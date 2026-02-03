@@ -1,0 +1,56 @@
+diff --git a/node_modules/@solana/pay/lib/cjs/validateTransfer.js b/node_modules/@solana/pay/lib/cjs/validateTransfer.js
+index 6e03923..918b31f 100644
+--- a/node_modules/@solana/pay/lib/cjs/validateTransfer.js
++++ b/node_modules/@solana/pay/lib/cjs/validateTransfer.js
+@@ -53,7 +53,8 @@ function validateTransfer(connection, signature, { recipient, amount, splToken,
+         }
+         // Deserialize the transaction and make a copy of the instructions we're going to validate.
+         const transaction = web3_js_1.Transaction.populate(message, signatures);
+-        const instructions = transaction.instructions.slice();
++        const transferIndex = transaction.instructions.findIndex(({ programId }) => programId.equals(spl_token_1.TOKEN_PROGRAM_ID));
++        const instructions = transaction.instructions.slice(0, transferIndex + 1);
+         // Transfer instruction must be the last instruction
+         const instruction = instructions.pop();
+         if (!instruction)
+diff --git a/node_modules/@solana/pay/lib/esm/validateTransfer.js b/node_modules/@solana/pay/lib/esm/validateTransfer.js
+index 23d3d22..ba9cecb 100644
+--- a/node_modules/@solana/pay/lib/esm/validateTransfer.js
++++ b/node_modules/@solana/pay/lib/esm/validateTransfer.js
+@@ -1,4 +1,4 @@
+-import { decodeInstruction, getAssociatedTokenAddress, isTransferCheckedInstruction, isTransferInstruction, } from '@solana/spl-token';
++import { decodeInstruction, getAssociatedTokenAddress, isTransferCheckedInstruction, isTransferInstruction, TOKEN_PROGRAM_ID, } from '@solana/spl-token';
+ import { LAMPORTS_PER_SOL, SystemInstruction, Transaction } from '@solana/web3.js';
+ import BigNumber from 'bignumber.js';
+ import { MEMO_PROGRAM_ID } from './constants.js';
+@@ -36,7 +36,8 @@ export async function validateTransfer(connection, signature, { recipient, amoun
+     }
+     // Deserialize the transaction and make a copy of the instructions we're going to validate.
+     const transaction = Transaction.populate(message, signatures);
+-    const instructions = transaction.instructions.slice();
++    const transferIndex = transaction.instructions.findIndex(({ programId }) => programId.equals(TOKEN_PROGRAM_ID));
++    const instructions = transaction.instructions.slice(0, transferIndex + 1);
+     // Transfer instruction must be the last instruction
+     const instruction = instructions.pop();
+     if (!instruction)
+diff --git a/node_modules/@solana/pay/src/validateTransfer.ts b/node_modules/@solana/pay/src/validateTransfer.ts
+index a3a47b8..9c08ee2 100644
+--- a/node_modules/@solana/pay/src/validateTransfer.ts
++++ b/node_modules/@solana/pay/src/validateTransfer.ts
+@@ -3,6 +3,7 @@ import {
+     getAssociatedTokenAddress,
+     isTransferCheckedInstruction,
+     isTransferInstruction,
++    TOKEN_PROGRAM_ID,
+ } from '@solana/spl-token';
+ import type {
+     ConfirmedTransactionMeta,
+@@ -71,7 +72,8 @@ export async function validateTransfer(
+ 
+     // Deserialize the transaction and make a copy of the instructions we're going to validate.
+     const transaction = Transaction.populate(message, signatures);
+-    const instructions = transaction.instructions.slice();
++    const transferIndex = transaction.instructions.findIndex(({ programId }) => programId.equals(TOKEN_PROGRAM_ID));
++    const instructions = transaction.instructions.slice(0, transferIndex + 1);
+ 
+     // Transfer instruction must be the last instruction
+     const instruction = instructions.pop();

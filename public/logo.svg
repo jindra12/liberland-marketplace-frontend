@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 200) rotate(90) scale(320 320)">
+      <stop offset="0" stop-color="#00A7D8"/>
+      <stop offset="0.55" stop-color="#0066B8"/>
+      <stop offset="1" stop-color="#02162F"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect x="24" y="24" width="464" height="464" rx="120" fill="url(#bg)" filter="url(#soft)"/>
+
+  <!-- Outer hex ring -->
+  <polygon points="256.0,81.0 407.6,168.5 407.6,343.5 256.0,431.0 104.4,343.5 104.4,168.5" stroke="#F6FBFF" stroke-width="18" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+
+  <!-- Outer nodes (symmetric 6 points) -->
+  <circle cx="256.0" cy="81.0" r="15" fill="#F6FBFF"/><circle cx="407.6" cy="168.5" r="15" fill="#F6FBFF"/><circle cx="407.6" cy="343.5" r="15" fill="#F6FBFF"/><circle cx="256.0" cy="431.0" r="15" fill="#F6FBFF"/><circle cx="104.4" cy="343.5" r="15" fill="#F6FBFF"/><circle cx="104.4" cy="168.5" r="15" fill="#F6FBFF"/>
+
+  <!-- Inner triangle (smaller center mark) -->
+  <polygon points="256.0,206.0 206.0,310.0 306.0,310.0" stroke="#F6FBFF" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+  <!-- Inner nodes: 3 total (top + two bottom) -->
+  <circle cx="256.0" cy="206.0" r="12" fill="#F6FBFF"/><circle cx="206.0" cy="310.0" r="12" fill="#F6FBFF"/><circle cx="306.0" cy="310.0" r="12" fill="#F6FBFF"/>
+</svg>
