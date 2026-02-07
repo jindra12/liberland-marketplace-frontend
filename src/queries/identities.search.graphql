@@ -1,0 +1,37 @@
+query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
+    where: {
+      AND: [
+        { title: { contains: $searchTerm } }
+        { doc: { relationTo: identities } }
+      ]
+    }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc {
+        relationTo
+        value {
+          ... on Identity {
+            id
+            name
+            website
+          }
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

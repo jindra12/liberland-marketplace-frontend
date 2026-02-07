@@ -1,0 +1,43 @@
+query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
+    where: {
+      AND: [
+        { title: { contains: $searchTerm } }
+        { doc: { relationTo: companies } }
+      ]
+    }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc {
+        relationTo
+        value {
+          ... on Company {
+            id
+            name
+            website
+            phone
+            email
+            identity {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

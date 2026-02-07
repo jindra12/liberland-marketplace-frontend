@@ -1,0 +1,21 @@
+query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
+  Products(page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      name
+      url
+      company {
+        id
+        name
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

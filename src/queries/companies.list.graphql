@@ -1,0 +1,23 @@
+query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      name
+      website
+      phone
+      email
+      identity {
+        id
+        name
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

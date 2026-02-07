@@ -1,0 +1,41 @@
+query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
+    where: {
+      AND: [
+        { title: { contains: $searchTerm } }
+        { doc: { relationTo: products } }
+      ]
+    }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc {
+        relationTo
+        value {
+          ... on Product {
+            id
+            name
+            url
+            company {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
