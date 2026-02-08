@@ -9,9 +9,14 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
       id
       title
       description
-      company {
+      image {
         id
-        name
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs

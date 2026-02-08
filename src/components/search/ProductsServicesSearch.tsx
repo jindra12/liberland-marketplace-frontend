@@ -12,13 +12,22 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState<string>();
-    const jobs = useSearchProductsQuery({
+    const products = useSearchProductsQuery({
         searchTerm: term || "",
         limit: 5,
         page: 0,
     }, {
         enabled: Boolean(term),
     });
+
+    React.useEffect(() => {
+        if (!products.isFetched) {
+            setOptions([]);
+        } else if (products.data) {
+            setOptions(products.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+        }
+    }, [products.isFetched, products.data]);
+
     return (
         <AutoSuggest
             onClose={props.onClose}
@@ -26,7 +35,7 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}
-            isLoading={jobs.isLoading}
+            isLoading={products.isLoading}
         />
     );
 };

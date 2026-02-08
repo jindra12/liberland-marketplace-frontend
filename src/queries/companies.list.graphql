@@ -9,6 +9,24 @@ query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
       identity {
         id
         name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs

@@ -12,13 +12,22 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState<string>();
-    const jobs = useSearchIdentitiesQuery({
+    const identities = useSearchIdentitiesQuery({
         searchTerm: term || "",
         limit: 5,
         page: 0,
     }, {
         enabled: Boolean(term),
     });
+
+    React.useEffect(() => {
+        if (!identities.isFetched) {
+            setOptions([]);
+        } else if (identities.data) {
+            setOptions(identities.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+        }
+    }, [identities.isFetched, identities.data]);
+
     return (
         <AutoSuggest
             onClose={props.onClose}
@@ -26,7 +35,7 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}
-            isLoading={jobs.isLoading}
+            isLoading={identities.isLoading}
         />
     );
 };

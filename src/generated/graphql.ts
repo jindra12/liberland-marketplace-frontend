@@ -2584,6 +2584,7 @@ export type CategoriesDocAccessFields = {
   createdAt?: Maybe<CategoriesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CategoriesDocAccessFields_CreatedBy>;
   generateSlug?: Maybe<CategoriesDocAccessFields_GenerateSlug>;
+  image?: Maybe<CategoriesDocAccessFields_Image>;
   parent?: Maybe<CategoriesDocAccessFields_Parent>;
   slug?: Maybe<CategoriesDocAccessFields_Slug>;
   title?: Maybe<CategoriesDocAccessFields_Title>;
@@ -2823,6 +2824,34 @@ export type CategoriesDocAccessFields_GenerateSlug_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CategoriesDocAccessFields_Image = {
+  __typename?: 'CategoriesDocAccessFields_image';
+  create?: Maybe<CategoriesDocAccessFields_Image_Create>;
+  delete?: Maybe<CategoriesDocAccessFields_Image_Delete>;
+  read?: Maybe<CategoriesDocAccessFields_Image_Read>;
+  update?: Maybe<CategoriesDocAccessFields_Image_Update>;
+};
+
+export type CategoriesDocAccessFields_Image_Create = {
+  __typename?: 'CategoriesDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesDocAccessFields_Image_Delete = {
+  __typename?: 'CategoriesDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesDocAccessFields_Image_Read = {
+  __typename?: 'CategoriesDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesDocAccessFields_Image_Update = {
+  __typename?: 'CategoriesDocAccessFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CategoriesDocAccessFields_Parent = {
   __typename?: 'CategoriesDocAccessFields_parent';
   create?: Maybe<CategoriesDocAccessFields_Parent_Create>;
@@ -2941,6 +2970,7 @@ export type CategoriesFields = {
   createdAt?: Maybe<CategoriesFields_CreatedAt>;
   createdBy?: Maybe<CategoriesFields_CreatedBy>;
   generateSlug?: Maybe<CategoriesFields_GenerateSlug>;
+  image?: Maybe<CategoriesFields_Image>;
   parent?: Maybe<CategoriesFields_Parent>;
   slug?: Maybe<CategoriesFields_Slug>;
   title?: Maybe<CategoriesFields_Title>;
@@ -3180,6 +3210,34 @@ export type CategoriesFields_GenerateSlug_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CategoriesFields_Image = {
+  __typename?: 'CategoriesFields_image';
+  create?: Maybe<CategoriesFields_Image_Create>;
+  delete?: Maybe<CategoriesFields_Image_Delete>;
+  read?: Maybe<CategoriesFields_Image_Read>;
+  update?: Maybe<CategoriesFields_Image_Update>;
+};
+
+export type CategoriesFields_Image_Create = {
+  __typename?: 'CategoriesFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesFields_Image_Delete = {
+  __typename?: 'CategoriesFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesFields_Image_Read = {
+  __typename?: 'CategoriesFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CategoriesFields_Image_Update = {
+  __typename?: 'CategoriesFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CategoriesFields_Parent = {
   __typename?: 'CategoriesFields_parent';
   create?: Maybe<CategoriesFields_Parent_Create>;
@@ -3323,6 +3381,7 @@ export type Category = {
   createdBy: User;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
+  image?: Maybe<Media>;
   parent?: Maybe<Category>;
   slug: Scalars['String']['output'];
   title: Scalars['String']['output'];
@@ -3415,6 +3474,15 @@ export type Category_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Category_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Category_Parent_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
@@ -3466,6 +3534,7 @@ export type Category_Where = {
   createdBy?: InputMaybe<Category_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   id?: InputMaybe<Category_Id_Operator>;
+  image?: InputMaybe<Category_Image_Operator>;
   parent?: InputMaybe<Category_Parent_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
@@ -3483,6 +3552,7 @@ export type Category_Where_And = {
   createdBy?: InputMaybe<Category_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   id?: InputMaybe<Category_Id_Operator>;
+  image?: InputMaybe<Category_Image_Operator>;
   parent?: InputMaybe<Category_Parent_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
@@ -3500,6 +3570,7 @@ export type Category_Where_Or = {
   createdBy?: InputMaybe<Category_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Category_GenerateSlug_Operator>;
   id?: InputMaybe<Category_Id_Operator>;
+  image?: InputMaybe<Category_Image_Operator>;
   parent?: InputMaybe<Category_Parent_Operator>;
   slug?: InputMaybe<Category_Slug_Operator>;
   title?: InputMaybe<Category_Title_Operator>;
@@ -3563,6 +3634,7 @@ export type CompaniesDocAccessFields = {
   createdBy?: Maybe<CompaniesDocAccessFields_CreatedBy>;
   email?: Maybe<CompaniesDocAccessFields_Email>;
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
+  image?: Maybe<CompaniesDocAccessFields_Image>;
   name?: Maybe<CompaniesDocAccessFields_Name>;
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
@@ -3678,6 +3750,34 @@ export type CompaniesDocAccessFields_Identity_Read = {
 
 export type CompaniesDocAccessFields_Identity_Update = {
   __typename?: 'CompaniesDocAccessFields_identity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Image = {
+  __typename?: 'CompaniesDocAccessFields_image';
+  create?: Maybe<CompaniesDocAccessFields_Image_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_Image_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_Image_Read>;
+  update?: Maybe<CompaniesDocAccessFields_Image_Update>;
+};
+
+export type CompaniesDocAccessFields_Image_Create = {
+  __typename?: 'CompaniesDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Image_Delete = {
+  __typename?: 'CompaniesDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Image_Read = {
+  __typename?: 'CompaniesDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Image_Update = {
+  __typename?: 'CompaniesDocAccessFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3799,6 +3899,7 @@ export type CompaniesFields = {
   createdBy?: Maybe<CompaniesFields_CreatedBy>;
   email?: Maybe<CompaniesFields_Email>;
   identity?: Maybe<CompaniesFields_Identity>;
+  image?: Maybe<CompaniesFields_Image>;
   name?: Maybe<CompaniesFields_Name>;
   phone?: Maybe<CompaniesFields_Phone>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
@@ -3914,6 +4015,34 @@ export type CompaniesFields_Identity_Read = {
 
 export type CompaniesFields_Identity_Update = {
   __typename?: 'CompaniesFields_identity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Image = {
+  __typename?: 'CompaniesFields_image';
+  create?: Maybe<CompaniesFields_Image_Create>;
+  delete?: Maybe<CompaniesFields_Image_Delete>;
+  read?: Maybe<CompaniesFields_Image_Read>;
+  update?: Maybe<CompaniesFields_Image_Update>;
+};
+
+export type CompaniesFields_Image_Create = {
+  __typename?: 'CompaniesFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Image_Delete = {
+  __typename?: 'CompaniesFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Image_Read = {
+  __typename?: 'CompaniesFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Image_Update = {
+  __typename?: 'CompaniesFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -4060,6 +4189,7 @@ export type Company = {
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
   identity: Identity;
+  image?: Maybe<Media>;
   name: Scalars['String']['output'];
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -4110,6 +4240,15 @@ export type Company_Id_Operator = {
 export type Company_Identity_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Company_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -4166,6 +4305,7 @@ export type Company_Where = {
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
+  image?: InputMaybe<Company_Image_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
@@ -4180,6 +4320,7 @@ export type Company_Where_And = {
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
+  image?: InputMaybe<Company_Image_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
@@ -4194,6 +4335,7 @@ export type Company_Where_Or = {
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
+  image?: InputMaybe<Company_Image_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
@@ -7743,6 +7885,7 @@ export type IdentitiesDocAccessFields = {
   __typename?: 'IdentitiesDocAccessFields';
   createdAt?: Maybe<IdentitiesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
+  image?: Maybe<IdentitiesDocAccessFields_Image>;
   name?: Maybe<IdentitiesDocAccessFields_Name>;
   updatedAt?: Maybe<IdentitiesDocAccessFields_UpdatedAt>;
   website?: Maybe<IdentitiesDocAccessFields_Website>;
@@ -7801,6 +7944,34 @@ export type IdentitiesDocAccessFields_CreatedBy_Read = {
 
 export type IdentitiesDocAccessFields_CreatedBy_Update = {
   __typename?: 'IdentitiesDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Image = {
+  __typename?: 'IdentitiesDocAccessFields_image';
+  create?: Maybe<IdentitiesDocAccessFields_Image_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_Image_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_Image_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_Image_Update>;
+};
+
+export type IdentitiesDocAccessFields_Image_Create = {
+  __typename?: 'IdentitiesDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Image_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Image_Read = {
+  __typename?: 'IdentitiesDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Image_Update = {
+  __typename?: 'IdentitiesDocAccessFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -7892,6 +8063,7 @@ export type IdentitiesFields = {
   __typename?: 'IdentitiesFields';
   createdAt?: Maybe<IdentitiesFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
+  image?: Maybe<IdentitiesFields_Image>;
   name?: Maybe<IdentitiesFields_Name>;
   updatedAt?: Maybe<IdentitiesFields_UpdatedAt>;
   website?: Maybe<IdentitiesFields_Website>;
@@ -7950,6 +8122,34 @@ export type IdentitiesFields_CreatedBy_Read = {
 
 export type IdentitiesFields_CreatedBy_Update = {
   __typename?: 'IdentitiesFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Image = {
+  __typename?: 'IdentitiesFields_image';
+  create?: Maybe<IdentitiesFields_Image_Create>;
+  delete?: Maybe<IdentitiesFields_Image_Delete>;
+  read?: Maybe<IdentitiesFields_Image_Read>;
+  update?: Maybe<IdentitiesFields_Image_Update>;
+};
+
+export type IdentitiesFields_Image_Create = {
+  __typename?: 'IdentitiesFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Image_Delete = {
+  __typename?: 'IdentitiesFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Image_Read = {
+  __typename?: 'IdentitiesFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Image_Update = {
+  __typename?: 'IdentitiesFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -8066,6 +8266,7 @@ export type Identity = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy: User;
   id: Scalars['String']['output'];
+  image?: Maybe<Media>;
   name: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
@@ -8099,6 +8300,15 @@ export type Identity_Id_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Identity_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Identity_Name_Operator = {
@@ -8139,6 +8349,7 @@ export type Identity_Where = {
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
+  image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -8150,6 +8361,7 @@ export type Identity_Where_And = {
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
+  image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -8161,6 +8373,7 @@ export type Identity_Where_Or = {
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
+  image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -8176,6 +8389,7 @@ export type Job = {
   description?: Maybe<Scalars['JSON']['output']>;
   employmentType?: Maybe<Job_EmploymentType>;
   id: Scalars['String']['output'];
+  image?: Maybe<Media>;
   location?: Maybe<Scalars['String']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<Job_SalaryRange>;
@@ -8406,6 +8620,7 @@ export type JobVersion_Version = {
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['JSON']['output']>;
   employmentType?: Maybe<JobVersion_Version_EmploymentType>;
+  image?: Maybe<Media>;
   location?: Maybe<Scalars['String']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<JobVersion_Version_SalaryRange>;
@@ -9100,6 +9315,15 @@ export type Job_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Job_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Job_Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -9364,6 +9588,7 @@ export type Job_Where = {
   description?: InputMaybe<Job_Description_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
+  image?: InputMaybe<Job_Image_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
@@ -9384,6 +9609,7 @@ export type Job_Where_And = {
   description?: InputMaybe<Job_Description_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
+  image?: InputMaybe<Job_Image_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
@@ -9404,6 +9630,7 @@ export type Job_Where_Or = {
   description?: InputMaybe<Job_Description_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
+  image?: InputMaybe<Job_Image_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
@@ -9461,6 +9688,7 @@ export type JobsDocAccessFields = {
   createdBy?: Maybe<JobsDocAccessFields_CreatedBy>;
   description?: Maybe<JobsDocAccessFields_Description>;
   employmentType?: Maybe<JobsDocAccessFields_EmploymentType>;
+  image?: Maybe<JobsDocAccessFields_Image>;
   location?: Maybe<JobsDocAccessFields_Location>;
   postedAt?: Maybe<JobsDocAccessFields_PostedAt>;
   salaryRange?: Maybe<JobsDocAccessFields_SalaryRange>;
@@ -9661,6 +9889,34 @@ export type JobsDocAccessFields_EmploymentType_Read = {
 
 export type JobsDocAccessFields_EmploymentType_Update = {
   __typename?: 'JobsDocAccessFields_employmentType_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Image = {
+  __typename?: 'JobsDocAccessFields_image';
+  create?: Maybe<JobsDocAccessFields_Image_Create>;
+  delete?: Maybe<JobsDocAccessFields_Image_Delete>;
+  read?: Maybe<JobsDocAccessFields_Image_Read>;
+  update?: Maybe<JobsDocAccessFields_Image_Update>;
+};
+
+export type JobsDocAccessFields_Image_Create = {
+  __typename?: 'JobsDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Image_Delete = {
+  __typename?: 'JobsDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Image_Read = {
+  __typename?: 'JobsDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Image_Update = {
+  __typename?: 'JobsDocAccessFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -9905,6 +10161,7 @@ export type JobsFields = {
   createdBy?: Maybe<JobsFields_CreatedBy>;
   description?: Maybe<JobsFields_Description>;
   employmentType?: Maybe<JobsFields_EmploymentType>;
+  image?: Maybe<JobsFields_Image>;
   location?: Maybe<JobsFields_Location>;
   postedAt?: Maybe<JobsFields_PostedAt>;
   salaryRange?: Maybe<JobsFields_SalaryRange>;
@@ -10105,6 +10362,34 @@ export type JobsFields_EmploymentType_Read = {
 
 export type JobsFields_EmploymentType_Update = {
   __typename?: 'JobsFields_employmentType_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Image = {
+  __typename?: 'JobsFields_image';
+  create?: Maybe<JobsFields_Image_Create>;
+  delete?: Maybe<JobsFields_Image_Delete>;
+  read?: Maybe<JobsFields_Image_Read>;
+  update?: Maybe<JobsFields_Image_Update>;
+};
+
+export type JobsFields_Image_Create = {
+  __typename?: 'JobsFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Image_Delete = {
+  __typename?: 'JobsFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Image_Read = {
+  __typename?: 'JobsFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Image_Update = {
+  __typename?: 'JobsFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -25416,6 +25701,7 @@ export type Product = {
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
+  image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   price?: Maybe<Product_Price>;
@@ -25647,6 +25933,7 @@ export type ProductVersion_Version = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
+  image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   price?: Maybe<ProductVersion_Version_Price>;
@@ -26330,6 +26617,15 @@ export type Product_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Product_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Product_Inventory_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -26637,6 +26933,7 @@ export type Product_Where = {
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
+  image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
@@ -26660,6 +26957,7 @@ export type Product_Where_And = {
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
+  image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
@@ -26683,6 +26981,7 @@ export type Product_Where_Or = {
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
+  image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
@@ -26743,6 +27042,7 @@ export type ProductsDocAccessFields = {
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
   deletedAt?: Maybe<ProductsDocAccessFields_DeletedAt>;
   enableVariants?: Maybe<ProductsDocAccessFields_EnableVariants>;
+  image?: Maybe<ProductsDocAccessFields_Image>;
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   price?: Maybe<ProductsDocAccessFields_Price>;
@@ -26892,6 +27192,34 @@ export type ProductsDocAccessFields_EnableVariants_Read = {
 
 export type ProductsDocAccessFields_EnableVariants_Update = {
   __typename?: 'ProductsDocAccessFields_enableVariants_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Image = {
+  __typename?: 'ProductsDocAccessFields_image';
+  create?: Maybe<ProductsDocAccessFields_Image_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Image_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Image_Read>;
+  update?: Maybe<ProductsDocAccessFields_Image_Update>;
+};
+
+export type ProductsDocAccessFields_Image_Create = {
+  __typename?: 'ProductsDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Image_Delete = {
+  __typename?: 'ProductsDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Image_Read = {
+  __typename?: 'ProductsDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Image_Update = {
+  __typename?: 'ProductsDocAccessFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -27337,6 +27665,7 @@ export type ProductsFields = {
   createdAt?: Maybe<ProductsFields_CreatedAt>;
   deletedAt?: Maybe<ProductsFields_DeletedAt>;
   enableVariants?: Maybe<ProductsFields_EnableVariants>;
+  image?: Maybe<ProductsFields_Image>;
   inventory?: Maybe<ProductsFields_Inventory>;
   name?: Maybe<ProductsFields_Name>;
   price?: Maybe<ProductsFields_Price>;
@@ -27486,6 +27815,34 @@ export type ProductsFields_EnableVariants_Read = {
 
 export type ProductsFields_EnableVariants_Update = {
   __typename?: 'ProductsFields_enableVariants_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Image = {
+  __typename?: 'ProductsFields_image';
+  create?: Maybe<ProductsFields_Image_Create>;
+  delete?: Maybe<ProductsFields_Image_Delete>;
+  read?: Maybe<ProductsFields_Image_Read>;
+  update?: Maybe<ProductsFields_Image_Update>;
+};
+
+export type ProductsFields_Image_Create = {
+  __typename?: 'ProductsFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Image_Delete = {
+  __typename?: 'ProductsFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Image_Read = {
+  __typename?: 'ProductsFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Image_Update = {
+  __typename?: 'ProductsFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -36519,6 +36876,7 @@ export type MutationCategoryInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   parent?: InputMaybe<Scalars['String']['input']>;
   slug: Scalars['String']['input'];
   title: Scalars['String']['input'];
@@ -36530,6 +36888,7 @@ export type MutationCategoryUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   parent?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -36555,6 +36914,7 @@ export type MutationCompanyInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   phone?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -36566,6 +36926,7 @@ export type MutationCompanyUpdateInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -36693,6 +37054,7 @@ export type MutationHeader_NavItems_LinkInput = {
 export type MutationIdentityInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -36701,6 +37063,7 @@ export type MutationIdentityInput = {
 export type MutationIdentityUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -36714,6 +37077,7 @@ export type MutationJobInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['JSON']['input']>;
   employmentType: Job_EmploymentType_MutationInput;
+  image?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   postedAt: Scalars['String']['input'];
   salaryRange?: InputMaybe<MutationJob_SalaryRangeInput>;
@@ -36729,6 +37093,7 @@ export type MutationJobUpdateInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['JSON']['input']>;
   employmentType?: InputMaybe<JobUpdate_EmploymentType_MutationInput>;
+  image?: InputMaybe<Scalars['String']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   postedAt?: InputMaybe<Scalars['String']['input']>;
   salaryRange?: InputMaybe<MutationJobUpdate_SalaryRangeInput>;
@@ -37260,6 +37625,7 @@ export type MutationProductInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   price: MutationProduct_PriceInput;
@@ -37277,6 +37643,7 @@ export type MutationProductUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   price: MutationProductUpdate_PriceInput;
@@ -38031,6 +38398,15 @@ export type VersionsJob_Version__EmploymentType_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__EmploymentType_Input>>>;
 };
 
+export type VersionsJob_Version__Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type VersionsJob_Version__Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -38299,6 +38675,7 @@ export type VersionsJob_Where = {
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
+  version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
@@ -38323,6 +38700,7 @@ export type VersionsJob_Where_And = {
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
+  version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
@@ -38347,6 +38725,7 @@ export type VersionsJob_Where_Or = {
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
+  version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
@@ -39184,6 +39563,15 @@ export type VersionsProduct_Version__EnableVariants_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsProduct_Version__Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type VersionsProduct_Version__Inventory_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -39496,6 +39884,7 @@ export type VersionsProduct_Where = {
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
+  version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
@@ -39524,6 +39913,7 @@ export type VersionsProduct_Where_And = {
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
+  version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
@@ -39552,6 +39942,7 @@ export type VersionsProduct_Where_Or = {
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
+  version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
@@ -39821,7 +40212,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string } }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -39833,7 +40224,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string } }
+          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -39846,7 +40237,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string } }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -39857,7 +40248,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string } }
+          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string } }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -39870,7 +40261,7 @@ export type ListIdentitiesQueryVariables = Exact<{
 }>;
 
 
-export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, name: string, website?: string | null }> } | null };
+export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchIdentitiesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -39882,7 +40273,7 @@ export type SearchIdentitiesQueryVariables = Exact<{
 
 export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
-          | { __typename?: 'Identity', id: string, name: string, website?: string | null }
+          | { __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
@@ -39895,7 +40286,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -39909,7 +40300,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -39920,7 +40311,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -39933,7 +40324,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -39945,7 +40336,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -39960,7 +40351,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }
          | null } }> } | null };
 
 export type ListProductsQueryVariables = Exact<{
@@ -39970,7 +40361,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -39984,7 +40375,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
 
@@ -40003,9 +40394,14 @@ export const ListCompaniesByIdentityDocument = `
       website
       phone
       email
-      identity {
+      image {
         id
-        name
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs
@@ -40062,9 +40458,14 @@ export const SearchCompaniesByIdentityDocument = `
             website
             phone
             email
-            identity {
+            image {
               id
-              name
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }
@@ -40115,6 +40516,24 @@ export const ListCompaniesDocument = `
       identity {
         id
         name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs
@@ -40171,6 +40590,15 @@ export const SearchCompaniesDocument = `
             website
             phone
             email
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
             identity {
               id
               name
@@ -40219,6 +40647,15 @@ export const ListIdentitiesDocument = `
       id
       name
       website
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
     }
     totalDocs
     limit
@@ -40272,6 +40709,15 @@ export const SearchIdentitiesDocument = `
             id
             name
             website
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
           }
         }
       }
@@ -40321,9 +40767,14 @@ export const ListJobsByCompanyDocument = `
       id
       title
       description
-      company {
+      image {
         id
-        name
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs
@@ -40378,9 +40829,14 @@ export const SearchJobsByCompanyDocument = `
             id
             title
             description
-            company {
+            image {
               id
-              name
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }
@@ -40426,9 +40882,27 @@ export const ListJobsDocument = `
       id
       title
       description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
       company {
         id
         name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
     totalDocs
@@ -40483,9 +40957,27 @@ export const SearchJobsDocument = `
             id
             title
             description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
             company {
               id
               name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
             }
           }
         }
@@ -40536,6 +41028,15 @@ export const ListProductsByCompanyDocument = `
       id
       name
       url
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
       company {
         id
         name
@@ -40593,6 +41094,15 @@ export const SearchProductsByCompanyDocument = `
             id
             name
             url
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
             company {
               id
               name
@@ -40641,9 +41151,27 @@ export const ListProductsDocument = `
       id
       name
       url
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
       company {
         id
         name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
     totalDocs
@@ -40698,9 +41226,27 @@ export const SearchProductsDocument = `
             id
             name
             url
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
             company {
               id
               name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
             }
           }
         }

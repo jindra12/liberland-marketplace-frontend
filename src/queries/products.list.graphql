@@ -4,9 +4,27 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       id
       name
       url
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
       company {
         id
         name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
     totalDocs

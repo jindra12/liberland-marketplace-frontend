@@ -21,9 +21,14 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
             id
             title
             description
-            company {
+            image {
               id
-              name
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }

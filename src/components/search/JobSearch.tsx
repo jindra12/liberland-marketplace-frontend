@@ -19,6 +19,15 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
     }, {
         enabled: Boolean(term),
     });
+
+    React.useEffect(() => {
+        if (!jobs.isFetched) {
+            setOptions([]);
+        } else if (jobs.data) {
+            setOptions(jobs.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+        }
+    }, [jobs.isFetched, jobs.data]);
+
     return (
         <AutoSuggest
             onClose={props.onClose}

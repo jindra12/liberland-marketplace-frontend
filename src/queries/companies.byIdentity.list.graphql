@@ -11,9 +11,14 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
       website
       phone
       email
-      identity {
+      image {
         id
-        name
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
     totalDocs

@@ -21,6 +21,15 @@ query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $
             id
             name
             website
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
           }
         }
       }

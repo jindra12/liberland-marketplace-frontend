@@ -12,13 +12,22 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState<string>();
-    const jobs = useSearchCompaniesQuery({
+    const companies = useSearchCompaniesQuery({
         searchTerm: term || "",
         limit: 5,
         page: 0,
     }, {
         enabled: Boolean(term),
     });
+
+    React.useEffect(() => {
+        if (!companies.isFetched) {
+            setOptions([]);
+        } else if (companies.data) {
+            setOptions(companies.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+        }
+    }, [companies.isFetched, companies.data]);
+
     return (
         <AutoSuggest
             onClose={props.onClose}
@@ -26,7 +35,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}
-            isLoading={jobs.isLoading}
+            isLoading={companies.isLoading}
         />
     );
 };
