@@ -11,7 +11,7 @@ const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
 const Identities = React.lazy(() => import("./components/Identities"));
 const ProductsServices = React.lazy(() => import("./components/ProductsServices"));
-const Layout = React.lazy(() => import("./components/Layout"));
+const AppLayout = React.lazy(() => import("./components/AppLayout"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <React.Suspense fallback={<Spin />}>
@@ -34,7 +34,7 @@ root.render(
         <QueryClientProvider client={config}>
             <AntProvider>
                 <React.Suspense fallback={<Spin />}>
-                    <Layout>
+                    <AppLayout>
                         <Routes>
                             <Route Component={suspense(Splash)} path="/" />
                             <Route Component={suspense(Jobs)} path="/jobs" />
@@ -42,7 +42,7 @@ root.render(
                             <Route Component={suspense(Identities)} path="/identities" />
                             <Route Component={suspense(ProductsServices)} path="/products-services" />
                         </Routes>
-                    </Layout>
+                    </AppLayout>
                 </React.Suspense>
             </AntProvider>
         </QueryClientProvider>
