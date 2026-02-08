@@ -18,6 +18,7 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
         relationTo
         value {
           ... on Company {
+            __typename
             id
             name
             website

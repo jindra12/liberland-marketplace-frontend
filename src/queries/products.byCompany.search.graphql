@@ -18,6 +18,7 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
         relationTo
         value {
           ... on Product {
+            __typename
             id
             name
             url

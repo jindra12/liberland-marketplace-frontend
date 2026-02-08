@@ -18,6 +18,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
         relationTo
         value {
           ... on Company {
+            __typename
             id
             name
             website

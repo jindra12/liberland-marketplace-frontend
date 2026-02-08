@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
-import { SearchOption } from "../../types";
+import { DocType, SearchOption } from "../../types";
 import { useSearchProductsQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 
 export interface ProductsServicesSearchProps {
     onClose: () => void;
@@ -24,7 +25,11 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
         if (!products.isFetched) {
             setOptions([]);
         } else if (products.data) {
-            setOptions(products.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+            setOptions(products
+                .data
+                .Searches
+                ?.docs
+                .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || [])
         }
     }, [products.isFetched, products.data]);
 

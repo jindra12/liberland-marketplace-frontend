@@ -18,6 +18,7 @@ query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $
         relationTo
         value {
           ... on Identity {
+            __typename
             id
             name
             website

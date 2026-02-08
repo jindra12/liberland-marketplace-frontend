@@ -40224,7 +40224,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -40248,7 +40248,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string } }
+          | { __typename: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string } }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -40273,7 +40273,7 @@ export type SearchIdentitiesQueryVariables = Exact<{
 
 export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
-          | { __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
@@ -40300,7 +40300,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -40324,7 +40324,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -40351,7 +40351,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }
          | null } }> } | null };
 
 export type ListProductsQueryVariables = Exact<{
@@ -40375,7 +40375,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
 
@@ -40453,6 +40453,7 @@ export const SearchCompaniesByIdentityDocument = `
         relationTo
         value {
           ... on Company {
+            __typename
             id
             name
             website
@@ -40585,6 +40586,7 @@ export const SearchCompaniesDocument = `
         relationTo
         value {
           ... on Company {
+            __typename
             id
             name
             website
@@ -40706,6 +40708,7 @@ export const SearchIdentitiesDocument = `
         relationTo
         value {
           ... on Identity {
+            __typename
             id
             name
             website
@@ -40826,6 +40829,7 @@ export const SearchJobsByCompanyDocument = `
         relationTo
         value {
           ... on Job {
+            __typename
             id
             title
             description
@@ -40954,6 +40958,7 @@ export const SearchJobsDocument = `
         relationTo
         value {
           ... on Job {
+            __typename
             id
             title
             description
@@ -41091,6 +41096,7 @@ export const SearchProductsByCompanyDocument = `
         relationTo
         value {
           ... on Product {
+            __typename
             id
             name
             url
@@ -41223,6 +41229,7 @@ export const SearchProductsDocument = `
         relationTo
         value {
           ... on Product {
+            __typename
             id
             name
             url

@@ -18,6 +18,7 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
         relationTo
         value {
           ... on Job {
+            __typename
             id
             title
             description

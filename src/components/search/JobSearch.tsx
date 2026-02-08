@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
-import { SearchOption } from "../../types";
+import { DocType, SearchOption } from "../../types";
 import { useSearchJobsQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 
 export interface JobSearchProps {
     onClose: () => void;
@@ -24,7 +25,11 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
         if (!jobs.isFetched) {
             setOptions([]);
         } else if (jobs.data) {
-            setOptions(jobs.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+            setOptions(jobs
+                .data
+                .Searches
+                ?.docs
+                .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || []);
         }
     }, [jobs.isFetched, jobs.data]);
 

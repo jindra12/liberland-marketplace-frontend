@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
-import { SearchOption } from "../../types";
+import { DocType, SearchOption } from "../../types";
 import { useSearchIdentitiesQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 
 export interface IdentitiesSearchProps {
     onClose: () => void;
@@ -24,7 +25,13 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
         if (!identities.isFetched) {
             setOptions([]);
         } else if (identities.data) {
-            setOptions(identities.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+            setOptions(
+                identities
+                    .data
+                    .Searches
+                    ?.docs
+                    .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || []
+            );
         }
     }, [identities.isFetched, identities.data]);
 

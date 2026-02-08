@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
-import { SearchOption } from "../../types";
+import { DocType, SearchOption } from "../../types";
 import { useSearchCompaniesQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 
 export interface CompaniesSearchProps {
     onClose: () => void;
@@ -24,7 +25,13 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
         if (!companies.isFetched) {
             setOptions([]);
         } else if (companies.data) {
-            setOptions(companies.data.Searches?.docs.map(({ id, title }) => ({ value: id, label: title })) || [])
+            setOptions(
+                companies
+                    .data
+                    .Searches
+                    ?.docs
+                    .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || []
+            );
         }
     }, [companies.isFetched, companies.data]);
 
