@@ -20,7 +20,7 @@ export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariab
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
         "https://liberland-marketplace.vercel.app/api/graphql",
         { query, variables },
-        { withCredentials: true, headers: normalizeAndReduce(options) },
+        { headers: normalizeAndReduce(options) },
     );
 
     if ((res.data?.errors?.length)) {
