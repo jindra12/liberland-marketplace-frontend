@@ -1,0 +1,32 @@
+query CompanyById($id: String!) {
+  Company(id: $id) {
+    id
+    name
+    website
+    phone
+    email
+    identity {
+      id
+      name
+      website
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}

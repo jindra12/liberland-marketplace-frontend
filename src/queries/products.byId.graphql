@@ -1,0 +1,29 @@
+query ProductById($id: String!) {
+  Product(id: $id) {
+    id
+    name
+    url
+    company {
+      id
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}

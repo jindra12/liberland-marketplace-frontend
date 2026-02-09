@@ -40204,6 +40204,13 @@ export type VersionsVariants = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type CompanyByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -40253,6 +40260,13 @@ export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typena
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
+
+export type IdentityByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type IdentityByIdQuery = { __typename?: 'Query', Identity?: { __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListIdentitiesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -40304,6 +40318,13 @@ export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __ty
           | { __typename?: 'Product' }
          | null } }> } | null };
 
+export type JobByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: any | null, postedAt?: any | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -40354,6 +40375,13 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }
          | null } }> } | null };
 
+export type ProductByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -40379,6 +40407,62 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
          | null } }> } | null };
 
 
+
+export const CompanyByIdDocument = `
+    query CompanyById($id: String!) {
+  Company(id: $id) {
+    id
+    name
+    website
+    phone
+    email
+    identity {
+      id
+      name
+      website
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useCompanyByIdQuery = <
+      TData = CompanyByIdQuery,
+      TError = unknown
+    >(
+      variables: CompanyByIdQueryVariables,
+      options?: Omit<UseQueryOptions<CompanyByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CompanyByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CompanyByIdQuery, TError, TData>(
+      {
+    queryKey: ['CompanyById', variables],
+    queryFn: gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useCompanyByIdQuery.getKey = (variables: CompanyByIdQueryVariables) => ['CompanyById', variables];
+
+
+useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables, options);
 
 export const ListCompaniesByIdentityDocument = `
     query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -40642,6 +40726,46 @@ useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => [
 
 useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
 
+export const IdentityByIdDocument = `
+    query IdentityById($id: String!) {
+  Identity(id: $id) {
+    id
+    name
+    website
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useIdentityByIdQuery = <
+      TData = IdentityByIdQuery,
+      TError = unknown
+    >(
+      variables: IdentityByIdQueryVariables,
+      options?: Omit<UseQueryOptions<IdentityByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<IdentityByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<IdentityByIdQuery, TError, TData>(
+      {
+    queryKey: ['IdentityById', variables],
+    queryFn: gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useIdentityByIdQuery.getKey = (variables: IdentityByIdQueryVariables) => ['IdentityById', variables];
+
+
+useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables, options);
+
 export const ListIdentitiesDocument = `
     query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
   Identities(page: $page, limit: $limit, sort: $sort) {
@@ -40878,6 +41002,60 @@ useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariabl
 
 
 useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
+
+export const JobByIdDocument = `
+    query JobById($id: String!) {
+  Job(id: $id) {
+    id
+    title
+    description
+    postedAt
+    company {
+      id
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useJobByIdQuery = <
+      TData = JobByIdQuery,
+      TError = unknown
+    >(
+      variables: JobByIdQueryVariables,
+      options?: Omit<UseQueryOptions<JobByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<JobByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<JobByIdQuery, TError, TData>(
+      {
+    queryKey: ['JobById', variables],
+    queryFn: gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', variables];
+
+
+useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -41149,6 +41327,59 @@ useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQuer
 
 
 useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables, options);
+
+export const ProductByIdDocument = `
+    query ProductById($id: String!) {
+  Product(id: $id) {
+    id
+    name
+    url
+    company {
+      id
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
+    `;
+
+export const useProductByIdQuery = <
+      TData = ProductByIdQuery,
+      TError = unknown
+    >(
+      variables: ProductByIdQueryVariables,
+      options?: Omit<UseQueryOptions<ProductByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ProductByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ProductByIdQuery, TError, TData>(
+      {
+    queryKey: ['ProductById', variables],
+    queryFn: gqlFetcher<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useProductByIdQuery.getKey = (variables: ProductByIdQueryVariables) => ['ProductById', variables];
+
+
+useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, variables, options);
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {

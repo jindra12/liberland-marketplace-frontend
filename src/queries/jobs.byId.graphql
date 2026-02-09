@@ -1,0 +1,30 @@
+query JobById($id: String!) {
+  Job(id: $id) {
+    id
+    title
+    description
+    postedAt
+    company {
+      id
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
