@@ -1,5 +1,5 @@
 import React from "react";
-import { AutoComplete, AutoCompleteProps, Drawer, Flex, Input, InputRef } from "antd";
+import { AutoComplete, AutoCompleteProps, Avatar, Drawer, Flex, Input, InputRef } from "antd";
 
 import { SearchOption } from "../types";
 
@@ -47,7 +47,17 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
                 <Flex align="center" gap={12}>
                     <AutoComplete
                         value={value}
-                        options={props.options}
+                        options={props.options.map((option) => ({
+                            ...option,
+                            label: (
+                                <Flex align="center" gap="8px">
+                                    {option.image && (
+                                        <Avatar src={option.image} size={24} />
+                                    )}
+                                    {option.label}
+                                </Flex>
+                            ),
+                        }))}
                         onSearch={onSearch}
                         onSelect={props.onSelect}
                         onChange={setValue}

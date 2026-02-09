@@ -1,7 +1,8 @@
 import * as React from "react";
+import { JobList } from "./lists/JobList";
 
 const Jobs: React.FunctionComponent = () => {
-    return null;
+    return <JobList />;
 };
 
 export default Jobs;

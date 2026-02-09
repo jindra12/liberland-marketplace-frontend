@@ -1,7 +1,8 @@
 import * as React from "react";
+import { ProductsServicesList } from "./lists/ProductServiceList";
 
 const ProductsServices: React.FunctionComponent = () => {
-    return null;
+    return <ProductsServicesList />;
 };
 
 export default ProductsServices;
