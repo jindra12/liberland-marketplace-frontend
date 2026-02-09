@@ -4,7 +4,11 @@ import { AppList } from "../AppList";
 import { Link } from "react-router-dom";
 import { Avatar } from "antd";
 
-export const JobList: React.FunctionComponent = () => {
+export interface JobListProps {
+    limited?: boolean;
+}
+
+export const JobList: React.FunctionComponent<JobListProps> = (props) => {
     const [page, setPage] = React.useState(0);
     const query = useListJobsQuery({
         limit: 10,
@@ -14,7 +18,7 @@ export const JobList: React.FunctionComponent = () => {
     
     return (
         <AppList
-            hasMore={!query.data?.Jobs || query.data.Jobs.hasNextPage}
+            hasMore={!props.limited && (!query.data?.Jobs || query.data.Jobs.hasNextPage)}
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
