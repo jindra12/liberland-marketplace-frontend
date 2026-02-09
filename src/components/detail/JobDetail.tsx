@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
+import { Typography } from "antd";
 import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 
@@ -9,7 +10,7 @@ const JobDetail: React.FunctionComponent = () => {
     return (
         <Loader query={job}>
             {(job) => (
-
+                <Typography.Title level={1}>{job.Job?.title}</Typography.Title>
             )}
         </Loader>
     );

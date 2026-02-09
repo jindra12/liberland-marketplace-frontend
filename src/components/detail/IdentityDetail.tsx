@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { useIdentityByIdQuery, useJobByIdQuery } from "../../generated/graphql";
+import { Typography } from "antd";
+import { useIdentityByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 
 const IdentityDetail: React.FunctionComponent = () => {
@@ -9,7 +10,7 @@ const IdentityDetail: React.FunctionComponent = () => {
     return (
         <Loader query={identity}>
             {(identity) => (
-                
+                <Typography.Title level={1}>{identity.Identity?.name}</Typography.Title>
             )}
         </Loader>
     );
