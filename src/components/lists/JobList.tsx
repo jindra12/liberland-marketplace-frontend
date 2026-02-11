@@ -1,11 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Space, Tag, Typography } from "antd";
+import SanitizedHTML from "react-sanitized-html";
+import { ApplyButton } from "../ApplyButton";
 import { EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
 import { useListJobsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
+import { timeAgo, formatSalary, formatEmploymentType, LOREM_FALLBACK } from "../../utils";
 
 export interface JobListProps {
     limited?: boolean;
@@ -41,29 +43,15 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 ),
                 avatar: (job) => {
                     const url = job.image?.url;
-                    return url ? <Avatar shape="square" size={80} src={`${BACKEND_URL}${url}`} /> : undefined;
+                    return url ? (
+                        <img
+                            src={`${BACKEND_URL}${url}`}
+                            alt={job.title || ""}
+                            style={{ width: 92, height: "100%", objectFit: "cover", borderRadius: 4 }}
+                        />
+                    ) : undefined;
                 },
-                description: (job) => (
-                    <Space size={[8, 4]} wrap>
-                        {job.company?.name && (
-                            <Typography.Text strong>{job.company.name}</Typography.Text>
-                        )}
-                        {job.location && (
-                            <Typography.Text type="secondary">
-                                <EnvironmentOutlined /> {job.location}
-                            </Typography.Text>
-                        )}
-                        {formatEmploymentType(job.employmentType) && (
-                            <Tag color="blue">{formatEmploymentType(job.employmentType)}</Tag>
-                        )}
-                        {job.postedAt && (
-                            <Typography.Text type="secondary">
-                                <ClockCircleOutlined /> {timeAgo(job.postedAt)}
-                            </Typography.Text>
-                        )}
-                    </Space>
-                ),
-                body: (job) => {
+                description: (job) => {
                     const salary = formatSalary(
                         job.salaryRange?.min,
                         job.salaryRange?.max,
@@ -71,29 +59,41 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                     );
                     return (
                         <Space direction="vertical" size={4}>
+                            <Space size={[8, 4]} wrap>
+                                {job.company?.name && (
+                                    <Typography.Text strong>{job.company.name}</Typography.Text>
+                                )}
+                                {job.location && (
+                                    <Typography.Text type="secondary">
+                                        <EnvironmentOutlined /> {job.location}
+                                    </Typography.Text>
+                                )}
+                                {formatEmploymentType(job.employmentType) && (
+                                    <Tag color="blue">{formatEmploymentType(job.employmentType)}</Tag>
+                                )}
+                                {job.postedAt && (
+                                    <Typography.Text type="secondary">
+                                        <ClockCircleOutlined /> {timeAgo(job.postedAt)}
+                                    </Typography.Text>
+                                )}
+                            </Space>
                             {salary && (
                                 <Typography.Text strong>
                                     <DollarOutlined /> {salary}
                                 </Typography.Text>
                             )}
-                            <Typography.Paragraph
-                                type="secondary"
-                                ellipsis={{ rows: 2 }}
-                                style={{ marginBottom: 0 }}
-                            >
-                                {job.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.\n\nTotam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."}
-                            </Typography.Paragraph>
                         </Space>
                     );
                 },
+                body: (job) => (
+                    <div style={{ marginBottom: 0, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                        <SanitizedHTML html={job.description || LOREM_FALLBACK} />
+                    </div>
+                ),
                 actions: (job) => (
                     <Space>
                         <Link to={`/jobs/${job.id}`}><Button size="large" style={{ minWidth: 120 }}>Details</Button></Link>
-                        {job.applyUrl && (
-                            <Button type="primary" size="large" style={{ minWidth: 120 }} href={job.applyUrl} target="_blank" rel="noopener noreferrer">
-                                Apply
-                            </Button>
-                        )}
+                        <ApplyButton url={job.applyUrl} />
                     </Space>
                 ),
             }}
