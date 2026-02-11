@@ -1,13 +1,13 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Space, Tag, Typography } from "antd";
-import { EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
+import { useParams, Link } from "react-router-dom";
+import { Avatar, Button, Space, Tag, Typography } from "antd";
+import SanitizedHTML from "react-sanitized-html";
+import { ApplyButton } from "../ApplyButton";
+import { ArrowLeftOutlined, EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
 import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
-
-const LOREM_FALLBACK = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.\n\nTotam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.";
+import { timeAgo, formatSalary, formatEmploymentType, LOREM_FALLBACK } from "../../utils";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -24,46 +24,56 @@ const JobDetail: React.FunctionComponent = () => {
                 const empType = formatEmploymentType(job?.employmentType);
 
                 return (
-                    <>
-                        {job?.image?.url && <Avatar size={96} src={`${BACKEND_URL}${job.image.url}`} />}
-                        <Typography.Title level={1}>{job?.title}</Typography.Title>
+                    <div style={{ maxWidth: 800, margin: "0 auto" }}>
+                        <Link to="/jobs">
+                            <Button type="text" size="large" icon={<ArrowLeftOutlined />} style={{ marginBottom: 16, fontSize: 18 }}>
+                                Back to Jobs
+                            </Button>
+                        </Link>
+                        <Space size={16} align="start" style={{ marginBottom: 16 }}>
+                            {job?.image?.url && <Avatar shape="square" size={192} src={`${BACKEND_URL}${job.image.url}`} />}
+                            <div>
+                                <Typography.Title level={1} style={{ marginBottom: 8 }}>
+                                    <Space>
+                                        {job?.title}
+                                        {job?.company?.image?.url && (
+                                            <Avatar size="small" src={`${BACKEND_URL}${job.company.image.url}`} />
+                                        )}
+                                        {job?.company?.image?.url && job?.image?.url && "🤝"}
+                                        {job?.image?.url && (
+                                            <Avatar size="small" src={`${BACKEND_URL}${job.image.url}`} />
+                                        )}
+                                    </Space>
+                                </Typography.Title>
+                                <Space size={[12, 8]} wrap>
+                                    {job?.company?.name && (
+                                        <Typography.Text strong>{job.company.name}</Typography.Text>
+                                    )}
+                                    {job?.location && (
+                                        <Typography.Text type="secondary">
+                                            <EnvironmentOutlined /> {job.location}
+                                        </Typography.Text>
+                                    )}
+                                    {empType && <Tag color="blue">{empType}</Tag>}
+                                    {salary && (
+                                        <Typography.Text strong>
+                                            <DollarOutlined /> {salary}
+                                        </Typography.Text>
+                                    )}
+                                    {job?.postedAt && (
+                                        <Typography.Text type="secondary">
+                                            <ClockCircleOutlined /> {timeAgo(job.postedAt)}
+                                        </Typography.Text>
+                                    )}
+                                    <ApplyButton url={job?.applyUrl} />
+                                </Space>
+                            </div>
+                        </Space>
 
-                        <Descriptions column={1} size="small" style={{ marginBottom: 16 }}>
-                            {job?.company?.name && (
-                                <Descriptions.Item label="Company">{job.company.name}</Descriptions.Item>
-                            )}
-                            {job?.location && (
-                                <Descriptions.Item label="Location">
-                                    <EnvironmentOutlined /> {job.location}
-                                </Descriptions.Item>
-                            )}
-                            {empType && (
-                                <Descriptions.Item label="Employment Type">
-                                    <Tag color="blue">{empType}</Tag>
-                                </Descriptions.Item>
-                            )}
-                            {salary && (
-                                <Descriptions.Item label="Salary">
-                                    <DollarOutlined /> {salary}
-                                </Descriptions.Item>
-                            )}
-                            {job?.postedAt && (
-                                <Descriptions.Item label="Posted">
-                                    <ClockCircleOutlined /> {timeAgo(job.postedAt)}
-                                </Descriptions.Item>
-                            )}
-                        </Descriptions>
+                        <SanitizedHTML html={job?.description || LOREM_FALLBACK} />
 
-                        {job?.applyUrl && (
-                            <Space style={{ marginBottom: 16 }}>
-                                <Button type="primary" href={job.applyUrl} target="_blank" rel="noopener noreferrer">
-                                    Apply
-                                </Button>
-                            </Space>
-                        )}
-
-                        <Typography.Paragraph>{job?.description || LOREM_FALLBACK}</Typography.Paragraph>
-                    </>
+                        <ApplyButton url={job?.applyUrl} />
+                    </div>
                 );
             }}
         </Loader>
