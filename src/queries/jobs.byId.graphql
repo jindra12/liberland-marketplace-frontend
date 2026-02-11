@@ -3,7 +3,15 @@ query JobById($id: String!) {
     id
     title
     description
+    location
+    employmentType
     postedAt
+    applyUrl
+    salaryRange {
+      min
+      max
+      currency
+    }
     company {
       id
       name
