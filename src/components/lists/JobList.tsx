@@ -27,10 +27,21 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
             next={() => setPage(page + 1)}
             refetch={query.refetch}
             renderItem={{
-                title: (job) => job.title,
+                title: (job) => (
+                    <Space>
+                        {job.title}
+                        {job.company?.image?.url && (
+                            <Avatar size="small" src={`${BACKEND_URL}${job.company.image.url}`} />
+                        )}
+                        {job.company?.image?.url && job.image?.url && "🤝"}
+                        {job.image?.url && (
+                            <Avatar size="small" src={`${BACKEND_URL}${job.image.url}`} />
+                        )}
+                    </Space>
+                ),
                 avatar: (job) => {
-                    const url = job.image?.url || job.company?.image?.url;
-                    return url ? <Avatar src={`${BACKEND_URL}${url}`} /> : undefined;
+                    const url = job.image?.url;
+                    return url ? <Avatar shape="square" size={80} src={`${BACKEND_URL}${url}`} /> : undefined;
                 },
                 description: (job) => (
                     <Space size={[8, 4]} wrap>
@@ -75,12 +86,16 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                         </Space>
                     );
                 },
-                extra: (job) => job.applyUrl ? (
-                    <Button type="primary" href={job.applyUrl} target="_blank" rel="noopener noreferrer">
-                        Apply
-                    </Button>
-                ) : undefined,
-                actions: (job) => <Link to={`/jobs/${job.id}`}>Details</Link>,
+                actions: (job) => (
+                    <Space>
+                        <Link to={`/jobs/${job.id}`}><Button size="large" style={{ minWidth: 120 }}>Details</Button></Link>
+                        {job.applyUrl && (
+                            <Button type="primary" size="large" style={{ minWidth: 120 }} href={job.applyUrl} target="_blank" rel="noopener noreferrer">
+                                Apply
+                            </Button>
+                        )}
+                    </Space>
+                ),
             }}
         />
         </div>
