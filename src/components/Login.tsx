@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Card, Form, Input, message, Typography } from "antd";
+import { Button, Card, Divider, Form, Input, message, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useLoginUserMutation } from "../generated/graphql";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 
 const { Title } = Typography;
 
@@ -43,6 +44,8 @@ const Login: React.FC = () => {
         <div style={{ maxWidth: 400, margin: "64px auto", padding: "0 16px" }}>
             <Card>
                 <Title level={3} style={{ textAlign: "center" }}>Log In</Title>
+                <GoogleLoginButton />
+                <Divider plain>or</Divider>
                 <Form<LoginFormValues> layout="vertical" onFinish={onFinish}>
                     <Form.Item
                         label="Email"
