@@ -3,8 +3,9 @@ import React from "react";
 import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { MenuOutlined } from "@ant-design/icons";
+import { LoginOutlined, LogoutOutlined, MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
+import { useAuth } from "./AuthContext";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -25,6 +26,7 @@ export const AppHeader: React.FunctionComponent = () => {
     const { md } = useBreakpoint();
     const navigate = useNavigate();
     const location = useLocation();
+    const { user, logout } = useAuth();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -53,6 +55,14 @@ export const AppHeader: React.FunctionComponent = () => {
                             selectedKeys={selectedKeys}
                             onClick={onMenuClick}
                         />
+                        {user ? (
+                            <Space className="AppHeader__auth">
+                                <span className="AppHeader__user"><UserOutlined /> {user.name || user.email}</span>
+                                <Button size="small" icon={<LogoutOutlined />} onClick={logout}>Log Out</Button>
+                            </Space>
+                        ) : (
+                            <Button icon={<LoginOutlined />} onClick={() => navigate("/login")}>Log In</Button>
+                        )}
                     </Flex>
                 ) : (
                     <Space className="AppHeader__mobile" align="center">
@@ -78,9 +88,20 @@ export const AppHeader: React.FunctionComponent = () => {
                         >
                             <Menu
                                 mode="inline"
-                                items={items}
+                                items={[
+                                    ...items,
+                                    { type: "divider" } as any,
+                                    user
+                                        ? { key: "logout", label: `Log Out (${user.name || user.email})`, icon: <LogoutOutlined /> }
+                                        : { key: "/login", label: "Log In", icon: <LoginOutlined /> },
+                                ]}
                                 selectedKeys={selectedKeys}
-                                onClick={onMenuClick}
+                                onClick={(info) => {
+                                    if (info.key === "logout") {
+                                        logout();
+                                    }
+                                    onMenuClick(info);
+                                }}
                             />
                         </Drawer>
                     </Space>

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import { gqlFetcher } from '../gqlFetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -40204,6 +40204,14 @@ export type VersionsVariants = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type LoginUserMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type LoginUserMutation = { __typename?: 'Mutation', loginUser?: { __typename?: 'usersLoginResult', token?: string | null, exp?: number | null, user?: { __typename?: 'User', id: string, email: any, name?: string | null } | null } | null };
+
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -40407,6 +40415,36 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
          | null } }> } | null };
 
 
+
+export const LoginUserDocument = `
+    mutation LoginUser($email: String!, $password: String!) {
+  loginUser(email: $email, password: $password) {
+    token
+    exp
+    user {
+      id
+      email
+      name
+    }
+  }
+}
+    `;
+
+export const useLoginUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LoginUserMutation, TError, LoginUserMutationVariables, TContext>) => {
+    
+    return useMutation<LoginUserMutation, TError, LoginUserMutationVariables, TContext>(
+      {
+    mutationKey: ['LoginUser'],
+    mutationFn: (variables?: LoginUserMutationVariables) => gqlFetcher<LoginUserMutation, LoginUserMutationVariables>(LoginUserDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useLoginUserMutation.fetcher = (variables: LoginUserMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LoginUserMutation, LoginUserMutationVariables>(LoginUserDocument, variables, options);
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {

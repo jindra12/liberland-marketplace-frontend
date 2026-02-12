@@ -64,4 +64,13 @@
         align-items: center;
         gap: 10px;
     }
+
+    &__auth {
+        white-space: nowrap;
+    }
+
+    &__user {
+        font-size: 13px;
+        opacity: 0.85;
+    }
 }
