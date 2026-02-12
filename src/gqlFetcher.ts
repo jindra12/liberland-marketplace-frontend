@@ -16,9 +16,11 @@ const normalizeAndReduce = (options?: RequestInit['headers']) => {
     return reduceOptions(Object.entries(options || {}));
 }
 
+export const BACKEND_URL = "http://localhost:3000";
+
 export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers']) => async (): Promise<TData> => {
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
-        "https://liberland-marketplace.vercel.app/api/graphql",
+        `${BACKEND_URL}/api/graphql`,
         { query, variables },
         { headers: normalizeAndReduce(options) },
     );

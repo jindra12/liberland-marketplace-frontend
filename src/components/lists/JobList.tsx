@@ -3,6 +3,7 @@ import { useListJobsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { Link } from "react-router-dom";
 import { Avatar } from "antd";
+import { BACKEND_URL } from "../../gqlFetcher";
 
 export interface JobListProps {
     limited?: boolean;
@@ -25,8 +26,8 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
             renderItem={{
                 title: (job) => job.title,
                 actions: (job) => <Link to={`/jobs/${job.id}`}>Details</Link>,
-                avatar: (job) => job.image?.url ? <Avatar src={job.image.url} /> : undefined,
-                description: (job) => job.description,
+                avatar: (job) => job.image?.url ? <Avatar src={`${BACKEND_URL}${job.image.url}`} /> : undefined,
+                description: (job) => job.description || "This is a job that people can apply on, that the creator didnt bother making a description for",
             }}
         />
     );
