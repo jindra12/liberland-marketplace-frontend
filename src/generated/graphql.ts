@@ -40212,6 +40212,13 @@ export type LoginUserMutationVariables = Exact<{
 
 export type LoginUserMutation = { __typename?: 'Mutation', loginUser?: { __typename?: 'usersLoginResult', token?: string | null, exp?: number | null, user?: { __typename?: 'User', id: string, email: any, name?: string | null } | null } | null };
 
+export type CreateUserMutationVariables = Exact<{
+  data: MutationUserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string, email: any, name?: string | null } | null };
+
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -40445,6 +40452,32 @@ export const useLoginUserMutation = <
 
 
 useLoginUserMutation.fetcher = (variables: LoginUserMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LoginUserMutation, LoginUserMutationVariables>(LoginUserDocument, variables, options);
+
+export const CreateUserDocument = `
+    mutation CreateUser($data: mutationUserInput!) {
+  createUser(data: $data) {
+    id
+    email
+    name
+  }
+}
+    `;
+
+export const useCreateUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateUserMutation, TError, CreateUserMutationVariables, TContext>) => {
+    
+    return useMutation<CreateUserMutation, TError, CreateUserMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateUser'],
+    mutationFn: (variables?: CreateUserMutationVariables) => gqlFetcher<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateUserMutation.fetcher = (variables: CreateUserMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, variables, options);
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
