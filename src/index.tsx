@@ -5,10 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
 
 import { AntProvider } from "./components/AntProvider";
+import { AuthProvider } from "./components/AuthContext";
 
 import "./index.scss";
 
 const Splash = React.lazy(() => import("./components/Splash"));
+const Login = React.lazy(() => import("./components/Login"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
 const Identities = React.lazy(() => import("./components/Identities"));
@@ -39,10 +41,12 @@ root.render(
     <BrowserRouter>
         <QueryClientProvider client={config}>
             <AntProvider>
+                <AuthProvider>
                 <React.Suspense fallback={<Spin />}>
                     <AppLayout>
                         <Routes>
                             <Route Component={suspense(Splash)} path="/" />
+                            <Route Component={suspense(Login)} path="/login" />
                             <Route Component={suspense(Jobs)} path="/jobs" />
                             <Route Component={suspense(Companies)} path="/companies" />
                             <Route Component={suspense(Identities)} path="/identities" />
@@ -54,6 +58,7 @@ root.render(
                         </Routes>
                     </AppLayout>
                 </React.Suspense>
+                </AuthProvider>
             </AntProvider>
         </QueryClientProvider>
     </BrowserRouter>
