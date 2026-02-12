@@ -8,7 +8,7 @@ const AppLayout: React.FunctionComponent<React.PropsWithChildren> = (props) => {
         <Layout className="AppLayout">
             <AppHeader />
             <Layout.Content>{props.children}</Layout.Content>
-            <Layout.Footer>© {new Date().getFullYear()} Liberland Marketplace</Layout.Footer>
+            <Layout.Footer>© {new Date().getFullYear()} Jita-44</Layout.Footer>
         </Layout>
     );
 };

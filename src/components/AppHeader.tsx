@@ -11,7 +11,7 @@ const { useBreakpoint } = Grid;
 
 const items = [
     { key: "/jobs", label: "Jobs" },
-    { key: "/products", label: "Products / Services" },
+    { key: "/products", label: "Marketplace" },
     { key: "/companies", label: "Companies" },
     { key: "/identities", label: "Identities" },
 ];
@@ -39,8 +39,8 @@ export const AppHeader: React.FunctionComponent = () => {
         <Header className="AppHeader">
             <div className="AppHeader__inner">
                 <Link className="AppHeader__brand" to="/">
-                    <img className="AppHeader__logo" src="/logo.svg" alt="Liberland Marketplace" />
-                    <span className="AppHeader__name">Liberland Marketplace</span>
+                    <img className="AppHeader__logo" src="/logo.svg" alt="Jita-44" />
+                    <span className="AppHeader__name">Jita-44</span>
                 </Link>
 
                 {md ? (
@@ -71,8 +71,8 @@ export const AppHeader: React.FunctionComponent = () => {
                             onClose={() => setDrawerOpen(false)}
                             title={
                                 <div className="AppHeader__drawerTitle">
-                                    <img className="AppHeader__logo" src="/logo.svg" alt="Liberland Marketplace" />
-                                    <span className="AppHeader__name">Liberland Marketplace</span>
+                                    <img className="AppHeader__logo" src="/logo.svg" alt="Jita-44" />
+                                    <span className="AppHeader__name">Jita-44</span>
                                 </div>
                             }
                         >
