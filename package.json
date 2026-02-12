@@ -6,6 +6,7 @@
     "@ant-design/icons": "^6.0.0",
     "@polkadot/extension-dapp": "^0.59.1",
     "@polkadot/util-crypto": "^13.5.1",
+    "@payloadcms/richtext-lexical": "^3.0.0",
     "@solana/pay": "^0.2.5",
     "@solana/wallet-adapter-react": "^0.15.38",
     "@solana/wallet-adapter-react-ui": "^0.9.38",
