@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Form, Input, message, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useLoginUserMutation } from "../generated/graphql";
 
@@ -73,6 +73,10 @@ const Login: React.FC = () => {
                             Log In
                         </Button>
                     </Form.Item>
+
+                    <div style={{ textAlign: "center" }}>
+                        Don't have an account? <Link to="/signup">Sign up</Link>
+                    </div>
                 </Form>
             </Card>
         </div>

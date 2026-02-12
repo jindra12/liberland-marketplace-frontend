@@ -11,6 +11,7 @@ import "./index.scss";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Login = React.lazy(() => import("./components/Login"));
+const Signup = React.lazy(() => import("./components/Signup"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
 const Identities = React.lazy(() => import("./components/Identities"));
@@ -47,6 +48,7 @@ root.render(
                         <Routes>
                             <Route Component={suspense(Splash)} path="/" />
                             <Route Component={suspense(Login)} path="/login" />
+                            <Route Component={suspense(Signup)} path="/signup" />
                             <Route Component={suspense(Jobs)} path="/jobs" />
                             <Route Component={suspense(Companies)} path="/companies" />
                             <Route Component={suspense(Identities)} path="/identities" />
