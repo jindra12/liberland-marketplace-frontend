@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Avatar, List, Typography } from "antd";
 import { useListCompaniesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
+import { BACKEND_URL } from "../../gqlFetcher";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -21,7 +22,7 @@ export const CompanyList: React.FunctionComponent = () => {
             renderItem={{
                 title: (company) => company.name,
                 actions: (company) => <Link to={`/companies/${company.id}`}>Details</Link>,
-                avatar: (company) => company.image?.url ? <Avatar src={company.image.url} /> : undefined,
+                avatar: (company) => company.image?.url ? <Avatar src={`${BACKEND_URL}${company.image.url}`} /> : undefined,
                 body: (company) => {
                     const email = company.email ? <Typography.Link href={`mailto:${company.email}`}>{company.email}</Typography.Link> : undefined;
                     const website = company.website ? <Typography.Link href={company.website}>{company.website}</Typography.Link> : undefined;

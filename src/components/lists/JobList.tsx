@@ -4,6 +4,7 @@ import { Avatar } from "antd";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { useListJobsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
+import { BACKEND_URL } from "../../gqlFetcher";
 
 export interface JobListProps {
     limited?: boolean;
@@ -26,8 +27,8 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
             renderItem={{
                 title: (job) => job.title,
                 actions: (job) => <Link to={`/jobs/${job.id}`}>Details</Link>,
-                avatar: (job) => job.image?.url ? <Avatar src={job.image.url} /> : undefined,
-                description: (job) => job.description ? <RichText data={job.description} /> : null,
+                avatar: (job) => job.image?.url ? <Avatar src={`${BACKEND_URL}${job.image.url}`} /> : undefined,
+                description: (job) => job.description ? <RichText data={job.description} /> : undefined,
             }}
         />
     );
