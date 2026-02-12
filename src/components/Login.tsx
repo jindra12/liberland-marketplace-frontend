@@ -3,7 +3,7 @@ import { Button, Card, Divider, Form, Input, message, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useLoginUserMutation } from "../generated/graphql";
-import { GoogleLoginButton } from "./GoogleLoginButton";
+import { SocialLoginButtons } from "./SocialLoginButtons";
 
 const { Title } = Typography;
 
@@ -41,10 +41,10 @@ const Login: React.FC = () => {
     if (user) return null;
 
     return (
-        <div style={{ maxWidth: 400, margin: "64px auto", padding: "0 16px" }}>
+        <div style={{ maxWidth: 680, margin: "64px auto", padding: "0 16px" }}>
             <Card>
                 <Title level={3} style={{ textAlign: "center" }}>Log In</Title>
-                <GoogleLoginButton />
+                <SocialLoginButtons />
                 <Divider plain>or</Divider>
                 <Form<LoginFormValues> layout="vertical" onFinish={onFinish}>
                     <Form.Item

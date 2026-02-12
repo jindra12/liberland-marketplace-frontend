@@ -3,7 +3,7 @@ import { Button, Card, Divider, Form, Input, message, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useCreateUserMutation, useLoginUserMutation } from "../generated/graphql";
-import { GoogleLoginButton } from "./GoogleLoginButton";
+import { SocialLoginButtons } from "./SocialLoginButtons";
 
 const { Title } = Typography;
 
@@ -63,10 +63,10 @@ const Signup: React.FC = () => {
     const isPending = createMutation.isPending || loginMutation.isPending;
 
     return (
-        <div style={{ maxWidth: 400, margin: "64px auto", padding: "0 16px" }}>
+        <div style={{ maxWidth: 680, margin: "64px auto", padding: "0 16px" }}>
             <Card>
                 <Title level={3} style={{ textAlign: "center" }}>Sign Up</Title>
-                <GoogleLoginButton />
+                <SocialLoginButtons />
                 <Divider plain>or</Divider>
                 <Form<SignupFormValues> layout="vertical" onFinish={onFinish}>
                     <Form.Item
