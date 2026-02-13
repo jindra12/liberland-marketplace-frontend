@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useParams, Link } from "react-router-dom";
 import { Avatar, Button, Space, Tag, Typography } from "antd";
-import SanitizedHTML from "react-sanitized-html";
 import { ApplyButton } from "../ApplyButton";
 import { ArrowLeftOutlined, EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
 import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType, LOREM_FALLBACK } from "../../utils";
+import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -70,7 +69,7 @@ const JobDetail: React.FunctionComponent = () => {
                             </div>
                         </Space>
 
-                        <SanitizedHTML html={job?.description || LOREM_FALLBACK} />
+                        <Typography.Paragraph>{job?.description}</Typography.Paragraph>
 
                         <ApplyButton url={job?.applyUrl} />
                     </div>

@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Space, Tag, Typography } from "antd";
-import SanitizedHTML from "react-sanitized-html";
 import { ApplyButton } from "../ApplyButton";
 import { EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
 import { useListJobsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType, LOREM_FALLBACK } from "../../utils";
+import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
 
 export interface JobListProps {
     limited?: boolean;
@@ -88,7 +87,9 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 },
                 body: (job) => (
                     <div className="JobList__description">
-                        <SanitizedHTML html={job.description || LOREM_FALLBACK} />
+                        <Typography.Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 0 }}>
+                            {job.description}
+                        </Typography.Paragraph>
                     </div>
                 ),
                 actions: (job) => (

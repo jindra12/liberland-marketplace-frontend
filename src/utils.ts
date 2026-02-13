@@ -54,8 +54,6 @@ export const formatEmploymentType = (type?: Job_EmploymentType | null): string |
     return type ? employmentTypeLabels[type] ?? null : null;
 };
 
-export const LOREM_FALLBACK = "<p><b>Lorem ipsum</b> dolor sit amet, <b>consectetur adipiscing</b> elit. Sed do eiusmod tempor incididunt ut <b>labore et dolore magna</b> aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <b>commodo consequat</b>.</p><p>Duis aute irure dolor in <b>reprehenderit</b> in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <b>Excepteur sint occaecat</b> cupidatat non proident, sunt in culpa qui officia deserunt <b>mollit anim</b> id est laborum. Sed ut perspiciatis unde omnis iste natus error sit <b>voluptatem accusantium</b> doloremque laudantium.</p><p>Totam rem aperiam, eaque ipsa quae ab illo <b>inventore veritatis</b> et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia <b>voluptas sit aspernatur</b> aut odit aut fugit, sed quia consequuntur <b>magni dolores</b> eos qui ratione voluptatem sequi nesciunt.</p>";
-
 export const getImage = (doc?: DocType) => {
     switch (doc?.__typename) {
         case "Company":
