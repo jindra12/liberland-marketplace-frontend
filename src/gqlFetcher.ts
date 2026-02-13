@@ -16,7 +16,7 @@ const normalizeAndReduce = (options?: RequestInit['headers']) => {
     return reduceOptions(Object.entries(options || {}));
 }
 
-export const BACKEND_URL = "https://liberland-marketplace.vercel.app";
+export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://liberland-marketplace.vercel.app";
 
 export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers']) => async (): Promise<TData> => {
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(

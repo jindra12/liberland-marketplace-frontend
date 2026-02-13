@@ -4,6 +4,15 @@ query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
       id
       title
       description
+      location
+      employmentType
+      postedAt
+      applyUrl
+      salaryRange {
+        min
+        max
+        currency
+      }
       image {
         id
         url

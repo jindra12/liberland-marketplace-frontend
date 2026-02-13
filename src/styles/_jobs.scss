@@ -1,0 +1,29 @@
+.JobContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.JobList__description {
+  margin-bottom: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.JobDetail__backBtn {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.JobDetail__header {
+  margin-bottom: 16px;
+}
+
+.JobDetail__title {
+  margin-bottom: 8px;
+}
+
+.ActionBtn {
+  min-width: 120px;
+}
