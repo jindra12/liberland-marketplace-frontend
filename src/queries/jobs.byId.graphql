@@ -1,5 +1,5 @@
 query JobById($id: String!) {
-  Job(id: $id) {
+  Job(id: $id, draft: false) {
     id
     title
     description

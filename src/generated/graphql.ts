@@ -40410,7 +40410,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
-  Company(id: $id) {
+  Company(id: $id, draft: false) {
     id
     name
     website
@@ -40467,6 +40467,7 @@ useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: R
 export const ListCompaniesByIdentityDocument = `
     query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(
+    draft: false
     where: {identity: {equals: $identityId}}
     page: $page
     limit: $limit
@@ -40524,6 +40525,7 @@ useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQue
 export const SearchCompaniesByIdentityDocument = `
     query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
     page: $page
     limit: $limit
@@ -40533,7 +40535,7 @@ export const SearchCompaniesByIdentityDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Company {
@@ -40591,7 +40593,7 @@ useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentit
 
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(page: $page, limit: $limit, sort: $sort) {
+  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name
@@ -40657,6 +40659,7 @@ useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, option
 export const SearchCompaniesDocument = `
     query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
     page: $page
     limit: $limit
@@ -40666,7 +40669,7 @@ export const SearchCompaniesDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Company {
@@ -40728,7 +40731,7 @@ useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, opt
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {
-  Identity(id: $id) {
+  Identity(id: $id, draft: false) {
     id
     name
     website
@@ -40768,7 +40771,7 @@ useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?:
 
 export const ListIdentitiesDocument = `
     query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Identities(page: $page, limit: $limit, sort: $sort) {
+  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name
@@ -40819,6 +40822,7 @@ useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, opti
 export const SearchIdentitiesDocument = `
     query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: identities}}]}
     page: $page
     limit: $limit
@@ -40828,7 +40832,7 @@ export const SearchIdentitiesDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Identity {
@@ -40885,6 +40889,7 @@ useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, o
 export const ListJobsByCompanyDocument = `
     query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(
+    draft: false
     where: {company: {equals: $companyId}}
     page: $page
     limit: $limit
@@ -40940,6 +40945,7 @@ useListJobsByCompanyQuery.fetcher = (variables: ListJobsByCompanyQueryVariables,
 export const SearchJobsByCompanyDocument = `
     query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
     page: $page
     limit: $limit
@@ -40949,7 +40955,7 @@ export const SearchJobsByCompanyDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Job {
@@ -41005,7 +41011,7 @@ useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariab
 
 export const JobByIdDocument = `
     query JobById($id: String!) {
-  Job(id: $id) {
+  Job(id: $id, draft: false) {
     id
     title
     description
@@ -41059,7 +41065,7 @@ useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestIn
 
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(page: $page, limit: $limit, sort: $sort) {
+  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       title
@@ -41123,6 +41129,7 @@ useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: Reques
 export const SearchJobsDocument = `
     query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
     page: $page
     limit: $limit
@@ -41132,7 +41139,7 @@ export const SearchJobsDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Job {
@@ -41202,6 +41209,7 @@ useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: Req
 export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(
+    draft: false
     where: {company: {equals: $companyId}}
     page: $page
     limit: $limit
@@ -41261,6 +41269,7 @@ useListProductsByCompanyQuery.fetcher = (variables: ListProductsByCompanyQueryVa
 export const SearchProductsByCompanyDocument = `
     query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
     page: $page
     limit: $limit
@@ -41270,7 +41279,7 @@ export const SearchProductsByCompanyDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Product {
@@ -41330,7 +41339,7 @@ useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQue
 
 export const ProductByIdDocument = `
     query ProductById($id: String!) {
-  Product(id: $id) {
+  Product(id: $id, draft: false) {
     id
     name
     url
@@ -41383,7 +41392,7 @@ useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: R
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Products(page: $page, limit: $limit, sort: $sort) {
+  Products(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name
@@ -41447,6 +41456,7 @@ useListProductsQuery.fetcher = (variables?: ListProductsQueryVariables, options?
 export const SearchProductsDocument = `
     query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
     page: $page
     limit: $limit
@@ -41456,7 +41466,7 @@ export const SearchProductsDocument = `
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Product {

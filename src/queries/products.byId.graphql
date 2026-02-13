@@ -1,5 +1,5 @@
 query ProductById($id: String!) {
-  Product(id: $id) {
+  Product(id: $id, draft: false) {
     id
     name
     url
