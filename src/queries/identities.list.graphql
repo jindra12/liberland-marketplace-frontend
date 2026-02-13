@@ -1,5 +1,5 @@
 query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Identities(page: $page, limit: $limit, sort: $sort) {
+  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name

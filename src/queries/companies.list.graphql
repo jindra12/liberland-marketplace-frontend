@@ -1,5 +1,5 @@
 query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(page: $page, limit: $limit, sort: $sort) {
+  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name

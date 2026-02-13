@@ -1,5 +1,6 @@
 query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
   Searches(
+    draft: false
     where: {
       AND: [
         { title: { contains: $searchTerm } }
@@ -14,7 +15,7 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
       id
       title
       priority
-      doc {
+      doc(draft: false) {
         relationTo
         value {
           ... on Company {

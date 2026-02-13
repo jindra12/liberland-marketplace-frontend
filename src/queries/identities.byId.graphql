@@ -1,5 +1,5 @@
 query IdentityById($id: String!) {
-  Identity(id: $id) {
+  Identity(id: $id, draft: false) {
     id
     name
     website

@@ -1,5 +1,6 @@
 query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(
+    draft: false
     where: { company: { equals: $companyId } }
     page: $page
     limit: $limit

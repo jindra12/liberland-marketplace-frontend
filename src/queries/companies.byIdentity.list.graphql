@@ -1,5 +1,6 @@
 query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(
+    draft: false
     where: { identity: { equals: $identityId } }
     page: $page
     limit: $limit

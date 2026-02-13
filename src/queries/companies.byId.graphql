@@ -1,5 +1,5 @@
 query CompanyById($id: String!) {
-  Company(id: $id) {
+  Company(id: $id, draft: false) {
     id
     name
     website
