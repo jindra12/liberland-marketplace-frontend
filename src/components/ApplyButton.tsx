@@ -9,7 +9,7 @@ export const ApplyButton: React.FunctionComponent<ApplyButtonProps> = ({ url }) 
     if (!url) return null;
     const href = url.startsWith("http") ? url : `https://${url}`;
     return (
-        <Button type="primary" size="large" style={{ minWidth: 120 }} href={href} target="_blank" rel="noopener noreferrer">
+        <Button type="primary" size="large" className="ActionBtn" href={href} target="_blank" rel="noopener noreferrer">
             Apply
         </Button>
     );

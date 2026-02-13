@@ -22,7 +22,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
     const items = query.data?.Jobs?.docs || [];
 
     return (
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        <div className="JobContainer">
         <AppList
             hasMore={!props.limited && (!query.data?.Jobs || query.data.Jobs.hasNextPage)}
             items={items}
@@ -47,7 +47,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                         <img
                             src={`${BACKEND_URL}${url}`}
                             alt={job.title || ""}
-                            style={{ width: 92, height: "100%", objectFit: "cover", borderRadius: 4 }}
+                            className="JobList__avatar"
                         />
                     ) : undefined;
                 },
@@ -86,13 +86,13 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                     );
                 },
                 body: (job) => (
-                    <div style={{ marginBottom: 0, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                    <div className="JobList__description">
                         <SanitizedHTML html={job.description || LOREM_FALLBACK} />
                     </div>
                 ),
                 actions: (job) => (
                     <Space>
-                        <Link to={`/jobs/${job.id}`}><Button size="large" style={{ minWidth: 120 }}>Details</Button></Link>
+                        <Link to={`/jobs/${job.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
                         <ApplyButton url={job.applyUrl} />
                     </Space>
                 ),

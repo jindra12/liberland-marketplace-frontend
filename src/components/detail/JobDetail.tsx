@@ -24,16 +24,16 @@ const JobDetail: React.FunctionComponent = () => {
                 const empType = formatEmploymentType(job?.employmentType);
 
                 return (
-                    <div style={{ maxWidth: 800, margin: "0 auto" }}>
+                    <div className="JobContainer">
                         <Link to="/jobs">
-                            <Button type="text" size="large" icon={<ArrowLeftOutlined />} style={{ marginBottom: 16, fontSize: 18 }}>
+                            <Button type="text" size="large" icon={<ArrowLeftOutlined />} className="JobDetail__backBtn">
                                 Back to Jobs
                             </Button>
                         </Link>
-                        <Space size={16} align="start" style={{ marginBottom: 16 }}>
+                        <Space size={16} align="start" className="JobDetail__header">
                             {job?.image?.url && <Avatar shape="square" size={192} src={`${BACKEND_URL}${job.image.url}`} />}
                             <div>
-                                <Typography.Title level={1} style={{ marginBottom: 8 }}>
+                                <Typography.Title level={1} className="JobDetail__title">
                                     <Space>
                                         {job?.title}
                                         {job?.company?.image?.url && (
