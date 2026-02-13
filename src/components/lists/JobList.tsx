@@ -44,10 +44,11 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 avatar: (job) => {
                     const url = job.image?.url;
                     return url ? (
-                        <img
+                        <Avatar
+                            shape="square"
+                            size={92}
                             src={`${BACKEND_URL}${url}`}
                             alt={job.title || ""}
-                            className="JobList__avatar"
                         />
                     ) : undefined;
                 },
