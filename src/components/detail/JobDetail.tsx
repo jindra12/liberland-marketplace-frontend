@@ -43,8 +43,8 @@ const JobDetail: React.FunctionComponent = () => {
                     ...job?.company?.allowedIdentities || [],
                 ], identity => identity.name);
                 const disallowedIdentities = uniqBy([
-                    ...job?.allowedIdentities || [],
-                    ...job?.company?.allowedIdentities || [],
+                    ...job?.disallowedIdentities || [],
+                    ...job?.company?.disallowedIdentities || [],
                 ], identity => identity.name);
 
                 return (
@@ -112,7 +112,7 @@ const JobDetail: React.FunctionComponent = () => {
                                         </Flex>
                                     </Flex>
                                     {allowedIdentities.length ? allowedIdentities.map((identity) => (
-                                        <Link to={`/identity/${identity.id}`}>
+                                        <Link key={`allowed-${identity.id}`} to={`/identities/${identity.id}`}>
                                             <Tag color="success">
                                                 {identity.name}
                                             </Tag>
@@ -127,8 +127,8 @@ const JobDetail: React.FunctionComponent = () => {
                                             Disallowed identities
                                         </Flex>
                                     </Flex>
-                                    {disallowedIdentities ? disallowedIdentities.map((identity) => (
-                                        <Link to={`/identity/${identity.id}`}>
+                                    {disallowedIdentities.length ? disallowedIdentities.map((identity) => (
+                                        <Link key={`disallowed-${identity.id}`} to={`/identities/${identity.id}`}>
                                             <Tag color="error">
                                                 {identity.name}
                                             </Tag>

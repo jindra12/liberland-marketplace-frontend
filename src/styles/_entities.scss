@@ -1,0 +1,57 @@
+.EntityDetail__header {
+    margin-bottom: 16px;
+}
+
+.EntityDetail__title {
+    margin-bottom: 8px !important;
+}
+
+.EntityDetail__meta {
+    margin-bottom: 4px;
+}
+
+.EntityDetail__identityGroups {
+    margin: 8px 0;
+}
+
+.EntityDetail__identityGroup {
+    flex: 1;
+    min-width: 280px;
+}
+
+.EntityDetail__identityGroupTitle {
+    margin-bottom: 8px;
+}
+
+.EntityDetail__subLists {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.EntitySubList__title {
+    margin-bottom: 8px !important;
+}
+
+.EntitySubList__itemTitle {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.EntitySubList__meta {
+    margin-bottom: 8px;
+}
+
+.EntitySubList__description {
+    margin-bottom: 8px;
+}
+
+.EntitySubList__identities {
+    margin-top: 4px;
+}
+
+@media (max-width: 991px) {
+    .EntityDetail__subLists {
+        grid-template-columns: 1fr;
+    }
+}
