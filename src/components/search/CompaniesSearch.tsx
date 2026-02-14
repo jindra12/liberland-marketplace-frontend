@@ -30,7 +30,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                     .data
                     .Searches
                     ?.docs
-                    .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || []
+                    .map(({ title, doc }) => ({ value: (doc.value as DocType)?.id || "", label: title, image: getImage(doc.value as DocType) })) || []
             );
         }
     }, [companies.isFetched, companies.data]);
@@ -38,7 +38,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => navigate(`/companies/${value}`)}
+            onSelect={(_, { value }) => { navigate(`/companies/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}

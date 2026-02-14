@@ -9,11 +9,11 @@ export interface AppListProps<TItem> {
     hasMore: boolean;
     refetch: () => void;
     next: () => void;
+    filters?: React.ReactNode;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
     const id = React.useMemo(() => uniqueId("infinite"), []);
-
     return (
         <div id={id}>
             <InfiniteScroll
@@ -30,6 +30,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     itemLayout="vertical"
                     dataSource={props.items}
                     size="large"
+                    header={props.filters && <Flex justify="start">{props.filters}</Flex>}
                     renderItem={(item) => (
                         <List.Item
                             extra={props.renderItem["extra"]?.(item)}

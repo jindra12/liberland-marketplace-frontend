@@ -12,7 +12,7 @@ const { useBreakpoint } = Grid;
 
 const items = [
     { key: "/jobs", label: "Jobs" },
-    { key: "/products", label: "Marketplace" },
+    { key: "/products", label: "Market" },
     { key: "/companies", label: "Companies" },
     { key: "/identities", label: "Identities" },
 ];
