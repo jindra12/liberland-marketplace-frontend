@@ -3,23 +3,35 @@ import { Link } from "react-router-dom";
 import { Avatar, List, Typography } from "antd";
 import { useListCompaniesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
+import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
+    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
     const query = useListCompaniesQuery({
         limit: 10,
         page,
     });
-    const items = query.data?.Companies?.docs || [];
-    
+    const allItems = query.data?.Companies?.docs || [];
+    const items = selectedIdentityIds.length === 0
+        ? allItems
+        : allItems.filter((company) => {
+            const identityIds = [
+                ...(company.allowedIdentities?.map((i) => i.id) || []),
+                company.identity.id,
+            ];
+            return selectedIdentityIds.some((id) => identityIds.includes(id));
+        });
+
     return (
         <AppList
             hasMore={!query.data?.Companies || query.data.Companies.hasNextPage}
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
+            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
                 title: (company) => company.name,
                 actions: (company) => <Link to={`/companies/${company.id}`}>Details</Link>,
