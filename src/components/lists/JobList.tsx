@@ -16,6 +16,7 @@ import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
+import { Markdown } from "../Markdown";
 
 export interface JobListProps {
     limited?: boolean;
@@ -112,9 +113,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 },
                 description: (job) => (
                     <div className="JobList__description">
-                        <Typography.Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 0 }}>
-                            {job.description}
-                        </Typography.Paragraph>
+                        <Markdown className="Markdown--clamp2">{job.description}</Markdown>
                     </div>
                 ),
                 actions: (job) => (

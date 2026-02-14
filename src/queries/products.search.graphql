@@ -22,6 +22,7 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             __typename
             id
             name
+            description
             url
             image {
               id

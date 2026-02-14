@@ -17,6 +17,7 @@ import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
 import { ApplyButton } from "../ApplyButton";
+import { Markdown } from "../Markdown";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -47,7 +48,7 @@ const JobDetail: React.FunctionComponent = () => {
                 ], identity => identity.name);
 
                 return (
-                    <div className="JobContainer">
+                    <div>
                         <Space size={16} align="start" className="JobDetail__header">
                             {url && <Avatar shape="circle" size={avatarSize} src={`${BACKEND_URL}${url}`} />}
                             <div>
@@ -99,8 +100,9 @@ const JobDetail: React.FunctionComponent = () => {
                                 )}
                             </div>
                         </Space>
+                        <Divider />
                         <Flex gap="32px" vertical>
-                            <Typography.Paragraph>{job?.description}</Typography.Paragraph>
+                            <Markdown>{job?.description}</Markdown>
                             <Flex wrap gap="16px" justify="center" align="center">
                                 <Flex flex={5} vertical gap="16px">
                                     <Flex vertical gap="8px">

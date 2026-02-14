@@ -9,6 +9,7 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
     docs {
       id
       name
+      description
       url
       image {
         id
