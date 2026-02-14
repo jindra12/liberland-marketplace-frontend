@@ -3,8 +3,9 @@ import React from "react";
 import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { MenuOutlined } from "@ant-design/icons";
+import { LoginOutlined, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
+import { useAuth } from "react-oidc-context";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -25,6 +26,7 @@ export const AppHeader: React.FunctionComponent = () => {
     const { md } = useBreakpoint();
     const navigate = useNavigate();
     const location = useLocation();
+    const auth = useAuth();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -53,6 +55,23 @@ export const AppHeader: React.FunctionComponent = () => {
                             selectedKeys={selectedKeys}
                             onClick={onMenuClick}
                         />
+                        {auth.isAuthenticated ? (
+                            <Button
+                                type="text"
+                                icon={<LogoutOutlined />}
+                                onClick={() => auth.removeUser()}
+                            >
+                                Log out
+                            </Button>
+                        ) : (
+                            <Button
+                                type="text"
+                                icon={<LoginOutlined />}
+                                onClick={() => auth.signinRedirect()}
+                            >
+                                Log in
+                            </Button>
+                        )}
                     </Flex>
                 ) : (
                     <Space className="AppHeader__mobile" align="center">
@@ -82,6 +101,26 @@ export const AppHeader: React.FunctionComponent = () => {
                                 selectedKeys={selectedKeys}
                                 onClick={onMenuClick}
                             />
+                            <div style={{ padding: "16px 24px" }}>
+                                {auth.isAuthenticated ? (
+                                    <Button
+                                        block
+                                        icon={<LogoutOutlined />}
+                                        onClick={() => { auth.removeUser(); setDrawerOpen(false); }}
+                                    >
+                                        Log out
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        block
+                                        type="primary"
+                                        icon={<LoginOutlined />}
+                                        onClick={() => { auth.signinRedirect(); setDrawerOpen(false); }}
+                                    >
+                                        Log in
+                                    </Button>
+                                )}
+                            </div>
                         </Drawer>
                     </Space>
                 )}

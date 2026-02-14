@@ -3,8 +3,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
+import { AuthProvider } from "react-oidc-context";
+import { WebStorageStateStore } from "oidc-client-ts";
 
 import { AntProvider } from "./components/AntProvider";
+import { BACKEND_URL } from "./gqlFetcher";
 
 import "./index.scss";
 
@@ -25,6 +28,26 @@ const suspense = (Component: React.FunctionComponent) => () => (
     </React.Suspense>
 );
 
+const oidcConfig = {
+    authority: `${BACKEND_URL}/api/auth`,
+    client_id: process.env.REACT_APP_OIDC_CLIENT_ID || "",
+    client_secret: process.env.REACT_APP_OIDC_CLIENT_SECRET || "",
+    redirect_uri:
+        process.env.REACT_APP_OIDC_REDIRECT_URI ||
+        `${window.location.origin}/auth/callback`,
+    scope: "openid profile email",
+    userStore: new WebStorageStateStore({ store: window.localStorage }),
+    metadata: {
+        issuer: `${BACKEND_URL}/api/auth`,
+        authorization_endpoint: `${BACKEND_URL}/api/auth/oauth2/authorize`,
+        token_endpoint: `${BACKEND_URL}/api/auth/oauth2/token`,
+        userinfo_endpoint: `${BACKEND_URL}/api/auth/oauth2/userinfo`,
+    },
+    onSigninCallback: () => {
+        window.history.replaceState({}, document.title, "/");
+    },
+};
+
 const config = new QueryClient({
     defaultOptions: {
         queries: {
@@ -36,25 +59,27 @@ const config = new QueryClient({
 });
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 root.render(
-    <BrowserRouter>
-        <QueryClientProvider client={config}>
-            <AntProvider>
-                <React.Suspense fallback={<Spin />}>
-                    <AppLayout>
-                        <Routes>
-                            <Route Component={suspense(Splash)} path="/" />
-                            <Route Component={suspense(Jobs)} path="/jobs" />
-                            <Route Component={suspense(Companies)} path="/companies" />
-                            <Route Component={suspense(Identities)} path="/identities" />
-                            <Route Component={suspense(ProductsServices)} path="/products-services" />
-                            <Route Component={suspense(Job)} path="/jobs/:id" />
-                            <Route Component={suspense(Company)} path="/companies/:id" />
-                            <Route Component={suspense(Identity)} path="/identities/:id" />
-                            <Route Component={suspense(ProductService)} path="/products-services/:id" />
-                        </Routes>
-                    </AppLayout>
-                </React.Suspense>
-            </AntProvider>
-        </QueryClientProvider>
-    </BrowserRouter>
+    <AuthProvider {...oidcConfig}>
+        <BrowserRouter>
+            <QueryClientProvider client={config}>
+                <AntProvider>
+                    <React.Suspense fallback={<Spin />}>
+                        <AppLayout>
+                            <Routes>
+                                <Route Component={suspense(Splash)} path="/" />
+                                <Route Component={suspense(Jobs)} path="/jobs" />
+                                <Route Component={suspense(Companies)} path="/companies" />
+                                <Route Component={suspense(Identities)} path="/identities" />
+                                <Route Component={suspense(ProductsServices)} path="/products-services" />
+                                <Route Component={suspense(Job)} path="/jobs/:id" />
+                                <Route Component={suspense(Company)} path="/companies/:id" />
+                                <Route Component={suspense(Identity)} path="/identities/:id" />
+                                <Route Component={suspense(ProductService)} path="/products-services/:id" />
+                            </Routes>
+                        </AppLayout>
+                    </React.Suspense>
+                </AntProvider>
+            </QueryClientProvider>
+        </BrowserRouter>
+    </AuthProvider>
 );
