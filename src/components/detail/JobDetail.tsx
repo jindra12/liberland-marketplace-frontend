@@ -1,16 +1,27 @@
 import * as React from "react";
-import { useParams, Link } from "react-router-dom";
-import { Avatar, Button, Space, Tag, Typography } from "antd";
-import { ApplyButton } from "../ApplyButton";
-import { ArrowLeftOutlined, EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from "@ant-design/icons";
+import { Link, useParams } from "react-router-dom";
+import { Avatar, Divider, Flex, Grid, Space, Tag, Typography } from "antd";
+import {
+    EnvironmentOutlined,
+    ClockCircleOutlined,
+    DollarOutlined,
+    MinusCircleFilled,
+    GiftOutlined,
+    TeamOutlined,
+    InfoCircleOutlined,
+    UsergroupAddOutlined,
+} from "@ant-design/icons";
+import uniqBy from "lodash-es/uniqBy";
 import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
+import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
+import { ApplyButton } from "../ApplyButton";
 import { Markdown } from "../Markdown";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
+    const { md } = Grid.useBreakpoint();
     const query = useJobByIdQuery({ id: id! });
     return (
         <Loader query={query}>
@@ -21,29 +32,35 @@ const JobDetail: React.FunctionComponent = () => {
                     job?.salaryRange?.max,
                     job?.salaryRange?.currency
                 );
+                const bounty = formatBounty(job?.bounty?.amount, job?.bounty?.currency);
+                const positions = formatPositions(job?.positions);
                 const empType = formatEmploymentType(job?.employmentType);
+                const url = job?.image?.url || job?.company?.image?.url;
+                const avatarSize = md ? 192 : 112;
+                const isInactive = job?.isActive === false;
+                const allowedIdentities = uniqBy([
+                    ...job?.allowedIdentities || [],
+                    ...job?.company?.allowedIdentities || [],
+                ], identity => identity.name);
+                const disallowedIdentities = uniqBy([
+                    ...job?.allowedIdentities || [],
+                    ...job?.company?.allowedIdentities || [],
+                ], identity => identity.name);
 
                 return (
                     <div>
-                        <Link to="/jobs">
-                            <Button type="text" size="large" icon={<ArrowLeftOutlined />} className="JobDetail__backBtn">
-                                Back to Jobs
-                            </Button>
-                        </Link>
                         <Space size={16} align="start" className="JobDetail__header">
-                            {job?.image?.url && <Avatar shape="square" size={192} src={`${BACKEND_URL}${job.image.url}`} />}
+                            {url && <Avatar shape="circle" size={avatarSize} src={`${BACKEND_URL}${url}`} />}
                             <div>
-                                <Typography.Title level={1} className="JobDetail__title">
-                                    <Space>
+                                <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
+                                    <Flex justify="space-between" align="center" gap="16px" wrap>
                                         {job?.title}
-                                        {job?.company?.image?.url && (
-                                            <Avatar size="small" src={`${BACKEND_URL}${job.company.image.url}`} />
+                                        {job?.company?.identity.name && (
+                                            <Tag color="success" icon={<UsergroupAddOutlined />}>
+                                                {job?.company?.identity.name}
+                                            </Tag>
                                         )}
-                                        {job?.company?.image?.url && job?.image?.url && "🤝"}
-                                        {job?.image?.url && (
-                                            <Avatar size="small" src={`${BACKEND_URL}${job.image.url}`} />
-                                        )}
-                                    </Space>
+                                    </Flex>
                                 </Typography.Title>
                                 <Space size={[12, 8]} wrap>
                                     {job?.company?.name && (
@@ -60,19 +77,69 @@ const JobDetail: React.FunctionComponent = () => {
                                             <DollarOutlined /> {salary}
                                         </Typography.Text>
                                     )}
+                                    {bounty && (
+                                        <Typography.Text strong>
+                                            <GiftOutlined /> Bounty: {bounty}
+                                        </Typography.Text>
+                                    )}
+                                    {positions && (
+                                        <Typography.Text type="secondary">
+                                            <TeamOutlined /> {positions}
+                                        </Typography.Text>
+                                    )}
                                     {job?.postedAt && (
                                         <Typography.Text type="secondary">
                                             <ClockCircleOutlined /> {timeAgo(job.postedAt)}
                                         </Typography.Text>
                                     )}
-                                    <ApplyButton url={job?.applyUrl} />
                                 </Space>
+                                {isInactive && (
+                                    <Typography.Text type="secondary" className="JobInactiveNotice">
+                                        <InfoCircleOutlined /> This job listing is no longer active.
+                                    </Typography.Text>
+                                )}
                             </div>
                         </Space>
-
-                        <Markdown className="JobDetail__description">{job?.description}</Markdown>
-
-                        <ApplyButton url={job?.applyUrl} />
+                        <Divider />
+                        <Flex gap="32px" vertical>
+                            <Markdown>{job?.description}</Markdown>
+                            <Flex wrap gap="16px" justify="center" align="center">
+                                <Flex flex={5} vertical gap="16px">
+                                    <Flex vertical gap="8px">
+                                        <Flex gap="8px" align="center">
+                                            <UsergroupAddOutlined />
+                                            Allowed identities
+                                        </Flex>
+                                    </Flex>
+                                    {allowedIdentities.length ? allowedIdentities.map((identity) => (
+                                        <Link to={`/identity/${identity.id}`}>
+                                            <Tag color="success">
+                                                {identity.name}
+                                            </Tag>
+                                        </Link>
+                                    )) : "No identities found"}
+                                </Flex>
+                                <Divider type="vertical" />
+                                <Flex flex={5} vertical gap="16px">
+                                    <Flex vertical gap="8px">
+                                        <Flex gap="8px" align="center">
+                                            <MinusCircleFilled />
+                                            Disallowed identities
+                                        </Flex>
+                                    </Flex>
+                                    {disallowedIdentities ? disallowedIdentities.map((identity) => (
+                                        <Link to={`/identity/${identity.id}`}>
+                                            <Tag color="error">
+                                                {identity.name}
+                                            </Tag>
+                                        </Link>
+                                    )) : "No identities found"}
+                                </Flex>
+                            </Flex>
+                            <div>
+                                <ApplyButton url={job?.applyUrl} />
+                            </div>
+                        </Flex>
                     </div>
                 );
             }}

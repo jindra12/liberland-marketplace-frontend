@@ -6,6 +6,16 @@ query CompanyById($id: String!) {
     website
     phone
     email
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     identity {
       id
       name

@@ -1,5 +1,22 @@
-query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
+query SearchCompaniesBySecondaryIdentity(
+  $identityId: JSON!
+  $searchTerm: String!
+  $page: Int = 1
+  $limit: Int = 20
+  $sort: String
+) {
+  Companies(
+    draft: false
+    where: {
+      AND: [
+        { name: { contains: $searchTerm } }
+        { allowedIdentities: { in: [$identityId] } }
+      ]
+    }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
     docs {
       id
       name

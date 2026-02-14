@@ -24,6 +24,11 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
         id
         name
         description
+        identity {
+          id
+          name
+          description
+        }
       }
     }
     totalDocs

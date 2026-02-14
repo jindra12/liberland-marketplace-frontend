@@ -5097,9 +5097,11 @@ export type CompaniesDeleteDocAccess = {
 
 export type CompaniesDocAccessFields = {
   __typename?: 'CompaniesDocAccessFields';
+  allowedIdentities?: Maybe<CompaniesDocAccessFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CompaniesDocAccessFields_CreatedBy>;
   description?: Maybe<CompaniesDocAccessFields_Description>;
+  disallowedIdentities?: Maybe<CompaniesDocAccessFields_DisallowedIdentities>;
   email?: Maybe<CompaniesDocAccessFields_Email>;
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
   image?: Maybe<CompaniesDocAccessFields_Image>;
@@ -5107,6 +5109,34 @@ export type CompaniesDocAccessFields = {
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
   website?: Maybe<CompaniesDocAccessFields_Website>;
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities';
+  create?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Read>;
+  update?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Update>;
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Create = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Delete = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Read = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Update = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesDocAccessFields_CreatedAt = {
@@ -5190,6 +5220,34 @@ export type CompaniesDocAccessFields_Description_Read = {
 
 export type CompaniesDocAccessFields_Description_Update = {
   __typename?: 'CompaniesDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities';
+  create?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Read>;
+  update?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Update>;
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Create = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Delete = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Read = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Update = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -5391,9 +5449,11 @@ export type CompaniesDocAccessFields_Website_Update = {
 
 export type CompaniesFields = {
   __typename?: 'CompaniesFields';
+  allowedIdentities?: Maybe<CompaniesFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesFields_CreatedAt>;
   createdBy?: Maybe<CompaniesFields_CreatedBy>;
   description?: Maybe<CompaniesFields_Description>;
+  disallowedIdentities?: Maybe<CompaniesFields_DisallowedIdentities>;
   email?: Maybe<CompaniesFields_Email>;
   identity?: Maybe<CompaniesFields_Identity>;
   image?: Maybe<CompaniesFields_Image>;
@@ -5401,6 +5461,34 @@ export type CompaniesFields = {
   phone?: Maybe<CompaniesFields_Phone>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
   website?: Maybe<CompaniesFields_Website>;
+};
+
+export type CompaniesFields_AllowedIdentities = {
+  __typename?: 'CompaniesFields_allowedIdentities';
+  create?: Maybe<CompaniesFields_AllowedIdentities_Create>;
+  delete?: Maybe<CompaniesFields_AllowedIdentities_Delete>;
+  read?: Maybe<CompaniesFields_AllowedIdentities_Read>;
+  update?: Maybe<CompaniesFields_AllowedIdentities_Update>;
+};
+
+export type CompaniesFields_AllowedIdentities_Create = {
+  __typename?: 'CompaniesFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Delete = {
+  __typename?: 'CompaniesFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Read = {
+  __typename?: 'CompaniesFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Update = {
+  __typename?: 'CompaniesFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesFields_CreatedAt = {
@@ -5484,6 +5572,34 @@ export type CompaniesFields_Description_Read = {
 
 export type CompaniesFields_Description_Update = {
   __typename?: 'CompaniesFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities = {
+  __typename?: 'CompaniesFields_disallowedIdentities';
+  create?: Maybe<CompaniesFields_DisallowedIdentities_Create>;
+  delete?: Maybe<CompaniesFields_DisallowedIdentities_Delete>;
+  read?: Maybe<CompaniesFields_DisallowedIdentities_Read>;
+  update?: Maybe<CompaniesFields_DisallowedIdentities_Update>;
+};
+
+export type CompaniesFields_DisallowedIdentities_Create = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Delete = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Read = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Update = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -5709,9 +5825,11 @@ export type CompaniesUpdateDocAccess = {
 
 export type Company = {
   __typename?: 'Company';
+  allowedIdentities?: Maybe<Array<Identity>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy: User;
   description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
   identity: Identity;
@@ -5720,6 +5838,15 @@ export type Company = {
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
+};
+
+export type Company_AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Company_CreatedAt_Operator = {
@@ -5747,6 +5874,15 @@ export type Company_Description_Operator = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Company_DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Company_Email_Operator = {
@@ -5834,9 +5970,11 @@ export type Company_Website_Operator = {
 export type Company_Where = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -5850,9 +5988,11 @@ export type Company_Where = {
 export type Company_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -5866,9 +6006,11 @@ export type Company_Where_And = {
 export type Company_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -9989,20 +10131,207 @@ export type Identity_Where_Or = {
 export type Job = {
   __typename?: 'Job';
   _status?: Maybe<Job__Status>;
+  allowedIdentities?: Maybe<Array<Identity>>;
   applyUrl?: Maybe<Scalars['String']['output']>;
+  bounty?: Maybe<Job_Bounty>;
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<Job_EmploymentType>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
+  positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<Job_SalaryRange>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
+
+export enum JobUpdate_Bounty_Currency_MutationInput {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
 
 export enum JobUpdate_SalaryRange_Currency_MutationInput {
   Aed = 'AED',
@@ -10194,6 +10523,7 @@ export enum JobUpdate__Status_MutationInput {
 export enum JobUpdate_EmploymentType_MutationInput {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -10216,19 +10546,212 @@ export type JobVersionParentArgs = {
 export type JobVersion_Version = {
   __typename?: 'JobVersion_Version';
   _status?: Maybe<JobVersion_Version__Status>;
+  allowedIdentities?: Maybe<Array<Identity>>;
   applyUrl?: Maybe<Scalars['String']['output']>;
+  bounty?: Maybe<JobVersion_Version_Bounty>;
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<JobVersion_Version_EmploymentType>;
   image?: Maybe<Media>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
+  positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<JobVersion_Version_SalaryRange>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
+
+export type JobVersion_Version_Bounty = {
+  __typename?: 'JobVersion_Version_Bounty';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<JobVersion_Version_Bounty_Currency>;
+};
+
+export enum JobVersion_Version_Bounty_Currency {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
 
 export type JobVersion_Version_SalaryRange = {
   __typename?: 'JobVersion_Version_SalaryRange';
@@ -10427,8 +10950,379 @@ export enum JobVersion_Version__Status {
 export enum JobVersion_Version_EmploymentType {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
+}
+
+export type Job_Bounty = {
+  __typename?: 'Job_Bounty';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<Job_Bounty_Currency>;
+};
+
+export enum Job_Bounty_Currency {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export enum Job_Bounty_Currency_MutationInput {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
 }
 
 export type Job_SalaryRange = {
@@ -10826,6 +11720,15 @@ export type Job__Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Job__Status_Input>>>;
 };
 
+export type Job_AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Job_ApplyUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -10835,6 +11738,207 @@ export type Job_ApplyUrl_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Job_Bounty__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum Job_Bounty__Currency_Input {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export type Job_Bounty__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
+  equals?: InputMaybe<Job_Bounty__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
+  not_equals?: InputMaybe<Job_Bounty__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
 };
 
 export type Job_Company_Operator = {
@@ -10872,9 +11976,19 @@ export type Job_Description_Operator = {
   not_equals?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Job_DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export enum Job_EmploymentType {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -10882,6 +11996,7 @@ export enum Job_EmploymentType {
 export enum Job_EmploymentType_Input {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -10889,6 +12004,7 @@ export enum Job_EmploymentType_Input {
 export enum Job_EmploymentType_MutationInput {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -10921,6 +12037,12 @@ export type Job_Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Job_IsActive_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Job_Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -10930,6 +12052,15 @@ export type Job_Location_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Job_Positions_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Job_PostedAt_Operator = {
@@ -11178,15 +12309,21 @@ export type Job_Where = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -11199,15 +12336,21 @@ export type Job_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -11220,15 +12363,21 @@ export type Job_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -11279,14 +12428,19 @@ export type JobsDeleteDocAccess = {
 export type JobsDocAccessFields = {
   __typename?: 'JobsDocAccessFields';
   _status?: Maybe<JobsDocAccessFields__Status>;
+  allowedIdentities?: Maybe<JobsDocAccessFields_AllowedIdentities>;
   applyUrl?: Maybe<JobsDocAccessFields_ApplyUrl>;
+  bounty?: Maybe<JobsDocAccessFields_Bounty>;
   company?: Maybe<JobsDocAccessFields_Company>;
   createdAt?: Maybe<JobsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<JobsDocAccessFields_CreatedBy>;
   description?: Maybe<JobsDocAccessFields_Description>;
+  disallowedIdentities?: Maybe<JobsDocAccessFields_DisallowedIdentities>;
   employmentType?: Maybe<JobsDocAccessFields_EmploymentType>;
   image?: Maybe<JobsDocAccessFields_Image>;
+  isActive?: Maybe<JobsDocAccessFields_IsActive>;
   location?: Maybe<JobsDocAccessFields_Location>;
+  positions?: Maybe<JobsDocAccessFields_Positions>;
   postedAt?: Maybe<JobsDocAccessFields_PostedAt>;
   salaryRange?: Maybe<JobsDocAccessFields_SalaryRange>;
   title?: Maybe<JobsDocAccessFields_Title>;
@@ -11321,6 +12475,34 @@ export type JobsDocAccessFields__Status_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_AllowedIdentities = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities';
+  create?: Maybe<JobsDocAccessFields_AllowedIdentities_Create>;
+  delete?: Maybe<JobsDocAccessFields_AllowedIdentities_Delete>;
+  read?: Maybe<JobsDocAccessFields_AllowedIdentities_Read>;
+  update?: Maybe<JobsDocAccessFields_AllowedIdentities_Update>;
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Create = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Delete = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Read = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Update = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_ApplyUrl = {
   __typename?: 'JobsDocAccessFields_applyUrl';
   create?: Maybe<JobsDocAccessFields_ApplyUrl_Create>;
@@ -11346,6 +12528,97 @@ export type JobsDocAccessFields_ApplyUrl_Read = {
 
 export type JobsDocAccessFields_ApplyUrl_Update = {
   __typename?: 'JobsDocAccessFields_applyUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty = {
+  __typename?: 'JobsDocAccessFields_bounty';
+  create?: Maybe<JobsDocAccessFields_Bounty_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Delete>;
+  fields?: Maybe<JobsDocAccessFields_Bounty_Fields>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Fields = {
+  __typename?: 'JobsDocAccessFields_bounty_Fields';
+  amount?: Maybe<JobsDocAccessFields_Bounty_Amount>;
+  currency?: Maybe<JobsDocAccessFields_Bounty_Currency>;
+};
+
+export type JobsDocAccessFields_Bounty_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount = {
+  __typename?: 'JobsDocAccessFields_bounty_amount';
+  create?: Maybe<JobsDocAccessFields_Bounty_Amount_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Amount_Delete>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Amount_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Amount_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency = {
+  __typename?: 'JobsDocAccessFields_bounty_currency';
+  create?: Maybe<JobsDocAccessFields_Bounty_Currency_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Currency_Delete>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Currency_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Currency_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -11461,6 +12734,34 @@ export type JobsDocAccessFields_Description_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_DisallowedIdentities = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities';
+  create?: Maybe<JobsDocAccessFields_DisallowedIdentities_Create>;
+  delete?: Maybe<JobsDocAccessFields_DisallowedIdentities_Delete>;
+  read?: Maybe<JobsDocAccessFields_DisallowedIdentities_Read>;
+  update?: Maybe<JobsDocAccessFields_DisallowedIdentities_Update>;
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Create = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Delete = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Read = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Update = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_EmploymentType = {
   __typename?: 'JobsDocAccessFields_employmentType';
   create?: Maybe<JobsDocAccessFields_EmploymentType_Create>;
@@ -11517,6 +12818,34 @@ export type JobsDocAccessFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_IsActive = {
+  __typename?: 'JobsDocAccessFields_isActive';
+  create?: Maybe<JobsDocAccessFields_IsActive_Create>;
+  delete?: Maybe<JobsDocAccessFields_IsActive_Delete>;
+  read?: Maybe<JobsDocAccessFields_IsActive_Read>;
+  update?: Maybe<JobsDocAccessFields_IsActive_Update>;
+};
+
+export type JobsDocAccessFields_IsActive_Create = {
+  __typename?: 'JobsDocAccessFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Delete = {
+  __typename?: 'JobsDocAccessFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Read = {
+  __typename?: 'JobsDocAccessFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Update = {
+  __typename?: 'JobsDocAccessFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_Location = {
   __typename?: 'JobsDocAccessFields_location';
   create?: Maybe<JobsDocAccessFields_Location_Create>;
@@ -11542,6 +12871,34 @@ export type JobsDocAccessFields_Location_Read = {
 
 export type JobsDocAccessFields_Location_Update = {
   __typename?: 'JobsDocAccessFields_location_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions = {
+  __typename?: 'JobsDocAccessFields_positions';
+  create?: Maybe<JobsDocAccessFields_Positions_Create>;
+  delete?: Maybe<JobsDocAccessFields_Positions_Delete>;
+  read?: Maybe<JobsDocAccessFields_Positions_Read>;
+  update?: Maybe<JobsDocAccessFields_Positions_Update>;
+};
+
+export type JobsDocAccessFields_Positions_Create = {
+  __typename?: 'JobsDocAccessFields_positions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Delete = {
+  __typename?: 'JobsDocAccessFields_positions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Read = {
+  __typename?: 'JobsDocAccessFields_positions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Update = {
+  __typename?: 'JobsDocAccessFields_positions_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -11752,14 +13109,19 @@ export type JobsDocAccessFields_UpdatedAt_Update = {
 export type JobsFields = {
   __typename?: 'JobsFields';
   _status?: Maybe<JobsFields__Status>;
+  allowedIdentities?: Maybe<JobsFields_AllowedIdentities>;
   applyUrl?: Maybe<JobsFields_ApplyUrl>;
+  bounty?: Maybe<JobsFields_Bounty>;
   company?: Maybe<JobsFields_Company>;
   createdAt?: Maybe<JobsFields_CreatedAt>;
   createdBy?: Maybe<JobsFields_CreatedBy>;
   description?: Maybe<JobsFields_Description>;
+  disallowedIdentities?: Maybe<JobsFields_DisallowedIdentities>;
   employmentType?: Maybe<JobsFields_EmploymentType>;
   image?: Maybe<JobsFields_Image>;
+  isActive?: Maybe<JobsFields_IsActive>;
   location?: Maybe<JobsFields_Location>;
+  positions?: Maybe<JobsFields_Positions>;
   postedAt?: Maybe<JobsFields_PostedAt>;
   salaryRange?: Maybe<JobsFields_SalaryRange>;
   title?: Maybe<JobsFields_Title>;
@@ -11794,6 +13156,34 @@ export type JobsFields__Status_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_AllowedIdentities = {
+  __typename?: 'JobsFields_allowedIdentities';
+  create?: Maybe<JobsFields_AllowedIdentities_Create>;
+  delete?: Maybe<JobsFields_AllowedIdentities_Delete>;
+  read?: Maybe<JobsFields_AllowedIdentities_Read>;
+  update?: Maybe<JobsFields_AllowedIdentities_Update>;
+};
+
+export type JobsFields_AllowedIdentities_Create = {
+  __typename?: 'JobsFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Delete = {
+  __typename?: 'JobsFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Read = {
+  __typename?: 'JobsFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Update = {
+  __typename?: 'JobsFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_ApplyUrl = {
   __typename?: 'JobsFields_applyUrl';
   create?: Maybe<JobsFields_ApplyUrl_Create>;
@@ -11819,6 +13209,97 @@ export type JobsFields_ApplyUrl_Read = {
 
 export type JobsFields_ApplyUrl_Update = {
   __typename?: 'JobsFields_applyUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty = {
+  __typename?: 'JobsFields_bounty';
+  create?: Maybe<JobsFields_Bounty_Create>;
+  delete?: Maybe<JobsFields_Bounty_Delete>;
+  fields?: Maybe<JobsFields_Bounty_Fields>;
+  read?: Maybe<JobsFields_Bounty_Read>;
+  update?: Maybe<JobsFields_Bounty_Update>;
+};
+
+export type JobsFields_Bounty_Create = {
+  __typename?: 'JobsFields_bounty_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Delete = {
+  __typename?: 'JobsFields_bounty_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Fields = {
+  __typename?: 'JobsFields_bounty_Fields';
+  amount?: Maybe<JobsFields_Bounty_Amount>;
+  currency?: Maybe<JobsFields_Bounty_Currency>;
+};
+
+export type JobsFields_Bounty_Read = {
+  __typename?: 'JobsFields_bounty_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Update = {
+  __typename?: 'JobsFields_bounty_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount = {
+  __typename?: 'JobsFields_bounty_amount';
+  create?: Maybe<JobsFields_Bounty_Amount_Create>;
+  delete?: Maybe<JobsFields_Bounty_Amount_Delete>;
+  read?: Maybe<JobsFields_Bounty_Amount_Read>;
+  update?: Maybe<JobsFields_Bounty_Amount_Update>;
+};
+
+export type JobsFields_Bounty_Amount_Create = {
+  __typename?: 'JobsFields_bounty_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Delete = {
+  __typename?: 'JobsFields_bounty_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Read = {
+  __typename?: 'JobsFields_bounty_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Update = {
+  __typename?: 'JobsFields_bounty_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency = {
+  __typename?: 'JobsFields_bounty_currency';
+  create?: Maybe<JobsFields_Bounty_Currency_Create>;
+  delete?: Maybe<JobsFields_Bounty_Currency_Delete>;
+  read?: Maybe<JobsFields_Bounty_Currency_Read>;
+  update?: Maybe<JobsFields_Bounty_Currency_Update>;
+};
+
+export type JobsFields_Bounty_Currency_Create = {
+  __typename?: 'JobsFields_bounty_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Delete = {
+  __typename?: 'JobsFields_bounty_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Read = {
+  __typename?: 'JobsFields_bounty_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Update = {
+  __typename?: 'JobsFields_bounty_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -11934,6 +13415,34 @@ export type JobsFields_Description_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_DisallowedIdentities = {
+  __typename?: 'JobsFields_disallowedIdentities';
+  create?: Maybe<JobsFields_DisallowedIdentities_Create>;
+  delete?: Maybe<JobsFields_DisallowedIdentities_Delete>;
+  read?: Maybe<JobsFields_DisallowedIdentities_Read>;
+  update?: Maybe<JobsFields_DisallowedIdentities_Update>;
+};
+
+export type JobsFields_DisallowedIdentities_Create = {
+  __typename?: 'JobsFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Delete = {
+  __typename?: 'JobsFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Read = {
+  __typename?: 'JobsFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Update = {
+  __typename?: 'JobsFields_disallowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_EmploymentType = {
   __typename?: 'JobsFields_employmentType';
   create?: Maybe<JobsFields_EmploymentType_Create>;
@@ -11990,6 +13499,34 @@ export type JobsFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_IsActive = {
+  __typename?: 'JobsFields_isActive';
+  create?: Maybe<JobsFields_IsActive_Create>;
+  delete?: Maybe<JobsFields_IsActive_Delete>;
+  read?: Maybe<JobsFields_IsActive_Read>;
+  update?: Maybe<JobsFields_IsActive_Update>;
+};
+
+export type JobsFields_IsActive_Create = {
+  __typename?: 'JobsFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Delete = {
+  __typename?: 'JobsFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Read = {
+  __typename?: 'JobsFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Update = {
+  __typename?: 'JobsFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_Location = {
   __typename?: 'JobsFields_location';
   create?: Maybe<JobsFields_Location_Create>;
@@ -12015,6 +13552,34 @@ export type JobsFields_Location_Read = {
 
 export type JobsFields_Location_Update = {
   __typename?: 'JobsFields_location_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions = {
+  __typename?: 'JobsFields_positions';
+  create?: Maybe<JobsFields_Positions_Create>;
+  delete?: Maybe<JobsFields_Positions_Delete>;
+  read?: Maybe<JobsFields_Positions_Read>;
+  update?: Maybe<JobsFields_Positions_Update>;
+};
+
+export type JobsFields_Positions_Create = {
+  __typename?: 'JobsFields_positions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Delete = {
+  __typename?: 'JobsFields_positions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Read = {
+  __typename?: 'JobsFields_positions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Update = {
+  __typename?: 'JobsFields_positions_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -42439,9 +44004,11 @@ export type MutationCategory_BreadcrumbsInput = {
 };
 
 export type MutationCompanyInput = {
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
@@ -42452,9 +44019,11 @@ export type MutationCompanyInput = {
 };
 
 export type MutationCompanyUpdateInput = {
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
@@ -42604,14 +44173,19 @@ export type MutationIdentityUpdateInput = {
 
 export type MutationJobInput = {
   _status?: InputMaybe<Job__Status_MutationInput>;
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   applyUrl?: InputMaybe<Scalars['String']['input']>;
+  bounty?: InputMaybe<MutationJob_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   employmentType: Job_EmploymentType_MutationInput;
   image?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  positions: Scalars['Float']['input'];
   postedAt: Scalars['String']['input'];
   salaryRange?: InputMaybe<MutationJob_SalaryRangeInput>;
   title: Scalars['String']['input'];
@@ -42620,24 +44194,39 @@ export type MutationJobInput = {
 
 export type MutationJobUpdateInput = {
   _status?: InputMaybe<JobUpdate__Status_MutationInput>;
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   applyUrl?: InputMaybe<Scalars['String']['input']>;
+  bounty?: InputMaybe<MutationJobUpdate_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   employmentType?: InputMaybe<JobUpdate_EmploymentType_MutationInput>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  positions?: InputMaybe<Scalars['Float']['input']>;
   postedAt?: InputMaybe<Scalars['String']['input']>;
   salaryRange?: InputMaybe<MutationJobUpdate_SalaryRangeInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationJobUpdate_BountyInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<JobUpdate_Bounty_Currency_MutationInput>;
+};
+
 export type MutationJobUpdate_SalaryRangeInput = {
   currency?: InputMaybe<JobUpdate_SalaryRange_Currency_MutationInput>;
   max?: InputMaybe<Scalars['Float']['input']>;
   min?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationJob_BountyInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<Job_Bounty_Currency_MutationInput>;
 };
 
 export type MutationJob_SalaryRangeInput = {
@@ -44038,6 +45627,15 @@ export type VersionsJob_Version___Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version___Status_Input>>>;
 };
 
+export type VersionsJob_Version__AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type VersionsJob_Version__ApplyUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -44047,6 +45645,207 @@ export type VersionsJob_Version__ApplyUrl_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsJob_Version__Bounty__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum VersionsJob_Version__Bounty__Currency_Input {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export type VersionsJob_Version__Bounty__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
+  equals?: InputMaybe<VersionsJob_Version__Bounty__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
+  not_equals?: InputMaybe<VersionsJob_Version__Bounty__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
 };
 
 export type VersionsJob_Version__Company_Operator = {
@@ -44084,9 +45883,19 @@ export type VersionsJob_Version__Description_Operator = {
   not_equals?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type VersionsJob_Version__DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export enum VersionsJob_Version__EmploymentType_Input {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -44108,6 +45917,12 @@ export type VersionsJob_Version__Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsJob_Version__IsActive_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsJob_Version__Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -44117,6 +45932,15 @@ export type VersionsJob_Version__Location_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsJob_Version__Positions_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type VersionsJob_Version__PostedAt_Operator = {
@@ -44370,14 +46194,20 @@ export type VersionsJob_Where = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -44395,14 +46225,20 @@ export type VersionsJob_Where_And = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -44420,14 +46256,20 @@ export type VersionsJob_Where_Or = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -45921,7 +47763,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -45931,7 +47773,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -45943,11 +47785,32 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
+
+export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+
+export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  searchTerm: Scalars['String']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -45956,7 +47819,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -45967,7 +47830,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } }
+          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -46012,7 +47875,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -46026,7 +47889,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -46035,7 +47898,28 @@ export type JobByIdQueryVariables = Exact<{
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, applyUrl?: string | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
+export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+
+export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  searchTerm: Scalars['String']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -46044,7 +47928,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, applyUrl?: string | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -46057,7 +47941,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -46069,7 +47953,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -46084,7 +47968,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }
          | null } }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
@@ -46092,7 +47976,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -46101,7 +47985,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -46115,7 +47999,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
 
@@ -46129,6 +48013,16 @@ export const CompanyByIdDocument = `
     website
     phone
     email
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     identity {
       id
       name
@@ -46194,6 +48088,30 @@ export const ListCompaniesByIdentityDocument = `
       website
       phone
       email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
       image {
         id
         url
@@ -46261,6 +48179,30 @@ export const SearchCompaniesByIdentityDocument = `
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            identity {
+              id
+              name
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
             image {
               id
               url
@@ -46307,6 +48249,172 @@ useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentity
 
 useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
 
+export const ListCompaniesBySecondaryIdentityDocument = `
+    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {allowedIdentities: {in: [$identityId]}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      name
+      description
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCompaniesBySecondaryIdentityQuery = <
+      TData = ListCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => ['ListCompaniesBySecondaryIdentity', variables];
+
+
+useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
+
+export const SearchCompaniesBySecondaryIdentityDocument = `
+    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      name
+      description
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useSearchCompaniesBySecondaryIdentityQuery = <
+      TData = SearchCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => ['SearchCompaniesBySecondaryIdentity', variables];
+
+
+useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
+
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
@@ -46317,6 +48425,16 @@ export const ListCompaniesDocument = `
       website
       phone
       email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
       identity {
         id
         name
@@ -46398,6 +48516,16 @@ export const SearchCompaniesDocument = `
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url
@@ -46622,6 +48750,42 @@ export const ListJobsByCompanyDocument = `
       id
       title
       description
+      positions
+      isActive
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+      }
       image {
         id
         url
@@ -46686,6 +48850,42 @@ export const SearchJobsByCompanyDocument = `
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            company {
+              id
+              name
+              description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
+            }
             image {
               id
               url
@@ -46740,8 +48940,24 @@ export const JobByIdDocument = `
     description
     location
     employmentType
+    positions
     postedAt
+    isActive
     applyUrl
+    bounty {
+      amount
+      currency
+    }
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     salaryRange {
       min
       max
@@ -46751,6 +48967,21 @@ export const JobByIdDocument = `
       id
       name
       description
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url
@@ -46795,17 +49026,39 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
-export const ListJobsDocument = `
-    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+export const ListJobsBySecondaryIdentityDocument = `
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {allowedIdentities: {in: [$identityId]}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
     docs {
       id
       title
       description
       location
       employmentType
+      positions
       postedAt
+      isActive
       applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
       salaryRange {
         min
         max
@@ -46824,6 +49077,235 @@ export const ListJobsDocument = `
         id
         name
         description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListJobsBySecondaryIdentityQuery = <
+      TData = ListJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => ['ListJobsBySecondaryIdentity', variables];
+
+
+useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
+
+export const SearchJobsBySecondaryIdentityDocument = `
+    query SearchJobsBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useSearchJobsBySecondaryIdentityQuery = <
+      TData = SearchJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => ['SearchJobsBySecondaryIdentity', variables];
+
+
+useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
+
+export const ListJobsDocument = `
+    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
         image {
           id
           url
@@ -46889,6 +49371,22 @@ export const SearchJobsDocument = `
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url
@@ -46902,6 +49400,21 @@ export const SearchJobsDocument = `
               id
               name
               description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
               image {
                 id
                 url
@@ -46976,6 +49489,11 @@ export const ListProductsByCompanyDocument = `
         id
         name
         description
+        identity {
+          id
+          name
+          description
+        }
       }
     }
     totalDocs
@@ -47046,6 +49564,11 @@ export const SearchProductsByCompanyDocument = `
               id
               name
               description
+              identity {
+                id
+                name
+                description
+              }
             }
           }
         }
@@ -47095,6 +49618,11 @@ export const ProductByIdDocument = `
       id
       name
       description
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url
@@ -47160,6 +49688,11 @@ export const ListProductsDocument = `
         id
         name
         description
+        identity {
+          id
+          name
+          description
+        }
         image {
           id
           url
@@ -47239,6 +49772,11 @@ export const SearchProductsDocument = `
               id
               name
               description
+              identity {
+                id
+                name
+                description
+              }
               image {
                 id
                 url

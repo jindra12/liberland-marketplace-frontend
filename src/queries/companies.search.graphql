@@ -26,6 +26,16 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url

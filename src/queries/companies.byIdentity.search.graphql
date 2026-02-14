@@ -26,6 +26,30 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            identity {
+              id
+              name
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
             image {
               id
               url
