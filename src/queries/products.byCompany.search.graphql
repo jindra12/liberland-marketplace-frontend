@@ -22,6 +22,7 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             __typename
             id
             name
+            description
             url
             image {
               id
@@ -35,6 +36,7 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             company {
               id
               name
+              description
             }
           }
         }

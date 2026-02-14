@@ -7,6 +7,7 @@ import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
+import { Markdown } from "../Markdown";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -23,7 +24,7 @@ const JobDetail: React.FunctionComponent = () => {
                 const empType = formatEmploymentType(job?.employmentType);
 
                 return (
-                    <div className="JobContainer">
+                    <div>
                         <Link to="/jobs">
                             <Button type="text" size="large" icon={<ArrowLeftOutlined />} className="JobDetail__backBtn">
                                 Back to Jobs
@@ -69,7 +70,7 @@ const JobDetail: React.FunctionComponent = () => {
                             </div>
                         </Space>
 
-                        <Typography.Paragraph>{job?.description}</Typography.Paragraph>
+                        <Markdown className="JobDetail__description">{job?.description}</Markdown>
 
                         <ApplyButton url={job?.applyUrl} />
                     </div>

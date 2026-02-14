@@ -4,6 +4,7 @@ import { Avatar, Typography } from "antd";
 import { useListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { Markdown } from "../Markdown";
 
 export const ProductsServicesList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -23,6 +24,7 @@ export const ProductsServicesList: React.FunctionComponent = () => {
                 title: (product) => product.name,
                 actions: (product) => <Link to={`/products-services/${product.id}`}>Details</Link>,
                 avatar: (product) => product.image?.url ? <Avatar src={`${BACKEND_URL}${product.image.url}`} /> : undefined,
+                description: (product) => <Markdown className="Markdown--clamp2 EntityList__description">{product.description}</Markdown>,
                 body: (product) => product.url ? <Typography.Link href={product.url}>Order now!</Typography.Link> : undefined,
             }}
         />

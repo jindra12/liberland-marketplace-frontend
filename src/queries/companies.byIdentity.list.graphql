@@ -9,6 +9,7 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
     docs {
       id
       name
+      description
       website
       phone
       email

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "antd";
 import { useIdentityByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
+import { Markdown } from "../Markdown";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -10,7 +11,10 @@ const IdentityDetail: React.FunctionComponent = () => {
     return (
         <Loader query={identity}>
             {(identity) => (
-                <Typography.Title level={1}>{identity.Identity?.name}</Typography.Title>
+                <div>
+                    <Typography.Title level={1}>{identity.Identity?.name}</Typography.Title>
+                    <Markdown>{identity.Identity?.description}</Markdown>
+                </div>
             )}
         </Loader>
     );

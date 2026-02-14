@@ -3,12 +3,14 @@ query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
     docs {
       id
       name
+      description
       website
       phone
       email
       identity {
         id
         name
+        description
         image {
           id
           url

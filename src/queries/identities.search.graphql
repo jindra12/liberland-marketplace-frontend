@@ -22,6 +22,7 @@ query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $
             __typename
             id
             name
+            description
             website
             image {
               id

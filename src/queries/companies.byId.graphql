@@ -2,12 +2,14 @@ query CompanyById($id: String!) {
   Company(id: $id, draft: false) {
     id
     name
+    description
     website
     phone
     email
     identity {
       id
       name
+      description
       website
       image {
         id

@@ -4,6 +4,7 @@ import { Avatar, Typography } from "antd";
 import { useListIdentitiesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { Markdown } from "../Markdown";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -23,6 +24,7 @@ export const IdentityList: React.FunctionComponent = () => {
                 title: (identity) => identity.name,
                 actions: (identity) => <Link to={`/identities/${identity.id}`}>Details</Link>,
                 avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} /> : undefined,
+                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
                 body: (identity) => identity.website ? <Typography.Link href={identity.website}>{identity.website}</Typography.Link> : undefined,
             }}
         />

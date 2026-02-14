@@ -15,6 +15,7 @@ query JobById($id: String!) {
     company {
       id
       name
+      description
       image {
         id
         url

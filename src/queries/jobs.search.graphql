@@ -35,6 +35,7 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
             company {
               id
               name
+              description
               image {
                 id
                 url

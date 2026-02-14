@@ -2,10 +2,12 @@ query ProductById($id: String!) {
   Product(id: $id, draft: false) {
     id
     name
+    description
     url
     company {
       id
       name
+      description
       image {
         id
         url
