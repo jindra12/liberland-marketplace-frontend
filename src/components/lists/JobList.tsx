@@ -14,6 +14,7 @@ import {
 import { useListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
+import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
 import { Markdown } from "../Markdown";
@@ -24,11 +25,22 @@ export interface JobListProps {
 
 export const JobList: React.FunctionComponent<JobListProps> = (props) => {
     const [page, setPage] = React.useState(0);
+    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
     const query = useListJobsQuery({
         limit: 10,
         page,
     });
-    const items = query.data?.Jobs?.docs || [];
+    const allItems = query.data?.Jobs?.docs || [];
+    const items = selectedIdentityIds.length === 0
+        ? allItems
+        : allItems.filter((job) => {
+            const identityIds = [
+                ...(job.allowedIdentities?.map((i) => i.id) || []),
+                ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
+                ...(job.company ? [job.company.identity.id] : []),
+            ];
+            return selectedIdentityIds.some((id) => identityIds.includes(id));
+        });
 
     return (
         <AppList
@@ -36,6 +48,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
+            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>

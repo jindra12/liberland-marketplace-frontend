@@ -1,6 +1,7 @@
 import { ResultStatusType } from "antd/es/result";
 import { DocType } from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
+import { BACKEND_URL } from "./gqlFetcher";
 
 export const convertStatusCode = (status?: number): ResultStatusType => {
     if (status === 403 || status === 404 || status === 500) {
@@ -74,8 +75,10 @@ export const getImage = (doc?: DocType) => {
         case "Company":
         case "Identity":
         case "Job":
-        case "Product":
-            return doc?.image?.url;
+        case "Product": {
+            const url = doc?.image?.url;
+            return url ? `${BACKEND_URL}${url}` : undefined;
+        }
         default:
             return undefined;
     }
