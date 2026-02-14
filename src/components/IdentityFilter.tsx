@@ -25,7 +25,7 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
             options={options}
             loading={query.isLoading}
             allowClear
-            style={{ width: "100%" }}
+            className="FilterControl"
         />
     );
 };

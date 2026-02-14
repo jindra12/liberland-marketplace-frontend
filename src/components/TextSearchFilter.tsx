@@ -13,7 +13,7 @@ export const TextSearchFilter: React.FunctionComponent<TextSearchFilterProps> = 
             value={props.value}
             onChange={(e) => props.onChange(e.target.value)}
             allowClear
-            style={{ width: "100%" }}
+            className="FilterControl"
         />
     );
 };

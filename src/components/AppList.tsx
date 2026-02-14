@@ -15,39 +15,37 @@ export interface AppListProps<TItem> {
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
     const id = React.useMemo(() => uniqueId("infinite"), []);
     return (
-        <div>
-            {props.filters && <div style={{ marginBottom: 16 }}>{props.filters}</div>}
-            <div id={id}>
-                <InfiniteScroll
-                    dataLength={props.items.length}
-                    next={props.next}
-                    hasMore={props.hasMore}
-                    loader={<Flex justify="center" align="center"><Spin /></Flex>}
-                    endMessage={<Typography.Text type="secondary">No more results</Typography.Text>}
-                    scrollableTarget={id}
-                    refreshFunction={props.refetch}
-                    className="InfinityScroll"
-                >
-                    <List
-                        itemLayout="vertical"
-                        dataSource={props.items}
-                        size="large"
-                        renderItem={(item) => (
-                            <List.Item
-                                extra={props.renderItem["extra"]?.(item)}
-                                actions={[props.renderItem["actions"]?.(item)]}
-                            >
-                                <List.Item.Meta
-                                    title={props.renderItem["title"]?.(item)}
-                                    description={props.renderItem["description"]?.(item)}
-                                    avatar={props.renderItem["avatar"]?.(item)}
-                                />
-                                {props.renderItem["body"]?.(item)}
-                            </List.Item>
-                        )}
-                    />
-                </InfiniteScroll>
-            </div>
+        <div id={id}>
+            <InfiniteScroll
+                dataLength={props.items.length}
+                next={props.next}
+                hasMore={props.hasMore}
+                loader={<Flex justify="center" align="center"><Spin /></Flex>}
+                endMessage={<Typography.Text type="secondary">No more results</Typography.Text>}
+                scrollableTarget={id}
+                refreshFunction={props.refetch}
+                className="InfinityScroll"
+            >
+                <List
+                    itemLayout="vertical"
+                    dataSource={props.items}
+                    size="large"
+                    header={props.filters && <Flex>{props.filters}</Flex>}
+                    renderItem={(item) => (
+                        <List.Item
+                            extra={props.renderItem["extra"]?.(item)}
+                            actions={[props.renderItem["actions"]?.(item)]}
+                        >
+                            <List.Item.Meta
+                                title={props.renderItem["title"]?.(item)}
+                                description={props.renderItem["description"]?.(item)}
+                                avatar={props.renderItem["avatar"]?.(item)}
+                            />
+                            {props.renderItem["body"]?.(item)}
+                        </List.Item>
+                    )}
+                />
+            </InfiniteScroll>
         </div>
     );
 };
