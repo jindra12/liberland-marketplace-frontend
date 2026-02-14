@@ -24,10 +24,12 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                 endMessage={<Typography.Text type="secondary">No more results</Typography.Text>}
                 scrollableTarget={id}
                 refreshFunction={props.refetch}
+                className="InfinityScroll"
             >
                 <List
                     itemLayout="vertical"
                     dataSource={props.items}
+                    size="large"
                     renderItem={(item) => (
                         <List.Item
                             extra={props.renderItem["extra"]?.(item)}

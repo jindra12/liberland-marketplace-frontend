@@ -43,11 +43,26 @@ export const formatSalary = (min?: number | null, max?: number | null, currency?
     return `Up to ${cur} ${fmt(max!)}`;
 };
 
+export const formatBounty = (amount?: number | null, currency?: string | null): string | null => {
+    if (amount == null) return null;
+    const maxFractionDigits = Number.isInteger(amount) ? 0 : 2;
+    const fmt = amount.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
+    return `${currency || "USD"} ${fmt}`;
+};
+
+export const formatPositions = (positions?: number | null): string | null => {
+    if (positions == null) return null;
+    const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;
+    const value = positions.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
+    return `${value} position${positions === 1 ? "" : "s"}`;
+};
+
 const employmentTypeLabels: Record<Job_EmploymentType, string> = {
     [Job_EmploymentType.FullTime]: "Full-time",
     [Job_EmploymentType.PartTime]: "Part-time",
     [Job_EmploymentType.Contract]: "Contract",
     [Job_EmploymentType.Internship]: "Internship",
+    [Job_EmploymentType.Gig]: "Gig",
 };
 
 export const formatEmploymentType = (type?: Job_EmploymentType | null): string | null => {

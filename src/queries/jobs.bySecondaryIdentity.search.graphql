@@ -1,7 +1,18 @@
-query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+query SearchJobsBySecondaryIdentity(
+  $identityId: JSON!
+  $searchTerm: String!
+  $page: Int = 1
+  $limit: Int = 20
+  $sort: String
+) {
   Jobs(
     draft: false
-    where: { company: { equals: $companyId } }
+    where: {
+      AND: [
+        { title: { contains: $searchTerm } }
+        { allowedIdentities: { in: [$identityId] } }
+      ]
+    }
     page: $page
     limit: $limit
     sort: $sort
@@ -10,8 +21,12 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
       id
       title
       description
+      location
+      employmentType
       positions
+      postedAt
       isActive
+      applyUrl
       bounty {
         amount
         currency
@@ -25,6 +40,20 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
         id
         name
         description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
       company {
         id
@@ -45,15 +74,15 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
           name
           description
         }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
     totalDocs

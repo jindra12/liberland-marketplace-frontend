@@ -1,8 +1,3 @@
-.JobContainer {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .JobList__description {
   margin-bottom: 0;
   overflow: hidden;
@@ -26,4 +21,8 @@
 
 .ActionBtn {
   min-width: 120px;
+}
+
+.JobInactiveNotice {
+  display: block;
 }

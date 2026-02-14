@@ -6,6 +6,12 @@ query ProductById($id: String!) {
     company {
       id
       name
+      description
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url

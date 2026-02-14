@@ -23,6 +23,22 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url
@@ -35,6 +51,22 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
             company {
               id
               name
+              description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
               image {
                 id
                 url

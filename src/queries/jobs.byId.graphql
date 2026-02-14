@@ -5,8 +5,24 @@ query JobById($id: String!) {
     description
     location
     employmentType
+    positions
     postedAt
+    isActive
     applyUrl
+    bounty {
+      amount
+      currency
+    }
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     salaryRange {
       min
       max
@@ -15,6 +31,22 @@ query JobById($id: String!) {
     company {
       id
       name
+      description
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url

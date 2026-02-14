@@ -23,6 +23,42 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            company {
+              id
+              name
+              description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
+            }
             image {
               id
               url

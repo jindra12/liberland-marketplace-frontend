@@ -35,6 +35,12 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             company {
               id
               name
+              description
+              identity {
+                id
+                name
+                description
+              }
             }
           }
         }

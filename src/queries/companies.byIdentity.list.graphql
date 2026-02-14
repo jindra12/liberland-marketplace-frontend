@@ -9,9 +9,34 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
     docs {
       id
       name
+      description
       website
       phone
       email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
       image {
         id
         url

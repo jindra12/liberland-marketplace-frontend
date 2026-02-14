@@ -22,7 +22,9 @@ export type Scalars = {
 
 export type Access = {
   __typename?: 'Access';
+  accounts?: Maybe<AccountsAccess>;
   addresses?: Maybe<AddressesAccess>;
+  admin_invitations?: Maybe<Admin_InvitationsAccess>;
   canAccessAdmin: Scalars['Boolean']['output'];
   carts?: Maybe<CartsAccess>;
   categories?: Maybe<CategoriesAccess>;
@@ -34,6 +36,9 @@ export type Access = {
   identities?: Maybe<IdentitiesAccess>;
   jobs?: Maybe<JobsAccess>;
   media?: Maybe<MediaAccess>;
+  oauthAccessTokens?: Maybe<OauthAccessTokensAccess>;
+  oauthApplications?: Maybe<OauthApplicationsAccess>;
+  oauthConsents?: Maybe<OauthConsentsAccess>;
   orders?: Maybe<OrdersAccess>;
   pages?: Maybe<PagesAccess>;
   payload_folders?: Maybe<Payload_FoldersAccess>;
@@ -45,11 +50,987 @@ export type Access = {
   products?: Maybe<ProductsAccess>;
   redirects?: Maybe<RedirectsAccess>;
   search?: Maybe<SearchAccess>;
+  sessions?: Maybe<SessionsAccess>;
   transactions?: Maybe<TransactionsAccess>;
   users?: Maybe<UsersAccess>;
   variantOptions?: Maybe<VariantOptionsAccess>;
   variantTypes?: Maybe<VariantTypesAccess>;
   variants?: Maybe<VariantsAccess>;
+  verifications?: Maybe<VerificationsAccess>;
+};
+
+export type Account = {
+  __typename?: 'Account';
+  accessToken?: Maybe<Scalars['String']['output']>;
+  accessTokenExpiresAt?: Maybe<Scalars['DateTime']['output']>;
+  accountId: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  idToken?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
+  providerId: Scalars['String']['output'];
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  refreshTokenExpiresAt?: Maybe<Scalars['DateTime']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user: User;
+};
+
+export type Account_AccessTokenExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Account_AccessToken_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_AccountId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Account_IdToken_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_Password_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_ProviderId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_RefreshTokenExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Account_RefreshToken_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_Scope_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Account_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Account_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Account_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Account_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Account_Where_Or>>>;
+  accessToken?: InputMaybe<Account_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<Account_AccessTokenExpiresAt_Operator>;
+  accountId?: InputMaybe<Account_AccountId_Operator>;
+  createdAt?: InputMaybe<Account_CreatedAt_Operator>;
+  id?: InputMaybe<Account_Id_Operator>;
+  idToken?: InputMaybe<Account_IdToken_Operator>;
+  password?: InputMaybe<Account_Password_Operator>;
+  providerId?: InputMaybe<Account_ProviderId_Operator>;
+  refreshToken?: InputMaybe<Account_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<Account_RefreshTokenExpiresAt_Operator>;
+  scope?: InputMaybe<Account_Scope_Operator>;
+  updatedAt?: InputMaybe<Account_UpdatedAt_Operator>;
+  user?: InputMaybe<Account_User_Operator>;
+};
+
+export type Account_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Account_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Account_Where_Or>>>;
+  accessToken?: InputMaybe<Account_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<Account_AccessTokenExpiresAt_Operator>;
+  accountId?: InputMaybe<Account_AccountId_Operator>;
+  createdAt?: InputMaybe<Account_CreatedAt_Operator>;
+  id?: InputMaybe<Account_Id_Operator>;
+  idToken?: InputMaybe<Account_IdToken_Operator>;
+  password?: InputMaybe<Account_Password_Operator>;
+  providerId?: InputMaybe<Account_ProviderId_Operator>;
+  refreshToken?: InputMaybe<Account_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<Account_RefreshTokenExpiresAt_Operator>;
+  scope?: InputMaybe<Account_Scope_Operator>;
+  updatedAt?: InputMaybe<Account_UpdatedAt_Operator>;
+  user?: InputMaybe<Account_User_Operator>;
+};
+
+export type Account_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Account_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Account_Where_Or>>>;
+  accessToken?: InputMaybe<Account_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<Account_AccessTokenExpiresAt_Operator>;
+  accountId?: InputMaybe<Account_AccountId_Operator>;
+  createdAt?: InputMaybe<Account_CreatedAt_Operator>;
+  id?: InputMaybe<Account_Id_Operator>;
+  idToken?: InputMaybe<Account_IdToken_Operator>;
+  password?: InputMaybe<Account_Password_Operator>;
+  providerId?: InputMaybe<Account_ProviderId_Operator>;
+  refreshToken?: InputMaybe<Account_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<Account_RefreshTokenExpiresAt_Operator>;
+  scope?: InputMaybe<Account_Scope_Operator>;
+  updatedAt?: InputMaybe<Account_UpdatedAt_Operator>;
+  user?: InputMaybe<Account_User_Operator>;
+};
+
+export type Accounts = {
+  __typename?: 'Accounts';
+  docs: Array<Account>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type AccountsCreateAccess = {
+  __typename?: 'AccountsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsCreateDocAccess = {
+  __typename?: 'AccountsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsDeleteAccess = {
+  __typename?: 'AccountsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsDeleteDocAccess = {
+  __typename?: 'AccountsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsDocAccessFields = {
+  __typename?: 'AccountsDocAccessFields';
+  accessToken?: Maybe<AccountsDocAccessFields_AccessToken>;
+  accessTokenExpiresAt?: Maybe<AccountsDocAccessFields_AccessTokenExpiresAt>;
+  accountId?: Maybe<AccountsDocAccessFields_AccountId>;
+  createdAt?: Maybe<AccountsDocAccessFields_CreatedAt>;
+  idToken?: Maybe<AccountsDocAccessFields_IdToken>;
+  password?: Maybe<AccountsDocAccessFields_Password>;
+  providerId?: Maybe<AccountsDocAccessFields_ProviderId>;
+  refreshToken?: Maybe<AccountsDocAccessFields_RefreshToken>;
+  refreshTokenExpiresAt?: Maybe<AccountsDocAccessFields_RefreshTokenExpiresAt>;
+  scope?: Maybe<AccountsDocAccessFields_Scope>;
+  updatedAt?: Maybe<AccountsDocAccessFields_UpdatedAt>;
+  user?: Maybe<AccountsDocAccessFields_User>;
+};
+
+export type AccountsDocAccessFields_AccessToken = {
+  __typename?: 'AccountsDocAccessFields_accessToken';
+  create?: Maybe<AccountsDocAccessFields_AccessToken_Create>;
+  delete?: Maybe<AccountsDocAccessFields_AccessToken_Delete>;
+  read?: Maybe<AccountsDocAccessFields_AccessToken_Read>;
+  update?: Maybe<AccountsDocAccessFields_AccessToken_Update>;
+};
+
+export type AccountsDocAccessFields_AccessTokenExpiresAt = {
+  __typename?: 'AccountsDocAccessFields_accessTokenExpiresAt';
+  create?: Maybe<AccountsDocAccessFields_AccessTokenExpiresAt_Create>;
+  delete?: Maybe<AccountsDocAccessFields_AccessTokenExpiresAt_Delete>;
+  read?: Maybe<AccountsDocAccessFields_AccessTokenExpiresAt_Read>;
+  update?: Maybe<AccountsDocAccessFields_AccessTokenExpiresAt_Update>;
+};
+
+export type AccountsDocAccessFields_AccessTokenExpiresAt_Create = {
+  __typename?: 'AccountsDocAccessFields_accessTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessTokenExpiresAt_Delete = {
+  __typename?: 'AccountsDocAccessFields_accessTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessTokenExpiresAt_Read = {
+  __typename?: 'AccountsDocAccessFields_accessTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessTokenExpiresAt_Update = {
+  __typename?: 'AccountsDocAccessFields_accessTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessToken_Create = {
+  __typename?: 'AccountsDocAccessFields_accessToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessToken_Delete = {
+  __typename?: 'AccountsDocAccessFields_accessToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessToken_Read = {
+  __typename?: 'AccountsDocAccessFields_accessToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccessToken_Update = {
+  __typename?: 'AccountsDocAccessFields_accessToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccountId = {
+  __typename?: 'AccountsDocAccessFields_accountId';
+  create?: Maybe<AccountsDocAccessFields_AccountId_Create>;
+  delete?: Maybe<AccountsDocAccessFields_AccountId_Delete>;
+  read?: Maybe<AccountsDocAccessFields_AccountId_Read>;
+  update?: Maybe<AccountsDocAccessFields_AccountId_Update>;
+};
+
+export type AccountsDocAccessFields_AccountId_Create = {
+  __typename?: 'AccountsDocAccessFields_accountId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccountId_Delete = {
+  __typename?: 'AccountsDocAccessFields_accountId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccountId_Read = {
+  __typename?: 'AccountsDocAccessFields_accountId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_AccountId_Update = {
+  __typename?: 'AccountsDocAccessFields_accountId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_CreatedAt = {
+  __typename?: 'AccountsDocAccessFields_createdAt';
+  create?: Maybe<AccountsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<AccountsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<AccountsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<AccountsDocAccessFields_CreatedAt_Update>;
+};
+
+export type AccountsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'AccountsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'AccountsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'AccountsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'AccountsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_IdToken = {
+  __typename?: 'AccountsDocAccessFields_idToken';
+  create?: Maybe<AccountsDocAccessFields_IdToken_Create>;
+  delete?: Maybe<AccountsDocAccessFields_IdToken_Delete>;
+  read?: Maybe<AccountsDocAccessFields_IdToken_Read>;
+  update?: Maybe<AccountsDocAccessFields_IdToken_Update>;
+};
+
+export type AccountsDocAccessFields_IdToken_Create = {
+  __typename?: 'AccountsDocAccessFields_idToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_IdToken_Delete = {
+  __typename?: 'AccountsDocAccessFields_idToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_IdToken_Read = {
+  __typename?: 'AccountsDocAccessFields_idToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_IdToken_Update = {
+  __typename?: 'AccountsDocAccessFields_idToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Password = {
+  __typename?: 'AccountsDocAccessFields_password';
+  create?: Maybe<AccountsDocAccessFields_Password_Create>;
+  delete?: Maybe<AccountsDocAccessFields_Password_Delete>;
+  read?: Maybe<AccountsDocAccessFields_Password_Read>;
+  update?: Maybe<AccountsDocAccessFields_Password_Update>;
+};
+
+export type AccountsDocAccessFields_Password_Create = {
+  __typename?: 'AccountsDocAccessFields_password_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Password_Delete = {
+  __typename?: 'AccountsDocAccessFields_password_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Password_Read = {
+  __typename?: 'AccountsDocAccessFields_password_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Password_Update = {
+  __typename?: 'AccountsDocAccessFields_password_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_ProviderId = {
+  __typename?: 'AccountsDocAccessFields_providerId';
+  create?: Maybe<AccountsDocAccessFields_ProviderId_Create>;
+  delete?: Maybe<AccountsDocAccessFields_ProviderId_Delete>;
+  read?: Maybe<AccountsDocAccessFields_ProviderId_Read>;
+  update?: Maybe<AccountsDocAccessFields_ProviderId_Update>;
+};
+
+export type AccountsDocAccessFields_ProviderId_Create = {
+  __typename?: 'AccountsDocAccessFields_providerId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_ProviderId_Delete = {
+  __typename?: 'AccountsDocAccessFields_providerId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_ProviderId_Read = {
+  __typename?: 'AccountsDocAccessFields_providerId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_ProviderId_Update = {
+  __typename?: 'AccountsDocAccessFields_providerId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshToken = {
+  __typename?: 'AccountsDocAccessFields_refreshToken';
+  create?: Maybe<AccountsDocAccessFields_RefreshToken_Create>;
+  delete?: Maybe<AccountsDocAccessFields_RefreshToken_Delete>;
+  read?: Maybe<AccountsDocAccessFields_RefreshToken_Read>;
+  update?: Maybe<AccountsDocAccessFields_RefreshToken_Update>;
+};
+
+export type AccountsDocAccessFields_RefreshTokenExpiresAt = {
+  __typename?: 'AccountsDocAccessFields_refreshTokenExpiresAt';
+  create?: Maybe<AccountsDocAccessFields_RefreshTokenExpiresAt_Create>;
+  delete?: Maybe<AccountsDocAccessFields_RefreshTokenExpiresAt_Delete>;
+  read?: Maybe<AccountsDocAccessFields_RefreshTokenExpiresAt_Read>;
+  update?: Maybe<AccountsDocAccessFields_RefreshTokenExpiresAt_Update>;
+};
+
+export type AccountsDocAccessFields_RefreshTokenExpiresAt_Create = {
+  __typename?: 'AccountsDocAccessFields_refreshTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshTokenExpiresAt_Delete = {
+  __typename?: 'AccountsDocAccessFields_refreshTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshTokenExpiresAt_Read = {
+  __typename?: 'AccountsDocAccessFields_refreshTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshTokenExpiresAt_Update = {
+  __typename?: 'AccountsDocAccessFields_refreshTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshToken_Create = {
+  __typename?: 'AccountsDocAccessFields_refreshToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshToken_Delete = {
+  __typename?: 'AccountsDocAccessFields_refreshToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshToken_Read = {
+  __typename?: 'AccountsDocAccessFields_refreshToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_RefreshToken_Update = {
+  __typename?: 'AccountsDocAccessFields_refreshToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Scope = {
+  __typename?: 'AccountsDocAccessFields_scope';
+  create?: Maybe<AccountsDocAccessFields_Scope_Create>;
+  delete?: Maybe<AccountsDocAccessFields_Scope_Delete>;
+  read?: Maybe<AccountsDocAccessFields_Scope_Read>;
+  update?: Maybe<AccountsDocAccessFields_Scope_Update>;
+};
+
+export type AccountsDocAccessFields_Scope_Create = {
+  __typename?: 'AccountsDocAccessFields_scope_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Scope_Delete = {
+  __typename?: 'AccountsDocAccessFields_scope_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Scope_Read = {
+  __typename?: 'AccountsDocAccessFields_scope_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_Scope_Update = {
+  __typename?: 'AccountsDocAccessFields_scope_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_UpdatedAt = {
+  __typename?: 'AccountsDocAccessFields_updatedAt';
+  create?: Maybe<AccountsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<AccountsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<AccountsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<AccountsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type AccountsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'AccountsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'AccountsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'AccountsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'AccountsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_User = {
+  __typename?: 'AccountsDocAccessFields_user';
+  create?: Maybe<AccountsDocAccessFields_User_Create>;
+  delete?: Maybe<AccountsDocAccessFields_User_Delete>;
+  read?: Maybe<AccountsDocAccessFields_User_Read>;
+  update?: Maybe<AccountsDocAccessFields_User_Update>;
+};
+
+export type AccountsDocAccessFields_User_Create = {
+  __typename?: 'AccountsDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_User_Delete = {
+  __typename?: 'AccountsDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_User_Read = {
+  __typename?: 'AccountsDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsDocAccessFields_User_Update = {
+  __typename?: 'AccountsDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields = {
+  __typename?: 'AccountsFields';
+  accessToken?: Maybe<AccountsFields_AccessToken>;
+  accessTokenExpiresAt?: Maybe<AccountsFields_AccessTokenExpiresAt>;
+  accountId?: Maybe<AccountsFields_AccountId>;
+  createdAt?: Maybe<AccountsFields_CreatedAt>;
+  idToken?: Maybe<AccountsFields_IdToken>;
+  password?: Maybe<AccountsFields_Password>;
+  providerId?: Maybe<AccountsFields_ProviderId>;
+  refreshToken?: Maybe<AccountsFields_RefreshToken>;
+  refreshTokenExpiresAt?: Maybe<AccountsFields_RefreshTokenExpiresAt>;
+  scope?: Maybe<AccountsFields_Scope>;
+  updatedAt?: Maybe<AccountsFields_UpdatedAt>;
+  user?: Maybe<AccountsFields_User>;
+};
+
+export type AccountsFields_AccessToken = {
+  __typename?: 'AccountsFields_accessToken';
+  create?: Maybe<AccountsFields_AccessToken_Create>;
+  delete?: Maybe<AccountsFields_AccessToken_Delete>;
+  read?: Maybe<AccountsFields_AccessToken_Read>;
+  update?: Maybe<AccountsFields_AccessToken_Update>;
+};
+
+export type AccountsFields_AccessTokenExpiresAt = {
+  __typename?: 'AccountsFields_accessTokenExpiresAt';
+  create?: Maybe<AccountsFields_AccessTokenExpiresAt_Create>;
+  delete?: Maybe<AccountsFields_AccessTokenExpiresAt_Delete>;
+  read?: Maybe<AccountsFields_AccessTokenExpiresAt_Read>;
+  update?: Maybe<AccountsFields_AccessTokenExpiresAt_Update>;
+};
+
+export type AccountsFields_AccessTokenExpiresAt_Create = {
+  __typename?: 'AccountsFields_accessTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessTokenExpiresAt_Delete = {
+  __typename?: 'AccountsFields_accessTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessTokenExpiresAt_Read = {
+  __typename?: 'AccountsFields_accessTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessTokenExpiresAt_Update = {
+  __typename?: 'AccountsFields_accessTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessToken_Create = {
+  __typename?: 'AccountsFields_accessToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessToken_Delete = {
+  __typename?: 'AccountsFields_accessToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessToken_Read = {
+  __typename?: 'AccountsFields_accessToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccessToken_Update = {
+  __typename?: 'AccountsFields_accessToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccountId = {
+  __typename?: 'AccountsFields_accountId';
+  create?: Maybe<AccountsFields_AccountId_Create>;
+  delete?: Maybe<AccountsFields_AccountId_Delete>;
+  read?: Maybe<AccountsFields_AccountId_Read>;
+  update?: Maybe<AccountsFields_AccountId_Update>;
+};
+
+export type AccountsFields_AccountId_Create = {
+  __typename?: 'AccountsFields_accountId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccountId_Delete = {
+  __typename?: 'AccountsFields_accountId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccountId_Read = {
+  __typename?: 'AccountsFields_accountId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_AccountId_Update = {
+  __typename?: 'AccountsFields_accountId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_CreatedAt = {
+  __typename?: 'AccountsFields_createdAt';
+  create?: Maybe<AccountsFields_CreatedAt_Create>;
+  delete?: Maybe<AccountsFields_CreatedAt_Delete>;
+  read?: Maybe<AccountsFields_CreatedAt_Read>;
+  update?: Maybe<AccountsFields_CreatedAt_Update>;
+};
+
+export type AccountsFields_CreatedAt_Create = {
+  __typename?: 'AccountsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_CreatedAt_Delete = {
+  __typename?: 'AccountsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_CreatedAt_Read = {
+  __typename?: 'AccountsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_CreatedAt_Update = {
+  __typename?: 'AccountsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_IdToken = {
+  __typename?: 'AccountsFields_idToken';
+  create?: Maybe<AccountsFields_IdToken_Create>;
+  delete?: Maybe<AccountsFields_IdToken_Delete>;
+  read?: Maybe<AccountsFields_IdToken_Read>;
+  update?: Maybe<AccountsFields_IdToken_Update>;
+};
+
+export type AccountsFields_IdToken_Create = {
+  __typename?: 'AccountsFields_idToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_IdToken_Delete = {
+  __typename?: 'AccountsFields_idToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_IdToken_Read = {
+  __typename?: 'AccountsFields_idToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_IdToken_Update = {
+  __typename?: 'AccountsFields_idToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Password = {
+  __typename?: 'AccountsFields_password';
+  create?: Maybe<AccountsFields_Password_Create>;
+  delete?: Maybe<AccountsFields_Password_Delete>;
+  read?: Maybe<AccountsFields_Password_Read>;
+  update?: Maybe<AccountsFields_Password_Update>;
+};
+
+export type AccountsFields_Password_Create = {
+  __typename?: 'AccountsFields_password_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Password_Delete = {
+  __typename?: 'AccountsFields_password_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Password_Read = {
+  __typename?: 'AccountsFields_password_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Password_Update = {
+  __typename?: 'AccountsFields_password_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_ProviderId = {
+  __typename?: 'AccountsFields_providerId';
+  create?: Maybe<AccountsFields_ProviderId_Create>;
+  delete?: Maybe<AccountsFields_ProviderId_Delete>;
+  read?: Maybe<AccountsFields_ProviderId_Read>;
+  update?: Maybe<AccountsFields_ProviderId_Update>;
+};
+
+export type AccountsFields_ProviderId_Create = {
+  __typename?: 'AccountsFields_providerId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_ProviderId_Delete = {
+  __typename?: 'AccountsFields_providerId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_ProviderId_Read = {
+  __typename?: 'AccountsFields_providerId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_ProviderId_Update = {
+  __typename?: 'AccountsFields_providerId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshToken = {
+  __typename?: 'AccountsFields_refreshToken';
+  create?: Maybe<AccountsFields_RefreshToken_Create>;
+  delete?: Maybe<AccountsFields_RefreshToken_Delete>;
+  read?: Maybe<AccountsFields_RefreshToken_Read>;
+  update?: Maybe<AccountsFields_RefreshToken_Update>;
+};
+
+export type AccountsFields_RefreshTokenExpiresAt = {
+  __typename?: 'AccountsFields_refreshTokenExpiresAt';
+  create?: Maybe<AccountsFields_RefreshTokenExpiresAt_Create>;
+  delete?: Maybe<AccountsFields_RefreshTokenExpiresAt_Delete>;
+  read?: Maybe<AccountsFields_RefreshTokenExpiresAt_Read>;
+  update?: Maybe<AccountsFields_RefreshTokenExpiresAt_Update>;
+};
+
+export type AccountsFields_RefreshTokenExpiresAt_Create = {
+  __typename?: 'AccountsFields_refreshTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshTokenExpiresAt_Delete = {
+  __typename?: 'AccountsFields_refreshTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshTokenExpiresAt_Read = {
+  __typename?: 'AccountsFields_refreshTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshTokenExpiresAt_Update = {
+  __typename?: 'AccountsFields_refreshTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshToken_Create = {
+  __typename?: 'AccountsFields_refreshToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshToken_Delete = {
+  __typename?: 'AccountsFields_refreshToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshToken_Read = {
+  __typename?: 'AccountsFields_refreshToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_RefreshToken_Update = {
+  __typename?: 'AccountsFields_refreshToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Scope = {
+  __typename?: 'AccountsFields_scope';
+  create?: Maybe<AccountsFields_Scope_Create>;
+  delete?: Maybe<AccountsFields_Scope_Delete>;
+  read?: Maybe<AccountsFields_Scope_Read>;
+  update?: Maybe<AccountsFields_Scope_Update>;
+};
+
+export type AccountsFields_Scope_Create = {
+  __typename?: 'AccountsFields_scope_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Scope_Delete = {
+  __typename?: 'AccountsFields_scope_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Scope_Read = {
+  __typename?: 'AccountsFields_scope_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_Scope_Update = {
+  __typename?: 'AccountsFields_scope_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_UpdatedAt = {
+  __typename?: 'AccountsFields_updatedAt';
+  create?: Maybe<AccountsFields_UpdatedAt_Create>;
+  delete?: Maybe<AccountsFields_UpdatedAt_Delete>;
+  read?: Maybe<AccountsFields_UpdatedAt_Read>;
+  update?: Maybe<AccountsFields_UpdatedAt_Update>;
+};
+
+export type AccountsFields_UpdatedAt_Create = {
+  __typename?: 'AccountsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_UpdatedAt_Delete = {
+  __typename?: 'AccountsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_UpdatedAt_Read = {
+  __typename?: 'AccountsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_UpdatedAt_Update = {
+  __typename?: 'AccountsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_User = {
+  __typename?: 'AccountsFields_user';
+  create?: Maybe<AccountsFields_User_Create>;
+  delete?: Maybe<AccountsFields_User_Delete>;
+  read?: Maybe<AccountsFields_User_Read>;
+  update?: Maybe<AccountsFields_User_Update>;
+};
+
+export type AccountsFields_User_Create = {
+  __typename?: 'AccountsFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_User_Delete = {
+  __typename?: 'AccountsFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_User_Read = {
+  __typename?: 'AccountsFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsFields_User_Update = {
+  __typename?: 'AccountsFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AccountsReadAccess = {
+  __typename?: 'AccountsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsReadDocAccess = {
+  __typename?: 'AccountsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsUpdateAccess = {
+  __typename?: 'AccountsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsUpdateDocAccess = {
+  __typename?: 'AccountsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type Address = {
@@ -1342,6 +2323,492 @@ export type AddressesUpdateAccess = {
 
 export type AddressesUpdateDocAccess = {
   __typename?: 'AddressesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitation = {
+  __typename?: 'AdminInvitation';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  role: AdminInvitation_Role;
+  token: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export enum AdminInvitationUpdate_Role_MutationInput {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export type AdminInvitation_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type AdminInvitation_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export enum AdminInvitation_Role {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export enum AdminInvitation_Role_Input {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export enum AdminInvitation_Role_MutationInput {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export type AdminInvitation_Role_Operator = {
+  all?: InputMaybe<Array<InputMaybe<AdminInvitation_Role_Input>>>;
+  equals?: InputMaybe<AdminInvitation_Role_Input>;
+  in?: InputMaybe<Array<InputMaybe<AdminInvitation_Role_Input>>>;
+  not_equals?: InputMaybe<AdminInvitation_Role_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<AdminInvitation_Role_Input>>>;
+};
+
+export type AdminInvitation_Token_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type AdminInvitation_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type AdminInvitation_Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type AdminInvitation_Where = {
+  AND?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_Or>>>;
+  createdAt?: InputMaybe<AdminInvitation_CreatedAt_Operator>;
+  id?: InputMaybe<AdminInvitation_Id_Operator>;
+  role?: InputMaybe<AdminInvitation_Role_Operator>;
+  token?: InputMaybe<AdminInvitation_Token_Operator>;
+  updatedAt?: InputMaybe<AdminInvitation_UpdatedAt_Operator>;
+  url?: InputMaybe<AdminInvitation_Url_Operator>;
+};
+
+export type AdminInvitation_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_Or>>>;
+  createdAt?: InputMaybe<AdminInvitation_CreatedAt_Operator>;
+  id?: InputMaybe<AdminInvitation_Id_Operator>;
+  role?: InputMaybe<AdminInvitation_Role_Operator>;
+  token?: InputMaybe<AdminInvitation_Token_Operator>;
+  updatedAt?: InputMaybe<AdminInvitation_UpdatedAt_Operator>;
+  url?: InputMaybe<AdminInvitation_Url_Operator>;
+};
+
+export type AdminInvitation_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<AdminInvitation_Where_Or>>>;
+  createdAt?: InputMaybe<AdminInvitation_CreatedAt_Operator>;
+  id?: InputMaybe<AdminInvitation_Id_Operator>;
+  role?: InputMaybe<AdminInvitation_Role_Operator>;
+  token?: InputMaybe<AdminInvitation_Token_Operator>;
+  updatedAt?: InputMaybe<AdminInvitation_UpdatedAt_Operator>;
+  url?: InputMaybe<AdminInvitation_Url_Operator>;
+};
+
+export type AdminInvitations = {
+  __typename?: 'AdminInvitations';
+  docs: Array<AdminInvitation>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type AdminInvitationsCreateAccess = {
+  __typename?: 'AdminInvitationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsCreateDocAccess = {
+  __typename?: 'AdminInvitationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsDeleteAccess = {
+  __typename?: 'AdminInvitationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsDeleteDocAccess = {
+  __typename?: 'AdminInvitationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsDocAccessFields = {
+  __typename?: 'AdminInvitationsDocAccessFields';
+  createdAt?: Maybe<AdminInvitationsDocAccessFields_CreatedAt>;
+  role?: Maybe<AdminInvitationsDocAccessFields_Role>;
+  token?: Maybe<AdminInvitationsDocAccessFields_Token>;
+  updatedAt?: Maybe<AdminInvitationsDocAccessFields_UpdatedAt>;
+  url?: Maybe<AdminInvitationsDocAccessFields_Url>;
+};
+
+export type AdminInvitationsDocAccessFields_CreatedAt = {
+  __typename?: 'AdminInvitationsDocAccessFields_createdAt';
+  create?: Maybe<AdminInvitationsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<AdminInvitationsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<AdminInvitationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<AdminInvitationsDocAccessFields_CreatedAt_Update>;
+};
+
+export type AdminInvitationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'AdminInvitationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'AdminInvitationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'AdminInvitationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'AdminInvitationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Role = {
+  __typename?: 'AdminInvitationsDocAccessFields_role';
+  create?: Maybe<AdminInvitationsDocAccessFields_Role_Create>;
+  delete?: Maybe<AdminInvitationsDocAccessFields_Role_Delete>;
+  read?: Maybe<AdminInvitationsDocAccessFields_Role_Read>;
+  update?: Maybe<AdminInvitationsDocAccessFields_Role_Update>;
+};
+
+export type AdminInvitationsDocAccessFields_Role_Create = {
+  __typename?: 'AdminInvitationsDocAccessFields_role_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Role_Delete = {
+  __typename?: 'AdminInvitationsDocAccessFields_role_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Role_Read = {
+  __typename?: 'AdminInvitationsDocAccessFields_role_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Role_Update = {
+  __typename?: 'AdminInvitationsDocAccessFields_role_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Token = {
+  __typename?: 'AdminInvitationsDocAccessFields_token';
+  create?: Maybe<AdminInvitationsDocAccessFields_Token_Create>;
+  delete?: Maybe<AdminInvitationsDocAccessFields_Token_Delete>;
+  read?: Maybe<AdminInvitationsDocAccessFields_Token_Read>;
+  update?: Maybe<AdminInvitationsDocAccessFields_Token_Update>;
+};
+
+export type AdminInvitationsDocAccessFields_Token_Create = {
+  __typename?: 'AdminInvitationsDocAccessFields_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Token_Delete = {
+  __typename?: 'AdminInvitationsDocAccessFields_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Token_Read = {
+  __typename?: 'AdminInvitationsDocAccessFields_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Token_Update = {
+  __typename?: 'AdminInvitationsDocAccessFields_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_UpdatedAt = {
+  __typename?: 'AdminInvitationsDocAccessFields_updatedAt';
+  create?: Maybe<AdminInvitationsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<AdminInvitationsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<AdminInvitationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<AdminInvitationsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type AdminInvitationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'AdminInvitationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'AdminInvitationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'AdminInvitationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'AdminInvitationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Url = {
+  __typename?: 'AdminInvitationsDocAccessFields_url';
+  create?: Maybe<AdminInvitationsDocAccessFields_Url_Create>;
+  delete?: Maybe<AdminInvitationsDocAccessFields_Url_Delete>;
+  read?: Maybe<AdminInvitationsDocAccessFields_Url_Read>;
+  update?: Maybe<AdminInvitationsDocAccessFields_Url_Update>;
+};
+
+export type AdminInvitationsDocAccessFields_Url_Create = {
+  __typename?: 'AdminInvitationsDocAccessFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Url_Delete = {
+  __typename?: 'AdminInvitationsDocAccessFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Url_Read = {
+  __typename?: 'AdminInvitationsDocAccessFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsDocAccessFields_Url_Update = {
+  __typename?: 'AdminInvitationsDocAccessFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields = {
+  __typename?: 'AdminInvitationsFields';
+  createdAt?: Maybe<AdminInvitationsFields_CreatedAt>;
+  role?: Maybe<AdminInvitationsFields_Role>;
+  token?: Maybe<AdminInvitationsFields_Token>;
+  updatedAt?: Maybe<AdminInvitationsFields_UpdatedAt>;
+  url?: Maybe<AdminInvitationsFields_Url>;
+};
+
+export type AdminInvitationsFields_CreatedAt = {
+  __typename?: 'AdminInvitationsFields_createdAt';
+  create?: Maybe<AdminInvitationsFields_CreatedAt_Create>;
+  delete?: Maybe<AdminInvitationsFields_CreatedAt_Delete>;
+  read?: Maybe<AdminInvitationsFields_CreatedAt_Read>;
+  update?: Maybe<AdminInvitationsFields_CreatedAt_Update>;
+};
+
+export type AdminInvitationsFields_CreatedAt_Create = {
+  __typename?: 'AdminInvitationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_CreatedAt_Delete = {
+  __typename?: 'AdminInvitationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_CreatedAt_Read = {
+  __typename?: 'AdminInvitationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_CreatedAt_Update = {
+  __typename?: 'AdminInvitationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Role = {
+  __typename?: 'AdminInvitationsFields_role';
+  create?: Maybe<AdminInvitationsFields_Role_Create>;
+  delete?: Maybe<AdminInvitationsFields_Role_Delete>;
+  read?: Maybe<AdminInvitationsFields_Role_Read>;
+  update?: Maybe<AdminInvitationsFields_Role_Update>;
+};
+
+export type AdminInvitationsFields_Role_Create = {
+  __typename?: 'AdminInvitationsFields_role_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Role_Delete = {
+  __typename?: 'AdminInvitationsFields_role_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Role_Read = {
+  __typename?: 'AdminInvitationsFields_role_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Role_Update = {
+  __typename?: 'AdminInvitationsFields_role_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Token = {
+  __typename?: 'AdminInvitationsFields_token';
+  create?: Maybe<AdminInvitationsFields_Token_Create>;
+  delete?: Maybe<AdminInvitationsFields_Token_Delete>;
+  read?: Maybe<AdminInvitationsFields_Token_Read>;
+  update?: Maybe<AdminInvitationsFields_Token_Update>;
+};
+
+export type AdminInvitationsFields_Token_Create = {
+  __typename?: 'AdminInvitationsFields_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Token_Delete = {
+  __typename?: 'AdminInvitationsFields_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Token_Read = {
+  __typename?: 'AdminInvitationsFields_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Token_Update = {
+  __typename?: 'AdminInvitationsFields_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_UpdatedAt = {
+  __typename?: 'AdminInvitationsFields_updatedAt';
+  create?: Maybe<AdminInvitationsFields_UpdatedAt_Create>;
+  delete?: Maybe<AdminInvitationsFields_UpdatedAt_Delete>;
+  read?: Maybe<AdminInvitationsFields_UpdatedAt_Read>;
+  update?: Maybe<AdminInvitationsFields_UpdatedAt_Update>;
+};
+
+export type AdminInvitationsFields_UpdatedAt_Create = {
+  __typename?: 'AdminInvitationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_UpdatedAt_Delete = {
+  __typename?: 'AdminInvitationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_UpdatedAt_Read = {
+  __typename?: 'AdminInvitationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_UpdatedAt_Update = {
+  __typename?: 'AdminInvitationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Url = {
+  __typename?: 'AdminInvitationsFields_url';
+  create?: Maybe<AdminInvitationsFields_Url_Create>;
+  delete?: Maybe<AdminInvitationsFields_Url_Delete>;
+  read?: Maybe<AdminInvitationsFields_Url_Read>;
+  update?: Maybe<AdminInvitationsFields_Url_Update>;
+};
+
+export type AdminInvitationsFields_Url_Create = {
+  __typename?: 'AdminInvitationsFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Url_Delete = {
+  __typename?: 'AdminInvitationsFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Url_Read = {
+  __typename?: 'AdminInvitationsFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsFields_Url_Update = {
+  __typename?: 'AdminInvitationsFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type AdminInvitationsReadAccess = {
+  __typename?: 'AdminInvitationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsReadDocAccess = {
+  __typename?: 'AdminInvitationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsUpdateAccess = {
+  __typename?: 'AdminInvitationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminInvitationsUpdateDocAccess = {
+  __typename?: 'AdminInvitationsUpdateDocAccess';
   permission: Scalars['Boolean']['output'];
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
@@ -3630,8 +5097,11 @@ export type CompaniesDeleteDocAccess = {
 
 export type CompaniesDocAccessFields = {
   __typename?: 'CompaniesDocAccessFields';
+  allowedIdentities?: Maybe<CompaniesDocAccessFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CompaniesDocAccessFields_CreatedBy>;
+  description?: Maybe<CompaniesDocAccessFields_Description>;
+  disallowedIdentities?: Maybe<CompaniesDocAccessFields_DisallowedIdentities>;
   email?: Maybe<CompaniesDocAccessFields_Email>;
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
   image?: Maybe<CompaniesDocAccessFields_Image>;
@@ -3639,6 +5109,34 @@ export type CompaniesDocAccessFields = {
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
   website?: Maybe<CompaniesDocAccessFields_Website>;
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities';
+  create?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Read>;
+  update?: Maybe<CompaniesDocAccessFields_AllowedIdentities_Update>;
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Create = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Delete = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Read = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_AllowedIdentities_Update = {
+  __typename?: 'CompaniesDocAccessFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesDocAccessFields_CreatedAt = {
@@ -3694,6 +5192,62 @@ export type CompaniesDocAccessFields_CreatedBy_Read = {
 
 export type CompaniesDocAccessFields_CreatedBy_Update = {
   __typename?: 'CompaniesDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Description = {
+  __typename?: 'CompaniesDocAccessFields_description';
+  create?: Maybe<CompaniesDocAccessFields_Description_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_Description_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_Description_Read>;
+  update?: Maybe<CompaniesDocAccessFields_Description_Update>;
+};
+
+export type CompaniesDocAccessFields_Description_Create = {
+  __typename?: 'CompaniesDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Description_Delete = {
+  __typename?: 'CompaniesDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Description_Read = {
+  __typename?: 'CompaniesDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Description_Update = {
+  __typename?: 'CompaniesDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities';
+  create?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Read>;
+  update?: Maybe<CompaniesDocAccessFields_DisallowedIdentities_Update>;
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Create = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Delete = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Read = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_DisallowedIdentities_Update = {
+  __typename?: 'CompaniesDocAccessFields_disallowedIdentities_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3895,8 +5449,11 @@ export type CompaniesDocAccessFields_Website_Update = {
 
 export type CompaniesFields = {
   __typename?: 'CompaniesFields';
+  allowedIdentities?: Maybe<CompaniesFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesFields_CreatedAt>;
   createdBy?: Maybe<CompaniesFields_CreatedBy>;
+  description?: Maybe<CompaniesFields_Description>;
+  disallowedIdentities?: Maybe<CompaniesFields_DisallowedIdentities>;
   email?: Maybe<CompaniesFields_Email>;
   identity?: Maybe<CompaniesFields_Identity>;
   image?: Maybe<CompaniesFields_Image>;
@@ -3904,6 +5461,34 @@ export type CompaniesFields = {
   phone?: Maybe<CompaniesFields_Phone>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
   website?: Maybe<CompaniesFields_Website>;
+};
+
+export type CompaniesFields_AllowedIdentities = {
+  __typename?: 'CompaniesFields_allowedIdentities';
+  create?: Maybe<CompaniesFields_AllowedIdentities_Create>;
+  delete?: Maybe<CompaniesFields_AllowedIdentities_Delete>;
+  read?: Maybe<CompaniesFields_AllowedIdentities_Read>;
+  update?: Maybe<CompaniesFields_AllowedIdentities_Update>;
+};
+
+export type CompaniesFields_AllowedIdentities_Create = {
+  __typename?: 'CompaniesFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Delete = {
+  __typename?: 'CompaniesFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Read = {
+  __typename?: 'CompaniesFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_AllowedIdentities_Update = {
+  __typename?: 'CompaniesFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesFields_CreatedAt = {
@@ -3959,6 +5544,62 @@ export type CompaniesFields_CreatedBy_Read = {
 
 export type CompaniesFields_CreatedBy_Update = {
   __typename?: 'CompaniesFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Description = {
+  __typename?: 'CompaniesFields_description';
+  create?: Maybe<CompaniesFields_Description_Create>;
+  delete?: Maybe<CompaniesFields_Description_Delete>;
+  read?: Maybe<CompaniesFields_Description_Read>;
+  update?: Maybe<CompaniesFields_Description_Update>;
+};
+
+export type CompaniesFields_Description_Create = {
+  __typename?: 'CompaniesFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Description_Delete = {
+  __typename?: 'CompaniesFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Description_Read = {
+  __typename?: 'CompaniesFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Description_Update = {
+  __typename?: 'CompaniesFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities = {
+  __typename?: 'CompaniesFields_disallowedIdentities';
+  create?: Maybe<CompaniesFields_DisallowedIdentities_Create>;
+  delete?: Maybe<CompaniesFields_DisallowedIdentities_Delete>;
+  read?: Maybe<CompaniesFields_DisallowedIdentities_Read>;
+  update?: Maybe<CompaniesFields_DisallowedIdentities_Update>;
+};
+
+export type CompaniesFields_DisallowedIdentities_Create = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Delete = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Read = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_DisallowedIdentities_Update = {
+  __typename?: 'CompaniesFields_disallowedIdentities_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -4184,8 +5825,11 @@ export type CompaniesUpdateDocAccess = {
 
 export type Company = {
   __typename?: 'Company';
+  allowedIdentities?: Maybe<Array<Identity>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy: User;
+  description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
   identity: Identity;
@@ -4194,6 +5838,15 @@ export type Company = {
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
+};
+
+export type Company_AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Company_CreatedAt_Operator = {
@@ -4210,6 +5863,23 @@ export type Company_CreatedAt_Operator = {
 export type Company_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Company_Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Company_DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -4300,8 +5970,11 @@ export type Company_Website_Operator = {
 export type Company_Where = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
+  description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -4315,8 +5988,11 @@ export type Company_Where = {
 export type Company_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
+  description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -4330,8 +6006,11 @@ export type Company_Where_And = {
 export type Company_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
+  description?: InputMaybe<Company_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
@@ -7885,6 +9564,7 @@ export type IdentitiesDocAccessFields = {
   __typename?: 'IdentitiesDocAccessFields';
   createdAt?: Maybe<IdentitiesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
+  description?: Maybe<IdentitiesDocAccessFields_Description>;
   image?: Maybe<IdentitiesDocAccessFields_Image>;
   name?: Maybe<IdentitiesDocAccessFields_Name>;
   updatedAt?: Maybe<IdentitiesDocAccessFields_UpdatedAt>;
@@ -7944,6 +9624,34 @@ export type IdentitiesDocAccessFields_CreatedBy_Read = {
 
 export type IdentitiesDocAccessFields_CreatedBy_Update = {
   __typename?: 'IdentitiesDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Description = {
+  __typename?: 'IdentitiesDocAccessFields_description';
+  create?: Maybe<IdentitiesDocAccessFields_Description_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_Description_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_Description_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_Description_Update>;
+};
+
+export type IdentitiesDocAccessFields_Description_Create = {
+  __typename?: 'IdentitiesDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Description_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Description_Read = {
+  __typename?: 'IdentitiesDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Description_Update = {
+  __typename?: 'IdentitiesDocAccessFields_description_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -8063,6 +9771,7 @@ export type IdentitiesFields = {
   __typename?: 'IdentitiesFields';
   createdAt?: Maybe<IdentitiesFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
+  description?: Maybe<IdentitiesFields_Description>;
   image?: Maybe<IdentitiesFields_Image>;
   name?: Maybe<IdentitiesFields_Name>;
   updatedAt?: Maybe<IdentitiesFields_UpdatedAt>;
@@ -8122,6 +9831,34 @@ export type IdentitiesFields_CreatedBy_Read = {
 
 export type IdentitiesFields_CreatedBy_Update = {
   __typename?: 'IdentitiesFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Description = {
+  __typename?: 'IdentitiesFields_description';
+  create?: Maybe<IdentitiesFields_Description_Create>;
+  delete?: Maybe<IdentitiesFields_Description_Delete>;
+  read?: Maybe<IdentitiesFields_Description_Read>;
+  update?: Maybe<IdentitiesFields_Description_Update>;
+};
+
+export type IdentitiesFields_Description_Create = {
+  __typename?: 'IdentitiesFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Description_Delete = {
+  __typename?: 'IdentitiesFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Description_Read = {
+  __typename?: 'IdentitiesFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Description_Update = {
+  __typename?: 'IdentitiesFields_description_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -8265,6 +10002,7 @@ export type Identity = {
   __typename?: 'Identity';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy: User;
+  description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
   name: Scalars['String']['output'];
@@ -8289,6 +10027,14 @@ export type Identity_CreatedBy_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Identity_Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Identity_Id_Operator = {
@@ -8348,6 +10094,7 @@ export type Identity_Where = {
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
+  description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
@@ -8360,6 +10107,7 @@ export type Identity_Where_And = {
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
+  description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
@@ -8372,6 +10120,7 @@ export type Identity_Where_Or = {
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
+  description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
@@ -8382,25 +10131,207 @@ export type Identity_Where_Or = {
 export type Job = {
   __typename?: 'Job';
   _status?: Maybe<Job__Status>;
+  allowedIdentities?: Maybe<Array<Identity>>;
   applyUrl?: Maybe<Scalars['String']['output']>;
+  bounty?: Maybe<Job_Bounty>;
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
-  description?: Maybe<Scalars['JSON']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<Job_EmploymentType>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
+  positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<Job_SalaryRange>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
-export type JobDescriptionArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
-};
+export enum JobUpdate_Bounty_Currency_MutationInput {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
 
 export enum JobUpdate_SalaryRange_Currency_MutationInput {
   Aed = 'AED',
@@ -8592,6 +10523,7 @@ export enum JobUpdate__Status_MutationInput {
 export enum JobUpdate_EmploymentType_MutationInput {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -8614,24 +10546,212 @@ export type JobVersionParentArgs = {
 export type JobVersion_Version = {
   __typename?: 'JobVersion_Version';
   _status?: Maybe<JobVersion_Version__Status>;
+  allowedIdentities?: Maybe<Array<Identity>>;
   applyUrl?: Maybe<Scalars['String']['output']>;
+  bounty?: Maybe<JobVersion_Version_Bounty>;
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
-  description?: Maybe<Scalars['JSON']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<JobVersion_Version_EmploymentType>;
   image?: Maybe<Media>;
+  isActive?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
+  positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<JobVersion_Version_SalaryRange>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
-export type JobVersion_VersionDescriptionArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
+export type JobVersion_Version_Bounty = {
+  __typename?: 'JobVersion_Version_Bounty';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<JobVersion_Version_Bounty_Currency>;
 };
+
+export enum JobVersion_Version_Bounty_Currency {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
 
 export type JobVersion_Version_SalaryRange = {
   __typename?: 'JobVersion_Version_SalaryRange';
@@ -8830,8 +10950,379 @@ export enum JobVersion_Version__Status {
 export enum JobVersion_Version_EmploymentType {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
+}
+
+export type Job_Bounty = {
+  __typename?: 'Job_Bounty';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<Job_Bounty_Currency>;
+};
+
+export enum Job_Bounty_Currency {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export enum Job_Bounty_Currency_MutationInput {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
 }
 
 export type Job_SalaryRange = {
@@ -9229,6 +11720,15 @@ export type Job__Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Job__Status_Input>>>;
 };
 
+export type Job_AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Job_ApplyUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -9238,6 +11738,207 @@ export type Job_ApplyUrl_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Job_Bounty__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum Job_Bounty__Currency_Input {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export type Job_Bounty__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
+  equals?: InputMaybe<Job_Bounty__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
+  not_equals?: InputMaybe<Job_Bounty__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
 };
 
 export type Job_Company_Operator = {
@@ -9268,16 +11969,26 @@ export type Job_CreatedBy_Operator = {
 };
 
 export type Job_Description_Operator = {
-  contains?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Job_DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export enum Job_EmploymentType {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -9285,6 +11996,7 @@ export enum Job_EmploymentType {
 export enum Job_EmploymentType_Input {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -9292,6 +12004,7 @@ export enum Job_EmploymentType_Input {
 export enum Job_EmploymentType_MutationInput {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -9324,6 +12037,12 @@ export type Job_Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Job_IsActive_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Job_Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -9333,6 +12052,15 @@ export type Job_Location_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Job_Positions_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Job_PostedAt_Operator = {
@@ -9581,15 +12309,21 @@ export type Job_Where = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -9602,15 +12336,21 @@ export type Job_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -9623,15 +12363,21 @@ export type Job_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Job_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Job_Where_Or>>>;
   _status?: InputMaybe<Job__Status_Operator>;
+  allowedIdentities?: InputMaybe<Job_AllowedIdentities_Operator>;
   applyUrl?: InputMaybe<Job_ApplyUrl_Operator>;
+  bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
+  bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
+  disallowedIdentities?: InputMaybe<Job_DisallowedIdentities_Operator>;
   employmentType?: InputMaybe<Job_EmploymentType_Operator>;
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
+  isActive?: InputMaybe<Job_IsActive_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
+  positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
   salaryRange__currency?: InputMaybe<Job_SalaryRange__Currency_Operator>;
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
@@ -9682,14 +12428,19 @@ export type JobsDeleteDocAccess = {
 export type JobsDocAccessFields = {
   __typename?: 'JobsDocAccessFields';
   _status?: Maybe<JobsDocAccessFields__Status>;
+  allowedIdentities?: Maybe<JobsDocAccessFields_AllowedIdentities>;
   applyUrl?: Maybe<JobsDocAccessFields_ApplyUrl>;
+  bounty?: Maybe<JobsDocAccessFields_Bounty>;
   company?: Maybe<JobsDocAccessFields_Company>;
   createdAt?: Maybe<JobsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<JobsDocAccessFields_CreatedBy>;
   description?: Maybe<JobsDocAccessFields_Description>;
+  disallowedIdentities?: Maybe<JobsDocAccessFields_DisallowedIdentities>;
   employmentType?: Maybe<JobsDocAccessFields_EmploymentType>;
   image?: Maybe<JobsDocAccessFields_Image>;
+  isActive?: Maybe<JobsDocAccessFields_IsActive>;
   location?: Maybe<JobsDocAccessFields_Location>;
+  positions?: Maybe<JobsDocAccessFields_Positions>;
   postedAt?: Maybe<JobsDocAccessFields_PostedAt>;
   salaryRange?: Maybe<JobsDocAccessFields_SalaryRange>;
   title?: Maybe<JobsDocAccessFields_Title>;
@@ -9724,6 +12475,34 @@ export type JobsDocAccessFields__Status_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_AllowedIdentities = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities';
+  create?: Maybe<JobsDocAccessFields_AllowedIdentities_Create>;
+  delete?: Maybe<JobsDocAccessFields_AllowedIdentities_Delete>;
+  read?: Maybe<JobsDocAccessFields_AllowedIdentities_Read>;
+  update?: Maybe<JobsDocAccessFields_AllowedIdentities_Update>;
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Create = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Delete = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Read = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_AllowedIdentities_Update = {
+  __typename?: 'JobsDocAccessFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_ApplyUrl = {
   __typename?: 'JobsDocAccessFields_applyUrl';
   create?: Maybe<JobsDocAccessFields_ApplyUrl_Create>;
@@ -9749,6 +12528,97 @@ export type JobsDocAccessFields_ApplyUrl_Read = {
 
 export type JobsDocAccessFields_ApplyUrl_Update = {
   __typename?: 'JobsDocAccessFields_applyUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty = {
+  __typename?: 'JobsDocAccessFields_bounty';
+  create?: Maybe<JobsDocAccessFields_Bounty_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Delete>;
+  fields?: Maybe<JobsDocAccessFields_Bounty_Fields>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Fields = {
+  __typename?: 'JobsDocAccessFields_bounty_Fields';
+  amount?: Maybe<JobsDocAccessFields_Bounty_Amount>;
+  currency?: Maybe<JobsDocAccessFields_Bounty_Currency>;
+};
+
+export type JobsDocAccessFields_Bounty_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount = {
+  __typename?: 'JobsDocAccessFields_bounty_amount';
+  create?: Maybe<JobsDocAccessFields_Bounty_Amount_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Amount_Delete>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Amount_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Amount_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Amount_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency = {
+  __typename?: 'JobsDocAccessFields_bounty_currency';
+  create?: Maybe<JobsDocAccessFields_Bounty_Currency_Create>;
+  delete?: Maybe<JobsDocAccessFields_Bounty_Currency_Delete>;
+  read?: Maybe<JobsDocAccessFields_Bounty_Currency_Read>;
+  update?: Maybe<JobsDocAccessFields_Bounty_Currency_Update>;
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Create = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Delete = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Read = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Bounty_Currency_Update = {
+  __typename?: 'JobsDocAccessFields_bounty_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -9864,6 +12734,34 @@ export type JobsDocAccessFields_Description_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_DisallowedIdentities = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities';
+  create?: Maybe<JobsDocAccessFields_DisallowedIdentities_Create>;
+  delete?: Maybe<JobsDocAccessFields_DisallowedIdentities_Delete>;
+  read?: Maybe<JobsDocAccessFields_DisallowedIdentities_Read>;
+  update?: Maybe<JobsDocAccessFields_DisallowedIdentities_Update>;
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Create = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Delete = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Read = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_DisallowedIdentities_Update = {
+  __typename?: 'JobsDocAccessFields_disallowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_EmploymentType = {
   __typename?: 'JobsDocAccessFields_employmentType';
   create?: Maybe<JobsDocAccessFields_EmploymentType_Create>;
@@ -9920,6 +12818,34 @@ export type JobsDocAccessFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_IsActive = {
+  __typename?: 'JobsDocAccessFields_isActive';
+  create?: Maybe<JobsDocAccessFields_IsActive_Create>;
+  delete?: Maybe<JobsDocAccessFields_IsActive_Delete>;
+  read?: Maybe<JobsDocAccessFields_IsActive_Read>;
+  update?: Maybe<JobsDocAccessFields_IsActive_Update>;
+};
+
+export type JobsDocAccessFields_IsActive_Create = {
+  __typename?: 'JobsDocAccessFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Delete = {
+  __typename?: 'JobsDocAccessFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Read = {
+  __typename?: 'JobsDocAccessFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsActive_Update = {
+  __typename?: 'JobsDocAccessFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_Location = {
   __typename?: 'JobsDocAccessFields_location';
   create?: Maybe<JobsDocAccessFields_Location_Create>;
@@ -9945,6 +12871,34 @@ export type JobsDocAccessFields_Location_Read = {
 
 export type JobsDocAccessFields_Location_Update = {
   __typename?: 'JobsDocAccessFields_location_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions = {
+  __typename?: 'JobsDocAccessFields_positions';
+  create?: Maybe<JobsDocAccessFields_Positions_Create>;
+  delete?: Maybe<JobsDocAccessFields_Positions_Delete>;
+  read?: Maybe<JobsDocAccessFields_Positions_Read>;
+  update?: Maybe<JobsDocAccessFields_Positions_Update>;
+};
+
+export type JobsDocAccessFields_Positions_Create = {
+  __typename?: 'JobsDocAccessFields_positions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Delete = {
+  __typename?: 'JobsDocAccessFields_positions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Read = {
+  __typename?: 'JobsDocAccessFields_positions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_Positions_Update = {
+  __typename?: 'JobsDocAccessFields_positions_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -10155,14 +13109,19 @@ export type JobsDocAccessFields_UpdatedAt_Update = {
 export type JobsFields = {
   __typename?: 'JobsFields';
   _status?: Maybe<JobsFields__Status>;
+  allowedIdentities?: Maybe<JobsFields_AllowedIdentities>;
   applyUrl?: Maybe<JobsFields_ApplyUrl>;
+  bounty?: Maybe<JobsFields_Bounty>;
   company?: Maybe<JobsFields_Company>;
   createdAt?: Maybe<JobsFields_CreatedAt>;
   createdBy?: Maybe<JobsFields_CreatedBy>;
   description?: Maybe<JobsFields_Description>;
+  disallowedIdentities?: Maybe<JobsFields_DisallowedIdentities>;
   employmentType?: Maybe<JobsFields_EmploymentType>;
   image?: Maybe<JobsFields_Image>;
+  isActive?: Maybe<JobsFields_IsActive>;
   location?: Maybe<JobsFields_Location>;
+  positions?: Maybe<JobsFields_Positions>;
   postedAt?: Maybe<JobsFields_PostedAt>;
   salaryRange?: Maybe<JobsFields_SalaryRange>;
   title?: Maybe<JobsFields_Title>;
@@ -10197,6 +13156,34 @@ export type JobsFields__Status_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_AllowedIdentities = {
+  __typename?: 'JobsFields_allowedIdentities';
+  create?: Maybe<JobsFields_AllowedIdentities_Create>;
+  delete?: Maybe<JobsFields_AllowedIdentities_Delete>;
+  read?: Maybe<JobsFields_AllowedIdentities_Read>;
+  update?: Maybe<JobsFields_AllowedIdentities_Update>;
+};
+
+export type JobsFields_AllowedIdentities_Create = {
+  __typename?: 'JobsFields_allowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Delete = {
+  __typename?: 'JobsFields_allowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Read = {
+  __typename?: 'JobsFields_allowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_AllowedIdentities_Update = {
+  __typename?: 'JobsFields_allowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_ApplyUrl = {
   __typename?: 'JobsFields_applyUrl';
   create?: Maybe<JobsFields_ApplyUrl_Create>;
@@ -10222,6 +13209,97 @@ export type JobsFields_ApplyUrl_Read = {
 
 export type JobsFields_ApplyUrl_Update = {
   __typename?: 'JobsFields_applyUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty = {
+  __typename?: 'JobsFields_bounty';
+  create?: Maybe<JobsFields_Bounty_Create>;
+  delete?: Maybe<JobsFields_Bounty_Delete>;
+  fields?: Maybe<JobsFields_Bounty_Fields>;
+  read?: Maybe<JobsFields_Bounty_Read>;
+  update?: Maybe<JobsFields_Bounty_Update>;
+};
+
+export type JobsFields_Bounty_Create = {
+  __typename?: 'JobsFields_bounty_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Delete = {
+  __typename?: 'JobsFields_bounty_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Fields = {
+  __typename?: 'JobsFields_bounty_Fields';
+  amount?: Maybe<JobsFields_Bounty_Amount>;
+  currency?: Maybe<JobsFields_Bounty_Currency>;
+};
+
+export type JobsFields_Bounty_Read = {
+  __typename?: 'JobsFields_bounty_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Update = {
+  __typename?: 'JobsFields_bounty_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount = {
+  __typename?: 'JobsFields_bounty_amount';
+  create?: Maybe<JobsFields_Bounty_Amount_Create>;
+  delete?: Maybe<JobsFields_Bounty_Amount_Delete>;
+  read?: Maybe<JobsFields_Bounty_Amount_Read>;
+  update?: Maybe<JobsFields_Bounty_Amount_Update>;
+};
+
+export type JobsFields_Bounty_Amount_Create = {
+  __typename?: 'JobsFields_bounty_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Delete = {
+  __typename?: 'JobsFields_bounty_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Read = {
+  __typename?: 'JobsFields_bounty_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Amount_Update = {
+  __typename?: 'JobsFields_bounty_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency = {
+  __typename?: 'JobsFields_bounty_currency';
+  create?: Maybe<JobsFields_Bounty_Currency_Create>;
+  delete?: Maybe<JobsFields_Bounty_Currency_Delete>;
+  read?: Maybe<JobsFields_Bounty_Currency_Read>;
+  update?: Maybe<JobsFields_Bounty_Currency_Update>;
+};
+
+export type JobsFields_Bounty_Currency_Create = {
+  __typename?: 'JobsFields_bounty_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Delete = {
+  __typename?: 'JobsFields_bounty_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Read = {
+  __typename?: 'JobsFields_bounty_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Bounty_Currency_Update = {
+  __typename?: 'JobsFields_bounty_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -10337,6 +13415,34 @@ export type JobsFields_Description_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_DisallowedIdentities = {
+  __typename?: 'JobsFields_disallowedIdentities';
+  create?: Maybe<JobsFields_DisallowedIdentities_Create>;
+  delete?: Maybe<JobsFields_DisallowedIdentities_Delete>;
+  read?: Maybe<JobsFields_DisallowedIdentities_Read>;
+  update?: Maybe<JobsFields_DisallowedIdentities_Update>;
+};
+
+export type JobsFields_DisallowedIdentities_Create = {
+  __typename?: 'JobsFields_disallowedIdentities_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Delete = {
+  __typename?: 'JobsFields_disallowedIdentities_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Read = {
+  __typename?: 'JobsFields_disallowedIdentities_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_DisallowedIdentities_Update = {
+  __typename?: 'JobsFields_disallowedIdentities_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_EmploymentType = {
   __typename?: 'JobsFields_employmentType';
   create?: Maybe<JobsFields_EmploymentType_Create>;
@@ -10393,6 +13499,34 @@ export type JobsFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_IsActive = {
+  __typename?: 'JobsFields_isActive';
+  create?: Maybe<JobsFields_IsActive_Create>;
+  delete?: Maybe<JobsFields_IsActive_Delete>;
+  read?: Maybe<JobsFields_IsActive_Read>;
+  update?: Maybe<JobsFields_IsActive_Update>;
+};
+
+export type JobsFields_IsActive_Create = {
+  __typename?: 'JobsFields_isActive_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Delete = {
+  __typename?: 'JobsFields_isActive_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Read = {
+  __typename?: 'JobsFields_isActive_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsActive_Update = {
+  __typename?: 'JobsFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_Location = {
   __typename?: 'JobsFields_location';
   create?: Maybe<JobsFields_Location_Create>;
@@ -10418,6 +13552,34 @@ export type JobsFields_Location_Read = {
 
 export type JobsFields_Location_Update = {
   __typename?: 'JobsFields_location_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions = {
+  __typename?: 'JobsFields_positions';
+  create?: Maybe<JobsFields_Positions_Create>;
+  delete?: Maybe<JobsFields_Positions_Delete>;
+  read?: Maybe<JobsFields_Positions_Read>;
+  update?: Maybe<JobsFields_Positions_Update>;
+};
+
+export type JobsFields_Positions_Create = {
+  __typename?: 'JobsFields_positions_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Delete = {
+  __typename?: 'JobsFields_positions_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Read = {
+  __typename?: 'JobsFields_positions_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_Positions_Update = {
+  __typename?: 'JobsFields_positions_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -15490,7 +18652,9 @@ export type MessageMessageArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createAccount?: Maybe<Account>;
   createAddress?: Maybe<Address>;
+  createAdminInvitation?: Maybe<AdminInvitation>;
   createCart?: Maybe<Cart>;
   createCategory?: Maybe<Category>;
   createCompany?: Maybe<Company>;
@@ -15499,6 +18663,9 @@ export type Mutation = {
   createIdentity?: Maybe<Identity>;
   createJob?: Maybe<Job>;
   createMedia?: Maybe<Media>;
+  createOauthAccessToken?: Maybe<OauthAccessToken>;
+  createOauthApplication?: Maybe<OauthApplication>;
+  createOauthConsent?: Maybe<OauthConsent>;
   createOrder?: Maybe<Order>;
   createPage?: Maybe<Page>;
   createPayloadFolder?: Maybe<PayloadFolder>;
@@ -15510,12 +18677,16 @@ export type Mutation = {
   createProduct?: Maybe<Product>;
   createRedirect?: Maybe<Redirect>;
   createSearch?: Maybe<Search>;
+  createSession?: Maybe<Session>;
   createTransaction?: Maybe<Transaction>;
   createUser?: Maybe<User>;
   createVariant?: Maybe<Variant>;
   createVariantOption?: Maybe<VariantOption>;
   createVariantType?: Maybe<VariantType>;
+  createVerification?: Maybe<Verification>;
+  deleteAccount?: Maybe<Account>;
   deleteAddress?: Maybe<Address>;
+  deleteAdminInvitation?: Maybe<AdminInvitation>;
   deleteCart?: Maybe<Cart>;
   deleteCategory?: Maybe<Category>;
   deleteCompany?: Maybe<Company>;
@@ -15524,6 +18695,9 @@ export type Mutation = {
   deleteIdentity?: Maybe<Identity>;
   deleteJob?: Maybe<Job>;
   deleteMedia?: Maybe<Media>;
+  deleteOauthAccessToken?: Maybe<OauthAccessToken>;
+  deleteOauthApplication?: Maybe<OauthApplication>;
+  deleteOauthConsent?: Maybe<OauthConsent>;
   deleteOrder?: Maybe<Order>;
   deletePage?: Maybe<Page>;
   deletePayloadFolder?: Maybe<PayloadFolder>;
@@ -15535,12 +18709,16 @@ export type Mutation = {
   deleteProduct?: Maybe<Product>;
   deleteRedirect?: Maybe<Redirect>;
   deleteSearch?: Maybe<Search>;
+  deleteSession?: Maybe<Session>;
   deleteTransaction?: Maybe<Transaction>;
   deleteUser?: Maybe<User>;
   deleteVariant?: Maybe<Variant>;
   deleteVariantOption?: Maybe<VariantOption>;
   deleteVariantType?: Maybe<VariantType>;
+  deleteVerification?: Maybe<Verification>;
+  duplicateAccount?: Maybe<Account>;
   duplicateAddress?: Maybe<Address>;
+  duplicateAdminInvitation?: Maybe<AdminInvitation>;
   duplicateCart?: Maybe<Cart>;
   duplicateCategory?: Maybe<Category>;
   duplicateCompany?: Maybe<Company>;
@@ -15549,6 +18727,9 @@ export type Mutation = {
   duplicateIdentity?: Maybe<Identity>;
   duplicateJob?: Maybe<Job>;
   duplicateMedia?: Maybe<Media>;
+  duplicateOauthAccessToken?: Maybe<OauthAccessToken>;
+  duplicateOauthApplication?: Maybe<OauthApplication>;
+  duplicateOauthConsent?: Maybe<OauthConsent>;
   duplicateOrder?: Maybe<Order>;
   duplicatePage?: Maybe<Page>;
   duplicatePayloadFolder?: Maybe<PayloadFolder>;
@@ -15560,22 +18741,22 @@ export type Mutation = {
   duplicateProduct?: Maybe<Product>;
   duplicateRedirect?: Maybe<Redirect>;
   duplicateSearch?: Maybe<Search>;
+  duplicateSession?: Maybe<Session>;
   duplicateTransaction?: Maybe<Transaction>;
   duplicateVariant?: Maybe<Variant>;
   duplicateVariantOption?: Maybe<VariantOption>;
   duplicateVariantType?: Maybe<VariantType>;
-  forgotPasswordUser: Scalars['Boolean']['output'];
-  loginUser?: Maybe<UsersLoginResult>;
+  duplicateVerification?: Maybe<Verification>;
   logoutUser?: Maybe<Scalars['String']['output']>;
   refreshTokenUser?: Maybe<UsersRefreshedUser>;
-  resetPasswordUser?: Maybe<UsersResetPassword>;
   restoreVersionJob?: Maybe<Job>;
   restoreVersionPage?: Maybe<Page>;
   restoreVersionPost?: Maybe<Post>;
   restoreVersionProduct?: Maybe<Product>;
   restoreVersionVariant?: Maybe<Variant>;
-  unlockUser: Scalars['Boolean']['output'];
+  updateAccount?: Maybe<Account>;
   updateAddress?: Maybe<Address>;
+  updateAdminInvitation?: Maybe<AdminInvitation>;
   updateCart?: Maybe<Cart>;
   updateCategory?: Maybe<Category>;
   updateCompany?: Maybe<Company>;
@@ -15586,6 +18767,9 @@ export type Mutation = {
   updateIdentity?: Maybe<Identity>;
   updateJob?: Maybe<Job>;
   updateMedia?: Maybe<Media>;
+  updateOauthAccessToken?: Maybe<OauthAccessToken>;
+  updateOauthApplication?: Maybe<OauthApplication>;
+  updateOauthConsent?: Maybe<OauthConsent>;
   updateOrder?: Maybe<Order>;
   updatePage?: Maybe<Page>;
   updatePayloadFolder?: Maybe<PayloadFolder>;
@@ -15597,17 +18781,30 @@ export type Mutation = {
   updateProduct?: Maybe<Product>;
   updateRedirect?: Maybe<Redirect>;
   updateSearch?: Maybe<Search>;
+  updateSession?: Maybe<Session>;
   updateTransaction?: Maybe<Transaction>;
   updateUser?: Maybe<User>;
   updateVariant?: Maybe<Variant>;
   updateVariantOption?: Maybe<VariantOption>;
   updateVariantType?: Maybe<VariantType>;
-  verifyEmailUser?: Maybe<Scalars['Boolean']['output']>;
+  updateVerification?: Maybe<Verification>;
+};
+
+
+export type MutationCreateAccountArgs = {
+  data: MutationAccountInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
 export type MutationCreateAddressArgs = {
   data: MutationAddressInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateAdminInvitationArgs = {
+  data: MutationAdminInvitationInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -15656,6 +18853,24 @@ export type MutationCreateJobArgs = {
 
 export type MutationCreateMediaArgs = {
   data: MutationMediaInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateOauthAccessTokenArgs = {
+  data: MutationOauthAccessTokenInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateOauthApplicationArgs = {
+  data: MutationOauthApplicationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateOauthConsentArgs = {
+  data: MutationOauthConsentInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -15726,6 +18941,12 @@ export type MutationCreateSearchArgs = {
 };
 
 
+export type MutationCreateSessionArgs = {
+  data: MutationSessionInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationCreateTransactionArgs = {
   data: MutationTransactionInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15756,7 +18977,25 @@ export type MutationCreateVariantTypeArgs = {
 };
 
 
+export type MutationCreateVerificationArgs = {
+  data: MutationVerificationInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteAddressArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteAdminInvitationArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -15805,6 +19044,24 @@ export type MutationDeleteJobArgs = {
 
 
 export type MutationDeleteMediaArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteOauthAccessTokenArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteOauthApplicationArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteOauthConsentArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -15876,6 +19133,12 @@ export type MutationDeleteSearchArgs = {
 };
 
 
+export type MutationDeleteSessionArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteTransactionArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -15906,8 +19169,26 @@ export type MutationDeleteVariantTypeArgs = {
 };
 
 
+export type MutationDeleteVerificationArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDuplicateAccountArgs = {
+  data: MutationAccountInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateAddressArgs = {
   data: MutationAddressInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateAdminInvitationArgs = {
+  data: MutationAdminInvitationInput;
   id: Scalars['String']['input'];
 };
 
@@ -15956,6 +19237,24 @@ export type MutationDuplicateJobArgs = {
 
 export type MutationDuplicateMediaArgs = {
   data: MutationMediaInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateOauthAccessTokenArgs = {
+  data: MutationOauthAccessTokenInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateOauthApplicationArgs = {
+  data: MutationOauthApplicationInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateOauthConsentArgs = {
+  data: MutationOauthConsentInput;
   id: Scalars['String']['input'];
 };
 
@@ -16026,6 +19325,12 @@ export type MutationDuplicateSearchArgs = {
 };
 
 
+export type MutationDuplicateSessionArgs = {
+  data: MutationSessionInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateTransactionArgs = {
   data: MutationTransactionInput;
   id: Scalars['String']['input'];
@@ -16050,27 +19355,14 @@ export type MutationDuplicateVariantTypeArgs = {
 };
 
 
-export type MutationForgotPasswordUserArgs = {
-  disableEmail?: InputMaybe<Scalars['Boolean']['input']>;
-  email: Scalars['String']['input'];
-  expiration?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type MutationLoginUserArgs = {
-  email: Scalars['String']['input'];
-  password?: InputMaybe<Scalars['String']['input']>;
+export type MutationDuplicateVerificationArgs = {
+  data: MutationVerificationInput;
+  id: Scalars['String']['input'];
 };
 
 
 export type MutationLogoutUserArgs = {
   allSessions?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationResetPasswordUserArgs = {
-  password?: InputMaybe<Scalars['String']['input']>;
-  token?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -16104,14 +19396,27 @@ export type MutationRestoreVersionVariantArgs = {
 };
 
 
-export type MutationUnlockUserArgs = {
-  email: Scalars['String']['input'];
+export type MutationUpdateAccountArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationAccountUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
 export type MutationUpdateAddressArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationAddressUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateAdminInvitationArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationAdminInvitationUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16196,6 +19501,33 @@ export type MutationUpdateJobArgs = {
 export type MutationUpdateMediaArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationMediaUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateOauthAccessTokenArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationOauthAccessTokenUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateOauthApplicationArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationOauthApplicationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateOauthConsentArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationOauthConsentUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16301,6 +19633,15 @@ export type MutationUpdateSearchArgs = {
 };
 
 
+export type MutationUpdateSessionArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationSessionUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationUpdateTransactionArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationTransactionUpdateInput;
@@ -16346,8 +19687,12 @@ export type MutationUpdateVariantTypeArgs = {
 };
 
 
-export type MutationVerifyEmailUserArgs = {
-  token?: InputMaybe<Scalars['String']['input']>;
+export type MutationUpdateVerificationArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationVerificationUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Number = {
@@ -16360,6 +19705,2199 @@ export type Number = {
   name: Scalars['String']['output'];
   required?: Maybe<Scalars['Boolean']['output']>;
   width?: Maybe<Scalars['Float']['output']>;
+};
+
+export type OauthAccessToken = {
+  __typename?: 'OauthAccessToken';
+  accessToken?: Maybe<Scalars['String']['output']>;
+  accessTokenExpiresAt?: Maybe<Scalars['DateTime']['output']>;
+  client?: Maybe<OauthApplication>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  refreshTokenExpiresAt?: Maybe<Scalars['DateTime']['output']>;
+  scopes?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user?: Maybe<User>;
+};
+
+export type OauthAccessToken_AccessTokenExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthAccessToken_AccessToken_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthAccessToken_Client_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type OauthAccessToken_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthAccessToken_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthAccessToken_RefreshTokenExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthAccessToken_RefreshToken_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthAccessToken_Scopes_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthAccessToken_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthAccessToken_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type OauthAccessToken_Where = {
+  AND?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_Or>>>;
+  accessToken?: InputMaybe<OauthAccessToken_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<OauthAccessToken_AccessTokenExpiresAt_Operator>;
+  client?: InputMaybe<OauthAccessToken_Client_Operator>;
+  createdAt?: InputMaybe<OauthAccessToken_CreatedAt_Operator>;
+  id?: InputMaybe<OauthAccessToken_Id_Operator>;
+  refreshToken?: InputMaybe<OauthAccessToken_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<OauthAccessToken_RefreshTokenExpiresAt_Operator>;
+  scopes?: InputMaybe<OauthAccessToken_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthAccessToken_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthAccessToken_User_Operator>;
+};
+
+export type OauthAccessToken_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_Or>>>;
+  accessToken?: InputMaybe<OauthAccessToken_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<OauthAccessToken_AccessTokenExpiresAt_Operator>;
+  client?: InputMaybe<OauthAccessToken_Client_Operator>;
+  createdAt?: InputMaybe<OauthAccessToken_CreatedAt_Operator>;
+  id?: InputMaybe<OauthAccessToken_Id_Operator>;
+  refreshToken?: InputMaybe<OauthAccessToken_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<OauthAccessToken_RefreshTokenExpiresAt_Operator>;
+  scopes?: InputMaybe<OauthAccessToken_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthAccessToken_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthAccessToken_User_Operator>;
+};
+
+export type OauthAccessToken_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthAccessToken_Where_Or>>>;
+  accessToken?: InputMaybe<OauthAccessToken_AccessToken_Operator>;
+  accessTokenExpiresAt?: InputMaybe<OauthAccessToken_AccessTokenExpiresAt_Operator>;
+  client?: InputMaybe<OauthAccessToken_Client_Operator>;
+  createdAt?: InputMaybe<OauthAccessToken_CreatedAt_Operator>;
+  id?: InputMaybe<OauthAccessToken_Id_Operator>;
+  refreshToken?: InputMaybe<OauthAccessToken_RefreshToken_Operator>;
+  refreshTokenExpiresAt?: InputMaybe<OauthAccessToken_RefreshTokenExpiresAt_Operator>;
+  scopes?: InputMaybe<OauthAccessToken_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthAccessToken_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthAccessToken_User_Operator>;
+};
+
+export type OauthAccessTokens = {
+  __typename?: 'OauthAccessTokens';
+  docs: Array<OauthAccessToken>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type OauthAccessTokensCreateAccess = {
+  __typename?: 'OauthAccessTokensCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensCreateDocAccess = {
+  __typename?: 'OauthAccessTokensCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensDeleteAccess = {
+  __typename?: 'OauthAccessTokensDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensDeleteDocAccess = {
+  __typename?: 'OauthAccessTokensDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensDocAccessFields = {
+  __typename?: 'OauthAccessTokensDocAccessFields';
+  accessToken?: Maybe<OauthAccessTokensDocAccessFields_AccessToken>;
+  accessTokenExpiresAt?: Maybe<OauthAccessTokensDocAccessFields_AccessTokenExpiresAt>;
+  client?: Maybe<OauthAccessTokensDocAccessFields_Client>;
+  createdAt?: Maybe<OauthAccessTokensDocAccessFields_CreatedAt>;
+  refreshToken?: Maybe<OauthAccessTokensDocAccessFields_RefreshToken>;
+  refreshTokenExpiresAt?: Maybe<OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt>;
+  scopes?: Maybe<OauthAccessTokensDocAccessFields_Scopes>;
+  updatedAt?: Maybe<OauthAccessTokensDocAccessFields_UpdatedAt>;
+  user?: Maybe<OauthAccessTokensDocAccessFields_User>;
+};
+
+export type OauthAccessTokensDocAccessFields_AccessToken = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessToken';
+  create?: Maybe<OauthAccessTokensDocAccessFields_AccessToken_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_AccessToken_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_AccessToken_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_AccessToken_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_AccessTokenExpiresAt = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessTokenExpiresAt';
+  create?: Maybe<OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessTokenExpiresAt_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessToken_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessToken_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessToken_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_AccessToken_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_accessToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Client = {
+  __typename?: 'OauthAccessTokensDocAccessFields_client';
+  create?: Maybe<OauthAccessTokensDocAccessFields_Client_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_Client_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_Client_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_Client_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_Client_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_client_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Client_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_client_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Client_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_client_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Client_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_client_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_CreatedAt = {
+  __typename?: 'OauthAccessTokensDocAccessFields_createdAt';
+  create?: Maybe<OauthAccessTokensDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_CreatedAt_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_CreatedAt_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_CreatedAt_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_CreatedAt_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshToken = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshToken';
+  create?: Maybe<OauthAccessTokensDocAccessFields_RefreshToken_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_RefreshToken_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_RefreshToken_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_RefreshToken_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshTokenExpiresAt';
+  create?: Maybe<OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshTokenExpiresAt_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshToken_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshToken_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshToken_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_RefreshToken_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_refreshToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Scopes = {
+  __typename?: 'OauthAccessTokensDocAccessFields_scopes';
+  create?: Maybe<OauthAccessTokensDocAccessFields_Scopes_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_Scopes_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_Scopes_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_Scopes_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_Scopes_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_scopes_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Scopes_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_scopes_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Scopes_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_scopes_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_Scopes_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_scopes_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_UpdatedAt = {
+  __typename?: 'OauthAccessTokensDocAccessFields_updatedAt';
+  create?: Maybe<OauthAccessTokensDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_UpdatedAt_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_User = {
+  __typename?: 'OauthAccessTokensDocAccessFields_user';
+  create?: Maybe<OauthAccessTokensDocAccessFields_User_Create>;
+  delete?: Maybe<OauthAccessTokensDocAccessFields_User_Delete>;
+  read?: Maybe<OauthAccessTokensDocAccessFields_User_Read>;
+  update?: Maybe<OauthAccessTokensDocAccessFields_User_Update>;
+};
+
+export type OauthAccessTokensDocAccessFields_User_Create = {
+  __typename?: 'OauthAccessTokensDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_User_Delete = {
+  __typename?: 'OauthAccessTokensDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_User_Read = {
+  __typename?: 'OauthAccessTokensDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensDocAccessFields_User_Update = {
+  __typename?: 'OauthAccessTokensDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields = {
+  __typename?: 'OauthAccessTokensFields';
+  accessToken?: Maybe<OauthAccessTokensFields_AccessToken>;
+  accessTokenExpiresAt?: Maybe<OauthAccessTokensFields_AccessTokenExpiresAt>;
+  client?: Maybe<OauthAccessTokensFields_Client>;
+  createdAt?: Maybe<OauthAccessTokensFields_CreatedAt>;
+  refreshToken?: Maybe<OauthAccessTokensFields_RefreshToken>;
+  refreshTokenExpiresAt?: Maybe<OauthAccessTokensFields_RefreshTokenExpiresAt>;
+  scopes?: Maybe<OauthAccessTokensFields_Scopes>;
+  updatedAt?: Maybe<OauthAccessTokensFields_UpdatedAt>;
+  user?: Maybe<OauthAccessTokensFields_User>;
+};
+
+export type OauthAccessTokensFields_AccessToken = {
+  __typename?: 'OauthAccessTokensFields_accessToken';
+  create?: Maybe<OauthAccessTokensFields_AccessToken_Create>;
+  delete?: Maybe<OauthAccessTokensFields_AccessToken_Delete>;
+  read?: Maybe<OauthAccessTokensFields_AccessToken_Read>;
+  update?: Maybe<OauthAccessTokensFields_AccessToken_Update>;
+};
+
+export type OauthAccessTokensFields_AccessTokenExpiresAt = {
+  __typename?: 'OauthAccessTokensFields_accessTokenExpiresAt';
+  create?: Maybe<OauthAccessTokensFields_AccessTokenExpiresAt_Create>;
+  delete?: Maybe<OauthAccessTokensFields_AccessTokenExpiresAt_Delete>;
+  read?: Maybe<OauthAccessTokensFields_AccessTokenExpiresAt_Read>;
+  update?: Maybe<OauthAccessTokensFields_AccessTokenExpiresAt_Update>;
+};
+
+export type OauthAccessTokensFields_AccessTokenExpiresAt_Create = {
+  __typename?: 'OauthAccessTokensFields_accessTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessTokenExpiresAt_Delete = {
+  __typename?: 'OauthAccessTokensFields_accessTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessTokenExpiresAt_Read = {
+  __typename?: 'OauthAccessTokensFields_accessTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessTokenExpiresAt_Update = {
+  __typename?: 'OauthAccessTokensFields_accessTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessToken_Create = {
+  __typename?: 'OauthAccessTokensFields_accessToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessToken_Delete = {
+  __typename?: 'OauthAccessTokensFields_accessToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessToken_Read = {
+  __typename?: 'OauthAccessTokensFields_accessToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_AccessToken_Update = {
+  __typename?: 'OauthAccessTokensFields_accessToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Client = {
+  __typename?: 'OauthAccessTokensFields_client';
+  create?: Maybe<OauthAccessTokensFields_Client_Create>;
+  delete?: Maybe<OauthAccessTokensFields_Client_Delete>;
+  read?: Maybe<OauthAccessTokensFields_Client_Read>;
+  update?: Maybe<OauthAccessTokensFields_Client_Update>;
+};
+
+export type OauthAccessTokensFields_Client_Create = {
+  __typename?: 'OauthAccessTokensFields_client_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Client_Delete = {
+  __typename?: 'OauthAccessTokensFields_client_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Client_Read = {
+  __typename?: 'OauthAccessTokensFields_client_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Client_Update = {
+  __typename?: 'OauthAccessTokensFields_client_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_CreatedAt = {
+  __typename?: 'OauthAccessTokensFields_createdAt';
+  create?: Maybe<OauthAccessTokensFields_CreatedAt_Create>;
+  delete?: Maybe<OauthAccessTokensFields_CreatedAt_Delete>;
+  read?: Maybe<OauthAccessTokensFields_CreatedAt_Read>;
+  update?: Maybe<OauthAccessTokensFields_CreatedAt_Update>;
+};
+
+export type OauthAccessTokensFields_CreatedAt_Create = {
+  __typename?: 'OauthAccessTokensFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_CreatedAt_Delete = {
+  __typename?: 'OauthAccessTokensFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_CreatedAt_Read = {
+  __typename?: 'OauthAccessTokensFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_CreatedAt_Update = {
+  __typename?: 'OauthAccessTokensFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshToken = {
+  __typename?: 'OauthAccessTokensFields_refreshToken';
+  create?: Maybe<OauthAccessTokensFields_RefreshToken_Create>;
+  delete?: Maybe<OauthAccessTokensFields_RefreshToken_Delete>;
+  read?: Maybe<OauthAccessTokensFields_RefreshToken_Read>;
+  update?: Maybe<OauthAccessTokensFields_RefreshToken_Update>;
+};
+
+export type OauthAccessTokensFields_RefreshTokenExpiresAt = {
+  __typename?: 'OauthAccessTokensFields_refreshTokenExpiresAt';
+  create?: Maybe<OauthAccessTokensFields_RefreshTokenExpiresAt_Create>;
+  delete?: Maybe<OauthAccessTokensFields_RefreshTokenExpiresAt_Delete>;
+  read?: Maybe<OauthAccessTokensFields_RefreshTokenExpiresAt_Read>;
+  update?: Maybe<OauthAccessTokensFields_RefreshTokenExpiresAt_Update>;
+};
+
+export type OauthAccessTokensFields_RefreshTokenExpiresAt_Create = {
+  __typename?: 'OauthAccessTokensFields_refreshTokenExpiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshTokenExpiresAt_Delete = {
+  __typename?: 'OauthAccessTokensFields_refreshTokenExpiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshTokenExpiresAt_Read = {
+  __typename?: 'OauthAccessTokensFields_refreshTokenExpiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshTokenExpiresAt_Update = {
+  __typename?: 'OauthAccessTokensFields_refreshTokenExpiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshToken_Create = {
+  __typename?: 'OauthAccessTokensFields_refreshToken_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshToken_Delete = {
+  __typename?: 'OauthAccessTokensFields_refreshToken_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshToken_Read = {
+  __typename?: 'OauthAccessTokensFields_refreshToken_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_RefreshToken_Update = {
+  __typename?: 'OauthAccessTokensFields_refreshToken_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Scopes = {
+  __typename?: 'OauthAccessTokensFields_scopes';
+  create?: Maybe<OauthAccessTokensFields_Scopes_Create>;
+  delete?: Maybe<OauthAccessTokensFields_Scopes_Delete>;
+  read?: Maybe<OauthAccessTokensFields_Scopes_Read>;
+  update?: Maybe<OauthAccessTokensFields_Scopes_Update>;
+};
+
+export type OauthAccessTokensFields_Scopes_Create = {
+  __typename?: 'OauthAccessTokensFields_scopes_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Scopes_Delete = {
+  __typename?: 'OauthAccessTokensFields_scopes_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Scopes_Read = {
+  __typename?: 'OauthAccessTokensFields_scopes_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_Scopes_Update = {
+  __typename?: 'OauthAccessTokensFields_scopes_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_UpdatedAt = {
+  __typename?: 'OauthAccessTokensFields_updatedAt';
+  create?: Maybe<OauthAccessTokensFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthAccessTokensFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthAccessTokensFields_UpdatedAt_Read>;
+  update?: Maybe<OauthAccessTokensFields_UpdatedAt_Update>;
+};
+
+export type OauthAccessTokensFields_UpdatedAt_Create = {
+  __typename?: 'OauthAccessTokensFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_UpdatedAt_Delete = {
+  __typename?: 'OauthAccessTokensFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_UpdatedAt_Read = {
+  __typename?: 'OauthAccessTokensFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_UpdatedAt_Update = {
+  __typename?: 'OauthAccessTokensFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_User = {
+  __typename?: 'OauthAccessTokensFields_user';
+  create?: Maybe<OauthAccessTokensFields_User_Create>;
+  delete?: Maybe<OauthAccessTokensFields_User_Delete>;
+  read?: Maybe<OauthAccessTokensFields_User_Read>;
+  update?: Maybe<OauthAccessTokensFields_User_Update>;
+};
+
+export type OauthAccessTokensFields_User_Create = {
+  __typename?: 'OauthAccessTokensFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_User_Delete = {
+  __typename?: 'OauthAccessTokensFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_User_Read = {
+  __typename?: 'OauthAccessTokensFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensFields_User_Update = {
+  __typename?: 'OauthAccessTokensFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthAccessTokensReadAccess = {
+  __typename?: 'OauthAccessTokensReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensReadDocAccess = {
+  __typename?: 'OauthAccessTokensReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensUpdateAccess = {
+  __typename?: 'OauthAccessTokensUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthAccessTokensUpdateDocAccess = {
+  __typename?: 'OauthAccessTokensUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplication = {
+  __typename?: 'OauthApplication';
+  clientId?: Maybe<Scalars['String']['output']>;
+  clientSecret?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  metadata?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  redirectUrls?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user?: Maybe<User>;
+};
+
+export type OauthApplication_ClientId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_ClientSecret_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthApplication_Disabled_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type OauthApplication_Icon_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_Metadata_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_RedirectUrls_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_Type_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthApplication_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthApplication_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type OauthApplication_Where = {
+  AND?: InputMaybe<Array<InputMaybe<OauthApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthApplication_Where_Or>>>;
+  clientId?: InputMaybe<OauthApplication_ClientId_Operator>;
+  clientSecret?: InputMaybe<OauthApplication_ClientSecret_Operator>;
+  createdAt?: InputMaybe<OauthApplication_CreatedAt_Operator>;
+  disabled?: InputMaybe<OauthApplication_Disabled_Operator>;
+  icon?: InputMaybe<OauthApplication_Icon_Operator>;
+  id?: InputMaybe<OauthApplication_Id_Operator>;
+  metadata?: InputMaybe<OauthApplication_Metadata_Operator>;
+  name?: InputMaybe<OauthApplication_Name_Operator>;
+  redirectUrls?: InputMaybe<OauthApplication_RedirectUrls_Operator>;
+  type?: InputMaybe<OauthApplication_Type_Operator>;
+  updatedAt?: InputMaybe<OauthApplication_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthApplication_User_Operator>;
+};
+
+export type OauthApplication_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<OauthApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthApplication_Where_Or>>>;
+  clientId?: InputMaybe<OauthApplication_ClientId_Operator>;
+  clientSecret?: InputMaybe<OauthApplication_ClientSecret_Operator>;
+  createdAt?: InputMaybe<OauthApplication_CreatedAt_Operator>;
+  disabled?: InputMaybe<OauthApplication_Disabled_Operator>;
+  icon?: InputMaybe<OauthApplication_Icon_Operator>;
+  id?: InputMaybe<OauthApplication_Id_Operator>;
+  metadata?: InputMaybe<OauthApplication_Metadata_Operator>;
+  name?: InputMaybe<OauthApplication_Name_Operator>;
+  redirectUrls?: InputMaybe<OauthApplication_RedirectUrls_Operator>;
+  type?: InputMaybe<OauthApplication_Type_Operator>;
+  updatedAt?: InputMaybe<OauthApplication_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthApplication_User_Operator>;
+};
+
+export type OauthApplication_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<OauthApplication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthApplication_Where_Or>>>;
+  clientId?: InputMaybe<OauthApplication_ClientId_Operator>;
+  clientSecret?: InputMaybe<OauthApplication_ClientSecret_Operator>;
+  createdAt?: InputMaybe<OauthApplication_CreatedAt_Operator>;
+  disabled?: InputMaybe<OauthApplication_Disabled_Operator>;
+  icon?: InputMaybe<OauthApplication_Icon_Operator>;
+  id?: InputMaybe<OauthApplication_Id_Operator>;
+  metadata?: InputMaybe<OauthApplication_Metadata_Operator>;
+  name?: InputMaybe<OauthApplication_Name_Operator>;
+  redirectUrls?: InputMaybe<OauthApplication_RedirectUrls_Operator>;
+  type?: InputMaybe<OauthApplication_Type_Operator>;
+  updatedAt?: InputMaybe<OauthApplication_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthApplication_User_Operator>;
+};
+
+export type OauthApplications = {
+  __typename?: 'OauthApplications';
+  docs: Array<OauthApplication>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type OauthApplicationsCreateAccess = {
+  __typename?: 'OauthApplicationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsCreateDocAccess = {
+  __typename?: 'OauthApplicationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsDeleteAccess = {
+  __typename?: 'OauthApplicationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsDeleteDocAccess = {
+  __typename?: 'OauthApplicationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsDocAccessFields = {
+  __typename?: 'OauthApplicationsDocAccessFields';
+  clientId?: Maybe<OauthApplicationsDocAccessFields_ClientId>;
+  clientSecret?: Maybe<OauthApplicationsDocAccessFields_ClientSecret>;
+  createdAt?: Maybe<OauthApplicationsDocAccessFields_CreatedAt>;
+  disabled?: Maybe<OauthApplicationsDocAccessFields_Disabled>;
+  icon?: Maybe<OauthApplicationsDocAccessFields_Icon>;
+  metadata?: Maybe<OauthApplicationsDocAccessFields_Metadata>;
+  name?: Maybe<OauthApplicationsDocAccessFields_Name>;
+  redirectUrls?: Maybe<OauthApplicationsDocAccessFields_RedirectUrls>;
+  type?: Maybe<OauthApplicationsDocAccessFields_Type>;
+  updatedAt?: Maybe<OauthApplicationsDocAccessFields_UpdatedAt>;
+  user?: Maybe<OauthApplicationsDocAccessFields_User>;
+};
+
+export type OauthApplicationsDocAccessFields_ClientId = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientId';
+  create?: Maybe<OauthApplicationsDocAccessFields_ClientId_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_ClientId_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_ClientId_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_ClientId_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_ClientId_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientId_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientId_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientId_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientSecret = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientSecret';
+  create?: Maybe<OauthApplicationsDocAccessFields_ClientSecret_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_ClientSecret_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_ClientSecret_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_ClientSecret_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_ClientSecret_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientSecret_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientSecret_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientSecret_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientSecret_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientSecret_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_ClientSecret_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_clientSecret_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_CreatedAt = {
+  __typename?: 'OauthApplicationsDocAccessFields_createdAt';
+  create?: Maybe<OauthApplicationsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_CreatedAt_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Disabled = {
+  __typename?: 'OauthApplicationsDocAccessFields_disabled';
+  create?: Maybe<OauthApplicationsDocAccessFields_Disabled_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_Disabled_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_Disabled_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_Disabled_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_Disabled_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_disabled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Disabled_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_disabled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Disabled_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_disabled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Disabled_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_disabled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Icon = {
+  __typename?: 'OauthApplicationsDocAccessFields_icon';
+  create?: Maybe<OauthApplicationsDocAccessFields_Icon_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_Icon_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_Icon_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_Icon_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_Icon_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Icon_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Icon_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Icon_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Metadata = {
+  __typename?: 'OauthApplicationsDocAccessFields_metadata';
+  create?: Maybe<OauthApplicationsDocAccessFields_Metadata_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_Metadata_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_Metadata_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_Metadata_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_Metadata_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_metadata_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Metadata_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_metadata_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Metadata_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_metadata_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Metadata_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_metadata_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Name = {
+  __typename?: 'OauthApplicationsDocAccessFields_name';
+  create?: Maybe<OauthApplicationsDocAccessFields_Name_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_Name_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_Name_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_Name_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_Name_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Name_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Name_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Name_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_RedirectUrls = {
+  __typename?: 'OauthApplicationsDocAccessFields_redirectUrls';
+  create?: Maybe<OauthApplicationsDocAccessFields_RedirectUrls_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_RedirectUrls_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_RedirectUrls_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_RedirectUrls_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_RedirectUrls_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_redirectUrls_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_RedirectUrls_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_redirectUrls_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_RedirectUrls_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_redirectUrls_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_RedirectUrls_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_redirectUrls_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Type = {
+  __typename?: 'OauthApplicationsDocAccessFields_type';
+  create?: Maybe<OauthApplicationsDocAccessFields_Type_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_Type_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_Type_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_Type_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_Type_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_type_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Type_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_type_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Type_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_type_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_Type_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_type_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_UpdatedAt = {
+  __typename?: 'OauthApplicationsDocAccessFields_updatedAt';
+  create?: Maybe<OauthApplicationsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_User = {
+  __typename?: 'OauthApplicationsDocAccessFields_user';
+  create?: Maybe<OauthApplicationsDocAccessFields_User_Create>;
+  delete?: Maybe<OauthApplicationsDocAccessFields_User_Delete>;
+  read?: Maybe<OauthApplicationsDocAccessFields_User_Read>;
+  update?: Maybe<OauthApplicationsDocAccessFields_User_Update>;
+};
+
+export type OauthApplicationsDocAccessFields_User_Create = {
+  __typename?: 'OauthApplicationsDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_User_Delete = {
+  __typename?: 'OauthApplicationsDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_User_Read = {
+  __typename?: 'OauthApplicationsDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsDocAccessFields_User_Update = {
+  __typename?: 'OauthApplicationsDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields = {
+  __typename?: 'OauthApplicationsFields';
+  clientId?: Maybe<OauthApplicationsFields_ClientId>;
+  clientSecret?: Maybe<OauthApplicationsFields_ClientSecret>;
+  createdAt?: Maybe<OauthApplicationsFields_CreatedAt>;
+  disabled?: Maybe<OauthApplicationsFields_Disabled>;
+  icon?: Maybe<OauthApplicationsFields_Icon>;
+  metadata?: Maybe<OauthApplicationsFields_Metadata>;
+  name?: Maybe<OauthApplicationsFields_Name>;
+  redirectUrls?: Maybe<OauthApplicationsFields_RedirectUrls>;
+  type?: Maybe<OauthApplicationsFields_Type>;
+  updatedAt?: Maybe<OauthApplicationsFields_UpdatedAt>;
+  user?: Maybe<OauthApplicationsFields_User>;
+};
+
+export type OauthApplicationsFields_ClientId = {
+  __typename?: 'OauthApplicationsFields_clientId';
+  create?: Maybe<OauthApplicationsFields_ClientId_Create>;
+  delete?: Maybe<OauthApplicationsFields_ClientId_Delete>;
+  read?: Maybe<OauthApplicationsFields_ClientId_Read>;
+  update?: Maybe<OauthApplicationsFields_ClientId_Update>;
+};
+
+export type OauthApplicationsFields_ClientId_Create = {
+  __typename?: 'OauthApplicationsFields_clientId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientId_Delete = {
+  __typename?: 'OauthApplicationsFields_clientId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientId_Read = {
+  __typename?: 'OauthApplicationsFields_clientId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientId_Update = {
+  __typename?: 'OauthApplicationsFields_clientId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientSecret = {
+  __typename?: 'OauthApplicationsFields_clientSecret';
+  create?: Maybe<OauthApplicationsFields_ClientSecret_Create>;
+  delete?: Maybe<OauthApplicationsFields_ClientSecret_Delete>;
+  read?: Maybe<OauthApplicationsFields_ClientSecret_Read>;
+  update?: Maybe<OauthApplicationsFields_ClientSecret_Update>;
+};
+
+export type OauthApplicationsFields_ClientSecret_Create = {
+  __typename?: 'OauthApplicationsFields_clientSecret_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientSecret_Delete = {
+  __typename?: 'OauthApplicationsFields_clientSecret_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientSecret_Read = {
+  __typename?: 'OauthApplicationsFields_clientSecret_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_ClientSecret_Update = {
+  __typename?: 'OauthApplicationsFields_clientSecret_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_CreatedAt = {
+  __typename?: 'OauthApplicationsFields_createdAt';
+  create?: Maybe<OauthApplicationsFields_CreatedAt_Create>;
+  delete?: Maybe<OauthApplicationsFields_CreatedAt_Delete>;
+  read?: Maybe<OauthApplicationsFields_CreatedAt_Read>;
+  update?: Maybe<OauthApplicationsFields_CreatedAt_Update>;
+};
+
+export type OauthApplicationsFields_CreatedAt_Create = {
+  __typename?: 'OauthApplicationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_CreatedAt_Delete = {
+  __typename?: 'OauthApplicationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_CreatedAt_Read = {
+  __typename?: 'OauthApplicationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_CreatedAt_Update = {
+  __typename?: 'OauthApplicationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Disabled = {
+  __typename?: 'OauthApplicationsFields_disabled';
+  create?: Maybe<OauthApplicationsFields_Disabled_Create>;
+  delete?: Maybe<OauthApplicationsFields_Disabled_Delete>;
+  read?: Maybe<OauthApplicationsFields_Disabled_Read>;
+  update?: Maybe<OauthApplicationsFields_Disabled_Update>;
+};
+
+export type OauthApplicationsFields_Disabled_Create = {
+  __typename?: 'OauthApplicationsFields_disabled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Disabled_Delete = {
+  __typename?: 'OauthApplicationsFields_disabled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Disabled_Read = {
+  __typename?: 'OauthApplicationsFields_disabled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Disabled_Update = {
+  __typename?: 'OauthApplicationsFields_disabled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Icon = {
+  __typename?: 'OauthApplicationsFields_icon';
+  create?: Maybe<OauthApplicationsFields_Icon_Create>;
+  delete?: Maybe<OauthApplicationsFields_Icon_Delete>;
+  read?: Maybe<OauthApplicationsFields_Icon_Read>;
+  update?: Maybe<OauthApplicationsFields_Icon_Update>;
+};
+
+export type OauthApplicationsFields_Icon_Create = {
+  __typename?: 'OauthApplicationsFields_icon_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Icon_Delete = {
+  __typename?: 'OauthApplicationsFields_icon_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Icon_Read = {
+  __typename?: 'OauthApplicationsFields_icon_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Icon_Update = {
+  __typename?: 'OauthApplicationsFields_icon_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Metadata = {
+  __typename?: 'OauthApplicationsFields_metadata';
+  create?: Maybe<OauthApplicationsFields_Metadata_Create>;
+  delete?: Maybe<OauthApplicationsFields_Metadata_Delete>;
+  read?: Maybe<OauthApplicationsFields_Metadata_Read>;
+  update?: Maybe<OauthApplicationsFields_Metadata_Update>;
+};
+
+export type OauthApplicationsFields_Metadata_Create = {
+  __typename?: 'OauthApplicationsFields_metadata_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Metadata_Delete = {
+  __typename?: 'OauthApplicationsFields_metadata_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Metadata_Read = {
+  __typename?: 'OauthApplicationsFields_metadata_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Metadata_Update = {
+  __typename?: 'OauthApplicationsFields_metadata_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Name = {
+  __typename?: 'OauthApplicationsFields_name';
+  create?: Maybe<OauthApplicationsFields_Name_Create>;
+  delete?: Maybe<OauthApplicationsFields_Name_Delete>;
+  read?: Maybe<OauthApplicationsFields_Name_Read>;
+  update?: Maybe<OauthApplicationsFields_Name_Update>;
+};
+
+export type OauthApplicationsFields_Name_Create = {
+  __typename?: 'OauthApplicationsFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Name_Delete = {
+  __typename?: 'OauthApplicationsFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Name_Read = {
+  __typename?: 'OauthApplicationsFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Name_Update = {
+  __typename?: 'OauthApplicationsFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_RedirectUrls = {
+  __typename?: 'OauthApplicationsFields_redirectUrls';
+  create?: Maybe<OauthApplicationsFields_RedirectUrls_Create>;
+  delete?: Maybe<OauthApplicationsFields_RedirectUrls_Delete>;
+  read?: Maybe<OauthApplicationsFields_RedirectUrls_Read>;
+  update?: Maybe<OauthApplicationsFields_RedirectUrls_Update>;
+};
+
+export type OauthApplicationsFields_RedirectUrls_Create = {
+  __typename?: 'OauthApplicationsFields_redirectUrls_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_RedirectUrls_Delete = {
+  __typename?: 'OauthApplicationsFields_redirectUrls_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_RedirectUrls_Read = {
+  __typename?: 'OauthApplicationsFields_redirectUrls_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_RedirectUrls_Update = {
+  __typename?: 'OauthApplicationsFields_redirectUrls_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Type = {
+  __typename?: 'OauthApplicationsFields_type';
+  create?: Maybe<OauthApplicationsFields_Type_Create>;
+  delete?: Maybe<OauthApplicationsFields_Type_Delete>;
+  read?: Maybe<OauthApplicationsFields_Type_Read>;
+  update?: Maybe<OauthApplicationsFields_Type_Update>;
+};
+
+export type OauthApplicationsFields_Type_Create = {
+  __typename?: 'OauthApplicationsFields_type_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Type_Delete = {
+  __typename?: 'OauthApplicationsFields_type_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Type_Read = {
+  __typename?: 'OauthApplicationsFields_type_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_Type_Update = {
+  __typename?: 'OauthApplicationsFields_type_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_UpdatedAt = {
+  __typename?: 'OauthApplicationsFields_updatedAt';
+  create?: Maybe<OauthApplicationsFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthApplicationsFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthApplicationsFields_UpdatedAt_Read>;
+  update?: Maybe<OauthApplicationsFields_UpdatedAt_Update>;
+};
+
+export type OauthApplicationsFields_UpdatedAt_Create = {
+  __typename?: 'OauthApplicationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_UpdatedAt_Delete = {
+  __typename?: 'OauthApplicationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_UpdatedAt_Read = {
+  __typename?: 'OauthApplicationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_UpdatedAt_Update = {
+  __typename?: 'OauthApplicationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_User = {
+  __typename?: 'OauthApplicationsFields_user';
+  create?: Maybe<OauthApplicationsFields_User_Create>;
+  delete?: Maybe<OauthApplicationsFields_User_Delete>;
+  read?: Maybe<OauthApplicationsFields_User_Read>;
+  update?: Maybe<OauthApplicationsFields_User_Update>;
+};
+
+export type OauthApplicationsFields_User_Create = {
+  __typename?: 'OauthApplicationsFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_User_Delete = {
+  __typename?: 'OauthApplicationsFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_User_Read = {
+  __typename?: 'OauthApplicationsFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsFields_User_Update = {
+  __typename?: 'OauthApplicationsFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthApplicationsReadAccess = {
+  __typename?: 'OauthApplicationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsReadDocAccess = {
+  __typename?: 'OauthApplicationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsUpdateAccess = {
+  __typename?: 'OauthApplicationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthApplicationsUpdateDocAccess = {
+  __typename?: 'OauthApplicationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsent = {
+  __typename?: 'OauthConsent';
+  client?: Maybe<OauthApplication>;
+  consentGiven?: Maybe<Scalars['Boolean']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['String']['output'];
+  scopes?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user?: Maybe<User>;
+};
+
+export type OauthConsent_Client_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type OauthConsent_ConsentGiven_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type OauthConsent_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthConsent_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthConsent_Scopes_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type OauthConsent_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OauthConsent_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type OauthConsent_Where = {
+  AND?: InputMaybe<Array<InputMaybe<OauthConsent_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthConsent_Where_Or>>>;
+  client?: InputMaybe<OauthConsent_Client_Operator>;
+  consentGiven?: InputMaybe<OauthConsent_ConsentGiven_Operator>;
+  createdAt?: InputMaybe<OauthConsent_CreatedAt_Operator>;
+  id?: InputMaybe<OauthConsent_Id_Operator>;
+  scopes?: InputMaybe<OauthConsent_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthConsent_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthConsent_User_Operator>;
+};
+
+export type OauthConsent_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<OauthConsent_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthConsent_Where_Or>>>;
+  client?: InputMaybe<OauthConsent_Client_Operator>;
+  consentGiven?: InputMaybe<OauthConsent_ConsentGiven_Operator>;
+  createdAt?: InputMaybe<OauthConsent_CreatedAt_Operator>;
+  id?: InputMaybe<OauthConsent_Id_Operator>;
+  scopes?: InputMaybe<OauthConsent_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthConsent_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthConsent_User_Operator>;
+};
+
+export type OauthConsent_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<OauthConsent_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<OauthConsent_Where_Or>>>;
+  client?: InputMaybe<OauthConsent_Client_Operator>;
+  consentGiven?: InputMaybe<OauthConsent_ConsentGiven_Operator>;
+  createdAt?: InputMaybe<OauthConsent_CreatedAt_Operator>;
+  id?: InputMaybe<OauthConsent_Id_Operator>;
+  scopes?: InputMaybe<OauthConsent_Scopes_Operator>;
+  updatedAt?: InputMaybe<OauthConsent_UpdatedAt_Operator>;
+  user?: InputMaybe<OauthConsent_User_Operator>;
+};
+
+export type OauthConsents = {
+  __typename?: 'OauthConsents';
+  docs: Array<OauthConsent>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type OauthConsentsCreateAccess = {
+  __typename?: 'OauthConsentsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsCreateDocAccess = {
+  __typename?: 'OauthConsentsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsDeleteAccess = {
+  __typename?: 'OauthConsentsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsDeleteDocAccess = {
+  __typename?: 'OauthConsentsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsDocAccessFields = {
+  __typename?: 'OauthConsentsDocAccessFields';
+  client?: Maybe<OauthConsentsDocAccessFields_Client>;
+  consentGiven?: Maybe<OauthConsentsDocAccessFields_ConsentGiven>;
+  createdAt?: Maybe<OauthConsentsDocAccessFields_CreatedAt>;
+  scopes?: Maybe<OauthConsentsDocAccessFields_Scopes>;
+  updatedAt?: Maybe<OauthConsentsDocAccessFields_UpdatedAt>;
+  user?: Maybe<OauthConsentsDocAccessFields_User>;
+};
+
+export type OauthConsentsDocAccessFields_Client = {
+  __typename?: 'OauthConsentsDocAccessFields_client';
+  create?: Maybe<OauthConsentsDocAccessFields_Client_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_Client_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_Client_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_Client_Update>;
+};
+
+export type OauthConsentsDocAccessFields_Client_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_client_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Client_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_client_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Client_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_client_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Client_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_client_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_ConsentGiven = {
+  __typename?: 'OauthConsentsDocAccessFields_consentGiven';
+  create?: Maybe<OauthConsentsDocAccessFields_ConsentGiven_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_ConsentGiven_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_ConsentGiven_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_ConsentGiven_Update>;
+};
+
+export type OauthConsentsDocAccessFields_ConsentGiven_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_consentGiven_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_ConsentGiven_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_consentGiven_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_ConsentGiven_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_consentGiven_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_ConsentGiven_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_consentGiven_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_CreatedAt = {
+  __typename?: 'OauthConsentsDocAccessFields_createdAt';
+  create?: Maybe<OauthConsentsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_CreatedAt_Update>;
+};
+
+export type OauthConsentsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Scopes = {
+  __typename?: 'OauthConsentsDocAccessFields_scopes';
+  create?: Maybe<OauthConsentsDocAccessFields_Scopes_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_Scopes_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_Scopes_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_Scopes_Update>;
+};
+
+export type OauthConsentsDocAccessFields_Scopes_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_scopes_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Scopes_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_scopes_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Scopes_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_scopes_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_Scopes_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_scopes_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_UpdatedAt = {
+  __typename?: 'OauthConsentsDocAccessFields_updatedAt';
+  create?: Maybe<OauthConsentsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type OauthConsentsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_User = {
+  __typename?: 'OauthConsentsDocAccessFields_user';
+  create?: Maybe<OauthConsentsDocAccessFields_User_Create>;
+  delete?: Maybe<OauthConsentsDocAccessFields_User_Delete>;
+  read?: Maybe<OauthConsentsDocAccessFields_User_Read>;
+  update?: Maybe<OauthConsentsDocAccessFields_User_Update>;
+};
+
+export type OauthConsentsDocAccessFields_User_Create = {
+  __typename?: 'OauthConsentsDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_User_Delete = {
+  __typename?: 'OauthConsentsDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_User_Read = {
+  __typename?: 'OauthConsentsDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsDocAccessFields_User_Update = {
+  __typename?: 'OauthConsentsDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields = {
+  __typename?: 'OauthConsentsFields';
+  client?: Maybe<OauthConsentsFields_Client>;
+  consentGiven?: Maybe<OauthConsentsFields_ConsentGiven>;
+  createdAt?: Maybe<OauthConsentsFields_CreatedAt>;
+  scopes?: Maybe<OauthConsentsFields_Scopes>;
+  updatedAt?: Maybe<OauthConsentsFields_UpdatedAt>;
+  user?: Maybe<OauthConsentsFields_User>;
+};
+
+export type OauthConsentsFields_Client = {
+  __typename?: 'OauthConsentsFields_client';
+  create?: Maybe<OauthConsentsFields_Client_Create>;
+  delete?: Maybe<OauthConsentsFields_Client_Delete>;
+  read?: Maybe<OauthConsentsFields_Client_Read>;
+  update?: Maybe<OauthConsentsFields_Client_Update>;
+};
+
+export type OauthConsentsFields_Client_Create = {
+  __typename?: 'OauthConsentsFields_client_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Client_Delete = {
+  __typename?: 'OauthConsentsFields_client_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Client_Read = {
+  __typename?: 'OauthConsentsFields_client_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Client_Update = {
+  __typename?: 'OauthConsentsFields_client_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_ConsentGiven = {
+  __typename?: 'OauthConsentsFields_consentGiven';
+  create?: Maybe<OauthConsentsFields_ConsentGiven_Create>;
+  delete?: Maybe<OauthConsentsFields_ConsentGiven_Delete>;
+  read?: Maybe<OauthConsentsFields_ConsentGiven_Read>;
+  update?: Maybe<OauthConsentsFields_ConsentGiven_Update>;
+};
+
+export type OauthConsentsFields_ConsentGiven_Create = {
+  __typename?: 'OauthConsentsFields_consentGiven_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_ConsentGiven_Delete = {
+  __typename?: 'OauthConsentsFields_consentGiven_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_ConsentGiven_Read = {
+  __typename?: 'OauthConsentsFields_consentGiven_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_ConsentGiven_Update = {
+  __typename?: 'OauthConsentsFields_consentGiven_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_CreatedAt = {
+  __typename?: 'OauthConsentsFields_createdAt';
+  create?: Maybe<OauthConsentsFields_CreatedAt_Create>;
+  delete?: Maybe<OauthConsentsFields_CreatedAt_Delete>;
+  read?: Maybe<OauthConsentsFields_CreatedAt_Read>;
+  update?: Maybe<OauthConsentsFields_CreatedAt_Update>;
+};
+
+export type OauthConsentsFields_CreatedAt_Create = {
+  __typename?: 'OauthConsentsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_CreatedAt_Delete = {
+  __typename?: 'OauthConsentsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_CreatedAt_Read = {
+  __typename?: 'OauthConsentsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_CreatedAt_Update = {
+  __typename?: 'OauthConsentsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Scopes = {
+  __typename?: 'OauthConsentsFields_scopes';
+  create?: Maybe<OauthConsentsFields_Scopes_Create>;
+  delete?: Maybe<OauthConsentsFields_Scopes_Delete>;
+  read?: Maybe<OauthConsentsFields_Scopes_Read>;
+  update?: Maybe<OauthConsentsFields_Scopes_Update>;
+};
+
+export type OauthConsentsFields_Scopes_Create = {
+  __typename?: 'OauthConsentsFields_scopes_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Scopes_Delete = {
+  __typename?: 'OauthConsentsFields_scopes_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Scopes_Read = {
+  __typename?: 'OauthConsentsFields_scopes_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_Scopes_Update = {
+  __typename?: 'OauthConsentsFields_scopes_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_UpdatedAt = {
+  __typename?: 'OauthConsentsFields_updatedAt';
+  create?: Maybe<OauthConsentsFields_UpdatedAt_Create>;
+  delete?: Maybe<OauthConsentsFields_UpdatedAt_Delete>;
+  read?: Maybe<OauthConsentsFields_UpdatedAt_Read>;
+  update?: Maybe<OauthConsentsFields_UpdatedAt_Update>;
+};
+
+export type OauthConsentsFields_UpdatedAt_Create = {
+  __typename?: 'OauthConsentsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_UpdatedAt_Delete = {
+  __typename?: 'OauthConsentsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_UpdatedAt_Read = {
+  __typename?: 'OauthConsentsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_UpdatedAt_Update = {
+  __typename?: 'OauthConsentsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_User = {
+  __typename?: 'OauthConsentsFields_user';
+  create?: Maybe<OauthConsentsFields_User_Create>;
+  delete?: Maybe<OauthConsentsFields_User_Delete>;
+  read?: Maybe<OauthConsentsFields_User_Read>;
+  update?: Maybe<OauthConsentsFields_User_Update>;
+};
+
+export type OauthConsentsFields_User_Create = {
+  __typename?: 'OauthConsentsFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_User_Delete = {
+  __typename?: 'OauthConsentsFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_User_Read = {
+  __typename?: 'OauthConsentsFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsFields_User_Update = {
+  __typename?: 'OauthConsentsFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OauthConsentsReadAccess = {
+  __typename?: 'OauthConsentsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsReadDocAccess = {
+  __typename?: 'OauthConsentsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsUpdateAccess = {
+  __typename?: 'OauthConsentsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type OauthConsentsUpdateDocAccess = {
+  __typename?: 'OauthConsentsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type Order = {
@@ -23023,7 +28561,9 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInput = {
 };
 
 export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
+  Accounts = 'accounts',
   Addresses = 'addresses',
+  AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
   Companies = 'companies',
@@ -23032,6 +28572,9 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  OauthAccessTokens = 'oauthAccessTokens',
+  OauthApplications = 'oauthApplications',
+  OauthConsents = 'oauthConsents',
   Orders = 'orders',
   Pages = 'pages',
   PayloadFolders = 'payload_folders',
@@ -23039,11 +28582,13 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Products = 'products',
   Redirects = 'redirects',
   Search = 'search',
+  Sessions = 'sessions',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
-  Variants = 'variants'
+  Variants = 'variants',
+  Verifications = 'verifications'
 }
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -23055,7 +28600,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Address | Cart | Category | Company | Form | FormSubmission | Identity | Job | Media | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Transaction | User | Variant | VariantOption | VariantType;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Transaction | User | Variant | VariantOption | VariantType | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -23063,7 +28608,9 @@ export type PayloadLockedDocument_DocumentRelationshipInput = {
 };
 
 export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
+  Accounts = 'accounts',
   Addresses = 'addresses',
+  AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
   Companies = 'companies',
@@ -23072,6 +28619,9 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  OauthAccessTokens = 'oauthAccessTokens',
+  OauthApplications = 'oauthApplications',
+  OauthConsents = 'oauthConsents',
   Orders = 'orders',
   Pages = 'pages',
   PayloadFolders = 'payload_folders',
@@ -23079,15 +28629,19 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Products = 'products',
   Redirects = 'redirects',
   Search = 'search',
+  Sessions = 'sessions',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
-  Variants = 'variants'
+  Variants = 'variants',
+  Verifications = 'verifications'
 }
 
 export enum PayloadLockedDocument_Document_RelationTo {
+  Accounts = 'accounts',
   Addresses = 'addresses',
+  AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
   Companies = 'companies',
@@ -23096,6 +28650,9 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  OauthAccessTokens = 'oauthAccessTokens',
+  OauthApplications = 'oauthApplications',
+  OauthConsents = 'oauthConsents',
   Orders = 'orders',
   Pages = 'pages',
   PayloadFolders = 'payload_folders',
@@ -23103,11 +28660,13 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Products = 'products',
   Redirects = 'redirects',
   Search = 'search',
+  Sessions = 'sessions',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
-  Variants = 'variants'
+  Variants = 'variants',
+  Verifications = 'verifications'
 }
 
 export type PayloadLockedDocument_Document_Relationship = {
@@ -23154,7 +28713,9 @@ export type PayloadLockedDocument_Document_Relation = {
 };
 
 export enum PayloadLockedDocument_Document_Relation_RelationTo {
+  Accounts = 'accounts',
   Addresses = 'addresses',
+  AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
   Companies = 'companies',
@@ -23163,6 +28724,9 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  OauthAccessTokens = 'oauthAccessTokens',
+  OauthApplications = 'oauthApplications',
+  OauthConsents = 'oauthConsents',
   Orders = 'orders',
   Pages = 'pages',
   PayloadFolders = 'payload_folders',
@@ -23170,11 +28734,13 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Products = 'products',
   Redirects = 'redirects',
   Search = 'search',
+  Sessions = 'sessions',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
-  Variants = 'variants'
+  Variants = 'variants',
+  Verifications = 'verifications'
 }
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -25699,6 +31265,7 @@ export type Product = {
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
@@ -25932,6 +31499,7 @@ export type ProductVersion_Version = {
   company?: Maybe<Company>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
@@ -26600,6 +32168,14 @@ export type Product_DeletedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type Product_Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Product_EnableVariants_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -26931,6 +32507,7 @@ export type Product_Where = {
   company?: InputMaybe<Product_Company_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
+  description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
@@ -26955,6 +32532,7 @@ export type Product_Where_And = {
   company?: InputMaybe<Product_Company_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
+  description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
@@ -26979,6 +32557,7 @@ export type Product_Where_Or = {
   company?: InputMaybe<Product_Company_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
+  description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
@@ -27041,6 +32620,7 @@ export type ProductsDocAccessFields = {
   company?: Maybe<ProductsDocAccessFields_Company>;
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
   deletedAt?: Maybe<ProductsDocAccessFields_DeletedAt>;
+  description?: Maybe<ProductsDocAccessFields_Description>;
   enableVariants?: Maybe<ProductsDocAccessFields_EnableVariants>;
   image?: Maybe<ProductsDocAccessFields_Image>;
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
@@ -27164,6 +32744,34 @@ export type ProductsDocAccessFields_DeletedAt_Read = {
 
 export type ProductsDocAccessFields_DeletedAt_Update = {
   __typename?: 'ProductsDocAccessFields_deletedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Description = {
+  __typename?: 'ProductsDocAccessFields_description';
+  create?: Maybe<ProductsDocAccessFields_Description_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Description_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Description_Read>;
+  update?: Maybe<ProductsDocAccessFields_Description_Update>;
+};
+
+export type ProductsDocAccessFields_Description_Create = {
+  __typename?: 'ProductsDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Description_Delete = {
+  __typename?: 'ProductsDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Description_Read = {
+  __typename?: 'ProductsDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Description_Update = {
+  __typename?: 'ProductsDocAccessFields_description_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -27664,6 +33272,7 @@ export type ProductsFields = {
   company?: Maybe<ProductsFields_Company>;
   createdAt?: Maybe<ProductsFields_CreatedAt>;
   deletedAt?: Maybe<ProductsFields_DeletedAt>;
+  description?: Maybe<ProductsFields_Description>;
   enableVariants?: Maybe<ProductsFields_EnableVariants>;
   image?: Maybe<ProductsFields_Image>;
   inventory?: Maybe<ProductsFields_Inventory>;
@@ -27787,6 +33396,34 @@ export type ProductsFields_DeletedAt_Read = {
 
 export type ProductsFields_DeletedAt_Update = {
   __typename?: 'ProductsFields_deletedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Description = {
+  __typename?: 'ProductsFields_description';
+  create?: Maybe<ProductsFields_Description_Create>;
+  delete?: Maybe<ProductsFields_Description_Delete>;
+  read?: Maybe<ProductsFields_Description_Read>;
+  update?: Maybe<ProductsFields_Description_Update>;
+};
+
+export type ProductsFields_Description_Create = {
+  __typename?: 'ProductsFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Description_Delete = {
+  __typename?: 'ProductsFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Description_Read = {
+  __typename?: 'ProductsFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Description_Update = {
+  __typename?: 'ProductsFields_description_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -28320,8 +33957,12 @@ export type ProductsUpdateDocAccess = {
 export type Query = {
   __typename?: 'Query';
   Access?: Maybe<Access>;
+  Account?: Maybe<Account>;
+  Accounts?: Maybe<Accounts>;
   Address?: Maybe<Address>;
   Addresses?: Maybe<Addresses>;
+  AdminInvitation?: Maybe<AdminInvitation>;
+  AdminInvitations?: Maybe<AdminInvitations>;
   Cart?: Maybe<Cart>;
   Carts?: Maybe<Carts>;
   Categories?: Maybe<Categories>;
@@ -28339,6 +33980,12 @@ export type Query = {
   Job?: Maybe<Job>;
   Jobs?: Maybe<Jobs>;
   Media?: Maybe<Media>;
+  OauthAccessToken?: Maybe<OauthAccessToken>;
+  OauthAccessTokens?: Maybe<OauthAccessTokens>;
+  OauthApplication?: Maybe<OauthApplication>;
+  OauthApplications?: Maybe<OauthApplications>;
+  OauthConsent?: Maybe<OauthConsent>;
+  OauthConsents?: Maybe<OauthConsents>;
   Order?: Maybe<Order>;
   Orders?: Maybe<Orders>;
   Page?: Maybe<Page>;
@@ -28361,6 +34008,8 @@ export type Query = {
   Redirects?: Maybe<Redirects>;
   Search?: Maybe<Search>;
   Searches?: Maybe<Searches>;
+  Session?: Maybe<Session>;
+  Sessions?: Maybe<Sessions>;
   Transaction?: Maybe<Transaction>;
   Transactions?: Maybe<Transactions>;
   User?: Maybe<User>;
@@ -28371,8 +34020,12 @@ export type Query = {
   VariantType?: Maybe<VariantType>;
   VariantTypes?: Maybe<VariantTypes>;
   Variants?: Maybe<Variants>;
+  Verification?: Maybe<Verification>;
+  Verifications?: Maybe<Verifications>;
   allMedia?: Maybe<AllMedia>;
+  countAccounts?: Maybe<CountAccounts>;
   countAddresses?: Maybe<CountAddresses>;
+  countAdminInvitations?: Maybe<CountAdminInvitations>;
   countCarts?: Maybe<CountCarts>;
   countCategories?: Maybe<CountCategories>;
   countCompanies?: Maybe<CountCompanies>;
@@ -28380,6 +34033,9 @@ export type Query = {
   countForms?: Maybe<CountForms>;
   countIdentities?: Maybe<CountIdentities>;
   countJobs?: Maybe<CountJobs>;
+  countOauthAccessTokens?: Maybe<CountOauthAccessTokens>;
+  countOauthApplications?: Maybe<CountOauthApplications>;
+  countOauthConsents?: Maybe<CountOauthConsents>;
   countOrders?: Maybe<CountOrders>;
   countPages?: Maybe<CountPages>;
   countPayloadFolders?: Maybe<CountPayloadFolders>;
@@ -28391,13 +34047,17 @@ export type Query = {
   countProducts?: Maybe<CountProducts>;
   countRedirects?: Maybe<CountRedirects>;
   countSearches?: Maybe<CountSearches>;
+  countSessions?: Maybe<CountSessions>;
   countTransactions?: Maybe<CountTransactions>;
   countUsers?: Maybe<CountUsers>;
   countVariantOptions?: Maybe<CountVariantOptions>;
   countVariantTypes?: Maybe<CountVariantTypes>;
   countVariants?: Maybe<CountVariants>;
+  countVerifications?: Maybe<CountVerifications>;
   countallMedia?: Maybe<CountallMedia>;
+  docAccessAccount?: Maybe<AccountsDocAccess>;
   docAccessAddress?: Maybe<AddressesDocAccess>;
+  docAccessAdminInvitation?: Maybe<Admin_InvitationsDocAccess>;
   docAccessCart?: Maybe<CartsDocAccess>;
   docAccessCategory?: Maybe<CategoriesDocAccess>;
   docAccessCompany?: Maybe<CompaniesDocAccess>;
@@ -28408,6 +34068,9 @@ export type Query = {
   docAccessIdentity?: Maybe<IdentitiesDocAccess>;
   docAccessJob?: Maybe<JobsDocAccess>;
   docAccessMedia?: Maybe<MediaDocAccess>;
+  docAccessOauthAccessToken?: Maybe<OauthAccessTokensDocAccess>;
+  docAccessOauthApplication?: Maybe<OauthApplicationsDocAccess>;
+  docAccessOauthConsent?: Maybe<OauthConsentsDocAccess>;
   docAccessOrder?: Maybe<OrdersDocAccess>;
   docAccessPage?: Maybe<PagesDocAccess>;
   docAccessPayloadFolder?: Maybe<Payload_FoldersDocAccess>;
@@ -28419,11 +34082,13 @@ export type Query = {
   docAccessProduct?: Maybe<ProductsDocAccess>;
   docAccessRedirect?: Maybe<RedirectsDocAccess>;
   docAccessSearch?: Maybe<SearchDocAccess>;
+  docAccessSession?: Maybe<SessionsDocAccess>;
   docAccessTransaction?: Maybe<TransactionsDocAccess>;
   docAccessUser?: Maybe<UsersDocAccess>;
   docAccessVariant?: Maybe<VariantsDocAccess>;
   docAccessVariantOption?: Maybe<VariantOptionsDocAccess>;
   docAccessVariantType?: Maybe<VariantTypesDocAccess>;
+  docAccessVerification?: Maybe<VerificationsDocAccess>;
   initializedUser?: Maybe<Scalars['Boolean']['output']>;
   meUser?: Maybe<UsersMe>;
   versionJob?: Maybe<JobVersion>;
@@ -28436,6 +34101,26 @@ export type Query = {
   versionsPosts?: Maybe<VersionsPosts>;
   versionsProducts?: Maybe<VersionsProducts>;
   versionsVariants?: Maybe<VersionsVariants>;
+};
+
+
+export type QueryAccountArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryAccountsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Account_Where>;
 };
 
 
@@ -28456,6 +34141,26 @@ export type QueryAddressesArgs = {
   sort?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Address_Where>;
+};
+
+
+export type QueryAdminInvitationArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryAdminInvitationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<AdminInvitation_Where>;
 };
 
 
@@ -28616,6 +34321,66 @@ export type QueryMediaArgs = {
   id: Scalars['String']['input'];
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryOauthAccessTokenArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryOauthAccessTokensArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthAccessToken_Where>;
+};
+
+
+export type QueryOauthApplicationArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryOauthApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthApplication_Where>;
+};
+
+
+export type QueryOauthConsentArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryOauthConsentsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthConsent_Where>;
 };
 
 
@@ -28839,6 +34604,26 @@ export type QuerySearchesArgs = {
 };
 
 
+export type QuerySessionArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QuerySessionsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Session_Where>;
+};
+
+
 export type QueryTransactionArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -28939,6 +34724,26 @@ export type QueryVariantsArgs = {
 };
 
 
+export type QueryVerificationArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryVerificationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Verification_Where>;
+};
+
+
 export type QueryAllMediaArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -28951,10 +34756,24 @@ export type QueryAllMediaArgs = {
 };
 
 
+export type QueryCountAccountsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Account_Where>;
+};
+
+
 export type QueryCountAddressesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Address_Where>;
+};
+
+
+export type QueryCountAdminInvitationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<AdminInvitation_Where>;
 };
 
 
@@ -29004,6 +34823,27 @@ export type QueryCountJobsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Job_Where>;
+};
+
+
+export type QueryCountOauthAccessTokensArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthAccessToken_Where>;
+};
+
+
+export type QueryCountOauthApplicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthApplication_Where>;
+};
+
+
+export type QueryCountOauthConsentsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<OauthConsent_Where>;
 };
 
 
@@ -29084,6 +34924,13 @@ export type QueryCountSearchesArgs = {
 };
 
 
+export type QueryCountSessionsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Session_Where>;
+};
+
+
 export type QueryCountTransactionsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -29119,6 +34966,13 @@ export type QueryCountVariantsArgs = {
 };
 
 
+export type QueryCountVerificationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Verification_Where>;
+};
+
+
 export type QueryCountallMediaArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -29126,7 +34980,17 @@ export type QueryCountallMediaArgs = {
 };
 
 
+export type QueryDocAccessAccountArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessAddressArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessAdminInvitationArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -29167,6 +35031,21 @@ export type QueryDocAccessJobArgs = {
 
 
 export type QueryDocAccessMediaArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessOauthAccessTokenArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessOauthApplicationArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessOauthConsentArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -29226,6 +35105,11 @@ export type QueryDocAccessSearchArgs = {
 };
 
 
+export type QueryDocAccessSessionArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessTransactionArgs = {
   id: Scalars['String']['input'];
 };
@@ -29247,6 +35131,11 @@ export type QueryDocAccessVariantOptionArgs = {
 
 
 export type QueryDocAccessVariantTypeArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessVerificationArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -31254,6 +37143,615 @@ export type Select_Options = {
   id?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
+};
+
+export type Session = {
+  __typename?: 'Session';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  expiresAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  ipAddress?: Maybe<Scalars['String']['output']>;
+  token: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user: User;
+  userAgent?: Maybe<Scalars['String']['output']>;
+};
+
+export type Session_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Session_ExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Session_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Session_IpAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Session_Token_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Session_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Session_UserAgent_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Session_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Session_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Session_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Session_Where_Or>>>;
+  createdAt?: InputMaybe<Session_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Session_ExpiresAt_Operator>;
+  id?: InputMaybe<Session_Id_Operator>;
+  ipAddress?: InputMaybe<Session_IpAddress_Operator>;
+  token?: InputMaybe<Session_Token_Operator>;
+  updatedAt?: InputMaybe<Session_UpdatedAt_Operator>;
+  user?: InputMaybe<Session_User_Operator>;
+  userAgent?: InputMaybe<Session_UserAgent_Operator>;
+};
+
+export type Session_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Session_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Session_Where_Or>>>;
+  createdAt?: InputMaybe<Session_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Session_ExpiresAt_Operator>;
+  id?: InputMaybe<Session_Id_Operator>;
+  ipAddress?: InputMaybe<Session_IpAddress_Operator>;
+  token?: InputMaybe<Session_Token_Operator>;
+  updatedAt?: InputMaybe<Session_UpdatedAt_Operator>;
+  user?: InputMaybe<Session_User_Operator>;
+  userAgent?: InputMaybe<Session_UserAgent_Operator>;
+};
+
+export type Session_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Session_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Session_Where_Or>>>;
+  createdAt?: InputMaybe<Session_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Session_ExpiresAt_Operator>;
+  id?: InputMaybe<Session_Id_Operator>;
+  ipAddress?: InputMaybe<Session_IpAddress_Operator>;
+  token?: InputMaybe<Session_Token_Operator>;
+  updatedAt?: InputMaybe<Session_UpdatedAt_Operator>;
+  user?: InputMaybe<Session_User_Operator>;
+  userAgent?: InputMaybe<Session_UserAgent_Operator>;
+};
+
+export type Sessions = {
+  __typename?: 'Sessions';
+  docs: Array<Session>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type SessionsCreateAccess = {
+  __typename?: 'SessionsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsCreateDocAccess = {
+  __typename?: 'SessionsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsDeleteAccess = {
+  __typename?: 'SessionsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsDeleteDocAccess = {
+  __typename?: 'SessionsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsDocAccessFields = {
+  __typename?: 'SessionsDocAccessFields';
+  createdAt?: Maybe<SessionsDocAccessFields_CreatedAt>;
+  expiresAt?: Maybe<SessionsDocAccessFields_ExpiresAt>;
+  ipAddress?: Maybe<SessionsDocAccessFields_IpAddress>;
+  token?: Maybe<SessionsDocAccessFields_Token>;
+  updatedAt?: Maybe<SessionsDocAccessFields_UpdatedAt>;
+  user?: Maybe<SessionsDocAccessFields_User>;
+  userAgent?: Maybe<SessionsDocAccessFields_UserAgent>;
+};
+
+export type SessionsDocAccessFields_CreatedAt = {
+  __typename?: 'SessionsDocAccessFields_createdAt';
+  create?: Maybe<SessionsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<SessionsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<SessionsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<SessionsDocAccessFields_CreatedAt_Update>;
+};
+
+export type SessionsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'SessionsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'SessionsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'SessionsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'SessionsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_ExpiresAt = {
+  __typename?: 'SessionsDocAccessFields_expiresAt';
+  create?: Maybe<SessionsDocAccessFields_ExpiresAt_Create>;
+  delete?: Maybe<SessionsDocAccessFields_ExpiresAt_Delete>;
+  read?: Maybe<SessionsDocAccessFields_ExpiresAt_Read>;
+  update?: Maybe<SessionsDocAccessFields_ExpiresAt_Update>;
+};
+
+export type SessionsDocAccessFields_ExpiresAt_Create = {
+  __typename?: 'SessionsDocAccessFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_ExpiresAt_Delete = {
+  __typename?: 'SessionsDocAccessFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_ExpiresAt_Read = {
+  __typename?: 'SessionsDocAccessFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_ExpiresAt_Update = {
+  __typename?: 'SessionsDocAccessFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_IpAddress = {
+  __typename?: 'SessionsDocAccessFields_ipAddress';
+  create?: Maybe<SessionsDocAccessFields_IpAddress_Create>;
+  delete?: Maybe<SessionsDocAccessFields_IpAddress_Delete>;
+  read?: Maybe<SessionsDocAccessFields_IpAddress_Read>;
+  update?: Maybe<SessionsDocAccessFields_IpAddress_Update>;
+};
+
+export type SessionsDocAccessFields_IpAddress_Create = {
+  __typename?: 'SessionsDocAccessFields_ipAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_IpAddress_Delete = {
+  __typename?: 'SessionsDocAccessFields_ipAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_IpAddress_Read = {
+  __typename?: 'SessionsDocAccessFields_ipAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_IpAddress_Update = {
+  __typename?: 'SessionsDocAccessFields_ipAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_Token = {
+  __typename?: 'SessionsDocAccessFields_token';
+  create?: Maybe<SessionsDocAccessFields_Token_Create>;
+  delete?: Maybe<SessionsDocAccessFields_Token_Delete>;
+  read?: Maybe<SessionsDocAccessFields_Token_Read>;
+  update?: Maybe<SessionsDocAccessFields_Token_Update>;
+};
+
+export type SessionsDocAccessFields_Token_Create = {
+  __typename?: 'SessionsDocAccessFields_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_Token_Delete = {
+  __typename?: 'SessionsDocAccessFields_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_Token_Read = {
+  __typename?: 'SessionsDocAccessFields_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_Token_Update = {
+  __typename?: 'SessionsDocAccessFields_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UpdatedAt = {
+  __typename?: 'SessionsDocAccessFields_updatedAt';
+  create?: Maybe<SessionsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<SessionsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<SessionsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<SessionsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type SessionsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'SessionsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'SessionsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'SessionsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'SessionsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_User = {
+  __typename?: 'SessionsDocAccessFields_user';
+  create?: Maybe<SessionsDocAccessFields_User_Create>;
+  delete?: Maybe<SessionsDocAccessFields_User_Delete>;
+  read?: Maybe<SessionsDocAccessFields_User_Read>;
+  update?: Maybe<SessionsDocAccessFields_User_Update>;
+};
+
+export type SessionsDocAccessFields_UserAgent = {
+  __typename?: 'SessionsDocAccessFields_userAgent';
+  create?: Maybe<SessionsDocAccessFields_UserAgent_Create>;
+  delete?: Maybe<SessionsDocAccessFields_UserAgent_Delete>;
+  read?: Maybe<SessionsDocAccessFields_UserAgent_Read>;
+  update?: Maybe<SessionsDocAccessFields_UserAgent_Update>;
+};
+
+export type SessionsDocAccessFields_UserAgent_Create = {
+  __typename?: 'SessionsDocAccessFields_userAgent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UserAgent_Delete = {
+  __typename?: 'SessionsDocAccessFields_userAgent_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UserAgent_Read = {
+  __typename?: 'SessionsDocAccessFields_userAgent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_UserAgent_Update = {
+  __typename?: 'SessionsDocAccessFields_userAgent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_User_Create = {
+  __typename?: 'SessionsDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_User_Delete = {
+  __typename?: 'SessionsDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_User_Read = {
+  __typename?: 'SessionsDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsDocAccessFields_User_Update = {
+  __typename?: 'SessionsDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields = {
+  __typename?: 'SessionsFields';
+  createdAt?: Maybe<SessionsFields_CreatedAt>;
+  expiresAt?: Maybe<SessionsFields_ExpiresAt>;
+  ipAddress?: Maybe<SessionsFields_IpAddress>;
+  token?: Maybe<SessionsFields_Token>;
+  updatedAt?: Maybe<SessionsFields_UpdatedAt>;
+  user?: Maybe<SessionsFields_User>;
+  userAgent?: Maybe<SessionsFields_UserAgent>;
+};
+
+export type SessionsFields_CreatedAt = {
+  __typename?: 'SessionsFields_createdAt';
+  create?: Maybe<SessionsFields_CreatedAt_Create>;
+  delete?: Maybe<SessionsFields_CreatedAt_Delete>;
+  read?: Maybe<SessionsFields_CreatedAt_Read>;
+  update?: Maybe<SessionsFields_CreatedAt_Update>;
+};
+
+export type SessionsFields_CreatedAt_Create = {
+  __typename?: 'SessionsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_CreatedAt_Delete = {
+  __typename?: 'SessionsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_CreatedAt_Read = {
+  __typename?: 'SessionsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_CreatedAt_Update = {
+  __typename?: 'SessionsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_ExpiresAt = {
+  __typename?: 'SessionsFields_expiresAt';
+  create?: Maybe<SessionsFields_ExpiresAt_Create>;
+  delete?: Maybe<SessionsFields_ExpiresAt_Delete>;
+  read?: Maybe<SessionsFields_ExpiresAt_Read>;
+  update?: Maybe<SessionsFields_ExpiresAt_Update>;
+};
+
+export type SessionsFields_ExpiresAt_Create = {
+  __typename?: 'SessionsFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_ExpiresAt_Delete = {
+  __typename?: 'SessionsFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_ExpiresAt_Read = {
+  __typename?: 'SessionsFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_ExpiresAt_Update = {
+  __typename?: 'SessionsFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_IpAddress = {
+  __typename?: 'SessionsFields_ipAddress';
+  create?: Maybe<SessionsFields_IpAddress_Create>;
+  delete?: Maybe<SessionsFields_IpAddress_Delete>;
+  read?: Maybe<SessionsFields_IpAddress_Read>;
+  update?: Maybe<SessionsFields_IpAddress_Update>;
+};
+
+export type SessionsFields_IpAddress_Create = {
+  __typename?: 'SessionsFields_ipAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_IpAddress_Delete = {
+  __typename?: 'SessionsFields_ipAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_IpAddress_Read = {
+  __typename?: 'SessionsFields_ipAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_IpAddress_Update = {
+  __typename?: 'SessionsFields_ipAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_Token = {
+  __typename?: 'SessionsFields_token';
+  create?: Maybe<SessionsFields_Token_Create>;
+  delete?: Maybe<SessionsFields_Token_Delete>;
+  read?: Maybe<SessionsFields_Token_Read>;
+  update?: Maybe<SessionsFields_Token_Update>;
+};
+
+export type SessionsFields_Token_Create = {
+  __typename?: 'SessionsFields_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_Token_Delete = {
+  __typename?: 'SessionsFields_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_Token_Read = {
+  __typename?: 'SessionsFields_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_Token_Update = {
+  __typename?: 'SessionsFields_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UpdatedAt = {
+  __typename?: 'SessionsFields_updatedAt';
+  create?: Maybe<SessionsFields_UpdatedAt_Create>;
+  delete?: Maybe<SessionsFields_UpdatedAt_Delete>;
+  read?: Maybe<SessionsFields_UpdatedAt_Read>;
+  update?: Maybe<SessionsFields_UpdatedAt_Update>;
+};
+
+export type SessionsFields_UpdatedAt_Create = {
+  __typename?: 'SessionsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UpdatedAt_Delete = {
+  __typename?: 'SessionsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UpdatedAt_Read = {
+  __typename?: 'SessionsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UpdatedAt_Update = {
+  __typename?: 'SessionsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_User = {
+  __typename?: 'SessionsFields_user';
+  create?: Maybe<SessionsFields_User_Create>;
+  delete?: Maybe<SessionsFields_User_Delete>;
+  read?: Maybe<SessionsFields_User_Read>;
+  update?: Maybe<SessionsFields_User_Update>;
+};
+
+export type SessionsFields_UserAgent = {
+  __typename?: 'SessionsFields_userAgent';
+  create?: Maybe<SessionsFields_UserAgent_Create>;
+  delete?: Maybe<SessionsFields_UserAgent_Delete>;
+  read?: Maybe<SessionsFields_UserAgent_Read>;
+  update?: Maybe<SessionsFields_UserAgent_Update>;
+};
+
+export type SessionsFields_UserAgent_Create = {
+  __typename?: 'SessionsFields_userAgent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UserAgent_Delete = {
+  __typename?: 'SessionsFields_userAgent_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UserAgent_Read = {
+  __typename?: 'SessionsFields_userAgent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_UserAgent_Update = {
+  __typename?: 'SessionsFields_userAgent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_User_Create = {
+  __typename?: 'SessionsFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_User_Delete = {
+  __typename?: 'SessionsFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_User_Read = {
+  __typename?: 'SessionsFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsFields_User_Update = {
+  __typename?: 'SessionsFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SessionsReadAccess = {
+  __typename?: 'SessionsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsReadDocAccess = {
+  __typename?: 'SessionsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsUpdateAccess = {
+  __typename?: 'SessionsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SessionsUpdateDocAccess = {
+  __typename?: 'SessionsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type State = {
@@ -33646,31 +40144,57 @@ export type TransactionsUpdateDocAccess = {
 
 export type User = {
   __typename?: 'User';
+  account?: Maybe<User_Account>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  email: Scalars['EmailAddress']['output'];
-  hash?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  emailVerified: Scalars['Boolean']['output'];
   id: Scalars['String']['output'];
-  isAdmin?: Maybe<Scalars['Boolean']['output']>;
-  lockUntil?: Maybe<Scalars['DateTime']['output']>;
-  loginAttempts?: Maybe<Scalars['Float']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  resetPasswordExpiration?: Maybe<Scalars['DateTime']['output']>;
-  resetPasswordToken?: Maybe<Scalars['String']['output']>;
-  salt?: Maybe<Scalars['String']['output']>;
-  sessions?: Maybe<Array<User_Sessions>>;
+  image?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  role?: Maybe<Array<User_Role>>;
+  session?: Maybe<User_Session>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type User_Sessions = {
-  __typename?: 'User_Sessions';
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  expiresAt?: Maybe<Scalars['DateTime']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
+
+export type UserAccountArgs = {
+  count?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  where?: InputMaybe<Account_Where>;
+};
+
+
+export type UserSessionArgs = {
+  count?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  where?: InputMaybe<Session_Where>;
+};
+
+export enum UserUpdate_Role_MutationInput {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export type User_Account = {
+  __typename?: 'User_Account';
+  docs: Array<Account>;
+  hasNextPage: Scalars['Boolean']['output'];
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type User_Session = {
+  __typename?: 'User_Session';
+  docs: Array<Session>;
+  hasNextPage: Scalars['Boolean']['output'];
+  totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
 export type User_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   less_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -33679,14 +40203,19 @@ export type User_CreatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type User_EmailVerified_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type User_Email_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
-  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
-  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
-  like?: InputMaybe<Scalars['EmailAddress']['input']>;
-  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type User_Id_Operator = {
@@ -33700,57 +40229,53 @@ export type User_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type User_IsAdmin_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']['input']>;
+export type User_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type User_Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type User_Sessions__CreatedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
+export enum User_Role {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export enum User_Role_Input {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export enum User_Role_MutationInput {
+  Admin = 'admin',
+  User = 'user'
+}
+
+export type User_Role_Operator = {
+  all?: InputMaybe<Array<InputMaybe<User_Role_Input>>>;
+  equals?: InputMaybe<User_Role_Input>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type User_Sessions__ExpiresAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type User_Sessions__Id_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<User_Role_Input>>>;
+  not_equals?: InputMaybe<User_Role_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<User_Role_Input>>>;
 };
 
 export type User_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   less_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -33764,12 +40289,11 @@ export type User_Where = {
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
+  emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
-  isAdmin?: InputMaybe<User_IsAdmin_Operator>;
+  image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
-  sessions__createdAt?: InputMaybe<User_Sessions__CreatedAt_Operator>;
-  sessions__expiresAt?: InputMaybe<User_Sessions__ExpiresAt_Operator>;
-  sessions__id?: InputMaybe<User_Sessions__Id_Operator>;
+  role?: InputMaybe<User_Role_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -33778,12 +40302,11 @@ export type User_Where_And = {
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
+  emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
-  isAdmin?: InputMaybe<User_IsAdmin_Operator>;
+  image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
-  sessions__createdAt?: InputMaybe<User_Sessions__CreatedAt_Operator>;
-  sessions__expiresAt?: InputMaybe<User_Sessions__ExpiresAt_Operator>;
-  sessions__id?: InputMaybe<User_Sessions__Id_Operator>;
+  role?: InputMaybe<User_Role_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -33792,12 +40315,11 @@ export type User_Where_Or = {
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
+  emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
-  isAdmin?: InputMaybe<User_IsAdmin_Operator>;
+  image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
-  sessions__createdAt?: InputMaybe<User_Sessions__CreatedAt_Operator>;
-  sessions__expiresAt?: InputMaybe<User_Sessions__ExpiresAt_Operator>;
-  sessions__id?: InputMaybe<User_Sessions__Id_Operator>;
+  role?: InputMaybe<User_Role_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -33842,12 +40364,43 @@ export type UsersDeleteDocAccess = {
 
 export type UsersDocAccessFields = {
   __typename?: 'UsersDocAccessFields';
+  account?: Maybe<UsersDocAccessFields_Account>;
   createdAt?: Maybe<UsersDocAccessFields_CreatedAt>;
   email?: Maybe<UsersDocAccessFields_Email>;
-  isAdmin?: Maybe<UsersDocAccessFields_IsAdmin>;
+  emailVerified?: Maybe<UsersDocAccessFields_EmailVerified>;
+  image?: Maybe<UsersDocAccessFields_Image>;
   name?: Maybe<UsersDocAccessFields_Name>;
-  sessions?: Maybe<UsersDocAccessFields_Sessions>;
+  role?: Maybe<UsersDocAccessFields_Role>;
+  session?: Maybe<UsersDocAccessFields_Session>;
   updatedAt?: Maybe<UsersDocAccessFields_UpdatedAt>;
+};
+
+export type UsersDocAccessFields_Account = {
+  __typename?: 'UsersDocAccessFields_account';
+  create?: Maybe<UsersDocAccessFields_Account_Create>;
+  delete?: Maybe<UsersDocAccessFields_Account_Delete>;
+  read?: Maybe<UsersDocAccessFields_Account_Read>;
+  update?: Maybe<UsersDocAccessFields_Account_Update>;
+};
+
+export type UsersDocAccessFields_Account_Create = {
+  __typename?: 'UsersDocAccessFields_account_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Account_Delete = {
+  __typename?: 'UsersDocAccessFields_account_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Account_Read = {
+  __typename?: 'UsersDocAccessFields_account_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Account_Update = {
+  __typename?: 'UsersDocAccessFields_account_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type UsersDocAccessFields_CreatedAt = {
@@ -33886,6 +40439,34 @@ export type UsersDocAccessFields_Email = {
   update?: Maybe<UsersDocAccessFields_Email_Update>;
 };
 
+export type UsersDocAccessFields_EmailVerified = {
+  __typename?: 'UsersDocAccessFields_emailVerified';
+  create?: Maybe<UsersDocAccessFields_EmailVerified_Create>;
+  delete?: Maybe<UsersDocAccessFields_EmailVerified_Delete>;
+  read?: Maybe<UsersDocAccessFields_EmailVerified_Read>;
+  update?: Maybe<UsersDocAccessFields_EmailVerified_Update>;
+};
+
+export type UsersDocAccessFields_EmailVerified_Create = {
+  __typename?: 'UsersDocAccessFields_emailVerified_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_EmailVerified_Delete = {
+  __typename?: 'UsersDocAccessFields_emailVerified_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_EmailVerified_Read = {
+  __typename?: 'UsersDocAccessFields_emailVerified_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_EmailVerified_Update = {
+  __typename?: 'UsersDocAccessFields_emailVerified_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type UsersDocAccessFields_Email_Create = {
   __typename?: 'UsersDocAccessFields_email_Create';
   permission: Scalars['Boolean']['output'];
@@ -33906,31 +40487,31 @@ export type UsersDocAccessFields_Email_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_IsAdmin = {
-  __typename?: 'UsersDocAccessFields_isAdmin';
-  create?: Maybe<UsersDocAccessFields_IsAdmin_Create>;
-  delete?: Maybe<UsersDocAccessFields_IsAdmin_Delete>;
-  read?: Maybe<UsersDocAccessFields_IsAdmin_Read>;
-  update?: Maybe<UsersDocAccessFields_IsAdmin_Update>;
+export type UsersDocAccessFields_Image = {
+  __typename?: 'UsersDocAccessFields_image';
+  create?: Maybe<UsersDocAccessFields_Image_Create>;
+  delete?: Maybe<UsersDocAccessFields_Image_Delete>;
+  read?: Maybe<UsersDocAccessFields_Image_Read>;
+  update?: Maybe<UsersDocAccessFields_Image_Update>;
 };
 
-export type UsersDocAccessFields_IsAdmin_Create = {
-  __typename?: 'UsersDocAccessFields_isAdmin_Create';
+export type UsersDocAccessFields_Image_Create = {
+  __typename?: 'UsersDocAccessFields_image_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_IsAdmin_Delete = {
-  __typename?: 'UsersDocAccessFields_isAdmin_Delete';
+export type UsersDocAccessFields_Image_Delete = {
+  __typename?: 'UsersDocAccessFields_image_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_IsAdmin_Read = {
-  __typename?: 'UsersDocAccessFields_isAdmin_Read';
+export type UsersDocAccessFields_Image_Read = {
+  __typename?: 'UsersDocAccessFields_image_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_IsAdmin_Update = {
-  __typename?: 'UsersDocAccessFields_isAdmin_Update';
+export type UsersDocAccessFields_Image_Update = {
+  __typename?: 'UsersDocAccessFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -33962,123 +40543,59 @@ export type UsersDocAccessFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions = {
-  __typename?: 'UsersDocAccessFields_sessions';
-  create?: Maybe<UsersDocAccessFields_Sessions_Create>;
-  delete?: Maybe<UsersDocAccessFields_Sessions_Delete>;
-  fields?: Maybe<UsersDocAccessFields_Sessions_Fields>;
-  read?: Maybe<UsersDocAccessFields_Sessions_Read>;
-  update?: Maybe<UsersDocAccessFields_Sessions_Update>;
+export type UsersDocAccessFields_Role = {
+  __typename?: 'UsersDocAccessFields_role';
+  create?: Maybe<UsersDocAccessFields_Role_Create>;
+  delete?: Maybe<UsersDocAccessFields_Role_Delete>;
+  read?: Maybe<UsersDocAccessFields_Role_Read>;
+  update?: Maybe<UsersDocAccessFields_Role_Update>;
 };
 
-export type UsersDocAccessFields_Sessions_Create = {
-  __typename?: 'UsersDocAccessFields_sessions_Create';
+export type UsersDocAccessFields_Role_Create = {
+  __typename?: 'UsersDocAccessFields_role_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_Delete = {
-  __typename?: 'UsersDocAccessFields_sessions_Delete';
+export type UsersDocAccessFields_Role_Delete = {
+  __typename?: 'UsersDocAccessFields_role_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_Fields = {
-  __typename?: 'UsersDocAccessFields_sessions_Fields';
-  createdAt?: Maybe<UsersDocAccessFields_Sessions_CreatedAt>;
-  expiresAt?: Maybe<UsersDocAccessFields_Sessions_ExpiresAt>;
-  id?: Maybe<UsersDocAccessFields_Sessions_Id>;
-};
-
-export type UsersDocAccessFields_Sessions_Read = {
-  __typename?: 'UsersDocAccessFields_sessions_Read';
+export type UsersDocAccessFields_Role_Read = {
+  __typename?: 'UsersDocAccessFields_role_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_Update = {
-  __typename?: 'UsersDocAccessFields_sessions_Update';
+export type UsersDocAccessFields_Role_Update = {
+  __typename?: 'UsersDocAccessFields_role_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_CreatedAt = {
-  __typename?: 'UsersDocAccessFields_sessions_createdAt';
-  create?: Maybe<UsersDocAccessFields_Sessions_CreatedAt_Create>;
-  delete?: Maybe<UsersDocAccessFields_Sessions_CreatedAt_Delete>;
-  read?: Maybe<UsersDocAccessFields_Sessions_CreatedAt_Read>;
-  update?: Maybe<UsersDocAccessFields_Sessions_CreatedAt_Update>;
+export type UsersDocAccessFields_Session = {
+  __typename?: 'UsersDocAccessFields_session';
+  create?: Maybe<UsersDocAccessFields_Session_Create>;
+  delete?: Maybe<UsersDocAccessFields_Session_Delete>;
+  read?: Maybe<UsersDocAccessFields_Session_Read>;
+  update?: Maybe<UsersDocAccessFields_Session_Update>;
 };
 
-export type UsersDocAccessFields_Sessions_CreatedAt_Create = {
-  __typename?: 'UsersDocAccessFields_sessions_createdAt_Create';
+export type UsersDocAccessFields_Session_Create = {
+  __typename?: 'UsersDocAccessFields_session_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_CreatedAt_Delete = {
-  __typename?: 'UsersDocAccessFields_sessions_createdAt_Delete';
+export type UsersDocAccessFields_Session_Delete = {
+  __typename?: 'UsersDocAccessFields_session_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_CreatedAt_Read = {
-  __typename?: 'UsersDocAccessFields_sessions_createdAt_Read';
+export type UsersDocAccessFields_Session_Read = {
+  __typename?: 'UsersDocAccessFields_session_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersDocAccessFields_Sessions_CreatedAt_Update = {
-  __typename?: 'UsersDocAccessFields_sessions_createdAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_ExpiresAt = {
-  __typename?: 'UsersDocAccessFields_sessions_expiresAt';
-  create?: Maybe<UsersDocAccessFields_Sessions_ExpiresAt_Create>;
-  delete?: Maybe<UsersDocAccessFields_Sessions_ExpiresAt_Delete>;
-  read?: Maybe<UsersDocAccessFields_Sessions_ExpiresAt_Read>;
-  update?: Maybe<UsersDocAccessFields_Sessions_ExpiresAt_Update>;
-};
-
-export type UsersDocAccessFields_Sessions_ExpiresAt_Create = {
-  __typename?: 'UsersDocAccessFields_sessions_expiresAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_ExpiresAt_Delete = {
-  __typename?: 'UsersDocAccessFields_sessions_expiresAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_ExpiresAt_Read = {
-  __typename?: 'UsersDocAccessFields_sessions_expiresAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_ExpiresAt_Update = {
-  __typename?: 'UsersDocAccessFields_sessions_expiresAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_Id = {
-  __typename?: 'UsersDocAccessFields_sessions_id';
-  create?: Maybe<UsersDocAccessFields_Sessions_Id_Create>;
-  delete?: Maybe<UsersDocAccessFields_Sessions_Id_Delete>;
-  read?: Maybe<UsersDocAccessFields_Sessions_Id_Read>;
-  update?: Maybe<UsersDocAccessFields_Sessions_Id_Update>;
-};
-
-export type UsersDocAccessFields_Sessions_Id_Create = {
-  __typename?: 'UsersDocAccessFields_sessions_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_Id_Delete = {
-  __typename?: 'UsersDocAccessFields_sessions_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_Id_Read = {
-  __typename?: 'UsersDocAccessFields_sessions_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersDocAccessFields_Sessions_Id_Update = {
-  __typename?: 'UsersDocAccessFields_sessions_id_Update';
+export type UsersDocAccessFields_Session_Update = {
+  __typename?: 'UsersDocAccessFields_session_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -34112,12 +40629,43 @@ export type UsersDocAccessFields_UpdatedAt_Update = {
 
 export type UsersFields = {
   __typename?: 'UsersFields';
+  account?: Maybe<UsersFields_Account>;
   createdAt?: Maybe<UsersFields_CreatedAt>;
   email?: Maybe<UsersFields_Email>;
-  isAdmin?: Maybe<UsersFields_IsAdmin>;
+  emailVerified?: Maybe<UsersFields_EmailVerified>;
+  image?: Maybe<UsersFields_Image>;
   name?: Maybe<UsersFields_Name>;
-  sessions?: Maybe<UsersFields_Sessions>;
+  role?: Maybe<UsersFields_Role>;
+  session?: Maybe<UsersFields_Session>;
   updatedAt?: Maybe<UsersFields_UpdatedAt>;
+};
+
+export type UsersFields_Account = {
+  __typename?: 'UsersFields_account';
+  create?: Maybe<UsersFields_Account_Create>;
+  delete?: Maybe<UsersFields_Account_Delete>;
+  read?: Maybe<UsersFields_Account_Read>;
+  update?: Maybe<UsersFields_Account_Update>;
+};
+
+export type UsersFields_Account_Create = {
+  __typename?: 'UsersFields_account_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Account_Delete = {
+  __typename?: 'UsersFields_account_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Account_Read = {
+  __typename?: 'UsersFields_account_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Account_Update = {
+  __typename?: 'UsersFields_account_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type UsersFields_CreatedAt = {
@@ -34156,6 +40704,34 @@ export type UsersFields_Email = {
   update?: Maybe<UsersFields_Email_Update>;
 };
 
+export type UsersFields_EmailVerified = {
+  __typename?: 'UsersFields_emailVerified';
+  create?: Maybe<UsersFields_EmailVerified_Create>;
+  delete?: Maybe<UsersFields_EmailVerified_Delete>;
+  read?: Maybe<UsersFields_EmailVerified_Read>;
+  update?: Maybe<UsersFields_EmailVerified_Update>;
+};
+
+export type UsersFields_EmailVerified_Create = {
+  __typename?: 'UsersFields_emailVerified_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_EmailVerified_Delete = {
+  __typename?: 'UsersFields_emailVerified_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_EmailVerified_Read = {
+  __typename?: 'UsersFields_emailVerified_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_EmailVerified_Update = {
+  __typename?: 'UsersFields_emailVerified_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type UsersFields_Email_Create = {
   __typename?: 'UsersFields_email_Create';
   permission: Scalars['Boolean']['output'];
@@ -34176,31 +40752,31 @@ export type UsersFields_Email_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_IsAdmin = {
-  __typename?: 'UsersFields_isAdmin';
-  create?: Maybe<UsersFields_IsAdmin_Create>;
-  delete?: Maybe<UsersFields_IsAdmin_Delete>;
-  read?: Maybe<UsersFields_IsAdmin_Read>;
-  update?: Maybe<UsersFields_IsAdmin_Update>;
+export type UsersFields_Image = {
+  __typename?: 'UsersFields_image';
+  create?: Maybe<UsersFields_Image_Create>;
+  delete?: Maybe<UsersFields_Image_Delete>;
+  read?: Maybe<UsersFields_Image_Read>;
+  update?: Maybe<UsersFields_Image_Update>;
 };
 
-export type UsersFields_IsAdmin_Create = {
-  __typename?: 'UsersFields_isAdmin_Create';
+export type UsersFields_Image_Create = {
+  __typename?: 'UsersFields_image_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_IsAdmin_Delete = {
-  __typename?: 'UsersFields_isAdmin_Delete';
+export type UsersFields_Image_Delete = {
+  __typename?: 'UsersFields_image_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_IsAdmin_Read = {
-  __typename?: 'UsersFields_isAdmin_Read';
+export type UsersFields_Image_Read = {
+  __typename?: 'UsersFields_image_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_IsAdmin_Update = {
-  __typename?: 'UsersFields_isAdmin_Update';
+export type UsersFields_Image_Update = {
+  __typename?: 'UsersFields_image_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -34232,123 +40808,59 @@ export type UsersFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions = {
-  __typename?: 'UsersFields_sessions';
-  create?: Maybe<UsersFields_Sessions_Create>;
-  delete?: Maybe<UsersFields_Sessions_Delete>;
-  fields?: Maybe<UsersFields_Sessions_Fields>;
-  read?: Maybe<UsersFields_Sessions_Read>;
-  update?: Maybe<UsersFields_Sessions_Update>;
+export type UsersFields_Role = {
+  __typename?: 'UsersFields_role';
+  create?: Maybe<UsersFields_Role_Create>;
+  delete?: Maybe<UsersFields_Role_Delete>;
+  read?: Maybe<UsersFields_Role_Read>;
+  update?: Maybe<UsersFields_Role_Update>;
 };
 
-export type UsersFields_Sessions_Create = {
-  __typename?: 'UsersFields_sessions_Create';
+export type UsersFields_Role_Create = {
+  __typename?: 'UsersFields_role_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_Delete = {
-  __typename?: 'UsersFields_sessions_Delete';
+export type UsersFields_Role_Delete = {
+  __typename?: 'UsersFields_role_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_Fields = {
-  __typename?: 'UsersFields_sessions_Fields';
-  createdAt?: Maybe<UsersFields_Sessions_CreatedAt>;
-  expiresAt?: Maybe<UsersFields_Sessions_ExpiresAt>;
-  id?: Maybe<UsersFields_Sessions_Id>;
-};
-
-export type UsersFields_Sessions_Read = {
-  __typename?: 'UsersFields_sessions_Read';
+export type UsersFields_Role_Read = {
+  __typename?: 'UsersFields_role_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_Update = {
-  __typename?: 'UsersFields_sessions_Update';
+export type UsersFields_Role_Update = {
+  __typename?: 'UsersFields_role_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_CreatedAt = {
-  __typename?: 'UsersFields_sessions_createdAt';
-  create?: Maybe<UsersFields_Sessions_CreatedAt_Create>;
-  delete?: Maybe<UsersFields_Sessions_CreatedAt_Delete>;
-  read?: Maybe<UsersFields_Sessions_CreatedAt_Read>;
-  update?: Maybe<UsersFields_Sessions_CreatedAt_Update>;
+export type UsersFields_Session = {
+  __typename?: 'UsersFields_session';
+  create?: Maybe<UsersFields_Session_Create>;
+  delete?: Maybe<UsersFields_Session_Delete>;
+  read?: Maybe<UsersFields_Session_Read>;
+  update?: Maybe<UsersFields_Session_Update>;
 };
 
-export type UsersFields_Sessions_CreatedAt_Create = {
-  __typename?: 'UsersFields_sessions_createdAt_Create';
+export type UsersFields_Session_Create = {
+  __typename?: 'UsersFields_session_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_CreatedAt_Delete = {
-  __typename?: 'UsersFields_sessions_createdAt_Delete';
+export type UsersFields_Session_Delete = {
+  __typename?: 'UsersFields_session_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_CreatedAt_Read = {
-  __typename?: 'UsersFields_sessions_createdAt_Read';
+export type UsersFields_Session_Read = {
+  __typename?: 'UsersFields_session_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type UsersFields_Sessions_CreatedAt_Update = {
-  __typename?: 'UsersFields_sessions_createdAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_ExpiresAt = {
-  __typename?: 'UsersFields_sessions_expiresAt';
-  create?: Maybe<UsersFields_Sessions_ExpiresAt_Create>;
-  delete?: Maybe<UsersFields_Sessions_ExpiresAt_Delete>;
-  read?: Maybe<UsersFields_Sessions_ExpiresAt_Read>;
-  update?: Maybe<UsersFields_Sessions_ExpiresAt_Update>;
-};
-
-export type UsersFields_Sessions_ExpiresAt_Create = {
-  __typename?: 'UsersFields_sessions_expiresAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_ExpiresAt_Delete = {
-  __typename?: 'UsersFields_sessions_expiresAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_ExpiresAt_Read = {
-  __typename?: 'UsersFields_sessions_expiresAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_ExpiresAt_Update = {
-  __typename?: 'UsersFields_sessions_expiresAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_Id = {
-  __typename?: 'UsersFields_sessions_id';
-  create?: Maybe<UsersFields_Sessions_Id_Create>;
-  delete?: Maybe<UsersFields_Sessions_Id_Delete>;
-  read?: Maybe<UsersFields_Sessions_Id_Read>;
-  update?: Maybe<UsersFields_Sessions_Id_Update>;
-};
-
-export type UsersFields_Sessions_Id_Create = {
-  __typename?: 'UsersFields_sessions_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_Id_Delete = {
-  __typename?: 'UsersFields_sessions_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_Id_Read = {
-  __typename?: 'UsersFields_sessions_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type UsersFields_Sessions_Id_Update = {
-  __typename?: 'UsersFields_sessions_id_Update';
+export type UsersFields_Session_Update = {
+  __typename?: 'UsersFields_session_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -36467,6 +42979,489 @@ export type VariantsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Verification = {
+  __typename?: 'Verification';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  expiresAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  identifier: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  value: Scalars['String']['output'];
+};
+
+export type Verification_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Verification_ExpiresAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Verification_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Verification_Identifier_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Verification_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Verification_Value_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Verification_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Verification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Verification_Where_Or>>>;
+  createdAt?: InputMaybe<Verification_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Verification_ExpiresAt_Operator>;
+  id?: InputMaybe<Verification_Id_Operator>;
+  identifier?: InputMaybe<Verification_Identifier_Operator>;
+  updatedAt?: InputMaybe<Verification_UpdatedAt_Operator>;
+  value?: InputMaybe<Verification_Value_Operator>;
+};
+
+export type Verification_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Verification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Verification_Where_Or>>>;
+  createdAt?: InputMaybe<Verification_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Verification_ExpiresAt_Operator>;
+  id?: InputMaybe<Verification_Id_Operator>;
+  identifier?: InputMaybe<Verification_Identifier_Operator>;
+  updatedAt?: InputMaybe<Verification_UpdatedAt_Operator>;
+  value?: InputMaybe<Verification_Value_Operator>;
+};
+
+export type Verification_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Verification_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Verification_Where_Or>>>;
+  createdAt?: InputMaybe<Verification_CreatedAt_Operator>;
+  expiresAt?: InputMaybe<Verification_ExpiresAt_Operator>;
+  id?: InputMaybe<Verification_Id_Operator>;
+  identifier?: InputMaybe<Verification_Identifier_Operator>;
+  updatedAt?: InputMaybe<Verification_UpdatedAt_Operator>;
+  value?: InputMaybe<Verification_Value_Operator>;
+};
+
+export type Verifications = {
+  __typename?: 'Verifications';
+  docs: Array<Verification>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type VerificationsCreateAccess = {
+  __typename?: 'VerificationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsCreateDocAccess = {
+  __typename?: 'VerificationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsDeleteAccess = {
+  __typename?: 'VerificationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsDeleteDocAccess = {
+  __typename?: 'VerificationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsDocAccessFields = {
+  __typename?: 'VerificationsDocAccessFields';
+  createdAt?: Maybe<VerificationsDocAccessFields_CreatedAt>;
+  expiresAt?: Maybe<VerificationsDocAccessFields_ExpiresAt>;
+  identifier?: Maybe<VerificationsDocAccessFields_Identifier>;
+  updatedAt?: Maybe<VerificationsDocAccessFields_UpdatedAt>;
+  value?: Maybe<VerificationsDocAccessFields_Value>;
+};
+
+export type VerificationsDocAccessFields_CreatedAt = {
+  __typename?: 'VerificationsDocAccessFields_createdAt';
+  create?: Maybe<VerificationsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<VerificationsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<VerificationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<VerificationsDocAccessFields_CreatedAt_Update>;
+};
+
+export type VerificationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'VerificationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'VerificationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'VerificationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'VerificationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_ExpiresAt = {
+  __typename?: 'VerificationsDocAccessFields_expiresAt';
+  create?: Maybe<VerificationsDocAccessFields_ExpiresAt_Create>;
+  delete?: Maybe<VerificationsDocAccessFields_ExpiresAt_Delete>;
+  read?: Maybe<VerificationsDocAccessFields_ExpiresAt_Read>;
+  update?: Maybe<VerificationsDocAccessFields_ExpiresAt_Update>;
+};
+
+export type VerificationsDocAccessFields_ExpiresAt_Create = {
+  __typename?: 'VerificationsDocAccessFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_ExpiresAt_Delete = {
+  __typename?: 'VerificationsDocAccessFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_ExpiresAt_Read = {
+  __typename?: 'VerificationsDocAccessFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_ExpiresAt_Update = {
+  __typename?: 'VerificationsDocAccessFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Identifier = {
+  __typename?: 'VerificationsDocAccessFields_identifier';
+  create?: Maybe<VerificationsDocAccessFields_Identifier_Create>;
+  delete?: Maybe<VerificationsDocAccessFields_Identifier_Delete>;
+  read?: Maybe<VerificationsDocAccessFields_Identifier_Read>;
+  update?: Maybe<VerificationsDocAccessFields_Identifier_Update>;
+};
+
+export type VerificationsDocAccessFields_Identifier_Create = {
+  __typename?: 'VerificationsDocAccessFields_identifier_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Identifier_Delete = {
+  __typename?: 'VerificationsDocAccessFields_identifier_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Identifier_Read = {
+  __typename?: 'VerificationsDocAccessFields_identifier_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Identifier_Update = {
+  __typename?: 'VerificationsDocAccessFields_identifier_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_UpdatedAt = {
+  __typename?: 'VerificationsDocAccessFields_updatedAt';
+  create?: Maybe<VerificationsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<VerificationsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<VerificationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<VerificationsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type VerificationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'VerificationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'VerificationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'VerificationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'VerificationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Value = {
+  __typename?: 'VerificationsDocAccessFields_value';
+  create?: Maybe<VerificationsDocAccessFields_Value_Create>;
+  delete?: Maybe<VerificationsDocAccessFields_Value_Delete>;
+  read?: Maybe<VerificationsDocAccessFields_Value_Read>;
+  update?: Maybe<VerificationsDocAccessFields_Value_Update>;
+};
+
+export type VerificationsDocAccessFields_Value_Create = {
+  __typename?: 'VerificationsDocAccessFields_value_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Value_Delete = {
+  __typename?: 'VerificationsDocAccessFields_value_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Value_Read = {
+  __typename?: 'VerificationsDocAccessFields_value_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsDocAccessFields_Value_Update = {
+  __typename?: 'VerificationsDocAccessFields_value_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields = {
+  __typename?: 'VerificationsFields';
+  createdAt?: Maybe<VerificationsFields_CreatedAt>;
+  expiresAt?: Maybe<VerificationsFields_ExpiresAt>;
+  identifier?: Maybe<VerificationsFields_Identifier>;
+  updatedAt?: Maybe<VerificationsFields_UpdatedAt>;
+  value?: Maybe<VerificationsFields_Value>;
+};
+
+export type VerificationsFields_CreatedAt = {
+  __typename?: 'VerificationsFields_createdAt';
+  create?: Maybe<VerificationsFields_CreatedAt_Create>;
+  delete?: Maybe<VerificationsFields_CreatedAt_Delete>;
+  read?: Maybe<VerificationsFields_CreatedAt_Read>;
+  update?: Maybe<VerificationsFields_CreatedAt_Update>;
+};
+
+export type VerificationsFields_CreatedAt_Create = {
+  __typename?: 'VerificationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_CreatedAt_Delete = {
+  __typename?: 'VerificationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_CreatedAt_Read = {
+  __typename?: 'VerificationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_CreatedAt_Update = {
+  __typename?: 'VerificationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_ExpiresAt = {
+  __typename?: 'VerificationsFields_expiresAt';
+  create?: Maybe<VerificationsFields_ExpiresAt_Create>;
+  delete?: Maybe<VerificationsFields_ExpiresAt_Delete>;
+  read?: Maybe<VerificationsFields_ExpiresAt_Read>;
+  update?: Maybe<VerificationsFields_ExpiresAt_Update>;
+};
+
+export type VerificationsFields_ExpiresAt_Create = {
+  __typename?: 'VerificationsFields_expiresAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_ExpiresAt_Delete = {
+  __typename?: 'VerificationsFields_expiresAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_ExpiresAt_Read = {
+  __typename?: 'VerificationsFields_expiresAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_ExpiresAt_Update = {
+  __typename?: 'VerificationsFields_expiresAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Identifier = {
+  __typename?: 'VerificationsFields_identifier';
+  create?: Maybe<VerificationsFields_Identifier_Create>;
+  delete?: Maybe<VerificationsFields_Identifier_Delete>;
+  read?: Maybe<VerificationsFields_Identifier_Read>;
+  update?: Maybe<VerificationsFields_Identifier_Update>;
+};
+
+export type VerificationsFields_Identifier_Create = {
+  __typename?: 'VerificationsFields_identifier_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Identifier_Delete = {
+  __typename?: 'VerificationsFields_identifier_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Identifier_Read = {
+  __typename?: 'VerificationsFields_identifier_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Identifier_Update = {
+  __typename?: 'VerificationsFields_identifier_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_UpdatedAt = {
+  __typename?: 'VerificationsFields_updatedAt';
+  create?: Maybe<VerificationsFields_UpdatedAt_Create>;
+  delete?: Maybe<VerificationsFields_UpdatedAt_Delete>;
+  read?: Maybe<VerificationsFields_UpdatedAt_Read>;
+  update?: Maybe<VerificationsFields_UpdatedAt_Update>;
+};
+
+export type VerificationsFields_UpdatedAt_Create = {
+  __typename?: 'VerificationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_UpdatedAt_Delete = {
+  __typename?: 'VerificationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_UpdatedAt_Read = {
+  __typename?: 'VerificationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_UpdatedAt_Update = {
+  __typename?: 'VerificationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Value = {
+  __typename?: 'VerificationsFields_value';
+  create?: Maybe<VerificationsFields_Value_Create>;
+  delete?: Maybe<VerificationsFields_Value_Delete>;
+  read?: Maybe<VerificationsFields_Value_Read>;
+  update?: Maybe<VerificationsFields_Value_Update>;
+};
+
+export type VerificationsFields_Value_Create = {
+  __typename?: 'VerificationsFields_value_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Value_Delete = {
+  __typename?: 'VerificationsFields_value_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Value_Read = {
+  __typename?: 'VerificationsFields_value_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsFields_Value_Update = {
+  __typename?: 'VerificationsFields_value_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VerificationsReadAccess = {
+  __typename?: 'VerificationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsReadDocAccess = {
+  __typename?: 'VerificationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsUpdateAccess = {
+  __typename?: 'VerificationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VerificationsUpdateDocAccess = {
+  __typename?: 'VerificationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AccountsAccess = {
+  __typename?: 'accountsAccess';
+  create?: Maybe<AccountsCreateAccess>;
+  delete?: Maybe<AccountsDeleteAccess>;
+  fields?: Maybe<AccountsFields>;
+  read?: Maybe<AccountsReadAccess>;
+  update?: Maybe<AccountsUpdateAccess>;
+};
+
+export type AccountsDocAccess = {
+  __typename?: 'accountsDocAccess';
+  create?: Maybe<AccountsCreateDocAccess>;
+  delete?: Maybe<AccountsDeleteDocAccess>;
+  fields?: Maybe<AccountsDocAccessFields>;
+  read?: Maybe<AccountsReadDocAccess>;
+  update?: Maybe<AccountsUpdateDocAccess>;
+};
+
 export type AddressesAccess = {
   __typename?: 'addressesAccess';
   create?: Maybe<AddressesCreateAccess>;
@@ -36483,6 +43478,24 @@ export type AddressesDocAccess = {
   fields?: Maybe<AddressesDocAccessFields>;
   read?: Maybe<AddressesReadDocAccess>;
   update?: Maybe<AddressesUpdateDocAccess>;
+};
+
+export type Admin_InvitationsAccess = {
+  __typename?: 'admin_invitationsAccess';
+  create?: Maybe<AdminInvitationsCreateAccess>;
+  delete?: Maybe<AdminInvitationsDeleteAccess>;
+  fields?: Maybe<AdminInvitationsFields>;
+  read?: Maybe<AdminInvitationsReadAccess>;
+  update?: Maybe<AdminInvitationsUpdateAccess>;
+};
+
+export type Admin_InvitationsDocAccess = {
+  __typename?: 'admin_invitationsDocAccess';
+  create?: Maybe<AdminInvitationsCreateDocAccess>;
+  delete?: Maybe<AdminInvitationsDeleteDocAccess>;
+  fields?: Maybe<AdminInvitationsDocAccessFields>;
+  read?: Maybe<AdminInvitationsReadDocAccess>;
+  update?: Maybe<AdminInvitationsUpdateDocAccess>;
 };
 
 export type AllMedia = {
@@ -36554,8 +43567,18 @@ export type CompaniesDocAccess = {
   update?: Maybe<CompaniesUpdateDocAccess>;
 };
 
+export type CountAccounts = {
+  __typename?: 'countAccounts';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountAddresses = {
   __typename?: 'countAddresses';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountAdminInvitations = {
+  __typename?: 'countAdminInvitations';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -36591,6 +43614,21 @@ export type CountIdentities = {
 
 export type CountJobs = {
   __typename?: 'countJobs';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountOauthAccessTokens = {
+  __typename?: 'countOauthAccessTokens';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountOauthApplications = {
+  __typename?: 'countOauthApplications';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountOauthConsents = {
+  __typename?: 'countOauthConsents';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -36649,6 +43687,11 @@ export type CountSearches = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountSessions = {
+  __typename?: 'countSessions';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountTransactions = {
   __typename?: 'countTransactions';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -36671,6 +43714,11 @@ export type CountVariantTypes = {
 
 export type CountVariants = {
   __typename?: 'countVariants';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountVerifications = {
+  __typename?: 'countVerifications';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -36799,6 +43847,36 @@ export type MediaDocAccess = {
   update?: Maybe<MediaUpdateDocAccess>;
 };
 
+export type MutationAccountInput = {
+  accessToken?: InputMaybe<Scalars['String']['input']>;
+  accessTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  accountId: Scalars['String']['input'];
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  idToken?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  providerId: Scalars['String']['input'];
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
+  refreshTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAccountUpdateInput = {
+  accessToken?: InputMaybe<Scalars['String']['input']>;
+  accessTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  accountId?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  idToken?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  providerId?: InputMaybe<Scalars['String']['input']>;
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
+  refreshTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationAddressInput = {
   addressLine1?: InputMaybe<Scalars['String']['input']>;
   addressLine2?: InputMaybe<Scalars['String']['input']>;
@@ -36831,6 +43909,22 @@ export type MutationAddressUpdateInput = {
   state?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAdminInvitationInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  role: AdminInvitation_Role_MutationInput;
+  token: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAdminInvitationUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<AdminInvitationUpdate_Role_MutationInput>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationCartInput = {
@@ -36910,8 +44004,11 @@ export type MutationCategory_BreadcrumbsInput = {
 };
 
 export type MutationCompanyInput = {
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
@@ -36922,8 +44019,11 @@ export type MutationCompanyInput = {
 };
 
 export type MutationCompanyUpdateInput = {
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
@@ -37054,6 +44154,7 @@ export type MutationHeader_NavItems_LinkInput = {
 export type MutationIdentityInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -37063,6 +44164,7 @@ export type MutationIdentityInput = {
 export type MutationIdentityUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -37071,14 +44173,19 @@ export type MutationIdentityUpdateInput = {
 
 export type MutationJobInput = {
   _status?: InputMaybe<Job__Status_MutationInput>;
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   applyUrl?: InputMaybe<Scalars['String']['input']>;
+  bounty?: InputMaybe<MutationJob_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['JSON']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   employmentType: Job_EmploymentType_MutationInput;
   image?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  positions: Scalars['Float']['input'];
   postedAt: Scalars['String']['input'];
   salaryRange?: InputMaybe<MutationJob_SalaryRangeInput>;
   title: Scalars['String']['input'];
@@ -37087,24 +44194,39 @@ export type MutationJobInput = {
 
 export type MutationJobUpdateInput = {
   _status?: InputMaybe<JobUpdate__Status_MutationInput>;
+  allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   applyUrl?: InputMaybe<Scalars['String']['input']>;
+  bounty?: InputMaybe<MutationJobUpdate_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['JSON']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  disallowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   employmentType?: InputMaybe<JobUpdate_EmploymentType_MutationInput>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
+  positions?: InputMaybe<Scalars['Float']['input']>;
   postedAt?: InputMaybe<Scalars['String']['input']>;
   salaryRange?: InputMaybe<MutationJobUpdate_SalaryRangeInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationJobUpdate_BountyInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<JobUpdate_Bounty_Currency_MutationInput>;
+};
+
 export type MutationJobUpdate_SalaryRangeInput = {
   currency?: InputMaybe<JobUpdate_SalaryRange_Currency_MutationInput>;
   max?: InputMaybe<Scalars['Float']['input']>;
   min?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationJob_BountyInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<Job_Bounty_Currency_MutationInput>;
 };
 
 export type MutationJob_SalaryRangeInput = {
@@ -37295,6 +44417,76 @@ export type MutationMedia_Sizes_XlargeInput = {
   mimeType?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   width?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationOauthAccessTokenInput = {
+  accessToken?: InputMaybe<Scalars['String']['input']>;
+  accessTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  client?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
+  refreshTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  scopes?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOauthAccessTokenUpdateInput = {
+  accessToken?: InputMaybe<Scalars['String']['input']>;
+  accessTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  client?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
+  refreshTokenExpiresAt?: InputMaybe<Scalars['String']['input']>;
+  scopes?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOauthApplicationInput = {
+  clientId?: InputMaybe<Scalars['String']['input']>;
+  clientSecret?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  disabled?: InputMaybe<Scalars['Boolean']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  redirectUrls?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOauthApplicationUpdateInput = {
+  clientId?: InputMaybe<Scalars['String']['input']>;
+  clientSecret?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  disabled?: InputMaybe<Scalars['Boolean']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  redirectUrls?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOauthConsentInput = {
+  client?: InputMaybe<Scalars['String']['input']>;
+  consentGiven?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  scopes?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOauthConsentUpdateInput = {
+  client?: InputMaybe<Scalars['String']['input']>;
+  consentGiven?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  scopes?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationOrderInput = {
@@ -37624,6 +44816,7 @@ export type MutationProductInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
@@ -37642,6 +44835,7 @@ export type MutationProductUpdateInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
@@ -37751,6 +44945,26 @@ export type MutationSearch_MetaInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationSessionInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  expiresAt: Scalars['String']['input'];
+  ipAddress?: InputMaybe<Scalars['String']['input']>;
+  token: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+  userAgent?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSessionUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  expiresAt?: InputMaybe<Scalars['String']['input']>;
+  ipAddress?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+  userAgent?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationTransactionInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
   billingAddress?: InputMaybe<MutationTransaction_BillingAddressInput>;
@@ -37838,45 +45052,21 @@ export type MutationTransaction_ItemsInput = {
 export type MutationUserInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
-  hash?: InputMaybe<Scalars['String']['input']>;
-  isAdmin?: InputMaybe<Scalars['Boolean']['input']>;
-  lockUntil?: InputMaybe<Scalars['String']['input']>;
-  loginAttempts?: InputMaybe<Scalars['Float']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  password: Scalars['String']['input'];
-  resetPasswordExpiration?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
-  salt?: InputMaybe<Scalars['String']['input']>;
-  sessions?: InputMaybe<Array<InputMaybe<MutationUser_SessionsInput>>>;
+  emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  role?: InputMaybe<Array<InputMaybe<User_Role_MutationInput>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationUserUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  hash?: InputMaybe<Scalars['String']['input']>;
-  isAdmin?: InputMaybe<Scalars['Boolean']['input']>;
-  lockUntil?: InputMaybe<Scalars['String']['input']>;
-  loginAttempts?: InputMaybe<Scalars['Float']['input']>;
+  emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordExpiration?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
-  salt?: InputMaybe<Scalars['String']['input']>;
-  sessions?: InputMaybe<Array<InputMaybe<MutationUserUpdate_SessionsInput>>>;
+  role?: InputMaybe<Array<InputMaybe<UserUpdate_Role_MutationInput>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationUserUpdate_SessionsInput = {
-  createdAt?: InputMaybe<Scalars['String']['input']>;
-  expiresAt: Scalars['String']['input'];
-  id: Scalars['String']['input'];
-};
-
-export type MutationUser_SessionsInput = {
-  createdAt?: InputMaybe<Scalars['String']['input']>;
-  expiresAt: Scalars['String']['input'];
-  id: Scalars['String']['input'];
 };
 
 export type MutationVariantInput = {
@@ -37939,6 +45129,76 @@ export type MutationVariantUpdateInput = {
   product?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationVerificationInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  expiresAt: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  value: Scalars['String']['input'];
+};
+
+export type MutationVerificationUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  expiresAt?: InputMaybe<Scalars['String']['input']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OauthAccessTokensAccess = {
+  __typename?: 'oauthAccessTokensAccess';
+  create?: Maybe<OauthAccessTokensCreateAccess>;
+  delete?: Maybe<OauthAccessTokensDeleteAccess>;
+  fields?: Maybe<OauthAccessTokensFields>;
+  read?: Maybe<OauthAccessTokensReadAccess>;
+  update?: Maybe<OauthAccessTokensUpdateAccess>;
+};
+
+export type OauthAccessTokensDocAccess = {
+  __typename?: 'oauthAccessTokensDocAccess';
+  create?: Maybe<OauthAccessTokensCreateDocAccess>;
+  delete?: Maybe<OauthAccessTokensDeleteDocAccess>;
+  fields?: Maybe<OauthAccessTokensDocAccessFields>;
+  read?: Maybe<OauthAccessTokensReadDocAccess>;
+  update?: Maybe<OauthAccessTokensUpdateDocAccess>;
+};
+
+export type OauthApplicationsAccess = {
+  __typename?: 'oauthApplicationsAccess';
+  create?: Maybe<OauthApplicationsCreateAccess>;
+  delete?: Maybe<OauthApplicationsDeleteAccess>;
+  fields?: Maybe<OauthApplicationsFields>;
+  read?: Maybe<OauthApplicationsReadAccess>;
+  update?: Maybe<OauthApplicationsUpdateAccess>;
+};
+
+export type OauthApplicationsDocAccess = {
+  __typename?: 'oauthApplicationsDocAccess';
+  create?: Maybe<OauthApplicationsCreateDocAccess>;
+  delete?: Maybe<OauthApplicationsDeleteDocAccess>;
+  fields?: Maybe<OauthApplicationsDocAccessFields>;
+  read?: Maybe<OauthApplicationsReadDocAccess>;
+  update?: Maybe<OauthApplicationsUpdateDocAccess>;
+};
+
+export type OauthConsentsAccess = {
+  __typename?: 'oauthConsentsAccess';
+  create?: Maybe<OauthConsentsCreateAccess>;
+  delete?: Maybe<OauthConsentsDeleteAccess>;
+  fields?: Maybe<OauthConsentsFields>;
+  read?: Maybe<OauthConsentsReadAccess>;
+  update?: Maybe<OauthConsentsUpdateAccess>;
+};
+
+export type OauthConsentsDocAccess = {
+  __typename?: 'oauthConsentsDocAccess';
+  create?: Maybe<OauthConsentsCreateDocAccess>;
+  delete?: Maybe<OauthConsentsDeleteDocAccess>;
+  fields?: Maybe<OauthConsentsDocAccessFields>;
+  read?: Maybe<OauthConsentsReadDocAccess>;
+  update?: Maybe<OauthConsentsUpdateDocAccess>;
 };
 
 export type OrdersAccess = {
@@ -38145,6 +45405,24 @@ export type SearchDocAccess = {
   update?: Maybe<SearchUpdateDocAccess>;
 };
 
+export type SessionsAccess = {
+  __typename?: 'sessionsAccess';
+  create?: Maybe<SessionsCreateAccess>;
+  delete?: Maybe<SessionsDeleteAccess>;
+  fields?: Maybe<SessionsFields>;
+  read?: Maybe<SessionsReadAccess>;
+  update?: Maybe<SessionsUpdateAccess>;
+};
+
+export type SessionsDocAccess = {
+  __typename?: 'sessionsDocAccess';
+  create?: Maybe<SessionsCreateDocAccess>;
+  delete?: Maybe<SessionsDeleteDocAccess>;
+  fields?: Maybe<SessionsDocAccessFields>;
+  read?: Maybe<SessionsReadDocAccess>;
+  update?: Maybe<SessionsUpdateDocAccess>;
+};
+
 export type TransactionsAccess = {
   __typename?: 'transactionsAccess';
   create?: Maybe<TransactionsCreateAccess>;
@@ -38186,15 +45464,15 @@ export type UsersDocAccess = {
 export type UsersJwt = {
   __typename?: 'usersJWT';
   collection: Scalars['String']['output'];
-  email: Scalars['EmailAddress']['output'];
+  emailVerified: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  role?: Maybe<Array<UsersJwt_Role>>;
 };
 
-export type UsersLoginResult = {
-  __typename?: 'usersLoginResult';
-  exp?: Maybe<Scalars['Int']['output']>;
-  token?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<User>;
-};
+export enum UsersJwt_Role {
+  Admin = 'admin',
+  User = 'user'
+}
 
 export type UsersMe = {
   __typename?: 'usersMe';
@@ -38211,12 +45489,6 @@ export type UsersRefreshedUser = {
   refreshedToken?: Maybe<Scalars['String']['output']>;
   strategy?: Maybe<Scalars['String']['output']>;
   user?: Maybe<UsersJwt>;
-};
-
-export type UsersResetPassword = {
-  __typename?: 'usersResetPassword';
-  token?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<User>;
 };
 
 export type VariantOptionsAccess = {
@@ -38273,6 +45545,24 @@ export type VariantsDocAccess = {
   read?: Maybe<VariantsReadDocAccess>;
   readVersions?: Maybe<VariantsReadVersionsDocAccess>;
   update?: Maybe<VariantsUpdateDocAccess>;
+};
+
+export type VerificationsAccess = {
+  __typename?: 'verificationsAccess';
+  create?: Maybe<VerificationsCreateAccess>;
+  delete?: Maybe<VerificationsDeleteAccess>;
+  fields?: Maybe<VerificationsFields>;
+  read?: Maybe<VerificationsReadAccess>;
+  update?: Maybe<VerificationsUpdateAccess>;
+};
+
+export type VerificationsDocAccess = {
+  __typename?: 'verificationsDocAccess';
+  create?: Maybe<VerificationsCreateDocAccess>;
+  delete?: Maybe<VerificationsDeleteDocAccess>;
+  fields?: Maybe<VerificationsDocAccessFields>;
+  read?: Maybe<VerificationsReadDocAccess>;
+  update?: Maybe<VerificationsUpdateDocAccess>;
 };
 
 export type VersionsJob_CreatedAt_Operator = {
@@ -38337,6 +45627,15 @@ export type VersionsJob_Version___Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version___Status_Input>>>;
 };
 
+export type VersionsJob_Version__AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type VersionsJob_Version__ApplyUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -38346,6 +45645,207 @@ export type VersionsJob_Version__ApplyUrl_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsJob_Version__Bounty__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum VersionsJob_Version__Bounty__Currency_Input {
+  Aed = 'AED',
+  Afn = 'AFN',
+  All = 'ALL',
+  Amd = 'AMD',
+  Ang = 'ANG',
+  Aoa = 'AOA',
+  Ars = 'ARS',
+  Aud = 'AUD',
+  Awg = 'AWG',
+  Azn = 'AZN',
+  Bam = 'BAM',
+  Bbd = 'BBD',
+  Bdt = 'BDT',
+  Bgn = 'BGN',
+  Bhd = 'BHD',
+  Bif = 'BIF',
+  Bmd = 'BMD',
+  Bnd = 'BND',
+  Bob = 'BOB',
+  Bov = 'BOV',
+  Brl = 'BRL',
+  Bsd = 'BSD',
+  Btn = 'BTN',
+  Bwp = 'BWP',
+  Byn = 'BYN',
+  Bzd = 'BZD',
+  Cad = 'CAD',
+  Cdf = 'CDF',
+  Che = 'CHE',
+  Chf = 'CHF',
+  Chw = 'CHW',
+  Clf = 'CLF',
+  Clp = 'CLP',
+  Cny = 'CNY',
+  Cop = 'COP',
+  Cou = 'COU',
+  Crc = 'CRC',
+  Cuc = 'CUC',
+  Cup = 'CUP',
+  Cve = 'CVE',
+  Czk = 'CZK',
+  Djf = 'DJF',
+  Dkk = 'DKK',
+  Dop = 'DOP',
+  Dzd = 'DZD',
+  Egp = 'EGP',
+  Ern = 'ERN',
+  Etb = 'ETB',
+  Eur = 'EUR',
+  Fjd = 'FJD',
+  Fkp = 'FKP',
+  Gbp = 'GBP',
+  Gel = 'GEL',
+  Ghs = 'GHS',
+  Gip = 'GIP',
+  Gmd = 'GMD',
+  Gnf = 'GNF',
+  Gtq = 'GTQ',
+  Gyd = 'GYD',
+  Hkd = 'HKD',
+  Hnl = 'HNL',
+  Hrk = 'HRK',
+  Htg = 'HTG',
+  Huf = 'HUF',
+  Idr = 'IDR',
+  Ils = 'ILS',
+  Inr = 'INR',
+  Iqd = 'IQD',
+  Irr = 'IRR',
+  Isk = 'ISK',
+  Jmd = 'JMD',
+  Jod = 'JOD',
+  Jpy = 'JPY',
+  Kes = 'KES',
+  Kgs = 'KGS',
+  Khr = 'KHR',
+  Kmf = 'KMF',
+  Kpw = 'KPW',
+  Krw = 'KRW',
+  Kwd = 'KWD',
+  Kyd = 'KYD',
+  Kzt = 'KZT',
+  Lak = 'LAK',
+  Lbp = 'LBP',
+  Lkr = 'LKR',
+  Lrd = 'LRD',
+  Lsl = 'LSL',
+  Lyd = 'LYD',
+  Mad = 'MAD',
+  Mdl = 'MDL',
+  Mga = 'MGA',
+  Mkd = 'MKD',
+  Mmk = 'MMK',
+  Mnt = 'MNT',
+  Mop = 'MOP',
+  Mru = 'MRU',
+  Mur = 'MUR',
+  Mvr = 'MVR',
+  Mwk = 'MWK',
+  Mxn = 'MXN',
+  Mxv = 'MXV',
+  Myr = 'MYR',
+  Mzn = 'MZN',
+  Nad = 'NAD',
+  Ngn = 'NGN',
+  Nio = 'NIO',
+  Nok = 'NOK',
+  Npr = 'NPR',
+  Nzd = 'NZD',
+  Omr = 'OMR',
+  Pab = 'PAB',
+  Pen = 'PEN',
+  Pgk = 'PGK',
+  Php = 'PHP',
+  Pkr = 'PKR',
+  Pln = 'PLN',
+  Pyg = 'PYG',
+  Qar = 'QAR',
+  Ron = 'RON',
+  Rsd = 'RSD',
+  Rub = 'RUB',
+  Rwf = 'RWF',
+  Sar = 'SAR',
+  Sbd = 'SBD',
+  Scr = 'SCR',
+  Sdg = 'SDG',
+  Sek = 'SEK',
+  Sgd = 'SGD',
+  Shp = 'SHP',
+  Sll = 'SLL',
+  Sos = 'SOS',
+  Srd = 'SRD',
+  Ssp = 'SSP',
+  Stn = 'STN',
+  Svc = 'SVC',
+  Syp = 'SYP',
+  Szl = 'SZL',
+  Thb = 'THB',
+  Tjs = 'TJS',
+  Tmt = 'TMT',
+  Tnd = 'TND',
+  Top = 'TOP',
+  Try = 'TRY',
+  Ttd = 'TTD',
+  Twd = 'TWD',
+  Tzs = 'TZS',
+  Uah = 'UAH',
+  Ugx = 'UGX',
+  Usd = 'USD',
+  Usn = 'USN',
+  Uyi = 'UYI',
+  Uyu = 'UYU',
+  Uyw = 'UYW',
+  Uzs = 'UZS',
+  Ves = 'VES',
+  Vnd = 'VND',
+  Vuv = 'VUV',
+  Wst = 'WST',
+  Xaf = 'XAF',
+  Xag = 'XAG',
+  Xau = 'XAU',
+  Xba = 'XBA',
+  Xbb = 'XBB',
+  Xbc = 'XBC',
+  Xbd = 'XBD',
+  Xcd = 'XCD',
+  Xdr = 'XDR',
+  Xof = 'XOF',
+  Xpd = 'XPD',
+  Xpf = 'XPF',
+  Xpt = 'XPT',
+  Xsu = 'XSU',
+  Xts = 'XTS',
+  Xua = 'XUA',
+  Xxx = 'XXX',
+  Yer = 'YER',
+  Zar = 'ZAR',
+  Zmw = 'ZMW',
+  Zwl = 'ZWL'
+}
+
+export type VersionsJob_Version__Bounty__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
+  equals?: InputMaybe<VersionsJob_Version__Bounty__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
+  not_equals?: InputMaybe<VersionsJob_Version__Bounty__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
 };
 
 export type VersionsJob_Version__Company_Operator = {
@@ -38376,16 +45876,26 @@ export type VersionsJob_Version__CreatedBy_Operator = {
 };
 
 export type VersionsJob_Version__Description_Operator = {
-  contains?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type VersionsJob_Version__DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export enum VersionsJob_Version__EmploymentType_Input {
   Contract = 'contract',
   FullTime = 'full_time',
+  Gig = 'gig',
   Internship = 'internship',
   PartTime = 'part_time'
 }
@@ -38407,6 +45917,12 @@ export type VersionsJob_Version__Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsJob_Version__IsActive_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsJob_Version__Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -38416,6 +45932,15 @@ export type VersionsJob_Version__Location_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsJob_Version__Positions_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type VersionsJob_Version__PostedAt_Operator = {
@@ -38669,14 +46194,20 @@ export type VersionsJob_Where = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -38694,14 +46225,20 @@ export type VersionsJob_Where_And = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -38719,14 +46256,20 @@ export type VersionsJob_Where_Or = {
   parent?: InputMaybe<VersionsJob_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsJob_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsJob_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsJob_Version__AllowedIdentities_Operator>;
   version__applyUrl?: InputMaybe<VersionsJob_Version__ApplyUrl_Operator>;
+  version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
+  version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsJob_Version__DisallowedIdentities_Operator>;
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
+  version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
+  version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
   version__salaryRange__currency?: InputMaybe<VersionsJob_Version__SalaryRange__Currency_Operator>;
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
@@ -39557,6 +47100,14 @@ export type VersionsProduct_Version__DeletedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type VersionsProduct_Version__Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type VersionsProduct_Version__EnableVariants_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -39883,6 +47434,7 @@ export type VersionsProduct_Where = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
+  version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
@@ -39912,6 +47464,7 @@ export type VersionsProduct_Where_And = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
+  version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
@@ -39941,6 +47494,7 @@ export type VersionsProduct_Where_Or = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
+  version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
@@ -40209,7 +47763,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -40219,7 +47773,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -40231,11 +47785,32 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
+
+export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+
+export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  searchTerm: Scalars['String']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -40244,7 +47819,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, identity: { __typename?: 'Identity', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -40255,7 +47830,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, website?: string | null, phone?: string | null, email?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string } }
+          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -40300,7 +47875,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -40314,7 +47889,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -40323,7 +47898,28 @@ export type JobByIdQueryVariables = Exact<{
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: any | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, applyUrl?: string | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
+export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+
+export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  searchTerm: Scalars['String']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -40332,7 +47928,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: any | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, applyUrl?: string | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -40345,7 +47941,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -40357,7 +47953,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -40372,7 +47968,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string } | null }
+          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }
          | null } }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
@@ -40380,7 +47976,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -40389,7 +47985,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -40403,7 +47999,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
 
@@ -40413,12 +48009,24 @@ export const CompanyByIdDocument = `
   Company(id: $id, draft: false) {
     id
     name
+    description
     website
     phone
     email
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     identity {
       id
       name
+      description
       website
       image {
         id
@@ -40476,9 +48084,34 @@ export const ListCompaniesByIdentityDocument = `
     docs {
       id
       name
+      description
       website
       phone
       email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
       image {
         id
         url
@@ -40542,9 +48175,34 @@ export const SearchCompaniesByIdentityDocument = `
             __typename
             id
             name
+            description
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            identity {
+              id
+              name
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
             image {
               id
               url
@@ -40591,18 +48249,196 @@ useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentity
 
 useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
 
+export const ListCompaniesBySecondaryIdentityDocument = `
+    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {allowedIdentities: {in: [$identityId]}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      name
+      description
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCompaniesBySecondaryIdentityQuery = <
+      TData = ListCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => ['ListCompaniesBySecondaryIdentity', variables];
+
+
+useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
+
+export const SearchCompaniesBySecondaryIdentityDocument = `
+    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      name
+      description
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useSearchCompaniesBySecondaryIdentityQuery = <
+      TData = SearchCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => ['SearchCompaniesBySecondaryIdentity', variables];
+
+
+useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
+
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       name
+      description
       website
       phone
       email
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
       identity {
         id
         name
+        description
         image {
           id
           url
@@ -40676,9 +48512,20 @@ export const SearchCompaniesDocument = `
             __typename
             id
             name
+            description
             website
             phone
             email
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url
@@ -40691,6 +48538,7 @@ export const SearchCompaniesDocument = `
             identity {
               id
               name
+              description
             }
           }
         }
@@ -40899,6 +48747,42 @@ export const ListJobsByCompanyDocument = `
       id
       title
       description
+      positions
+      isActive
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+      }
       image {
         id
         url
@@ -40963,6 +48847,42 @@ export const SearchJobsByCompanyDocument = `
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
+            company {
+              id
+              name
+              description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
+            }
             image {
               id
               url
@@ -41017,8 +48937,24 @@ export const JobByIdDocument = `
     description
     location
     employmentType
+    positions
     postedAt
+    isActive
     applyUrl
+    bounty {
+      amount
+      currency
+    }
+    allowedIdentities {
+      id
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      name
+      description
+    }
     salaryRange {
       min
       max
@@ -41027,6 +48963,22 @@ export const JobByIdDocument = `
     company {
       id
       name
+      description
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url
@@ -41071,17 +49023,39 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
-export const ListJobsDocument = `
-    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+export const ListJobsBySecondaryIdentityDocument = `
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {allowedIdentities: {in: [$identityId]}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
     docs {
       id
       title
       description
       location
       employmentType
+      positions
       postedAt
+      isActive
       applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
       salaryRange {
         min
         max
@@ -41099,6 +49073,236 @@ export const ListJobsDocument = `
       company {
         id
         name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListJobsBySecondaryIdentityQuery = <
+      TData = ListJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => ['ListJobsBySecondaryIdentity', variables];
+
+
+useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
+
+export const SearchJobsBySecondaryIdentityDocument = `
+    query SearchJobsBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useSearchJobsBySecondaryIdentityQuery = <
+      TData = SearchJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => ['SearchJobsBySecondaryIdentity', variables];
+
+
+useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
+
+export const ListJobsDocument = `
+    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        name
+        description
+        allowedIdentities {
+          id
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          name
+          description
+        }
+        identity {
+          id
+          name
+          description
+        }
         image {
           id
           url
@@ -41164,6 +49368,22 @@ export const SearchJobsDocument = `
             id
             title
             description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
+            }
+            allowedIdentities {
+              id
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              name
+              description
+            }
             image {
               id
               url
@@ -41176,6 +49396,22 @@ export const SearchJobsDocument = `
             company {
               id
               name
+              description
+              allowedIdentities {
+                id
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                name
+                description
+              }
+              identity {
+                id
+                name
+                description
+              }
               image {
                 id
                 url
@@ -41248,6 +49484,12 @@ export const ListProductsByCompanyDocument = `
       company {
         id
         name
+        description
+        identity {
+          id
+          name
+          description
+        }
       }
     }
     totalDocs
@@ -41316,6 +49558,12 @@ export const SearchProductsByCompanyDocument = `
             company {
               id
               name
+              description
+              identity {
+                id
+                name
+                description
+              }
             }
           }
         }
@@ -41363,6 +49611,12 @@ export const ProductByIdDocument = `
     company {
       id
       name
+      description
+      identity {
+        id
+        name
+        description
+      }
       image {
         id
         url
@@ -41426,6 +49680,12 @@ export const ListProductsDocument = `
       company {
         id
         name
+        description
+        identity {
+          id
+          name
+          description
+        }
         image {
           id
           url
@@ -41503,6 +49763,12 @@ export const SearchProductsDocument = `
             company {
               id
               name
+              description
+              identity {
+                id
+                name
+                description
+              }
               image {
                 id
                 url
