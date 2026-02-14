@@ -30,7 +30,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     itemLayout="vertical"
                     dataSource={props.items}
                     size="large"
-                    header={props.filters && <Flex>{props.filters}</Flex>}
+                    header={props.filters && <Flex justify="start">{props.filters}</Flex>}
                     renderItem={(item) => (
                         <List.Item
                             extra={props.renderItem["extra"]?.(item)}
