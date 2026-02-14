@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "antd";
 import { useProductByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
+import { Markdown } from "../Markdown";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -10,7 +11,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
     return (
         <Loader query={product}>
             {(product) => (
-                <Typography.Title level={1}>{product.Product?.name}</Typography.Title>
+                <div>
+                    <Typography.Title level={1}>{product.Product?.name}</Typography.Title>
+                    <Markdown>{product.Product?.description}</Markdown>
+                </div>
             )}
         </Loader>
     );

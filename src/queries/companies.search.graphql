@@ -22,6 +22,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
             __typename
             id
             name
+            description
             website
             phone
             email
@@ -37,6 +38,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
             identity {
               id
               name
+              description
             }
           }
         }

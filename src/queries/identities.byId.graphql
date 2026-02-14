@@ -2,6 +2,7 @@ query IdentityById($id: String!) {
   Identity(id: $id, draft: false) {
     id
     name
+    description
     website
     image {
       id

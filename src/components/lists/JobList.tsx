@@ -7,6 +7,7 @@ import { useListJobsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { timeAgo, formatSalary, formatEmploymentType } from "../../utils";
+import { Markdown } from "../Markdown";
 
 export interface JobListProps {
     limited?: boolean;
@@ -21,7 +22,6 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
     const items = query.data?.Jobs?.docs || [];
 
     return (
-        <div className="JobContainer">
         <AppList
             hasMore={!props.limited && (!query.data?.Jobs || query.data.Jobs.hasNextPage)}
             items={items}
@@ -87,9 +87,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 },
                 body: (job) => (
                     <div className="JobList__description">
-                        <Typography.Paragraph ellipsis={{ rows: 2 }} style={{ marginBottom: 0 }}>
-                            {job.description}
-                        </Typography.Paragraph>
+                        <Markdown className="Markdown--clamp2">{job.description}</Markdown>
                     </div>
                 ),
                 actions: (job) => (
@@ -100,6 +98,5 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 ),
             }}
         />
-        </div>
     );
 };
