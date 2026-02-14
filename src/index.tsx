@@ -3,9 +3,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
+import { AuthProvider } from "react-oidc-context";
+import { WebStorageStateStore } from "oidc-client-ts";
 
 import { AntProvider } from "./components/AntProvider";
-import { AuthProvider } from "./components/AuthContext";
+import { BACKEND_URL } from "./gqlFetcher";
 
 import "./index.scss";
 
@@ -19,14 +21,32 @@ const Company = React.lazy(() => import("./components/detail/CompanyDetail"));
 const Identity = React.lazy(() => import("./components/detail/IdentityDetail"));
 const ProductService = React.lazy(() => import("./components/detail/ProductServiceDetail"));
 const AppLayout = React.lazy(() => import("./components/AppLayout"));
-const Login = React.lazy(() => import("./components/Login"));
-const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <React.Suspense fallback={<Spin />}>
         <Component />
     </React.Suspense>
 );
+
+const oidcConfig = {
+    authority: `${BACKEND_URL}/api/auth`,
+    client_id: process.env.REACT_APP_OIDC_CLIENT_ID || "",
+    client_secret: process.env.REACT_APP_OIDC_CLIENT_SECRET || "",
+    redirect_uri:
+        process.env.REACT_APP_OIDC_REDIRECT_URI ||
+        `${window.location.origin}/auth/callback`,
+    scope: "openid profile email",
+    userStore: new WebStorageStateStore({ store: window.localStorage }),
+    metadata: {
+        issuer: `${BACKEND_URL}/api/auth`,
+        authorization_endpoint: `${BACKEND_URL}/api/auth/oauth2/authorize`,
+        token_endpoint: `${BACKEND_URL}/api/auth/oauth2/token`,
+        userinfo_endpoint: `${BACKEND_URL}/api/auth/oauth2/userinfo`,
+    },
+    onSigninCallback: () => {
+        window.history.replaceState({}, document.title, "/");
+    },
+};
 
 const config = new QueryClient({
     defaultOptions: {
@@ -39,10 +59,10 @@ const config = new QueryClient({
 });
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 root.render(
-    <BrowserRouter>
-        <QueryClientProvider client={config}>
-            <AntProvider>
-                <AuthProvider>
+    <AuthProvider {...oidcConfig}>
+        <BrowserRouter>
+            <QueryClientProvider client={config}>
+                <AntProvider>
                     <React.Suspense fallback={<Spin />}>
                         <AppLayout>
                             <Routes>
@@ -55,13 +75,11 @@ root.render(
                                 <Route Component={suspense(Company)} path="/companies/:id" />
                                 <Route Component={suspense(Identity)} path="/identities/:id" />
                                 <Route Component={suspense(ProductService)} path="/products-services/:id" />
-                                <Route Component={suspense(Login)} path="/login" />
-                                <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                             </Routes>
                         </AppLayout>
                     </React.Suspense>
-                </AuthProvider>
-            </AntProvider>
-        </QueryClientProvider>
-    </BrowserRouter>
+                </AntProvider>
+            </QueryClientProvider>
+        </BrowserRouter>
+    </AuthProvider>
 );

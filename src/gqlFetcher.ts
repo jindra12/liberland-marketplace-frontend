@@ -18,9 +18,20 @@ const normalizeAndReduce = (options?: RequestInit['headers']) => {
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://liberland-marketplace.vercel.app";
 
+function getAccessToken(): string | null {
+    const key = `oidc.user:${BACKEND_URL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+    try {
+        const stored = localStorage.getItem(key);
+        if (!stored) return null;
+        return JSON.parse(stored).access_token || null;
+    } catch {
+        return null;
+    }
+}
+
 export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers']) => async (): Promise<TData> => {
     const headers = normalizeAndReduce(options);
-    const token = localStorage.getItem("oidc_access_token");
+    const token = getAccessToken();
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }

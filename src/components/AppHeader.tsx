@@ -3,10 +3,9 @@ import React from "react";
 import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
-import { MenuOutlined } from "@ant-design/icons";
+import { LoginOutlined, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "react-oidc-context";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -27,7 +26,7 @@ export const AppHeader: React.FunctionComponent = () => {
     const { md } = useBreakpoint();
     const navigate = useNavigate();
     const location = useLocation();
-    const { isAuthenticated, login, logout } = useAuth();
+    const auth = useAuth();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -56,11 +55,11 @@ export const AppHeader: React.FunctionComponent = () => {
                             selectedKeys={selectedKeys}
                             onClick={onMenuClick}
                         />
-                        {isAuthenticated ? (
+                        {auth.isAuthenticated ? (
                             <Button
                                 type="text"
                                 icon={<LogoutOutlined />}
-                                onClick={logout}
+                                onClick={() => auth.removeUser()}
                             >
                                 Log out
                             </Button>
@@ -68,7 +67,7 @@ export const AppHeader: React.FunctionComponent = () => {
                             <Button
                                 type="text"
                                 icon={<LoginOutlined />}
-                                onClick={login}
+                                onClick={() => auth.signinRedirect()}
                             >
                                 Log in
                             </Button>
@@ -103,11 +102,11 @@ export const AppHeader: React.FunctionComponent = () => {
                                 onClick={onMenuClick}
                             />
                             <div style={{ padding: "16px 24px" }}>
-                                {isAuthenticated ? (
+                                {auth.isAuthenticated ? (
                                     <Button
                                         block
                                         icon={<LogoutOutlined />}
-                                        onClick={() => { logout(); setDrawerOpen(false); }}
+                                        onClick={() => { auth.removeUser(); setDrawerOpen(false); }}
                                     >
                                         Log out
                                     </Button>
@@ -116,7 +115,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                         block
                                         type="primary"
                                         icon={<LoginOutlined />}
-                                        onClick={() => { login(); setDrawerOpen(false); }}
+                                        onClick={() => { auth.signinRedirect(); setDrawerOpen(false); }}
                                     >
                                         Log in
                                     </Button>
