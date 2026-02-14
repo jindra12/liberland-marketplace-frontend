@@ -29,14 +29,14 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 .data
                 .Searches
                 ?.docs
-                .map(({ id, title, doc }) => ({ value: id, label: title, image: getImage(doc.value as DocType) })) || [])
+                .map(({ title, doc }) => ({ value: (doc.value as DocType)?.id || "", label: title, image: getImage(doc.value as DocType) })) || [])
         }
     }, [products.isFetched, products.data]);
 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => navigate(`/products-services/${value}`)}
+            onSelect={(_, { value }) => { navigate(`/products-services/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}
