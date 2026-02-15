@@ -1,57 +1,19 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, List, Typography } from "antd";
 import { useListCompaniesQuery } from "../../generated/graphql";
-import { AppList } from "../AppList";
-import { IdentityFilter } from "../IdentityFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { Markdown } from "../Markdown";
+import { CompanyListInternal } from "./CompanyListInternal";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
     const query = useListCompaniesQuery({
         limit: 10,
         page,
     });
-    const allItems = query.data?.Companies?.docs || [];
-    const items = selectedIdentityIds.length === 0
-        ? allItems
-        : allItems.filter((company) => {
-            const identityIds = [
-                ...(company.allowedIdentities?.map((i) => i.id) || []),
-                company.identity.id,
-            ];
-            return selectedIdentityIds.some((id) => identityIds.includes(id));
-        });
 
     return (
-        <AppList
-            hasMore={!query.data?.Companies || query.data.Companies.hasNextPage}
-            items={items}
-            next={() => setPage(page + 1)}
-            refetch={query.refetch}
-            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
-            renderItem={{
-                title: (company) => company.name,
-                actions: (company) => <Link to={`/companies/${company.id}`}>Details</Link>,
-                avatar: (company) => company.image?.url ? <Avatar src={`${BACKEND_URL}${company.image.url}`} /> : undefined,
-                description: (company) => <Markdown className="Markdown--clamp2 EntityList__description">{company.description}</Markdown>,
-                body: (company) => {
-                    const email = company.email ? <Typography.Link href={`mailto:${company.email}`}>{company.email}</Typography.Link> : undefined;
-                    const website = company.website ? <Typography.Link href={company.website}>{company.website}</Typography.Link> : undefined;
-                    const phone = company.phone ? <Typography.Link href={`tel:${company.phone}`}>{company.phone}</Typography.Link> : undefined;
-                    const contacts = [email, website, phone].filter(Boolean);
-                    return  (
-                        <List
-                            dataSource={contacts}
-                            itemLayout="vertical"
-                            locale={{ emptyText: "No contacts found" }}
-                            renderItem={(item) => <List.Item>{item}</List.Item>}
-                        />
-                    );
-                },
-            }}
+        <CompanyListInternal
+            page={page}
+            query={query}
+            setPage={setPage}
         />
     );
 };

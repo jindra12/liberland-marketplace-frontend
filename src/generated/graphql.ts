@@ -47902,6 +47902,7 @@ export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', i
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
+  companyIds?: InputMaybe<Array<Scalars['JSON']['input']> | Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
@@ -47912,6 +47913,7 @@ export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { 
 
 export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
+  companyIds?: InputMaybe<Array<Scalars['JSON']['input']> | Scalars['JSON']['input']>;
   searchTerm: Scalars['String']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -49027,10 +49029,10 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsBySecondaryIdentityDocument = `
-    query ListJobsBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(
     draft: false
-    where: {allowedIdentities: {in: [$identityId]}}
+    where: {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -49137,10 +49139,10 @@ useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIden
 useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
 
 export const SearchJobsBySecondaryIdentityDocument = `
-    query SearchJobsBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(
     draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}]}
     page: $page
     limit: $limit
     sort: $sort

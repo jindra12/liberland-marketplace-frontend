@@ -52,7 +52,7 @@ export const formatBounty = (amount?: number | null, currency?: string | null): 
 };
 
 export const formatPositions = (positions?: number | null): string | null => {
-    if (positions == null) return null;
+    if (!positions || positions === 1) return null;
     const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;
     const value = positions.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
     return `${value} position${positions === 1 ? "" : "s"}`;

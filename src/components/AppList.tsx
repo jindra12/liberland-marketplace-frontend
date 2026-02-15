@@ -1,6 +1,6 @@
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Flex, List, Spin, Typography } from "antd";
+import { Divider, Flex, List, Spin, Typography } from "antd";
 import uniqueId from "lodash-es/uniqueId";
 
 export interface AppListProps<TItem> {
@@ -9,7 +9,9 @@ export interface AppListProps<TItem> {
     hasMore: boolean;
     refetch: () => void;
     next: () => void;
+    title: React.ReactNode;
     filters?: React.ReactNode;
+    emptyText?: React.ReactNode;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
@@ -21,7 +23,12 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                 next={props.next}
                 hasMore={props.hasMore}
                 loader={<Flex justify="center" align="center"><Spin /></Flex>}
-                endMessage={<Typography.Text type="secondary">No more results</Typography.Text>}
+                endMessage={(
+                    <div>
+                        <Divider size="large" />
+                        <Typography.Text type="secondary">No more results</Typography.Text>
+                    </div>
+                )}
                 scrollableTarget={id}
                 refreshFunction={props.refetch}
                 className="InfinityScroll"
@@ -30,19 +37,34 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     itemLayout="vertical"
                     dataSource={props.items}
                     size="large"
-                    header={props.filters && <Flex justify="start">{props.filters}</Flex>}
+                    header={(
+                        <Flex justify="space-between" gap="16px" wrap align="center">
+                            <Flex flex={6}>
+                                <Typography.Title level={2}>
+                                    {props.title}
+                                </Typography.Title>
+                            </Flex>
+                            <Flex flex={4}>{props.filters}</Flex>
+                        </Flex>
+                    )}
+                    locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                     renderItem={(item) => (
-                        <List.Item
-                            extra={props.renderItem["extra"]?.(item)}
-                            actions={[props.renderItem["actions"]?.(item)]}
-                        >
-                            <List.Item.Meta
-                                title={props.renderItem["title"]?.(item)}
-                                description={props.renderItem["description"]?.(item)}
-                                avatar={props.renderItem["avatar"]?.(item)}
-                            />
-                            {props.renderItem["body"]?.(item)}
-                        </List.Item>
+                        (() => {
+                            const actions = props.renderItem["actions"]?.(item);
+                            return (
+                                <List.Item
+                                    extra={props.renderItem["extra"]?.(item)}
+                                    actions={actions ? [actions] : undefined}
+                                >
+                                    <List.Item.Meta
+                                        title={props.renderItem["title"]?.(item)}
+                                        description={props.renderItem["description"]?.(item)}
+                                        avatar={props.renderItem["avatar"]?.(item)}
+                                    />
+                                    {props.renderItem["body"]?.(item)}
+                                </List.Item>
+                            );
+                        })()
                     )}
                 />
             </InfiniteScroll>

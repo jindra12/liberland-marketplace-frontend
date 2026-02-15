@@ -10,6 +10,8 @@
         padding: 2rem 1rem;
         display: flex;
         justify-content: center;
+        flex: 1;
+        min-height: 100%;
     }
 
     .ant-layout-header,

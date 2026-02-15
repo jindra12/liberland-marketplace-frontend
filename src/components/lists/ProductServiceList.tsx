@@ -28,6 +28,7 @@ export const ProductsServicesList: React.FunctionComponent = () => {
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
+            title="Products and Services"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
                 title: (product) => product.name,
