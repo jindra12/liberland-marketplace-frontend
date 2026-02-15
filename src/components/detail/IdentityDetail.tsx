@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Divider, Grid, Space, Typography } from "antd";
+import { Avatar, Button, Divider, Space, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useIdentityByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
@@ -10,7 +10,6 @@ import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const { md } = Grid.useBreakpoint();
     const identity = useIdentityByIdQuery({ id: id! });
 
     return (
@@ -21,7 +20,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                         {data.Identity?.image?.url && (
                             <Avatar
                                 shape="circle"
-                                size={md ? 128 : 96}
+                                size={96}
                                 src={`${BACKEND_URL}${data.Identity.image.url}`}
                             />
                         )}
@@ -29,19 +28,20 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <Typography.Title level={1} className="EntityDetail__title">
                                 {data.Identity?.name}
                             </Typography.Title>
-                            {data.Identity?.website && (
-                                <Typography.Link href={data.Identity.website} target="_blank" rel="noreferrer">
-                                    <GlobalOutlined /> {data.Identity.website}
-                                </Typography.Link>
-                            )}
                         </div>
                     </Space>
+                    {data.Identity?.website && (
+                        <>
+                            <Divider />
+                            <Button type="primary" href={data.Identity.website} target="_blank" rel="noreferrer">
+                                <GlobalOutlined /> {data.Identity.website}
+                            </Button>
+                        </>
+                    )}
                     <Divider />
                     <Markdown>{data.Identity?.description}</Markdown>
                     <Divider />
-                    <div className="EntityDetail__subLists">
-                        <IdentityCompaniesList identityId={id!} />
-                    </div>
+                    <IdentityCompaniesList identityId={id!} />
                 </div>
             )}
         </Loader>

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Space, Typography } from "antd";
-import { GlobalOutlined } from "@ant-design/icons";
+import { Avatar, Button, Divider, Typography } from "antd";
 import { useListIdentitiesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
@@ -31,21 +30,23 @@ export const IdentityList: React.FunctionComponent = () => {
             title="Identities"
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
-                title: (identity) => identity.name,
-                actions: (identity) => <Link to={`/identities/${identity.id}`}>Details</Link>,
-                avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} /> : undefined,
-                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
-                body: (identity) => (
-                    <Space size={[8, 8]} wrap className="EntityList__body">
-                        {identity.website ? (
-                            <Typography.Link href={identity.website} target="_blank" rel="noreferrer">
-                                <GlobalOutlined /> {identity.website}
-                            </Typography.Link>
-                        ) : (
-                            <Typography.Text type="secondary">No website provided</Typography.Text>
-                        )}
-                    </Space>
+                title: (identity) => (
+                    <Typography.Link href={identity.website || "#"}>
+                        <Typography.Title level={3}>
+                            {identity.name}
+                        </Typography.Title>
+                    </Typography.Link>
                 ),
+                actions: (identity) => (
+                    <Link to={`/identities/${identity.id}`}>
+                        <Button type="primary">
+                            Details
+                        </Button>
+                    </Link>
+                ),
+                avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} /> : undefined,
+                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
+                body: () => <Divider />,
             }}
         />
     );

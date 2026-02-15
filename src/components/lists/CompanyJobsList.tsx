@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useListJobsByCompanyQuery } from "../../generated/graphql";
-import { JobsAppList } from "./JobsAppList";
+import { JobListInternal } from "./JobListInternal";
 
-type CompanyJobsListProps = {
+export interface CompanyJobsListProps {
     companyId: string;
 };
 
@@ -15,13 +15,10 @@ export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (p
     });
 
     return (
-        <JobsAppList
-            title="Jobs"
-            items={query.data?.Jobs?.docs || []}
-            hasMore={!query.data?.Jobs || query.data.Jobs.hasNextPage}
-            next={() => setPage((prev) => prev + 1)}
-            refetch={query.refetch}
-            emptyText="No jobs found for this company"
+        <JobListInternal
+            page={page}
+            query={query}
+            setPage={setPage}
         />
     );
 };

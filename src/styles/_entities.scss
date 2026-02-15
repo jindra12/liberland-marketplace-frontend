@@ -3,7 +3,7 @@
 }
 
 .EntityDetail__title {
-    margin-bottom: 8px !important;
+    flex: 1;
 }
 
 .EntityDetail__meta {
@@ -39,6 +39,10 @@
 
 .EntitySubList__identities {
     margin-top: 4px;
+}
+
+.CompanyDetailLinks {
+    max-width: 500px;
 }
 
 @media (max-width: 991px) {

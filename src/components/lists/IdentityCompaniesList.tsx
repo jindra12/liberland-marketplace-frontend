@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useListCompaniesByIdentityQuery } from "../../generated/graphql";
-import { CompaniesAppList } from "./CompaniesAppList";
+import { CompanyListInternal } from "./CompanyListInternal";
 
 type IdentityCompaniesListProps = {
     identityId: string;
@@ -15,13 +15,10 @@ export const IdentityCompaniesList: React.FunctionComponent<IdentityCompaniesLis
     });
 
     return (
-        <CompaniesAppList
-            title="Companies"
-            items={query.data?.Companies?.docs || []}
-            hasMore={!query.data?.Companies || query.data.Companies.hasNextPage}
-            next={() => setPage((prev) => prev + 1)}
-            refetch={query.refetch}
-            emptyText="No companies found for this identity"
+        <CompanyListInternal
+            page={page}
+            query={query}
+            setPage={setPage}
         />
     );
 };

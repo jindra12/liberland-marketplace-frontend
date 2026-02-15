@@ -1,6 +1,6 @@
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Flex, List, Spin, Typography } from "antd";
+import { Divider, Flex, List, Spin, Typography } from "antd";
 import uniqueId from "lodash-es/uniqueId";
 
 export interface AppListProps<TItem> {
@@ -23,7 +23,12 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                 next={props.next}
                 hasMore={props.hasMore}
                 loader={<Flex justify="center" align="center"><Spin /></Flex>}
-                endMessage={<Typography.Text type="secondary">No more results</Typography.Text>}
+                endMessage={(
+                    <div>
+                        <Divider size="large" />
+                        <Typography.Text type="secondary">No more results</Typography.Text>
+                    </div>
+                )}
                 scrollableTarget={id}
                 refreshFunction={props.refetch}
                 className="InfinityScroll"
