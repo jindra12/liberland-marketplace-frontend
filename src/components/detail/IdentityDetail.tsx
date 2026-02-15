@@ -6,8 +6,7 @@ import { useIdentityByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
-import { IdentityJobsSubList } from "./sublists/IdentityJobsSubList";
-import { IdentityCompaniesSubList } from "./sublists/IdentityCompaniesSubList";
+import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -41,8 +40,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <Markdown>{data.Identity?.description}</Markdown>
                     <Divider />
                     <div className="EntityDetail__subLists">
-                        <IdentityJobsSubList identityId={id!} />
-                        <IdentityCompaniesSubList identityId={id!} />
+                        <IdentityCompaniesList identityId={id!} />
                     </div>
                 </div>
             )}

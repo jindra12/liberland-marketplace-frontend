@@ -1,23 +1,16 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Space, Tag, Typography } from "antd";
-import {
-    EnvironmentOutlined,
-    ClockCircleOutlined,
-    DollarOutlined,
-    HomeFilled,
-    GiftOutlined,
-    TeamOutlined,
-    InfoCircleOutlined,
-    UsergroupAddOutlined,
-} from "@ant-design/icons";
+import { Avatar, Button, Divider, Flex } from "antd";
 import { useListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
+import { formatSalary, formatEmploymentType } from "../../utils";
 import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getJobMeta } from "../shared/jobDerived";
+import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 export interface JobListProps {
     limited?: boolean;
@@ -53,7 +46,9 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
                         {job.title}
-                        {job.company?.identity.name && <Tag color="success" icon={<UsergroupAddOutlined />}>{job.company?.identity.name}</Tag>}
+                        {job.company?.identity.name && (
+                            <IdentityTagLink identity={job.company.identity} color="success" />
+                        )}
                     </Flex>
                 ),
                 avatar: (job) => {
@@ -73,55 +68,27 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
                         job.salaryRange?.max,
                         job.salaryRange?.currency
                     );
-                    const bounty = formatBounty(job.bounty?.amount, job.bounty?.currency);
-                    const positions = formatPositions(job.positions);
+                    const { bounty, positions } = getJobMeta(job);
                     const isInactive = job.isActive === false;
+                    const employmentType = formatEmploymentType(job.employmentType);
+                    const postedAt = typeof job.postedAt === "string" ? job.postedAt : undefined;
                     return (
-                        <Space direction="vertical" size={4}>
+                        <Flex vertical gap={4}>
                             <Divider />
-                            <Space size={[8, 4]} wrap>
-                                {job.company?.name && (
-                                    <Typography.Text strong>
-                                        <HomeFilled />
-                                        {job.company.name}
-                                    </Typography.Text>
-                                )}
-                                {job.location && (
-                                    <Typography.Text type="secondary">
-                                        <EnvironmentOutlined /> {job.location}
-                                    </Typography.Text>
-                                )}
-                                {formatEmploymentType(job.employmentType) && (
-                                    <Tag color="blue">{formatEmploymentType(job.employmentType)}</Tag>
-                                )}
-                                {positions && (
-                                    <Typography.Text type="secondary">
-                                        <TeamOutlined /> {positions}
-                                    </Typography.Text>
-                                )}
-                                {job.postedAt && (
-                                    <Typography.Text type="secondary">
-                                        <ClockCircleOutlined /> {timeAgo(job.postedAt)}
-                                    </Typography.Text>
-                                )}
-                            </Space>
-                            {salary && (
-                                <Typography.Text strong>
-                                    <DollarOutlined /> {salary}
-                                </Typography.Text>
-                            )}
-                            {bounty && (
-                                <Typography.Text strong>
-                                    <GiftOutlined /> Bounty: {bounty}
-                                </Typography.Text>
-                            )}
-                            {isInactive && (
-                                <Typography.Text type="secondary" className="JobInactiveNotice">
-                                    <InfoCircleOutlined /> This job listing is no longer active.
-                                </Typography.Text>
-                            )}
+                            <JobDetailsSummary
+                                companyName={job.company?.name}
+                                location={job.location}
+                                employmentType={employmentType}
+                                salary={salary}
+                                bounty={bounty}
+                                positions={positions}
+                                postedAt={postedAt}
+                                isInactive={isInactive}
+                                showCompanyIcon
+                                metaSize={[8, 4]}
+                            />
                             <Divider />
-                        </Space>
+                        </Flex>
                     );
                 },
                 description: (job) => (

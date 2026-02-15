@@ -10,6 +10,7 @@ export interface AppListProps<TItem> {
     refetch: () => void;
     next: () => void;
     filters?: React.ReactNode;
+    emptyText?: React.ReactNode;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
@@ -31,18 +32,24 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     dataSource={props.items}
                     size="large"
                     header={props.filters && <Flex justify="start">{props.filters}</Flex>}
+                    locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                     renderItem={(item) => (
-                        <List.Item
-                            extra={props.renderItem["extra"]?.(item)}
-                            actions={[props.renderItem["actions"]?.(item)]}
-                        >
-                            <List.Item.Meta
-                                title={props.renderItem["title"]?.(item)}
-                                description={props.renderItem["description"]?.(item)}
-                                avatar={props.renderItem["avatar"]?.(item)}
-                            />
-                            {props.renderItem["body"]?.(item)}
-                        </List.Item>
+                        (() => {
+                            const actions = props.renderItem["actions"]?.(item);
+                            return (
+                                <List.Item
+                                    extra={props.renderItem["extra"]?.(item)}
+                                    actions={actions ? [actions] : undefined}
+                                >
+                                    <List.Item.Meta
+                                        title={props.renderItem["title"]?.(item)}
+                                        description={props.renderItem["description"]?.(item)}
+                                        avatar={props.renderItem["avatar"]?.(item)}
+                                    />
+                                    {props.renderItem["body"]?.(item)}
+                                </List.Item>
+                            );
+                        })()
                     )}
                 />
             </InfiniteScroll>

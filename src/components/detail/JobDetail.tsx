@@ -1,23 +1,17 @@
 import * as React from "react";
-import { Link, useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Space, Tag, Typography } from "antd";
-import {
-    EnvironmentOutlined,
-    ClockCircleOutlined,
-    DollarOutlined,
-    MinusCircleFilled,
-    GiftOutlined,
-    TeamOutlined,
-    InfoCircleOutlined,
-    UsergroupAddOutlined,
-} from "@ant-design/icons";
-import uniqBy from "lodash-es/uniqBy";
+import { useParams } from "react-router-dom";
+import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useJobByIdQuery } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { timeAgo, formatSalary, formatEmploymentType, formatBounty, formatPositions } from "../../utils";
+import { formatSalary, formatEmploymentType } from "../../utils";
 import { ApplyButton } from "../ApplyButton";
 import { Markdown } from "../Markdown";
+import { IdentityGroups } from "./IdentityGroups";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
+import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -32,20 +26,13 @@ const JobDetail: React.FunctionComponent = () => {
                     job?.salaryRange?.max,
                     job?.salaryRange?.currency
                 );
-                const bounty = formatBounty(job?.bounty?.amount, job?.bounty?.currency);
-                const positions = formatPositions(job?.positions);
+                const { bounty, positions, companyIdentity } = getJobMeta(job);
                 const empType = formatEmploymentType(job?.employmentType);
                 const url = job?.image?.url || job?.company?.image?.url;
                 const avatarSize = md ? 192 : 112;
                 const isInactive = job?.isActive === false;
-                const allowedIdentities = uniqBy([
-                    ...job?.allowedIdentities || [],
-                    ...job?.company?.allowedIdentities || [],
-                ], identity => identity.name);
-                const disallowedIdentities = uniqBy([
-                    ...job?.disallowedIdentities || [],
-                    ...job?.company?.disallowedIdentities || [],
-                ], identity => identity.name);
+                const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
+                const { allowedIdentities, disallowedIdentities } = getJobIdentityAccess(job, "name");
 
                 return (
                     <div>
@@ -55,87 +42,35 @@ const JobDetail: React.FunctionComponent = () => {
                                 <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
                                     <Flex justify="space-between" align="center" gap="16px" wrap>
                                         {job?.title}
-                                        {job?.company?.identity.name && (
-                                            <Tag color="success" icon={<UsergroupAddOutlined />}>
-                                                {job?.company?.identity.name}
-                                            </Tag>
+                                        {companyIdentity && (
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
                                         )}
                                     </Flex>
                                 </Typography.Title>
-                                <Space size={[12, 8]} wrap>
-                                    {job?.company?.name && (
-                                        <Typography.Text strong>{job.company.name}</Typography.Text>
-                                    )}
-                                    {job?.location && (
-                                        <Typography.Text type="secondary">
-                                            <EnvironmentOutlined /> {job.location}
-                                        </Typography.Text>
-                                    )}
-                                    {empType && <Tag color="blue">{empType}</Tag>}
-                                    {salary && (
-                                        <Typography.Text strong>
-                                            <DollarOutlined /> {salary}
-                                        </Typography.Text>
-                                    )}
-                                    {bounty && (
-                                        <Typography.Text strong>
-                                            <GiftOutlined /> Bounty: {bounty}
-                                        </Typography.Text>
-                                    )}
-                                    {positions && (
-                                        <Typography.Text type="secondary">
-                                            <TeamOutlined /> {positions}
-                                        </Typography.Text>
-                                    )}
-                                    {job?.postedAt && (
-                                        <Typography.Text type="secondary">
-                                            <ClockCircleOutlined /> {timeAgo(job.postedAt)}
-                                        </Typography.Text>
-                                    )}
-                                </Space>
-                                {isInactive && (
-                                    <Typography.Text type="secondary" className="JobInactiveNotice">
-                                        <InfoCircleOutlined /> This job listing is no longer active.
-                                    </Typography.Text>
-                                )}
+                                <JobDetailsSummary
+                                    companyName={job?.company?.name}
+                                    location={job?.location}
+                                    employmentType={empType}
+                                    salary={salary}
+                                    bounty={bounty}
+                                    positions={positions}
+                                    postedAt={postedAt}
+                                    isInactive={isInactive}
+                                    metaSize={[12, 8]}
+                                />
                             </div>
                         </Space>
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{job?.description}</Markdown>
-                            <Flex wrap gap="16px" justify="center" align="center">
-                                <Flex flex={5} vertical gap="16px">
-                                    <Flex vertical gap="8px">
-                                        <Flex gap="8px" align="center">
-                                            <UsergroupAddOutlined />
-                                            Allowed identities
-                                        </Flex>
-                                    </Flex>
-                                    {allowedIdentities.length ? allowedIdentities.map((identity) => (
-                                        <Link key={`allowed-${identity.id}`} to={`/identities/${identity.id}`}>
-                                            <Tag color="success">
-                                                {identity.name}
-                                            </Tag>
-                                        </Link>
-                                    )) : "No identities found"}
-                                </Flex>
-                                <Divider type="vertical" />
-                                <Flex flex={5} vertical gap="16px">
-                                    <Flex vertical gap="8px">
-                                        <Flex gap="8px" align="center">
-                                            <MinusCircleFilled />
-                                            Disallowed identities
-                                        </Flex>
-                                    </Flex>
-                                    {disallowedIdentities.length ? disallowedIdentities.map((identity) => (
-                                        <Link key={`disallowed-${identity.id}`} to={`/identities/${identity.id}`}>
-                                            <Tag color="error">
-                                                {identity.name}
-                                            </Tag>
-                                        </Link>
-                                    )) : "No identities found"}
-                                </Flex>
-                            </Flex>
+                            <IdentityGroups
+                                allowedIdentities={allowedIdentities}
+                                disallowedIdentities={disallowedIdentities}
+                            />
                             <div>
                                 <ApplyButton url={job?.applyUrl} />
                             </div>

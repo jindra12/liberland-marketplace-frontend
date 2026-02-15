@@ -14,15 +14,6 @@
     margin: 8px 0;
 }
 
-.EntityDetail__identityGroup {
-    flex: 1;
-    min-width: 280px;
-}
-
-.EntityDetail__identityGroupTitle {
-    margin-bottom: 8px;
-}
-
 .EntityDetail__subLists {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

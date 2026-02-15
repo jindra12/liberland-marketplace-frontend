@@ -1,18 +1,15 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Space, Tag, Typography } from "antd";
-import {
-    GlobalOutlined,
-    MailOutlined,
-    MinusCircleFilled,
-    PhoneOutlined,
-    UsergroupAddOutlined,
-} from "@ant-design/icons";
+import { Avatar, Space, Typography } from "antd";
 import { useListCompaniesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
+import { CompanyContactLinks } from "../shared/CompanyContactLinks";
+import { IdentityAccessTags } from "../shared/IdentityAccessTags";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -44,11 +41,11 @@ export const CompanyList: React.FunctionComponent = () => {
                     <Space size={[8, 8]} wrap>
                         {company.name}
                         {company.identity?.name && (
-                            <Link to={`/identities/${company.identity.id}`}>
-                                <Tag color="success" icon={<UsergroupAddOutlined />}>
-                                    {company.identity.name}
-                                </Tag>
-                            </Link>
+                            <IdentityTagLink
+                                identity={company.identity}
+                                color="success"
+                                icon={<UsergroupAddOutlined />}
+                            />
                         )}
                     </Space>
                 ),
@@ -56,47 +53,19 @@ export const CompanyList: React.FunctionComponent = () => {
                 avatar: (company) => company.image?.url ? <Avatar src={`${BACKEND_URL}${company.image.url}`} /> : undefined,
                 description: (company) => <Markdown className="Markdown--clamp2 EntityList__description">{company.description}</Markdown>,
                 body: (company) => {
-                    const contacts = [
-                        company.website ? (
-                            <Typography.Link key={`website-${company.id}`} href={company.website} target="_blank" rel="noreferrer">
-                                <GlobalOutlined /> {company.website}
-                            </Typography.Link>
-                        ) : undefined,
-                        company.email ? (
-                            <Typography.Link key={`email-${company.id}`} href={`mailto:${company.email}`}>
-                                <MailOutlined /> {company.email}
-                            </Typography.Link>
-                        ) : undefined,
-                        company.phone ? (
-                            <Typography.Link key={`phone-${company.id}`} href={`tel:${company.phone}`}>
-                                <PhoneOutlined /> {company.phone}
-                            </Typography.Link>
-                        ) : undefined,
-                    ].filter(Boolean);
-
                     return  (
                         <Space direction="vertical" size={8} className="EntityList__body">
-                            {contacts.length ? (
-                                <Space size={[8, 8]} wrap>{contacts}</Space>
-                            ) : (
-                                <Typography.Text type="secondary">No contacts found</Typography.Text>
-                            )}
-                            <Space size={[8, 8]} wrap>
-                                {company.allowedIdentities?.map((identity) => (
-                                    <Link key={`allowed-${company.id}-${identity.id}`} to={`/identities/${identity.id}`}>
-                                        <Tag color="success" icon={<UsergroupAddOutlined />}>
-                                            {identity.name}
-                                        </Tag>
-                                    </Link>
-                                ))}
-                                {company.disallowedIdentities?.map((identity) => (
-                                    <Link key={`disallowed-${company.id}-${identity.id}`} to={`/identities/${identity.id}`}>
-                                        <Tag color="error" icon={<MinusCircleFilled />}>
-                                            {identity.name}
-                                        </Tag>
-                                    </Link>
-                                ))}
-                            </Space>
+                            <CompanyContactLinks
+                                website={company.website}
+                                email={company.email}
+                                phone={company.phone}
+                                emptyText={<Typography.Text type="secondary">No contacts found</Typography.Text>}
+                            />
+                            <IdentityAccessTags
+                                allowedIdentities={company.allowedIdentities}
+                                disallowedIdentities={company.disallowedIdentities}
+                                keyPrefix={company.id}
+                            />
                         </Space>
                     );
                 },
