@@ -39,6 +39,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
         <AppList
             hasMore={!props.limited && (!query.data?.Jobs || query.data.Jobs.hasNextPage)}
             items={items}
+            title="Jobs"
             next={() => setPage(page + 1)}
             refetch={query.refetch}
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}

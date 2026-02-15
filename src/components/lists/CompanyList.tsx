@@ -35,6 +35,7 @@ export const CompanyList: React.FunctionComponent = () => {
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
+            title="Companies"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
                 title: (company) => (

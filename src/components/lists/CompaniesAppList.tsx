@@ -28,6 +28,7 @@ export const CompaniesAppList: React.FunctionComponent<CompaniesAppListProps> = 
                 hasMore={props.hasMore}
                 next={props.next}
                 refetch={props.refetch}
+                title="Companies"
                 emptyText={props.emptyText}
                 renderItem={{
                     title: (company) => (

@@ -35,6 +35,7 @@ export const JobsAppList: React.FunctionComponent<JobsAppListProps> = (props) =>
                 next={props.next}
                 refetch={props.refetch}
                 emptyText={props.emptyText}
+                title="Jobs"
                 renderItem={{
                     title: (job) => (
                         <Typography.Text strong className="EntitySubList__itemTitle" delete={job.isActive === false}>

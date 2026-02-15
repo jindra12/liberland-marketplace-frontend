@@ -28,6 +28,7 @@ export const IdentityList: React.FunctionComponent = () => {
             items={items}
             next={() => setPage(page + 1)}
             refetch={query.refetch}
+            title="Identities"
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => identity.name,

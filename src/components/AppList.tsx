@@ -9,6 +9,7 @@ export interface AppListProps<TItem> {
     hasMore: boolean;
     refetch: () => void;
     next: () => void;
+    title: React.ReactNode;
     filters?: React.ReactNode;
     emptyText?: React.ReactNode;
 }
@@ -31,7 +32,14 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     itemLayout="vertical"
                     dataSource={props.items}
                     size="large"
-                    header={props.filters && <Flex justify="start">{props.filters}</Flex>}
+                    header={(
+                        <Flex justify="space-between" gap="16px" wrap align="center">
+                            <Flex flex={6}>
+                                {props.title}
+                            </Flex>
+                            <Flex flex={4}>{props.filters}</Flex>
+                        </Flex>
+                    )}
                     locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                     renderItem={(item) => (
                         (() => {
