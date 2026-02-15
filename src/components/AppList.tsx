@@ -35,7 +35,9 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     header={(
                         <Flex justify="space-between" gap="16px" wrap align="center">
                             <Flex flex={6}>
-                                {props.title}
+                                <Typography.Title level={2}>
+                                    {props.title}
+                                </Typography.Title>
                             </Flex>
                             <Flex flex={4}>{props.filters}</Flex>
                         </Flex>
