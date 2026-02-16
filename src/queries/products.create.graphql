@@ -1,0 +1,10 @@
+mutation CreateProduct($data: mutationProductInput!) {
+  createProduct(data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}
