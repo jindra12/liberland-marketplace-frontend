@@ -9,6 +9,7 @@ import {
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { resolveImageId } from "./useImageUpload";
+import { MarkdownEditor } from "./MarkdownEditor";
 
 interface CompanyFormValues {
     name: string;
@@ -83,7 +84,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-                <Input.TextArea rows={4} />
+                <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
             <Form.Item name="identity" label="Identity" rules={[{ required: true, message: "Please select an identity" }]}>
