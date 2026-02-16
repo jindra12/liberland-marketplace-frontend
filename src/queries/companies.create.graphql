@@ -1,7 +1,8 @@
-mutation CreateCompany($data: mutationCompanyInput!) {
-  createCompany(data: $data, draft: false) {
+mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
+  createCompany(data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url

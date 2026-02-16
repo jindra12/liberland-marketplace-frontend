@@ -48217,14 +48217,14 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, name?: string | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -48275,10 +48275,11 @@ export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Co
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -48307,10 +48308,11 @@ export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typena
 export type UpdateCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
   data: MutationCompanyUpdateInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -48376,14 +48378,14 @@ export type ListJobsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null }> } | null };
+export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null }> } | null };
 
 export type JobByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -48410,10 +48412,11 @@ export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: 
 
 export type CreateJobMutationVariables = Exact<{
   data: MutationJobInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -48442,10 +48445,11 @@ export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 
 export type UpdateJobMutationVariables = Exact<{
   id: Scalars['String']['input'];
   data: MutationJobUpdateInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -48473,19 +48477,29 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }
          | null } }> } | null };
 
+export type ListProductsByCreatorQueryVariables = Exact<{
+  companyIds?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>> | InputMaybe<Scalars['JSON']['input']>>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null }> } | null };
+
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, inventory?: number | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, inventory?: number | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -48514,17 +48528,18 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
 export type UpdateProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
   data: MutationProductUpdateInput;
+  draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 
 
 export const ListCompaniesByCreatorDocument = `
     query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
   Companies(
-    draft: false
+    draft: true
     page: $page
     limit: $limit
     where: {createdBy: {equals: $userId}}
@@ -48532,6 +48547,7 @@ export const ListCompaniesByCreatorDocument = `
     docs {
       id
       name
+      _status
     }
     totalDocs
   }
@@ -48561,9 +48577,10 @@ useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQuer
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
-  Company(id: $id, draft: false) {
+  Company(id: $id, draft: true) {
     id
     name
+    _status
     description
     website
     phone
@@ -48974,10 +48991,11 @@ useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesB
 useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
 
 export const CreateCompanyDocument = `
-    mutation CreateCompany($data: mutationCompanyInput!) {
-  createCompany(data: $data, draft: false) {
+    mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
+  createCompany(data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url
@@ -49165,10 +49183,11 @@ useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => [
 useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
 
 export const UpdateCompanyDocument = `
-    mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!) {
-  updateCompany(id: $id, data: $data, draft: false) {
+    mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
+  updateCompany(id: $id, data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url
@@ -49551,7 +49570,7 @@ useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariab
 export const ListJobsByCreatorDocument = `
     query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
   Jobs(
-    draft: false
+    draft: true
     page: $page
     limit: $limit
     where: {createdBy: {equals: $userId}}
@@ -49561,6 +49580,7 @@ export const ListJobsByCreatorDocument = `
       title
       employmentType
       postedAt
+      _status
     }
     totalDocs
   }
@@ -49590,9 +49610,10 @@ useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables
 
 export const JobByIdDocument = `
     query JobById($id: String!) {
-  Job(id: $id, draft: false) {
+  Job(id: $id, draft: true) {
     id
     title
+    _status
     description
     location
     employmentType
@@ -49906,13 +49927,14 @@ useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondary
 useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
 
 export const CreateJobDocument = `
-    mutation CreateJob($data: mutationJobInput!) {
-  createJob(data: $data, draft: false) {
+    mutation CreateJob($data: mutationJobInput!, $draft: Boolean!) {
+  createJob(data: $data, draft: $draft) {
     id
     title
     employmentType
     positions
     postedAt
+    _status
     image {
       id
       url
@@ -50154,13 +50176,14 @@ useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJob
 useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
 
 export const UpdateJobDocument = `
-    mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!) {
-  updateJob(id: $id, data: $data, draft: false) {
+    mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
+  updateJob(id: $id, data: $data, draft: $draft) {
     id
     title
     employmentType
     positions
     postedAt
+    _status
     image {
       id
       url
@@ -50330,11 +50353,51 @@ useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQuer
 
 useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables, options);
 
+export const ListProductsByCreatorDocument = `
+    query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
+  Products(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {company: {in: $companyIds}}
+  ) {
+    docs {
+      id
+      name
+      _status
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListProductsByCreatorQuery = <
+      TData = ListProductsByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListProductsByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListProductsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListProductsByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListProductsByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListProductsByCreator'] : ['ListProductsByCreator', variables],
+    queryFn: gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListProductsByCreatorQuery.getKey = (variables?: ListProductsByCreatorQueryVariables) => variables === undefined ? ['ListProductsByCreator'] : ['ListProductsByCreator', variables];
+
+
+useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables, options);
+
 export const ProductByIdDocument = `
     query ProductById($id: String!) {
-  Product(id: $id, draft: false) {
+  Product(id: $id, draft: true) {
     id
     name
+    _status
     description
     url
     inventory
@@ -50399,10 +50462,11 @@ useProductByIdQuery.getKey = (variables: ProductByIdQueryVariables) => ['Product
 useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, variables, options);
 
 export const CreateProductDocument = `
-    mutation CreateProduct($data: mutationProductInput!) {
-  createProduct(data: $data, draft: false) {
+    mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
+  createProduct(data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url
@@ -50585,10 +50649,11 @@ useSearchProductsQuery.getKey = (variables: SearchProductsQueryVariables) => ['S
 useSearchProductsQuery.fetcher = (variables: SearchProductsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, variables, options);
 
 export const UpdateProductDocument = `
-    mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!) {
-  updateProduct(id: $id, data: $data, draft: false) {
+    mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft: Boolean!) {
+  updateProduct(id: $id, data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url

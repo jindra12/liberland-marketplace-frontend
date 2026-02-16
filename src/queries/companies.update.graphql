@@ -1,7 +1,8 @@
-mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!) {
-  updateCompany(id: $id, data: $data, draft: false) {
+mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
+  updateCompany(id: $id, data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url

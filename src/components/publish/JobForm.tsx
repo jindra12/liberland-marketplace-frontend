@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, DatePicker, Form, Input, InputNumber, message, Select } from "antd";
+import React, { useRef } from "react";
+import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import dayjs from "dayjs";
@@ -59,6 +59,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
     const createMutation = useCreateJobMutation();
     const updateMutation = useUpdateJobMutation();
     const loading = createMutation.isPending || updateMutation.isPending;
+    const draftRef = useRef(false);
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
@@ -107,16 +108,18 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
         }
 
         try {
+            const draft = draftRef.current;
             if (mode === "edit" && initialValues?.id) {
                 const result = await updateMutation.mutateAsync({
                     id: initialValues.id,
                     data: data as never,
+                    draft,
                 });
-                message.success("Job updated");
+                message.success(draft ? "Job saved as draft" : "Job published!");
                 navigate(`/jobs/${result.updateJob?.id}`);
             } else {
-                const result = await createMutation.mutateAsync({ data: data as never });
-                message.success("Job published!");
+                const result = await createMutation.mutateAsync({ data: data as never, draft });
+                message.success(draft ? "Job saved as draft" : "Job published!");
                 navigate(`/jobs/${result.createJob?.id}`);
             }
         } catch (e: unknown) {
@@ -183,9 +186,14 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
             </Form.Item>
 
             <Form.Item>
-                <Button type="primary" htmlType="submit" loading={loading}>
-                    {mode === "edit" ? "Save changes" : "Publish Job"}
-                </Button>
+                <Space>
+                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
+                        {mode === "edit" ? "Publish" : "Publish Job"}
+                    </Button>
+                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
+                        Save as Draft
+                    </Button>
+                </Space>
             </Form.Item>
         </Form>
     );

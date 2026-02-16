@@ -1,0 +1,13 @@
+.Publish {
+    max-width: 640px;
+    margin: 0 auto;
+
+    &__category {
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    &__form {
+        max-width: 500px;
+    }
+}

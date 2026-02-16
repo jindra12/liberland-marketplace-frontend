@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Form, Input, InputNumber, message, Select } from "antd";
+import React, { useRef } from "react";
+import { Button, Form, Input, InputNumber, message, Select, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
@@ -43,6 +43,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
     const loading = createMutation.isPending || updateMutation.isPending;
+    const draftRef = useRef(false);
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
@@ -71,16 +72,18 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         }
 
         try {
+            const draft = draftRef.current;
             if (mode === "edit" && initialValues?.id) {
                 const result = await updateMutation.mutateAsync({
                     id: initialValues.id,
                     data: data as never,
+                    draft,
                 });
-                message.success("Product updated");
+                message.success(draft ? "Product saved as draft" : "Product published!");
                 navigate(`/products-services/${result.updateProduct?.id}`);
             } else {
-                const result = await createMutation.mutateAsync({ data: data as never });
-                message.success("Product listed!");
+                const result = await createMutation.mutateAsync({ data: data as never, draft });
+                message.success(draft ? "Product saved as draft" : "Product published!");
                 navigate(`/products-services/${result.createProduct?.id}`);
             }
         } catch (e: unknown) {
@@ -120,9 +123,14 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
                 />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit" loading={loading}>
-                    {mode === "edit" ? "Save changes" : "List Product"}
-                </Button>
+                <Space>
+                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
+                        {mode === "edit" ? "Publish" : "Publish Product"}
+                    </Button>
+                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
+                        Save as Draft
+                    </Button>
+                </Space>
             </Form.Item>
         </Form>
     );

@@ -18,7 +18,7 @@ export const ProductsServicesList: React.FunctionComponent = () => {
     const items = selectedIdentityIds.length === 0
         ? allItems
         : allItems.filter((product) => {
-            const identityId = product.company?.identity.id;
+            const identityId = product.company?.identity?.id;
             return identityId && selectedIdentityIds.includes(identityId);
         });
 

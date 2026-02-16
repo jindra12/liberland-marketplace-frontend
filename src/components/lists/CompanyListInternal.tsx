@@ -26,7 +26,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
         : allItems.filter((company) => {
             const identityIds = [
                 ...(company.allowedIdentities?.map((i) => i.id) || []),
-                company.identity.id,
+                company.identity?.id,
             ];
             return selectedIdentityIds.some((id) => identityIds.includes(id));
         });

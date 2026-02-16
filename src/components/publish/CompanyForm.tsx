@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Form, Input, message, Select } from "antd";
+import React, { useRef } from "react";
+import { Button, Form, Input, message, Select, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
@@ -35,6 +35,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
     const loading = createMutation.isPending || updateMutation.isPending;
+    const draftRef = useRef(false);
 
     const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
@@ -56,16 +57,18 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         }
 
         try {
+            const draft = draftRef.current;
             if (mode === "edit" && initialValues?.id) {
                 const result = await updateMutation.mutateAsync({
                     id: initialValues.id,
                     data: data as never,
+                    draft,
                 });
-                message.success("Company updated");
+                message.success(draft ? "Company saved as draft" : "Company published!");
                 navigate(`/companies/${result.updateCompany?.id}`);
             } else {
-                const result = await createMutation.mutateAsync({ data: data as never });
-                message.success("Company created!");
+                const result = await createMutation.mutateAsync({ data: data as never, draft });
+                message.success(draft ? "Company saved as draft" : "Company published!");
                 navigate(`/companies/${result.createCompany?.id}`);
             }
         } catch (e: unknown) {
@@ -99,9 +102,14 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit" loading={loading}>
-                    {mode === "edit" ? "Save changes" : "Create Company"}
-                </Button>
+                <Space>
+                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
+                        {mode === "edit" ? "Publish" : "Publish Company"}
+                    </Button>
+                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
+                        Save as Draft
+                    </Button>
+                </Space>
             </Form.Item>
         </Form>
     );

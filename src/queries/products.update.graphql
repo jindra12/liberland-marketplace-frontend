@@ -1,7 +1,8 @@
-mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!) {
-  updateProduct(id: $id, data: $data, draft: false) {
+mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft: Boolean!) {
+  updateProduct(id: $id, data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url
