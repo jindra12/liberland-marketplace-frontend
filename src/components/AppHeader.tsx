@@ -1,9 +1,9 @@
 // src/layout/AppHeader.tsx
 import React from "react";
-import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
+import { Layout, Menu, Drawer, Button, Grid, Space, Flex, Avatar } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LoginOutlined, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
+import { LoginOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
 import { useAuth } from "react-oidc-context";
 
@@ -37,6 +37,14 @@ export const AppHeader: React.FunctionComponent = () => {
         setDrawerOpen(false);
     };
 
+    const handlePublish = () => {
+        if (auth.isAuthenticated) {
+            navigate("/publish");
+        } else {
+            auth.signinRedirect();
+        }
+    };
+
     return (
         <Header className="AppHeader">
             <div className="AppHeader__inner">
@@ -55,14 +63,22 @@ export const AppHeader: React.FunctionComponent = () => {
                             selectedKeys={selectedKeys}
                             onClick={onMenuClick}
                         />
+                        <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={handlePublish}
+                        >
+                            Publish your ad
+                        </Button>
                         {auth.isAuthenticated ? (
-                            <Button
-                                type="text"
-                                icon={<LogoutOutlined />}
-                                onClick={() => auth.removeUser()}
-                            >
-                                Log out
-                            </Button>
+                            <Link to="/profile">
+                                <Avatar
+                                    className="AppHeader__avatar"
+                                    size="default"
+                                    src={auth.user?.profile?.picture}
+                                    icon={<UserOutlined />}
+                                />
+                            </Link>
                         ) : (
                             <Button
                                 type="text"
@@ -102,18 +118,26 @@ export const AppHeader: React.FunctionComponent = () => {
                                 onClick={onMenuClick}
                             />
                             <div style={{ padding: "16px 24px" }}>
+                                <Button
+                                    block
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    onClick={() => { handlePublish(); setDrawerOpen(false); }}
+                                    style={{ marginBottom: 8 }}
+                                >
+                                    Publish your ad
+                                </Button>
                                 {auth.isAuthenticated ? (
                                     <Button
                                         block
-                                        icon={<LogoutOutlined />}
-                                        onClick={() => { auth.removeUser(); setDrawerOpen(false); }}
+                                        icon={<UserOutlined />}
+                                        onClick={() => { navigate("/profile"); setDrawerOpen(false); }}
                                     >
-                                        Log out
+                                        Profile
                                     </Button>
                                 ) : (
                                     <Button
                                         block
-                                        type="primary"
                                         icon={<LoginOutlined />}
                                         onClick={() => { auth.signinRedirect(); setDrawerOpen(false); }}
                                     >

@@ -1,10 +1,11 @@
-mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!) {
-  updateJob(id: $id, data: $data, draft: false) {
+mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
+  updateJob(id: $id, data: $data, draft: $draft) {
     id
     title
     employmentType
     positions
     postedAt
+    _status
     image {
       id
       url

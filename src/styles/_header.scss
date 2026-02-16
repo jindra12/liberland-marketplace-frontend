@@ -64,4 +64,13 @@
         align-items: center;
         gap: 10px;
     }
+
+    &__avatar {
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+
+        &:hover {
+            box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.5);
+        }
+    }
 }

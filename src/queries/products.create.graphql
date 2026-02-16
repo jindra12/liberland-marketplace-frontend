@@ -1,7 +1,8 @@
-mutation CreateProduct($data: mutationProductInput!) {
-  createProduct(data: $data, draft: false) {
+mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
+  createProduct(data: $data, draft: $draft) {
     id
     name
+    _status
     image {
       id
       url

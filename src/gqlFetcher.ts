@@ -18,7 +18,7 @@ const normalizeAndReduce = (options?: RequestInit['headers']) => {
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
 
-function getAccessToken(): string | null {
+export function getAccessToken(): string | null {
     const key = `oidc.user:${BACKEND_URL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
     try {
         const stored = localStorage.getItem(key);
@@ -37,9 +37,9 @@ export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariab
     }
 
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
-        `${BACKEND_URL}/api/graphql`,
+        `/api/graphql`,
         { query, variables },
-        { headers },
+        { headers, withCredentials: true },
     );
 
     if ((res.data?.errors?.length)) {
