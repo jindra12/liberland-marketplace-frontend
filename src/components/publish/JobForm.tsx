@@ -12,6 +12,7 @@ import {
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { resolveImageId } from "./useImageUpload";
+import { MarkdownEditor } from "./MarkdownEditor";
 
 const employmentOptions = [
     { value: Job_EmploymentType_MutationInput.FullTime, label: "Full-time" },
@@ -134,7 +135,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-                <Input.TextArea rows={4} />
+                <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
             <Form.Item name="employmentType" label="Employment Type" rules={[{ required: true }]}>

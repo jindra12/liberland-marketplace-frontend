@@ -10,6 +10,7 @@ import {
 import { useAuth } from "react-oidc-context";
 import { ImageUploadField } from "./ImageUploadField";
 import { resolveImageId } from "./useImageUpload";
+import { MarkdownEditor } from "./MarkdownEditor";
 
 const commonCurrencies = ["USD", "EUR", "GBP", "LLD", "BTC", "ETH"].map((c) => ({
     value: c,
@@ -98,7 +99,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-                <Input.TextArea rows={4} />
+                <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
             <Form.Item label="Price" required>
