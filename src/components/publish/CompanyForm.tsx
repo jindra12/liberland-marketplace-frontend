@@ -58,6 +58,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
 
         try {
             const draft = draftRef.current;
+            data._status = draft ? "draft" : "published";
             if (mode === "edit" && initialValues?.id) {
                 const result = await updateMutation.mutateAsync({
                     id: initialValues.id,

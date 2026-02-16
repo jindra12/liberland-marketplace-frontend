@@ -109,6 +109,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
 
         try {
             const draft = draftRef.current;
+            data._status = draft ? "draft" : "published";
             if (mode === "edit" && initialValues?.id) {
                 const result = await updateMutation.mutateAsync({
                     id: initialValues.id,
