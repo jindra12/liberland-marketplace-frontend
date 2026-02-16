@@ -6535,6 +6535,18 @@ export type CompaniesReadVersionsDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type CompaniesReadVersionsAccess = {
+  __typename?: 'CompaniesReadVersionsAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CompaniesReadVersionsDocAccess = {
+  __typename?: 'CompaniesReadVersionsDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type CompaniesUpdateAccess = {
   __typename?: 'CompaniesUpdateAccess';
   permission: Scalars['Boolean']['output'];
@@ -48978,12 +48990,21 @@ export type VersionsVariants = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type ListCompaniesByCreatorQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['JSON']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, name?: string | null }> } | null };
+
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -49032,6 +49053,13 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 
 export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
+export type CreateCompanyMutationVariables = Exact<{
+  data: MutationCompanyInput;
+}>;
+
+
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -49079,6 +49107,14 @@ export type DeleteCommentMutationVariables = Exact<{
 
 
 export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string } | null };
+
+export type UpdateCompanyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationCompanyUpdateInput;
+}>;
+
+
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -49137,12 +49173,21 @@ export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __ty
           | { __typename?: 'Product' }
          | null } }> } | null };
 
+export type ListJobsByCreatorQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['JSON']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null }> } | null };
+
 export type JobByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -49166,6 +49211,13 @@ export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
 
 
 export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+
+export type CreateJobMutationVariables = Exact<{
+  data: MutationJobInput;
+}>;
+
+
+export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -49208,6 +49260,14 @@ export type ListRepliesToCommentQueryVariables = Exact<{
 
 export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
+export type UpdateJobMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationJobUpdateInput;
+}>;
+
+
+export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -49239,7 +49299,14 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, inventory?: number | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+
+export type CreateProductMutationVariables = Exact<{
+  data: MutationProductInput;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -49265,6 +49332,11 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationProductUpdateInput;
+}>;
+
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
   content: Scalars['String']['input'];
@@ -49274,6 +49346,47 @@ export type UpdateCommentContentMutationVariables = Exact<{
 export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
 
 
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+
+
+export const ListCompaniesByCreatorDocument = `
+    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+  Companies(
+    draft: false
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      name
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListCompaniesByCreatorQuery = <
+      TData = ListCompaniesByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListCompaniesByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListCompaniesByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables],
+    queryFn: gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQueryVariables) => variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables];
+
+
+useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables, options);
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
@@ -49293,6 +49406,9 @@ export const CompanyByIdDocument = `
       id
       name
       description
+    }
+    createdBy {
+      id
     }
     identity {
       id
@@ -49686,6 +49802,35 @@ useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesB
 
 useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
 
+export const CreateCompanyDocument = `
+    mutation CreateCompany($data: mutationCompanyInput!) {
+  createCompany(data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+export const useCreateCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>) => {
+
+    return useMutation<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateCompany'],
+    mutationFn: (variables?: CreateCompanyMutationVariables) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCompanyMutation.fetcher = (variables: CreateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables, options);
+
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
@@ -49847,99 +49992,6 @@ useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => [
 
 
 useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
-
-export const CreateCommentDocument = `
-    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
-  createComment(data: {content: $content, replyPost: $replyToPost}) {
-    id
-    content
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
-    
-    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateComment'],
-    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
-
-export const CreateReplyToCommentDocument = `
-    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
-  createComment(
-    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
-  ) {
-    id
-    content
-    replyComment {
-      id
-    }
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateReplyToCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
-    
-    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateReplyToComment'],
-    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
-
-export const DeleteCommentDocument = `
-    mutation DeleteComment($id: String!) {
-  deleteComment(id: $id) {
-    id
-  }
-}
-    `;
-
-export const useDeleteCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
-    
-    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteComment'],
-    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {
@@ -50296,6 +50348,46 @@ useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariabl
 
 useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
 
+export const ListJobsByCreatorDocument = `
+    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+  Jobs(
+    draft: false
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      title
+      employmentType
+      postedAt
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListJobsByCreatorQuery = <
+      TData = ListJobsByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListJobsByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListJobsByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables],
+    queryFn: gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables) => variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables];
+
+
+useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables, options);
+
 export const JobByIdDocument = `
     query JobById($id: String!) {
   Job(id: $id, draft: false) {
@@ -50326,6 +50418,9 @@ export const JobByIdDocument = `
       min
       max
       currency
+    }
+    createdBy {
+      id
     }
     company {
       id
@@ -50610,6 +50705,38 @@ useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondary
 
 useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
 
+export const CreateJobDocument = `
+    mutation CreateJob($data: mutationJobInput!) {
+  createJob(data: $data, draft: false) {
+    id
+    title
+    employmentType
+    positions
+    postedAt
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+export const useCreateJobMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>) => {
+
+    return useMutation<CreateJobMutation, TError, CreateJobMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateJob'],
+    mutationFn: (variables?: CreateJobMutationVariables) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateJobMutation.fetcher = (variables: CreateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables, options);
+
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
@@ -50826,110 +50953,6 @@ useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJob
 
 useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
 
-export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
-  Comments(
-    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
-    sort: "createdAt"
-    limit: $limit
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCommentsByTargetQuery = <
-      TData = ListCommentsByTargetQuery,
-      TError = unknown
-    >(
-      variables: ListCommentsByTargetQueryVariables,
-      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCommentsByTargetQuery, TError, TData>(
-      {
-    queryKey: ['ListCommentsByTarget', variables],
-    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
-    ...options
-  }
-    )};
-
-useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
-
-
-useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
-
-export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
-  Comments(
-    where: {replyComment: {equals: $parentCommentId}}
-    sort: "createdAt"
-    limit: $limit
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-  }
-}
-    `;
-
-export const useListRepliesToCommentQuery = <
-      TData = ListRepliesToCommentQuery,
-      TError = unknown
-    >(
-      variables: ListRepliesToCommentQueryVariables,
-      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListRepliesToCommentQuery, TError, TData>(
-      {
-    queryKey: ['ListRepliesToComment', variables],
-    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
-    ...options
-  }
-    )};
-
-useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
-
-
-useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
-
 export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(
@@ -51082,10 +51105,18 @@ export const ProductByIdDocument = `
     name
     description
     url
+    inventory
+    price {
+      amount
+      currency
+    }
     company {
       id
       name
       description
+      createdBy {
+        id
+      }
       identity {
         id
         name
@@ -51134,6 +51165,35 @@ useProductByIdQuery.getKey = (variables: ProductByIdQueryVariables) => ['Product
 
 
 useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ProductByIdQuery, ProductByIdQueryVariables>(ProductByIdDocument, variables, options);
+
+export const CreateProductDocument = `
+    mutation CreateProduct($data: mutationProductInput!) {
+  createProduct(data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+export const useCreateProductMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateProductMutation, TError, CreateProductMutationVariables, TContext>) => {
+
+    return useMutation<CreateProductMutation, TError, CreateProductMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateProduct'],
+    mutationFn: (variables?: CreateProductMutationVariables) => gqlFetcher<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateProductMutation.fetcher = (variables: CreateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, variables, options);
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -51291,29 +51351,3 @@ useSearchProductsQuery.getKey = (variables: SearchProductsQueryVariables) => ['S
 
 
 useSearchProductsQuery.fetcher = (variables: SearchProductsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, variables, options);
-
-export const UpdateCommentContentDocument = `
-    mutation UpdateCommentContent($id: String!, $content: String!) {
-  updateComment(id: $id, data: {content: $content}) {
-    id
-    content
-    updatedAt
-  }
-}
-    `;
-
-export const useUpdateCommentContentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>) => {
-    
-    return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateCommentContent'],
-    mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);

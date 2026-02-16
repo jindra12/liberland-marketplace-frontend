@@ -1,0 +1,10 @@
+mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!) {
+  updateProduct(id: $id, data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}

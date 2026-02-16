@@ -1,0 +1,10 @@
+mutation CreateCompany($data: mutationCompanyInput!) {
+  createCompany(data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}

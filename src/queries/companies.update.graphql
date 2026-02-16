@@ -1,0 +1,10 @@
+mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!) {
+  updateCompany(id: $id, data: $data, draft: false) {
+    id
+    name
+    image {
+      id
+      url
+    }
+  }
+}

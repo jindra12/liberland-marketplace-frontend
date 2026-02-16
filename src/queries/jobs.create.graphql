@@ -1,0 +1,13 @@
+mutation CreateJob($data: mutationJobInput!) {
+  createJob(data: $data, draft: false) {
+    id
+    title
+    employmentType
+    positions
+    postedAt
+    image {
+      id
+      url
+    }
+  }
+}
