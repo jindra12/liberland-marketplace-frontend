@@ -50829,7 +50829,7 @@ useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: Req
 export const ListCommentsByTargetDocument = `
     query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
   Comments(
-    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}, {replyComment: {exists: false}}]}
+    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
     sort: "createdAt"
     limit: $limit
   ) {

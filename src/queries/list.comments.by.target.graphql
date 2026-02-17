@@ -8,7 +8,6 @@ query ListCommentsByTarget(
       AND: [
         { replyPost: { relationTo: $relationTo } }
         { replyPost: { value: { equals: $targetId } } }
-        { replyComment: { exists: false } }
       ]
     }
     sort: "createdAt"
