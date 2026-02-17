@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
-import { Button, DatePicker, Form, Input, InputNumber, message, Select, Space } from "antd";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { DatePicker, Form, Input, InputNumber, Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import dayjs from "dayjs";
 import type { UploadFile } from "antd/es/upload/interface";
@@ -11,8 +10,10 @@ import {
     useListCompaniesByCreatorQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
-import { resolveImageId } from "./useImageUpload";
 import { MarkdownEditor } from "./MarkdownEditor";
+import { FormSubmitButtons } from "./FormSubmitButtons";
+import { useEntityForm } from "./useEntityForm";
+import { stripEmpty } from "./formUtils";
 import { currencyOptions } from "./constants";
 
 const employmentOptions = [
@@ -50,13 +51,9 @@ export interface JobFormProps {
 }
 
 export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialValues }) => {
-    const navigate = useNavigate();
     const auth = useAuth();
-    const [form] = Form.useForm();
     const createMutation = useCreateJobMutation();
     const updateMutation = useUpdateJobMutation();
-    const loading = createMutation.isPending || updateMutation.isPending;
-    const draftRef = useRef(false);
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
@@ -71,59 +68,48 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
         ...initialValues,
     };
 
-    const onFinish = async (values: JobFormValues) => {
-        const imageId = await resolveImageId(values.imageFile, initialValues?.existingImageId);
+    const { form, draftRef, loading, onFinish } = useEntityForm({
+        entityName: "Job",
+        routePrefix: "/jobs",
+        mode,
+        existingImageId: initialValues?.existingImageId,
+        editId: initialValues?.id,
+        createMutation,
+        updateMutation,
+        buildData: (values: JobFormValues, imageId) => {
+            const data: Record<string, unknown> = stripEmpty({
+                title: values.title,
+                description: values.description ?? "",
+                employmentType: values.employmentType,
+                positions: values.positions,
+                postedAt: values.postedAt.toISOString(),
+                location: values.location ?? "",
+                applyUrl: values.applyUrl ?? "",
+                company: values.company ?? "",
+            });
 
-        const data: Record<string, unknown> = {
-            title: values.title,
-            description: values.description,
-            employmentType: values.employmentType,
-            positions: values.positions,
-            postedAt: values.postedAt.toISOString(),
-            location: values.location || undefined,
-            applyUrl: values.applyUrl || undefined,
-            company: values.company || undefined,
-        };
+            if (imageId !== undefined) data.image = imageId;
 
-        if (imageId !== undefined) {
-            data.image = imageId;
-        }
-
-        if (values.salaryMin != null || values.salaryMax != null) {
-            data.salaryRange = {
-                min: values.salaryMin,
-                max: values.salaryMax,
-                currency: values.salaryCurrency || "USD",
-            };
-        }
-
-        if (values.bountyAmount != null) {
-            data.bounty = {
-                amount: values.bountyAmount,
-                currency: values.bountyCurrency || "USD",
-            };
-        }
-
-        try {
-            const draft = draftRef.current;
-            data._status = draft ? "draft" : "published";
-            if (mode === "edit" && initialValues?.id) {
-                const result = await updateMutation.mutateAsync({
-                    id: initialValues.id,
-                    data: data as never,
-                    draft,
-                });
-                message.success(draft ? "Job saved as draft" : "Job published!");
-                navigate(`/jobs/${result.updateJob?.id}`);
-            } else {
-                const result = await createMutation.mutateAsync({ data: data as never, draft });
-                message.success(draft ? "Job saved as draft" : "Job published!");
-                navigate(`/jobs/${result.createJob?.id}`);
+            if (values.salaryMin != null || values.salaryMax != null) {
+                data.salaryRange = {
+                    min: values.salaryMin,
+                    max: values.salaryMax,
+                    currency: values.salaryCurrency || "USD",
+                };
             }
-        } catch (e: unknown) {
-            message.error(e instanceof Error ? e.message : "Something went wrong");
-        }
-    };
+
+            if (values.bountyAmount != null) {
+                data.bounty = {
+                    amount: values.bountyAmount,
+                    currency: values.bountyCurrency || "USD",
+                };
+            }
+
+            return data;
+        },
+        getCreateId: (r) => r.createJob?.id,
+        getUpdateId: (r) => r.updateJob?.id,
+    });
 
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
@@ -184,14 +170,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
             </Form.Item>
 
             <Form.Item>
-                <Space>
-                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
-                        {mode === "edit" ? "Publish" : "Publish Job"}
-                    </Button>
-                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
-                        Save as Draft
-                    </Button>
-                </Space>
+                <FormSubmitButtons mode={mode} entityName="Job" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

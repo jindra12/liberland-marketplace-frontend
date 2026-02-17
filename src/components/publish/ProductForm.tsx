@@ -1,16 +1,17 @@
-import React, { useRef } from "react";
-import { Button, Form, Input, InputNumber, message, Select, Space } from "antd";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Form, Input, InputNumber, Select } from "antd";
+import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     useCreateProductMutation,
     useUpdateProductMutation,
     useListCompaniesByCreatorQuery,
 } from "../../generated/graphql";
-import { useAuth } from "react-oidc-context";
 import { ImageUploadField } from "./ImageUploadField";
-import { resolveImageId } from "./useImageUpload";
 import { MarkdownEditor } from "./MarkdownEditor";
+import { FormSubmitButtons } from "./FormSubmitButtons";
+import { useEntityForm } from "./useEntityForm";
+import { stripEmpty } from "./formUtils";
 import { currencyOptions } from "./constants";
 
 interface ProductFormValues {
@@ -34,13 +35,9 @@ export interface ProductFormProps {
 }
 
 export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues }) => {
-    const navigate = useNavigate();
     const auth = useAuth();
-    const [form] = Form.useForm();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
-    const loading = createMutation.isPending || updateMutation.isPending;
-    const draftRef = useRef(false);
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
@@ -49,45 +46,32 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 
-    const onFinish = async (values: ProductFormValues) => {
-        const imageId = await resolveImageId(values.imageFile, initialValues?.existingImageId);
-
-        const data: Record<string, unknown> = {
-            name: values.name,
-            description: values.description || undefined,
-            price: {
+    const { form, draftRef, loading, onFinish } = useEntityForm({
+        entityName: "Product",
+        routePrefix: "/products-services",
+        mode,
+        existingImageId: initialValues?.existingImageId,
+        editId: initialValues?.id,
+        createMutation,
+        updateMutation,
+        buildData: (values: ProductFormValues, imageId) => {
+            const data: Record<string, unknown> = stripEmpty({
+                name: values.name,
+                description: values.description ?? "",
+                url: values.url ?? "",
+                company: values.company ?? "",
+            });
+            data.price = {
                 amount: values.priceAmount,
                 currency: values.priceCurrency,
-            },
-            url: values.url || undefined,
-            inventory: values.inventory,
-            company: values.company || undefined,
-        };
-
-        if (imageId !== undefined) {
-            data.image = imageId;
-        }
-
-        try {
-            const draft = draftRef.current;
-            data._status = draft ? "draft" : "published";
-            if (mode === "edit" && initialValues?.id) {
-                const result = await updateMutation.mutateAsync({
-                    id: initialValues.id,
-                    data: data as never,
-                    draft,
-                });
-                message.success(draft ? "Product saved as draft" : "Product published!");
-                navigate(`/products-services/${result.updateProduct?.id}`);
-            } else {
-                const result = await createMutation.mutateAsync({ data: data as never, draft });
-                message.success(draft ? "Product saved as draft" : "Product published!");
-                navigate(`/products-services/${result.createProduct?.id}`);
-            }
-        } catch (e: unknown) {
-            message.error(e instanceof Error ? e.message : "Something went wrong");
-        }
-    };
+            };
+            data.inventory = values.inventory;
+            if (imageId !== undefined) data.image = imageId;
+            return data;
+        },
+        getCreateId: (r) => r.createProduct?.id,
+        getUpdateId: (r) => r.updateProduct?.id,
+    });
 
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
@@ -121,14 +105,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
                 />
             </Form.Item>
             <Form.Item>
-                <Space>
-                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
-                        {mode === "edit" ? "Publish" : "Publish Product"}
-                    </Button>
-                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
-                        Save as Draft
-                    </Button>
-                </Space>
+                <FormSubmitButtons mode={mode} entityName="Product" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );
