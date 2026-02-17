@@ -1,7 +1,25 @@
 import { ResultStatusType } from "antd/es/result";
-import { DocType } from "./types";
+import {
+    AuthProfile,
+    CommentCurrentUser,
+    CommentDataItem,
+    CommentDoc,
+    CommentGrouping,
+    CommentSectionStyles,
+    CommentThemeVars,
+    DocType,
+    EntityCommentsThemeToken,
+} from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
 import { BACKEND_URL } from "./gqlFetcher";
+import {
+    ENTITY_COMMENTS_ANONYMOUS_NAME,
+    ENTITY_COMMENTS_ANONYMOUS_USER_ID,
+    ENTITY_COMMENTS_AUTHORIZED_FALLBACK_ID,
+    ENTITY_COMMENTS_AUTHORIZED_FALLBACK_NAME,
+    ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
+    ENTITY_COMMENTS_USER_FALLBACK_NAME,
+} from "./constants";
 
 export const convertStatusCode = (status?: number): ResultStatusType => {
     if (status === 403 || status === 404 || status === 500) {
@@ -83,3 +101,148 @@ export const getImage = (doc?: DocType) => {
             return undefined;
     }
 };
+
+export const getCommentTimestamp = (comment: CommentDoc): string | undefined => {
+    const value = comment.updatedAt ?? comment.createdAt;
+    return value ? String(value) : undefined;
+};
+
+export const toCommentItem = (comment: CommentDoc): CommentDataItem => {
+    if (comment.createdBy) {
+        const fullName = comment.createdBy.name || comment.createdBy.email || ENTITY_COMMENTS_USER_FALLBACK_NAME;
+        return {
+            userId: `user:${comment.createdBy.email || comment.createdBy.id}`,
+            comId: comment.id,
+            fullName,
+            avatarUrl: ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
+            userProfile: "",
+            text: comment.content,
+            timestamp: getCommentTimestamp(comment),
+            replies: [],
+        };
+    }
+
+    return {
+        userId: `anon:${comment.anonymousHash || comment.id}`,
+        comId: comment.id,
+        fullName: ENTITY_COMMENTS_ANONYMOUS_NAME,
+        avatarUrl: ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
+        userProfile: "",
+        text: comment.content,
+        timestamp: getCommentTimestamp(comment),
+        replies: [],
+    };
+};
+
+export const buildCommentData = (docs: CommentDoc[]): CommentDataItem[] => {
+    const { roots, repliesByParent } = docs.reduce<CommentGrouping>((acc, comment) => {
+        const parentId = comment.replyComment?.id;
+        if (!parentId) {
+            acc.roots.push(comment);
+            return acc;
+        }
+
+        const existingReplies = acc.repliesByParent.get(parentId) || [];
+        existingReplies.push(toCommentItem(comment));
+        acc.repliesByParent.set(parentId, existingReplies);
+        return acc;
+    }, {
+        roots: [],
+        repliesByParent: new Map<string, CommentDataItem[]>(),
+    });
+
+    return roots.map((comment) => {
+        const root = toCommentItem(comment);
+        return {
+            ...root,
+            replies: repliesByParent.get(comment.id) || [],
+        };
+    });
+};
+
+export const getCommentCurrentUser = (
+    isAuthenticated: boolean,
+    profile?: AuthProfile
+): CommentCurrentUser => {
+    if (isAuthenticated) {
+        const email = profile?.email;
+        const name = profile?.name;
+        const picture = profile?.picture;
+        const sub = profile?.sub;
+        const profileLink = profile?.profile || "";
+
+        return {
+            currentUserId: email || sub || ENTITY_COMMENTS_AUTHORIZED_FALLBACK_ID,
+            currentUserImg: picture || ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
+            currentUserProfile: profileLink,
+            currentUserFullName: name || email || ENTITY_COMMENTS_AUTHORIZED_FALLBACK_NAME,
+        };
+    }
+
+    return {
+        currentUserId: ENTITY_COMMENTS_ANONYMOUS_USER_ID,
+        currentUserImg: ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
+        currentUserProfile: "",
+        currentUserFullName: ENTITY_COMMENTS_ANONYMOUS_NAME,
+    };
+};
+
+export const getCommentThemeVars = (token: EntityCommentsThemeToken): CommentThemeVars => ({
+    "--ecs-bg-overlay": token.colorBgContainer,
+    "--ecs-bg-form": token.colorFillAlter,
+    "--ecs-bg-elevated": token.colorBgElevated,
+    "--ecs-text-primary": token.colorText,
+    "--ecs-text-secondary": token.colorTextSecondary,
+    "--ecs-text-placeholder": token.colorTextPlaceholder,
+    "--ecs-border": token.colorBorder,
+    "--ecs-border-secondary": token.colorBorderSecondary,
+    "--ecs-primary": token.colorPrimary,
+    "--ecs-primary-hover": token.colorPrimaryHover,
+    "--ecs-font-family": token.fontFamily,
+    "--ecs-radius": `${token.borderRadiusLG}px`,
+});
+
+export const getCommentSectionStyles = (token: EntityCommentsThemeToken): CommentSectionStyles => ({
+    overlayStyle: {
+        backgroundColor: token.colorBgContainer,
+        color: token.colorText,
+        fontFamily: token.fontFamily,
+        borderRadius: token.borderRadiusLG,
+    },
+    formStyle: {
+        backgroundColor: token.colorFillAlter,
+        border: `1px solid ${token.colorBorderSecondary}`,
+        borderRadius: token.borderRadiusLG,
+        padding: token.padding,
+    },
+    inputStyle: {
+        color: token.colorText,
+        borderBottom: `1px solid ${token.colorBorder}`,
+        fontFamily: token.fontFamily,
+    },
+    replyInputStyle: {
+        color: token.colorText,
+        borderBottom: `1px solid ${token.colorBorder}`,
+        fontFamily: token.fontFamily,
+    },
+    submitBtnStyle: {
+        border: `1px solid ${token.colorPrimary}`,
+        borderRadius: token.borderRadius,
+        backgroundColor: token.colorPrimary,
+        color: token.colorTextLightSolid,
+    },
+    cancelBtnStyle: {
+        border: `1px solid ${token.colorFillSecondary}`,
+        borderRadius: token.borderRadius,
+        backgroundColor: token.colorFillSecondary,
+        color: token.colorTextSecondary,
+    },
+    hrStyle: {
+        borderTopColor: token.colorBorderSecondary,
+    },
+    titleStyle: {
+        color: token.colorTextHeading,
+        fontFamily: token.fontFamily,
+        fontSize: token.fontSizeHeading4,
+    },
+});

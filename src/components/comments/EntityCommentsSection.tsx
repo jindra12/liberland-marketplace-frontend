@@ -1,96 +1,47 @@
 import * as React from "react";
-import { Alert, Flex, Spin, Typography } from "antd";
+import { Alert, Flex, Spin, Typography, theme } from "antd";
 import { useAuth } from "react-oidc-context";
 import { CommentSection } from "react-comments-section";
 import "react-comments-section/dist/index.css";
 import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-    Comment_ReplyPost_Relation_RelationTo,
-    ListCommentsByTargetQuery,
     useCreateCommentMutation,
     useCreateReplyToCommentMutation,
     useDeleteCommentMutation,
     useListCommentsByTargetQuery,
     useUpdateCommentContentMutation,
 } from "../../generated/graphql";
-
-type CommentDoc = NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number];
-type CommentDataItem = React.ComponentProps<typeof CommentSection>["commentData"][number];
-type CurrentUser = NonNullable<React.ComponentProps<typeof CommentSection>["currentUser"]>;
-type OidcProfile = {
-    email?: string;
-    name?: string;
-    picture?: string;
-    sub?: string;
-    profile?: string;
-};
-type SubmitPayload = { text: string };
-type ReplyPayload = { text: string; repliedToCommentId: string };
-type EditPayload = { text: string; comId: string };
-type DeletePayload = { comIdToDelete: string };
-type CommentGrouping = {
-    roots: CommentDoc[];
-    repliesByParent: Map<string, CommentDataItem[]>;
-};
-
-type EntityCommentsSectionProps = {
-    targetId: string;
-    relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    title?: string;
-    limit?: number;
-    placeholder?: string;
-    className?: string;
-};
-
-const RELATION_TO_QUERY_RELATION: Record<
-    Comment_ReplyPostRelationshipInputRelationTo,
-    Comment_ReplyPost_Relation_RelationTo
-> = {
-    [Comment_ReplyPostRelationshipInputRelationTo.Companies]: Comment_ReplyPost_Relation_RelationTo.Companies,
-    [Comment_ReplyPostRelationshipInputRelationTo.Identities]: Comment_ReplyPost_Relation_RelationTo.Identities,
-    [Comment_ReplyPostRelationshipInputRelationTo.Jobs]: Comment_ReplyPost_Relation_RelationTo.Jobs,
-    [Comment_ReplyPostRelationshipInputRelationTo.Products]: Comment_ReplyPost_Relation_RelationTo.Products,
-};
-
-const commentTimestamp = (comment: CommentDoc) => (
-    comment.updatedAt ?? comment.createdAt ?? undefined
-) as string | undefined;
-
-const toCommentItem = (comment: CommentDoc): CommentDataItem => {
-    if (comment.createdBy) {
-        const fullName = comment.createdBy.name || comment.createdBy.email || "User";
-        return {
-            userId: `user:${comment.createdBy.email || comment.createdBy.id}`,
-            comId: comment.id,
-            fullName,
-            avatarUrl: "/logo192.png",
-            userProfile: "",
-            text: comment.content,
-            timestamp: commentTimestamp(comment),
-        };
-    }
-
-    return {
-        userId: `anon:${comment.anonymousHash || comment.id}`,
-        comId: comment.id,
-        fullName: "Anonymous",
-        avatarUrl: "/logo192.png",
-        userProfile: "",
-        text: comment.content,
-        timestamp: commentTimestamp(comment),
-    };
-};
+import {
+    COMMENT_RELATION_TO_QUERY_RELATION,
+    ENTITY_COMMENTS_DEFAULT_LIMIT,
+    ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
+    ENTITY_COMMENTS_DEFAULT_TITLE,
+} from "../../constants";
+import {
+    AuthProfile,
+    CommentDeletePayload,
+    CommentEditPayload,
+    CommentReplyPayload,
+    CommentSubmitPayload,
+    EntityCommentsSectionProps,
+} from "../../types";
+import {
+    buildCommentData,
+    getCommentCurrentUser,
+    getCommentSectionStyles,
+    getCommentThemeVars,
+} from "../../utils";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = ({
     targetId,
     relationTo,
-    title = "Comments",
-    limit = 100,
-    placeholder = "Write your comment...",
+    title = ENTITY_COMMENTS_DEFAULT_TITLE,
+    limit = ENTITY_COMMENTS_DEFAULT_LIMIT,
+    placeholder = ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
     className,
 }) => {
     const auth = useAuth();
-    const queryRelationTo = RELATION_TO_QUERY_RELATION[relationTo];
+    const { token } = theme.useToken();
+    const queryRelationTo = COMMENT_RELATION_TO_QUERY_RELATION[relationTo];
     const comments = useListCommentsByTargetQuery(
         { targetId, relationTo: queryRelationTo, limit },
         { enabled: Boolean(targetId) }
@@ -100,69 +51,25 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     const updateComment = useUpdateCommentContentMutation();
     const deleteComment = useDeleteCommentMutation();
 
-    const currentUser = React.useMemo<CurrentUser>(() => {
-        const profile = auth.user?.profile as OidcProfile | undefined;
-        const email = profile?.email;
-        const name = profile?.name;
-        const picture = profile?.picture;
-        const sub = profile?.sub;
-        const profileLink = profile?.profile || "";
+    const profile = auth.user?.profile as AuthProfile | undefined;
+    const currentUser = React.useMemo(
+        () => getCommentCurrentUser(auth.isAuthenticated, profile),
+        [auth.isAuthenticated, profile]
+    );
 
-        if (auth.isAuthenticated) {
-            return {
-                currentUserId: email || sub || "authorized-user",
-                currentUserImg: picture || "/logo192.png",
-                currentUserProfile: profileLink,
-                currentUserFullName: name || email || "Authorized user",
-            };
-        }
-
-        // Keep comment input enabled for guests while hiding edit/delete controls via CSS.
-        return {
-            currentUserId: "__anonymous_writer__",
-            currentUserImg: "/logo192.png",
-            currentUserProfile: "",
-            currentUserFullName: "Anonymous",
-        };
-    }, [auth.isAuthenticated, auth.user]);
-
-    const commentData = React.useMemo<CommentDataItem[]>(() => {
+    const commentData = React.useMemo(() => {
         const docs = comments.data?.Comments?.docs || [];
-        const { roots, repliesByParent } = docs.reduce<CommentGrouping>((acc, comment) => {
-            const parentId = comment.replyComment?.id;
-            if (!parentId) {
-                acc.roots.push(comment);
-                return acc;
-            }
-
-            const existingReplies = acc.repliesByParent.get(parentId) || [];
-            existingReplies.push(toCommentItem(comment));
-            acc.repliesByParent.set(parentId, existingReplies);
-            return acc;
-        }, {
-            roots: [],
-            repliesByParent: new Map<string, CommentDataItem[]>(),
-        });
-
-        return roots.map((comment) => {
-            const root = toCommentItem(comment);
-            const replies = repliesByParent.get(comment.id);
-            if (!replies?.length) {
-                return root;
-            }
-
-            return {
-                ...root,
-                replies,
-            };
-        });
+        return buildCommentData(docs);
     }, [comments.data]);
 
     const refetchComments = React.useCallback(async () => {
         await comments.refetch();
     }, [comments]);
 
-    const onSubmitAction = React.useCallback(async (payload: SubmitPayload) => {
+    const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
+    const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
+
+    const onSubmitAction = React.useCallback(async (payload: CommentSubmitPayload) => {
         const content = payload.text.trim();
         if (!content) {
             return;
@@ -178,7 +85,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         await refetchComments();
     }, [createComment, refetchComments, relationTo, targetId]);
 
-    const onReplyAction = React.useCallback(async (payload: ReplyPayload) => {
+    const onReplyAction = React.useCallback(async (payload: CommentReplyPayload) => {
         const content = payload.text.trim();
         const parentCommentId = payload.repliedToCommentId;
         if (!content || !parentCommentId) {
@@ -196,7 +103,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         await refetchComments();
     }, [createReply, refetchComments, relationTo, targetId]);
 
-    const onEditAction = React.useCallback(async (payload: EditPayload) => {
+    const onEditAction = React.useCallback(async (payload: CommentEditPayload) => {
         if (!auth.isAuthenticated) {
             return;
         }
@@ -214,7 +121,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         await refetchComments();
     }, [auth.isAuthenticated, refetchComments, updateComment]);
 
-    const onDeleteAction = React.useCallback(async (payload: DeletePayload) => {
+    const onDeleteAction = React.useCallback(async (payload: CommentDeletePayload) => {
         const commentId = payload.comIdToDelete;
         if (!auth.isAuthenticated || !commentId) {
             return;
@@ -247,7 +154,10 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     }
 
     return (
-        <div className={["EntityCommentsSection", !auth.isAuthenticated && "EntityCommentsSection--anonymous", className].filter(Boolean).join(" ")}>
+        <div
+            className={["EntityCommentsSection", !auth.isAuthenticated && "EntityCommentsSection--anonymous", className].filter(Boolean).join(" ")}
+            style={commentThemeVars}
+        >
             <Typography.Title level={4} className="EntityCommentsSection__title">
                 {title}
             </Typography.Title>
@@ -261,6 +171,14 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
                 commentData={commentData}
                 placeHolder={placeholder}
                 showTimestamp
+                overlayStyle={commentSectionStyles.overlayStyle}
+                formStyle={commentSectionStyles.formStyle}
+                inputStyle={commentSectionStyles.inputStyle}
+                replyInputStyle={commentSectionStyles.replyInputStyle}
+                submitBtnStyle={commentSectionStyles.submitBtnStyle}
+                cancelBtnStyle={commentSectionStyles.cancelBtnStyle}
+                hrStyle={commentSectionStyles.hrStyle}
+                titleStyle={commentSectionStyles.titleStyle}
                 onSubmitAction={onSubmitAction}
                 onReplyAction={onReplyAction}
                 onEditAction={onEditAction}

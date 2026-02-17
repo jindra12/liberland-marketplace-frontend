@@ -1,15 +1,7 @@
 import * as React from "react";
 import { GlobalOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Flex, List, Typography } from "antd";
-import { IdentityTagItem } from "./IdentityTagLink";
-
-type CompanyContactLinksProps = {
-    identity?: IdentityTagItem;
-    website?: string | null;
-    email?: unknown;
-    phone?: string | null;
-    className?: string;
-};
+import { CompanyContactLinksProps } from "../../types";
 
 export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksProps> = ({
     identity,

@@ -1,11 +1,15 @@
 query ListCommentsByTarget(
   $targetId: JSON!
-  $relationTo: Comment_ReplyPost_Relation_RelationTo!
+  $relationTo: Comment_replyPost_Relation_RelationTo!
   $limit: Int = 50
 ) {
   Comments(
     where: {
-      replyPost: { relationTo: $relationTo, value: { equals: $targetId } }
+      AND: [
+        { replyPost: { relationTo: $relationTo } }
+        { replyPost: { value: { equals: $targetId } } }
+        { replyComment: { exists: false } }
+      ]
     }
     sort: "createdAt"
     limit: $limit

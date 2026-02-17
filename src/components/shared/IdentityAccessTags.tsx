@@ -1,16 +1,8 @@
 import * as React from "react";
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
 import { Space } from "antd";
-import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
-
-type IdentityAccessTagsProps = {
-    allowedIdentities?: IdentityTagItem[] | null;
-    disallowedIdentities?: IdentityTagItem[] | null;
-    className?: string;
-    showIcons?: boolean;
-    hideWhenEmpty?: boolean;
-    keyPrefix?: string;
-};
+import { IdentityTagLink } from "./IdentityTagLink";
+import { IdentityAccessTagsProps } from "../../types";
 
 export const IdentityAccessTags: React.FunctionComponent<IdentityAccessTagsProps> = ({
     allowedIdentities,

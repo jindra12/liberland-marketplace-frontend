@@ -4,7 +4,9 @@ mutation UpdateCommentContent(
 ) {
   updateComment(
     id: $id
-    data: { content: $content }
+    data: {
+      content: $content
+    }
   ) {
     id
     content

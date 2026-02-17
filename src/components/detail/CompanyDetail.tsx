@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Typography } from "antd";
+import { Avatar, Divider, Flex, Grid, Tabs, Typography } from "antd";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
@@ -58,7 +58,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                         </Flex>
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
-                        <Divider />                        
+                        <Divider />
                         <CompanyContactLinks
                             identity={companyIdentity}
                             website={companyData?.website}
@@ -72,12 +72,26 @@ const CompanyDetail: React.FunctionComponent = () => {
                             className="EntityDetail__identityGroups"
                         />
                         <Divider />
-                        <CompanyJobsList companyId={id!} />
-                        <Divider />
-                        <EntityCommentsSection
-                            targetId={id!}
-                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                            title="Comments"
+                        <Tabs
+                            defaultActiveKey="jobs"
+                            items={[
+                                {
+                                    key: "jobs",
+                                    label: "Jobs",
+                                    children: <CompanyJobsList companyId={id!} />,
+                                },
+                                {
+                                    key: "comments",
+                                    label: "Comments",
+                                    children: (
+                                        <EntityCommentsSection
+                                            targetId={id!}
+                                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                                            title="Comments"
+                                        />
+                                    ),
+                                },
+                            ]}
                         />
                     </div>
                 );

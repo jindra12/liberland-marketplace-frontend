@@ -7,17 +7,8 @@ import {
     UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Space, Tag } from "antd";
-import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
-
-type JobMetaTagsProps = {
-    showCompany?: boolean;
-    companyName?: string | null;
-    companyIdentity?: IdentityTagItem;
-    positions?: string | null;
-    bounty?: string | null;
-    isInactive?: boolean;
-    className?: string;
-};
+import { IdentityTagLink } from "./IdentityTagLink";
+import { JobMetaTagsProps } from "../../types";
 
 export const JobMetaTags: React.FunctionComponent<JobMetaTagsProps> = ({
     showCompany,

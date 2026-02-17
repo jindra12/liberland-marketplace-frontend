@@ -10,19 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Space, Tag, Typography } from "antd";
 import { timeAgo } from "../../utils";
-
-type JobDetailsSummaryProps = {
-    companyName?: string | null;
-    location?: string | null;
-    employmentType?: string | null;
-    salary?: string | null;
-    bounty?: string | null;
-    positions?: string | null;
-    postedAt?: string | null;
-    isInactive?: boolean;
-    showCompanyIcon?: boolean;
-    metaSize?: React.ComponentProps<typeof Space>["size"];
-};
+import { JobDetailsSummaryProps } from "../../types";
 
 export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> = ({
     companyName,

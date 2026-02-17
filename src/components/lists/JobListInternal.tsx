@@ -29,7 +29,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             const identityIds = [
                 ...(job.allowedIdentities?.map((i) => i.id) || []),
                 ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
-                ...(job.company ? [job.company.identity.id] : []),
+                ...(job.company?.identity?.id ? [job.company.identity.id] : []),
             ];
             return selectedIdentityIds.some((id) => identityIds.includes(id));
         });
@@ -46,7 +46,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
                         {job.title}
-                        {job.company?.identity.name && (
+                        {job.company?.identity?.name && (
                             <IdentityTagLink identity={job.company.identity} color="success" />
                         )}
                     </Flex>

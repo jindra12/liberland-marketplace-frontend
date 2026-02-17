@@ -21,6 +21,9 @@ query ListRepliesToComment(
       replyComment {
         id
       }
+      replyPost {
+        relationTo
+      }
     }
     totalDocs
   }

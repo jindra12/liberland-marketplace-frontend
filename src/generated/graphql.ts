@@ -49206,7 +49206,7 @@ export type ListRepliesToCommentQueryVariables = Exact<{
 }>;
 
 
-export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null }> } | null };
+export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -50827,9 +50827,9 @@ useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJob
 useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
 
 export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_ReplyPost_Relation_RelationTo!, $limit: Int = 50) {
+    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
   Comments(
-    where: {replyPost: {relationTo: $relationTo, value: {equals: $targetId}}}
+    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}, {replyComment: {exists: false}}]}
     sort: "createdAt"
     limit: $limit
   ) {
@@ -50899,6 +50899,9 @@ export const ListRepliesToCommentDocument = `
       updatedAt
       replyComment {
         id
+      }
+      replyPost {
+        relationTo
       }
     }
     totalDocs
