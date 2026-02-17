@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import { Avatar, Divider, Flex, Grid, Typography } from "antd";
-import { useCompanyByIdQuery } from "../../generated/graphql";
+import {
+    Comment_ReplyPostRelationshipInputRelationTo,
+    useCompanyByIdQuery,
+} from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
@@ -10,6 +13,7 @@ import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -69,6 +73,12 @@ const CompanyDetail: React.FunctionComponent = () => {
                         />
                         <Divider />
                         <CompanyJobsList companyId={id!} />
+                        <Divider />
+                        <EntityCommentsSection
+                            targetId={id!}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                            title="Comments"
+                        />
                     </div>
                 );
             }}

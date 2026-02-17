@@ -1,0 +1,35 @@
+query ListCommentsByTarget(
+  $targetId: JSON!
+  $relationTo: Comment_ReplyPost_Relation_RelationTo!
+  $limit: Int = 50
+) {
+  Comments(
+    where: {
+      replyPost: { relationTo: $relationTo, value: { equals: $targetId } }
+    }
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}

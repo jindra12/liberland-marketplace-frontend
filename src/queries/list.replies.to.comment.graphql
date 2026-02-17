@@ -1,0 +1,27 @@
+query ListRepliesToComment(
+  $parentCommentId: JSON!
+  $limit: Int = 100
+) {
+  Comments(
+    where: { replyComment: { equals: $parentCommentId } }
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+    }
+    totalDocs
+  }
+}

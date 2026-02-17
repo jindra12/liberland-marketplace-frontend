@@ -45,6 +45,18 @@
     max-width: 500px;
 }
 
+.EntityCommentsSection {
+    margin-top: 8px;
+}
+
+.EntityCommentsSection__title {
+    margin-bottom: 8px !important;
+}
+
+.EntityCommentsSection--anonymous .userActions {
+    display: none !important;
+}
+
 @media (max-width: 991px) {
     .EntityDetail__subLists {
         grid-template-columns: 1fr;
