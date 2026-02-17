@@ -11,7 +11,7 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
     const query = useListJobsQuery({
         limit: 10,
         page,
-    }, { refetchOnMount: "always" });
+    });
 
     return (
         <JobListInternal

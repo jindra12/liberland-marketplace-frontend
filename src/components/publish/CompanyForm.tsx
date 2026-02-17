@@ -38,7 +38,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
     const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
 
-    const { form, draftRef, loading, onFinish } = useEntityForm<CompanyFormValues, typeof createMutation extends { mutateAsync: (...args: never[]) => Promise<infer R> } ? R : never, typeof updateMutation extends { mutateAsync: (...args: never[]) => Promise<infer R> } ? R : never>({
+    const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Company",
         routePrefix: "/companies",
         mode,
@@ -46,7 +46,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values, imageId) => ({
+        buildData: (values: CompanyFormValues, imageId) => ({
             ...stripEmpty({
                 name: values.name,
                 description: values.description ?? "",

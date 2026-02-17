@@ -1,6 +1,7 @@
 import { useRef, useCallback } from "react";
 import { Form, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { resolveImageId } from "./useImageUpload";
 
 interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
@@ -20,9 +21,11 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
     config: UseEntityFormConfig<TValues, TCreate, TUpdate>,
 ) => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [form] = Form.useForm();
     const draftRef = useRef(false);
     const loading = config.createMutation.isPending || config.updateMutation.isPending;
+    const listQueryKey = `List${config.entityName === "Product" ? "Products" : `${config.entityName}s`}`;
 
     const onFinish = useCallback(async (values: TValues) => {
         const imageId = await resolveImageId(
@@ -41,6 +44,7 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                     data,
                     draft,
                 });
+                await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
                 message.success(`${config.entityName} ${label}!`);
                 navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
             } else {
@@ -48,13 +52,14 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                     data,
                     draft,
                 });
+                await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
                 message.success(`${config.entityName} ${label}!`);
                 navigate(`${config.routePrefix}/${config.getCreateId(result)}`);
             }
         } catch (e: unknown) {
             message.error(e instanceof Error ? e.message : "Something went wrong");
         }
-    }, [config, navigate]);
+    }, [config, navigate, queryClient, listQueryKey]);
 
     return { form, draftRef, loading, onFinish };
 };

@@ -82,9 +82,9 @@ root.render(
                                 <Route Component={suspense(ProductService)} path="/products-services/:id" />
                                 <Route Component={suspense(Profile)} path="/profile" />
                                 <Route Component={suspense(Publish)} path="/publish" />
-                                <Route Component={suspense(EditJob)} path="/jobs/:id/edit" />
-                                <Route Component={suspense(EditCompany)} path="/companies/:id/edit" />
-                                <Route Component={suspense(EditProduct)} path="/products-services/:id/edit" />
+                                <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
+                                <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
+                                <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
                             </Routes>
                         </AppLayout>
                     </React.Suspense>

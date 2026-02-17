@@ -28,13 +28,13 @@ const EditProduct: React.FunctionComponent = () => {
                                         id: product?.id,
                                         name: product?.name || "",
                                         description: product?.description || "",
-                                        priceAmount: product?.price?.amount ?? undefined,
+                                        priceAmount: product?.price?.amount || undefined,
                                         priceCurrency: product?.price?.currency || "USD",
                                         url: product?.url || "",
-                                        inventory: product?.inventory ?? undefined,
-                                        company: product?.company?.id ?? undefined,
-                                        existingImageUrl: product?.image?.url ?? undefined,
-                                        existingImageId: product?.image?.id ?? undefined,
+                                        inventory: product?.inventory || undefined,
+                                        company: product?.company?.id || undefined,
+                                        existingImageUrl: product?.image?.url || undefined,
+                                        existingImageId: product?.image?.id || undefined,
                                     }}
                                 />
                             </OwnerGuard>

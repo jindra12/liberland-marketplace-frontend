@@ -7,7 +7,7 @@ export const CompanyList: React.FunctionComponent = () => {
     const query = useListCompaniesQuery({
         limit: 10,
         page,
-    }, { refetchOnMount: "always" });
+    });
 
     return (
         <CompanyListInternal

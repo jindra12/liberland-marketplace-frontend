@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import { changePassword, updateUserName } from "../authApi";
+import { useChangePasswordMutation, useUpdateUserNameMutation } from "../authApi";
 import {
     useListJobsByCreatorQuery,
     useListCompaniesByCreatorQuery,
@@ -24,8 +24,8 @@ export const ProfileContent: React.FunctionComponent = () => {
 
     const [nicknameForm] = Form.useForm();
     const [passwordForm] = Form.useForm();
-    const [nicknameLoading, setNicknameLoading] = React.useState(false);
-    const [passwordLoading, setPasswordLoading] = React.useState(false);
+    const nicknameMutation = useUpdateUserNameMutation();
+    const passwordMutation = useChangePasswordMutation();
 
     const jobsQuery = useListJobsByCreatorQuery(
         { userId },
@@ -43,16 +43,13 @@ export const ProfileContent: React.FunctionComponent = () => {
     );
 
     const handleNickname = async (values: { name: string }) => {
-        setNicknameLoading(true);
         try {
-            await updateUserName(values.name);
+            await nicknameMutation.mutateAsync(values.name);
             await auth.signinSilent();
             message.success("Nickname updated");
             nicknameForm.resetFields();
         } catch {
             message.error("Failed to update nickname");
-        } finally {
-            setNicknameLoading(false);
         }
     };
 
@@ -61,15 +58,12 @@ export const ProfileContent: React.FunctionComponent = () => {
             message.error("Passwords do not match");
             return;
         }
-        setPasswordLoading(true);
         try {
-            await changePassword(values.currentPassword, values.newPassword);
+            await passwordMutation.mutateAsync({ currentPassword: values.currentPassword, newPassword: values.newPassword });
             message.success("Password changed");
             passwordForm.resetFields();
         } catch {
             message.error("Failed to change password");
-        } finally {
-            setPasswordLoading(false);
         }
     };
 
@@ -112,7 +106,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                             <Input prefix={<UserOutlined />} placeholder="New nickname" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" loading={nicknameLoading}>
+                            <Button type="primary" htmlType="submit" loading={nicknameMutation.isPending}>
                                 Update
                             </Button>
                         </Form.Item>
@@ -131,7 +125,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                             <Input.Password placeholder="Confirm new password" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" loading={passwordLoading}>
+                            <Button type="primary" htmlType="submit" loading={passwordMutation.isPending}>
                                 Change Password
                             </Button>
                         </Form.Item>
@@ -168,7 +162,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(job) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/jobs/${job.id}/edit`}>
+                                            <Link key="edit" to={`/jobs/edit/${job.id}`}>
                                                 <Button size="small" icon={<EditOutlined />}>Edit</Button>
                                             </Link>,
                                             <Link key="view" to={`/jobs/${job.id}`}>
@@ -196,7 +190,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(company) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/companies/${company.id}/edit`}>
+                                            <Link key="edit" to={`/companies/edit/${company.id}`}>
                                                 <Button size="small" icon={<EditOutlined />}>Edit</Button>
                                             </Link>,
                                             <Link key="view" to={`/companies/${company.id}`}>
@@ -221,7 +215,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(product) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/products-services/${product.id}/edit`}>
+                                            <Link key="edit" to={`/products-services/edit/${product.id}`}>
                                                 <Button size="small" icon={<EditOutlined />}>Edit</Button>
                                             </Link>,
                                             <Link key="view" to={`/products-services/${product.id}`}>
