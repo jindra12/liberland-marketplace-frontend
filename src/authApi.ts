@@ -1,11 +1,10 @@
 import axios from "axios";
-import { getAccessToken } from "./gqlFetcher";
+import { BACKEND_URL, getAccessToken } from "./gqlFetcher";
 
 const authClient = () => {
     const token = getAccessToken();
     return axios.create({
-        baseURL: `/api/auth`,
-        withCredentials: true,
+        baseURL: `${BACKEND_URL}/api/auth`,
         headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 };

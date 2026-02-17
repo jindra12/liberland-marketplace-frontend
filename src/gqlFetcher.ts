@@ -32,9 +32,9 @@ export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariab
     }
 
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
-        `/api/graphql`,
+        `${BACKEND_URL}/api/graphql`,
         { query, variables },
-        { headers, withCredentials: true },
+        { headers },
     );
 
     if ((res.data?.errors?.length)) {

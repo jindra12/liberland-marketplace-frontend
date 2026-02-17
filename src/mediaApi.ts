@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "./gqlFetcher";
+import { BACKEND_URL, getAccessToken } from "./gqlFetcher";
 
 interface MediaDoc {
     id: string;
@@ -17,8 +17,7 @@ export const uploadMedia = async (file: File, alt?: string): Promise<MediaDoc> =
     formData.append("file", file);
     if (alt) formData.append("alt", alt);
 
-    const res = await axios.post<{ doc: MediaDoc }>("/api/media", formData, {
-        withCredentials: true,
+    const res = await axios.post<{ doc: MediaDoc }>(`${BACKEND_URL}/api/media`, formData, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 
