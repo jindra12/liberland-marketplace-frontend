@@ -23,7 +23,3 @@ export const COMMENT_RELATION_TO_QUERY_RELATION: Record<
     [Comment_ReplyPostRelationshipInputRelationTo.Jobs]: Comment_ReplyPost_Relation_RelationTo.Jobs,
     [Comment_ReplyPostRelationshipInputRelationTo.Products]: Comment_ReplyPost_Relation_RelationTo.Products,
 };
-
-export const IDENTITY_GROUPS_DEFAULT_EMPTY_TEXT = "No identities found";
-export const IDENTITY_GROUPS_ALLOWED_LABEL = "Allowed identities";
-export const IDENTITY_GROUPS_DISALLOWED_LABEL = "Disallowed identities";

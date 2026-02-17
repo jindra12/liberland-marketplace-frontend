@@ -1,6 +1,10 @@
 import * as React from "react";
 import { Typography } from "antd";
-import { EntitySubListSectionProps } from "../../types";
+
+type EntitySubListSectionProps = {
+    title: string;
+    children: React.ReactNode;
+};
 
 export const EntitySubListSection: React.FunctionComponent<EntitySubListSectionProps> = ({
     title,

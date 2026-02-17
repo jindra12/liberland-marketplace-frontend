@@ -1,19 +1,20 @@
 import * as React from "react";
 import { Divider, Flex } from "antd";
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import {
-    IDENTITY_GROUPS_ALLOWED_LABEL,
-    IDENTITY_GROUPS_DEFAULT_EMPTY_TEXT,
-    IDENTITY_GROUPS_DISALLOWED_LABEL,
-} from "../../constants";
-import { IdentityGroupsProps } from "../../types";
+import { IdentityTagItem, IdentityTagLink } from "../shared/IdentityTagLink";
+
+type IdentityGroupsProps = {
+    allowedIdentities?: IdentityTagItem[] | null;
+    disallowedIdentities?: IdentityTagItem[] | null;
+    className?: string;
+    emptyText?: React.ReactNode;
+};
 
 export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
     allowedIdentities,
     disallowedIdentities,
     className,
-    emptyText = IDENTITY_GROUPS_DEFAULT_EMPTY_TEXT,
+    emptyText = "No identities found",
 }) => {
     const allowed = allowedIdentities || [];
     const disallowed = disallowedIdentities || [];
@@ -25,7 +26,7 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
                     <Flex vertical gap="8px">
                         <Flex gap="8px" align="center">
                             <UsergroupAddOutlined />
-                            {IDENTITY_GROUPS_ALLOWED_LABEL}
+                            Allowed identities
                         </Flex>
                     </Flex>
                     {allowed.map((identity) => (
@@ -41,7 +42,7 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
                     <Flex vertical gap="8px">
                         <Flex gap="8px" align="center">
                             <MinusCircleFilled />
-                            {IDENTITY_GROUPS_DISALLOWED_LABEL}
+                            Disallowed identities
                         </Flex>
                     </Flex>
                     {disallowed.length ? disallowed.map((identity) => (
