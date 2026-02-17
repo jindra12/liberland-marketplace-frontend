@@ -54,21 +54,17 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values: ProductFormValues, imageId) => {
-            const data: Record<string, unknown> = stripEmpty({
+        buildData: (values: ProductFormValues, imageId) => ({
+            ...stripEmpty({
                 name: values.name,
                 description: values.description ?? "",
                 url: values.url ?? "",
                 company: values.company ?? "",
-            });
-            data.price = {
-                amount: values.priceAmount,
-                currency: values.priceCurrency,
-            };
-            data.inventory = values.inventory;
-            if (imageId !== undefined) data.image = imageId;
-            return data;
-        },
+            }),
+            price: { amount: values.priceAmount, currency: values.priceCurrency },
+            inventory: values.inventory,
+            ...(imageId !== undefined && { image: imageId }),
+        }),
         getCreateId: (r) => r.createProduct?.id,
         getUpdateId: (r) => r.updateProduct?.id,
     });

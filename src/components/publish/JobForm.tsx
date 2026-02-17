@@ -76,8 +76,8 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values: JobFormValues, imageId) => {
-            const data: Record<string, unknown> = stripEmpty({
+        buildData: (values: JobFormValues, imageId) => ({
+            ...stripEmpty({
                 title: values.title,
                 description: values.description ?? "",
                 employmentType: values.employmentType,
@@ -86,27 +86,15 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                 location: values.location ?? "",
                 applyUrl: values.applyUrl ?? "",
                 company: values.company ?? "",
-            });
-
-            if (imageId !== undefined) data.image = imageId;
-
-            if (values.salaryMin != null || values.salaryMax != null) {
-                data.salaryRange = {
-                    min: values.salaryMin,
-                    max: values.salaryMax,
-                    currency: values.salaryCurrency || "USD",
-                };
-            }
-
-            if (values.bountyAmount != null) {
-                data.bounty = {
-                    amount: values.bountyAmount,
-                    currency: values.bountyCurrency || "USD",
-                };
-            }
-
-            return data;
-        },
+            }),
+            ...(imageId !== undefined && { image: imageId }),
+            ...(values.salaryMin != null || values.salaryMax != null
+                ? { salaryRange: { min: values.salaryMin, max: values.salaryMax, currency: values.salaryCurrency || "USD" } }
+                : {}),
+            ...(values.bountyAmount != null
+                ? { bounty: { amount: values.bountyAmount, currency: values.bountyCurrency || "USD" } }
+                : {}),
+        }),
         getCreateId: (r) => r.createJob?.id,
         getUpdateId: (r) => r.updateJob?.id,
     });

@@ -46,18 +46,17 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values, imageId) => {
-            const data: Record<string, unknown> = stripEmpty({
+        buildData: (values, imageId) => ({
+            ...stripEmpty({
                 name: values.name,
                 description: values.description ?? "",
                 email: values.email ?? "",
                 phone: values.phone ?? "",
                 website: values.website ?? "",
                 identity: values.identity ?? "",
-            });
-            if (imageId !== undefined) data.image = imageId;
-            return data;
-        },
+            }),
+            ...(imageId !== undefined && { image: imageId }),
+        }),
         getCreateId: (r) => r.createCompany?.id,
         getUpdateId: (r) => r.updateCompany?.id,
     });
