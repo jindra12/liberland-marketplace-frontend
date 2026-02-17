@@ -13,6 +13,7 @@ import {
 import { ImageUploadField } from "./ImageUploadField";
 import { resolveImageId } from "./useImageUpload";
 import { MarkdownEditor } from "./MarkdownEditor";
+import { currencyOptions } from "./constants";
 
 const employmentOptions = [
     { value: Job_EmploymentType_MutationInput.FullTime, label: "Full-time" },
@@ -21,11 +22,6 @@ const employmentOptions = [
     { value: Job_EmploymentType_MutationInput.Internship, label: "Internship" },
     { value: Job_EmploymentType_MutationInput.Gig, label: "Gig" },
 ];
-
-const commonCurrencies = ["USD", "EUR", "GBP", "LLD", "BTC", "ETH"].map((c) => ({
-    value: c,
-    label: c,
-}));
 
 interface JobFormValues {
     title: string;
@@ -171,7 +167,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                         <InputNumber placeholder="Max" style={{ width: "35%" }} />
                     </Form.Item>
                     <Form.Item name="salaryCurrency" noStyle>
-                        <Select placeholder="Currency" options={commonCurrencies} style={{ width: "30%" }} allowClear />
+                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} allowClear />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -182,7 +178,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                         <InputNumber placeholder="Amount" style={{ width: "70%" }} />
                     </Form.Item>
                     <Form.Item name="bountyCurrency" noStyle>
-                        <Select placeholder="Currency" options={commonCurrencies} style={{ width: "30%" }} allowClear />
+                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} allowClear />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
