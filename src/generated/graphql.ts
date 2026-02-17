@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 import { gqlFetcher } from '../gqlFetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -28,6 +28,7 @@ export type Access = {
   canAccessAdmin: Scalars['Boolean']['output'];
   carts?: Maybe<CartsAccess>;
   categories?: Maybe<CategoriesAccess>;
+  comments?: Maybe<CommentsAccess>;
   companies?: Maybe<CompaniesAccess>;
   footer?: Maybe<FooterAccess>;
   form_submissions?: Maybe<Form_SubmissionsAccess>;
@@ -5056,6 +5057,659 @@ export type Checkbox = {
   width?: Maybe<Scalars['Float']['output']>;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  anonymousHash?: Maybe<Scalars['String']['output']>;
+  content: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  id: Scalars['String']['output'];
+  replyComment?: Maybe<Comment>;
+  replyPost: Comment_ReplyPost_Relationship;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type CommentReplyPostArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CommentUpdate_ReplyPostRelationshipInput = {
+  relationTo?: InputMaybe<CommentUpdate_ReplyPostRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export enum CommentUpdate_ReplyPostRelationshipInputRelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products'
+}
+
+export type Comment_ReplyPost = Company | Identity | Job | Product;
+
+export type Comment_ReplyPostRelationshipInput = {
+  relationTo?: InputMaybe<Comment_ReplyPostRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export enum Comment_ReplyPostRelationshipInputRelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products'
+}
+
+export enum Comment_ReplyPost_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products'
+}
+
+export type Comment_ReplyPost_Relationship = {
+  __typename?: 'Comment_ReplyPost_Relationship';
+  relationTo?: Maybe<Comment_ReplyPost_RelationTo>;
+  value?: Maybe<Comment_ReplyPost>;
+};
+
+export type Comment_AnonymousHash_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Comment_Content_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Comment_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Comment_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Comment_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Comment_ReplyComment_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Comment_ReplyPost_Relation = {
+  relationTo?: InputMaybe<Comment_ReplyPost_Relation_RelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export enum Comment_ReplyPost_Relation_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products'
+}
+
+export type Comment_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Comment_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Comment_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
+  anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
+  content?: InputMaybe<Comment_Content_Operator>;
+  createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  id?: InputMaybe<Comment_Id_Operator>;
+  replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
+};
+
+export type Comment_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Comment_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
+  anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
+  content?: InputMaybe<Comment_Content_Operator>;
+  createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  id?: InputMaybe<Comment_Id_Operator>;
+  replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
+};
+
+export type Comment_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Comment_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
+  anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
+  content?: InputMaybe<Comment_Content_Operator>;
+  createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  id?: InputMaybe<Comment_Id_Operator>;
+  replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
+};
+
+export type Comments = {
+  __typename?: 'Comments';
+  docs: Array<Comment>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type CommentsCreateAccess = {
+  __typename?: 'CommentsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsCreateDocAccess = {
+  __typename?: 'CommentsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsDeleteAccess = {
+  __typename?: 'CommentsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsDeleteDocAccess = {
+  __typename?: 'CommentsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsDocAccessFields = {
+  __typename?: 'CommentsDocAccessFields';
+  anonymousHash?: Maybe<CommentsDocAccessFields_AnonymousHash>;
+  content?: Maybe<CommentsDocAccessFields_Content>;
+  createdAt?: Maybe<CommentsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<CommentsDocAccessFields_CreatedBy>;
+  replyComment?: Maybe<CommentsDocAccessFields_ReplyComment>;
+  replyPost?: Maybe<CommentsDocAccessFields_ReplyPost>;
+  updatedAt?: Maybe<CommentsDocAccessFields_UpdatedAt>;
+};
+
+export type CommentsDocAccessFields_AnonymousHash = {
+  __typename?: 'CommentsDocAccessFields_anonymousHash';
+  create?: Maybe<CommentsDocAccessFields_AnonymousHash_Create>;
+  delete?: Maybe<CommentsDocAccessFields_AnonymousHash_Delete>;
+  read?: Maybe<CommentsDocAccessFields_AnonymousHash_Read>;
+  update?: Maybe<CommentsDocAccessFields_AnonymousHash_Update>;
+};
+
+export type CommentsDocAccessFields_AnonymousHash_Create = {
+  __typename?: 'CommentsDocAccessFields_anonymousHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_AnonymousHash_Delete = {
+  __typename?: 'CommentsDocAccessFields_anonymousHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_AnonymousHash_Read = {
+  __typename?: 'CommentsDocAccessFields_anonymousHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_AnonymousHash_Update = {
+  __typename?: 'CommentsDocAccessFields_anonymousHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_Content = {
+  __typename?: 'CommentsDocAccessFields_content';
+  create?: Maybe<CommentsDocAccessFields_Content_Create>;
+  delete?: Maybe<CommentsDocAccessFields_Content_Delete>;
+  read?: Maybe<CommentsDocAccessFields_Content_Read>;
+  update?: Maybe<CommentsDocAccessFields_Content_Update>;
+};
+
+export type CommentsDocAccessFields_Content_Create = {
+  __typename?: 'CommentsDocAccessFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_Content_Delete = {
+  __typename?: 'CommentsDocAccessFields_content_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_Content_Read = {
+  __typename?: 'CommentsDocAccessFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_Content_Update = {
+  __typename?: 'CommentsDocAccessFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedAt = {
+  __typename?: 'CommentsDocAccessFields_createdAt';
+  create?: Maybe<CommentsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<CommentsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<CommentsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<CommentsDocAccessFields_CreatedAt_Update>;
+};
+
+export type CommentsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'CommentsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'CommentsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'CommentsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'CommentsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedBy = {
+  __typename?: 'CommentsDocAccessFields_createdBy';
+  create?: Maybe<CommentsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<CommentsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<CommentsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<CommentsDocAccessFields_CreatedBy_Update>;
+};
+
+export type CommentsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'CommentsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'CommentsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'CommentsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'CommentsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyComment = {
+  __typename?: 'CommentsDocAccessFields_replyComment';
+  create?: Maybe<CommentsDocAccessFields_ReplyComment_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ReplyComment_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ReplyComment_Read>;
+  update?: Maybe<CommentsDocAccessFields_ReplyComment_Update>;
+};
+
+export type CommentsDocAccessFields_ReplyComment_Create = {
+  __typename?: 'CommentsDocAccessFields_replyComment_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyComment_Delete = {
+  __typename?: 'CommentsDocAccessFields_replyComment_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyComment_Read = {
+  __typename?: 'CommentsDocAccessFields_replyComment_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyComment_Update = {
+  __typename?: 'CommentsDocAccessFields_replyComment_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPost = {
+  __typename?: 'CommentsDocAccessFields_replyPost';
+  create?: Maybe<CommentsDocAccessFields_ReplyPost_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ReplyPost_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ReplyPost_Read>;
+  update?: Maybe<CommentsDocAccessFields_ReplyPost_Update>;
+};
+
+export type CommentsDocAccessFields_ReplyPost_Create = {
+  __typename?: 'CommentsDocAccessFields_replyPost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPost_Delete = {
+  __typename?: 'CommentsDocAccessFields_replyPost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPost_Read = {
+  __typename?: 'CommentsDocAccessFields_replyPost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPost_Update = {
+  __typename?: 'CommentsDocAccessFields_replyPost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_UpdatedAt = {
+  __typename?: 'CommentsDocAccessFields_updatedAt';
+  create?: Maybe<CommentsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<CommentsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<CommentsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<CommentsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type CommentsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'CommentsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'CommentsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'CommentsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'CommentsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields = {
+  __typename?: 'CommentsFields';
+  anonymousHash?: Maybe<CommentsFields_AnonymousHash>;
+  content?: Maybe<CommentsFields_Content>;
+  createdAt?: Maybe<CommentsFields_CreatedAt>;
+  createdBy?: Maybe<CommentsFields_CreatedBy>;
+  replyComment?: Maybe<CommentsFields_ReplyComment>;
+  replyPost?: Maybe<CommentsFields_ReplyPost>;
+  updatedAt?: Maybe<CommentsFields_UpdatedAt>;
+};
+
+export type CommentsFields_AnonymousHash = {
+  __typename?: 'CommentsFields_anonymousHash';
+  create?: Maybe<CommentsFields_AnonymousHash_Create>;
+  delete?: Maybe<CommentsFields_AnonymousHash_Delete>;
+  read?: Maybe<CommentsFields_AnonymousHash_Read>;
+  update?: Maybe<CommentsFields_AnonymousHash_Update>;
+};
+
+export type CommentsFields_AnonymousHash_Create = {
+  __typename?: 'CommentsFields_anonymousHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_AnonymousHash_Delete = {
+  __typename?: 'CommentsFields_anonymousHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_AnonymousHash_Read = {
+  __typename?: 'CommentsFields_anonymousHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_AnonymousHash_Update = {
+  __typename?: 'CommentsFields_anonymousHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_Content = {
+  __typename?: 'CommentsFields_content';
+  create?: Maybe<CommentsFields_Content_Create>;
+  delete?: Maybe<CommentsFields_Content_Delete>;
+  read?: Maybe<CommentsFields_Content_Read>;
+  update?: Maybe<CommentsFields_Content_Update>;
+};
+
+export type CommentsFields_Content_Create = {
+  __typename?: 'CommentsFields_content_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_Content_Delete = {
+  __typename?: 'CommentsFields_content_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_Content_Read = {
+  __typename?: 'CommentsFields_content_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_Content_Update = {
+  __typename?: 'CommentsFields_content_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedAt = {
+  __typename?: 'CommentsFields_createdAt';
+  create?: Maybe<CommentsFields_CreatedAt_Create>;
+  delete?: Maybe<CommentsFields_CreatedAt_Delete>;
+  read?: Maybe<CommentsFields_CreatedAt_Read>;
+  update?: Maybe<CommentsFields_CreatedAt_Update>;
+};
+
+export type CommentsFields_CreatedAt_Create = {
+  __typename?: 'CommentsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedAt_Delete = {
+  __typename?: 'CommentsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedAt_Read = {
+  __typename?: 'CommentsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedAt_Update = {
+  __typename?: 'CommentsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedBy = {
+  __typename?: 'CommentsFields_createdBy';
+  create?: Maybe<CommentsFields_CreatedBy_Create>;
+  delete?: Maybe<CommentsFields_CreatedBy_Delete>;
+  read?: Maybe<CommentsFields_CreatedBy_Read>;
+  update?: Maybe<CommentsFields_CreatedBy_Update>;
+};
+
+export type CommentsFields_CreatedBy_Create = {
+  __typename?: 'CommentsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedBy_Delete = {
+  __typename?: 'CommentsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedBy_Read = {
+  __typename?: 'CommentsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_CreatedBy_Update = {
+  __typename?: 'CommentsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyComment = {
+  __typename?: 'CommentsFields_replyComment';
+  create?: Maybe<CommentsFields_ReplyComment_Create>;
+  delete?: Maybe<CommentsFields_ReplyComment_Delete>;
+  read?: Maybe<CommentsFields_ReplyComment_Read>;
+  update?: Maybe<CommentsFields_ReplyComment_Update>;
+};
+
+export type CommentsFields_ReplyComment_Create = {
+  __typename?: 'CommentsFields_replyComment_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyComment_Delete = {
+  __typename?: 'CommentsFields_replyComment_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyComment_Read = {
+  __typename?: 'CommentsFields_replyComment_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyComment_Update = {
+  __typename?: 'CommentsFields_replyComment_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPost = {
+  __typename?: 'CommentsFields_replyPost';
+  create?: Maybe<CommentsFields_ReplyPost_Create>;
+  delete?: Maybe<CommentsFields_ReplyPost_Delete>;
+  read?: Maybe<CommentsFields_ReplyPost_Read>;
+  update?: Maybe<CommentsFields_ReplyPost_Update>;
+};
+
+export type CommentsFields_ReplyPost_Create = {
+  __typename?: 'CommentsFields_replyPost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPost_Delete = {
+  __typename?: 'CommentsFields_replyPost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPost_Read = {
+  __typename?: 'CommentsFields_replyPost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPost_Update = {
+  __typename?: 'CommentsFields_replyPost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_UpdatedAt = {
+  __typename?: 'CommentsFields_updatedAt';
+  create?: Maybe<CommentsFields_UpdatedAt_Create>;
+  delete?: Maybe<CommentsFields_UpdatedAt_Delete>;
+  read?: Maybe<CommentsFields_UpdatedAt_Read>;
+  update?: Maybe<CommentsFields_UpdatedAt_Update>;
+};
+
+export type CommentsFields_UpdatedAt_Create = {
+  __typename?: 'CommentsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_UpdatedAt_Delete = {
+  __typename?: 'CommentsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_UpdatedAt_Read = {
+  __typename?: 'CommentsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_UpdatedAt_Update = {
+  __typename?: 'CommentsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsReadAccess = {
+  __typename?: 'CommentsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsReadDocAccess = {
+  __typename?: 'CommentsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsUpdateAccess = {
+  __typename?: 'CommentsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentsUpdateDocAccess = {
+  __typename?: 'CommentsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Companies = {
   __typename?: 'Companies';
   docs: Array<Company>;
@@ -5097,6 +5751,7 @@ export type CompaniesDeleteDocAccess = {
 
 export type CompaniesDocAccessFields = {
   __typename?: 'CompaniesDocAccessFields';
+  _status?: Maybe<CompaniesDocAccessFields__Status>;
   allowedIdentities?: Maybe<CompaniesDocAccessFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CompaniesDocAccessFields_CreatedBy>;
@@ -5109,6 +5764,34 @@ export type CompaniesDocAccessFields = {
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
   website?: Maybe<CompaniesDocAccessFields_Website>;
+};
+
+export type CompaniesDocAccessFields__Status = {
+  __typename?: 'CompaniesDocAccessFields__status';
+  create?: Maybe<CompaniesDocAccessFields__Status_Create>;
+  delete?: Maybe<CompaniesDocAccessFields__Status_Delete>;
+  read?: Maybe<CompaniesDocAccessFields__Status_Read>;
+  update?: Maybe<CompaniesDocAccessFields__Status_Update>;
+};
+
+export type CompaniesDocAccessFields__Status_Create = {
+  __typename?: 'CompaniesDocAccessFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields__Status_Delete = {
+  __typename?: 'CompaniesDocAccessFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields__Status_Read = {
+  __typename?: 'CompaniesDocAccessFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields__Status_Update = {
+  __typename?: 'CompaniesDocAccessFields__status_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesDocAccessFields_AllowedIdentities = {
@@ -5449,6 +6132,7 @@ export type CompaniesDocAccessFields_Website_Update = {
 
 export type CompaniesFields = {
   __typename?: 'CompaniesFields';
+  _status?: Maybe<CompaniesFields__Status>;
   allowedIdentities?: Maybe<CompaniesFields_AllowedIdentities>;
   createdAt?: Maybe<CompaniesFields_CreatedAt>;
   createdBy?: Maybe<CompaniesFields_CreatedBy>;
@@ -5461,6 +6145,34 @@ export type CompaniesFields = {
   phone?: Maybe<CompaniesFields_Phone>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
   website?: Maybe<CompaniesFields_Website>;
+};
+
+export type CompaniesFields__Status = {
+  __typename?: 'CompaniesFields__status';
+  create?: Maybe<CompaniesFields__Status_Create>;
+  delete?: Maybe<CompaniesFields__Status_Delete>;
+  read?: Maybe<CompaniesFields__Status_Read>;
+  update?: Maybe<CompaniesFields__Status_Update>;
+};
+
+export type CompaniesFields__Status_Create = {
+  __typename?: 'CompaniesFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields__Status_Delete = {
+  __typename?: 'CompaniesFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields__Status_Read = {
+  __typename?: 'CompaniesFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields__Status_Update = {
+  __typename?: 'CompaniesFields__status_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CompaniesFields_AllowedIdentities = {
@@ -5811,6 +6523,18 @@ export type CompaniesReadDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type CompaniesReadVersionsAccess = {
+  __typename?: 'CompaniesReadVersionsAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CompaniesReadVersionsDocAccess = {
+  __typename?: 'CompaniesReadVersionsDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type CompaniesUpdateAccess = {
   __typename?: 'CompaniesUpdateAccess';
   permission: Scalars['Boolean']['output'];
@@ -5825,19 +6549,86 @@ export type CompaniesUpdateDocAccess = {
 
 export type Company = {
   __typename?: 'Company';
+  _status?: Maybe<Company__Status>;
   allowedIdentities?: Maybe<Array<Identity>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
   disallowedIdentities?: Maybe<Array<Identity>>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
-  identity: Identity;
+  identity?: Maybe<Identity>;
   image?: Maybe<Media>;
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
+};
+
+export enum CompanyUpdate__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type CompanyVersion = {
+  __typename?: 'CompanyVersion';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  latest?: Maybe<Scalars['Boolean']['output']>;
+  parent?: Maybe<Company>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  version?: Maybe<CompanyVersion_Version>;
+};
+
+
+export type CompanyVersionParentArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CompanyVersion_Version = {
+  __typename?: 'CompanyVersion_Version';
+  _status?: Maybe<CompanyVersion_Version__Status>;
+  allowedIdentities?: Maybe<Array<Identity>>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  disallowedIdentities?: Maybe<Array<Identity>>;
+  email?: Maybe<Scalars['EmailAddress']['output']>;
+  identity?: Maybe<Identity>;
+  image?: Maybe<Media>;
+  name?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  website?: Maybe<Scalars['String']['output']>;
+};
+
+export enum CompanyVersion_Version__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Company__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Company__Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Company__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type Company__Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Company__Status_Input>>>;
+  equals?: InputMaybe<Company__Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Company__Status_Input>>>;
+  not_equals?: InputMaybe<Company__Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Company__Status_Input>>>;
 };
 
 export type Company_AllowedIdentities_Operator = {
@@ -5970,6 +6761,7 @@ export type Company_Website_Operator = {
 export type Company_Where = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
@@ -5988,6 +6780,7 @@ export type Company_Where = {
 export type Company_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
@@ -6006,6 +6799,7 @@ export type Company_Where_And = {
 export type Company_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Company_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Company_Where_Or>>>;
+  _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
@@ -10151,6 +10945,11 @@ export type Job = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+
+export type JobCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export enum JobUpdate_Bounty_Currency_MutationInput {
   Aed = 'AED',
   Afn = 'AFN',
@@ -10563,6 +11362,11 @@ export type JobVersion_Version = {
   salaryRange?: Maybe<JobVersion_Version_SalaryRange>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type JobVersion_VersionCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type JobVersion_Version_Bounty = {
@@ -18657,6 +19461,7 @@ export type Mutation = {
   createAdminInvitation?: Maybe<AdminInvitation>;
   createCart?: Maybe<Cart>;
   createCategory?: Maybe<Category>;
+  createComment?: Maybe<Comment>;
   createCompany?: Maybe<Company>;
   createForm?: Maybe<Form>;
   createFormSubmission?: Maybe<FormSubmission>;
@@ -18689,6 +19494,7 @@ export type Mutation = {
   deleteAdminInvitation?: Maybe<AdminInvitation>;
   deleteCart?: Maybe<Cart>;
   deleteCategory?: Maybe<Category>;
+  deleteComment?: Maybe<Comment>;
   deleteCompany?: Maybe<Company>;
   deleteForm?: Maybe<Form>;
   deleteFormSubmission?: Maybe<FormSubmission>;
@@ -18721,6 +19527,7 @@ export type Mutation = {
   duplicateAdminInvitation?: Maybe<AdminInvitation>;
   duplicateCart?: Maybe<Cart>;
   duplicateCategory?: Maybe<Category>;
+  duplicateComment?: Maybe<Comment>;
   duplicateCompany?: Maybe<Company>;
   duplicateForm?: Maybe<Form>;
   duplicateFormSubmission?: Maybe<FormSubmission>;
@@ -18749,6 +19556,7 @@ export type Mutation = {
   duplicateVerification?: Maybe<Verification>;
   logoutUser?: Maybe<Scalars['String']['output']>;
   refreshTokenUser?: Maybe<UsersRefreshedUser>;
+  restoreVersionCompany?: Maybe<Company>;
   restoreVersionJob?: Maybe<Job>;
   restoreVersionPage?: Maybe<Page>;
   restoreVersionPost?: Maybe<Post>;
@@ -18759,6 +19567,7 @@ export type Mutation = {
   updateAdminInvitation?: Maybe<AdminInvitation>;
   updateCart?: Maybe<Cart>;
   updateCategory?: Maybe<Category>;
+  updateComment?: Maybe<Comment>;
   updateCompany?: Maybe<Company>;
   updateFooter?: Maybe<Footer>;
   updateForm?: Maybe<Form>;
@@ -18817,6 +19626,12 @@ export type MutationCreateCartArgs = {
 
 export type MutationCreateCategoryArgs = {
   data: MutationCategoryInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateCommentArgs = {
+  data: MutationCommentInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -19008,6 +19823,12 @@ export type MutationDeleteCartArgs = {
 
 
 export type MutationDeleteCategoryArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteCommentArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -19205,6 +20026,12 @@ export type MutationDuplicateCategoryArgs = {
 };
 
 
+export type MutationDuplicateCommentArgs = {
+  data: MutationCommentInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateCompanyArgs = {
   data: MutationCompanyInput;
   id: Scalars['String']['input'];
@@ -19366,6 +20193,12 @@ export type MutationLogoutUserArgs = {
 };
 
 
+export type MutationRestoreVersionCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type MutationRestoreVersionJobArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
@@ -19435,6 +20268,15 @@ export type MutationUpdateCartArgs = {
 export type MutationUpdateCategoryArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationCategoryUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationCommentUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -28566,6 +29408,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  Comments = 'comments',
   Companies = 'companies',
   FormSubmissions = 'form_submissions',
   Forms = 'forms',
@@ -28600,7 +29443,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Transaction | User | Variant | VariantOption | VariantType | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Transaction | User | Variant | VariantOption | VariantType | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -28613,6 +29456,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  Comments = 'comments',
   Companies = 'companies',
   FormSubmissions = 'form_submissions',
   Forms = 'forms',
@@ -28644,6 +29488,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  Comments = 'comments',
   Companies = 'companies',
   FormSubmissions = 'form_submissions',
   Forms = 'forms',
@@ -28718,6 +29563,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  Comments = 'comments',
   Companies = 'companies',
   FormSubmissions = 'form_submissions',
   Forms = 'forms',
@@ -31282,6 +32128,11 @@ export type Product = {
 };
 
 
+export type ProductCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type ProductVariantsArgs = {
   count?: InputMaybe<Scalars['Boolean']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -31512,6 +32363,11 @@ export type ProductVersion_Version = {
   url?: Maybe<Scalars['String']['output']>;
   variantTypes?: Maybe<Array<VariantType>>;
   variants?: Maybe<ProductVersion_Version_Variants>;
+};
+
+
+export type ProductVersion_VersionCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -33967,6 +34823,8 @@ export type Query = {
   Carts?: Maybe<Carts>;
   Categories?: Maybe<Categories>;
   Category?: Maybe<Category>;
+  Comment?: Maybe<Comment>;
+  Comments?: Maybe<Comments>;
   Companies?: Maybe<Companies>;
   Company?: Maybe<Company>;
   Footer?: Maybe<Footer>;
@@ -34028,6 +34886,7 @@ export type Query = {
   countAdminInvitations?: Maybe<CountAdminInvitations>;
   countCarts?: Maybe<CountCarts>;
   countCategories?: Maybe<CountCategories>;
+  countComments?: Maybe<CountComments>;
   countCompanies?: Maybe<CountCompanies>;
   countFormSubmissions?: Maybe<CountFormSubmissions>;
   countForms?: Maybe<CountForms>;
@@ -34060,6 +34919,7 @@ export type Query = {
   docAccessAdminInvitation?: Maybe<Admin_InvitationsDocAccess>;
   docAccessCart?: Maybe<CartsDocAccess>;
   docAccessCategory?: Maybe<CategoriesDocAccess>;
+  docAccessComment?: Maybe<CommentsDocAccess>;
   docAccessCompany?: Maybe<CompaniesDocAccess>;
   docAccessFooter?: Maybe<FooterDocAccess>;
   docAccessForm?: Maybe<FormsDocAccess>;
@@ -34091,11 +34951,13 @@ export type Query = {
   docAccessVerification?: Maybe<VerificationsDocAccess>;
   initializedUser?: Maybe<Scalars['Boolean']['output']>;
   meUser?: Maybe<UsersMe>;
+  versionCompany?: Maybe<CompanyVersion>;
   versionJob?: Maybe<JobVersion>;
   versionPage?: Maybe<PageVersion>;
   versionPost?: Maybe<PostVersion>;
   versionProduct?: Maybe<ProductVersion>;
   versionVariant?: Maybe<VariantVersion>;
+  versionsCompanies?: Maybe<VersionsCompanies>;
   versionsJobs?: Maybe<VersionsJobs>;
   versionsPages?: Maybe<VersionsPages>;
   versionsPosts?: Maybe<VersionsPosts>;
@@ -34201,6 +35063,26 @@ export type QueryCategoryArgs = {
   id: Scalars['String']['input'];
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCommentArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCommentsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Comment_Where>;
 };
 
 
@@ -34791,6 +35673,13 @@ export type QueryCountCategoriesArgs = {
 };
 
 
+export type QueryCountCommentsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Comment_Where>;
+};
+
+
 export type QueryCountCompaniesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -35005,6 +35894,11 @@ export type QueryDocAccessCategoryArgs = {
 };
 
 
+export type QueryDocAccessCommentArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessCompanyArgs = {
   id: Scalars['String']['input'];
 };
@@ -35140,6 +36034,12 @@ export type QueryDocAccessVerificationArgs = {
 };
 
 
+export type QueryVersionCompanyArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type QueryVersionJobArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -35167,6 +36067,17 @@ export type QueryVersionProductArgs = {
 export type QueryVersionVariantArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryVersionsCompaniesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<VersionsCompany_Where>;
 };
 
 
@@ -43549,12 +44460,31 @@ export type CategoriesDocAccess = {
   update?: Maybe<CategoriesUpdateDocAccess>;
 };
 
+export type CommentsAccess = {
+  __typename?: 'commentsAccess';
+  create?: Maybe<CommentsCreateAccess>;
+  delete?: Maybe<CommentsDeleteAccess>;
+  fields?: Maybe<CommentsFields>;
+  read?: Maybe<CommentsReadAccess>;
+  update?: Maybe<CommentsUpdateAccess>;
+};
+
+export type CommentsDocAccess = {
+  __typename?: 'commentsDocAccess';
+  create?: Maybe<CommentsCreateDocAccess>;
+  delete?: Maybe<CommentsDeleteDocAccess>;
+  fields?: Maybe<CommentsDocAccessFields>;
+  read?: Maybe<CommentsReadDocAccess>;
+  update?: Maybe<CommentsUpdateDocAccess>;
+};
+
 export type CompaniesAccess = {
   __typename?: 'companiesAccess';
   create?: Maybe<CompaniesCreateAccess>;
   delete?: Maybe<CompaniesDeleteAccess>;
   fields?: Maybe<CompaniesFields>;
   read?: Maybe<CompaniesReadAccess>;
+  readVersions?: Maybe<CompaniesReadVersionsAccess>;
   update?: Maybe<CompaniesUpdateAccess>;
 };
 
@@ -43564,6 +44494,7 @@ export type CompaniesDocAccess = {
   delete?: Maybe<CompaniesDeleteDocAccess>;
   fields?: Maybe<CompaniesDocAccessFields>;
   read?: Maybe<CompaniesReadDocAccess>;
+  readVersions?: Maybe<CompaniesReadVersionsDocAccess>;
   update?: Maybe<CompaniesUpdateDocAccess>;
 };
 
@@ -43589,6 +44520,11 @@ export type CountCarts = {
 
 export type CountCategories = {
   __typename?: 'countCategories';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountComments = {
+  __typename?: 'countComments';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -44003,7 +44939,28 @@ export type MutationCategory_BreadcrumbsInput = {
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationCommentInput = {
+  anonymousHash?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['String']['input'];
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  replyComment?: InputMaybe<Scalars['String']['input']>;
+  replyPost?: InputMaybe<Comment_ReplyPostRelationshipInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationCommentUpdateInput = {
+  anonymousHash?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  replyComment?: InputMaybe<Scalars['String']['input']>;
+  replyPost?: InputMaybe<CommentUpdate_ReplyPostRelationshipInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationCompanyInput = {
+  _status?: InputMaybe<Company__Status_MutationInput>;
   allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
@@ -44019,6 +44976,7 @@ export type MutationCompanyInput = {
 };
 
 export type MutationCompanyUpdateInput = {
+  _status?: InputMaybe<CompanyUpdate__Status_MutationInput>;
   allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
@@ -45563,6 +46521,268 @@ export type VerificationsDocAccess = {
   fields?: Maybe<VerificationsDocAccessFields>;
   read?: Maybe<VerificationsReadDocAccess>;
   update?: Maybe<VerificationsUpdateDocAccess>;
+};
+
+export type VersionsCompanies = {
+  __typename?: 'versionsCompanies';
+  docs: Array<CompanyVersion>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type VersionsCompany_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsCompany_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsCompany_Latest_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsCompany_Parent_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export enum VersionsCompany_Version___Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type VersionsCompany_Version___Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsCompany_Version___Status_Input>>>;
+  equals?: InputMaybe<VersionsCompany_Version___Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version___Status_Input>>>;
+  not_equals?: InputMaybe<VersionsCompany_Version___Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version___Status_Input>>>;
+};
+
+export type VersionsCompany_Version__AllowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_Version__CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsCompany_Version__CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_Version__Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type VersionsCompany_Version__DisallowedIdentities_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_Version__Email_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
+  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  like?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+};
+
+export type VersionsCompany_Version__Identity_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_Version__Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsCompany_Version__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsCompany_Version__Phone_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsCompany_Version__UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsCompany_Version__Website_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsCompany_Where = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsCompany_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsCompany_Id_Operator>;
+  latest?: InputMaybe<VersionsCompany_Latest_Operator>;
+  parent?: InputMaybe<VersionsCompany_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsCompany_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
+  version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
+  version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
+  version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
+  version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
+};
+
+export type VersionsCompany_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsCompany_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsCompany_Id_Operator>;
+  latest?: InputMaybe<VersionsCompany_Latest_Operator>;
+  parent?: InputMaybe<VersionsCompany_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsCompany_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
+  version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
+  version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
+  version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
+  version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
+};
+
+export type VersionsCompany_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsCompany_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsCompany_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsCompany_Id_Operator>;
+  latest?: InputMaybe<VersionsCompany_Latest_Operator>;
+  parent?: InputMaybe<VersionsCompany_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsCompany_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
+  version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
+  version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
+  version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
+  version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
+  version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
+  version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
 
 export type VersionsJob_CreatedAt_Operator = {
@@ -47763,7 +48983,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -47773,7 +48993,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -47785,7 +49005,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -47799,7 +49019,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -47810,7 +49030,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -47819,7 +49039,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -47830,11 +49050,35 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, name: string, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } }
+          | { __typename: 'Company', id: string, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
          | null } }> } | null };
+
+export type CreateCommentMutationVariables = Exact<{
+  replyToPost: Comment_ReplyPostRelationshipInput;
+  content: Scalars['String']['input'];
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+
+export type CreateReplyToCommentMutationVariables = Exact<{
+  replyToPost: Comment_ReplyPostRelationshipInput;
+  parentCommentId: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type CreateReplyToCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, replyComment?: { __typename?: 'Comment', id: string } | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+
+export type DeleteCommentMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -47875,7 +49119,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -47889,7 +49133,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
 
@@ -47898,7 +49142,7 @@ export type JobByIdQueryVariables = Exact<{
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -47909,7 +49153,7 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -47921,7 +49165,7 @@ export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -47930,7 +49174,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -47943,9 +49187,26 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
          | null } }> } | null };
+
+export type ListCommentsByTargetQueryVariables = Exact<{
+  targetId: Scalars['JSON']['input'];
+  relationTo: Comment_ReplyPost_Relation_RelationTo;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+
+export type ListRepliesToCommentQueryVariables = Exact<{
+  parentCommentId: Scalars['JSON']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -47955,7 +49216,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -47970,7 +49231,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null } } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }
          | null } }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
@@ -47978,7 +49239,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -47987,7 +49248,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -48001,8 +49262,16 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name: string, description?: string | null, identity: { __typename?: 'Identity', id: string, name: string, description?: string | null }, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
+
+export type UpdateCommentContentMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
 
 
 
@@ -48578,6 +49847,99 @@ useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => [
 
 
 useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
+
+export const CreateCommentDocument = `
+    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
+  createComment(data: {content: $content, replyPost: $replyToPost}) {
+    id
+    content
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateComment'],
+    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
+
+export const CreateReplyToCommentDocument = `
+    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
+  createComment(
+    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
+  ) {
+    id
+    content
+    replyComment {
+      id
+    }
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateReplyToCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateReplyToComment'],
+    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
+
+export const DeleteCommentDocument = `
+    mutation DeleteComment($id: String!) {
+  deleteComment(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteComment'],
+    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {
@@ -49464,6 +50826,110 @@ useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJob
 
 useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
 
+export const ListCommentsByTargetDocument = `
+    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
+  Comments(
+    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCommentsByTargetQuery = <
+      TData = ListCommentsByTargetQuery,
+      TError = unknown
+    >(
+      variables: ListCommentsByTargetQueryVariables,
+      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCommentsByTargetQuery, TError, TData>(
+      {
+    queryKey: ['ListCommentsByTarget', variables],
+    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
+    ...options
+  }
+    )};
+
+useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
+
+
+useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+
+export const ListRepliesToCommentDocument = `
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
+  Comments(
+    where: {replyComment: {equals: $parentCommentId}}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListRepliesToCommentQuery = <
+      TData = ListRepliesToCommentQuery,
+      TError = unknown
+    >(
+      variables: ListRepliesToCommentQueryVariables,
+      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListRepliesToCommentQuery, TError, TData>(
+      {
+    queryKey: ['ListRepliesToComment', variables],
+    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
+    ...options
+  }
+    )};
+
+useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
+
+
+useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+
 export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(
@@ -49825,3 +51291,29 @@ useSearchProductsQuery.getKey = (variables: SearchProductsQueryVariables) => ['S
 
 
 useSearchProductsQuery.fetcher = (variables: SearchProductsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, variables, options);
+
+export const UpdateCommentContentDocument = `
+    mutation UpdateCommentContent($id: String!, $content: String!) {
+  updateComment(id: $id, data: {content: $content}) {
+    id
+    content
+    updatedAt
+  }
+}
+    `;
+
+export const useUpdateCommentContentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCommentContent'],
+    mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
