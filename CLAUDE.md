@@ -65,3 +65,7 @@ After making changes that affect frontend behavior (UI changes, new features, bu
 - Verify the change works as expected (elements render, interactions behave correctly)
 - If issues are found, fix them and re-test
 - Do this without being asked — it's part of the workflow for UI-affecting changes
+- **Clean up after testing** — delete any screenshot files (`.png`) created during Playwright testing so they don't clutter the repo
+
+## Tasks
+No pending tasks.

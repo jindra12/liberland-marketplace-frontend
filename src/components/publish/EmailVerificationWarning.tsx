@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Result, message } from "antd";
 import { MailOutlined } from "@ant-design/icons";
+import useCountdown from "@bradgarropy/use-countdown";
 import { sendVerificationEmail } from "../../authApi";
 
 interface Props {
@@ -8,21 +9,16 @@ interface Props {
 }
 
 export const EmailVerificationWarning: React.FunctionComponent<Props> = ({ email }) => {
-    const [cooldown, setCooldown] = React.useState(0);
     const [sending, setSending] = React.useState(false);
-
-    React.useEffect(() => {
-        if (cooldown <= 0) return;
-        const timer = setTimeout(() => setCooldown((c) => c - 1), 1000);
-        return () => clearTimeout(timer);
-    }, [cooldown]);
+    const countdown = useCountdown({ minutes: 1, seconds: 0, autoStart: false });
 
     const handleResend = async () => {
         setSending(true);
         try {
             await sendVerificationEmail(email);
             message.success("Verification email sent");
-            setCooldown(60);
+            countdown.reset();
+            countdown.start();
         } catch {
             message.error("Failed to send verification email");
         } finally {
@@ -41,10 +37,10 @@ export const EmailVerificationWarning: React.FunctionComponent<Props> = ({ email
                         type="primary"
                         icon={<MailOutlined />}
                         loading={sending}
-                        disabled={cooldown > 0}
+                        disabled={countdown.isRunning}
                         onClick={handleResend}
                     >
-                        {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend verification email"}
+                        {countdown.isRunning ? `Resend in ${countdown.formatted}` : "Resend verification email"}
                     </Button>
                 }
             />

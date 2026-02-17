@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
-import { Button, Form, Input, message, Select, Space } from "antd";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Form, Input, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     useCreateCompanyMutation,
@@ -8,8 +7,10 @@ import {
     useListIdentitiesQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
-import { resolveImageId } from "./useImageUpload";
 import { MarkdownEditor } from "./MarkdownEditor";
+import { FormSubmitButtons } from "./FormSubmitButtons";
+import { useEntityForm } from "./useEntityForm";
+import { stripEmpty } from "./formUtils";
 
 interface CompanyFormValues {
     name: string;
@@ -31,52 +32,35 @@ export interface CompanyFormProps {
 }
 
 export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues }) => {
-    const navigate = useNavigate();
-    const [form] = Form.useForm();
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
-    const loading = createMutation.isPending || updateMutation.isPending;
-    const draftRef = useRef(false);
 
     const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
 
-    const onFinish = async (values: CompanyFormValues) => {
-        const imageId = await resolveImageId(values.imageFile, initialValues?.existingImageId);
-
-        const data: Record<string, unknown> = {
-            name: values.name,
-            description: values.description || undefined,
-            email: values.email || undefined,
-            phone: values.phone || undefined,
-            website: values.website || undefined,
-            identity: values.identity || undefined,
-        };
-
-        if (imageId !== undefined) {
-            data.image = imageId;
-        }
-
-        try {
-            const draft = draftRef.current;
-            data._status = draft ? "draft" : "published";
-            if (mode === "edit" && initialValues?.id) {
-                const result = await updateMutation.mutateAsync({
-                    id: initialValues.id,
-                    data: data as never,
-                    draft,
-                });
-                message.success(draft ? "Company saved as draft" : "Company published!");
-                navigate(`/companies/${result.updateCompany?.id}`);
-            } else {
-                const result = await createMutation.mutateAsync({ data: data as never, draft });
-                message.success(draft ? "Company saved as draft" : "Company published!");
-                navigate(`/companies/${result.createCompany?.id}`);
-            }
-        } catch (e: unknown) {
-            message.error(e instanceof Error ? e.message : "Something went wrong");
-        }
-    };
+    const { form, draftRef, loading, onFinish } = useEntityForm<CompanyFormValues, typeof createMutation extends { mutateAsync: (...args: never[]) => Promise<infer R> } ? R : never, typeof updateMutation extends { mutateAsync: (...args: never[]) => Promise<infer R> } ? R : never>({
+        entityName: "Company",
+        routePrefix: "/companies",
+        mode,
+        existingImageId: initialValues?.existingImageId,
+        editId: initialValues?.id,
+        createMutation,
+        updateMutation,
+        buildData: (values, imageId) => {
+            const data: Record<string, unknown> = stripEmpty({
+                name: values.name,
+                description: values.description ?? "",
+                email: values.email ?? "",
+                phone: values.phone ?? "",
+                website: values.website ?? "",
+                identity: values.identity ?? "",
+            });
+            if (imageId !== undefined) data.image = imageId;
+            return data;
+        },
+        getCreateId: (r) => r.createCompany?.id,
+        getUpdateId: (r) => r.updateCompany?.id,
+    });
 
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
@@ -104,14 +88,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Space>
-                    <Button type="primary" htmlType="submit" loading={loading} onClick={() => { draftRef.current = false; }}>
-                        {mode === "edit" ? "Publish" : "Publish Company"}
-                    </Button>
-                    <Button htmlType="submit" loading={loading} onClick={() => { draftRef.current = true; }}>
-                        Save as Draft
-                    </Button>
-                </Space>
+                <FormSubmitButtons mode={mode} entityName="Company" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

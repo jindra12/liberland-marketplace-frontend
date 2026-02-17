@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@bradgarropy/use-countdown": "^2.0.1",
     "@polkadot/extension-dapp": "^0.59.1",
     "@polkadot/util-crypto": "^13.5.1",
     "@solana/pay": "^0.2.5",
