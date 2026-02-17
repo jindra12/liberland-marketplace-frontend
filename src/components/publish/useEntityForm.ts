@@ -11,7 +11,7 @@ interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     editId?: string;
     createMutation: { isPending: boolean; mutateAsync: (vars: { data: never; draft: boolean }) => Promise<TCreate> };
     updateMutation: { isPending: boolean; mutateAsync: (vars: { id: string; data: never; draft: boolean }) => Promise<TUpdate> };
-    buildData: (values: TValues, imageId: string | undefined | null) => Record<string, unknown>;
+    buildData: (values: TValues, imageId: string | undefined | null) => object;
     getCreateId: (result: TCreate) => string | undefined | null;
     getUpdateId: (result: TUpdate) => string | undefined | null;
 }
@@ -30,23 +30,22 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
             config.existingImageId,
         );
 
-        const data = config.buildData(values, imageId);
         const draft = draftRef.current;
-        data._status = draft ? "draft" : "published";
+        const data = { ...config.buildData(values, imageId), _status: draft ? "draft" : "published" } as never;
 
         try {
             const label = draft ? "saved as draft" : "published";
             if (config.mode === "edit" && config.editId) {
                 const result = await config.updateMutation.mutateAsync({
                     id: config.editId,
-                    data: data as never,
+                    data,
                     draft,
                 });
                 message.success(`${config.entityName} ${label}!`);
                 navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
             } else {
                 const result = await config.createMutation.mutateAsync({
-                    data: data as never,
+                    data,
                     draft,
                 });
                 message.success(`${config.entityName} ${label}!`);
