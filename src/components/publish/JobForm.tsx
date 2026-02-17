@@ -88,10 +88,10 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                 company: values.company ?? "",
             }),
             ...(imageId !== undefined && { image: imageId }),
-            ...(values.salaryMin != null || values.salaryMax != null
+            ...(typeof values.salaryMin === "number" || typeof values.salaryMax === "number"
                 ? { salaryRange: { min: values.salaryMin, max: values.salaryMax, currency: values.salaryCurrency || "USD" } }
                 : {}),
-            ...(values.bountyAmount != null
+            ...(typeof values.bountyAmount === "number"
                 ? { bounty: { amount: values.bountyAmount, currency: values.bountyCurrency || "USD" } }
                 : {}),
         }),
