@@ -19,6 +19,7 @@
     "@tronweb3/tronwallet-adapter-react-ui": "^1.1.11",
     "@tronweb3/tronwallet-adapter-tronlink": "^1.1.12",
     "@tronweb3/tronwallet-adapters": "^1.2.9",
+    "@uiw/react-md-editor": "^4.0.11",
     "antd": "^5.24.4",
     "axios": "^1.13.4",
     "bignumber.js": "^9.3.0",
