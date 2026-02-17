@@ -29,17 +29,17 @@ export const ProfileContent: React.FunctionComponent = () => {
 
     const jobsQuery = useListJobsByCreatorQuery(
         { userId },
-        { enabled: !!userId },
+        { enabled: !!userId, refetchOnMount: "always" },
     );
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
+        { enabled: !!userId, refetchOnMount: "always" },
     );
 
     const companyIds = (companiesQuery.data?.Companies?.docs ?? []).map((c) => c.id);
     const productsQuery = useListProductsByCreatorQuery(
         { companyIds },
-        { enabled: companyIds.length > 0 },
+        { enabled: companyIds.length > 0, refetchOnMount: "always" },
     );
 
     const handleNickname = async (values: { name: string }) => {

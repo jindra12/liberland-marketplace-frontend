@@ -1,5 +1,5 @@
 query CompanyById($id: String!) {
-  Company(id: $id, draft: true) {
+  Company(id: $id) {
     id
     name
     _status
