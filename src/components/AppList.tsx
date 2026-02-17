@@ -40,11 +40,11 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     header={(
                         <Flex justify="space-between" gap="16px" wrap align="center">
                             <Flex flex={6}>
-                                <Typography.Title level={2}>
+                                <Typography.Title level={2} className="AppList__title">
                                     {props.title}
                                 </Typography.Title>
                             </Flex>
-                            <Flex flex={4}>{props.filters}</Flex>
+                            <Flex flex={4} justify="flex-end">{props.filters}</Flex>
                         </Flex>
                     )}
                     locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
