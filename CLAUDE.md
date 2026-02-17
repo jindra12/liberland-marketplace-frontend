@@ -51,6 +51,7 @@ Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/li
 ## Conventions
 
 - Ant Design for all UI components; SCSS for custom styles (`src/styles/`)
+- **No inline styles** — always use CSS classes in SCSS files instead of `style={{...}}` props
 - React Query configured with all automatic refetching disabled (refetchOnMount, refetchOnReconnect, refetchOnWindowFocus all false)
 - TypeScript strict mode enabled
 - When adding new entities/queries: create `.graphql` file, run `npm run codegen`, then build components using the generated hooks

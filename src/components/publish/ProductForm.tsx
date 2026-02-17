@@ -101,10 +101,10 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             <Form.Item label="Price" required>
                 <Input.Group compact>
                     <Form.Item name="priceAmount" noStyle rules={[{ required: true, message: "Enter price" }]}>
-                        <InputNumber placeholder="Amount" min={0} style={{ width: "70%" }} />
+                        <InputNumber placeholder="Amount" min={0} className="Publish__amountInput" />
                     </Form.Item>
                     <Form.Item name="priceCurrency" noStyle rules={[{ required: true, message: "Select currency" }]}>
-                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} />
+                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -112,7 +112,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item name="inventory" label="Inventory">
-                <InputNumber min={0} style={{ width: "100%" }} />
+                <InputNumber min={0} className="Publish__fullWidth" />
             </Form.Item>
             <Form.Item name="company" label="Company" rules={[{ required: true }]}>
                 <Select

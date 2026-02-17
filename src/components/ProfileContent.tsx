@@ -149,8 +149,8 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography.Title level={3} style={{ margin: 0 }}>My Listings</Typography.Title>
+            <div className="Profile__listingsHeader">
+                <Typography.Title level={3} className="Profile__listingsTitle">My Listings</Typography.Title>
                 <Link to="/publish">
                     <Button type="primary" icon={<PlusOutlined />}>Create Listing</Button>
                 </Link>

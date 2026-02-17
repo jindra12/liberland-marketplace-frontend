@@ -117,13 +117,13 @@ export const AppHeader: React.FunctionComponent = () => {
                                 selectedKeys={selectedKeys}
                                 onClick={onMenuClick}
                             />
-                            <div style={{ padding: "16px 24px" }}>
+                            <div className="AppHeader__drawerNav">
                                 <Button
                                     block
                                     type="primary"
                                     icon={<PlusOutlined />}
                                     onClick={() => { handlePublish(); setDrawerOpen(false); }}
-                                    style={{ marginBottom: 8 }}
+                                    className="AppHeader__drawerPublish"
                                 >
                                     Publish your ad
                                 </Button>

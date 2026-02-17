@@ -50,12 +50,12 @@ export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = 
                 >
                     <div>
                         <PlusOutlined />
-                        <div style={{ marginTop: 8 }}>Upload</div>
+                        <div className="ImageUpload__label">Upload</div>
                     </div>
                 </Upload>
             </Form.Item>
             <Modal open={previewOpen} footer={null} onCancel={() => setPreviewOpen(false)}>
-                <img alt="preview" style={{ width: "100%" }} src={previewSrc} />
+                <img alt="preview" className="ImageUpload__preview" src={previewSrc} />
             </Modal>
         </>
     );

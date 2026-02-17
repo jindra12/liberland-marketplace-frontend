@@ -13,7 +13,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "job") {
         return (
             <div className="Publish">
-                <Button icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)} style={{ marginBottom: 16 }}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Post a Job</Typography.Title>
@@ -25,7 +25,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "company") {
         return (
             <div className="Publish">
-                <Button icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)} style={{ marginBottom: 16 }}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Create a Company</Typography.Title>
@@ -37,7 +37,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "product") {
         return (
             <div className="Publish">
-                <Button icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)} style={{ marginBottom: 16 }}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>List a Product</Typography.Title>
@@ -52,30 +52,30 @@ export const PublishContent: React.FunctionComponent = () => {
             <Typography.Paragraph type="secondary">
                 Choose what you'd like to publish
             </Typography.Paragraph>
-            <Space direction="vertical" size={16} style={{ width: "100%" }}>
+            <Space direction="vertical" size={16} className="Publish__categories">
                 <Card hoverable className="Publish__category" onClick={() => setCategory("job")}>
                     <Space size={16}>
-                        <ToolOutlined style={{ fontSize: 32 }} />
+                        <ToolOutlined className="Publish__categoryIcon" />
                         <div>
-                            <Typography.Title level={4} style={{ margin: 0 }}>Job</Typography.Title>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Job</Typography.Title>
                             <Typography.Text type="secondary">Post a job listing</Typography.Text>
                         </div>
                     </Space>
                 </Card>
                 <Card hoverable className="Publish__category" onClick={() => setCategory("company")}>
                     <Space size={16}>
-                        <TeamOutlined style={{ fontSize: 32 }} />
+                        <TeamOutlined className="Publish__categoryIcon" />
                         <div>
-                            <Typography.Title level={4} style={{ margin: 0 }}>Company</Typography.Title>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Company</Typography.Title>
                             <Typography.Text type="secondary">Create a company profile</Typography.Text>
                         </div>
                     </Space>
                 </Card>
                 <Card hoverable className="Publish__category" onClick={() => setCategory("product")}>
                     <Space size={16}>
-                        <ShopOutlined style={{ fontSize: 32 }} />
+                        <ShopOutlined className="Publish__categoryIcon" />
                         <div>
-                            <Typography.Title level={4} style={{ margin: 0 }}>Product</Typography.Title>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Product</Typography.Title>
                             <Typography.Text type="secondary">List a product or service</Typography.Text>
                         </div>
                     </Space>
