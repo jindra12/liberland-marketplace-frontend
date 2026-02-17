@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Space } from "antd";
+import { Avatar, Button, Flex } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
@@ -53,21 +53,22 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     </Flex>
                 ),
                 actions: (company) => <Link to={`/companies/${company.id}`}><Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button></Link>,
-                avatar: (company) => company.image?.url ? <Avatar src={`${BACKEND_URL}${company.image.url}`} size={64} /> : undefined,
-                description: (company) => <Markdown className="Markdown--clamp2 EntityList__description">{company.description}</Markdown>,
-                body: (company) => {
-                    return  (
-                        <Space direction="vertical" size={8} className="EntityList__body">
-                            <Divider />
-                            <CompanyContactLinks
-                                website={company.website}
-                                email={company.email}
-                                phone={company.phone}
-                            />
-                            <Divider />
-                        </Space>
-                    );
-                },
+                avatar: (company) => company.image?.url ? (
+                    <Avatar
+                        shape="square"
+                        size={80}
+                        src={`${BACKEND_URL}${company.image.url}`}
+                        className="EntityList__avatar"
+                    />
+                ) : undefined,
+                description: (company) => (
+                    <CompanyContactLinks
+                        website={company.website}
+                        email={company.email}
+                        phone={company.phone}
+                    />
+                ),
+                body: (company) => <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>,
             }}
         />
     );

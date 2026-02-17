@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex } from "antd";
+import { Avatar, Button, Flex } from "antd";
 import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
@@ -55,14 +55,15 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     const url = job.image?.url || job.company?.image?.url;
                     return url ? (
                         <Avatar
-                            shape="circle"
-                            size={56}
+                            shape="square"
+                            size={80}
                             src={`${BACKEND_URL}${url}`}
                             alt={job.title || ""}
+                            className="EntityList__avatar"
                         />
                     ) : undefined;
                 },
-                body: (job) => {
+                description: (job) => {
                     const salary = formatSalary(
                         job.salaryRange?.min,
                         job.salaryRange?.max,
@@ -73,27 +74,24 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     const employmentType = formatEmploymentType(job.employmentType);
                     const postedAt = typeof job.postedAt === "string" ? job.postedAt : undefined;
                     return (
-                        <Flex vertical gap={4}>
-                            <Divider />
-                            <JobDetailsSummary
-                                companyName={job.company?.name}
-                                location={job.location}
-                                employmentType={employmentType}
-                                salary={salary}
-                                bounty={bounty}
-                                positions={positions}
-                                postedAt={postedAt}
-                                isInactive={isInactive}
-                                showCompanyIcon
-                                metaSize={[8, 4]}
-                            />
-                            <Divider />
-                        </Flex>
+                        <JobDetailsSummary
+                            companyName={job.company?.name}
+                            companyId={job.company?.id}
+                            location={job.location}
+                            employmentType={employmentType}
+                            salary={salary}
+                            bounty={bounty}
+                            positions={positions}
+                            postedAt={postedAt}
+                            isInactive={isInactive}
+                            showCompanyIcon
+                            metaSize={[8, 4]}
+                        />
                     );
                 },
-                description: (job) => (
+                body: (job) => (
                     <div className="JobList__description">
-                        <Markdown className="Markdown--clamp2">{job.description}</Markdown>
+                        <Markdown className="Markdown--clamp3">{job.description}</Markdown>
                     </div>
                 ),
                 actions: (job) => (

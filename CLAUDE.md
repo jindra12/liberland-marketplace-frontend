@@ -68,4 +68,7 @@ After making changes that affect frontend behavior (UI changes, new features, bu
 - **Clean up after testing** — delete any screenshot files (`.png`) created during Playwright testing so they don't clutter the repo
 
 ## Tasks
-No pending tasks.
+We will be working on design polish tasks
+- Reduce maximum width of jobs, products and companies listings to 1200
+- Make the job/company image avatar into a bigger image.
+- Move the job details up, next to the image and te job title

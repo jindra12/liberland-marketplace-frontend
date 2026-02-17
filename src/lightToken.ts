@@ -73,4 +73,7 @@ export const lightComponents: { [key in keyof OverrideToken]?: OverrideToken[key
     Card: {
         borderRadiusLG: 18,
     },
+    List: {
+        titleMarginBottom: 2,
+    },
 };

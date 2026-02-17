@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import {
     ClockCircleOutlined,
     DollarOutlined,
@@ -8,11 +9,12 @@ import {
     InfoCircleOutlined,
     TeamOutlined,
 } from "@ant-design/icons";
-import { Space, Tag, Typography } from "antd";
+import { Flex, Space, Tag, Typography } from "antd";
 import { timeAgo } from "../../utils";
 
 type JobDetailsSummaryProps = {
     companyName?: string | null;
+    companyId?: string | null;
     location?: string | null;
     employmentType?: string | null;
     salary?: string | null;
@@ -26,6 +28,7 @@ type JobDetailsSummaryProps = {
 
 export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> = ({
     companyName,
+    companyId,
     location,
     employmentType,
     salary,
@@ -36,12 +39,16 @@ export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> 
     showCompanyIcon = false,
     metaSize = [12, 8],
 }) => (
-    <>
+    <Flex vertical gap={4}>
         <Space size={metaSize} wrap>
             {companyName && (
                 <Typography.Text strong>
                     {showCompanyIcon && <><HomeFilled /> </>}
-                    {companyName}
+                    {companyId ? (
+                        <Link to={`/companies/${companyId}`}>{companyName}</Link>
+                    ) : (
+                        companyName
+                    )}
                 </Typography.Text>
             )}
             {location && (
@@ -61,20 +68,24 @@ export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> 
                 </Typography.Text>
             )}
         </Space>
-        {salary && (
-            <Typography.Text strong>
-                <DollarOutlined /> {salary}
-            </Typography.Text>
-        )}
-        {bounty && (
-            <Typography.Text strong>
-                <GiftOutlined /> Bounty: {bounty}
-            </Typography.Text>
+        {(salary || bounty) && (
+            <Space size={metaSize} wrap>
+                {salary && (
+                    <Typography.Text strong>
+                        <DollarOutlined /> {salary}
+                    </Typography.Text>
+                )}
+                {bounty && (
+                    <Typography.Text strong>
+                        <GiftOutlined /> Bounty: {bounty}
+                    </Typography.Text>
+                )}
+            </Space>
         )}
         {isInactive && (
             <Typography.Text type="secondary" className="JobInactiveNotice">
                 <InfoCircleOutlined /> This job listing is no longer active.
             </Typography.Text>
         )}
-    </>
+    </Flex>
 );
