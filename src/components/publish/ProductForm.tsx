@@ -11,11 +11,7 @@ import { useAuth } from "react-oidc-context";
 import { ImageUploadField } from "./ImageUploadField";
 import { resolveImageId } from "./useImageUpload";
 import { MarkdownEditor } from "./MarkdownEditor";
-
-const commonCurrencies = ["USD", "EUR", "GBP", "LLD", "BTC", "ETH"].map((c) => ({
-    value: c,
-    label: c,
-}));
+import { currencyOptions } from "./constants";
 
 interface ProductFormValues {
     name: string;
@@ -108,7 +104,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
                         <InputNumber placeholder="Amount" min={0} style={{ width: "70%" }} />
                     </Form.Item>
                     <Form.Item name="priceCurrency" noStyle rules={[{ required: true, message: "Select currency" }]}>
-                        <Select placeholder="Currency" options={commonCurrencies} style={{ width: "30%" }} />
+                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
