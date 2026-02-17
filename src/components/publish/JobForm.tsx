@@ -146,10 +146,10 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
                 </Form.Item>
             )}
             <Form.Item name="positions" label="Positions" rules={[{ required: true }]}>
-                <InputNumber min={1} style={{ width: "100%" }} />
+                <InputNumber min={1} className="Publish__fullWidth" />
             </Form.Item>
             <Form.Item name="postedAt" label="Posted Date" rules={[{ required: true }]}>
-                <DatePicker style={{ width: "100%" }} />
+                <DatePicker className="Publish__fullWidth" />
             </Form.Item>
             <Form.Item name="location" label="Location">
                 <Input />
@@ -161,13 +161,13 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
             <Form.Item label="Salary Range">
                 <Input.Group compact>
                     <Form.Item name="salaryMin" noStyle>
-                        <InputNumber placeholder="Min" style={{ width: "35%" }} />
+                        <InputNumber placeholder="Min" className="Publish__salaryMin" />
                     </Form.Item>
                     <Form.Item name="salaryMax" noStyle>
-                        <InputNumber placeholder="Max" style={{ width: "35%" }} />
+                        <InputNumber placeholder="Max" className="Publish__salaryMax" />
                     </Form.Item>
                     <Form.Item name="salaryCurrency" noStyle>
-                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} allowClear />
+                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" allowClear />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -175,10 +175,10 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
             <Form.Item label="Bounty">
                 <Input.Group compact>
                     <Form.Item name="bountyAmount" noStyle>
-                        <InputNumber placeholder="Amount" style={{ width: "70%" }} />
+                        <InputNumber placeholder="Amount" className="Publish__amountInput" />
                     </Form.Item>
                     <Form.Item name="bountyCurrency" noStyle>
-                        <Select placeholder="Currency" options={currencyOptions} style={{ width: "30%" }} allowClear />
+                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" allowClear />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
