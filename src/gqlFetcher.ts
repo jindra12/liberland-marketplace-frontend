@@ -18,16 +18,11 @@ const normalizeAndReduce = (options?: RequestInit['headers']) => {
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
 
-export function getAccessToken(): string | null {
+export const getAccessToken = (): string | undefined => {
     const key = `oidc.user:${BACKEND_URL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
-    try {
-        const stored = localStorage.getItem(key);
-        if (!stored) return null;
-        return JSON.parse(stored).access_token || null;
-    } catch {
-        return null;
-    }
-}
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored).access_token : undefined;
+};
 
 export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers']) => async (): Promise<TData> => {
     const headers = normalizeAndReduce(options);

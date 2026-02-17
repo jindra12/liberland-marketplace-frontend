@@ -13,7 +13,7 @@ export const ProductsServicesList: React.FunctionComponent = () => {
     const query = useListProductsQuery({
         limit: 10,
         page,
-    });
+    }, { refetchOnMount: "always" });
     const allItems = query.data?.Products?.docs || [];
     const items = selectedIdentityIds.length === 0
         ? allItems

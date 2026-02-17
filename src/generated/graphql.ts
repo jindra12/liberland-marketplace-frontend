@@ -49406,7 +49406,7 @@ useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQuer
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
-  Company(id: $id, draft: true) {
+  Company(id: $id) {
     id
     name
     _status
@@ -50439,7 +50439,7 @@ useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables
 
 export const JobByIdDocument = `
     query JobById($id: String!) {
-  Job(id: $id, draft: true) {
+  Job(id: $id) {
     id
     title
     _status
@@ -51223,7 +51223,7 @@ useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryV
 
 export const ProductByIdDocument = `
     query ProductById($id: String!) {
-  Product(id: $id, draft: true) {
+  Product(id: $id) {
     id
     name
     _status

@@ -1,5 +1,5 @@
 query ProductById($id: String!) {
-  Product(id: $id, draft: true) {
+  Product(id: $id) {
     id
     name
     _status
