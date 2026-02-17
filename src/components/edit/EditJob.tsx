@@ -39,6 +39,7 @@ const EditJob: React.FunctionComponent = () => {
                                         salaryCurrency: job?.salaryRange?.currency ?? undefined,
                                         bountyAmount: job?.bounty?.amount ?? undefined,
                                         bountyCurrency: job?.bounty?.currency ?? undefined,
+                                        company: (job?.company as { id?: string } | null)?.id ?? undefined,
                                         existingImageUrl: job?.image?.url ?? undefined,
                                         existingImageId: job?.image?.id ?? undefined,
                                     }}
