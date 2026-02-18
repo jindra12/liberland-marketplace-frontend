@@ -5,6 +5,7 @@ import { useListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { formatPrice } from "../../utils";
 import { Markdown } from "../Markdown";
 
 export const ProductsServicesList: React.FunctionComponent = () => {
@@ -46,7 +47,11 @@ export const ProductsServicesList: React.FunctionComponent = () => {
                         className="EntityList__avatar"
                     />
                 ) : undefined,
-                description: (product) => <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>,
+                description: (product) => {
+                    const price = formatPrice(product.price?.amount, product.price?.currency);
+                    return price ? <Typography.Text strong>{price}</Typography.Text> : null;
+                },
+                body: (product) => <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>,
             }}
         />
     );

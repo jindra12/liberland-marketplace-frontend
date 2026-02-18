@@ -10951,367 +10951,31 @@ export type JobCompanyArgs = {
 };
 
 export enum JobUpdate_Bounty_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum JobUpdate_SalaryRange_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum JobUpdate__Status_MutationInput {
@@ -11376,185 +11040,17 @@ export type JobVersion_Version_Bounty = {
 };
 
 export enum JobVersion_Version_Bounty_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type JobVersion_Version_SalaryRange = {
@@ -11565,185 +11061,17 @@ export type JobVersion_Version_SalaryRange = {
 };
 
 export enum JobVersion_Version_SalaryRange_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum JobVersion_Version__Status {
@@ -11766,367 +11094,31 @@ export type Job_Bounty = {
 };
 
 export enum Job_Bounty_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum Job_Bounty_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type Job_SalaryRange = {
@@ -12137,367 +11129,31 @@ export type Job_SalaryRange = {
 };
 
 export enum Job_SalaryRange_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum Job_SalaryRange_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum Job__Status {
@@ -12555,185 +11211,17 @@ export type Job_Bounty__Amount_Operator = {
 };
 
 export enum Job_Bounty__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type Job_Bounty__Currency_Operator = {
@@ -12878,185 +11366,17 @@ export type Job_PostedAt_Operator = {
 };
 
 export enum Job_SalaryRange__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type Job_SalaryRange__Currency_Operator = {
@@ -32142,185 +30462,17 @@ export type ProductVariantsArgs = {
 };
 
 export enum ProductUpdate_Price_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum ProductUpdate__Status_MutationInput {
@@ -32386,185 +30538,17 @@ export type ProductVersion_Version_Price = {
 };
 
 export enum ProductVersion_Version_Price_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type ProductVersion_Version_Properties = {
@@ -32593,367 +30577,31 @@ export type Product_Price = {
 };
 
 export enum Product_Price_Currency {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export enum Product_Price_Currency_MutationInput {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type Product_Properties = {
@@ -33104,185 +30752,17 @@ export type Product_Price__Amount_Operator = {
 };
 
 export enum Product_Price__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type Product_Price__Currency_Operator = {
@@ -41060,6 +38540,7 @@ export type User = {
   email: Scalars['String']['output'];
   emailVerified: Scalars['Boolean']['output'];
   id: Scalars['String']['output'];
+  identity?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   role?: Maybe<Array<User_Role>>;
@@ -41140,6 +38621,17 @@ export type User_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type User_Identity_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type User_Image_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -41202,6 +38694,7 @@ export type User_Where = {
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
+  identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   role?: InputMaybe<User_Role_Operator>;
@@ -41215,6 +38708,7 @@ export type User_Where_And = {
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
+  identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   role?: InputMaybe<User_Role_Operator>;
@@ -41228,6 +38722,7 @@ export type User_Where_Or = {
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
   id?: InputMaybe<User_Id_Operator>;
+  identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   role?: InputMaybe<User_Role_Operator>;
@@ -41279,6 +38774,7 @@ export type UsersDocAccessFields = {
   createdAt?: Maybe<UsersDocAccessFields_CreatedAt>;
   email?: Maybe<UsersDocAccessFields_Email>;
   emailVerified?: Maybe<UsersDocAccessFields_EmailVerified>;
+  identity?: Maybe<UsersDocAccessFields_Identity>;
   image?: Maybe<UsersDocAccessFields_Image>;
   name?: Maybe<UsersDocAccessFields_Name>;
   role?: Maybe<UsersDocAccessFields_Role>;
@@ -41395,6 +38891,34 @@ export type UsersDocAccessFields_Email_Read = {
 
 export type UsersDocAccessFields_Email_Update = {
   __typename?: 'UsersDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Identity = {
+  __typename?: 'UsersDocAccessFields_identity';
+  create?: Maybe<UsersDocAccessFields_Identity_Create>;
+  delete?: Maybe<UsersDocAccessFields_Identity_Delete>;
+  read?: Maybe<UsersDocAccessFields_Identity_Read>;
+  update?: Maybe<UsersDocAccessFields_Identity_Update>;
+};
+
+export type UsersDocAccessFields_Identity_Create = {
+  __typename?: 'UsersDocAccessFields_identity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Identity_Delete = {
+  __typename?: 'UsersDocAccessFields_identity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Identity_Read = {
+  __typename?: 'UsersDocAccessFields_identity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Identity_Update = {
+  __typename?: 'UsersDocAccessFields_identity_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -41544,6 +39068,7 @@ export type UsersFields = {
   createdAt?: Maybe<UsersFields_CreatedAt>;
   email?: Maybe<UsersFields_Email>;
   emailVerified?: Maybe<UsersFields_EmailVerified>;
+  identity?: Maybe<UsersFields_Identity>;
   image?: Maybe<UsersFields_Image>;
   name?: Maybe<UsersFields_Name>;
   role?: Maybe<UsersFields_Role>;
@@ -41660,6 +39185,34 @@ export type UsersFields_Email_Read = {
 
 export type UsersFields_Email_Update = {
   __typename?: 'UsersFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Identity = {
+  __typename?: 'UsersFields_identity';
+  create?: Maybe<UsersFields_Identity_Create>;
+  delete?: Maybe<UsersFields_Identity_Delete>;
+  read?: Maybe<UsersFields_Identity_Read>;
+  update?: Maybe<UsersFields_Identity_Update>;
+};
+
+export type UsersFields_Identity_Create = {
+  __typename?: 'UsersFields_identity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Identity_Delete = {
+  __typename?: 'UsersFields_identity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Identity_Read = {
+  __typename?: 'UsersFields_identity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Identity_Update = {
+  __typename?: 'UsersFields_identity_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -46011,6 +43564,7 @@ export type MutationUserInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
   emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   role?: InputMaybe<Array<InputMaybe<User_Role_MutationInput>>>;
@@ -46021,6 +43575,7 @@ export type MutationUserUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Array<InputMaybe<UserUpdate_Role_MutationInput>>>;
@@ -46878,185 +44433,17 @@ export type VersionsJob_Version__Bounty__Amount_Operator = {
 };
 
 export enum VersionsJob_Version__Bounty__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type VersionsJob_Version__Bounty__Currency_Operator = {
@@ -47174,185 +44561,17 @@ export type VersionsJob_Version__PostedAt_Operator = {
 };
 
 export enum VersionsJob_Version__SalaryRange__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type VersionsJob_Version__SalaryRange__Currency_Operator = {
@@ -48389,185 +45608,17 @@ export type VersionsProduct_Version__Price__Amount_Operator = {
 };
 
 export enum VersionsProduct_Version__Price__Currency_Input {
-  Aed = 'AED',
-  Afn = 'AFN',
-  All = 'ALL',
-  Amd = 'AMD',
-  Ang = 'ANG',
-  Aoa = 'AOA',
-  Ars = 'ARS',
-  Aud = 'AUD',
-  Awg = 'AWG',
-  Azn = 'AZN',
-  Bam = 'BAM',
-  Bbd = 'BBD',
-  Bdt = 'BDT',
-  Bgn = 'BGN',
-  Bhd = 'BHD',
-  Bif = 'BIF',
-  Bmd = 'BMD',
-  Bnd = 'BND',
-  Bob = 'BOB',
-  Bov = 'BOV',
-  Brl = 'BRL',
-  Bsd = 'BSD',
-  Btn = 'BTN',
-  Bwp = 'BWP',
-  Byn = 'BYN',
-  Bzd = 'BZD',
-  Cad = 'CAD',
-  Cdf = 'CDF',
-  Che = 'CHE',
-  Chf = 'CHF',
-  Chw = 'CHW',
-  Clf = 'CLF',
-  Clp = 'CLP',
-  Cny = 'CNY',
-  Cop = 'COP',
-  Cou = 'COU',
-  Crc = 'CRC',
-  Cuc = 'CUC',
-  Cup = 'CUP',
-  Cve = 'CVE',
-  Czk = 'CZK',
-  Djf = 'DJF',
-  Dkk = 'DKK',
-  Dop = 'DOP',
-  Dzd = 'DZD',
-  Egp = 'EGP',
-  Ern = 'ERN',
-  Etb = 'ETB',
+  Btc = 'BTC',
+  Eth = 'ETH',
   Eur = 'EUR',
-  Fjd = 'FJD',
-  Fkp = 'FKP',
   Gbp = 'GBP',
-  Gel = 'GEL',
-  Ghs = 'GHS',
-  Gip = 'GIP',
-  Gmd = 'GMD',
-  Gnf = 'GNF',
-  Gtq = 'GTQ',
-  Gyd = 'GYD',
-  Hkd = 'HKD',
   Hnl = 'HNL',
-  Hrk = 'HRK',
-  Htg = 'HTG',
-  Huf = 'HUF',
-  Idr = 'IDR',
-  Ils = 'ILS',
-  Inr = 'INR',
-  Iqd = 'IQD',
-  Irr = 'IRR',
-  Isk = 'ISK',
-  Jmd = 'JMD',
-  Jod = 'JOD',
-  Jpy = 'JPY',
-  Kes = 'KES',
-  Kgs = 'KGS',
-  Khr = 'KHR',
-  Kmf = 'KMF',
-  Kpw = 'KPW',
-  Krw = 'KRW',
-  Kwd = 'KWD',
-  Kyd = 'KYD',
-  Kzt = 'KZT',
-  Lak = 'LAK',
-  Lbp = 'LBP',
-  Lkr = 'LKR',
-  Lrd = 'LRD',
-  Lsl = 'LSL',
-  Lyd = 'LYD',
-  Mad = 'MAD',
-  Mdl = 'MDL',
-  Mga = 'MGA',
-  Mkd = 'MKD',
-  Mmk = 'MMK',
-  Mnt = 'MNT',
-  Mop = 'MOP',
-  Mru = 'MRU',
-  Mur = 'MUR',
-  Mvr = 'MVR',
-  Mwk = 'MWK',
-  Mxn = 'MXN',
-  Mxv = 'MXV',
-  Myr = 'MYR',
-  Mzn = 'MZN',
-  Nad = 'NAD',
-  Ngn = 'NGN',
-  Nio = 'NIO',
-  Nok = 'NOK',
-  Npr = 'NPR',
-  Nzd = 'NZD',
-  Omr = 'OMR',
-  Pab = 'PAB',
-  Pen = 'PEN',
-  Pgk = 'PGK',
-  Php = 'PHP',
-  Pkr = 'PKR',
-  Pln = 'PLN',
-  Pyg = 'PYG',
-  Qar = 'QAR',
-  Ron = 'RON',
-  Rsd = 'RSD',
-  Rub = 'RUB',
-  Rwf = 'RWF',
-  Sar = 'SAR',
-  Sbd = 'SBD',
-  Scr = 'SCR',
-  Sdg = 'SDG',
-  Sek = 'SEK',
+  Lld = 'LLD',
+  Llm = 'LLM',
   Sgd = 'SGD',
-  Shp = 'SHP',
-  Sll = 'SLL',
-  Sos = 'SOS',
-  Srd = 'SRD',
-  Ssp = 'SSP',
-  Stn = 'STN',
-  Svc = 'SVC',
-  Syp = 'SYP',
-  Szl = 'SZL',
-  Thb = 'THB',
-  Tjs = 'TJS',
-  Tmt = 'TMT',
-  Tnd = 'TND',
-  Top = 'TOP',
-  Try = 'TRY',
-  Ttd = 'TTD',
-  Twd = 'TWD',
-  Tzs = 'TZS',
-  Uah = 'UAH',
-  Ugx = 'UGX',
   Usd = 'USD',
-  Usn = 'USN',
-  Uyi = 'UYI',
-  Uyu = 'UYU',
-  Uyw = 'UYW',
-  Uzs = 'UZS',
-  Ves = 'VES',
-  Vnd = 'VND',
-  Vuv = 'VUV',
-  Wst = 'WST',
-  Xaf = 'XAF',
-  Xag = 'XAG',
-  Xau = 'XAU',
-  Xba = 'XBA',
-  Xbb = 'XBB',
-  Xbc = 'XBC',
-  Xbd = 'XBD',
-  Xcd = 'XCD',
-  Xdr = 'XDR',
-  Xof = 'XOF',
-  Xpd = 'XPD',
-  Xpf = 'XPF',
-  Xpt = 'XPT',
-  Xsu = 'XSU',
-  Xts = 'XTS',
-  Xua = 'XUA',
-  Xxx = 'XXX',
-  Yer = 'YER',
-  Zar = 'ZAR',
-  Zmw = 'ZMW',
-  Zwl = 'ZWL'
+  Usdc = 'USDC',
+  Xmr = 'XMR'
 }
 
 export type VersionsProduct_Version__Price__Currency_Operator = {
@@ -49073,6 +46124,15 @@ export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typena
           | { __typename?: 'Product' }
          | null } }> } | null };
 
+export type UpdateCompanyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationCompanyUpdateInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
   content: Scalars['String']['input'];
@@ -49096,15 +46156,6 @@ export type DeleteCommentMutationVariables = Exact<{
 
 
 export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string } | null };
-
-export type UpdateCompanyMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  data: MutationCompanyUpdateInput;
-  draft: Scalars['Boolean']['input'];
-}>;
-
-
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -49234,6 +46285,15 @@ export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 
           | { __typename?: 'Product' }
          | null } }> } | null };
 
+export type UpdateJobMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationJobUpdateInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
 export type ListCommentsByTargetQueryVariables = Exact<{
   targetId: Scalars['JSON']['input'];
   relationTo: Comment_ReplyPost_Relation_RelationTo;
@@ -49251,15 +46311,6 @@ export type ListRepliesToCommentQueryVariables = Exact<{
 
 export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
-export type UpdateJobMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  data: MutationJobUpdateInput;
-  draft: Scalars['Boolean']['input'];
-}>;
-
-
-export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
-
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -49268,7 +46319,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -49317,7 +46368,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -49340,6 +46391,9 @@ export type UpdateProductMutationVariables = Exact<{
   draft: Scalars['Boolean']['input'];
 }>;
 
+
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
   content: Scalars['String']['input'];
@@ -49347,9 +46401,6 @@ export type UpdateCommentContentMutationVariables = Exact<{
 
 
 export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
-
-
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 
 
@@ -49378,7 +46429,7 @@ export const useListCompaniesByCreatorQuery = <
       variables?: ListCompaniesByCreatorQueryVariables,
       options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<ListCompaniesByCreatorQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables],
@@ -49807,229 +46858,6 @@ useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesB
 
 useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
 
-export const CreateCommentDocument = `
-    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
-  createComment(data: {content: $content, replyPost: $replyToPost}) {
-    id
-    content
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
-
-    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateComment'],
-    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
-
-export const CreateReplyToCommentDocument = `
-    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
-  createComment(
-    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
-  ) {
-    id
-    content
-    replyComment {
-      id
-    }
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateReplyToCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
-
-    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateReplyToComment'],
-    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
-
-export const DeleteCommentDocument = `
-    mutation DeleteComment($id: String!) {
-  deleteComment(id: $id) {
-    id
-  }
-}
-    `;
-
-export const useDeleteCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
-
-    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteComment'],
-    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
-
-export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
-  Comments(
-    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
-    sort: "createdAt"
-    limit: $limit
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCommentsByTargetQuery = <
-      TData = ListCommentsByTargetQuery,
-      TError = unknown
-    >(
-      variables: ListCommentsByTargetQueryVariables,
-      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
-    ) => {
-
-    return useQuery<ListCommentsByTargetQuery, TError, TData>(
-      {
-    queryKey: ['ListCommentsByTarget', variables],
-    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
-    ...options
-  }
-    )};
-
-useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
-
-
-useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
-
-export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
-  Comments(
-    where: {replyComment: {equals: $parentCommentId}}
-    sort: "createdAt"
-    limit: $limit
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-  }
-}
-    `;
-
-export const useListRepliesToCommentQuery = <
-      TData = ListRepliesToCommentQuery,
-      TError = unknown
-    >(
-      variables: ListRepliesToCommentQueryVariables,
-      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
-    ) => {
-
-    return useQuery<ListRepliesToCommentQuery, TError, TData>(
-      {
-    queryKey: ['ListRepliesToComment', variables],
-    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
-    ...options
-  }
-    )};
-
-useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
-
-
-useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
-
-export const UpdateCommentContentDocument = `
-    mutation UpdateCommentContent($id: String!, $content: String!) {
-  updateComment(id: $id, data: {content: $content}) {
-    id
-    content
-    updatedAt
-  }
-}
-    `;
-
-export const useUpdateCommentContentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>) => {
-
-    return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateCommentContent'],
-    mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
-
 export const CreateCompanyDocument = `
     mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
   createCompany(data: $data, draft: $draft) {
@@ -50048,7 +46876,7 @@ export const useCreateCompanyMutation = <
       TError = unknown,
       TContext = unknown
     >(options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>) => {
-
+    
     return useMutation<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>(
       {
     mutationKey: ['CreateCompany'],
@@ -50251,6 +47079,99 @@ export const useUpdateCompanyMutation = <
 
 
 useUpdateCompanyMutation.fetcher = (variables: UpdateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables, options);
+
+export const CreateCommentDocument = `
+    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
+  createComment(data: {content: $content, replyPost: $replyToPost}) {
+    id
+    content
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateComment'],
+    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
+
+export const CreateReplyToCommentDocument = `
+    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
+  createComment(
+    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
+  ) {
+    id
+    content
+    replyComment {
+      id
+    }
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateReplyToCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateReplyToComment'],
+    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
+
+export const DeleteCommentDocument = `
+    mutation DeleteComment($id: String!) {
+  deleteComment(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteComment'],
+    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {
@@ -50634,7 +47555,7 @@ export const useListJobsByCreatorQuery = <
       variables?: ListJobsByCreatorQueryVariables,
       options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<ListJobsByCreatorQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables],
@@ -50987,7 +47908,7 @@ export const useCreateJobMutation = <
       TError = unknown,
       TContext = unknown
     >(options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>) => {
-
+    
     return useMutation<CreateJobMutation, TError, CreateJobMutationVariables, TContext>(
       {
     mutationKey: ['CreateJob'],
@@ -51248,6 +48169,110 @@ export const useUpdateJobMutation = <
 
 useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
 
+export const ListCommentsByTargetDocument = `
+    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
+  Comments(
+    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCommentsByTargetQuery = <
+      TData = ListCommentsByTargetQuery,
+      TError = unknown
+    >(
+      variables: ListCommentsByTargetQueryVariables,
+      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCommentsByTargetQuery, TError, TData>(
+      {
+    queryKey: ['ListCommentsByTarget', variables],
+    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
+    ...options
+  }
+    )};
+
+useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
+
+
+useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+
+export const ListRepliesToCommentDocument = `
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
+  Comments(
+    where: {replyComment: {equals: $parentCommentId}}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListRepliesToCommentQuery = <
+      TData = ListRepliesToCommentQuery,
+      TError = unknown
+    >(
+      variables: ListRepliesToCommentQueryVariables,
+      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListRepliesToCommentQuery, TError, TData>(
+      {
+    queryKey: ['ListRepliesToComment', variables],
+    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
+    ...options
+  }
+    )};
+
+useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
+
+
+useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+
 export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(
@@ -51262,6 +48287,10 @@ export const ListProductsByCompanyDocument = `
       name
       description
       url
+      price {
+        amount
+        currency
+      }
       image {
         id
         url
@@ -51418,7 +48447,7 @@ export const useListProductsByCreatorQuery = <
       variables?: ListProductsByCreatorQueryVariables,
       options?: Omit<UseQueryOptions<ListProductsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListProductsByCreatorQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<ListProductsByCreatorQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['ListProductsByCreator'] : ['ListProductsByCreator', variables],
@@ -51519,7 +48548,7 @@ export const useCreateProductMutation = <
       TError = unknown,
       TContext = unknown
     >(options?: UseMutationOptions<CreateProductMutation, TError, CreateProductMutationVariables, TContext>) => {
-
+    
     return useMutation<CreateProductMutation, TError, CreateProductMutationVariables, TContext>(
       {
     mutationKey: ['CreateProduct'],
@@ -51539,6 +48568,10 @@ export const ListProductsDocument = `
       name
       description
       url
+      price {
+        amount
+        currency
+      }
       image {
         id
         url
@@ -51717,3 +48750,29 @@ export const useUpdateProductMutation = <
 
 
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
+
+export const UpdateCommentContentDocument = `
+    mutation UpdateCommentContent($id: String!, $content: String!) {
+  updateComment(id: $id, data: {content: $content}) {
+    id
+    content
+    updatedAt
+  }
+}
+    `;
+
+export const useUpdateCommentContentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCommentContent'],
+    mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
