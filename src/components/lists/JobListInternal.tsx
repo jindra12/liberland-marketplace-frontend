@@ -40,6 +40,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             items={items}
             title="Jobs"
             next={() => props.setPage(props.page + 1)}
+            loading={props.query.isLoading}
             refetch={props.query.refetch}
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{

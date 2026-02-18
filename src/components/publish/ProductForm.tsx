@@ -51,7 +51,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
-        routePrefix: "/products",
+        routePrefix: "/products-services",
         mode,
         existingImageId: initialValues?.existingImageId,
         editId: initialValues?.id,

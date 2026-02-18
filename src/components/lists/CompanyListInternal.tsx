@@ -37,6 +37,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
+            loading={props.query.isLoading}
             title="Companies"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{

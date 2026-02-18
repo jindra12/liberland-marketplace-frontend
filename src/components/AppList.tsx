@@ -12,6 +12,7 @@ export interface AppListProps<TItem> {
     title: React.ReactNode;
     filters?: React.ReactNode;
     emptyText?: React.ReactNode;
+    loading?: boolean;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
@@ -37,6 +38,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     itemLayout="vertical"
                     dataSource={props.items}
                     size="large"
+                    loading={props.loading}
                     header={(
                         <Flex justify="space-between" gap="16px" wrap align="center">
                             <Flex flex={6}>

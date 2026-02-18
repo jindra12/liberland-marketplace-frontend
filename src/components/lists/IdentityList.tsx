@@ -26,6 +26,7 @@ export const IdentityList: React.FunctionComponent = () => {
             hasMore={!query.data?.Identities || query.data.Identities.hasNextPage}
             items={items}
             next={() => setPage(page + 1)}
+            loading={query.isLoading}
             refetch={query.refetch}
             title="Identities"
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}

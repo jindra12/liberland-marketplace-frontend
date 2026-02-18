@@ -43,7 +43,7 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => { navigate(`/products/${value}`); props.onClose(); }}
+            onSelect={(_, { value }) => { navigate(`/products-services/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}

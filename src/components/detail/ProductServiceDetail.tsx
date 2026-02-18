@@ -1,26 +1,36 @@
 import * as React from "react";
-import { HomeFilled, ShoppingOutlined } from "@ant-design/icons";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Space, Tag, Typography } from "antd";
+import { Avatar, Button, Descriptions, Divider, Flex, Grid, Space, Typography } from "antd";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
+    useCompanyByIdQuery,
     useProductByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { IdentityGroups } from "./IdentityGroups";
+import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const { md } = Grid.useBreakpoint();
     const query = useProductByIdQuery({ id: id! });
+    const companyId = query.data?.Product?.company?.id;
+    const companyQuery = useCompanyByIdQuery(
+        { id: companyId || "" },
+        { enabled: Boolean(companyId) }
+    );
 
     return (
         <Loader query={query}>
             {(data) => {
                 const product = data.Product;
                 const imageUrl = product?.image?.url || product?.company?.image?.url;
+                const companyData = companyQuery.data?.Company;
                 const amount = product?.price?.amount;
                 const price = typeof amount === "number"
                     ? `${product?.price?.currency ?? "USD"} ${amount.toLocaleString("en-US", { maximumFractionDigits: 2 })}`
@@ -29,9 +39,18 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const inventory = typeof product?.inventory === "number"
                     ? product.inventory.toLocaleString("en-US")
                     : undefined;
+                const companyIdentity = companyData?.identity?.name ? {
+                    id: companyData.identity.id,
+                    name: companyData.identity.name,
+                } : product?.company?.identity?.name ? {
+                    id: product.company.identity.id,
+                    name: product.company.identity.name,
+                } : undefined;
+                const allowedIdentities = companyData?.allowedIdentities || [];
+                const disallowedIdentities = companyData?.disallowedIdentities || [];
 
                 return (
-                    <div>
+                    <Flex flex={1} vertical gap="8px">
                         <Space size={16} align="start" className="EntityDetail__header">
                             {imageUrl && (
                                 <Avatar
@@ -42,25 +61,33 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             )}
                             <div>
                                 <Typography.Title level={1} className="EntityDetail__title">
-                                    {product?.name}
+                                    <Flex justify="space-between" align="center" gap="16px" wrap>
+                                        {product?.name}
+                                        {companyIdentity && (
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
+                                        )}
+                                    </Flex>
                                 </Typography.Title>
-                                <Space size={[8, 8]} wrap className="EntityDetail__meta">
-                                    {product?.company?.id && product.company.name && (
-                                        <Link to={`/companies/${product.company.id}`}>
-                                            <Tag icon={<HomeFilled />}>{product.company.name}</Tag>
-                                        </Link>
-                                    )}
-                                    {price && <Tag color="processing">{price}</Tag>}
-                                    {inventory && (
-                                        <Tag icon={<ShoppingOutlined />}>
-                                            Inventory: {inventory}
-                                        </Tag>
-                                    )}
-                                </Space>
+                                <ProductDetailsSummary
+                                    companyName={product?.company?.name}
+                                    companyId={product?.company?.id}
+                                    price={price}
+                                    inventory={inventory}
+                                />
                             </div>
                         </Space>
                         <Divider />
-                        <Markdown>{product?.description}</Markdown>
+                        <Flex gap="32px" vertical>
+                            <Markdown>{product?.description}</Markdown>
+                            <IdentityGroups
+                                allowedIdentities={allowedIdentities}
+                                disallowedIdentities={disallowedIdentities}
+                            />
+                        </Flex>
                         {properties.length > 0 && (
                             <>
                                 <Divider />
@@ -100,7 +127,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
                             title="Comments"
                         />
-                    </div>
+                    </Flex>
                 );
             }}
         </Loader>
