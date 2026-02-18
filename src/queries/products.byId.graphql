@@ -1,13 +1,22 @@
 query ProductById($id: String!) {
-  Product(id: $id, draft: false) {
+  Product(id: $id) {
     id
     name
+    _status
     description
     url
+    inventory
+    price {
+      amount
+      currency
+    }
     company {
       id
       name
       description
+      createdBy {
+        id
+      }
       identity {
         id
         name

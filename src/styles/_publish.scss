@@ -1,0 +1,59 @@
+.Publish {
+    max-width: 640px;
+    margin: 0 auto;
+
+    &__back {
+        margin-bottom: 16px;
+    }
+
+    &__categories {
+        width: 100%;
+    }
+
+    &__category {
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    &__categoryIcon {
+        font-size: 32px;
+    }
+
+    &__categoryTitle {
+        margin: 0;
+    }
+
+    &__form {
+        max-width: 500px;
+    }
+
+    &__fullWidth {
+        width: 100%;
+    }
+
+    &__salaryMin {
+        width: 35%;
+    }
+
+    &__salaryMax {
+        width: 35%;
+    }
+
+    &__currencySelect {
+        width: 30%;
+    }
+
+    &__amountInput {
+        width: 70%;
+    }
+}
+
+.ImageUpload {
+    &__label {
+        margin-top: 8px;
+    }
+
+    &__preview {
+        width: 100%;
+    }
+}

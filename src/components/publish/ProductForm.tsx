@@ -1,0 +1,108 @@
+import React from "react";
+import { Form, Input, InputNumber, Select } from "antd";
+import { useAuth } from "react-oidc-context";
+import type { UploadFile } from "antd/es/upload/interface";
+import {
+    useCreateProductMutation,
+    useUpdateProductMutation,
+    useListCompaniesByCreatorQuery,
+} from "../../generated/graphql";
+import { ImageUploadField } from "./ImageUploadField";
+import { MarkdownEditor } from "./MarkdownEditor";
+import { FormSubmitButtons } from "./FormSubmitButtons";
+import { useEntityForm } from "./useEntityForm";
+import { stripEmpty } from "./formUtils";
+import { currencyOptions } from "./constants";
+
+interface ProductFormValues {
+    name: string;
+    description?: string;
+    priceAmount: number | null;
+    priceCurrency: string;
+    url?: string;
+    inventory?: number | null;
+    company?: string;
+    imageFile?: UploadFile[];
+}
+
+export interface ProductFormProps {
+    mode: "create" | "edit";
+    initialValues?: Partial<ProductFormValues> & {
+        id?: string;
+        existingImageUrl?: string | null;
+        existingImageId?: string | null;
+    };
+}
+
+export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues }) => {
+    const auth = useAuth();
+    const createMutation = useCreateProductMutation();
+    const updateMutation = useUpdateProductMutation();
+
+    const userId = auth.user?.profile?.sub;
+    const companiesQuery = useListCompaniesByCreatorQuery(
+        { userId },
+        { enabled: !!userId },
+    );
+    const companies = companiesQuery.data?.Companies?.docs ?? [];
+
+    const { form, draftRef, loading, onFinish } = useEntityForm({
+        entityName: "Product",
+        routePrefix: "/products-services",
+        mode,
+        existingImageId: initialValues?.existingImageId,
+        editId: initialValues?.id,
+        createMutation,
+        updateMutation,
+        buildData: (values: ProductFormValues, imageId) => ({
+            ...stripEmpty({
+                name: values.name,
+                description: values.description ?? "",
+                url: values.url ?? "",
+                company: values.company ?? "",
+            }),
+            price: { amount: values.priceAmount, currency: values.priceCurrency },
+            inventory: values.inventory,
+            ...(imageId !== undefined && { image: imageId }),
+        }),
+        getCreateId: (r) => r.createProduct?.id,
+        getUpdateId: (r) => r.updateProduct?.id,
+    });
+
+    return (
+        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
+            <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+                <Input />
+            </Form.Item>
+            <Form.Item name="description" label="Description">
+                <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
+            </Form.Item>
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <Form.Item label="Price" required>
+                <Input.Group compact>
+                    <Form.Item name="priceAmount" noStyle rules={[{ required: true, message: "Enter price" }]}>
+                        <InputNumber placeholder="Amount" min={0} className="Publish__amountInput" />
+                    </Form.Item>
+                    <Form.Item name="priceCurrency" noStyle rules={[{ required: true, message: "Select currency" }]}>
+                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" />
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+            <Form.Item name="url" label="Product URL">
+                <Input />
+            </Form.Item>
+            <Form.Item name="inventory" label="Inventory">
+                <InputNumber min={0} className="Publish__fullWidth" />
+            </Form.Item>
+            <Form.Item name="company" label="Company" rules={[{ required: true }]}>
+                <Select
+                    placeholder="Select a company"
+                    options={companies.map((c) => ({ value: c.id, label: c.name }))}
+                />
+            </Form.Item>
+            <Form.Item>
+                <FormSubmitButtons mode={mode} entityName="Product" loading={loading} draftRef={draftRef} />
+            </Form.Item>
+        </Form>
+    );
+};

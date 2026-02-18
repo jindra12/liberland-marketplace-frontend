@@ -1,7 +1,8 @@
 query JobById($id: String!) {
-  Job(id: $id, draft: false) {
+  Job(id: $id) {
     id
     title
+    _status
     description
     location
     employmentType
@@ -27,6 +28,9 @@ query JobById($id: String!) {
       min
       max
       currency
+    }
+    createdBy {
+      id
     }
     company {
       id

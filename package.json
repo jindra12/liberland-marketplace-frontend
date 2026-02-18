@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@bradgarropy/use-countdown": "^2.0.1",
     "@polkadot/extension-dapp": "^0.59.1",
     "@polkadot/util-crypto": "^13.5.1",
     "@solana/pay": "^0.2.5",
@@ -19,6 +20,7 @@
     "@tronweb3/tronwallet-adapter-react-ui": "^1.1.11",
     "@tronweb3/tronwallet-adapter-tronlink": "^1.1.12",
     "@tronweb3/tronwallet-adapters": "^1.2.9",
+    "@uiw/react-md-editor": "^4.0.11",
     "antd": "^5.24.4",
     "axios": "^1.13.4",
     "bignumber.js": "^9.3.0",

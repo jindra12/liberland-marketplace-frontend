@@ -1,0 +1,11 @@
+mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
+  createProduct(data: $data, draft: $draft) {
+    id
+    name
+    _status
+    image {
+      id
+      url
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Typography } from "antd";
+import { Avatar, Button, Flex, Typography } from "antd";
 import { useListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
@@ -32,10 +32,21 @@ export const ProductsServicesList: React.FunctionComponent = () => {
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
                 title: (product) => product.name,
-                actions: (product) => <Link to={`/products-services/${product.id}`}>Details</Link>,
-                avatar: (product) => product.image?.url ? <Avatar src={`${BACKEND_URL}${product.image.url}`} /> : undefined,
-                description: (product) => <Markdown className="Markdown--clamp2 EntityList__description">{product.description}</Markdown>,
-                body: (product) => product.url ? <Typography.Link href={product.url}>Order now!</Typography.Link> : undefined,
+                actions: (product) => (
+                    <Flex wrap gap="32px" align="center">
+                        <Link to={`/products-services/${product.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
+                        {product.url && <Typography.Link href={product.url}><Button size="large">Order now!</Button></Typography.Link>}
+                    </Flex>
+                ),
+                avatar: (product) => product.image?.url ? (
+                    <Avatar
+                        shape="square"
+                        size={80}
+                        src={`${BACKEND_URL}${product.image.url}`}
+                        className="EntityList__avatar"
+                    />
+                ) : undefined,
+                description: (product) => <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>,
             }}
         />
     );

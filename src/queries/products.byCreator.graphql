@@ -1,0 +1,10 @@
+query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
+  Products(draft: true, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
+    docs {
+      id
+      name
+      _status
+    }
+    totalDocs
+  }
+}

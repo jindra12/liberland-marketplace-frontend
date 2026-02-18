@@ -1,0 +1,33 @@
+.Profile {
+    max-width: 800px;
+    margin: 0 auto;
+
+    &__info {
+        margin-bottom: 16px;
+    }
+
+    &__forms {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    &__card {
+        flex: 1;
+        min-width: 280px;
+    }
+
+    &__actions {
+        margin-bottom: 8px;
+    }
+
+    &__listingsHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__listingsTitle {
+        margin: 0;
+    }
+}

@@ -11,18 +11,28 @@
   margin-bottom: 0;
 }
 
-.Markdown--clamp2 {
+.Markdown--clamp2,
+.Markdown--clamp3 {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-.Markdown--clamp2 p {
+.Markdown--clamp2 {
+  -webkit-line-clamp: 2;
+}
+
+.Markdown--clamp3 {
+  -webkit-line-clamp: 3;
+}
+
+.Markdown--clamp2 p,
+.Markdown--clamp3 p {
   margin: 0;
   display: inline;
 }
 
-.Markdown--clamp2 p + p::before {
+.Markdown--clamp2 p + p::before,
+.Markdown--clamp3 p + p::before {
   content: " ";
 }

@@ -72,5 +72,8 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
     },
     Card: {
         borderRadiusLG: 18,
-    }
+    },
+    List: {
+        titleMarginBottom: 2,
+    },
 };
