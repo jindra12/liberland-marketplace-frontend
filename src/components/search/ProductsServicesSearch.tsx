@@ -12,13 +12,13 @@ export interface ProductsServicesSearchProps {
 export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSearchProps> = (props) => {
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
-    const [term, setTerm] = React.useState<string>();
+    const [term, setTerm] = React.useState("");
     const products = useSearchProductsQuery({
-        searchTerm: term || "",
+        searchTerm: term,
         limit: 5,
         page: 0,
     }, {
-        enabled: Boolean(term),
+        enabled: term.length > 0,
     });
 
     React.useEffect(() => {
@@ -29,14 +29,21 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 .data
                 .Searches
                 ?.docs
-                .map(({ title, doc }) => ({ value: (doc.value as DocType)?.id || "", label: title, image: getImage(doc.value as DocType) })) || [])
+                .reduce<SearchOption[]>((acc, { title, doc }) => {
+                    const value = (doc.value as DocType)?.id;
+                    if (!value) {
+                        return acc;
+                    }
+                    acc.push({ value, label: title, image: getImage(doc.value as DocType) });
+                    return acc;
+                }, []) ?? [])
         }
     }, [products.isFetched, products.data]);
 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => { navigate(`/products-services/${value}`); props.onClose(); }}
+            onSelect={(_, { value }) => { navigate(`/products/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}

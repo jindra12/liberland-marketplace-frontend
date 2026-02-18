@@ -11,24 +11,23 @@ import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { stripEmpty } from "./formUtils";
 import { currencyOptions } from "./constants";
 
 interface ProductFormValues {
-    name: string;
-    description?: string;
-    priceAmount: number | null;
-    priceCurrency: string;
-    url?: string;
+    name: string | null;
+    description?: string | null;
+    priceAmount?: number | null;
+    priceCurrency: string | null;
+    url?: string | null;
     inventory?: number | null;
-    company?: string;
+    company?: string | null;
     imageFile?: UploadFile[];
 }
 
 export interface ProductFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<ProductFormValues> & {
-        id?: string;
+        id?: string | null;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
     };
@@ -45,22 +44,24 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
+    const defaults: Partial<ProductFormValues> = {
+        ...initialValues,
+        priceCurrency: initialValues?.priceCurrency ? initialValues.priceCurrency : "USD",
+    };
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
-        routePrefix: "/products-services",
+        routePrefix: "/products",
         mode,
         existingImageId: initialValues?.existingImageId,
         editId: initialValues?.id,
         createMutation,
         updateMutation,
         buildData: (values: ProductFormValues, imageId) => ({
-            ...stripEmpty({
-                name: values.name,
-                description: values.description ?? "",
-                url: values.url ?? "",
-                company: values.company ?? "",
-            }),
+            name: values.name,
+            description: values.description,
+            url: values.url,
+            company: values.company,
             price: { amount: values.priceAmount, currency: values.priceCurrency },
             inventory: values.inventory,
             ...(imageId !== undefined && { image: imageId }),
@@ -70,7 +71,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     });
 
     return (
-        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
+        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
             <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>

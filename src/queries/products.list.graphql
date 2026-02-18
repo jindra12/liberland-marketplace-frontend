@@ -5,6 +5,11 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       name
       description
       url
+      properties {
+        id
+        key
+        value
+      }
       image {
         id
         url

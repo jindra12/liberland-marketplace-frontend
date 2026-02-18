@@ -18,7 +18,7 @@ const EditJob: React.FunctionComponent = () => {
                 <Loader query={query}>
                     {(data) => {
                         const job = data.Job;
-                        const createdById = (job?.createdBy as { id?: string } | null)?.id;
+                        const createdById = job?.createdBy?.id;
 
                         return (
                             <OwnerGuard createdById={createdById}>
@@ -27,19 +27,19 @@ const EditJob: React.FunctionComponent = () => {
                                     mode="edit"
                                     initialValues={{
                                         id: job?.id,
-                                        title: job?.title || "",
-                                        description: job?.description || "",
+                                        title: job?.title,
+                                        description: job?.description,
                                         employmentType: job?.employmentType as unknown as Job_EmploymentType_MutationInput,
-                                        positions: job?.positions ?? 1,
+                                        positions: job?.positions,
                                         postedAt: job?.postedAt ? dayjs(job.postedAt) : dayjs(),
-                                        location: job?.location || "",
-                                        applyUrl: job?.applyUrl || "",
+                                        location: job?.location,
+                                        applyUrl: job?.applyUrl,
                                         salaryMin: job?.salaryRange?.min,
                                         salaryMax: job?.salaryRange?.max,
                                         salaryCurrency: job?.salaryRange?.currency,
                                         bountyAmount: job?.bounty?.amount,
                                         bountyCurrency: job?.bounty?.currency,
-                                        company: (job?.company as { id?: string } | null)?.id,
+                                        company: job?.company?.id,
                                         existingImageUrl: job?.image?.url,
                                         existingImageId: job?.image?.id,
                                     }}

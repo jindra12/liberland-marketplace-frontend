@@ -13,7 +13,6 @@ import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { stripEmpty } from "./formUtils";
 import { currencyOptions } from "./constants";
 
 const employmentOptions = [
@@ -25,26 +24,26 @@ const employmentOptions = [
 ];
 
 interface JobFormValues {
-    title: string;
-    description?: string;
-    employmentType: Job_EmploymentType_MutationInput;
-    positions: number;
+    title: string | null;
+    description?: string | null;
+    employmentType: Job_EmploymentType_MutationInput | null;
+    positions: number | null;
     postedAt: dayjs.Dayjs;
-    location?: string;
-    applyUrl?: string;
+    location?: string | null;
+    applyUrl?: string | null;
     salaryMin?: number | null;
     salaryMax?: number | null;
     salaryCurrency?: string | null;
     bountyAmount?: number | null;
     bountyCurrency?: string | null;
-    company?: string;
+    company?: string | null;
     imageFile?: UploadFile[];
 }
 
 export interface JobFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<JobFormValues> & {
-        id?: string;
+        id?: string | null;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
     };
@@ -63,9 +62,11 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 
     const defaults: Partial<JobFormValues> = {
-        positions: 1,
-        postedAt: dayjs(),
         ...initialValues,
+        positions: typeof initialValues?.positions === "number" ? initialValues.positions : 1,
+        postedAt: initialValues?.postedAt ? initialValues.postedAt : dayjs(),
+        salaryCurrency: initialValues?.salaryCurrency ? initialValues.salaryCurrency : "USD",
+        bountyCurrency: initialValues?.bountyCurrency ? initialValues.bountyCurrency : "USD",
     };
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
@@ -77,22 +78,20 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
         createMutation,
         updateMutation,
         buildData: (values: JobFormValues, imageId) => ({
-            ...stripEmpty({
-                title: values.title,
-                description: values.description ?? "",
-                employmentType: values.employmentType,
-                positions: values.positions,
-                postedAt: values.postedAt.toISOString(),
-                location: values.location ?? "",
-                applyUrl: values.applyUrl ?? "",
-                company: values.company ?? "",
-            }),
+            title: values.title,
+            description: values.description,
+            employmentType: values.employmentType,
+            positions: values.positions,
+            postedAt: values.postedAt.toISOString(),
+            location: values.location,
+            applyUrl: values.applyUrl,
+            company: values.company,
             ...(imageId !== undefined && { image: imageId }),
             ...(typeof values.salaryMin === "number" || typeof values.salaryMax === "number"
-                ? { salaryRange: { min: values.salaryMin, max: values.salaryMax, currency: values.salaryCurrency || "USD" } }
+                ? { salaryRange: { min: values.salaryMin, max: values.salaryMax, currency: values.salaryCurrency } }
                 : {}),
             ...(typeof values.bountyAmount === "number"
-                ? { bounty: { amount: values.bountyAmount, currency: values.bountyCurrency || "USD" } }
+                ? { bounty: { amount: values.bountyAmount, currency: values.bountyCurrency } }
                 : {}),
         }),
         getCreateId: (r) => r.createJob?.id,

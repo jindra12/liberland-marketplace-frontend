@@ -3,6 +3,11 @@ mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
     id
     name
     _status
+    properties {
+      id
+      key
+      value
+    }
     image {
       id
       url

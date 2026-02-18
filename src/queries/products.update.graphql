@@ -3,6 +3,11 @@ mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft:
     id
     name
     _status
+    properties {
+      id
+      key
+      value
+    }
     image {
       id
       url

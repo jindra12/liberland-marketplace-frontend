@@ -5,15 +5,15 @@ import { JobForm } from "./JobForm";
 import { CompanyForm } from "./CompanyForm";
 import { ProductForm } from "./ProductForm";
 
-type Category = "job" | "company" | "product" | null;
+type Category = "job" | "company" | "product";
 
 export const PublishContent: React.FunctionComponent = () => {
-    const [category, setCategory] = React.useState<Category>(null);
+    const [category, setCategory] = React.useState<Category>();
 
     if (category === "job") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Post a Job</Typography.Title>
@@ -25,7 +25,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "company") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Create a Company</Typography.Title>
@@ -37,7 +37,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "product") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>List a Product</Typography.Title>
