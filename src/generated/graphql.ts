@@ -6535,18 +6535,6 @@ export type CompaniesReadVersionsDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
-export type CompaniesReadVersionsAccess = {
-  __typename?: 'CompaniesReadVersionsAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type CompaniesReadVersionsDocAccess = {
-  __typename?: 'CompaniesReadVersionsDocAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
-};
-
 export type CompaniesUpdateAccess = {
   __typename?: 'CompaniesUpdateAccess';
   permission: Scalars['Boolean']['output'];
@@ -49818,6 +49806,229 @@ useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesB
 
 
 useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
+
+export const CreateCommentDocument = `
+    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
+  createComment(data: {content: $content, replyPost: $replyToPost}) {
+    id
+    content
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
+
+    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateComment'],
+    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
+
+export const CreateReplyToCommentDocument = `
+    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
+  createComment(
+    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
+  ) {
+    id
+    content
+    replyComment {
+      id
+    }
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
+    `;
+
+export const useCreateReplyToCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
+
+    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateReplyToComment'],
+    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
+
+export const DeleteCommentDocument = `
+    mutation DeleteComment($id: String!) {
+  deleteComment(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
+
+    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteComment'],
+    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
+
+export const ListCommentsByTargetDocument = `
+    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
+  Comments(
+    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCommentsByTargetQuery = <
+      TData = ListCommentsByTargetQuery,
+      TError = unknown
+    >(
+      variables: ListCommentsByTargetQueryVariables,
+      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListCommentsByTargetQuery, TError, TData>(
+      {
+    queryKey: ['ListCommentsByTarget', variables],
+    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
+    ...options
+  }
+    )};
+
+useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
+
+
+useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+
+export const ListRepliesToCommentDocument = `
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
+  Comments(
+    where: {replyComment: {equals: $parentCommentId}}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListRepliesToCommentQuery = <
+      TData = ListRepliesToCommentQuery,
+      TError = unknown
+    >(
+      variables: ListRepliesToCommentQueryVariables,
+      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListRepliesToCommentQuery, TError, TData>(
+      {
+    queryKey: ['ListRepliesToComment', variables],
+    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
+    ...options
+  }
+    )};
+
+useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
+
+
+useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+
+export const UpdateCommentContentDocument = `
+    mutation UpdateCommentContent($id: String!, $content: String!) {
+  updateComment(id: $id, data: {content: $content}) {
+    id
+    content
+    updatedAt
+  }
+}
+    `;
+
+export const useUpdateCommentContentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>) => {
+
+    return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCommentContent'],
+    mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
 
 export const CreateCompanyDocument = `
     mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
