@@ -26,6 +26,7 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
     const draftRef = useRef(false);
     const loading = config.createMutation.isPending || config.updateMutation.isPending;
     const listQueryKey = `List${config.entityName === "Product" ? "Products" : `${config.entityName}s`}`;
+    const byIdQueryKey = `${config.entityName}ById`;
 
     const onFinish = useCallback(async (values: TValues) => {
         const imageId = await resolveImageId(
@@ -44,7 +45,10 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                     data,
                     draft,
                 });
-                await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
+                await Promise.all([
+                    queryClient.invalidateQueries({ queryKey: [listQueryKey] }),
+                    queryClient.invalidateQueries({ queryKey: [byIdQueryKey] }),
+                ]);
                 message.success(`${config.entityName} ${label}!`);
                 navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
             } else {

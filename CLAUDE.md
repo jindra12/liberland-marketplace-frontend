@@ -59,7 +59,7 @@ Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/li
 ## Testing with Playwright
 
 After making changes that affect frontend behavior (UI changes, new features, bug fixes to interactions), **proactively** use the `playwright-cli` skill to visually verify the changes in the browser. This means:
-- Start the dev server if not already running
+- Check if the dev server is running on localhost:3001, if not, start the dev server
 - Navigate to the affected page(s) on localhost:3001
 - If you need login use user claudetest2@gmail.com password claudetest2@gmail.com
 - Verify the change works as expected (elements render, interactions behave correctly)
@@ -68,7 +68,4 @@ After making changes that affect frontend behavior (UI changes, new features, bu
 - **Clean up after testing** — delete any screenshot files (`.png`) created during Playwright testing so they don't clutter the repo
 
 ## Tasks
-We will be working on design polish tasks
-- Reduce maximum width of jobs, products and companies listings to 1200
-- Make the job/company image avatar into a bigger image.
-- Move the job details up, next to the image and te job title
+No open task
