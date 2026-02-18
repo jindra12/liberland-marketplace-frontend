@@ -34,14 +34,14 @@ const EditJob: React.FunctionComponent = () => {
                                         postedAt: job?.postedAt ? dayjs(job.postedAt) : dayjs(),
                                         location: job?.location || "",
                                         applyUrl: job?.applyUrl || "",
-                                        salaryMin: job?.salaryRange?.min || undefined,
-                                        salaryMax: job?.salaryRange?.max || undefined,
-                                        salaryCurrency: job?.salaryRange?.currency || undefined,
-                                        bountyAmount: job?.bounty?.amount || undefined,
-                                        bountyCurrency: job?.bounty?.currency || undefined,
-                                        company: (job?.company as { id?: string } | null)?.id || undefined,
-                                        existingImageUrl: job?.image?.url || undefined,
-                                        existingImageId: job?.image?.id || undefined,
+                                        salaryMin: job?.salaryRange?.min,
+                                        salaryMax: job?.salaryRange?.max,
+                                        salaryCurrency: job?.salaryRange?.currency,
+                                        bountyAmount: job?.bounty?.amount,
+                                        bountyCurrency: job?.bounty?.currency,
+                                        company: (job?.company as { id?: string } | null)?.id,
+                                        existingImageUrl: job?.image?.url,
+                                        existingImageId: job?.image?.id,
                                     }}
                                 />
                             </OwnerGuard>

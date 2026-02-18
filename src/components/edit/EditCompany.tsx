@@ -31,9 +31,9 @@ const EditCompany: React.FunctionComponent = () => {
                                         email: company?.email || "",
                                         phone: company?.phone || "",
                                         website: company?.website || "",
-                                        identity: company?.identity?.id || undefined,
-                                        existingImageUrl: company?.image?.url || undefined,
-                                        existingImageId: company?.image?.id || undefined,
+                                        identity: company?.identity?.id,
+                                        existingImageUrl: company?.image?.url,
+                                        existingImageId: company?.image?.id,
                                     }}
                                 />
                             </OwnerGuard>

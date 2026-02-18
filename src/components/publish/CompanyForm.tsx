@@ -26,8 +26,8 @@ export interface CompanyFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<CompanyFormValues> & {
         id?: string;
-        existingImageUrl?: string;
-        existingImageId?: string;
+        existingImageUrl?: string | null;
+        existingImageId?: string | null;
     };
 }
 

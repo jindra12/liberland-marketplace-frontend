@@ -10,7 +10,7 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]) => {
 };
 
 interface ImageUploadFieldProps {
-    existingImageUrl?: string;
+    existingImageUrl?: string | null;
 }
 
 export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = ({ existingImageUrl }) => {

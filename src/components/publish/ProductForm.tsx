@@ -17,10 +17,10 @@ import { currencyOptions } from "./constants";
 interface ProductFormValues {
     name: string;
     description?: string;
-    priceAmount: number;
+    priceAmount: number | null;
     priceCurrency: string;
     url?: string;
-    inventory?: number;
+    inventory?: number | null;
     company?: string;
     imageFile?: UploadFile[];
 }
@@ -29,8 +29,8 @@ export interface ProductFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<ProductFormValues> & {
         id?: string;
-        existingImageUrl?: string;
-        existingImageId?: string;
+        existingImageUrl?: string | null;
+        existingImageId?: string | null;
     };
 }
 

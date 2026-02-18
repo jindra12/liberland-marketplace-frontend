@@ -8,7 +8,7 @@ interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     entityName: string;
     routePrefix: string;
     mode: "create" | "edit";
-    existingImageId?: string;
+    existingImageId?: string | null;
     editId?: string;
     createMutation: { isPending: boolean; mutateAsync: (vars: { data: never; draft: boolean }) => Promise<TCreate> };
     updateMutation: { isPending: boolean; mutateAsync: (vars: { id: string; data: never; draft: boolean }) => Promise<TUpdate> };

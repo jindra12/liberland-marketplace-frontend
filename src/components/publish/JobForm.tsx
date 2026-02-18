@@ -32,11 +32,11 @@ interface JobFormValues {
     postedAt: dayjs.Dayjs;
     location?: string;
     applyUrl?: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    salaryCurrency?: string;
-    bountyAmount?: number;
-    bountyCurrency?: string;
+    salaryMin?: number | null;
+    salaryMax?: number | null;
+    salaryCurrency?: string | null;
+    bountyAmount?: number | null;
+    bountyCurrency?: string | null;
     company?: string;
     imageFile?: UploadFile[];
 }
@@ -45,8 +45,8 @@ export interface JobFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<JobFormValues> & {
         id?: string;
-        existingImageUrl?: string;
-        existingImageId?: string;
+        existingImageUrl?: string | null;
+        existingImageId?: string | null;
     };
 }
 

@@ -11,7 +11,7 @@ import { uploadMedia } from "../../mediaApi";
  */
 export const resolveImageId = async (
     fileList: UploadFile[] | undefined,
-    existingImageId?: string,
+    existingImageId?: string | null,
 ): Promise<string | undefined | null> => {
     if (!fileList || fileList.length === 0) {
         return existingImageId ? null : undefined;
