@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Card, Typography, Space } from "antd";
-import { ArrowLeftOutlined, ShopOutlined, TeamOutlined, ToolOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, RocketOutlined, ShopOutlined, TeamOutlined, ToolOutlined } from "@ant-design/icons";
 import { JobForm } from "./JobForm";
 import { CompanyForm } from "./CompanyForm";
 import { ProductForm } from "./ProductForm";
+import { StartupForm } from "./StartupForm";
 
-type Category = "job" | "company" | "product";
+type Category = "job" | "company" | "product" | "startup";
 
 export const PublishContent: React.FunctionComponent = () => {
     const [category, setCategory] = React.useState<Category>();
@@ -46,6 +47,18 @@ export const PublishContent: React.FunctionComponent = () => {
         );
     }
 
+    if (category === "startup") {
+        return (
+            <div className="Publish">
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
+                    Back
+                </Button>
+                <Typography.Title level={3}>Launch a Startup</Typography.Title>
+                <StartupForm mode="create" />
+            </div>
+        );
+    }
+
     return (
         <div className="Publish">
             <Typography.Title level={2}>Publish your ad</Typography.Title>
@@ -77,6 +90,15 @@ export const PublishContent: React.FunctionComponent = () => {
                         <div>
                             <Typography.Title level={4} className="Publish__categoryTitle">Product</Typography.Title>
                             <Typography.Text type="secondary">List a product or service</Typography.Text>
+                        </div>
+                    </Space>
+                </Card>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("startup")}>
+                    <Space size={16}>
+                        <RocketOutlined className="Publish__categoryIcon" />
+                        <div>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Startup</Typography.Title>
+                            <Typography.Text type="secondary">Launch a startup venture</Typography.Text>
                         </div>
                     </Space>
                 </Card>

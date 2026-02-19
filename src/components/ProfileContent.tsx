@@ -12,6 +12,7 @@ import {
     useListJobsByCreatorQuery,
     useListCompaniesByCreatorQuery,
     useListProductsByCreatorQuery,
+    useListStartupsByCreatorQuery,
 } from "../generated/graphql";
 import { formatEmploymentType } from "../utils";
 
@@ -32,6 +33,11 @@ export const ProfileContent: React.FunctionComponent = () => {
         { enabled: !!userId, refetchOnMount: "always" },
     );
     const companiesQuery = useListCompaniesByCreatorQuery(
+        { userId },
+        { enabled: !!userId, refetchOnMount: "always" },
+    );
+
+    const startupsQuery = useListStartupsByCreatorQuery(
         { userId },
         { enabled: !!userId, refetchOnMount: "always" },
     );
@@ -75,6 +81,7 @@ export const ProfileContent: React.FunctionComponent = () => {
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const products = productsQuery.data?.Products?.docs ?? [];
+    const startups = startupsQuery.data?.Startups?.docs ?? [];
 
     return (
         <div className="Profile">
@@ -199,6 +206,31 @@ export const ProfileContent: React.FunctionComponent = () => {
                                         ]}
                                     >
                                         <List.Item.Meta title={<Space>{company.name}{company._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
+                                    </List.Item>
+                                )}
+                            />
+                        ),
+                    },
+                    {
+                        key: "startups",
+                        label: `Startups (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
+                        children: (
+                            <List
+                                loading={startupsQuery.isLoading}
+                                dataSource={startups}
+                                locale={{ emptyText: "No startups created yet" }}
+                                renderItem={(startup) => (
+                                    <List.Item
+                                        actions={[
+                                            <Link key="edit" to={`/startups/edit/${startup.id}`}>
+                                                <Button size="small" icon={<EditOutlined />}>Edit</Button>
+                                            </Link>,
+                                            <Link key="view" to={`/startups/${startup.id}`}>
+                                                <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
+                                            </Link>,
+                                        ]}
+                                    >
+                                        <List.Item.Meta title={<Space>{startup.title}{startup._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
                                     </List.Item>
                                 )}
                             />

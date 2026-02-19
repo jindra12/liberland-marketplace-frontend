@@ -1,0 +1,11 @@
+mutation UpdateStartup($id: String!, $data: mutationStartupUpdateInput!, $draft: Boolean!) {
+  updateStartup(id: $id, data: $data, draft: $draft) {
+    id
+    title
+    _status
+    image {
+      id
+      url
+    }
+  }
+}

@@ -52,6 +52,7 @@ export type Access = {
   redirects?: Maybe<RedirectsAccess>;
   search?: Maybe<SearchAccess>;
   sessions?: Maybe<SessionsAccess>;
+  startups?: Maybe<StartupsAccess>;
   transactions?: Maybe<TransactionsAccess>;
   users?: Maybe<UsersAccess>;
   variantOptions?: Maybe<VariantOptionsAccess>;
@@ -5085,10 +5086,11 @@ export enum CommentUpdate_ReplyPostRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
-export type Comment_ReplyPost = Company | Identity | Job | Product;
+export type Comment_ReplyPost = Company | Identity | Job | Product | Startup;
 
 export type Comment_ReplyPostRelationshipInput = {
   relationTo?: InputMaybe<Comment_ReplyPostRelationshipInputRelationTo>;
@@ -5099,14 +5101,16 @@ export enum Comment_ReplyPostRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export enum Comment_ReplyPost_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export type Comment_ReplyPost_Relationship = {
@@ -5204,7 +5208,8 @@ export enum Comment_ReplyPost_Relation_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export type Comment_UpdatedAt_Operator = {
@@ -17949,6 +17954,7 @@ export type Mutation = {
   createRedirect?: Maybe<Redirect>;
   createSearch?: Maybe<Search>;
   createSession?: Maybe<Session>;
+  createStartup?: Maybe<Startup>;
   createTransaction?: Maybe<Transaction>;
   createUser?: Maybe<User>;
   createVariant?: Maybe<Variant>;
@@ -17982,6 +17988,7 @@ export type Mutation = {
   deleteRedirect?: Maybe<Redirect>;
   deleteSearch?: Maybe<Search>;
   deleteSession?: Maybe<Session>;
+  deleteStartup?: Maybe<Startup>;
   deleteTransaction?: Maybe<Transaction>;
   deleteUser?: Maybe<User>;
   deleteVariant?: Maybe<Variant>;
@@ -18015,6 +18022,7 @@ export type Mutation = {
   duplicateRedirect?: Maybe<Redirect>;
   duplicateSearch?: Maybe<Search>;
   duplicateSession?: Maybe<Session>;
+  duplicateStartup?: Maybe<Startup>;
   duplicateTransaction?: Maybe<Transaction>;
   duplicateVariant?: Maybe<Variant>;
   duplicateVariantOption?: Maybe<VariantOption>;
@@ -18027,6 +18035,7 @@ export type Mutation = {
   restoreVersionPage?: Maybe<Page>;
   restoreVersionPost?: Maybe<Post>;
   restoreVersionProduct?: Maybe<Product>;
+  restoreVersionStartup?: Maybe<Startup>;
   restoreVersionVariant?: Maybe<Variant>;
   updateAccount?: Maybe<Account>;
   updateAddress?: Maybe<Address>;
@@ -18057,6 +18066,7 @@ export type Mutation = {
   updateRedirect?: Maybe<Redirect>;
   updateSearch?: Maybe<Search>;
   updateSession?: Maybe<Session>;
+  updateStartup?: Maybe<Startup>;
   updateTransaction?: Maybe<Transaction>;
   updateUser?: Maybe<User>;
   updateVariant?: Maybe<Variant>;
@@ -18224,6 +18234,12 @@ export type MutationCreateSearchArgs = {
 
 export type MutationCreateSessionArgs = {
   data: MutationSessionInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateStartupArgs = {
+  data: MutationStartupInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -18421,6 +18437,12 @@ export type MutationDeleteSearchArgs = {
 
 
 export type MutationDeleteSessionArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteStartupArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -18624,6 +18646,12 @@ export type MutationDuplicateSessionArgs = {
 };
 
 
+export type MutationDuplicateStartupArgs = {
+  data: MutationStartupInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateTransactionArgs = {
   data: MutationTransactionInput;
   id: Scalars['String']['input'];
@@ -18684,6 +18712,12 @@ export type MutationRestoreVersionPostArgs = {
 
 
 export type MutationRestoreVersionProductArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationRestoreVersionStartupArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
@@ -18944,6 +18978,15 @@ export type MutationUpdateSearchArgs = {
 export type MutationUpdateSessionArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationSessionUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateStartupArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationStartupUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -27892,6 +27935,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Redirects = 'redirects',
   Search = 'search',
   Sessions = 'sessions',
+  Startups = 'startups',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -27909,7 +27953,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Transaction | User | Variant | VariantOption | VariantType | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Startup | Transaction | User | Variant | VariantOption | VariantType | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -27940,6 +27984,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Redirects = 'redirects',
   Search = 'search',
   Sessions = 'sessions',
+  Startups = 'startups',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -27972,6 +28017,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Redirects = 'redirects',
   Search = 'search',
   Sessions = 'sessions',
+  Startups = 'startups',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -28047,6 +28093,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Redirects = 'redirects',
   Search = 'search',
   Sessions = 'sessions',
+  Startups = 'startups',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -32494,6 +32541,8 @@ export type Query = {
   Searches?: Maybe<Searches>;
   Session?: Maybe<Session>;
   Sessions?: Maybe<Sessions>;
+  Startup?: Maybe<Startup>;
+  Startups?: Maybe<Startups>;
   Transaction?: Maybe<Transaction>;
   Transactions?: Maybe<Transactions>;
   User?: Maybe<User>;
@@ -32533,6 +32582,7 @@ export type Query = {
   countRedirects?: Maybe<CountRedirects>;
   countSearches?: Maybe<CountSearches>;
   countSessions?: Maybe<CountSessions>;
+  countStartups?: Maybe<CountStartups>;
   countTransactions?: Maybe<CountTransactions>;
   countUsers?: Maybe<CountUsers>;
   countVariantOptions?: Maybe<CountVariantOptions>;
@@ -32569,6 +32619,7 @@ export type Query = {
   docAccessRedirect?: Maybe<RedirectsDocAccess>;
   docAccessSearch?: Maybe<SearchDocAccess>;
   docAccessSession?: Maybe<SessionsDocAccess>;
+  docAccessStartup?: Maybe<StartupsDocAccess>;
   docAccessTransaction?: Maybe<TransactionsDocAccess>;
   docAccessUser?: Maybe<UsersDocAccess>;
   docAccessVariant?: Maybe<VariantsDocAccess>;
@@ -32582,12 +32633,14 @@ export type Query = {
   versionPage?: Maybe<PageVersion>;
   versionPost?: Maybe<PostVersion>;
   versionProduct?: Maybe<ProductVersion>;
+  versionStartup?: Maybe<StartupVersion>;
   versionVariant?: Maybe<VariantVersion>;
   versionsCompanies?: Maybe<VersionsCompanies>;
   versionsJobs?: Maybe<VersionsJobs>;
   versionsPages?: Maybe<VersionsPages>;
   versionsPosts?: Maybe<VersionsPosts>;
   versionsProducts?: Maybe<VersionsProducts>;
+  versionsStartups?: Maybe<VersionsStartups>;
   versionsVariants?: Maybe<VersionsVariants>;
 };
 
@@ -33132,6 +33185,26 @@ export type QuerySessionsArgs = {
 };
 
 
+export type QueryStartupArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryStartupsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Startup_Where>;
+};
+
+
 export type QueryTransactionArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -33446,6 +33519,13 @@ export type QueryCountSessionsArgs = {
 };
 
 
+export type QueryCountStartupsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Startup_Where>;
+};
+
+
 export type QueryCountTransactionsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -33630,6 +33710,11 @@ export type QueryDocAccessSessionArgs = {
 };
 
 
+export type QueryDocAccessStartupArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessTransactionArgs = {
   id: Scalars['String']['input'];
 };
@@ -33685,6 +33770,12 @@ export type QueryVersionPostArgs = {
 
 
 export type QueryVersionProductArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryVersionStartupArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -33748,6 +33839,17 @@ export type QueryVersionsProductsArgs = {
   sort?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<VersionsProduct_Where>;
+};
+
+
+export type QueryVersionsStartupsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<VersionsStartup_Where>;
 };
 
 
@@ -35392,7 +35494,8 @@ export enum SearchUpdate_DocRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export type Search_Categories = {
@@ -35403,7 +35506,7 @@ export type Search_Categories = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export type Search_Doc = Company | Identity | Job | Product;
+export type Search_Doc = Company | Identity | Job | Product | Startup;
 
 export type Search_DocRelationshipInput = {
   relationTo?: InputMaybe<Search_DocRelationshipInputRelationTo>;
@@ -35414,14 +35517,16 @@ export enum Search_DocRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export enum Search_Doc_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export type Search_Doc_Relationship = {
@@ -35501,7 +35606,8 @@ export enum Search_Doc_Relation_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
-  Products = 'products'
+  Products = 'products',
+  Startups = 'startups'
 }
 
 export type Search_Id_Operator = {
@@ -36287,6 +36393,1556 @@ export type SessionsUpdateAccess = {
 
 export type SessionsUpdateDocAccess = {
   __typename?: 'SessionsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Startup = {
+  __typename?: 'Startup';
+  _status?: Maybe<Startup__Status>;
+  alreadyHave?: Maybe<Array<Startup_AlreadyHave>>;
+  company?: Maybe<Company>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  fundsNeeded?: Maybe<Startup_FundsNeeded>;
+  id: Scalars['String']['output'];
+  identity?: Maybe<Identity>;
+  image?: Maybe<Media>;
+  involvedUsers?: Maybe<Array<User>>;
+  lookingFor?: Maybe<Array<Startup_LookingFor>>;
+  stage?: Maybe<Startup_Stage>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type StartupCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum StartupUpdate_FundsNeeded_Currency_MutationInput {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export enum StartupUpdate__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum StartupUpdate_AlreadyHave_MutationInput {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum StartupUpdate_LookingFor_MutationInput {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum StartupUpdate_Stage_MutationInput {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export type StartupVersion = {
+  __typename?: 'StartupVersion';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  latest?: Maybe<Scalars['Boolean']['output']>;
+  parent?: Maybe<Startup>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  version?: Maybe<StartupVersion_Version>;
+};
+
+
+export type StartupVersionParentArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type StartupVersion_Version = {
+  __typename?: 'StartupVersion_Version';
+  _status?: Maybe<StartupVersion_Version__Status>;
+  alreadyHave?: Maybe<Array<StartupVersion_Version_AlreadyHave>>;
+  company?: Maybe<Company>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  fundsNeeded?: Maybe<StartupVersion_Version_FundsNeeded>;
+  identity?: Maybe<Identity>;
+  image?: Maybe<Media>;
+  involvedUsers?: Maybe<Array<User>>;
+  lookingFor?: Maybe<Array<StartupVersion_Version_LookingFor>>;
+  stage?: Maybe<StartupVersion_Version_Stage>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type StartupVersion_VersionCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type StartupVersion_Version_FundsNeeded = {
+  __typename?: 'StartupVersion_Version_FundsNeeded';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<StartupVersion_Version_FundsNeeded_Currency>;
+};
+
+export enum StartupVersion_Version_FundsNeeded_Currency {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export enum StartupVersion_Version__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum StartupVersion_Version_AlreadyHave {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum StartupVersion_Version_LookingFor {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum StartupVersion_Version_Stage {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export type Startup_FundsNeeded = {
+  __typename?: 'Startup_FundsNeeded';
+  amount?: Maybe<Scalars['Float']['output']>;
+  currency?: Maybe<Startup_FundsNeeded_Currency>;
+};
+
+export enum Startup_FundsNeeded_Currency {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export enum Startup_FundsNeeded_Currency_MutationInput {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export enum Startup__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Startup__Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Startup__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type Startup__Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup__Status_Input>>>;
+  equals?: InputMaybe<Startup__Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Startup__Status_Input>>>;
+  not_equals?: InputMaybe<Startup__Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup__Status_Input>>>;
+};
+
+export enum Startup_AlreadyHave {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum Startup_AlreadyHave_Input {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum Startup_AlreadyHave_MutationInput {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export type Startup_AlreadyHave_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup_AlreadyHave_Input>>>;
+  equals?: InputMaybe<Startup_AlreadyHave_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Startup_AlreadyHave_Input>>>;
+  not_equals?: InputMaybe<Startup_AlreadyHave_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup_AlreadyHave_Input>>>;
+};
+
+export type Startup_Company_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Startup_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Startup_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Startup_Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Startup_FundsNeeded__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum Startup_FundsNeeded__Currency_Input {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export type Startup_FundsNeeded__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup_FundsNeeded__Currency_Input>>>;
+  equals?: InputMaybe<Startup_FundsNeeded__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Startup_FundsNeeded__Currency_Input>>>;
+  not_equals?: InputMaybe<Startup_FundsNeeded__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup_FundsNeeded__Currency_Input>>>;
+};
+
+export type Startup_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_Identity_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Startup_Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Startup_InvolvedUsers_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export enum Startup_LookingFor {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum Startup_LookingFor_Input {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export enum Startup_LookingFor_MutationInput {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export type Startup_LookingFor_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup_LookingFor_Input>>>;
+  equals?: InputMaybe<Startup_LookingFor_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Startup_LookingFor_Input>>>;
+  not_equals?: InputMaybe<Startup_LookingFor_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup_LookingFor_Input>>>;
+};
+
+export enum Startup_Stage {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export enum Startup_Stage_Input {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export enum Startup_Stage_MutationInput {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export type Startup_Stage_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup_Stage_Input>>>;
+  equals?: InputMaybe<Startup_Stage_Input>;
+  in?: InputMaybe<Array<InputMaybe<Startup_Stage_Input>>>;
+  not_equals?: InputMaybe<Startup_Stage_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup_Stage_Input>>>;
+};
+
+export type Startup_Title_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Startup_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Startup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Startup_Where_Or>>>;
+  _status?: InputMaybe<Startup__Status_Operator>;
+  alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
+  company?: InputMaybe<Startup_Company_Operator>;
+  createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
+  description?: InputMaybe<Startup_Description_Operator>;
+  fundsNeeded__amount?: InputMaybe<Startup_FundsNeeded__Amount_Operator>;
+  fundsNeeded__currency?: InputMaybe<Startup_FundsNeeded__Currency_Operator>;
+  id?: InputMaybe<Startup_Id_Operator>;
+  identity?: InputMaybe<Startup_Identity_Operator>;
+  image?: InputMaybe<Startup_Image_Operator>;
+  involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
+  stage?: InputMaybe<Startup_Stage_Operator>;
+  title?: InputMaybe<Startup_Title_Operator>;
+  updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
+};
+
+export type Startup_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Startup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Startup_Where_Or>>>;
+  _status?: InputMaybe<Startup__Status_Operator>;
+  alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
+  company?: InputMaybe<Startup_Company_Operator>;
+  createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
+  description?: InputMaybe<Startup_Description_Operator>;
+  fundsNeeded__amount?: InputMaybe<Startup_FundsNeeded__Amount_Operator>;
+  fundsNeeded__currency?: InputMaybe<Startup_FundsNeeded__Currency_Operator>;
+  id?: InputMaybe<Startup_Id_Operator>;
+  identity?: InputMaybe<Startup_Identity_Operator>;
+  image?: InputMaybe<Startup_Image_Operator>;
+  involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
+  stage?: InputMaybe<Startup_Stage_Operator>;
+  title?: InputMaybe<Startup_Title_Operator>;
+  updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
+};
+
+export type Startup_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Startup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Startup_Where_Or>>>;
+  _status?: InputMaybe<Startup__Status_Operator>;
+  alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
+  company?: InputMaybe<Startup_Company_Operator>;
+  createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
+  description?: InputMaybe<Startup_Description_Operator>;
+  fundsNeeded__amount?: InputMaybe<Startup_FundsNeeded__Amount_Operator>;
+  fundsNeeded__currency?: InputMaybe<Startup_FundsNeeded__Currency_Operator>;
+  id?: InputMaybe<Startup_Id_Operator>;
+  identity?: InputMaybe<Startup_Identity_Operator>;
+  image?: InputMaybe<Startup_Image_Operator>;
+  involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
+  stage?: InputMaybe<Startup_Stage_Operator>;
+  title?: InputMaybe<Startup_Title_Operator>;
+  updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
+};
+
+export type Startups = {
+  __typename?: 'Startups';
+  docs: Array<Startup>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type StartupsCreateAccess = {
+  __typename?: 'StartupsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsCreateDocAccess = {
+  __typename?: 'StartupsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsDeleteAccess = {
+  __typename?: 'StartupsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsDeleteDocAccess = {
+  __typename?: 'StartupsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsDocAccessFields = {
+  __typename?: 'StartupsDocAccessFields';
+  _status?: Maybe<StartupsDocAccessFields__Status>;
+  alreadyHave?: Maybe<StartupsDocAccessFields_AlreadyHave>;
+  company?: Maybe<StartupsDocAccessFields_Company>;
+  createdAt?: Maybe<StartupsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<StartupsDocAccessFields_CreatedBy>;
+  description?: Maybe<StartupsDocAccessFields_Description>;
+  fundsNeeded?: Maybe<StartupsDocAccessFields_FundsNeeded>;
+  identity?: Maybe<StartupsDocAccessFields_Identity>;
+  image?: Maybe<StartupsDocAccessFields_Image>;
+  involvedUsers?: Maybe<StartupsDocAccessFields_InvolvedUsers>;
+  lookingFor?: Maybe<StartupsDocAccessFields_LookingFor>;
+  stage?: Maybe<StartupsDocAccessFields_Stage>;
+  title?: Maybe<StartupsDocAccessFields_Title>;
+  updatedAt?: Maybe<StartupsDocAccessFields_UpdatedAt>;
+};
+
+export type StartupsDocAccessFields__Status = {
+  __typename?: 'StartupsDocAccessFields__status';
+  create?: Maybe<StartupsDocAccessFields__Status_Create>;
+  delete?: Maybe<StartupsDocAccessFields__Status_Delete>;
+  read?: Maybe<StartupsDocAccessFields__Status_Read>;
+  update?: Maybe<StartupsDocAccessFields__Status_Update>;
+};
+
+export type StartupsDocAccessFields__Status_Create = {
+  __typename?: 'StartupsDocAccessFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields__Status_Delete = {
+  __typename?: 'StartupsDocAccessFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields__Status_Read = {
+  __typename?: 'StartupsDocAccessFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields__Status_Update = {
+  __typename?: 'StartupsDocAccessFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_AlreadyHave = {
+  __typename?: 'StartupsDocAccessFields_alreadyHave';
+  create?: Maybe<StartupsDocAccessFields_AlreadyHave_Create>;
+  delete?: Maybe<StartupsDocAccessFields_AlreadyHave_Delete>;
+  read?: Maybe<StartupsDocAccessFields_AlreadyHave_Read>;
+  update?: Maybe<StartupsDocAccessFields_AlreadyHave_Update>;
+};
+
+export type StartupsDocAccessFields_AlreadyHave_Create = {
+  __typename?: 'StartupsDocAccessFields_alreadyHave_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_AlreadyHave_Delete = {
+  __typename?: 'StartupsDocAccessFields_alreadyHave_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_AlreadyHave_Read = {
+  __typename?: 'StartupsDocAccessFields_alreadyHave_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_AlreadyHave_Update = {
+  __typename?: 'StartupsDocAccessFields_alreadyHave_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Company = {
+  __typename?: 'StartupsDocAccessFields_company';
+  create?: Maybe<StartupsDocAccessFields_Company_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Company_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Company_Read>;
+  update?: Maybe<StartupsDocAccessFields_Company_Update>;
+};
+
+export type StartupsDocAccessFields_Company_Create = {
+  __typename?: 'StartupsDocAccessFields_company_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Company_Delete = {
+  __typename?: 'StartupsDocAccessFields_company_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Company_Read = {
+  __typename?: 'StartupsDocAccessFields_company_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Company_Update = {
+  __typename?: 'StartupsDocAccessFields_company_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedAt = {
+  __typename?: 'StartupsDocAccessFields_createdAt';
+  create?: Maybe<StartupsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<StartupsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<StartupsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<StartupsDocAccessFields_CreatedAt_Update>;
+};
+
+export type StartupsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'StartupsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'StartupsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'StartupsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'StartupsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedBy = {
+  __typename?: 'StartupsDocAccessFields_createdBy';
+  create?: Maybe<StartupsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<StartupsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<StartupsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<StartupsDocAccessFields_CreatedBy_Update>;
+};
+
+export type StartupsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'StartupsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'StartupsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'StartupsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'StartupsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Description = {
+  __typename?: 'StartupsDocAccessFields_description';
+  create?: Maybe<StartupsDocAccessFields_Description_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Description_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Description_Read>;
+  update?: Maybe<StartupsDocAccessFields_Description_Update>;
+};
+
+export type StartupsDocAccessFields_Description_Create = {
+  __typename?: 'StartupsDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Description_Delete = {
+  __typename?: 'StartupsDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Description_Read = {
+  __typename?: 'StartupsDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Description_Update = {
+  __typename?: 'StartupsDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded';
+  create?: Maybe<StartupsDocAccessFields_FundsNeeded_Create>;
+  delete?: Maybe<StartupsDocAccessFields_FundsNeeded_Delete>;
+  fields?: Maybe<StartupsDocAccessFields_FundsNeeded_Fields>;
+  read?: Maybe<StartupsDocAccessFields_FundsNeeded_Read>;
+  update?: Maybe<StartupsDocAccessFields_FundsNeeded_Update>;
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Create = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Delete = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Fields = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_Fields';
+  amount?: Maybe<StartupsDocAccessFields_FundsNeeded_Amount>;
+  currency?: Maybe<StartupsDocAccessFields_FundsNeeded_Currency>;
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Read = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Update = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Amount = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_amount';
+  create?: Maybe<StartupsDocAccessFields_FundsNeeded_Amount_Create>;
+  delete?: Maybe<StartupsDocAccessFields_FundsNeeded_Amount_Delete>;
+  read?: Maybe<StartupsDocAccessFields_FundsNeeded_Amount_Read>;
+  update?: Maybe<StartupsDocAccessFields_FundsNeeded_Amount_Update>;
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Amount_Create = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Amount_Delete = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Amount_Read = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Amount_Update = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Currency = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_currency';
+  create?: Maybe<StartupsDocAccessFields_FundsNeeded_Currency_Create>;
+  delete?: Maybe<StartupsDocAccessFields_FundsNeeded_Currency_Delete>;
+  read?: Maybe<StartupsDocAccessFields_FundsNeeded_Currency_Read>;
+  update?: Maybe<StartupsDocAccessFields_FundsNeeded_Currency_Update>;
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Currency_Create = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Currency_Delete = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Currency_Read = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_FundsNeeded_Currency_Update = {
+  __typename?: 'StartupsDocAccessFields_fundsNeeded_currency_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Identity = {
+  __typename?: 'StartupsDocAccessFields_identity';
+  create?: Maybe<StartupsDocAccessFields_Identity_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Identity_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Identity_Read>;
+  update?: Maybe<StartupsDocAccessFields_Identity_Update>;
+};
+
+export type StartupsDocAccessFields_Identity_Create = {
+  __typename?: 'StartupsDocAccessFields_identity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Identity_Delete = {
+  __typename?: 'StartupsDocAccessFields_identity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Identity_Read = {
+  __typename?: 'StartupsDocAccessFields_identity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Identity_Update = {
+  __typename?: 'StartupsDocAccessFields_identity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Image = {
+  __typename?: 'StartupsDocAccessFields_image';
+  create?: Maybe<StartupsDocAccessFields_Image_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Image_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Image_Read>;
+  update?: Maybe<StartupsDocAccessFields_Image_Update>;
+};
+
+export type StartupsDocAccessFields_Image_Create = {
+  __typename?: 'StartupsDocAccessFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Image_Delete = {
+  __typename?: 'StartupsDocAccessFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Image_Read = {
+  __typename?: 'StartupsDocAccessFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Image_Update = {
+  __typename?: 'StartupsDocAccessFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_InvolvedUsers = {
+  __typename?: 'StartupsDocAccessFields_involvedUsers';
+  create?: Maybe<StartupsDocAccessFields_InvolvedUsers_Create>;
+  delete?: Maybe<StartupsDocAccessFields_InvolvedUsers_Delete>;
+  read?: Maybe<StartupsDocAccessFields_InvolvedUsers_Read>;
+  update?: Maybe<StartupsDocAccessFields_InvolvedUsers_Update>;
+};
+
+export type StartupsDocAccessFields_InvolvedUsers_Create = {
+  __typename?: 'StartupsDocAccessFields_involvedUsers_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_InvolvedUsers_Delete = {
+  __typename?: 'StartupsDocAccessFields_involvedUsers_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_InvolvedUsers_Read = {
+  __typename?: 'StartupsDocAccessFields_involvedUsers_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_InvolvedUsers_Update = {
+  __typename?: 'StartupsDocAccessFields_involvedUsers_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LookingFor = {
+  __typename?: 'StartupsDocAccessFields_lookingFor';
+  create?: Maybe<StartupsDocAccessFields_LookingFor_Create>;
+  delete?: Maybe<StartupsDocAccessFields_LookingFor_Delete>;
+  read?: Maybe<StartupsDocAccessFields_LookingFor_Read>;
+  update?: Maybe<StartupsDocAccessFields_LookingFor_Update>;
+};
+
+export type StartupsDocAccessFields_LookingFor_Create = {
+  __typename?: 'StartupsDocAccessFields_lookingFor_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LookingFor_Delete = {
+  __typename?: 'StartupsDocAccessFields_lookingFor_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LookingFor_Read = {
+  __typename?: 'StartupsDocAccessFields_lookingFor_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LookingFor_Update = {
+  __typename?: 'StartupsDocAccessFields_lookingFor_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Stage = {
+  __typename?: 'StartupsDocAccessFields_stage';
+  create?: Maybe<StartupsDocAccessFields_Stage_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Stage_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Stage_Read>;
+  update?: Maybe<StartupsDocAccessFields_Stage_Update>;
+};
+
+export type StartupsDocAccessFields_Stage_Create = {
+  __typename?: 'StartupsDocAccessFields_stage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Stage_Delete = {
+  __typename?: 'StartupsDocAccessFields_stage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Stage_Read = {
+  __typename?: 'StartupsDocAccessFields_stage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Stage_Update = {
+  __typename?: 'StartupsDocAccessFields_stage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Title = {
+  __typename?: 'StartupsDocAccessFields_title';
+  create?: Maybe<StartupsDocAccessFields_Title_Create>;
+  delete?: Maybe<StartupsDocAccessFields_Title_Delete>;
+  read?: Maybe<StartupsDocAccessFields_Title_Read>;
+  update?: Maybe<StartupsDocAccessFields_Title_Update>;
+};
+
+export type StartupsDocAccessFields_Title_Create = {
+  __typename?: 'StartupsDocAccessFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Title_Delete = {
+  __typename?: 'StartupsDocAccessFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Title_Read = {
+  __typename?: 'StartupsDocAccessFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_Title_Update = {
+  __typename?: 'StartupsDocAccessFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_UpdatedAt = {
+  __typename?: 'StartupsDocAccessFields_updatedAt';
+  create?: Maybe<StartupsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<StartupsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<StartupsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<StartupsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type StartupsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'StartupsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'StartupsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'StartupsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'StartupsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields = {
+  __typename?: 'StartupsFields';
+  _status?: Maybe<StartupsFields__Status>;
+  alreadyHave?: Maybe<StartupsFields_AlreadyHave>;
+  company?: Maybe<StartupsFields_Company>;
+  createdAt?: Maybe<StartupsFields_CreatedAt>;
+  createdBy?: Maybe<StartupsFields_CreatedBy>;
+  description?: Maybe<StartupsFields_Description>;
+  fundsNeeded?: Maybe<StartupsFields_FundsNeeded>;
+  identity?: Maybe<StartupsFields_Identity>;
+  image?: Maybe<StartupsFields_Image>;
+  involvedUsers?: Maybe<StartupsFields_InvolvedUsers>;
+  lookingFor?: Maybe<StartupsFields_LookingFor>;
+  stage?: Maybe<StartupsFields_Stage>;
+  title?: Maybe<StartupsFields_Title>;
+  updatedAt?: Maybe<StartupsFields_UpdatedAt>;
+};
+
+export type StartupsFields__Status = {
+  __typename?: 'StartupsFields__status';
+  create?: Maybe<StartupsFields__Status_Create>;
+  delete?: Maybe<StartupsFields__Status_Delete>;
+  read?: Maybe<StartupsFields__Status_Read>;
+  update?: Maybe<StartupsFields__Status_Update>;
+};
+
+export type StartupsFields__Status_Create = {
+  __typename?: 'StartupsFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields__Status_Delete = {
+  __typename?: 'StartupsFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields__Status_Read = {
+  __typename?: 'StartupsFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields__Status_Update = {
+  __typename?: 'StartupsFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_AlreadyHave = {
+  __typename?: 'StartupsFields_alreadyHave';
+  create?: Maybe<StartupsFields_AlreadyHave_Create>;
+  delete?: Maybe<StartupsFields_AlreadyHave_Delete>;
+  read?: Maybe<StartupsFields_AlreadyHave_Read>;
+  update?: Maybe<StartupsFields_AlreadyHave_Update>;
+};
+
+export type StartupsFields_AlreadyHave_Create = {
+  __typename?: 'StartupsFields_alreadyHave_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_AlreadyHave_Delete = {
+  __typename?: 'StartupsFields_alreadyHave_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_AlreadyHave_Read = {
+  __typename?: 'StartupsFields_alreadyHave_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_AlreadyHave_Update = {
+  __typename?: 'StartupsFields_alreadyHave_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Company = {
+  __typename?: 'StartupsFields_company';
+  create?: Maybe<StartupsFields_Company_Create>;
+  delete?: Maybe<StartupsFields_Company_Delete>;
+  read?: Maybe<StartupsFields_Company_Read>;
+  update?: Maybe<StartupsFields_Company_Update>;
+};
+
+export type StartupsFields_Company_Create = {
+  __typename?: 'StartupsFields_company_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Company_Delete = {
+  __typename?: 'StartupsFields_company_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Company_Read = {
+  __typename?: 'StartupsFields_company_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Company_Update = {
+  __typename?: 'StartupsFields_company_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedAt = {
+  __typename?: 'StartupsFields_createdAt';
+  create?: Maybe<StartupsFields_CreatedAt_Create>;
+  delete?: Maybe<StartupsFields_CreatedAt_Delete>;
+  read?: Maybe<StartupsFields_CreatedAt_Read>;
+  update?: Maybe<StartupsFields_CreatedAt_Update>;
+};
+
+export type StartupsFields_CreatedAt_Create = {
+  __typename?: 'StartupsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedAt_Delete = {
+  __typename?: 'StartupsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedAt_Read = {
+  __typename?: 'StartupsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedAt_Update = {
+  __typename?: 'StartupsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedBy = {
+  __typename?: 'StartupsFields_createdBy';
+  create?: Maybe<StartupsFields_CreatedBy_Create>;
+  delete?: Maybe<StartupsFields_CreatedBy_Delete>;
+  read?: Maybe<StartupsFields_CreatedBy_Read>;
+  update?: Maybe<StartupsFields_CreatedBy_Update>;
+};
+
+export type StartupsFields_CreatedBy_Create = {
+  __typename?: 'StartupsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedBy_Delete = {
+  __typename?: 'StartupsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedBy_Read = {
+  __typename?: 'StartupsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_CreatedBy_Update = {
+  __typename?: 'StartupsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Description = {
+  __typename?: 'StartupsFields_description';
+  create?: Maybe<StartupsFields_Description_Create>;
+  delete?: Maybe<StartupsFields_Description_Delete>;
+  read?: Maybe<StartupsFields_Description_Read>;
+  update?: Maybe<StartupsFields_Description_Update>;
+};
+
+export type StartupsFields_Description_Create = {
+  __typename?: 'StartupsFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Description_Delete = {
+  __typename?: 'StartupsFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Description_Read = {
+  __typename?: 'StartupsFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Description_Update = {
+  __typename?: 'StartupsFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded = {
+  __typename?: 'StartupsFields_fundsNeeded';
+  create?: Maybe<StartupsFields_FundsNeeded_Create>;
+  delete?: Maybe<StartupsFields_FundsNeeded_Delete>;
+  fields?: Maybe<StartupsFields_FundsNeeded_Fields>;
+  read?: Maybe<StartupsFields_FundsNeeded_Read>;
+  update?: Maybe<StartupsFields_FundsNeeded_Update>;
+};
+
+export type StartupsFields_FundsNeeded_Create = {
+  __typename?: 'StartupsFields_fundsNeeded_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Delete = {
+  __typename?: 'StartupsFields_fundsNeeded_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Fields = {
+  __typename?: 'StartupsFields_fundsNeeded_Fields';
+  amount?: Maybe<StartupsFields_FundsNeeded_Amount>;
+  currency?: Maybe<StartupsFields_FundsNeeded_Currency>;
+};
+
+export type StartupsFields_FundsNeeded_Read = {
+  __typename?: 'StartupsFields_fundsNeeded_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Update = {
+  __typename?: 'StartupsFields_fundsNeeded_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Amount = {
+  __typename?: 'StartupsFields_fundsNeeded_amount';
+  create?: Maybe<StartupsFields_FundsNeeded_Amount_Create>;
+  delete?: Maybe<StartupsFields_FundsNeeded_Amount_Delete>;
+  read?: Maybe<StartupsFields_FundsNeeded_Amount_Read>;
+  update?: Maybe<StartupsFields_FundsNeeded_Amount_Update>;
+};
+
+export type StartupsFields_FundsNeeded_Amount_Create = {
+  __typename?: 'StartupsFields_fundsNeeded_amount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Amount_Delete = {
+  __typename?: 'StartupsFields_fundsNeeded_amount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Amount_Read = {
+  __typename?: 'StartupsFields_fundsNeeded_amount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Amount_Update = {
+  __typename?: 'StartupsFields_fundsNeeded_amount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Currency = {
+  __typename?: 'StartupsFields_fundsNeeded_currency';
+  create?: Maybe<StartupsFields_FundsNeeded_Currency_Create>;
+  delete?: Maybe<StartupsFields_FundsNeeded_Currency_Delete>;
+  read?: Maybe<StartupsFields_FundsNeeded_Currency_Read>;
+  update?: Maybe<StartupsFields_FundsNeeded_Currency_Update>;
+};
+
+export type StartupsFields_FundsNeeded_Currency_Create = {
+  __typename?: 'StartupsFields_fundsNeeded_currency_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Currency_Delete = {
+  __typename?: 'StartupsFields_fundsNeeded_currency_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Currency_Read = {
+  __typename?: 'StartupsFields_fundsNeeded_currency_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_FundsNeeded_Currency_Update = {
+  __typename?: 'StartupsFields_fundsNeeded_currency_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Identity = {
+  __typename?: 'StartupsFields_identity';
+  create?: Maybe<StartupsFields_Identity_Create>;
+  delete?: Maybe<StartupsFields_Identity_Delete>;
+  read?: Maybe<StartupsFields_Identity_Read>;
+  update?: Maybe<StartupsFields_Identity_Update>;
+};
+
+export type StartupsFields_Identity_Create = {
+  __typename?: 'StartupsFields_identity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Identity_Delete = {
+  __typename?: 'StartupsFields_identity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Identity_Read = {
+  __typename?: 'StartupsFields_identity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Identity_Update = {
+  __typename?: 'StartupsFields_identity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Image = {
+  __typename?: 'StartupsFields_image';
+  create?: Maybe<StartupsFields_Image_Create>;
+  delete?: Maybe<StartupsFields_Image_Delete>;
+  read?: Maybe<StartupsFields_Image_Read>;
+  update?: Maybe<StartupsFields_Image_Update>;
+};
+
+export type StartupsFields_Image_Create = {
+  __typename?: 'StartupsFields_image_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Image_Delete = {
+  __typename?: 'StartupsFields_image_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Image_Read = {
+  __typename?: 'StartupsFields_image_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Image_Update = {
+  __typename?: 'StartupsFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_InvolvedUsers = {
+  __typename?: 'StartupsFields_involvedUsers';
+  create?: Maybe<StartupsFields_InvolvedUsers_Create>;
+  delete?: Maybe<StartupsFields_InvolvedUsers_Delete>;
+  read?: Maybe<StartupsFields_InvolvedUsers_Read>;
+  update?: Maybe<StartupsFields_InvolvedUsers_Update>;
+};
+
+export type StartupsFields_InvolvedUsers_Create = {
+  __typename?: 'StartupsFields_involvedUsers_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_InvolvedUsers_Delete = {
+  __typename?: 'StartupsFields_involvedUsers_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_InvolvedUsers_Read = {
+  __typename?: 'StartupsFields_involvedUsers_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_InvolvedUsers_Update = {
+  __typename?: 'StartupsFields_involvedUsers_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LookingFor = {
+  __typename?: 'StartupsFields_lookingFor';
+  create?: Maybe<StartupsFields_LookingFor_Create>;
+  delete?: Maybe<StartupsFields_LookingFor_Delete>;
+  read?: Maybe<StartupsFields_LookingFor_Read>;
+  update?: Maybe<StartupsFields_LookingFor_Update>;
+};
+
+export type StartupsFields_LookingFor_Create = {
+  __typename?: 'StartupsFields_lookingFor_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LookingFor_Delete = {
+  __typename?: 'StartupsFields_lookingFor_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LookingFor_Read = {
+  __typename?: 'StartupsFields_lookingFor_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LookingFor_Update = {
+  __typename?: 'StartupsFields_lookingFor_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Stage = {
+  __typename?: 'StartupsFields_stage';
+  create?: Maybe<StartupsFields_Stage_Create>;
+  delete?: Maybe<StartupsFields_Stage_Delete>;
+  read?: Maybe<StartupsFields_Stage_Read>;
+  update?: Maybe<StartupsFields_Stage_Update>;
+};
+
+export type StartupsFields_Stage_Create = {
+  __typename?: 'StartupsFields_stage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Stage_Delete = {
+  __typename?: 'StartupsFields_stage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Stage_Read = {
+  __typename?: 'StartupsFields_stage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Stage_Update = {
+  __typename?: 'StartupsFields_stage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Title = {
+  __typename?: 'StartupsFields_title';
+  create?: Maybe<StartupsFields_Title_Create>;
+  delete?: Maybe<StartupsFields_Title_Delete>;
+  read?: Maybe<StartupsFields_Title_Read>;
+  update?: Maybe<StartupsFields_Title_Update>;
+};
+
+export type StartupsFields_Title_Create = {
+  __typename?: 'StartupsFields_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Title_Delete = {
+  __typename?: 'StartupsFields_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Title_Read = {
+  __typename?: 'StartupsFields_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_Title_Update = {
+  __typename?: 'StartupsFields_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_UpdatedAt = {
+  __typename?: 'StartupsFields_updatedAt';
+  create?: Maybe<StartupsFields_UpdatedAt_Create>;
+  delete?: Maybe<StartupsFields_UpdatedAt_Delete>;
+  read?: Maybe<StartupsFields_UpdatedAt_Read>;
+  update?: Maybe<StartupsFields_UpdatedAt_Update>;
+};
+
+export type StartupsFields_UpdatedAt_Create = {
+  __typename?: 'StartupsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_UpdatedAt_Delete = {
+  __typename?: 'StartupsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_UpdatedAt_Read = {
+  __typename?: 'StartupsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_UpdatedAt_Update = {
+  __typename?: 'StartupsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsReadAccess = {
+  __typename?: 'StartupsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsReadDocAccess = {
+  __typename?: 'StartupsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsReadVersionsAccess = {
+  __typename?: 'StartupsReadVersionsAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsReadVersionsDocAccess = {
+  __typename?: 'StartupsReadVersionsDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsUpdateAccess = {
+  __typename?: 'StartupsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type StartupsUpdateDocAccess = {
+  __typename?: 'StartupsUpdateDocAccess';
   permission: Scalars['Boolean']['output'];
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
@@ -42327,6 +43983,11 @@ export type CountSessions = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountStartups = {
+  __typename?: 'countStartups';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountTransactions = {
   __typename?: 'countTransactions';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -43626,6 +45287,50 @@ export type MutationSessionUpdateInput = {
   userAgent?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationStartupInput = {
+  _status?: InputMaybe<Startup__Status_MutationInput>;
+  alreadyHave?: InputMaybe<Array<InputMaybe<Startup_AlreadyHave_MutationInput>>>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  fundsNeeded?: InputMaybe<MutationStartup_FundsNeededInput>;
+  identity?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  lookingFor?: InputMaybe<Array<InputMaybe<Startup_LookingFor_MutationInput>>>;
+  stage: Startup_Stage_MutationInput;
+  title: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationStartupUpdateInput = {
+  _status?: InputMaybe<StartupUpdate__Status_MutationInput>;
+  alreadyHave?: InputMaybe<Array<InputMaybe<StartupUpdate_AlreadyHave_MutationInput>>>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  fundsNeeded?: InputMaybe<MutationStartupUpdate_FundsNeededInput>;
+  identity?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  lookingFor?: InputMaybe<Array<InputMaybe<StartupUpdate_LookingFor_MutationInput>>>;
+  stage?: InputMaybe<StartupUpdate_Stage_MutationInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationStartupUpdate_FundsNeededInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<StartupUpdate_FundsNeeded_Currency_MutationInput>;
+};
+
+export type MutationStartup_FundsNeededInput = {
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  currency?: InputMaybe<Startup_FundsNeeded_Currency_MutationInput>;
+};
+
 export type MutationTransactionInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
   billingAddress?: InputMaybe<MutationTransaction_BillingAddressInput>;
@@ -44084,6 +45789,26 @@ export type SessionsDocAccess = {
   fields?: Maybe<SessionsDocAccessFields>;
   read?: Maybe<SessionsReadDocAccess>;
   update?: Maybe<SessionsUpdateDocAccess>;
+};
+
+export type StartupsAccess = {
+  __typename?: 'startupsAccess';
+  create?: Maybe<StartupsCreateAccess>;
+  delete?: Maybe<StartupsDeleteAccess>;
+  fields?: Maybe<StartupsFields>;
+  read?: Maybe<StartupsReadAccess>;
+  readVersions?: Maybe<StartupsReadVersionsAccess>;
+  update?: Maybe<StartupsUpdateAccess>;
+};
+
+export type StartupsDocAccess = {
+  __typename?: 'startupsDocAccess';
+  create?: Maybe<StartupsCreateDocAccess>;
+  delete?: Maybe<StartupsDeleteDocAccess>;
+  fields?: Maybe<StartupsDocAccessFields>;
+  read?: Maybe<StartupsReadDocAccess>;
+  readVersions?: Maybe<StartupsReadVersionsDocAccess>;
+  update?: Maybe<StartupsUpdateDocAccess>;
 };
 
 export type TransactionsAccess = {
@@ -45947,6 +47672,329 @@ export type VersionsProducts = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type VersionsStartup_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsStartup_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Latest_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsStartup_Parent_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsStartup_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export enum VersionsStartup_Version___Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type VersionsStartup_Version___Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version___Status_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version___Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version___Status_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version___Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version___Status_Input>>>;
+};
+
+export enum VersionsStartup_Version__AlreadyHave_Input {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export type VersionsStartup_Version__AlreadyHave_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__AlreadyHave_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version__AlreadyHave_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__AlreadyHave_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version__AlreadyHave_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__AlreadyHave_Input>>>;
+};
+
+export type VersionsStartup_Version__Company_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsStartup_Version__CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsStartup_Version__CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsStartup_Version__Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type VersionsStartup_Version__FundsNeeded__Amount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export enum VersionsStartup_Version__FundsNeeded__Currency_Input {
+  Btc = 'BTC',
+  Eth = 'ETH',
+  Eur = 'EUR',
+  Gbp = 'GBP',
+  Hnl = 'HNL',
+  Lld = 'LLD',
+  Llm = 'LLM',
+  Sgd = 'SGD',
+  Usd = 'USD',
+  Usdc = 'USDC',
+  Xmr = 'XMR'
+}
+
+export type VersionsStartup_Version__FundsNeeded__Currency_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Input>>>;
+};
+
+export type VersionsStartup_Version__Identity_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsStartup_Version__Image_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsStartup_Version__InvolvedUsers_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export enum VersionsStartup_Version__LookingFor_Input {
+  Distribution = 'distribution',
+  Founders = 'founders',
+  Funding = 'funding',
+  Idea = 'idea',
+  Product = 'product',
+  Production = 'production',
+  Team = 'team',
+  Traction = 'traction'
+}
+
+export type VersionsStartup_Version__LookingFor_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__LookingFor_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version__LookingFor_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__LookingFor_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version__LookingFor_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__LookingFor_Input>>>;
+};
+
+export enum VersionsStartup_Version__Stage_Input {
+  Early = 'early',
+  Established = 'established',
+  Idea = 'idea',
+  Mvp = 'mvp',
+  Scaling = 'scaling'
+}
+
+export type VersionsStartup_Version__Stage_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__Stage_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version__Stage_Input>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__Stage_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version__Stage_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__Stage_Input>>>;
+};
+
+export type VersionsStartup_Version__Title_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsStartup_Where = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsStartup_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsStartup_Id_Operator>;
+  latest?: InputMaybe<VersionsStartup_Latest_Operator>;
+  parent?: InputMaybe<VersionsStartup_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsStartup_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsStartup_Version___Status_Operator>;
+  version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
+  version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
+  version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
+  version__fundsNeeded__amount?: InputMaybe<VersionsStartup_Version__FundsNeeded__Amount_Operator>;
+  version__fundsNeeded__currency?: InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Operator>;
+  version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
+  version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
+  version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
+  version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
+};
+
+export type VersionsStartup_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsStartup_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsStartup_Id_Operator>;
+  latest?: InputMaybe<VersionsStartup_Latest_Operator>;
+  parent?: InputMaybe<VersionsStartup_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsStartup_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsStartup_Version___Status_Operator>;
+  version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
+  version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
+  version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
+  version__fundsNeeded__amount?: InputMaybe<VersionsStartup_Version__FundsNeeded__Amount_Operator>;
+  version__fundsNeeded__currency?: InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Operator>;
+  version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
+  version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
+  version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
+  version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
+};
+
+export type VersionsStartup_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsStartup_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsStartup_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsStartup_Id_Operator>;
+  latest?: InputMaybe<VersionsStartup_Latest_Operator>;
+  parent?: InputMaybe<VersionsStartup_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsStartup_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsStartup_Version___Status_Operator>;
+  version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
+  version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
+  version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
+  version__fundsNeeded__amount?: InputMaybe<VersionsStartup_Version__FundsNeeded__Amount_Operator>;
+  version__fundsNeeded__currency?: InputMaybe<VersionsStartup_Version__FundsNeeded__Currency_Operator>;
+  version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
+  version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
+  version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
+  version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
+  version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
+};
+
+export type VersionsStartups = {
+  __typename?: 'versionsStartups';
+  docs: Array<StartupVersion>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
 export type VersionsVariant_Autosave_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -46219,6 +48267,7 @@ export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: 
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
          | null } }> } | null };
 
 export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
@@ -46272,6 +48321,7 @@ export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typena
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
          | null } }> } | null };
 
 export type UpdateCompanyMutationVariables = Exact<{
@@ -46336,6 +48386,7 @@ export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typen
           | { __typename: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
          | null } }> } | null };
 
 export type ListJobsByCompanyQueryVariables = Exact<{
@@ -46362,6 +48413,7 @@ export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __ty
           | { __typename?: 'Identity' }
           | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
          | null } }> } | null };
 
 export type ListJobsByCreatorQueryVariables = Exact<{
@@ -46433,6 +48485,7 @@ export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 
           | { __typename?: 'Identity' }
           | { __typename: 'Job', id: string, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
          | null } }> } | null };
 
 export type UpdateJobMutationVariables = Exact<{
@@ -46485,6 +48538,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Startup' }
           | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }
          | null } }> } | null };
 
@@ -46533,8 +48587,8 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
-         | null } }> } | null };
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null } | { __typename?: 'Startup' }
+          | null } }> } | null };
 
 export type UpdateProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -46544,6 +48598,64 @@ export type UpdateProductMutationVariables = Exact<{
 
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+export type ListStartupsByCreatorQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['JSON']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListStartupsByCreatorQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null }> } | null };
+
+export type StartupByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+
+export type CreateStartupMutationVariables = Exact<{
+  data: MutationStartupInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+export type ListStartupsQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+
+export type SearchStartupsQueryVariables = Exact<{
+  searchTerm: Scalars['String']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchStartupsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
+          | { __typename?: 'Company' }
+          | { __typename?: 'Identity' }
+          | { __typename?: 'Job' }
+          | { __typename?: 'Product' }
+          | { __typename: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null }
+         | null } }> } | null };
+
+export type UpdateStartupMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationStartupUpdateInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -48944,6 +51056,347 @@ export const useUpdateProductMutation = <
 
 
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
+
+export const ListStartupsByCreatorDocument = `
+    query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+  Startups(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      title
+      _status
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useListStartupsByCreatorQuery = <
+      TData = ListStartupsByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListStartupsByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListStartupsByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListStartupsByCreator'] : ['ListStartupsByCreator', variables],
+    queryFn: gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(ListStartupsByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListStartupsByCreatorQuery.getKey = (variables?: ListStartupsByCreatorQueryVariables) => variables === undefined ? ['ListStartupsByCreator'] : ['ListStartupsByCreator', variables];
+
+
+useListStartupsByCreatorQuery.fetcher = (variables?: ListStartupsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(ListStartupsByCreatorDocument, variables, options);
+
+export const StartupByIdDocument = `
+    query StartupById($id: String!) {
+  Startup(id: $id) {
+    id
+    title
+    _status
+    description
+    stage
+    lookingFor
+    alreadyHave
+    fundsNeeded {
+      amount
+      currency
+    }
+    company {
+      id
+      name
+      email
+    }
+    createdBy {
+      id
+    }
+    identity {
+      id
+      name
+      description
+      website
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    involvedUsers {
+      id
+      name
+      email
+    }
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+export const useStartupByIdQuery = <
+      TData = StartupByIdQuery,
+      TError = unknown
+    >(
+      variables: StartupByIdQueryVariables,
+      options?: Omit<UseQueryOptions<StartupByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<StartupByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<StartupByIdQuery, TError, TData>(
+      {
+    queryKey: ['StartupById', variables],
+    queryFn: gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useStartupByIdQuery.getKey = (variables: StartupByIdQueryVariables) => ['StartupById', variables];
+
+
+useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables, options);
+
+export const CreateStartupDocument = `
+    mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
+  createStartup(data: $data, draft: $draft) {
+    id
+    title
+    _status
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+export const useCreateStartupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateStartupMutation, TError, CreateStartupMutationVariables, TContext>) => {
+
+    return useMutation<CreateStartupMutation, TError, CreateStartupMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateStartup'],
+    mutationFn: (variables?: CreateStartupMutationVariables) => gqlFetcher<CreateStartupMutation, CreateStartupMutationVariables>(CreateStartupDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateStartupMutation.fetcher = (variables: CreateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateStartupMutation, CreateStartupMutationVariables>(CreateStartupDocument, variables, options);
+
+export const ListStartupsDocument = `
+    query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
+  Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      title
+      description
+      stage
+      lookingFor
+      alreadyHave
+      fundsNeeded {
+        amount
+        currency
+      }
+      company {
+        id
+        name
+        email
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      involvedUsers {
+        id
+        name
+        email
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListStartupsQuery = <
+      TData = ListStartupsQuery,
+      TError = unknown
+    >(
+      variables?: ListStartupsQueryVariables,
+      options?: Omit<UseQueryOptions<ListStartupsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListStartupsQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<ListStartupsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListStartups'] : ['ListStartups', variables],
+    queryFn: gqlFetcher<ListStartupsQuery, ListStartupsQueryVariables>(ListStartupsDocument, variables),
+    ...options
+  }
+    )};
+
+useListStartupsQuery.getKey = (variables?: ListStartupsQueryVariables) => variables === undefined ? ['ListStartups'] : ['ListStartups', variables];
+
+
+useListStartupsQuery.fetcher = (variables?: ListStartupsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsQuery, ListStartupsQueryVariables>(ListStartupsDocument, variables, options);
+
+export const SearchStartupsDocument = `
+    query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: startups}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Startup {
+            __typename
+            id
+            title
+            description
+            stage
+            lookingFor
+            alreadyHave
+            fundsNeeded {
+              amount
+              currency
+            }
+            company {
+              id
+              name
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            identity {
+              id
+              name
+              description
+            }
+          }
+        }
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useSearchStartupsQuery = <
+      TData = SearchStartupsQuery,
+      TError = unknown
+    >(
+      variables: SearchStartupsQueryVariables,
+      options?: Omit<UseQueryOptions<SearchStartupsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchStartupsQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<SearchStartupsQuery, TError, TData>(
+      {
+    queryKey: ['SearchStartups', variables],
+    queryFn: gqlFetcher<SearchStartupsQuery, SearchStartupsQueryVariables>(SearchStartupsDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchStartupsQuery.getKey = (variables: SearchStartupsQueryVariables) => ['SearchStartups', variables];
+
+
+useSearchStartupsQuery.fetcher = (variables: SearchStartupsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchStartupsQuery, SearchStartupsQueryVariables>(SearchStartupsDocument, variables, options);
+
+export const UpdateStartupDocument = `
+    mutation UpdateStartup($id: String!, $data: mutationStartupUpdateInput!, $draft: Boolean!) {
+  updateStartup(id: $id, data: $data, draft: $draft) {
+    id
+    title
+    _status
+    image {
+      id
+      url
+    }
+  }
+}
+    `;
+
+export const useUpdateStartupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateStartupMutation, TError, UpdateStartupMutationVariables, TContext>) => {
+
+    return useMutation<UpdateStartupMutation, TError, UpdateStartupMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateStartup'],
+    mutationFn: (variables?: UpdateStartupMutationVariables) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables, options);
 
 export const UpdateCommentContentDocument = `
     mutation UpdateCommentContent($id: String!, $content: String!) {

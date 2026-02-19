@@ -1,0 +1,54 @@
+query StartupById($id: String!) {
+  Startup(id: $id) {
+    id
+    title
+    _status
+    description
+    stage
+    lookingFor
+    alreadyHave
+    fundsNeeded {
+      amount
+      currency
+    }
+    company {
+      id
+      name
+      email
+    }
+    createdBy {
+      id
+    }
+    identity {
+      id
+      name
+      description
+      website
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    involvedUsers {
+      id
+      name
+      email
+    }
+    createdAt
+    updatedAt
+  }
+}

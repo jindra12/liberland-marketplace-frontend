@@ -11,6 +11,7 @@ export const SearchButton: React.FunctionComponent = () => {
     const items: { key: SearchScope, label: string }[] = [
         { key: "jobs", label: "Jobs" },
         { key: "companies", label: "Companies" },
+        { key: "startups", label: "Startups" },
         { key: "identities", label: "Identities" },
         { key: "products", label: "Products / Services" },
     ];
