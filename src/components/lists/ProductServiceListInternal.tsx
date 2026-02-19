@@ -7,6 +7,7 @@ import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -37,7 +38,14 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             title="Products / Services"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
-                title: (product) => product.name,
+                title: (product) => (
+                    <Flex justify="space-between" align="center" wrap>
+                        {product.name}
+                        {product.company?.identity?.name && (
+                            <IdentityTagLink identity={product.company.identity} color="success" />
+                        )}
+                    </Flex>
+                ),
                 actions: (product) => (
                     <Flex wrap gap="32px" align="center">
                         <Link to={`/products-services/${product.id}`}>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Space, Typography } from "antd";
+import { Avatar, Button, Descriptions, Divider, Flex, Grid, Typography } from "antd";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
@@ -51,7 +51,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap="8px">
-                        <Space size={16} align="start" className="EntityDetail__header">
+                        <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageUrl && (
                                 <Avatar
                                     shape="circle"
@@ -59,7 +59,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     src={`${BACKEND_URL}${imageUrl}`}
                                 />
                             )}
-                            <div>
+                            <Flex flex={1} vertical>
                                 <Typography.Title level={1} className="EntityDetail__title">
                                     <Flex justify="space-between" align="center" gap="16px" wrap>
                                         {product?.name}
@@ -78,8 +78,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     price={price}
                                     inventory={inventory}
                                 />
-                            </div>
-                        </Space>
+                            </Flex>
+                        </Flex>
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{product?.description}</Markdown>

@@ -10,10 +10,6 @@ export interface MarkdownProps {
 }
 
 export const Markdown: React.FunctionComponent<MarkdownProps> = (props) => {
-    if (!props.children) {
-        return null;
-    }
-
     const classes = ["Markdown", props.className].filter(Boolean).join(" ");
 
     return (
@@ -22,7 +18,7 @@ export const Markdown: React.FunctionComponent<MarkdownProps> = (props) => {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw, rehypeSanitize]}
             >
-                {props.children}
+                {props.children || ""}
             </ReactMarkdown>
         </div>
     );

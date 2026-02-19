@@ -20,10 +20,12 @@
 
 .Markdown--clamp2 {
   -webkit-line-clamp: 2;
+  min-height: 2lh;
 }
 
 .Markdown--clamp3 {
   -webkit-line-clamp: 3;
+  min-height: 3lh;
 }
 
 .Markdown--clamp2 p,
