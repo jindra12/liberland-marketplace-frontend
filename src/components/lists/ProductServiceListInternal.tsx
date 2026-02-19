@@ -17,7 +17,6 @@ export interface ProductServiceListInternalProps {
     query: UseQueryResult<ProductListQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
-    limited?: boolean;
 }
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
@@ -32,7 +31,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
 
     return (
         <AppList
-            hasMore={!props.limited && (!props.query.data?.Products || props.query.data.Products.hasNextPage)}
+            hasMore={!props.query.data?.Products || props.query.data.Products.hasNextPage}
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
