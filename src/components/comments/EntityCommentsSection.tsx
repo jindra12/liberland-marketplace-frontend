@@ -162,7 +162,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
                 {title}
             </Typography.Title>
             <CommentSection
-                key={`${targetId}-${auth.isAuthenticated ? "auth" : "anonymous"}`}
+                key={`${relationTo}-${targetId}-${auth.isAuthenticated ? "auth" : "anonymous"}`}
                 currentUser={currentUser}
                 logIn={{
                     onLogin: () => auth.signinRedirect(),
