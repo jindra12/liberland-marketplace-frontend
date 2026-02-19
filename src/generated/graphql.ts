@@ -46470,7 +46470,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -46519,7 +46519,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -48446,6 +48446,10 @@ export const ListProductsByCompanyDocument = `
         key
         value
       }
+      price {
+        amount
+        currency
+      }
       image {
         id
         url
@@ -48747,6 +48751,10 @@ export const ListProductsDocument = `
         id
         key
         value
+      }
+      price {
+        amount
+        currency
       }
       image {
         id

@@ -6,7 +6,7 @@ import { Flex, Space, Typography } from "antd";
 type ProductDetailsSummaryProps = {
     companyName?: string | null;
     companyId?: string | null;
-    price?: string;
+    price?: string | null;
     inventory?: string;
     metaSize?: React.ComponentProps<typeof Space>["size"];
 };

@@ -12,6 +12,7 @@ import {
 } from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
 import { BACKEND_URL } from "./gqlFetcher";
+import { isCryptoCurrency } from "./components/publish/constants";
 import {
     ENTITY_COMMENTS_ANONYMOUS_NAME,
     ENTITY_COMMENTS_ANONYMOUS_USER_ID,
@@ -53,10 +54,14 @@ export const timeAgo = (date: string): string => {
     return "just now";
 };
 
+const getCryptoFractionDigits = (currency: string, fallback: number): number =>
+    isCryptoCurrency(currency) ? 6 : fallback;
+
 export const formatSalary = (min?: number | null, max?: number | null, currency?: string | null): string | null => {
     if (min == null && max == null) return null;
-    const fmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
     const cur = currency || "USD";
+    const digits = getCryptoFractionDigits(cur, 0);
+    const fmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: digits });
     if (min != null && max != null) return `${cur} ${fmt(min)} – ${fmt(max)}`;
     if (min != null) return `From ${cur} ${fmt(min)}`;
     return `Up to ${cur} ${fmt(max!)}`;
@@ -64,9 +69,20 @@ export const formatSalary = (min?: number | null, max?: number | null, currency?
 
 export const formatBounty = (amount?: number | null, currency?: string | null): string | null => {
     if (amount == null) return null;
-    const maxFractionDigits = Number.isInteger(amount) ? 0 : 2;
+    const cur = currency || "USD";
+    const fallback = Number.isInteger(amount) ? 0 : 2;
+    const maxFractionDigits = getCryptoFractionDigits(cur, fallback);
     const fmt = amount.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
-    return `${currency || "USD"} ${fmt}`;
+    return `${cur} ${fmt}`;
+};
+
+export const formatPrice = (amount?: number | null, currency?: string | null): string | null => {
+    if (amount == null) return null;
+    const cur = currency || "USD";
+    const fallback = Number.isInteger(amount) ? 0 : 2;
+    const maxFractionDigits = getCryptoFractionDigits(cur, fallback);
+    const fmt = amount.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
+    return `${cur} ${fmt}`;
 };
 
 export const formatPositions = (positions?: number | null): string | null => {

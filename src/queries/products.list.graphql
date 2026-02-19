@@ -10,6 +10,10 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
         key
         value
       }
+      price {
+        amount
+        currency
+      }
       image {
         id
         url

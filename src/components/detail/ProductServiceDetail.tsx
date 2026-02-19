@@ -14,6 +14,7 @@ import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
+import { formatPrice } from "../../utils";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -31,10 +32,6 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const product = data.Product;
                 const imageUrl = product?.image?.url || product?.company?.image?.url;
                 const companyData = companyQuery.data?.Company;
-                const amount = product?.price?.amount;
-                const price = typeof amount === "number"
-                    ? `${product?.price?.currency ?? "USD"} ${amount.toLocaleString("en-US", { maximumFractionDigits: 2 })}`
-                    : undefined;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
                 const inventory = typeof product?.inventory === "number"
                     ? product.inventory.toLocaleString("en-US")
@@ -75,7 +72,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 <ProductDetailsSummary
                                     companyName={product?.company?.name}
                                     companyId={product?.company?.id}
-                                    price={price}
+                                    price={formatPrice(product?.price?.amount, product?.price?.currency)}
                                     inventory={inventory}
                                 />
                             </Flex>
