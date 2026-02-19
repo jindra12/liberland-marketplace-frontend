@@ -5,6 +5,11 @@ query ProductById($id: String!) {
     _status
     description
     url
+    properties {
+      id
+      key
+      value
+    }
     inventory
     price {
       amount

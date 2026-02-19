@@ -2,7 +2,10 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
-import { useJobByIdQuery } from "../../generated/graphql";
+import {
+    Comment_ReplyPostRelationshipInputRelationTo,
+    useJobByIdQuery,
+} from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { formatSalary, formatEmploymentType } from "../../utils";
@@ -12,6 +15,7 @@ import { IdentityGroups } from "./IdentityGroups";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -35,7 +39,7 @@ const JobDetail: React.FunctionComponent = () => {
                 const { allowedIdentities, disallowedIdentities } = getJobIdentityAccess(job, "name");
 
                 return (
-                    <div>
+                    <Flex flex={1} vertical gap="8px">
                         <Space size={16} align="start" className="JobDetail__header">
                             {url && <Avatar shape="circle" size={avatarSize} src={`${BACKEND_URL}${url}`} />}
                             <div>
@@ -75,7 +79,13 @@ const JobDetail: React.FunctionComponent = () => {
                                 <ApplyButton url={job?.applyUrl} />
                             </div>
                         </Flex>
-                    </div>
+                        <Divider />
+                        <EntityCommentsSection
+                            targetId={id!}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
+                            title="Comments"
+                        />
+                    </Flex>
                 );
             }}
         </Loader>

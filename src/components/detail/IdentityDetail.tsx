@@ -1,12 +1,16 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Space, Typography } from "antd";
+import { Avatar, Button, Divider, Flex, Space, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import { useIdentityByIdQuery } from "../../generated/graphql";
+import {
+    Comment_ReplyPostRelationshipInputRelationTo,
+    useIdentityByIdQuery,
+} from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -15,7 +19,7 @@ const IdentityDetail: React.FunctionComponent = () => {
     return (
         <Loader query={identity}>
             {(data) => (
-                <div>
+                <Flex flex={1} vertical gap="8px">
                     <Space size={16} align="start" className="EntityDetail__header">
                         {data.Identity?.image?.url && (
                             <Avatar
@@ -42,7 +46,13 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <Markdown>{data.Identity?.description}</Markdown>
                     <Divider />
                     <IdentityCompaniesList identityId={id!} />
-                </div>
+                    <Divider />
+                    <EntityCommentsSection
+                        targetId={id!}
+                        relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
+                        title="Comments"
+                    />
+                </Flex>
             )}
         </Loader>
     );

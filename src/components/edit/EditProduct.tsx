@@ -17,7 +17,7 @@ const EditProduct: React.FunctionComponent = () => {
                 <Loader query={query}>
                     {(data) => {
                         const product = data.Product;
-                        const companyCreatedById = (product?.company?.createdBy as { id?: string } | null)?.id;
+                        const companyCreatedById = product?.company?.createdBy?.id;
 
                         return (
                             <OwnerGuard createdById={companyCreatedById}>
@@ -26,11 +26,11 @@ const EditProduct: React.FunctionComponent = () => {
                                     mode="edit"
                                     initialValues={{
                                         id: product?.id,
-                                        name: product?.name || "",
-                                        description: product?.description || "",
+                                        name: product?.name,
+                                        description: product?.description,
                                         priceAmount: product?.price?.amount,
-                                        priceCurrency: product?.price?.currency || "USD",
-                                        url: product?.url || "",
+                                        priceCurrency: product?.price?.currency,
+                                        url: product?.url,
                                         inventory: product?.inventory,
                                         company: product?.company?.id,
                                         existingImageUrl: product?.image?.url,

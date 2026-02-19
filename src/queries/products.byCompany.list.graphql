@@ -11,6 +11,11 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
       name
       description
       url
+      properties {
+        id
+        key
+        value
+      }
       price {
         amount
         currency

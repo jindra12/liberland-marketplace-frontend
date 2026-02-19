@@ -24,6 +24,11 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             name
             description
             url
+            properties {
+              id
+              key
+              value
+            }
             image {
               id
               url

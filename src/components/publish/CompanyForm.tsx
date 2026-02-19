@@ -10,22 +10,21 @@ import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { stripEmpty } from "./formUtils";
 
 interface CompanyFormValues {
-    name: string;
-    description?: string;
-    email?: string;
-    phone?: string;
-    website?: string;
-    identity?: string;
+    name: string | null;
+    description?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    identity?: string | null;
     imageFile?: UploadFile[];
 }
 
 export interface CompanyFormProps {
     mode: "create" | "edit";
     initialValues?: Partial<CompanyFormValues> & {
-        id?: string;
+        id?: string | null;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
     };
@@ -47,14 +46,12 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         createMutation,
         updateMutation,
         buildData: (values: CompanyFormValues, imageId) => ({
-            ...stripEmpty({
-                name: values.name,
-                description: values.description ?? "",
-                email: values.email ?? "",
-                phone: values.phone ?? "",
-                website: values.website ?? "",
-                identity: values.identity ?? "",
-            }),
+            name: values.name,
+            description: values.description,
+            email: values.email,
+            phone: values.phone,
+            website: values.website,
+            identity: values.identity,
             ...(imageId !== undefined && { image: imageId }),
         }),
         getCreateId: (r) => r.createCompany?.id,

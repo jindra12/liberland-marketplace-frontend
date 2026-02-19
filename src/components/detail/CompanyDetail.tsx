@@ -10,6 +10,7 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
+import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
 import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -34,7 +35,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const avatarSize = md ? 120 : 64;
 
                 return (
-                    <div>
+                    <Flex flex={1} vertical gap="8px">
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageUrl && (
                                 <Avatar
@@ -81,6 +82,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     children: <CompanyJobsList companyId={id!} />,
                                 },
                                 {
+                                    key: "products-services",
+                                    label: "Products / Services",
+                                    children: <CompanyProductsServicesList companyId={id!} />,
+                                },
+                                {
                                     key: "comments",
                                     label: "Comments",
                                     children: (
@@ -93,7 +99,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 },
                             ]}
                         />
-                    </div>
+                    </Flex>
                 );
             }}
         </Loader>

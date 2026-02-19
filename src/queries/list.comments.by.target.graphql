@@ -1,17 +1,19 @@
 query ListCommentsByTarget(
-  $targetId: JSON!
-  $relationTo: Comment_replyPost_Relation_RelationTo!
+  $targetId: String!
+  $relationTo: String!
   $limit: Int = 50
+  $page: Int = 1
 ) {
   Comments(
     where: {
       AND: [
-        { replyPost: { relationTo: $relationTo } }
-        { replyPost: { value: { equals: $targetId } } }
+        { replyPostRelationTo: { equals: $relationTo } }
+        { replyPostValue: { equals: $targetId } }
       ]
     }
     sort: "createdAt"
     limit: $limit
+    page: $page
   ) {
     docs {
       id
@@ -22,6 +24,8 @@ query ListCommentsByTarget(
         email
       }
       anonymousHash
+      replyPostRelationTo
+      replyPostValue
       createdAt
       updatedAt
       replyComment {

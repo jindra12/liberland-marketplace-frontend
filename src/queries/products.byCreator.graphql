@@ -4,6 +4,11 @@ query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 1
       id
       name
       _status
+      properties {
+        id
+        key
+        value
+      }
     }
     totalDocs
   }

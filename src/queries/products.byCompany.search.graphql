@@ -24,6 +24,11 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             name
             description
             url
+            properties {
+              id
+              key
+              value
+            }
             image {
               id
               url

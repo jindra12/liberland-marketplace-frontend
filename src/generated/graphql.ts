@@ -5066,6 +5066,8 @@ export type Comment = {
   id: Scalars['String']['output'];
   replyComment?: Maybe<Comment>;
   replyPost: Comment_ReplyPost_Relationship;
+  replyPostRelationTo?: Maybe<Scalars['String']['output']>;
+  replyPostValue?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -5171,6 +5173,28 @@ export type Comment_ReplyComment_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Comment_ReplyPostRelationTo_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Comment_ReplyPostValue_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Comment_ReplyPost_Relation = {
   relationTo?: InputMaybe<Comment_ReplyPost_Relation_RelationTo>;
   value?: InputMaybe<Scalars['JSON']['input']>;
@@ -5204,6 +5228,8 @@ export type Comment_Where = {
   id?: InputMaybe<Comment_Id_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
+  replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5217,6 +5243,8 @@ export type Comment_Where_And = {
   id?: InputMaybe<Comment_Id_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
+  replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5230,6 +5258,8 @@ export type Comment_Where_Or = {
   id?: InputMaybe<Comment_Id_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
+  replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
+  replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5280,6 +5310,8 @@ export type CommentsDocAccessFields = {
   createdBy?: Maybe<CommentsDocAccessFields_CreatedBy>;
   replyComment?: Maybe<CommentsDocAccessFields_ReplyComment>;
   replyPost?: Maybe<CommentsDocAccessFields_ReplyPost>;
+  replyPostRelationTo?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo>;
+  replyPostValue?: Maybe<CommentsDocAccessFields_ReplyPostValue>;
   updatedAt?: Maybe<CommentsDocAccessFields_UpdatedAt>;
 };
 
@@ -5431,6 +5463,62 @@ export type CommentsDocAccessFields_ReplyPost = {
   update?: Maybe<CommentsDocAccessFields_ReplyPost_Update>;
 };
 
+export type CommentsDocAccessFields_ReplyPostRelationTo = {
+  __typename?: 'CommentsDocAccessFields_replyPostRelationTo';
+  create?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo_Read>;
+  update?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo_Update>;
+};
+
+export type CommentsDocAccessFields_ReplyPostRelationTo_Create = {
+  __typename?: 'CommentsDocAccessFields_replyPostRelationTo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostRelationTo_Delete = {
+  __typename?: 'CommentsDocAccessFields_replyPostRelationTo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostRelationTo_Read = {
+  __typename?: 'CommentsDocAccessFields_replyPostRelationTo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostRelationTo_Update = {
+  __typename?: 'CommentsDocAccessFields_replyPostRelationTo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostValue = {
+  __typename?: 'CommentsDocAccessFields_replyPostValue';
+  create?: Maybe<CommentsDocAccessFields_ReplyPostValue_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ReplyPostValue_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ReplyPostValue_Read>;
+  update?: Maybe<CommentsDocAccessFields_ReplyPostValue_Update>;
+};
+
+export type CommentsDocAccessFields_ReplyPostValue_Create = {
+  __typename?: 'CommentsDocAccessFields_replyPostValue_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostValue_Delete = {
+  __typename?: 'CommentsDocAccessFields_replyPostValue_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostValue_Read = {
+  __typename?: 'CommentsDocAccessFields_replyPostValue_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyPostValue_Update = {
+  __typename?: 'CommentsDocAccessFields_replyPostValue_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CommentsDocAccessFields_ReplyPost_Create = {
   __typename?: 'CommentsDocAccessFields_replyPost_Create';
   permission: Scalars['Boolean']['output'];
@@ -5487,6 +5575,8 @@ export type CommentsFields = {
   createdBy?: Maybe<CommentsFields_CreatedBy>;
   replyComment?: Maybe<CommentsFields_ReplyComment>;
   replyPost?: Maybe<CommentsFields_ReplyPost>;
+  replyPostRelationTo?: Maybe<CommentsFields_ReplyPostRelationTo>;
+  replyPostValue?: Maybe<CommentsFields_ReplyPostValue>;
   updatedAt?: Maybe<CommentsFields_UpdatedAt>;
 };
 
@@ -5636,6 +5726,62 @@ export type CommentsFields_ReplyPost = {
   delete?: Maybe<CommentsFields_ReplyPost_Delete>;
   read?: Maybe<CommentsFields_ReplyPost_Read>;
   update?: Maybe<CommentsFields_ReplyPost_Update>;
+};
+
+export type CommentsFields_ReplyPostRelationTo = {
+  __typename?: 'CommentsFields_replyPostRelationTo';
+  create?: Maybe<CommentsFields_ReplyPostRelationTo_Create>;
+  delete?: Maybe<CommentsFields_ReplyPostRelationTo_Delete>;
+  read?: Maybe<CommentsFields_ReplyPostRelationTo_Read>;
+  update?: Maybe<CommentsFields_ReplyPostRelationTo_Update>;
+};
+
+export type CommentsFields_ReplyPostRelationTo_Create = {
+  __typename?: 'CommentsFields_replyPostRelationTo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostRelationTo_Delete = {
+  __typename?: 'CommentsFields_replyPostRelationTo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostRelationTo_Read = {
+  __typename?: 'CommentsFields_replyPostRelationTo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostRelationTo_Update = {
+  __typename?: 'CommentsFields_replyPostRelationTo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostValue = {
+  __typename?: 'CommentsFields_replyPostValue';
+  create?: Maybe<CommentsFields_ReplyPostValue_Create>;
+  delete?: Maybe<CommentsFields_ReplyPostValue_Delete>;
+  read?: Maybe<CommentsFields_ReplyPostValue_Read>;
+  update?: Maybe<CommentsFields_ReplyPostValue_Update>;
+};
+
+export type CommentsFields_ReplyPostValue_Create = {
+  __typename?: 'CommentsFields_replyPostValue_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostValue_Delete = {
+  __typename?: 'CommentsFields_replyPostValue_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostValue_Read = {
+  __typename?: 'CommentsFields_replyPostValue_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyPostValue_Update = {
+  __typename?: 'CommentsFields_replyPostValue_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CommentsFields_ReplyPost_Create = {
@@ -42499,6 +42645,8 @@ export type MutationCommentInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
   replyPost?: InputMaybe<Comment_ReplyPostRelationshipInput>;
+  replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
+  replyPostValue?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -42509,6 +42657,8 @@ export type MutationCommentUpdateInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
   replyPost?: InputMaybe<CommentUpdate_ReplyPostRelationshipInput>;
+  replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
+  replyPostValue?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -46295,13 +46445,14 @@ export type UpdateJobMutationVariables = Exact<{
 export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListCommentsByTargetQueryVariables = Exact<{
-  targetId: Scalars['JSON']['input'];
-  relationTo: Comment_ReplyPost_Relation_RelationTo;
+  targetId: Scalars['String']['input'];
+  relationTo: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -46319,7 +46470,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -46334,7 +46485,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null } | null }
          | null } }> } | null };
 
 export type ListProductsByCreatorQueryVariables = Exact<{
@@ -46344,14 +46495,14 @@ export type ListProductsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null }> } | null };
+export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, inventory?: number | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, inventory?: number | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -46359,7 +46510,7 @@ export type CreateProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -46368,7 +46519,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -46382,7 +46533,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null } }> } | null };
 
 export type UpdateProductMutationVariables = Exact<{
@@ -46392,7 +46543,7 @@ export type UpdateProductMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -48170,11 +48321,12 @@ export const useUpdateJobMutation = <
 useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
 
 export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: JSON!, $relationTo: Comment_replyPost_Relation_RelationTo!, $limit: Int = 50) {
+    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
-    where: {AND: [{replyPost: {relationTo: $relationTo}}, {replyPost: {value: {equals: $targetId}}}]}
+    where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}]}
     sort: "createdAt"
     limit: $limit
+    page: $page
   ) {
     docs {
       id
@@ -48185,6 +48337,8 @@ export const ListCommentsByTargetDocument = `
         email
       }
       anonymousHash
+      replyPostRelationTo
+      replyPostValue
       createdAt
       updatedAt
       replyComment {
@@ -48287,6 +48441,11 @@ export const ListProductsByCompanyDocument = `
       name
       description
       url
+      properties {
+        id
+        key
+        value
+      }
       price {
         amount
         currency
@@ -48366,6 +48525,11 @@ export const SearchProductsByCompanyDocument = `
             name
             description
             url
+            properties {
+              id
+              key
+              value
+            }
             image {
               id
               url
@@ -48434,6 +48598,11 @@ export const ListProductsByCreatorDocument = `
       id
       name
       _status
+      properties {
+        id
+        key
+        value
+      }
     }
     totalDocs
   }
@@ -48469,6 +48638,11 @@ export const ProductByIdDocument = `
     _status
     description
     url
+    properties {
+      id
+      key
+      value
+    }
     inventory
     price {
       amount
@@ -48536,6 +48710,11 @@ export const CreateProductDocument = `
     id
     name
     _status
+    properties {
+      id
+      key
+      value
+    }
     image {
       id
       url
@@ -48568,6 +48747,11 @@ export const ListProductsDocument = `
       name
       description
       url
+      properties {
+        id
+        key
+        value
+      }
       price {
         amount
         currency
@@ -48656,6 +48840,11 @@ export const SearchProductsDocument = `
             name
             description
             url
+            properties {
+              id
+              key
+              value
+            }
             image {
               id
               url
@@ -48727,6 +48916,11 @@ export const UpdateProductDocument = `
     id
     name
     _status
+    properties {
+      id
+      key
+      value
+    }
     image {
       id
       url

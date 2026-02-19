@@ -3,7 +3,7 @@ import {
     Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Space, Tabs, Tag, Typography,
 } from "antd";
 import {
-    EditOutlined, EyeOutlined, LogoutOutlined, MailOutlined, PlusOutlined, UserOutlined,
+    EditOutlined, EyeOutlined, LogoutOutlined, PlusOutlined, UserOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
