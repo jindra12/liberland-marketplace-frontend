@@ -1,13 +1,15 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Typography } from "antd";
+import { Avatar, Button, Divider, Flex, Tag, Typography } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
+import { BankOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { formatPrice } from "../../utils";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -71,6 +73,15 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         {product.description}
                     </Markdown>
                 ),
+                body: (product) => {
+                    const price = formatPrice(product.price?.amount, product.price?.currency);
+                    return price ? (
+                        <>
+                            <Tag color="success" icon={<BankOutlined />}>{price}</Tag>
+                            <Divider />
+                        </>
+                    ) : null;
+                },
             }}
         />
     );
