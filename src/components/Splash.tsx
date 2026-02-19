@@ -5,25 +5,18 @@ import { JobList } from "./lists/JobList";
 const Splash: React.FunctionComponent = () => {
     return (
         <Flex vertical gap={32} justify="center" className="SplashPage">
-            <picture className="SplashPage__picture">
-                <source
-                    media="(max-width: 768px)"
-                    srcSet="/hero/hero-mobile-900x1200.png 1x, /hero/hero-mobile-1350x1800.png 2x"
-                />
-                <source
-                    media="(min-width: 769px)"
-                    srcSet="/hero/hero-desktop-1600x900.png 1x, /hero/hero-desktop-2400x1350.png 2x"
-                />
-                <img
-                    className="SplashPage__img"
-                    src="/hero/hero-desktop-1600x900.png"
-                    alt="Liberland Market"
-                />
-            </picture>
+            <div className="SplashPage__hero">
+                <Flex vertical align="center" gap={12} className="SplashPage__heroInner">
+                    <img className="SplashPage__logo" src="/logo.svg" alt="Jita-44" />
+                    <Typography.Title level={1} className="SplashPage__title">
+                        Jita-44
+                    </Typography.Title>
+                    <Typography.Text className="SplashPage__tagline">
+                        The free marketplace connecting sovereign communities
+                    </Typography.Text>
+                </Flex>
+            </div>
             <Flex vertical gap={32} justify="center" className="SplashPage__content">
-                <Typography.Title level={1} className="SplashPage__title">
-                    Liberland Market
-                </Typography.Title>
                 <JobList limited />
             </Flex>
         </Flex>
