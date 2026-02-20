@@ -109,7 +109,8 @@ export const getImage = (doc?: DocType) => {
         case "Company":
         case "Identity":
         case "Job":
-        case "Product": {
+        case "Product":
+        case "Startup": {
             const url = doc?.image?.url;
             return url ? `${BACKEND_URL}${url}` : undefined;
         }

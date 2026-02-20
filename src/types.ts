@@ -9,11 +9,12 @@ import type {
     Job,
     ListCommentsByTargetQuery,
     Product,
+    Startup,
 } from "./generated/graphql";
 
-export type SearchScope = "jobs" | "companies" | "identities" | "products";
+export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
 export type SearchOption = { value: string; label?: ReactNode, image?: string | null };
-export type DocType = Partial<Identity | Company | Job | Product>;
+export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 
 export type IdentityTagItem = {
     id: string;
