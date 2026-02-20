@@ -11075,6 +11075,7 @@ export type Job = {
   applyUrl?: Maybe<Scalars['String']['output']>;
   bounty?: Maybe<Job_Bounty>;
   company?: Maybe<Company>;
+  companyIdentityId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -11159,6 +11160,7 @@ export type JobVersion_Version = {
   applyUrl?: Maybe<Scalars['String']['output']>;
   bounty?: Maybe<JobVersion_Version_Bounty>;
   company?: Maybe<Company>;
+  companyIdentityId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -11379,6 +11381,17 @@ export type Job_Bounty__Currency_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Job_Bounty__Currency_Input>>>;
 };
 
+export type Job_CompanyIdentityId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Job_Company_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
@@ -11584,6 +11597,7 @@ export type Job_Where = {
   bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
   bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
+  companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -11611,6 +11625,7 @@ export type Job_Where_And = {
   bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
   bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
+  companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -11638,6 +11653,7 @@ export type Job_Where_Or = {
   bounty__amount?: InputMaybe<Job_Bounty__Amount_Operator>;
   bounty__currency?: InputMaybe<Job_Bounty__Currency_Operator>;
   company?: InputMaybe<Job_Company_Operator>;
+  companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -11702,6 +11718,7 @@ export type JobsDocAccessFields = {
   applyUrl?: Maybe<JobsDocAccessFields_ApplyUrl>;
   bounty?: Maybe<JobsDocAccessFields_Bounty>;
   company?: Maybe<JobsDocAccessFields_Company>;
+  companyIdentityId?: Maybe<JobsDocAccessFields_CompanyIdentityId>;
   createdAt?: Maybe<JobsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<JobsDocAccessFields_CreatedBy>;
   description?: Maybe<JobsDocAccessFields_Description>;
@@ -11898,6 +11915,34 @@ export type JobsDocAccessFields_Company = {
   delete?: Maybe<JobsDocAccessFields_Company_Delete>;
   read?: Maybe<JobsDocAccessFields_Company_Read>;
   update?: Maybe<JobsDocAccessFields_Company_Update>;
+};
+
+export type JobsDocAccessFields_CompanyIdentityId = {
+  __typename?: 'JobsDocAccessFields_companyIdentityId';
+  create?: Maybe<JobsDocAccessFields_CompanyIdentityId_Create>;
+  delete?: Maybe<JobsDocAccessFields_CompanyIdentityId_Delete>;
+  read?: Maybe<JobsDocAccessFields_CompanyIdentityId_Read>;
+  update?: Maybe<JobsDocAccessFields_CompanyIdentityId_Update>;
+};
+
+export type JobsDocAccessFields_CompanyIdentityId_Create = {
+  __typename?: 'JobsDocAccessFields_companyIdentityId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_CompanyIdentityId_Delete = {
+  __typename?: 'JobsDocAccessFields_companyIdentityId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_CompanyIdentityId_Read = {
+  __typename?: 'JobsDocAccessFields_companyIdentityId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_CompanyIdentityId_Update = {
+  __typename?: 'JobsDocAccessFields_companyIdentityId_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type JobsDocAccessFields_Company_Create = {
@@ -12383,6 +12428,7 @@ export type JobsFields = {
   applyUrl?: Maybe<JobsFields_ApplyUrl>;
   bounty?: Maybe<JobsFields_Bounty>;
   company?: Maybe<JobsFields_Company>;
+  companyIdentityId?: Maybe<JobsFields_CompanyIdentityId>;
   createdAt?: Maybe<JobsFields_CreatedAt>;
   createdBy?: Maybe<JobsFields_CreatedBy>;
   description?: Maybe<JobsFields_Description>;
@@ -12579,6 +12625,34 @@ export type JobsFields_Company = {
   delete?: Maybe<JobsFields_Company_Delete>;
   read?: Maybe<JobsFields_Company_Read>;
   update?: Maybe<JobsFields_Company_Update>;
+};
+
+export type JobsFields_CompanyIdentityId = {
+  __typename?: 'JobsFields_companyIdentityId';
+  create?: Maybe<JobsFields_CompanyIdentityId_Create>;
+  delete?: Maybe<JobsFields_CompanyIdentityId_Delete>;
+  read?: Maybe<JobsFields_CompanyIdentityId_Read>;
+  update?: Maybe<JobsFields_CompanyIdentityId_Update>;
+};
+
+export type JobsFields_CompanyIdentityId_Create = {
+  __typename?: 'JobsFields_companyIdentityId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_CompanyIdentityId_Delete = {
+  __typename?: 'JobsFields_companyIdentityId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_CompanyIdentityId_Read = {
+  __typename?: 'JobsFields_companyIdentityId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_CompanyIdentityId_Update = {
+  __typename?: 'JobsFields_companyIdentityId_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type JobsFields_Company_Create = {
@@ -30575,6 +30649,7 @@ export type Product = {
   __typename?: 'Product';
   _status?: Maybe<Product__Status>;
   company?: Maybe<Company>;
+  companyIdentityId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -30646,6 +30721,7 @@ export type ProductVersion_Version = {
   __typename?: 'ProductVersion_Version';
   _status?: Maybe<ProductVersion_Version__Status>;
   company?: Maybe<Company>;
+  companyIdentityId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -30786,6 +30862,17 @@ export type Product__Status_Operator = {
   in?: InputMaybe<Array<InputMaybe<Product__Status_Input>>>;
   not_equals?: InputMaybe<Product__Status_Input>;
   not_in?: InputMaybe<Array<InputMaybe<Product__Status_Input>>>;
+};
+
+export type Product_CompanyIdentityId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Product_Company_Operator = {
@@ -30987,6 +31074,7 @@ export type Product_Where = {
   OR?: InputMaybe<Array<InputMaybe<Product_Where_Or>>>;
   _status?: InputMaybe<Product__Status_Operator>;
   company?: InputMaybe<Product_Company_Operator>;
+  companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
@@ -31012,6 +31100,7 @@ export type Product_Where_And = {
   OR?: InputMaybe<Array<InputMaybe<Product_Where_Or>>>;
   _status?: InputMaybe<Product__Status_Operator>;
   company?: InputMaybe<Product_Company_Operator>;
+  companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
@@ -31037,6 +31126,7 @@ export type Product_Where_Or = {
   OR?: InputMaybe<Array<InputMaybe<Product_Where_Or>>>;
   _status?: InputMaybe<Product__Status_Operator>;
   company?: InputMaybe<Product_Company_Operator>;
+  companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
@@ -31100,6 +31190,7 @@ export type ProductsDocAccessFields = {
   __typename?: 'ProductsDocAccessFields';
   _status?: Maybe<ProductsDocAccessFields__Status>;
   company?: Maybe<ProductsDocAccessFields_Company>;
+  companyIdentityId?: Maybe<ProductsDocAccessFields_CompanyIdentityId>;
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
   deletedAt?: Maybe<ProductsDocAccessFields_DeletedAt>;
   description?: Maybe<ProductsDocAccessFields_Description>;
@@ -31151,6 +31242,34 @@ export type ProductsDocAccessFields_Company = {
   delete?: Maybe<ProductsDocAccessFields_Company_Delete>;
   read?: Maybe<ProductsDocAccessFields_Company_Read>;
   update?: Maybe<ProductsDocAccessFields_Company_Update>;
+};
+
+export type ProductsDocAccessFields_CompanyIdentityId = {
+  __typename?: 'ProductsDocAccessFields_companyIdentityId';
+  create?: Maybe<ProductsDocAccessFields_CompanyIdentityId_Create>;
+  delete?: Maybe<ProductsDocAccessFields_CompanyIdentityId_Delete>;
+  read?: Maybe<ProductsDocAccessFields_CompanyIdentityId_Read>;
+  update?: Maybe<ProductsDocAccessFields_CompanyIdentityId_Update>;
+};
+
+export type ProductsDocAccessFields_CompanyIdentityId_Create = {
+  __typename?: 'ProductsDocAccessFields_companyIdentityId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CompanyIdentityId_Delete = {
+  __typename?: 'ProductsDocAccessFields_companyIdentityId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CompanyIdentityId_Read = {
+  __typename?: 'ProductsDocAccessFields_companyIdentityId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CompanyIdentityId_Update = {
+  __typename?: 'ProductsDocAccessFields_companyIdentityId_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ProductsDocAccessFields_Company_Create = {
@@ -31752,6 +31871,7 @@ export type ProductsFields = {
   __typename?: 'ProductsFields';
   _status?: Maybe<ProductsFields__Status>;
   company?: Maybe<ProductsFields_Company>;
+  companyIdentityId?: Maybe<ProductsFields_CompanyIdentityId>;
   createdAt?: Maybe<ProductsFields_CreatedAt>;
   deletedAt?: Maybe<ProductsFields_DeletedAt>;
   description?: Maybe<ProductsFields_Description>;
@@ -31803,6 +31923,34 @@ export type ProductsFields_Company = {
   delete?: Maybe<ProductsFields_Company_Delete>;
   read?: Maybe<ProductsFields_Company_Read>;
   update?: Maybe<ProductsFields_Company_Update>;
+};
+
+export type ProductsFields_CompanyIdentityId = {
+  __typename?: 'ProductsFields_companyIdentityId';
+  create?: Maybe<ProductsFields_CompanyIdentityId_Create>;
+  delete?: Maybe<ProductsFields_CompanyIdentityId_Delete>;
+  read?: Maybe<ProductsFields_CompanyIdentityId_Read>;
+  update?: Maybe<ProductsFields_CompanyIdentityId_Update>;
+};
+
+export type ProductsFields_CompanyIdentityId_Create = {
+  __typename?: 'ProductsFields_companyIdentityId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CompanyIdentityId_Delete = {
+  __typename?: 'ProductsFields_companyIdentityId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CompanyIdentityId_Read = {
+  __typename?: 'ProductsFields_companyIdentityId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CompanyIdentityId_Update = {
+  __typename?: 'ProductsFields_companyIdentityId_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type ProductsFields_Company_Create = {
@@ -42838,6 +42986,7 @@ export type MutationJobInput = {
   applyUrl?: InputMaybe<Scalars['String']['input']>;
   bounty?: InputMaybe<MutationJob_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
+  companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -42859,6 +43008,7 @@ export type MutationJobUpdateInput = {
   applyUrl?: InputMaybe<Scalars['String']['input']>;
   bounty?: InputMaybe<MutationJobUpdate_BountyInput>;
   company?: InputMaybe<Scalars['String']['input']>;
+  companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -43475,6 +43625,7 @@ export type MutationPost_PopulatedAuthorsInput = {
 export type MutationProductInput = {
   _status?: InputMaybe<Product__Status_MutationInput>;
   company?: InputMaybe<Scalars['String']['input']>;
+  companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -43494,6 +43645,7 @@ export type MutationProductInput = {
 export type MutationProductUpdateInput = {
   _status?: InputMaybe<ProductUpdate__Status_MutationInput>;
   company?: InputMaybe<Scalars['String']['input']>;
+  companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -44605,6 +44757,17 @@ export type VersionsJob_Version__Bounty__Currency_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsJob_Version__Bounty__Currency_Input>>>;
 };
 
+export type VersionsJob_Version__CompanyIdentityId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsJob_Version__Company_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
@@ -44788,6 +44951,7 @@ export type VersionsJob_Where = {
   version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
   version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -44819,6 +44983,7 @@ export type VersionsJob_Where_And = {
   version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
   version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -44850,6 +45015,7 @@ export type VersionsJob_Where_Or = {
   version__bounty__amount?: InputMaybe<VersionsJob_Version__Bounty__Amount_Operator>;
   version__bounty__currency?: InputMaybe<VersionsJob_Version__Bounty__Currency_Operator>;
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -45659,6 +45825,17 @@ export type VersionsProduct_Version___Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsProduct_Version___Status_Input>>>;
 };
 
+export type VersionsProduct_Version__CompanyIdentityId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsProduct_Version__Company_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
@@ -45853,6 +46030,7 @@ export type VersionsProduct_Where = {
   updatedAt?: InputMaybe<VersionsProduct_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsProduct_Version___Status_Operator>;
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
@@ -45883,6 +46061,7 @@ export type VersionsProduct_Where_And = {
   updatedAt?: InputMaybe<VersionsProduct_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsProduct_Version___Status_Operator>;
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
@@ -45913,6 +46092,7 @@ export type VersionsProduct_Where_Or = {
   updatedAt?: InputMaybe<VersionsProduct_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsProduct_Version___Status_Operator>;
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
+  version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
@@ -46453,6 +46633,24 @@ export type ListCommentsByTargetQueryVariables = Exact<{
 
 
 export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+
+export type ListJobsByIdentityQueryVariables = Exact<{
+  identityId: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null }> } | null };
+
+export type ListProductsByIdentityQueryVariables = Exact<{
+  identityId: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -48375,6 +48573,106 @@ useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVaria
 
 
 useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+
+export const ListJobsByIdentityDocument = `
+    query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+  Jobs(
+    where: {companyIdentityId: {equals: $identityId}}
+    sort: "-postedAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      title
+      companyIdentityId
+      company {
+        id
+        name
+      }
+      location
+      employmentType
+      postedAt
+      _status
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListJobsByIdentityQuery = <
+      TData = ListJobsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListJobsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsByIdentity', variables],
+    queryFn: gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsByIdentityQuery.getKey = (variables: ListJobsByIdentityQueryVariables) => ['ListJobsByIdentity', variables];
+
+
+useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables, options);
+
+export const ListProductsByIdentityDocument = `
+    query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+  Products(
+    where: {companyIdentityId: {equals: $identityId}}
+    sort: "-createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      name
+      companyIdentityId
+      company {
+        id
+        name
+      }
+      price {
+        amount
+        currency
+      }
+      _status
+      createdAt
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListProductsByIdentityQuery = <
+      TData = ListProductsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListProductsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListProductsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListProductsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListProductsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListProductsByIdentity', variables],
+    queryFn: gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryVariables) => ['ListProductsByIdentity', variables];
+
+
+useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
 
 export const ListRepliesToCommentDocument = `
     query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {

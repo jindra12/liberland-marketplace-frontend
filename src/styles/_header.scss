@@ -1,14 +1,22 @@
 .AppHeader {
     padding: 0;
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 167, 216, 0.4);
 
     &__inner {
-        height: 64px;
+        height: 72px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 16px;
         gap: 16px;
+    }
+
+    &__drawer {
+        .ant-drawer-title {
+            display: flex;
+            padding-left: 10px;
+        }
     }
 
     &__brand {
