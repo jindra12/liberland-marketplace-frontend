@@ -63,7 +63,7 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
         } catch (e: unknown) {
             message.error(e instanceof Error ? e.message : "Something went wrong");
         }
-    }, [config, navigate, queryClient, listQueryKey]);
+    }, [config, navigate, queryClient, listQueryKey, byIdQueryKey]);
 
     return { form, draftRef, loading, onFinish };
 };

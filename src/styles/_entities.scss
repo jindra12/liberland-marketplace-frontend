@@ -166,6 +166,18 @@
     display: none !important;
 }
 
+.StartupDetail__meta {
+    margin-bottom: 8px;
+}
+
+.StartupDetail__tags {
+    margin-top: 4px;
+}
+
+.StartupDetail__joinAction {
+    margin-bottom: 16px;
+}
+
 @media (max-width: 991px) {
     .EntityDetail__subLists {
         grid-template-columns: 1fr;
