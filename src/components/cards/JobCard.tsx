@@ -1,0 +1,76 @@
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
+import { ListJobsQuery } from "../../generated/graphql";
+import { BACKEND_URL } from "../../gqlFetcher";
+import { formatEmploymentType, formatSalary } from "../../utils";
+
+type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
+
+type JobCardProps = {
+    items: JobItem[];
+    loading?: boolean;
+};
+
+export const JobCard: React.FunctionComponent<JobCardProps> = ({
+    items,
+    loading,
+}) => (
+    <Card
+        className="SplashEntityCard SplashEntityCard--jobs"
+        title={(
+            <Typography.Title level={3} className="SplashEntityCard__title">
+                <Link to="/jobs" className="SplashEntityCard__titleLink">Jobs</Link>
+            </Typography.Title>
+        )}
+    >
+        <List
+            className="SplashEntityCard__list"
+            loading={loading}
+            dataSource={items}
+            locale={{ emptyText: "No jobs for this identity" }}
+            renderItem={(job) => {
+                const employmentType = formatEmploymentType(job.employmentType);
+                const salary = formatSalary(
+                    job.salaryRange?.min,
+                    job.salaryRange?.max,
+                    job.salaryRange?.currency
+                );
+                const imageUrl = job.image?.url || job.company?.image?.url;
+                return (
+                    <List.Item
+                        actions={[
+                            (
+                                <Link key={`job-link-${job.id}`} to={`/jobs/${job.id}`}>
+                                    <Button>Details</Button>
+                                </Link>
+                            ),
+                        ]}
+                    >
+                        <div className="SplashEntityCard__itemBody">
+                            <List.Item.Meta
+                                avatar={imageUrl ? (
+                                    <Avatar
+                                        shape="square"
+                                        size={48}
+                                        src={`${BACKEND_URL}${imageUrl}`}
+                                        className="SplashEntityCard__avatar"
+                                    />
+                                ) : undefined}
+                                title={(
+                                    <Link to={`/jobs/${job.id}`} className="SplashEntityCard__itemLink">
+                                        {job.title}
+                                    </Link>
+                                )}
+                            />
+                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                                {employmentType && <Tag>{employmentType}</Tag>}
+                                {salary && <Tag color="gold">{salary}</Tag>}
+                            </Space>
+                        </div>
+                    </List.Item>
+                );
+            }}
+        />
+    </Card>
+);

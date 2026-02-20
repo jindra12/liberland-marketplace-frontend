@@ -1,34 +1,194 @@
 .SplashPage {
     width: 100%;
-
-    &__content {
-        padding: 16px;
-        max-width: 84rem;
-        width: 100%;
-        margin: 0 auto;
-    }
+    max-width: none;
+    margin: 0;
+    padding: 0;
 
     &__hero {
-        padding: 48px 16px;
-        text-align: center;
+        min-height: 300px;
+        width: 100%;
+        border-radius: 0;
+        overflow: hidden;
+        border: 0;
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.36);
+        background: linear-gradient(102deg, #012041 0%, #013a6d 48%, #00a7d8 100%);
     }
 
     &__heroInner {
-        max-width: 600px;
+        width: min(100%, 1200px);
         margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr);
+        gap: 16px;
+
+        @include lg-min {
+            grid-template-columns: 1fr;
+            min-height: 260px;
+        }
     }
 
-    &__logo {
-        width: 80px;
-        height: 80px;
+    &__heroCopy {
+        padding: 30px 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+
+        @include md-min {
+            padding: 22px;
+        }
     }
 
-    &__title {
+    &__eyebrow {
+        margin: 0;
+        width: fit-content;
+        border-radius: 999px;
+        border: 1px solid rgba(184, 230, 245, 0.28);
+        background: rgba(2, 34, 68, 0.7);
+        color: #b8e6f5;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+
+    &__heroTitle {
         margin: 0 !important;
+        max-width: 14ch;
+        color: #f6fbff !important;
+        line-height: 1.03 !important;
+        text-wrap: balance;
+
+        @include md-min {
+            font-size: 40px !important;
+        }
+
+        @include sm-min {
+            font-size: 32px !important;
+        }
     }
 
-    &__tagline {
-        font-size: 1.125rem;
-        opacity: 0.7;
+    &__heroDescription {
+        margin: 0 !important;
+        max-width: 62ch;
+        color: #b8e6f5;
+        font-size: 14px;
     }
+
+    &__heroVisual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+
+        @include lg-min {
+            display: none;
+        }
+    }
+
+    &__heroLogo {
+        width: 230px;
+        height: 230px;
+        border-radius: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(145deg, rgba(2, 34, 68, 0.86), rgba(0, 102, 184, 0.56));
+        border: 1px solid rgba(184, 230, 245, 0.28);
+        box-shadow: inset 0 0 36px rgba(0, 167, 216, 0.24), 0 20px 34px rgba(0, 0, 0, 0.35);
+    }
+
+    &__heroGlyph {
+        width: 136px;
+        height: 136px;
+        color: #d6f3ff;
+    }
+
+    &__sections {
+        width: min(100%, 1200px);
+        margin: 0 auto;
+        padding: 14px 16px 0;
+        box-sizing: border-box;
+    }
+
+    &__loading {
+        min-height: 220px;
+    }
+
+    &__identityList {
+        width: 100%;
+    }
+
+    &__identitySection {
+        padding-top: 4px;
+    }
+
+    &__identityHeading {
+        margin: 0 0 10px !important;
+        color: #b8e6f5 !important;
+    }
+
+}
+
+.SplashEntityCard {
+    height: 100%;
+    border-radius: 16px;
+    border: 1px solid rgba(184, 230, 245, 0.14);
+    background: linear-gradient(180deg, rgba(2, 34, 68, 0.65), rgba(2, 19, 40, 0.74));
+    box-shadow: none;
+
+    .ant-card-head {
+        border-bottom: 1px solid rgba(184, 230, 245, 0.12);
+        min-height: 56px;
+        padding-inline: 14px;
+    }
+
+    .ant-card-body {
+        padding: 12px 14px;
+    }
+
+    .ant-list-item {
+        padding: 10px 0;
+    }
+}
+
+.SplashEntityCard__title {
+    margin: 0 !important;
+    font-size: 26px !important;
+    line-height: 1 !important;
+}
+
+.SplashEntityCard__titleLink {
+    color: inherit;
+}
+
+.SplashEntityCard__itemLink {
+    color: #f6fbff;
+    font-weight: 700;
+}
+
+.SplashEntityCard__meta {
+    margin-top: 10px;
+
+    .ant-tag {
+        margin-inline-end: 0;
+    }
+}
+
+.SplashEntityCard__itemBody {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.SplashEntityCard .ant-list-item-meta {
+    margin-bottom: 0;
+}
+
+.SplashEntityCard .ant-list-item-action {
+    margin-inline-start: 12px;
+}
+
+.SplashEntityCard__avatar {
+    border-radius: 8px;
 }

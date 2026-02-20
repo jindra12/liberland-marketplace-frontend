@@ -1,0 +1,27 @@
+query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+  Products(
+    where: { companyIdentityId: { equals: $identityId } }
+    sort: "-createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      name
+      companyIdentityId
+      company {
+        id
+        name
+      }
+      price {
+        amount
+        currency
+      }
+      _status
+      createdAt
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
