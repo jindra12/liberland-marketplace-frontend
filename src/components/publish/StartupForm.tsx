@@ -15,7 +15,6 @@ import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { stripEmpty } from "./formUtils";
 import { currencyOptions } from "./constants";
 
 const stageOptions = [
@@ -99,12 +98,10 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
         createMutation,
         updateMutation,
         buildData: (values: StartupFormValues, imageId) => ({
-            ...stripEmpty({
-                title: values.title,
-                description: values.description ?? "",
-                company: values.company ?? "",
-                identity: values.identity ?? "",
-            }),
+            title: values.title,
+            description: values.description,
+            company: values.company,
+            identity: values.identity,
             stage: values.stage,
             ...(values.lookingFor?.length ? { lookingFor: values.lookingFor } : {}),
             ...(values.alreadyHave?.length ? { alreadyHave: values.alreadyHave } : {}),
