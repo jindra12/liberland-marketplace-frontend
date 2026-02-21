@@ -50,7 +50,7 @@ export const PublishContent: React.FunctionComponent = () => {
     if (category === "startup") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(null)}>
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Launch a Startup</Typography.Title>
