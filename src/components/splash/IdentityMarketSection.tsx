@@ -1,13 +1,17 @@
 import * as React from "react";
-import { Col, Row, Typography } from "antd";
+import {
+    Col,
+    Row,
+    Typography } from "antd";
+
+import { CompanyCard } from "../cards/CompanyCard";
+import { JobCard } from "../cards/JobCard";
+import { ProductServiceCard } from "../cards/ProductServiceCard";
 import {
     useListCompaniesByIdentityQuery,
     useListJobsByIdentityQuery,
     useListProductsByIdentityQuery,
-} from "../../generated/graphql";
-import { CompanyCard } from "../cards/CompanyCard";
-import { JobCard } from "../cards/JobCard";
-import { ProductServiceCard } from "../cards/ProductServiceCard";
+} from "../hooks";
 
 type IdentityMarketSectionProps = {
     identityId: string;

@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Divider, Typography } from "antd";
-import { useListIdentitiesQuery } from "../../generated/graphql";
+
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
+import { useListIdentitiesQuery } from "../hooks";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);

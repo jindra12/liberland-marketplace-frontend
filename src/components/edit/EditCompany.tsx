@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "antd";
-import { useCompanyByIdQuery } from "../../generated/graphql";
+
 import { AuthGuard } from "../AuthGuard";
 import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { CompanyForm } from "../publish/CompanyForm";
+import { useCompanyByIdQuery } from "../hooks";
 
 const EditCompany: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

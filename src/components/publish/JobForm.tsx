@@ -1,5 +1,10 @@
 import React from "react";
-import { DatePicker, Form, Input, InputNumber, Select } from "antd";
+import {
+    DatePicker,
+    Form,
+    Input,
+    InputNumber,
+    Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import dayjs from "dayjs";
 import type { UploadFile } from "antd/es/upload/interface";
@@ -7,13 +12,13 @@ import {
     Job_EmploymentType_MutationInput,
     useCreateJobMutation,
     useUpdateJobMutation,
-    useListCompaniesByCreatorQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
+import { useListCompaniesByCreatorQuery } from "../hooks";
 
 const employmentOptions = [
     { value: Job_EmploymentType_MutationInput.FullTime, label: "Full-time" },

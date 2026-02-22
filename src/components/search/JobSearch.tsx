@@ -2,8 +2,9 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
 import { DocType, SearchOption } from "../../types";
-import { useSearchJobsQuery } from "../../generated/graphql";
+
 import { getImage } from "../../utils";
+import { useSearchJobsQuery } from "../hooks";
 
 export interface JobSearchProps {
     onClose: () => void;

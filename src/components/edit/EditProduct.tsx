@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "antd";
-import { useProductByIdQuery } from "../../generated/graphql";
+
 import { AuthGuard } from "../AuthGuard";
 import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { ProductForm } from "../publish/ProductForm";
+import { useProductByIdQuery } from "../hooks";
 
 const EditProduct: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

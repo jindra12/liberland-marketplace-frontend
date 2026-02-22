@@ -1,17 +1,21 @@
 import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     useCreateProductMutation,
     useUpdateProductMutation,
-    useListCompaniesByCreatorQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
+import { useListCompaniesByCreatorQuery } from "../hooks";
 
 interface ProductFormValues {
     name: string | null;

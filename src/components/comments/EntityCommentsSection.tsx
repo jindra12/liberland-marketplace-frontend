@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Alert, Flex, Spin, Typography, theme } from "antd";
+import {
+    Alert,
+    Flex,
+    Spin,
+    Typography,
+    theme } from "antd";
 import { useAuth } from "react-oidc-context";
 import { CommentSection } from "react-comments-section";
 import "react-comments-section/dist/index.css";
@@ -7,7 +12,6 @@ import {
     useCreateCommentMutation,
     useCreateReplyToCommentMutation,
     useDeleteCommentMutation,
-    useListCommentsByTargetQuery,
     useUpdateCommentContentMutation,
 } from "../../generated/graphql";
 import {
@@ -30,6 +34,7 @@ import {
     getCommentSectionStyles,
     getCommentThemeVars,
 } from "../../utils";
+import { useListCommentsByTargetQuery } from "../hooks";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = ({
     targetId,

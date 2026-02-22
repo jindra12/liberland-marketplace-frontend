@@ -1,10 +1,15 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
+import {
+    useParams } from "react-router-dom";
+import { Avatar,
+    Divider,
+    Flex,
+    Grid,
+    Space,
+    Typography } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useJobByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
@@ -16,6 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useJobByIdQuery } from "../hooks";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

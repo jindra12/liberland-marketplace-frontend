@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListCompaniesQuery } from "../../generated/graphql";
+
 import { CompanyListInternal } from "./CompanyListInternal";
+import { useListCompaniesQuery } from "../hooks";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);

@@ -1,15 +1,18 @@
 import React from "react";
-import { Form, Input, Select } from "antd";
+import {
+    Form,
+    Input,
+    Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     useCreateCompanyMutation,
     useUpdateCompanyMutation,
-    useListIdentitiesQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
+import { useListIdentitiesQuery } from "../hooks";
 
 interface CompanyFormValues {
     name: string | null;

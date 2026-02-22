@@ -2,8 +2,9 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
 import { DocType, SearchOption } from "../../types";
-import { useSearchIdentitiesQuery } from "../../generated/graphql";
+
 import { getImage } from "../../utils";
+import { useSearchIdentitiesQuery } from "../hooks";
 
 export interface IdentitiesSearchProps {
     onClose: () => void;

@@ -24,7 +24,7 @@ export const getAccessToken = (): string | undefined => {
     return stored ? JSON.parse(stored).access_token : undefined;
 };
 
-export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers']) => async (): Promise<TData> => {
+export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariables, options?: RequestInit['headers'], url?: string) => async (): Promise<TData> => {
     const headers = normalizeAndReduce(options);
     const token = getAccessToken();
     if (token) {
@@ -32,7 +32,7 @@ export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariab
     }
 
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
-        `${BACKEND_URL}/api/graphql`,
+        `${url || BACKEND_URL}/api/graphql`,
         { query, variables },
         { headers },
     );

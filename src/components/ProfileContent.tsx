@@ -1,20 +1,39 @@
 import React from "react";
 import {
-    Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Space, Tabs, Tag, Typography,
-} from "antd";
+    Avatar,
+    Button,
+    Card,
+    Descriptions,
+    Divider,
+    Form,
+    Input,
+    List,
+    message,
+    Space,
+    Tabs,
+    Tag,
+    Typography,
+    } from "antd";
 import {
-    EditOutlined, EyeOutlined, LogoutOutlined, PlusOutlined, UserOutlined,
-} from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+    EditOutlined,
+    EyeOutlined,
+    LogoutOutlined,
+    PlusOutlined,
+    UserOutlined,
+    } from "@ant-design/icons";
+import { Link,
+    useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import { useChangePasswordMutation, useUpdateUserNameMutation } from "../authApi";
+import { useChangePasswordMutation,
+    useUpdateUserNameMutation } from "../authApi";
+
+import { formatEmploymentType } from "../utils";
 import {
-    useListJobsByCreatorQuery,
     useListCompaniesByCreatorQuery,
+    useListJobsByCreatorQuery,
     useListProductsByCreatorQuery,
     useListStartupsByCreatorQuery,
-} from "../generated/graphql";
-import { formatEmploymentType } from "../utils";
+} from "./hooks";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();

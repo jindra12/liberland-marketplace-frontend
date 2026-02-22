@@ -1,6 +1,16 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, message, Space, Tabs, Tag, Typography } from "antd";
+import {
+    useParams } from "react-router-dom";
+import { Avatar,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    message,
+    Space,
+    Tabs,
+    Tag,
+    Typography } from "antd";
 import {
     MailOutlined,
     RocketOutlined,
@@ -8,12 +18,11 @@ import {
     UsergroupAddOutlined,
     UserAddOutlined,
     UserDeleteOutlined,
-} from "@ant-design/icons";
+    } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import { useQueryClient } from "@tanstack/react-query";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useStartupByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
@@ -22,6 +31,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { useStartupByIdQuery } from "../hooks";
 
 const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

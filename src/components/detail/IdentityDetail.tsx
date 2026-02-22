@@ -1,16 +1,22 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Space, Typography } from "antd";
+import {
+    useParams } from "react-router-dom";
+import { Avatar,
+    Button,
+    Divider,
+    Flex,
+    Space,
+    Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useIdentityByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useIdentityByIdQuery } from "../hooks";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

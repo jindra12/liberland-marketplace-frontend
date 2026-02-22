@@ -1,9 +1,14 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Tabs, Typography } from "antd";
+import {
+    useParams } from "react-router-dom";
+import { Avatar,
+    Divider,
+    Flex,
+    Grid,
+    Tabs,
+    Typography } from "antd";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { UsergroupAddOutlined } from "@ant-design/icons";
@@ -15,6 +20,7 @@ import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery } from "../hooks";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Alert, Empty, Flex, Spin, Tag, Typography } from "antd";
-import { useListIdentitiesQuery } from "../generated/graphql";
+
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
+import { useListIdentitiesQuery } from "./hooks";
 
 const Splash: React.FunctionComponent = () => {
     const identitiesQuery = useListIdentitiesQuery({

@@ -1,11 +1,17 @@
 import * as React from "react";
-import { UsergroupAddOutlined } from "@ant-design/icons";
-import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Typography } from "antd";
+import {
+    UsergroupAddOutlined } from "@ant-design/icons";
+import { Link,
+    useParams } from "react-router-dom";
+import { Avatar,
+    Button,
+    Descriptions,
+    Divider,
+    Flex,
+    Grid,
+    Typography } from "antd";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
-    useProductByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
@@ -15,6 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { formatPrice } from "../../utils";
+import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

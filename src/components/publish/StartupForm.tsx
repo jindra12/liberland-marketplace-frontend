@@ -1,5 +1,9 @@
 import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
@@ -8,14 +12,13 @@ import {
     Startup_AlreadyHave_MutationInput,
     useCreateStartupMutation,
     useUpdateStartupMutation,
-    useListCompaniesByCreatorQuery,
-    useListIdentitiesQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
+import { useListCompaniesByCreatorQuery, useListIdentitiesQuery } from "../hooks";
 
 const stageOptions = [
     { value: Startup_Stage_MutationInput.Idea, label: "Idea" },
