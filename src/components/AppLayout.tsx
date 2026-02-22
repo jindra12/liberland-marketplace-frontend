@@ -14,7 +14,7 @@ const AppLayout: React.FunctionComponent<React.PropsWithChildren> = (props) => {
             <Layout.Content>
                 {isSplash ? props.children : <div className="AppLayout__container">{props.children}</div>}
             </Layout.Content>
-            <Layout.Footer>© {new Date().getFullYear()} Jita-44</Layout.Footer>
+            <Layout.Footer>© {new Date().getFullYear()} NSwap</Layout.Footer>
         </Layout>
     );
 };

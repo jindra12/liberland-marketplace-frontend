@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Typography } from "antd";
+import { Avatar, Button, Flex, Typography } from "antd";
 import { useListIdentitiesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
@@ -32,22 +32,21 @@ export const IdentityList: React.FunctionComponent = () => {
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
-                    <Typography.Link href={identity.website || "#"}>
-                        <Typography.Title level={3}>
-                            {identity.name}
-                        </Typography.Title>
-                    </Typography.Link>
-                ),
-                actions: (identity) => (
-                    <Link to={`/identities/${identity.id}`}>
-                        <Button type="primary">
-                            Details
-                        </Button>
-                    </Link>
+                    <Flex align="center" gap={12}>
+                        <Typography.Link href={identity.website || "#"}>
+                            <Typography.Title level={3} className="IdentityList__title">
+                                {identity.name}
+                            </Typography.Title>
+                        </Typography.Link>
+                        <Link to={`/identities/${identity.id}`}>
+                            <Button type="primary" size="small">
+                                Details
+                            </Button>
+                        </Link>
+                    </Flex>
                 ),
                 avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} /> : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
-                body: () => <Divider />,
             }}
         />
     );

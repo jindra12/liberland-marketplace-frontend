@@ -1,12 +1,13 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Tabs, Typography } from "antd";
+import { Link, useParams } from "react-router-dom";
+import { Avatar, Button, Divider, Flex, Grid, Tabs, Typography } from "antd";
+import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
@@ -20,6 +21,7 @@ const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const company = useCompanyByIdQuery({ id: id! });
     const { md } = Grid.useBreakpoint();
+    const auth = useAuth();
 
     return (
         <Loader query={company}>
@@ -33,6 +35,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 64;
+                const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
 
                 return (
                     <Flex flex={1} vertical gap="8px">
@@ -57,6 +60,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 </Flex>
                             </Typography.Title>
                         </Flex>
+                        {isOwner && (
+                            <Link to={`/companies/edit/${id}`}>
+                                <Button icon={<EditOutlined />}>Edit</Button>
+                            </Link>
+                        )}
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
                         <Divider />

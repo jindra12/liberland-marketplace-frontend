@@ -1,11 +1,12 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Avatar, Button, Divider, Flex, Grid, message, Space, Tabs, Tag, Typography } from "antd";
 import {
     MailOutlined,
     RocketOutlined,
     TeamOutlined,
     UsergroupAddOutlined,
+    EditOutlined,
     UserAddOutlined,
     UserDeleteOutlined,
 } from "@ant-design/icons";
@@ -68,6 +69,7 @@ const StartupDetail: React.FunctionComponent = () => {
                 const isInvolved = userId
                     ? involvedUsers.some((u) => u.id === userId)
                     : false;
+                const isOwner = userId && (s?.createdBy as { id?: string } | null)?.id === userId;
 
                 return (
                     <div>
@@ -98,6 +100,11 @@ const StartupDetail: React.FunctionComponent = () => {
                                 </Flex>
                             </Typography.Title>
                         </Flex>
+                        {isOwner && (
+                            <Link to={`/startups/edit/${id}`}>
+                                <Button icon={<EditOutlined />}>Edit</Button>
+                            </Link>
+                        )}
 
                         <Divider />
 
