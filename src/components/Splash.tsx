@@ -21,15 +21,15 @@ const Splash: React.FunctionComponent = () => {
                     <div className="SplashPage__heroCopy">
                         <Tag className="SplashPage__eyebrow">Identity-first discovery</Tag>
                         <Typography.Title level={1} className="SplashPage__heroTitle">
-                            Jita-44
+                            NSwap
                         </Typography.Title>
                         <Typography.Paragraph className="SplashPage__heroDescription">
-                            Universal syndicated marketplace.
+                            Network swap market. Those who organize into tribes outcompete those who do not. Empower your tribe. Carve a piece of the world in your image.
                         </Typography.Paragraph>
                     </div>
                     <div className="SplashPage__heroVisual">
                         <div className="SplashPage__heroLogo">
-                            <img className="SplashPage__heroGlyph" src="/logo.svg" alt="Jita-44 logo" />
+                            <img className="SplashPage__heroGlyph" src="/logo.svg" alt="NSwap logo" />
                         </div>
                     </div>
                 </div>

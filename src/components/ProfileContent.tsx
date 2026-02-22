@@ -41,6 +41,14 @@ export const ProfileContent: React.FunctionComponent = () => {
     const profile = auth.user?.profile;
     const userId = profile?.sub;
     const emailVerified = profile?.email_verified;
+    const isAuthenticated = auth.isAuthenticated;
+    const signinSilent = auth.signinSilent;
+
+    React.useEffect(() => {
+        if (isAuthenticated && !emailVerified) {
+            signinSilent();
+        }
+    }, [isAuthenticated, signinSilent, emailVerified]);
 
     const [nicknameForm] = Form.useForm();
     const [passwordForm] = Form.useForm();

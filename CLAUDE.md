@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Liberland Marketplace Frontend — a React app connecting users to syndicated free marketplaces. Built with Create React App + react-app-rewired, TypeScript, Ant Design, and a GraphQL backend.
+Network Marketplace Frontend — a React app connecting users to syndicated free marketplaces. Built with Create React App + react-app-rewired, TypeScript, Ant Design, and a GraphQL backend.
 
 ## Commands
 

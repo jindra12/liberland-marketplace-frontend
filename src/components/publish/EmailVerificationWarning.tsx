@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Result, message } from "antd";
-import { MailOutlined } from "@ant-design/icons";
+import { Button, Result, Space, message } from "antd";
+import { CheckCircleOutlined, MailOutlined } from "@ant-design/icons";
 import useCountdown from "@bradgarropy/use-countdown";
+import { useAuth } from "react-oidc-context";
 import { useSendVerificationEmailMutation } from "../../authApi";
 
 interface EmailVerificationWarningProps {
@@ -9,8 +10,10 @@ interface EmailVerificationWarningProps {
 }
 
 export const EmailVerificationWarning: React.FunctionComponent<EmailVerificationWarningProps> = ({ email }) => {
+    const auth = useAuth();
     const sendMutation = useSendVerificationEmailMutation();
     const countdown = useCountdown({ minutes: 1, seconds: 0, autoStart: false });
+    const [checking, setChecking] = React.useState(false);
 
     const handleResend = async () => {
         try {
@@ -23,6 +26,17 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
         }
     };
 
+    const handleCheckVerification = async () => {
+        setChecking(true);
+        try {
+            await auth.signinSilent();
+        } catch {
+            message.error("Could not check verification status");
+        } finally {
+            setChecking(false);
+        }
+    };
+
     return (
         <div className="Publish">
             <Result
@@ -30,15 +44,24 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
                 title="Email not verified"
                 subTitle="You need to verify your email address before you can publish listings."
                 extra={
-                    <Button
-                        type="primary"
-                        icon={<MailOutlined />}
-                        loading={sendMutation.isPending}
-                        disabled={countdown.isRunning}
-                        onClick={handleResend}
-                    >
-                        {countdown.isRunning ? `Resend in ${countdown.formatted}` : "Resend verification email"}
-                    </Button>
+                    <Space>
+                        <Button
+                            type="primary"
+                            icon={<MailOutlined />}
+                            loading={sendMutation.isPending}
+                            disabled={countdown.isRunning}
+                            onClick={handleResend}
+                        >
+                            {countdown.isRunning ? `Resend in ${countdown.formatted}` : "Resend verification email"}
+                        </Button>
+                        <Button
+                            icon={<CheckCircleOutlined />}
+                            loading={checking}
+                            onClick={handleCheckVerification}
+                        >
+                            I've verified my email
+                        </Button>
+                    </Space>
                 }
             />
         </div>

@@ -50,8 +50,8 @@ export const AppHeader: React.FunctionComponent = () => {
         <Header className="AppHeader">
             <div className="AppHeader__inner">
                 <Link className="AppHeader__brand" to="/">
-                    <img className="AppHeader__logo" src="/logo.svg" alt="Jita-44" />
-                    <span className="AppHeader__name">Jita-44</span>
+                    <img className="AppHeader__logo" src="/logo.svg" alt="NSwap" />
+                    <span className="AppHeader__name">NSwap</span>
                 </Link>
 
                 {md ? (
@@ -107,8 +107,8 @@ export const AppHeader: React.FunctionComponent = () => {
                             onClose={() => setDrawerOpen(false)}
                             title={
                                 <div className="AppHeader__drawerTitle">
-                                    <img className="AppHeader__logo" src="/logo.svg" alt="Jita-44" />
-                                    <span className="AppHeader__name">Jita-44</span>
+                                    <img className="AppHeader__logo" src="/logo.svg" alt="NSwap" />
+                                    <span className="AppHeader__name">NSwap</span>
                                 </div>
                             }
                         >

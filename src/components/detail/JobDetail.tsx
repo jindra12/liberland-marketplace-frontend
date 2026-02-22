@@ -1,13 +1,15 @@
 import * as React from "react";
-import {
-    useParams } from "react-router-dom";
 import { Avatar,
     Divider,
     Flex,
     Grid,
     Space,
-    Typography } from "antd";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+    Typography,
+    Button
+} from "antd";
+import { Link, useParams } from "react-router-dom";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
 } from "../../generated/graphql";
@@ -26,6 +28,7 @@ import { useJobByIdQuery } from "../hooks";
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const { md } = Grid.useBreakpoint();
+    const auth = useAuth();
     const query = useJobByIdQuery({ id: id! });
     return (
         <Loader query={query}>
@@ -43,6 +46,7 @@ const JobDetail: React.FunctionComponent = () => {
                 const isInactive = job?.isActive === false;
                 const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
                 const { allowedIdentities, disallowedIdentities } = getJobIdentityAccess(job, "name");
+                const isOwner = auth.user?.profile?.sub && job?.createdBy?.id === auth.user.profile.sub;
 
                 return (
                     <Flex flex={1} vertical gap="8px">
@@ -74,6 +78,11 @@ const JobDetail: React.FunctionComponent = () => {
                                 />
                             </div>
                         </Space>
+                        {isOwner && (
+                            <Link to={`/jobs/edit/${id}`}>
+                                <Button icon={<EditOutlined />}>Edit</Button>
+                            </Link>
+                        )}
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{job?.description}</Markdown>
