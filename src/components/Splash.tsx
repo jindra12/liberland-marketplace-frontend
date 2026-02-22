@@ -23,7 +23,7 @@ const Splash: React.FunctionComponent = () => {
                             NSwap
                         </Typography.Title>
                         <Typography.Paragraph className="SplashPage__heroDescription">
-                            A market for network states.
+                            Network swap market. Those who organize into tribes outcompete those who do not. Empower your tribe. Carve a piece of the world in your image.
                         </Typography.Paragraph>
                     </div>
                     <div className="SplashPage__heroVisual">
