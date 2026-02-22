@@ -1,4 +1,14 @@
-import { QueryKey, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import {
+    FetchStatus,
+    QueryKey,
+    QueryObserverResult,
+    QueryStatus,
+    RefetchOptions,
+    useQueries,
+    UseQueryOptions,
+    UseQueryResult,
+} from "@tanstack/react-query";
+import maxBy from "lodash-es/maxBy";
 import {
     ListCompaniesByCreatorDocument,
     useListCompaniesByCreatorQuery as useListCompaniesByCreatorQuerySingle,
@@ -67,6 +77,72 @@ import {
     SearchStartupsDocument,
     useSearchStartupsQuery as useSearchStartupsQuerySingle,
 } from "../generated/graphql";
+import { gqlFetcher } from "../gqlFetcher";
+import { useEndpointContext } from "./EndpointContext";
+
+type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
+type CombinedQueryResult<TQuery> = UseQueryResult<TQuery[], Error>;
+
+const combineResult = <TQuery>(
+    results: readonly QueryResult<TQuery>[],
+): CombinedQueryResult<TQuery> => {
+    const data = results.flatMap((query) => (query.data ? [query.data] : []));
+    const error = results.find((query) => query.error)?.error;
+    const failureReason = results.find((query) => query.failureReason)?.failureReason;
+
+    const isError = results.some((query) => query.isError);
+    const isPending = results.some((query) => query.isPending);
+    const isLoading = results.some((query) => query.isLoading);
+    const isFetching = results.some((query) => query.isFetching);
+    const isFetched = results.some((query) => query.isFetched);
+    const isFetchedAfterMount = results.some((query) => query.isFetchedAfterMount);
+    const isPaused = results.some((query) => query.isPaused);
+    const isPlaceholderData = results.some((query) => query.isPlaceholderData);
+    const isStale = results.some((query) => query.isStale);
+    const isSuccess = results.length > 0 && results.every((query) => query.isSuccess);
+
+    const status: QueryStatus = isPending ? "pending" : isError ? "error" : "success";
+    const fetchStatus: FetchStatus = isFetching ? "fetching" : isPaused ? "paused" : "idle";
+
+    const hasData = data.length > 0;
+    const isLoadingError = isError && !hasData;
+    const isRefetchError = isError && hasData;
+
+    const refetch = async (
+        options?: RefetchOptions,
+    ): Promise<QueryObserverResult<TQuery[], Error>> => {
+        const refetched = await Promise.all(results.map((query) => query.refetch(options)));
+        return combineResult(refetched);
+    };
+
+    return {
+        data,
+        dataUpdatedAt: maxBy(results, (query) => query.dataUpdatedAt)?.dataUpdatedAt || 0,
+        error,
+        errorUpdateCount: results.reduce((sum, query) => sum + query.errorUpdateCount, 0),
+        errorUpdatedAt: maxBy(results, (query) => query.errorUpdatedAt)?.errorUpdatedAt || 0,
+        failureCount: results.reduce((sum, query) => sum + query.failureCount, 0),
+        failureReason,
+        fetchStatus,
+        isError,
+        isFetched,
+        isFetchedAfterMount,
+        isFetching,
+        isInitialLoading: isLoading,
+        isLoading,
+        isLoadingError,
+        isPaused,
+        isPending,
+        isPlaceholderData,
+        isRefetchError,
+        isRefetching: isFetching && !isPending,
+        isStale,
+        isSuccess,
+        promise: Promise.all(results.map((query) => query.promise)),
+        refetch,
+        status,
+    } as CombinedQueryResult<TQuery>;
+};
 
 export type GeneratedUseQueryHook<TQueryFnData, TVariables> =
     (<TData = TQueryFnData, TError = unknown>(
@@ -96,7 +172,29 @@ export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
         ) => () => Promise<TQueryFnData>;
     };
 
-export const enhancedQueryFactory = <THook>(useHook: THook, _query: string): THook => useHook;
+export const enhancedQueryFactory = <TQueryFnData, TVariables>(
+    useHook:
+        | GeneratedUseQueryHook<TQueryFnData, TVariables>
+        | GeneratedUseQueryHookOptional<TQueryFnData, TVariables>,
+    query: string,
+) => {
+    return (variables?: TVariables, options?: Headers): CombinedQueryResult<TQueryFnData> => {
+        const { urls } = useEndpointContext();
+        return useQueries({
+            queries: urls.map((url) => ({
+                queryKey: [...useHook.getKey(variables as TVariables), url],
+                queryFn: gqlFetcher<TQueryFnData, TVariables>(
+                    query,
+                    variables,
+                    options,
+                    url,
+                ),
+            })),
+            combine: (result): CombinedQueryResult<TQueryFnData> =>
+                combineResult(result),
+        });
+    };
+}
 
 export const useListCompaniesByCreatorQuery = enhancedQueryFactory(useListCompaniesByCreatorQuerySingle, ListCompaniesByCreatorDocument);
 export const useCompanyByIdQuery = enhancedQueryFactory(useCompanyByIdQuerySingle, CompanyByIdDocument);
