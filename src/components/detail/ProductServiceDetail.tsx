@@ -1,5 +1,6 @@
 import * as React from "react";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { useAuth } from "react-oidc-context";
 import { Link, useParams } from "react-router-dom";
 import { Avatar, Button, Descriptions, Divider, Flex, Grid, Typography } from "antd";
 import {
@@ -19,6 +20,7 @@ import { formatPrice } from "../../utils";
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const { md } = Grid.useBreakpoint();
+    const auth = useAuth();
     const query = useProductByIdQuery({ id: id! });
     const companyId = query.data?.Product?.company?.id;
     const companyQuery = useCompanyByIdQuery(
@@ -45,6 +47,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 } : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
+                const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
 
                 return (
                     <Flex flex={1} vertical gap="8px">
@@ -77,6 +80,11 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 />
                             </Flex>
                         </Flex>
+                        {isOwner && (
+                            <Link to={`/products-services/edit/${id}`}>
+                                <Button icon={<EditOutlined />}>Edit</Button>
+                            </Link>
+                        )}
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{product?.description}</Markdown>
