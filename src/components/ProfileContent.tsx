@@ -23,6 +23,12 @@ export const ProfileContent: React.FunctionComponent = () => {
     const userId = profile?.sub;
     const emailVerified = profile?.email_verified;
 
+    React.useEffect(() => {
+        if (auth.isAuthenticated && !emailVerified) {
+            auth.signinSilent();
+        }
+    }, [auth.isAuthenticated]);
+
     const [nicknameForm] = Form.useForm();
     const [passwordForm] = Form.useForm();
     const nicknameMutation = useUpdateUserNameMutation();
