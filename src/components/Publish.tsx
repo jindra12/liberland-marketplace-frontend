@@ -6,16 +6,19 @@ import { PublishContent } from "./publish/PublishContent";
 
 const Publish: React.FunctionComponent = () => {
     const auth = useAuth();
+    const isAuthenticated = auth.isAuthenticated;
+    const signinSilent = auth.signinSilent;
+    const emailVerified = auth.user?.profile?.email_verified;
 
     React.useEffect(() => {
-        if (auth.isAuthenticated && !auth.user?.profile?.email_verified) {
-            auth.signinSilent();
+        if (isAuthenticated && !emailVerified) {
+            signinSilent();
         }
-    }, [auth.isAuthenticated]);
+    }, [isAuthenticated, signinSilent, emailVerified]);
 
     return (
         <AuthGuard redirect>
-            {!auth.user?.profile?.email_verified ? (
+            {!emailVerified ? (
                 <EmailVerificationWarning email={auth.user?.profile?.email as string} />
             ) : (
                 <PublishContent />
