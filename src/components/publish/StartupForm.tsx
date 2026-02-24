@@ -10,15 +10,18 @@ import {
     Startup_Stage_MutationInput,
     Startup_LookingFor_MutationInput,
     Startup_AlreadyHave_MutationInput,
-    useCreateStartupMutation,
-    useUpdateStartupMutation,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
-import { useListCompaniesByCreatorQuery, useListIdentitiesQuery } from "../hooks";
+import {
+    useCreateStartupMutation,
+    useListCompaniesByCreatorQuery,
+    useListIdentitiesQuery,
+    useUpdateStartupMutation,
+} from "../hooks";
 
 const stageOptions = [
     { value: Startup_Stage_MutationInput.Idea, label: "Idea" },
@@ -80,7 +83,6 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 

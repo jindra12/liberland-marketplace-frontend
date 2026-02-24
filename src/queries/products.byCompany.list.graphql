@@ -8,6 +8,7 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
   ) {
     docs {
       id
+      serverURL
       name
       description
       url
@@ -31,10 +32,12 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
       }
       company {
         id
+        serverURL
         name
         description
         identity {
           id
+          serverURL
           name
           description
         }

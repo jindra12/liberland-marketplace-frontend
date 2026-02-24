@@ -8,6 +8,7 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
   ) {
     docs {
       id
+      serverURL
       name
       description
       website
@@ -15,16 +16,19 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
       email
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       identity {
         id
+        serverURL
         name
         description
         image {

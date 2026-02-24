@@ -6,16 +6,16 @@ import {
     Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
-import {
-    useCreateProductMutation,
-    useUpdateProductMutation,
-} from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
-import { useListCompaniesByCreatorQuery } from "../hooks";
+import {
+    useCreateProductMutation,
+    useListCompaniesByCreatorQuery,
+    useUpdateProductMutation,
+} from "../hooks";
 
 interface ProductFormValues {
     name: string | null;
@@ -45,7 +45,6 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<ProductFormValues> = {

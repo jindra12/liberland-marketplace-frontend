@@ -30,7 +30,10 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
     const handleJoin = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await joinMutation.mutateAsync(startup.id);
+            await joinMutation.mutateAsync({
+                startupId: startup.id,
+                url: startup.serverURL!,
+            });
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You joined this startup!");
@@ -42,7 +45,10 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
     const handleLeave = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await leaveMutation.mutateAsync(startup.id);
+            await leaveMutation.mutateAsync({
+                startupId: startup.id,
+                url: startup.serverURL!,
+            });
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You left this startup");

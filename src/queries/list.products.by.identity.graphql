@@ -7,10 +7,12 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
   ) {
     docs {
       id
+      serverURL
       name
       companyIdentityId
       company {
         id
+        serverURL
         name
       }
       price {

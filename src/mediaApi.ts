@@ -11,8 +11,8 @@ interface MediaDoc {
     mimeType: string;
 }
 
-export const uploadMedia = async (file: File, alt?: string): Promise<MediaDoc> => {
-    const token = getAccessToken();
+export const uploadMedia = async (url: string, file: File, alt?: string): Promise<MediaDoc> => {
+    const token = getAccessToken(url);
     const formData = new FormData();
     formData.append("file", file);
     if (alt) formData.append("alt", alt);

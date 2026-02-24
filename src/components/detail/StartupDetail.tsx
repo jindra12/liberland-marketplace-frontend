@@ -47,7 +47,10 @@ const StartupDetail: React.FunctionComponent = () => {
 
     const handleJoin = async () => {
         try {
-            await joinMutation.mutateAsync(id!);
+            await joinMutation.mutateAsync({
+                startupId: id!,
+                url: startup.data!.Startup?.serverURL!
+            });
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
             message.success("You joined this startup!");
         } catch {
@@ -57,7 +60,10 @@ const StartupDetail: React.FunctionComponent = () => {
 
     const handleLeave = async () => {
         try {
-            await leaveMutation.mutateAsync(id!);
+            await leaveMutation.mutateAsync({
+                startupId: id!,
+                url: startup.data!.Startup?.serverURL!
+            });
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
             message.success("You left this startup");
         } catch {

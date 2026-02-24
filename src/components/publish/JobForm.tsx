@@ -10,15 +10,17 @@ import dayjs from "dayjs";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     Job_EmploymentType_MutationInput,
-    useCreateJobMutation,
-    useUpdateJobMutation,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
-import { useListCompaniesByCreatorQuery } from "../hooks";
+import {
+    useCreateJobMutation,
+    useListCompaniesByCreatorQuery,
+    useUpdateJobMutation,
+} from "../hooks";
 
 const employmentOptions = [
     { value: Job_EmploymentType_MutationInput.FullTime, label: "Full-time" },
@@ -62,7 +64,6 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 

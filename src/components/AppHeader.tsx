@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LoginOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
 import { useAuth } from "react-oidc-context";
+import { EndpointDrawerButton } from "./EndpointDrawerButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -57,6 +58,7 @@ export const AppHeader: React.FunctionComponent = () => {
                 {md ? (
                     <Flex align="center" gap={16}>
                         <SearchButton />
+                        <EndpointDrawerButton />
                         <Menu
                             className="AppHeader__menu"
                             mode="horizontal"
@@ -93,6 +95,7 @@ export const AppHeader: React.FunctionComponent = () => {
                 ) : (
                     <Space className="AppHeader__mobile" align="center">
                         <SearchButton />
+                        <EndpointDrawerButton />
                         <Button
                             className="AppHeader__burger"
                             type="text"

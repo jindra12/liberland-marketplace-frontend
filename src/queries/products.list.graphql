@@ -2,6 +2,7 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
+      serverURL
       name
       description
       url
@@ -25,10 +26,12 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       }
       company {
         id
+        serverURL
         name
         description
         identity {
           id
+          serverURL
           name
           description
         }

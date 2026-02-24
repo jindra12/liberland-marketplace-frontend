@@ -4,15 +4,15 @@ import {
     Input,
     Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
-import {
-    useCreateCompanyMutation,
-    useUpdateCompanyMutation,
-} from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { useListIdentitiesQuery } from "../hooks";
+import {
+    useCreateCompanyMutation,
+    useListIdentitiesQuery,
+    useUpdateCompanyMutation,
+} from "../hooks";
 
 interface CompanyFormValues {
     name: string | null;

@@ -8,6 +8,7 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
   ) {
     docs {
       id
+      serverURL
       title
       description
       positions
@@ -18,30 +19,36 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
       }
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       company {
         id
+        serverURL
         name
         description
         allowedIdentities {
           id
+          serverURL
           name
           description
         }
         disallowedIdentities {
           id
+          serverURL
           name
           description
         }
         identity {
           id
+          serverURL
           name
           description
         }

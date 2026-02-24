@@ -1,6 +1,7 @@
 query ProductById($id: String!) {
   Product(id: $id) {
     id
+    serverURL
     name
     _status
     description
@@ -17,6 +18,7 @@ query ProductById($id: String!) {
     }
     company {
       id
+      serverURL
       name
       description
       createdBy {
@@ -24,6 +26,7 @@ query ProductById($id: String!) {
       }
       identity {
         id
+        serverURL
         name
         description
       }

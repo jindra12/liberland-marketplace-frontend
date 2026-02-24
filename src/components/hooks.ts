@@ -4,10 +4,14 @@ import {
     QueryObserverResult,
     QueryStatus,
     RefetchOptions,
+    useMutation,
     useQueries,
+    UseMutationOptions,
+    UseMutationResult,
     UseQueryOptions,
     UseQueryResult,
 } from "@tanstack/react-query";
+import mergeWith from "lodash-es/mergeWith";
 import maxBy from "lodash-es/maxBy";
 import {
     ListCompaniesByCreatorDocument,
@@ -26,6 +30,10 @@ import {
     useListCompaniesQuery as useListCompaniesQuerySingle,
     SearchCompaniesDocument,
     useSearchCompaniesQuery as useSearchCompaniesQuerySingle,
+    CreateCompanyDocument,
+    useCreateCompanyMutation as useCreateCompanyMutationSingle,
+    UpdateCompanyDocument,
+    useUpdateCompanyMutation as useUpdateCompanyMutationSingle,
     IdentityByIdDocument,
     useIdentityByIdQuery as useIdentityByIdQuerySingle,
     ListIdentitiesDocument,
@@ -44,12 +52,24 @@ import {
     useListJobsBySecondaryIdentityQuery as useListJobsBySecondaryIdentityQuerySingle,
     SearchJobsBySecondaryIdentityDocument,
     useSearchJobsBySecondaryIdentityQuery as useSearchJobsBySecondaryIdentityQuerySingle,
+    CreateJobDocument,
+    useCreateJobMutation as useCreateJobMutationSingle,
+    UpdateJobDocument,
+    useUpdateJobMutation as useUpdateJobMutationSingle,
     ListJobsDocument,
     useListJobsQuery as useListJobsQuerySingle,
     SearchJobsDocument,
     useSearchJobsQuery as useSearchJobsQuerySingle,
     ListCommentsByTargetDocument,
     useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle,
+    CreateCommentDocument,
+    useCreateCommentMutation as useCreateCommentMutationSingle,
+    CreateReplyToCommentDocument,
+    useCreateReplyToCommentMutation as useCreateReplyToCommentMutationSingle,
+    DeleteCommentDocument,
+    useDeleteCommentMutation as useDeleteCommentMutationSingle,
+    UpdateCommentContentDocument,
+    useUpdateCommentContentMutation as useUpdateCommentContentMutationSingle,
     ListJobsByIdentityDocument,
     useListJobsByIdentityQuery as useListJobsByIdentityQuerySingle,
     ListProductsByIdentityDocument,
@@ -60,6 +80,10 @@ import {
     useListProductsByCompanyQuery as useListProductsByCompanyQuerySingle,
     SearchProductsByCompanyDocument,
     useSearchProductsByCompanyQuery as useSearchProductsByCompanyQuerySingle,
+    CreateProductDocument,
+    useCreateProductMutation as useCreateProductMutationSingle,
+    UpdateProductDocument,
+    useUpdateProductMutation as useUpdateProductMutationSingle,
     ListProductsByCreatorDocument,
     useListProductsByCreatorQuery as useListProductsByCreatorQuerySingle,
     ProductByIdDocument,
@@ -76,17 +100,33 @@ import {
     useListStartupsQuery as useListStartupsQuerySingle,
     SearchStartupsDocument,
     useSearchStartupsQuery as useSearchStartupsQuerySingle,
+    CreateStartupDocument,
+    useCreateStartupMutation as useCreateStartupMutationSingle,
+    UpdateStartupDocument,
+    useUpdateStartupMutation as useUpdateStartupMutationSingle,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
 
+const deepMergeConcatArrays = <T>(a: T, b: T): T =>
+    mergeWith({}, a, b, (left: any, right: any) => {
+        if (Array.isArray(left) && Array.isArray(right)) {
+            return [...left, ...right];
+        }
+        return undefined;
+    });
+
 type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
-type CombinedQueryResult<TQuery> = UseQueryResult<TQuery[], Error>;
+
+const merger = <TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TQuery) => data.slice(1).reduce((acc, item) => {
+    return action(acc, item);
+}, data[0]);
 
 const combineResult = <TQuery>(
     results: readonly QueryResult<TQuery>[],
-): CombinedQueryResult<TQuery> => {
-    const data = results.flatMap((query) => (query.data ? [query.data] : []));
+    mergeAction: (a: TQuery, b: TQuery) => TQuery,
+) => {
+    const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
     const error = results.find((query) => query.error)?.error;
     const failureReason = results.find((query) => query.failureReason)?.failureReason;
 
@@ -104,15 +144,15 @@ const combineResult = <TQuery>(
     const status: QueryStatus = isPending ? "pending" : isError ? "error" : "success";
     const fetchStatus: FetchStatus = isFetching ? "fetching" : isPaused ? "paused" : "idle";
 
-    const hasData = data.length > 0;
+    const hasData = Array.isArray(data) ? data.length > 0 : Boolean(data);
     const isLoadingError = isError && !hasData;
     const isRefetchError = isError && hasData;
 
     const refetch = async (
         options?: RefetchOptions,
-    ): Promise<QueryObserverResult<TQuery[], Error>> => {
+    ): Promise<QueryObserverResult<TQuery, Error>> => {
         const refetched = await Promise.all(results.map((query) => query.refetch(options)));
-        return combineResult(refetched);
+        return combineResult(refetched, mergeAction);
     };
 
     return {
@@ -141,7 +181,7 @@ const combineResult = <TQuery>(
         promise: Promise.all(results.map((query) => query.promise)),
         refetch,
         status,
-    } as CombinedQueryResult<TQuery>;
+    } as QueryResult<TQuery>;
 };
 
 export type GeneratedUseQueryHook<TQueryFnData, TVariables> =
@@ -172,14 +212,73 @@ export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
         ) => () => Promise<TQueryFnData>;
     };
 
+type MutationVariablesWithUrl<TVariables extends object | undefined> =
+    (TVariables extends undefined ? {} : TVariables) & { url?: string };
+
+export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
+    <TError = unknown, TContext = unknown>(
+        options?: UseMutationOptions<TData, TError, TVariables, TContext>,
+    ): UseMutationResult<TData, TError, TVariables, TContext>;
+    fetcher: (
+        variables: TVariables,
+        options?: RequestInit["headers"],
+    ) => () => Promise<TData>;
+};
+
+export type EnhancedUseMutationHook<TData, TVariables extends object | undefined> = {
+    <TError = unknown, TContext = unknown>(
+        options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
+    ): UseMutationResult<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>;
+    fetcher: (
+        variables: MutationVariablesWithUrl<TVariables>,
+        options?: RequestInit["headers"],
+    ) => () => Promise<TData>;
+};
+
+export const enhancedMutationFactory = <TData, TVariables extends object | undefined>(
+    _useHook: GeneratedUseMutationHook<TData, TVariables>,
+    mutation: string,
+): EnhancedUseMutationHook<TData, TVariables> => {
+    const useEnhancedMutation = <TError = unknown, TContext = unknown>(
+        options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
+    ) => {
+        return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>(
+            {
+                mutationFn: (variables) => {
+                    const { url, ...rest } = variables;
+                    return gqlFetcher<TData, TVariables>(
+                        mutation,
+                        rest as TVariables,
+                        undefined,
+                        url,
+                    )();
+                },
+                ...options,
+            },
+        );
+    };
+
+    useEnhancedMutation.fetcher = (
+        variables: MutationVariablesWithUrl<TVariables>,
+        options?: RequestInit["headers"],
+    ) => {
+        const { url, ...rest } = variables;
+        return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url);
+    };
+
+    return useEnhancedMutation;
+};
+
 export const enhancedQueryFactory = <TQueryFnData, TVariables>(
     useHook:
         | GeneratedUseQueryHook<TQueryFnData, TVariables>
         | GeneratedUseQueryHookOptional<TQueryFnData, TVariables>,
     query: string,
+    mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
 ) => {
-    return (variables?: TVariables, options?: Headers): CombinedQueryResult<TQueryFnData> => {
-        const { urls } = useEndpointContext();
+    return (variables?: TVariables & { url?: string }, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
+        const { enabled } = useEndpointContext();
+        const urls = (variables?.url ? [variables.url] : enabled);
         return useQueries({
             queries: urls.map((url) => ({
                 queryKey: [...useHook.getKey(variables as TVariables), url],
@@ -189,9 +288,10 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables>(
                     options,
                     url,
                 ),
+                ...params,
             })),
-            combine: (result): CombinedQueryResult<TQueryFnData> =>
-                combineResult(result),
+            combine: (result) =>
+                combineResult(result, mergeAction),
         });
     };
 }
@@ -229,3 +329,15 @@ export const useListStartupsByCreatorQuery = enhancedQueryFactory(useListStartup
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
+export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
+export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
+export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
+export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
+export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
+export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);
+export const useUpdateJobMutation = enhancedMutationFactory(useUpdateJobMutationSingle, UpdateJobDocument);
+export const useCreateProductMutation = enhancedMutationFactory(useCreateProductMutationSingle, CreateProductDocument);
+export const useUpdateProductMutation = enhancedMutationFactory(useUpdateProductMutationSingle, UpdateProductDocument);
+export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
+export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
+export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);

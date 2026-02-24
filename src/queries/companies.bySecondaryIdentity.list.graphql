@@ -13,6 +13,7 @@ query ListCompaniesBySecondaryIdentity(
   ) {
     docs {
       id
+      serverURL
       name
       description
       website
@@ -20,16 +21,19 @@ query ListCompaniesBySecondaryIdentity(
       email
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       identity {
         id
+        serverURL
         name
         description
         image {

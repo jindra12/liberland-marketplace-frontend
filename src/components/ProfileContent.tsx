@@ -75,9 +75,9 @@ export const ProfileContent: React.FunctionComponent = () => {
         { enabled: companyIds.length > 0, refetchOnMount: "always" },
     );
 
-    const handleNickname = async (values: { name: string }) => {
+    const handleNickname = async (values: { url: string; name: string }) => {
         try {
-            await nicknameMutation.mutateAsync(values.name);
+            await nicknameMutation.mutateAsync(values);
             await auth.signinSilent();
             message.success("Nickname updated");
             nicknameForm.resetFields();
@@ -86,13 +86,13 @@ export const ProfileContent: React.FunctionComponent = () => {
         }
     };
 
-    const handlePassword = async (values: { currentPassword: string; newPassword: string; confirm: string }) => {
+    const handlePassword = async (values: { url: string; currentPassword: string; newPassword: string; confirm: string }) => {
         if (values.newPassword !== values.confirm) {
             message.error("Passwords do not match");
             return;
         }
         try {
-            await passwordMutation.mutateAsync({ currentPassword: values.currentPassword, newPassword: values.newPassword });
+            await passwordMutation.mutateAsync(values);
             message.success("Password changed");
             passwordForm.resetFields();
         } catch {
