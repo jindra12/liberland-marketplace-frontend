@@ -3,12 +3,14 @@ import { useAuth } from "react-oidc-context";
 import { AuthGuard } from "./AuthGuard";
 import { EmailVerificationWarning } from "./publish/EmailVerificationWarning";
 import { PublishContent } from "./publish/PublishContent";
+import { useEndpointContext } from "./EndpointContext";
 
 const Publish: React.FunctionComponent = () => {
     const auth = useAuth();
     const isAuthenticated = auth.isAuthenticated;
     const signinSilent = auth.signinSilent;
     const emailVerified = auth.user?.profile?.email_verified;
+    const { authUrl } = useEndpointContext();
 
     React.useEffect(() => {
         if (isAuthenticated && !emailVerified) {
@@ -19,7 +21,10 @@ const Publish: React.FunctionComponent = () => {
     return (
         <AuthGuard redirect>
             {!emailVerified ? (
-                <EmailVerificationWarning email={auth.user?.profile?.email as string} />
+                <EmailVerificationWarning
+                    email={auth.user?.profile?.email as string}
+                    url={authUrl}
+                />
             ) : (
                 <PublishContent />
             )}

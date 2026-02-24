@@ -7,9 +7,10 @@ import { useSendVerificationEmailMutation } from "../../authApi";
 
 interface EmailVerificationWarningProps {
     email: string;
+    url: string;
 }
 
-export const EmailVerificationWarning: React.FunctionComponent<EmailVerificationWarningProps> = ({ email }) => {
+export const EmailVerificationWarning: React.FunctionComponent<EmailVerificationWarningProps> = ({ email, url }) => {
     const auth = useAuth();
     const sendMutation = useSendVerificationEmailMutation();
     const countdown = useCountdown({ minutes: 1, seconds: 0, autoStart: false });
@@ -17,7 +18,10 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
 
     const handleResend = async () => {
         try {
-            await sendMutation.mutateAsync(email);
+            await sendMutation.mutateAsync({
+                email,
+                url,
+            });
             message.success("Verification email sent");
             countdown.reset();
             countdown.start();

@@ -3,14 +3,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
-import { AuthProvider } from "react-oidc-context";
-import { WebStorageStateStore } from "oidc-client-ts";
 
 import { AntProvider } from "./components/AntProvider";
-import { BACKEND_URL } from "./gqlFetcher";
 import { EndpointContextProvider } from "./components/EndpointContext";
 
 import "./index.scss";
+import { AuthContextProvider } from "./components/AuthContext";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
@@ -37,26 +35,6 @@ const suspense = (Component: React.FunctionComponent) => () => (
     </React.Suspense>
 );
 
-const oidcConfig = {
-    authority: `${BACKEND_URL}/api/auth`,
-    client_id: process.env.REACT_APP_OIDC_CLIENT_ID || "",
-    client_secret: process.env.REACT_APP_OIDC_CLIENT_SECRET || "",
-    redirect_uri:
-        process.env.REACT_APP_OIDC_REDIRECT_URI ||
-        `${window.location.origin}/auth/callback`,
-    scope: "openid profile email",
-    userStore: new WebStorageStateStore({ store: window.localStorage }),
-    metadata: {
-        issuer: `${BACKEND_URL}/api/auth`,
-        authorization_endpoint: `${BACKEND_URL}/api/auth/oauth2/authorize`,
-        token_endpoint: `${BACKEND_URL}/api/auth/oauth2/token`,
-        userinfo_endpoint: `${BACKEND_URL}/api/auth/oauth2/userinfo`,
-    },
-    onSigninCallback: () => {
-        window.history.replaceState({}, document.title, "/");
-    },
-};
-
 const config = new QueryClient({
     defaultOptions: {
         queries: {
@@ -68,10 +46,10 @@ const config = new QueryClient({
 });
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 root.render(
-    <AuthProvider {...oidcConfig}>
-        <BrowserRouter>
-            <QueryClientProvider client={config}>
-                <EndpointContextProvider>
+    <EndpointContextProvider>
+        <AuthContextProvider>
+            <BrowserRouter>
+                <QueryClientProvider client={config}>
                     <AntProvider>
                         <React.Suspense fallback={<Spin />}>
                             <AppLayout>
@@ -97,8 +75,8 @@ root.render(
                             </AppLayout>
                         </React.Suspense>
                     </AntProvider>
-                </EndpointContextProvider>
-            </QueryClientProvider>
-        </BrowserRouter>
-    </AuthProvider>
+                </QueryClientProvider>
+            </BrowserRouter>
+        </AuthContextProvider>
+    </EndpointContextProvider>
 );
