@@ -15,7 +15,7 @@ const items = [
     { key: "/products-services", label: "Market" },
     { key: "/companies", label: "Companies" },
     { key: "/startups", label: "Startups" },
-    { key: "/identities", label: "Identities" },
+    { key: "/tribes", label: "Tribes" },
 ];
 
 const getSelectedKeys = (pathname: string) => {

@@ -28,7 +28,7 @@ export const IdentityList: React.FunctionComponent = () => {
             next={() => setPage(page + 1)}
             loading={query.isLoading}
             refetch={query.refetch}
-            title="Identities"
+            title="Tribes"
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
@@ -38,7 +38,7 @@ export const IdentityList: React.FunctionComponent = () => {
                                 {identity.name}
                             </Typography.Title>
                         </Typography.Link>
-                        <Link to={`/identities/${identity.id}`}>
+                        <Link to={`/tribes/${identity.id}`}>
                             <Button type="primary" size="small">
                                 Details
                             </Button>
@@ -46,7 +46,7 @@ export const IdentityList: React.FunctionComponent = () => {
                     </Flex>
                 ),
                 avatar: (identity) => identity.image?.url ? (
-                    <Link to={`/identities/${identity.id}`}>
+                    <Link to={`/tribes/${identity.id}`}>
                         <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
                     </Link>
                 ) : undefined,

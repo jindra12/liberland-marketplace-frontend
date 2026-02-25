@@ -18,7 +18,7 @@ const Splash: React.FunctionComponent = () => {
             <section className="SplashPage__hero">
                 <div className="SplashPage__heroInner">
                     <div className="SplashPage__heroCopy">
-                        <Tag className="SplashPage__eyebrow">Identity-first discovery</Tag>
+                        <Tag className="SplashPage__eyebrow">Tribe-first discovery</Tag>
                         <Typography.Title level={1} className="SplashPage__heroTitle">
                             NSwap
                         </Typography.Title>
@@ -39,7 +39,7 @@ const Splash: React.FunctionComponent = () => {
                     <Alert
                         type="error"
                         showIcon
-                        message="Failed to load identities"
+                        message="Failed to load tribes"
                         description="Try refreshing the page."
                     />
                 )}
@@ -51,7 +51,7 @@ const Splash: React.FunctionComponent = () => {
                 )}
 
                 {!hasError && !identities.length && !isLoading && (
-                    <Empty description="No identities found yet." />
+                    <Empty description="No tribes found yet." />
                 )}
 
                 {identities.length > 0 && (
@@ -60,7 +60,7 @@ const Splash: React.FunctionComponent = () => {
                             <IdentityMarketSection
                                 key={identity.id}
                                 identityId={identity.id}
-                                identityName={identity.name || "Identity"}
+                                identityName={identity.name || "Tribe"}
                             />
                         ))}
                     </Flex>

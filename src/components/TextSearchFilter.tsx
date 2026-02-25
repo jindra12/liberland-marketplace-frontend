@@ -9,7 +9,7 @@ export interface TextSearchFilterProps {
 export const TextSearchFilter: React.FunctionComponent<TextSearchFilterProps> = (props) => {
     return (
         <Input.Search
-            placeholder="Search identities"
+            placeholder="Search tribes"
             value={props.value}
             onChange={(e) => props.onChange(e.target.value)}
             allowClear

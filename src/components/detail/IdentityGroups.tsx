@@ -14,7 +14,7 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
     allowedIdentities,
     disallowedIdentities,
     className,
-    emptyText = "No identities found",
+    emptyText = "No tribes found",
 }) => {
     const allowed = allowedIdentities || [];
     const disallowed = disallowedIdentities || [];
@@ -26,7 +26,7 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
                     <Flex vertical gap="8px">
                         <Flex gap="8px" align="center">
                             <UsergroupAddOutlined />
-                            Allowed identities
+                            Allowed tribes
                         </Flex>
                     </Flex>
                     {allowed.map((identity) => (
@@ -42,7 +42,7 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = ({
                     <Flex vertical gap="8px">
                         <Flex gap="8px" align="center">
                             <MinusCircleFilled />
-                            Disallowed identities
+                            Disallowed tribes
                         </Flex>
                     </Flex>
                     {disallowed.length ? disallowed.map((identity) => (

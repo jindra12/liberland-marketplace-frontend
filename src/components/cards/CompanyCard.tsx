@@ -27,7 +27,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No companies for this identity" }}
+            locale={{ emptyText: "No companies for this tribe" }}
             renderItem={(company) => {
                 const imageUrl = company.image?.url;
                 return (

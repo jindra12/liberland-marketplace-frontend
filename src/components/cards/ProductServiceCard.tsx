@@ -28,7 +28,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No products/services for this identity" }}
+            locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
                 const price = formatPrice(product.price?.amount, product.price?.currency);
                 const imageUrl = product.image?.url;

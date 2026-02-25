@@ -28,7 +28,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No jobs for this identity" }}
+            locale={{ emptyText: "No jobs for this tribe" }}
             renderItem={(job) => {
                 const employmentType = formatEmploymentType(job.employmentType);
                 const salary = formatSalary(
