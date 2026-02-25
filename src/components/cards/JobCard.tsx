@@ -50,12 +50,14 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
                                 avatar={imageUrl ? (
-                                    <Avatar
-                                        shape="square"
-                                        size={48}
-                                        src={`${BACKEND_URL}${imageUrl}`}
-                                        className="SplashEntityCard__avatar"
-                                    />
+                                    <Link to={`/jobs/${job.id}`}>
+                                        <Avatar
+                                            shape="square"
+                                            size={48}
+                                            src={`${BACKEND_URL}${imageUrl}`}
+                                            className="SplashEntityCard__avatar"
+                                        />
+                                    </Link>
                                 ) : undefined}
                                 title={(
                                     <Link to={`/jobs/${job.id}`} className="SplashEntityCard__itemLink">

@@ -29,6 +29,7 @@ const EditProduct = React.lazy(() => import("./components/edit/EditProduct"));
 const Startups = React.lazy(() => import("./components/Startups"));
 const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
+const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <React.Suspense fallback={<Spin />}>
@@ -91,6 +92,7 @@ root.render(
                                 <Route Component={suspense(Startups)} path="/startups" />
                                 <Route Component={suspense(Startup)} path="/startups/:id" />
                                 <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
+                                <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                             </Routes>
                         </AppLayout>
                     </React.Suspense>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Tag, Typography } from "antd";
+import { Avatar, Button, Divider, Flex, Tag } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
 import { BankOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
@@ -9,7 +9,7 @@ import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPrice } from "../../utils";
+import { formatPrice, parseActionLink } from "../../utils";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -48,24 +48,35 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     </Flex>
                 ),
                 actions: (product) => (
-                    <Flex wrap gap="32px" align="center">
-                        <Link to={`/products-services/${product.id}`}>
-                            <Button size="large" className="ActionBtn">Details</Button>
-                        </Link>
-                        {product.url && (
-                            <Typography.Link href={product.url}>
-                                <Button size="large" type="primary">Order now!</Button>
-                            </Typography.Link>
-                        )}
-                    </Flex>
+                    (() => {
+                        const orderLink = parseActionLink(product.url);
+                        return (
+                            <Flex wrap gap="32px" align="center">
+                                <Link to={`/products-services/${product.id}`}>
+                                    <Button size="large" className="ActionBtn">Details</Button>
+                                </Link>
+                                {orderLink && (
+                                    <Button
+                                        size="large"
+                                        type="primary"
+                                        href={orderLink}
+                                    >
+                                        Order now!
+                                    </Button>
+                                )}
+                            </Flex>
+                        );
+                    })()
                 ),
                 avatar: (product) => product.image?.url ? (
-                    <Avatar
-                        shape="square"
-                        size={80}
-                        src={`${BACKEND_URL}${product.image.url}`}
-                        className="EntityList__avatar"
-                    />
+                    <Link to={`/products-services/${product.id}`}>
+                        <Avatar
+                            shape="square"
+                            size={80}
+                            src={`${BACKEND_URL}${product.image.url}`}
+                            className="EntityList__avatar"
+                        />
+                    </Link>
                 ) : undefined,
                 description: (product) => (
                     <Markdown className="Markdown--clamp3 EntityList__description">

@@ -55,12 +55,14 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                 ),
                 actions: (company) => <Link to={`/companies/${company.id}`}><Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button></Link>,
                 avatar: (company) => company.image?.url ? (
-                    <Avatar
-                        shape="square"
-                        size={80}
-                        src={`${BACKEND_URL}${company.image.url}`}
-                        className="EntityList__avatar"
-                    />
+                    <Link to={`/companies/${company.id}`}>
+                        <Avatar
+                            shape="square"
+                            size={80}
+                            src={`${BACKEND_URL}${company.image.url}`}
+                            className="EntityList__avatar"
+                        />
+                    </Link>
                 ) : undefined,
                 description: (company) => (
                     <CompanyContactLinks

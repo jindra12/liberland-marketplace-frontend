@@ -22,6 +22,7 @@
     "@tronweb3/tronwallet-adapters": "^1.2.9",
     "@uiw/react-md-editor": "^4.0.11",
     "antd": "^5.24.4",
+    "autolinker": "^4.1.5",
     "axios": "^1.13.4",
     "bignumber.js": "^9.3.0",
     "bs58check": "^4.0.0",

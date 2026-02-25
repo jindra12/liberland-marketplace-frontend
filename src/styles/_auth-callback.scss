@@ -1,0 +1,52 @@
+.AuthCallback {
+    min-height: clamp(260px, 55vh, 520px);
+    text-align: center;
+    gap: 8px;
+
+    &__spinnerCluster {
+        width: 112px;
+        height: 112px;
+        margin-bottom: 12px;
+        display: grid;
+        place-items: center;
+        position: relative;
+    }
+
+    &__ring {
+        position: absolute;
+        border-radius: 999px;
+        border: 2px solid transparent;
+    }
+
+    &__ring--outer {
+        inset: 0;
+        border-top-color: rgba(0, 167, 216, 0.95);
+        border-right-color: rgba(0, 167, 216, 0.55);
+        animation: auth-callback-spin 1.3s linear infinite;
+    }
+
+    &__ring--inner {
+        inset: 16px;
+        border-bottom-color: rgba(250, 173, 20, 0.95);
+        border-left-color: rgba(250, 173, 20, 0.55);
+        animation: auth-callback-spin-reverse 1s linear infinite;
+    }
+
+    &__title {
+        margin: 0 !important;
+    }
+
+    &__subtitle {
+        max-width: 420px;
+    }
+}
+
+@keyframes auth-callback-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes auth-callback-spin-reverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}

@@ -45,7 +45,11 @@ export const IdentityList: React.FunctionComponent = () => {
                         </Link>
                     </Flex>
                 ),
-                avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} /> : undefined,
+                avatar: (identity) => identity.image?.url ? (
+                    <Link to={`/identities/${identity.id}`}>
+                        <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
+                    </Link>
+                ) : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
             }}
         />
