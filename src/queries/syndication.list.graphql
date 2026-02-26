@@ -1,0 +1,10 @@
+query ListPublishedSyndicationUrls {
+  Syndications(
+    draft: false
+    limit: 0
+  ) {
+    docs {
+      url
+    }
+  }
+}

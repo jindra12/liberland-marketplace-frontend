@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
     FetchStatus,
     QueryKey,
@@ -295,6 +296,10 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables>(
         });
     };
 }
+
+export const useSyndicationQuery = () => {
+    
+};
 
 export const useListCompaniesByCreatorQuery = enhancedQueryFactory(useListCompaniesByCreatorQuerySingle, ListCompaniesByCreatorDocument);
 export const useCompanyByIdQuery = enhancedQueryFactory(useCompanyByIdQuerySingle, CompanyByIdDocument);

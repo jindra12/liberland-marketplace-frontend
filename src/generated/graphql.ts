@@ -53,6 +53,7 @@ export type Access = {
   search?: Maybe<SearchAccess>;
   sessions?: Maybe<SessionsAccess>;
   startups?: Maybe<StartupsAccess>;
+  syndications?: Maybe<SyndicationsAccess>;
   transactions?: Maybe<TransactionsAccess>;
   users?: Maybe<UsersAccess>;
   variantOptions?: Maybe<VariantOptionsAccess>;
@@ -18250,6 +18251,7 @@ export type Mutation = {
   createSearch?: Maybe<Search>;
   createSession?: Maybe<Session>;
   createStartup?: Maybe<Startup>;
+  createSyndication?: Maybe<Syndication>;
   createTransaction?: Maybe<Transaction>;
   createUser?: Maybe<User>;
   createVariant?: Maybe<Variant>;
@@ -18284,6 +18286,7 @@ export type Mutation = {
   deleteSearch?: Maybe<Search>;
   deleteSession?: Maybe<Session>;
   deleteStartup?: Maybe<Startup>;
+  deleteSyndication?: Maybe<Syndication>;
   deleteTransaction?: Maybe<Transaction>;
   deleteUser?: Maybe<User>;
   deleteVariant?: Maybe<Variant>;
@@ -18318,6 +18321,7 @@ export type Mutation = {
   duplicateSearch?: Maybe<Search>;
   duplicateSession?: Maybe<Session>;
   duplicateStartup?: Maybe<Startup>;
+  duplicateSyndication?: Maybe<Syndication>;
   duplicateTransaction?: Maybe<Transaction>;
   duplicateVariant?: Maybe<Variant>;
   duplicateVariantOption?: Maybe<VariantOption>;
@@ -18331,6 +18335,7 @@ export type Mutation = {
   restoreVersionPost?: Maybe<Post>;
   restoreVersionProduct?: Maybe<Product>;
   restoreVersionStartup?: Maybe<Startup>;
+  restoreVersionSyndication?: Maybe<Syndication>;
   restoreVersionVariant?: Maybe<Variant>;
   updateAccount?: Maybe<Account>;
   updateAddress?: Maybe<Address>;
@@ -18362,6 +18367,7 @@ export type Mutation = {
   updateSearch?: Maybe<Search>;
   updateSession?: Maybe<Session>;
   updateStartup?: Maybe<Startup>;
+  updateSyndication?: Maybe<Syndication>;
   updateTransaction?: Maybe<Transaction>;
   updateUser?: Maybe<User>;
   updateVariant?: Maybe<Variant>;
@@ -18535,6 +18541,12 @@ export type MutationCreateSessionArgs = {
 
 export type MutationCreateStartupArgs = {
   data: MutationStartupInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateSyndicationArgs = {
+  data: MutationSyndicationInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -18738,6 +18750,12 @@ export type MutationDeleteSessionArgs = {
 
 
 export type MutationDeleteStartupArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteSyndicationArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -18947,6 +18965,12 @@ export type MutationDuplicateStartupArgs = {
 };
 
 
+export type MutationDuplicateSyndicationArgs = {
+  data: MutationSyndicationInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateTransactionArgs = {
   data: MutationTransactionInput;
   id: Scalars['String']['input'];
@@ -19013,6 +19037,12 @@ export type MutationRestoreVersionProductArgs = {
 
 
 export type MutationRestoreVersionStartupArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationRestoreVersionSyndicationArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
 };
@@ -19282,6 +19312,15 @@ export type MutationUpdateSessionArgs = {
 export type MutationUpdateStartupArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationStartupUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateSyndicationArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationSyndicationUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -28231,6 +28270,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -28248,7 +28288,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Startup | Transaction | User | Variant | VariantOption | VariantType | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Startup | Syndication | Transaction | User | Variant | VariantOption | VariantType | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -28280,6 +28320,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -28313,6 +28354,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -28389,6 +28431,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
   VariantOptions = 'variantOptions',
@@ -32986,6 +33029,8 @@ export type Query = {
   Sessions?: Maybe<Sessions>;
   Startup?: Maybe<Startup>;
   Startups?: Maybe<Startups>;
+  Syndication?: Maybe<Syndication>;
+  Syndications?: Maybe<Syndications>;
   Transaction?: Maybe<Transaction>;
   Transactions?: Maybe<Transactions>;
   User?: Maybe<User>;
@@ -33026,6 +33071,7 @@ export type Query = {
   countSearches?: Maybe<CountSearches>;
   countSessions?: Maybe<CountSessions>;
   countStartups?: Maybe<CountStartups>;
+  countSyndications?: Maybe<CountSyndications>;
   countTransactions?: Maybe<CountTransactions>;
   countUsers?: Maybe<CountUsers>;
   countVariantOptions?: Maybe<CountVariantOptions>;
@@ -33063,6 +33109,7 @@ export type Query = {
   docAccessSearch?: Maybe<SearchDocAccess>;
   docAccessSession?: Maybe<SessionsDocAccess>;
   docAccessStartup?: Maybe<StartupsDocAccess>;
+  docAccessSyndication?: Maybe<SyndicationsDocAccess>;
   docAccessTransaction?: Maybe<TransactionsDocAccess>;
   docAccessUser?: Maybe<UsersDocAccess>;
   docAccessVariant?: Maybe<VariantsDocAccess>;
@@ -33077,6 +33124,7 @@ export type Query = {
   versionPost?: Maybe<PostVersion>;
   versionProduct?: Maybe<ProductVersion>;
   versionStartup?: Maybe<StartupVersion>;
+  versionSyndication?: Maybe<SyndicationVersion>;
   versionVariant?: Maybe<VariantVersion>;
   versionsCompanies?: Maybe<VersionsCompanies>;
   versionsJobs?: Maybe<VersionsJobs>;
@@ -33084,6 +33132,7 @@ export type Query = {
   versionsPosts?: Maybe<VersionsPosts>;
   versionsProducts?: Maybe<VersionsProducts>;
   versionsStartups?: Maybe<VersionsStartups>;
+  versionsSyndications?: Maybe<VersionsSyndications>;
   versionsVariants?: Maybe<VersionsVariants>;
 };
 
@@ -33648,6 +33697,26 @@ export type QueryStartupsArgs = {
 };
 
 
+export type QuerySyndicationArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QuerySyndicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Syndication_Where>;
+};
+
+
 export type QueryTransactionArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -33969,6 +34038,13 @@ export type QueryCountStartupsArgs = {
 };
 
 
+export type QueryCountSyndicationsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Syndication_Where>;
+};
+
+
 export type QueryCountTransactionsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -34158,6 +34234,11 @@ export type QueryDocAccessStartupArgs = {
 };
 
 
+export type QueryDocAccessSyndicationArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessTransactionArgs = {
   id: Scalars['String']['input'];
 };
@@ -34219,6 +34300,12 @@ export type QueryVersionProductArgs = {
 
 
 export type QueryVersionStartupArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryVersionSyndicationArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -34293,6 +34380,17 @@ export type QueryVersionsStartupsArgs = {
   sort?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<VersionsStartup_Where>;
+};
+
+
+export type QueryVersionsSyndicationsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<VersionsSyndication_Where>;
 };
 
 
@@ -38473,6 +38571,675 @@ export type State = {
   name: Scalars['String']['output'];
   required?: Maybe<Scalars['Boolean']['output']>;
   width?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Syndication = {
+  __typename?: 'Syndication';
+  _status?: Maybe<Syndication__Status>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export enum SyndicationUpdate__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type SyndicationVersion = {
+  __typename?: 'SyndicationVersion';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  latest?: Maybe<Scalars['Boolean']['output']>;
+  parent?: Maybe<Syndication>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  version?: Maybe<SyndicationVersion_Version>;
+};
+
+
+export type SyndicationVersionParentArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SyndicationVersion_Version = {
+  __typename?: 'SyndicationVersion_Version';
+  _status?: Maybe<SyndicationVersion_Version__Status>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export enum SyndicationVersion_Version__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Syndication__Status {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Syndication__Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export enum Syndication__Status_MutationInput {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type Syndication__Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Syndication__Status_Input>>>;
+  equals?: InputMaybe<Syndication__Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Syndication__Status_Input>>>;
+  not_equals?: InputMaybe<Syndication__Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Syndication__Status_Input>>>;
+};
+
+export type Syndication_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Syndication_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Syndication_Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Syndication_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Syndication_Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Syndication_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Syndication_Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Syndication_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
+  _status?: InputMaybe<Syndication__Status_Operator>;
+  createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
+  description?: InputMaybe<Syndication_Description_Operator>;
+  id?: InputMaybe<Syndication_Id_Operator>;
+  name?: InputMaybe<Syndication_Name_Operator>;
+  updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
+  url?: InputMaybe<Syndication_Url_Operator>;
+};
+
+export type Syndication_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
+  _status?: InputMaybe<Syndication__Status_Operator>;
+  createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
+  description?: InputMaybe<Syndication_Description_Operator>;
+  id?: InputMaybe<Syndication_Id_Operator>;
+  name?: InputMaybe<Syndication_Name_Operator>;
+  updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
+  url?: InputMaybe<Syndication_Url_Operator>;
+};
+
+export type Syndication_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
+  _status?: InputMaybe<Syndication__Status_Operator>;
+  createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
+  description?: InputMaybe<Syndication_Description_Operator>;
+  id?: InputMaybe<Syndication_Id_Operator>;
+  name?: InputMaybe<Syndication_Name_Operator>;
+  updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
+  url?: InputMaybe<Syndication_Url_Operator>;
+};
+
+export type Syndications = {
+  __typename?: 'Syndications';
+  docs: Array<Syndication>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type SyndicationsCreateAccess = {
+  __typename?: 'SyndicationsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsCreateDocAccess = {
+  __typename?: 'SyndicationsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsDeleteAccess = {
+  __typename?: 'SyndicationsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsDeleteDocAccess = {
+  __typename?: 'SyndicationsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsDocAccessFields = {
+  __typename?: 'SyndicationsDocAccessFields';
+  _status?: Maybe<SyndicationsDocAccessFields__Status>;
+  createdAt?: Maybe<SyndicationsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<SyndicationsDocAccessFields_CreatedBy>;
+  description?: Maybe<SyndicationsDocAccessFields_Description>;
+  name?: Maybe<SyndicationsDocAccessFields_Name>;
+  updatedAt?: Maybe<SyndicationsDocAccessFields_UpdatedAt>;
+  url?: Maybe<SyndicationsDocAccessFields_Url>;
+};
+
+export type SyndicationsDocAccessFields__Status = {
+  __typename?: 'SyndicationsDocAccessFields__status';
+  create?: Maybe<SyndicationsDocAccessFields__Status_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields__Status_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields__Status_Read>;
+  update?: Maybe<SyndicationsDocAccessFields__Status_Update>;
+};
+
+export type SyndicationsDocAccessFields__Status_Create = {
+  __typename?: 'SyndicationsDocAccessFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields__Status_Delete = {
+  __typename?: 'SyndicationsDocAccessFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields__Status_Read = {
+  __typename?: 'SyndicationsDocAccessFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields__Status_Update = {
+  __typename?: 'SyndicationsDocAccessFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedAt = {
+  __typename?: 'SyndicationsDocAccessFields_createdAt';
+  create?: Maybe<SyndicationsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_CreatedAt_Update>;
+};
+
+export type SyndicationsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'SyndicationsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'SyndicationsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'SyndicationsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedBy = {
+  __typename?: 'SyndicationsDocAccessFields_createdBy';
+  create?: Maybe<SyndicationsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_CreatedBy_Update>;
+};
+
+export type SyndicationsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'SyndicationsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'SyndicationsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'SyndicationsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Description = {
+  __typename?: 'SyndicationsDocAccessFields_description';
+  create?: Maybe<SyndicationsDocAccessFields_Description_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_Description_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_Description_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_Description_Update>;
+};
+
+export type SyndicationsDocAccessFields_Description_Create = {
+  __typename?: 'SyndicationsDocAccessFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Description_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Description_Read = {
+  __typename?: 'SyndicationsDocAccessFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Description_Update = {
+  __typename?: 'SyndicationsDocAccessFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Name = {
+  __typename?: 'SyndicationsDocAccessFields_name';
+  create?: Maybe<SyndicationsDocAccessFields_Name_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_Name_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_Name_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_Name_Update>;
+};
+
+export type SyndicationsDocAccessFields_Name_Create = {
+  __typename?: 'SyndicationsDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Name_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Name_Read = {
+  __typename?: 'SyndicationsDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Name_Update = {
+  __typename?: 'SyndicationsDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_UpdatedAt = {
+  __typename?: 'SyndicationsDocAccessFields_updatedAt';
+  create?: Maybe<SyndicationsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type SyndicationsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'SyndicationsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'SyndicationsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'SyndicationsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Url = {
+  __typename?: 'SyndicationsDocAccessFields_url';
+  create?: Maybe<SyndicationsDocAccessFields_Url_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_Url_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_Url_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_Url_Update>;
+};
+
+export type SyndicationsDocAccessFields_Url_Create = {
+  __typename?: 'SyndicationsDocAccessFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Url_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Url_Read = {
+  __typename?: 'SyndicationsDocAccessFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Url_Update = {
+  __typename?: 'SyndicationsDocAccessFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields = {
+  __typename?: 'SyndicationsFields';
+  _status?: Maybe<SyndicationsFields__Status>;
+  createdAt?: Maybe<SyndicationsFields_CreatedAt>;
+  createdBy?: Maybe<SyndicationsFields_CreatedBy>;
+  description?: Maybe<SyndicationsFields_Description>;
+  name?: Maybe<SyndicationsFields_Name>;
+  updatedAt?: Maybe<SyndicationsFields_UpdatedAt>;
+  url?: Maybe<SyndicationsFields_Url>;
+};
+
+export type SyndicationsFields__Status = {
+  __typename?: 'SyndicationsFields__status';
+  create?: Maybe<SyndicationsFields__Status_Create>;
+  delete?: Maybe<SyndicationsFields__Status_Delete>;
+  read?: Maybe<SyndicationsFields__Status_Read>;
+  update?: Maybe<SyndicationsFields__Status_Update>;
+};
+
+export type SyndicationsFields__Status_Create = {
+  __typename?: 'SyndicationsFields__status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields__Status_Delete = {
+  __typename?: 'SyndicationsFields__status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields__Status_Read = {
+  __typename?: 'SyndicationsFields__status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields__Status_Update = {
+  __typename?: 'SyndicationsFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedAt = {
+  __typename?: 'SyndicationsFields_createdAt';
+  create?: Maybe<SyndicationsFields_CreatedAt_Create>;
+  delete?: Maybe<SyndicationsFields_CreatedAt_Delete>;
+  read?: Maybe<SyndicationsFields_CreatedAt_Read>;
+  update?: Maybe<SyndicationsFields_CreatedAt_Update>;
+};
+
+export type SyndicationsFields_CreatedAt_Create = {
+  __typename?: 'SyndicationsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedAt_Delete = {
+  __typename?: 'SyndicationsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedAt_Read = {
+  __typename?: 'SyndicationsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedAt_Update = {
+  __typename?: 'SyndicationsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedBy = {
+  __typename?: 'SyndicationsFields_createdBy';
+  create?: Maybe<SyndicationsFields_CreatedBy_Create>;
+  delete?: Maybe<SyndicationsFields_CreatedBy_Delete>;
+  read?: Maybe<SyndicationsFields_CreatedBy_Read>;
+  update?: Maybe<SyndicationsFields_CreatedBy_Update>;
+};
+
+export type SyndicationsFields_CreatedBy_Create = {
+  __typename?: 'SyndicationsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedBy_Delete = {
+  __typename?: 'SyndicationsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedBy_Read = {
+  __typename?: 'SyndicationsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_CreatedBy_Update = {
+  __typename?: 'SyndicationsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Description = {
+  __typename?: 'SyndicationsFields_description';
+  create?: Maybe<SyndicationsFields_Description_Create>;
+  delete?: Maybe<SyndicationsFields_Description_Delete>;
+  read?: Maybe<SyndicationsFields_Description_Read>;
+  update?: Maybe<SyndicationsFields_Description_Update>;
+};
+
+export type SyndicationsFields_Description_Create = {
+  __typename?: 'SyndicationsFields_description_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Description_Delete = {
+  __typename?: 'SyndicationsFields_description_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Description_Read = {
+  __typename?: 'SyndicationsFields_description_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Description_Update = {
+  __typename?: 'SyndicationsFields_description_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Name = {
+  __typename?: 'SyndicationsFields_name';
+  create?: Maybe<SyndicationsFields_Name_Create>;
+  delete?: Maybe<SyndicationsFields_Name_Delete>;
+  read?: Maybe<SyndicationsFields_Name_Read>;
+  update?: Maybe<SyndicationsFields_Name_Update>;
+};
+
+export type SyndicationsFields_Name_Create = {
+  __typename?: 'SyndicationsFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Name_Delete = {
+  __typename?: 'SyndicationsFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Name_Read = {
+  __typename?: 'SyndicationsFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Name_Update = {
+  __typename?: 'SyndicationsFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_UpdatedAt = {
+  __typename?: 'SyndicationsFields_updatedAt';
+  create?: Maybe<SyndicationsFields_UpdatedAt_Create>;
+  delete?: Maybe<SyndicationsFields_UpdatedAt_Delete>;
+  read?: Maybe<SyndicationsFields_UpdatedAt_Read>;
+  update?: Maybe<SyndicationsFields_UpdatedAt_Update>;
+};
+
+export type SyndicationsFields_UpdatedAt_Create = {
+  __typename?: 'SyndicationsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_UpdatedAt_Delete = {
+  __typename?: 'SyndicationsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_UpdatedAt_Read = {
+  __typename?: 'SyndicationsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_UpdatedAt_Update = {
+  __typename?: 'SyndicationsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Url = {
+  __typename?: 'SyndicationsFields_url';
+  create?: Maybe<SyndicationsFields_Url_Create>;
+  delete?: Maybe<SyndicationsFields_Url_Delete>;
+  read?: Maybe<SyndicationsFields_Url_Read>;
+  update?: Maybe<SyndicationsFields_Url_Update>;
+};
+
+export type SyndicationsFields_Url_Create = {
+  __typename?: 'SyndicationsFields_url_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Url_Delete = {
+  __typename?: 'SyndicationsFields_url_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Url_Read = {
+  __typename?: 'SyndicationsFields_url_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Url_Update = {
+  __typename?: 'SyndicationsFields_url_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsReadAccess = {
+  __typename?: 'SyndicationsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsReadDocAccess = {
+  __typename?: 'SyndicationsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsReadVersionsAccess = {
+  __typename?: 'SyndicationsReadVersionsAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsReadVersionsDocAccess = {
+  __typename?: 'SyndicationsReadVersionsDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsUpdateAccess = {
+  __typename?: 'SyndicationsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SyndicationsUpdateDocAccess = {
+  __typename?: 'SyndicationsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type Text = {
@@ -44505,6 +45272,11 @@ export type CountStartups = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountSyndications = {
+  __typename?: 'countSyndications';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountTransactions = {
   __typename?: 'countTransactions';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -45862,6 +46634,26 @@ export type MutationStartup_FundsNeededInput = {
   currency?: InputMaybe<Startup_FundsNeeded_Currency_MutationInput>;
 };
 
+export type MutationSyndicationInput = {
+  _status?: InputMaybe<Syndication__Status_MutationInput>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  url: Scalars['String']['input'];
+};
+
+export type MutationSyndicationUpdateInput = {
+  _status?: InputMaybe<SyndicationUpdate__Status_MutationInput>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationTransactionInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
   billingAddress?: InputMaybe<MutationTransaction_BillingAddressInput>;
@@ -46340,6 +47132,26 @@ export type StartupsDocAccess = {
   read?: Maybe<StartupsReadDocAccess>;
   readVersions?: Maybe<StartupsReadVersionsDocAccess>;
   update?: Maybe<StartupsUpdateDocAccess>;
+};
+
+export type SyndicationsAccess = {
+  __typename?: 'syndicationsAccess';
+  create?: Maybe<SyndicationsCreateAccess>;
+  delete?: Maybe<SyndicationsDeleteAccess>;
+  fields?: Maybe<SyndicationsFields>;
+  read?: Maybe<SyndicationsReadAccess>;
+  readVersions?: Maybe<SyndicationsReadVersionsAccess>;
+  update?: Maybe<SyndicationsUpdateAccess>;
+};
+
+export type SyndicationsDocAccess = {
+  __typename?: 'syndicationsDocAccess';
+  create?: Maybe<SyndicationsCreateDocAccess>;
+  delete?: Maybe<SyndicationsDeleteDocAccess>;
+  fields?: Maybe<SyndicationsDocAccessFields>;
+  read?: Maybe<SyndicationsReadDocAccess>;
+  readVersions?: Maybe<SyndicationsReadVersionsDocAccess>;
+  update?: Maybe<SyndicationsUpdateDocAccess>;
 };
 
 export type TransactionsAccess = {
@@ -48610,6 +49422,192 @@ export type VersionsStartups = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type VersionsSyndication_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsSyndication_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsSyndication_Latest_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsSyndication_Parent_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsSyndication_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export enum VersionsSyndication_Version___Status_Input {
+  Draft = 'draft',
+  Published = 'published'
+}
+
+export type VersionsSyndication_Version___Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsSyndication_Version___Status_Input>>>;
+  equals?: InputMaybe<VersionsSyndication_Version___Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsSyndication_Version___Status_Input>>>;
+  not_equals?: InputMaybe<VersionsSyndication_Version___Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsSyndication_Version___Status_Input>>>;
+};
+
+export type VersionsSyndication_Version__CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsSyndication_Version__CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsSyndication_Version__Description_Operator = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type VersionsSyndication_Version__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsSyndication_Version__UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsSyndication_Version__Url_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsSyndication_Where = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsSyndication_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsSyndication_Id_Operator>;
+  latest?: InputMaybe<VersionsSyndication_Latest_Operator>;
+  parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
+  version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
+  version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
+};
+
+export type VersionsSyndication_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsSyndication_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsSyndication_Id_Operator>;
+  latest?: InputMaybe<VersionsSyndication_Latest_Operator>;
+  parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
+  version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
+  version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
+};
+
+export type VersionsSyndication_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VersionsSyndication_Where_Or>>>;
+  createdAt?: InputMaybe<VersionsSyndication_CreatedAt_Operator>;
+  id?: InputMaybe<VersionsSyndication_Id_Operator>;
+  latest?: InputMaybe<VersionsSyndication_Latest_Operator>;
+  parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
+  updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
+  version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
+  version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
+  version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
+  version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
+};
+
+export type VersionsSyndications = {
+  __typename?: 'versionsSyndications';
+  docs: Array<SyndicationVersion>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
 export type VersionsVariant_Autosave_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -49290,6 +50288,11 @@ export type UpdateStartupMutationVariables = Exact<{
 
 
 export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null }> } | null };
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52243,6 +53246,37 @@ export const useUpdateStartupMutation = <
 
 
 useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables, options);
+
+export const ListPublishedSyndicationUrlsDocument = `
+    query ListPublishedSyndicationUrls {
+  Syndications(draft: false, limit: 0) {
+    docs {
+      url
+    }
+  }
+}
+    `;
+
+export const useListPublishedSyndicationUrlsQuery = <
+      TData = ListPublishedSyndicationUrlsQuery,
+      TError = unknown
+    >(
+      variables?: ListPublishedSyndicationUrlsQueryVariables,
+      options?: Omit<UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListPublishedSyndicationUrlsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListPublishedSyndicationUrls'] : ['ListPublishedSyndicationUrls', variables],
+    queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables),
+    ...options
+  }
+    )};
+
+useListPublishedSyndicationUrlsQuery.getKey = (variables?: ListPublishedSyndicationUrlsQueryVariables) => variables === undefined ? ['ListPublishedSyndicationUrls'] : ['ListPublishedSyndicationUrls', variables];
+
+
+useListPublishedSyndicationUrlsQuery.fetcher = (variables?: ListPublishedSyndicationUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables, options);
 
 export const UpdateCommentContentDocument = `
     mutation UpdateCommentContent($id: String!, $content: String!) {
