@@ -28,7 +28,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No products/services for this identity" }}
+            locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
                 const price = formatPrice(product.price?.amount, product.price?.currency);
                 const imageUrl = product.image?.url;
@@ -45,12 +45,14 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
                                 avatar={imageUrl ? (
-                                    <Avatar
-                                        shape="square"
-                                        size={48}
-                                        src={`${BACKEND_URL}${imageUrl}`}
-                                        className="SplashEntityCard__avatar"
-                                    />
+                                    <Link to={`/products-services/${product.id}`}>
+                                        <Avatar
+                                            shape="square"
+                                            size={48}
+                                            src={`${BACKEND_URL}${imageUrl}`}
+                                            className="SplashEntityCard__avatar"
+                                        />
+                                    </Link>
                                 ) : undefined}
                                 title={(
                                     <Link to={`/products-services/${product.id}`} className="SplashEntityCard__itemLink">

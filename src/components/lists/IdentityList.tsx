@@ -28,7 +28,7 @@ export const IdentityList: React.FunctionComponent = () => {
             next={() => setPage(page + 1)}
             loading={query.isLoading}
             refetch={query.refetch}
-            title="Identities"
+            title="Tribes"
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
@@ -38,14 +38,18 @@ export const IdentityList: React.FunctionComponent = () => {
                                 {identity.name}
                             </Typography.Title>
                         </Typography.Link>
-                        <Link to={`/identities/${identity.id}`}>
+                        <Link to={`/tribes/${identity.id}`}>
                             <Button type="primary" size="small">
                                 Details
                             </Button>
                         </Link>
                     </Flex>
                 ),
-                avatar: (identity) => identity.image?.url ? <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} /> : undefined,
+                avatar: (identity) => identity.image?.url ? (
+                    <Link to={`/tribes/${identity.id}`}>
+                        <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
+                    </Link>
+                ) : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
             }}
         />

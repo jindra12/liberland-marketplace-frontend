@@ -29,6 +29,7 @@ const EditProduct = React.lazy(() => import("./components/edit/EditProduct"));
 const Startups = React.lazy(() => import("./components/Startups"));
 const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
+const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <React.Suspense fallback={<Spin />}>
@@ -77,11 +78,11 @@ root.render(
                                 <Route Component={suspense(Splash)} path="/" />
                                 <Route Component={suspense(Jobs)} path="/jobs" />
                                 <Route Component={suspense(Companies)} path="/companies" />
-                                <Route Component={suspense(Identities)} path="/identities" />
+                                <Route Component={suspense(Identities)} path="/tribes" />
                                 <Route Component={suspense(ProductsServices)} path="/products-services" />
                                 <Route Component={suspense(Job)} path="/jobs/:id" />
                                 <Route Component={suspense(Company)} path="/companies/:id" />
-                                <Route Component={suspense(Identity)} path="/identities/:id" />
+                                <Route Component={suspense(Identity)} path="/tribes/:id" />
                                 <Route Component={suspense(ProductService)} path="/products-services/:id" />
                                 <Route Component={suspense(Profile)} path="/profile" />
                                 <Route Component={suspense(Publish)} path="/publish" />
@@ -91,6 +92,7 @@ root.render(
                                 <Route Component={suspense(Startups)} path="/startups" />
                                 <Route Component={suspense(Startup)} path="/startups/:id" />
                                 <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
+                                <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                             </Routes>
                         </AppLayout>
                     </React.Suspense>

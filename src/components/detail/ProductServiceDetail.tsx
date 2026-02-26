@@ -15,7 +15,7 @@ import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
-import { formatPrice } from "../../utils";
+import { formatPrice, parseActionLink } from "../../utils";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -48,6 +48,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
+                const orderLink = parseActionLink(product?.url);
 
                 return (
                     <Flex flex={1} vertical gap="8px">
@@ -109,12 +110,15 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 </Descriptions>
                             </>
                         )}
-                        {(product?.url || product?.company?.id) && (
+                        {(orderLink || product?.company?.id) && (
                             <>
                                 <Divider />
                                 <Flex wrap gap="12px">
-                                    {product?.url && (
-                                        <Button type="primary" href={product.url} target="_blank" rel="noreferrer">
+                                    {orderLink && (
+                                        <Button
+                                            type="primary"
+                                            href={orderLink}
+                                        >
                                             Order now
                                         </Button>
                                     )}

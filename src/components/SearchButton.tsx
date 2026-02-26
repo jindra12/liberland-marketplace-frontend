@@ -12,7 +12,7 @@ export const SearchButton: React.FunctionComponent = () => {
         { key: "jobs", label: "Jobs" },
         { key: "companies", label: "Companies" },
         { key: "startups", label: "Startups" },
-        { key: "identities", label: "Identities" },
+        { key: "identities", label: "Tribes" },
         { key: "products", label: "Products / Services" },
     ];
 

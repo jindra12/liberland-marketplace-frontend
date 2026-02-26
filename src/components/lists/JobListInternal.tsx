@@ -55,13 +55,15 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 avatar: (job) => {
                     const url = job.image?.url || job.company?.image?.url;
                     return url ? (
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={`${BACKEND_URL}${url}`}
-                            alt={job.title || ""}
-                            className="EntityList__avatar"
-                        />
+                        <Link to={`/jobs/${job.id}`}>
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={`${BACKEND_URL}${url}`}
+                                alt={job.title || ""}
+                                className="EntityList__avatar"
+                            />
+                        </Link>
                     ) : undefined;
                 },
                 description: (job) => {

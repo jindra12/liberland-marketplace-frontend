@@ -1,4 +1,5 @@
 import { ResultStatusType } from "antd/es/result";
+import Autolinker from "autolinker";
 import {
     AuthProfile,
     CommentCurrentUser,
@@ -102,6 +103,19 @@ const employmentTypeLabels: Record<Job_EmploymentType, string> = {
 
 export const formatEmploymentType = (type?: Job_EmploymentType | null): string | null => {
     return type ? employmentTypeLabels[type] ?? null : null;
+};
+
+export const parseActionLink = (value?: string | null) => {
+    const text = typeof value === "string" ? value.trim() : "";
+    if (!text) return undefined;
+
+    const [match] = Autolinker.parse(text, {
+        mention: false,
+        hashtag: false,
+    });
+    if (!match) return undefined;
+
+    return match.getAnchorHref();
 };
 
 export const getImage = (doc?: DocType) => {
