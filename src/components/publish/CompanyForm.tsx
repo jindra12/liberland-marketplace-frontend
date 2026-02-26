@@ -26,6 +26,7 @@ interface CompanyFormValues {
 
 export interface CompanyFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<CompanyFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -33,7 +34,7 @@ export interface CompanyFormProps {
     };
 }
 
-export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues }) => {
+export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues, url }) => {
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
 
@@ -48,6 +49,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: CompanyFormValues, imageId) => ({
             name: values.name,
             description: values.description,

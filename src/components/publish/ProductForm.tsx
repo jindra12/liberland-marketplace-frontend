@@ -30,6 +30,7 @@ interface ProductFormValues {
 
 export interface ProductFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<ProductFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -37,7 +38,7 @@ export interface ProductFormProps {
     };
 }
 
-export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues }) => {
+export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
@@ -60,6 +61,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: ProductFormValues, imageId) => ({
             name: values.name,
             description: values.description,

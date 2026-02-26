@@ -44,6 +44,7 @@ const EditJob: React.FunctionComponent = () => {
                                         existingImageUrl: job?.image?.url,
                                         existingImageId: job?.image?.id,
                                     }}
+                                    url={job?.serverURL!}
                                 />
                             </OwnerGuard>
                         );

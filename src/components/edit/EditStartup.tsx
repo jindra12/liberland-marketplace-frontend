@@ -39,6 +39,7 @@ const EditStartup: React.FunctionComponent = () => {
                                         existingImageUrl: startup?.image?.url,
                                         existingImageId: startup?.image?.id,
                                     }}
+                                    url={startup?.serverURL!}
                                 />
                             </OwnerGuard>
                         );

@@ -68,6 +68,7 @@ interface StartupFormValues {
 
 export interface StartupFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<StartupFormValues> & {
         id?: string;
         existingImageUrl?: string | null;
@@ -75,7 +76,7 @@ export interface StartupFormProps {
     };
 }
 
-export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues }) => {
+export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
@@ -102,6 +103,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: StartupFormValues, imageId) => ({
             title: values.title,
             description: values.description,

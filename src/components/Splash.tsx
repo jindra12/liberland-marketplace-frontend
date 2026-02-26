@@ -62,6 +62,7 @@ const Splash: React.FunctionComponent = () => {
                                 key={identity.id}
                                 identityId={identity.id}
                                 identityName={identity.name || "Identity"}
+                                identityUrl={identity.serverURL!}
                             />
                         ))}
                     </Flex>

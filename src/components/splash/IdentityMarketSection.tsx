@@ -16,14 +16,22 @@ import {
 type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
+    identityUrl: string;
 };
 
 export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = ({
     identityId,
     identityName,
+    identityUrl,
 }) => {
     const companiesQuery = useListCompaniesByIdentityQuery(
-        { identityId, page: 1, limit: 3, sort: "-createdAt" },
+        {
+            identityId,
+            page: 1,
+            limit: 3,
+            sort: "-createdAt",
+            url: identityUrl,
+        },
         { enabled: Boolean(identityId) }
     );
 
@@ -32,6 +40,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             identityId,
             page: 1,
             limit: 3,
+            url: identityUrl,
         },
         { enabled: Boolean(identityId) }
     );
@@ -41,6 +50,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             identityId,
             page: 1,
             limit: 3,
+            url: identityUrl,
         },
         { enabled: Boolean(identityId) }
     );

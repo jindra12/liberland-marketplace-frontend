@@ -1,35 +1,28 @@
 import React from "react";
-import { useAuth } from "react-oidc-context";
-import { AuthGuard } from "./AuthGuard";
-import { EmailVerificationWarning } from "./publish/EmailVerificationWarning";
-import { PublishContent } from "./publish/PublishContent";
 import { useEndpointContext } from "./EndpointContext";
+import { PublishContent } from "./publish/PublishContent";
+import { PublishServerSelector } from "./publish/PublishServerSelector";
 
 const Publish: React.FunctionComponent = () => {
-    const auth = useAuth();
-    const isAuthenticated = auth.isAuthenticated;
-    const signinSilent = auth.signinSilent;
-    const emailVerified = auth.user?.profile?.email_verified;
-    const { authUrl } = useEndpointContext();
+    const { urls, authUrl, setAuthUrl } = useEndpointContext();
+    const [serverSelected, setServerSelected] = React.useState(false);
 
-    React.useEffect(() => {
-        if (isAuthenticated && !emailVerified) {
-            signinSilent();
-        }
-    }, [isAuthenticated, signinSilent, emailVerified]);
+    const handleServerConfirm = (url: string) => {
+        setAuthUrl(url);
+        setServerSelected(true);
+    };
 
-    return (
-        <AuthGuard redirect>
-            {!emailVerified ? (
-                <EmailVerificationWarning
-                    email={auth.user?.profile?.email as string}
-                    url={authUrl}
-                />
-            ) : (
-                <PublishContent />
-            )}
-        </AuthGuard>
-    );
+    if (!serverSelected) {
+        return (
+            <PublishServerSelector
+                urls={urls}
+                authUrl={authUrl}
+                onConfirm={handleServerConfirm}
+            />
+        );
+    }
+
+    return <PublishContent />;
 };
 
 export default Publish;

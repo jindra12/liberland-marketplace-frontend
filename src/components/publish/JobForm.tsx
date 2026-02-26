@@ -49,6 +49,7 @@ interface JobFormValues {
 
 export interface JobFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<JobFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -56,7 +57,7 @@ export interface JobFormProps {
     };
 }
 
-export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialValues }) => {
+export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateJobMutation();
     const updateMutation = useUpdateJobMutation();
@@ -83,6 +84,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: JobFormValues, imageId) => ({
             title: values.title,
             description: values.description,

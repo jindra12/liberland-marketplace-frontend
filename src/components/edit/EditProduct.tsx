@@ -37,6 +37,7 @@ const EditProduct: React.FunctionComponent = () => {
                                         existingImageUrl: product?.image?.url,
                                         existingImageId: product?.image?.id,
                                     }}
+                                    url={product?.serverURL!}
                                 />
                             </OwnerGuard>
                         );
