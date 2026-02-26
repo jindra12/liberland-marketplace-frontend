@@ -127,12 +127,14 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     </Space>
                 ),
                 avatar: (startup) => startup.image?.url ? (
-                    <Avatar
-                        shape="square"
-                        size={80}
-                        src={`${BACKEND_URL}${startup.image.url}`}
-                        className="EntityList__avatar"
-                    />
+                    <Link to={`/startups/${startup.id}`}>
+                        <Avatar
+                            shape="square"
+                            size={80}
+                            src={`${BACKEND_URL}${startup.image.url}`}
+                            className="EntityList__avatar"
+                        />
+                    </Link>
                 ) : undefined,
                 description: (startup) => (
                     <Flex gap={4} wrap className="StartupList__meta">

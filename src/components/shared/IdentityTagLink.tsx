@@ -18,7 +18,7 @@ export const IdentityTagLink: React.FunctionComponent<IdentityTagLinkProps> = ({
     color,
     icon,
 }) => (
-    <Link to={`/identities/${identity.id}`} className="EntityDetail__identity">
+    <Link to={`/tribes/${identity.id}`} className="EntityDetail__identity">
         <Tag color={color} icon={icon}>
             {identity.name}
         </Tag>

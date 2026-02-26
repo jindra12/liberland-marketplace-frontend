@@ -20,7 +20,7 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
     return (
         <Select
             mode="multiple"
-            placeholder="Filter by identity"
+            placeholder="Filter by tribe"
             value={props.selectedIds}
             onChange={props.onChange}
             options={options}

@@ -116,7 +116,9 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Card className="Profile__info">
                 <Space size={16} align="start">
-                    <Avatar size={64} src={profile?.picture} icon={<UserOutlined />} />
+                    <Link to="/profile">
+                        <Avatar size={64} src={profile?.picture} icon={<UserOutlined />} />
+                    </Link>
                     <Descriptions column={1} size="small">
                         <Descriptions.Item label="Name">{profile?.name || "—"}</Descriptions.Item>
                         <Descriptions.Item label="Email">

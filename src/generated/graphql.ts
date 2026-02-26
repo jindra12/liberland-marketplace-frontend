@@ -52210,6 +52210,7 @@ useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVari
 export const ListJobsByIdentityDocument = `
     query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Jobs(
+    draft: false
     where: {companyIdentityId: {equals: $identityId}}
     sort: "-postedAt"
     limit: $limit

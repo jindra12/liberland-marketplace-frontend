@@ -137,10 +137,10 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
                     options={companies.map((c) => ({ value: c.id, label: c.name }))}
                 />
             </Form.Item>
-            <Form.Item name="identity" label="Identity" rules={[{ required: true, message: "Please select an identity" }]}>
+            <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
                 <Select
                     loading={identitiesQuery.isLoading}
-                    placeholder="Select an identity"
+                    placeholder="Select a tribe"
                     options={identities.map((i) => ({ value: i.id, label: i.name }))}
                 />
             </Form.Item>

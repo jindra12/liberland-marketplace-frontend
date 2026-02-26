@@ -39,7 +39,7 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => { navigate(`/identities/${value}`); props.onClose(); }}
+            onSelect={(_, { value }) => { navigate(`/tribes/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}

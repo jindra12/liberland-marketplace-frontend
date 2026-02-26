@@ -27,7 +27,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No companies for this identity" }}
+            locale={{ emptyText: "No companies for this tribe" }}
             renderItem={(company) => {
                 const imageUrl = company.image?.url;
                 return (
@@ -43,12 +43,14 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
                                 avatar={imageUrl ? (
-                                    <Avatar
-                                        shape="square"
-                                        size={48}
-                                        src={`${BACKEND_URL}${imageUrl}`}
-                                        className="SplashEntityCard__avatar"
-                                    />
+                                    <Link to={`/companies/${company.id}`}>
+                                        <Avatar
+                                            shape="square"
+                                            size={48}
+                                            src={`${BACKEND_URL}${imageUrl}`}
+                                            className="SplashEntityCard__avatar"
+                                        />
+                                    </Link>
                                 ) : undefined}
                                 title={(
                                     <Link to={`/companies/${company.id}`} className="SplashEntityCard__itemLink">

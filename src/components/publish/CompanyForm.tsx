@@ -72,10 +72,10 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
-            <Form.Item name="identity" label="Identity" rules={[{ required: true, message: "Please select an identity" }]}>
+            <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
                 <Select
                     loading={identitiesQuery.isLoading}
-                    placeholder="Select an identity"
+                    placeholder="Select a tribe"
                     options={identities.map((i) => ({ value: i.id, label: i.name }))}
                 />
             </Form.Item>
