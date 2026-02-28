@@ -6,12 +6,11 @@ import {
     Form,
     Input,
     List,
-    Popconfirm,
     Switch,
     Tag,
     Typography,
 } from "antd";
-import { DeleteOutlined, DownOutlined, GlobalOutlined, LinkOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
+import { DownOutlined, GlobalOutlined, LinkOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
 import { useEndpointContext } from "./EndpointContext";
 
 type AddEndpointValues = {
@@ -41,10 +40,6 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                 endpoint.value === value ? { ...endpoint, enabled: endpointEnabled } : endpoint,
             ) || [],
         );
-    };
-
-    const removeEndpoint = (value: string) => {
-        setUrls((current) => current?.filter((endpoint) => endpoint.value !== value) || []);
     };
 
     const moveEndpoint = (index: number, direction: -1 | 1) => {
@@ -81,7 +76,7 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                 extra={<Tag color={enabled.length ? "success" : "warning"}>{enabled.length} enabled</Tag>}
             >
                 <Typography.Paragraph type="secondary">
-                    Add any compatible backend URL, reorder it with arrows, toggle it on or off, or remove it.
+                    Add any compatible backend URL, reorder it with arrows, and toggle it on or off.
                 </Typography.Paragraph>
 
                 <Form<AddEndpointValues>
@@ -175,16 +170,6 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                                     unCheckedChildren="Off"
                                     onChange={(checked) => toggleEndpoint(endpoint.value, checked)}
                                 />,
-                                <Popconfirm
-                                    key={`delete-${endpoint.value}`}
-                                    title="Remove endpoint?"
-                                    description={endpoint.value}
-                                    okText="Remove"
-                                    cancelText="Cancel"
-                                    onConfirm={() => removeEndpoint(endpoint.value)}
-                                >
-                                    <Button danger icon={<DeleteOutlined />} />
-                                </Popconfirm>,
                             ]}
                         >
                             <List.Item.Meta title={endpoint.value} />
