@@ -6,7 +6,8 @@ import { useAuth } from "react-oidc-context";
 import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
 import { EndpointDrawerButton } from "./EndpointDrawerButton";
-import { EndpointAuthAction, LoginButton } from "./LoginButton";
+import { EndpointAuthAction } from "./EndpointAuthAction";
+import { LoginButton } from "./LoginButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;

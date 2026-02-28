@@ -3,9 +3,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { AntProvider } from "./components/AntProvider";
 import { EndpointContextProvider } from "./components/EndpointContext";
+import { RouteErrorFallback } from "./components/RouteErrorFallback";
 
 import "./index.scss";
 import { AuthContextProvider } from "./components/AuthContext";
@@ -31,9 +33,13 @@ const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
-    <React.Suspense fallback={<Spin />}>
-        <Component />
-    </React.Suspense>
+    <ErrorBoundary fallbackRender={({ error }) => (
+        <RouteErrorFallback error={error instanceof Error ? error : undefined} />
+    )}>
+        <React.Suspense fallback={<Spin />}>
+            <Component />
+        </React.Suspense>
+    </ErrorBoundary>
 );
 
 const config = new QueryClient({
