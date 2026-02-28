@@ -71,7 +71,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
                 <Select
                     loading={identitiesQuery.isLoading}

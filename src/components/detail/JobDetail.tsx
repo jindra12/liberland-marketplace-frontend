@@ -14,8 +14,7 @@ import {
     Comment_ReplyPostRelationshipInputRelationTo,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatSalary, formatEmploymentType } from "../../utils";
+import { formatSalary, formatEmploymentType, getImage } from "../../utils";
 import { ApplyButton } from "../ApplyButton";
 import { Markdown } from "../Markdown";
 import { IdentityGroups } from "./IdentityGroups";
@@ -41,7 +40,7 @@ const JobDetail: React.FunctionComponent = () => {
                 );
                 const { bounty, positions, companyIdentity } = getJobMeta(job);
                 const empType = formatEmploymentType(job?.employmentType);
-                const url = job?.image?.url || job?.company?.image?.url;
+                const imageSrc = getImage(job) || getImage(job?.company);
                 const avatarSize = md ? 192 : 112;
                 const isInactive = job?.isActive === false;
                 const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
@@ -51,7 +50,7 @@ const JobDetail: React.FunctionComponent = () => {
                 return (
                     <Flex flex={1} vertical gap="8px">
                         <Space size={16} align="start" className="JobDetail__header">
-                            {url && <Avatar shape="circle" size={avatarSize} src={`${BACKEND_URL}${url}`} />}
+                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <div>
                                 <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
                                     <Flex justify="space-between" align="center" gap="16px" wrap>

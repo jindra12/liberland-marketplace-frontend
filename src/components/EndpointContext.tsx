@@ -1,7 +1,16 @@
 import * as React from "react";
-import { BACKEND_URL } from "../gqlFetcher";
-
-export type URL = { enabled: boolean, value: string };
+import {
+    useQueries,
+} from "@tanstack/react-query";
+import {
+    useListPublishedSyndicationUrlsQuery,
+    ListPublishedSyndicationUrlsQueryVariables,
+    ListPublishedSyndicationUrlsQuery,
+    ListPublishedSyndicationUrlsDocument,
+} from "../generated/graphql";
+import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
+import { URL } from "../types";
+import { combineResult, deepMergeConcatArrays } from "../utils";
 
 export interface EndpointContextType {
     urls: URL[];
@@ -13,10 +22,42 @@ export interface EndpointContextType {
 
 const EndpointContext = React.createContext<EndpointContextType>(null!);
 
+export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev: URL[]) => URL[]) | URL[]) => void) => {
+    const queries = useQueries({
+        queries: urls.map(url => ({
+            queryKey: [...useListPublishedSyndicationUrlsQuery.getKey({}), url.value],
+            queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
+                ListPublishedSyndicationUrlsDocument,
+                {},
+            )
+        })),
+        combine: (result) => {
+            return combineResult(result, deepMergeConcatArrays);
+        },
+    });
+
+    React.useEffect(() => {
+        setUrls(urls => {
+            const nextOnes = queries
+                .data
+                ?.Syndications
+                ?.docs
+                .map(({ url, name }) => ({ value: url!, enabled: false, name: name! }))
+                .filter(({ value }) => !urls.some((url) => url.value === value)) || [];
+
+            return [
+                ...nextOnes,
+                ...urls,
+            ].sort((a, b) => b.value.localeCompare(a.value));
+        });
+    }, [queries.data, setUrls]);
+};
+
 export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
-    const [urls, setUrls] = React.useState<URL[]>([{ enabled: true, value: BACKEND_URL }]);
+    const [urls, setUrls] = React.useState<URL[]>([{ enabled: true, value: BACKEND_URL, name: "Main" }]);
     const [authUrl, setAuthUrl] = React.useState<string>(urls[0].value);
     const enabled = React.useMemo(() => urls.filter(({ enabled }) => enabled).map(({ value }) => value), [urls]);
+
     return (
         <EndpointContext.Provider value={{ setUrls, urls, enabled, authUrl, setAuthUrl }}>
             {props.children}

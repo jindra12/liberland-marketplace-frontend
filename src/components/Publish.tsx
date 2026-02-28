@@ -4,7 +4,7 @@ import { PublishContent } from "./publish/PublishContent";
 import { PublishServerSelector } from "./publish/PublishServerSelector";
 
 const Publish: React.FunctionComponent = () => {
-    const { urls, authUrl, setAuthUrl } = useEndpointContext();
+    const { urls, setAuthUrl } = useEndpointContext();
     const [serverSelected, setServerSelected] = React.useState(false);
 
     const handleServerConfirm = (url: string) => {
@@ -16,7 +16,6 @@ const Publish: React.FunctionComponent = () => {
         return (
             <PublishServerSelector
                 urls={urls}
-                authUrl={authUrl}
                 onConfirm={handleServerConfirm}
             />
         );

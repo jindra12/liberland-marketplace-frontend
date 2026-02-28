@@ -5,12 +5,12 @@ import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlin
 import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
 import { AppList } from "../AppList";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { getImage } from "../../utils";
 
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
@@ -131,7 +131,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${startup.image.url}`}
+                            src={getImage(startup) || getImage(startup?.company)}
                             className="EntityList__avatar"
                         />
                     </Link>

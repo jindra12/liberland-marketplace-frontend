@@ -26,7 +26,7 @@ import {
     Comment_ReplyPostRelationshipInputRelationTo,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -75,7 +75,7 @@ const StartupDetail: React.FunctionComponent = () => {
         <Loader query={startup}>
             {(data) => {
                 const s = data.Startup;
-                const imageUrl = s?.image?.url || s?.identity?.image?.url;
+                const imageSrc = getImage(s) || getImage(s?.company);
                 const startupIdentity = s?.identity?.name ? {
                     id: s.identity.id,
                     name: s.identity.name,
@@ -90,11 +90,11 @@ const StartupDetail: React.FunctionComponent = () => {
                 return (
                     <div>
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={avatarSize}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
                             <Typography.Title level={1} className="EntityDetail__title">

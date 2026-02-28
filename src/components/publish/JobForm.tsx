@@ -114,7 +114,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="employmentType" label="Employment Type" rules={[{ required: true }]}>
                 <Select options={employmentOptions} />
             </Form.Item>

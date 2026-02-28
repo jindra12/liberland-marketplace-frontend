@@ -6,10 +6,9 @@ import { BankOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPrice, parseActionLink } from "../../utils";
+import { formatPrice, parseActionLink, getImage } from "../../utils";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -73,7 +72,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${product.image.url}`}
+                            src={getImage(product) || getImage(product.company)}
                             className="EntityList__avatar"
                         />
                     </Link>

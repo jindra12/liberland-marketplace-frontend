@@ -16,6 +16,7 @@ import { useEndpointContext } from "./EndpointContext";
 
 type AddEndpointValues = {
     url: string;
+    name: string;
 };
 
 export const EndpointDrawerButton: React.FunctionComponent = () => {
@@ -29,7 +30,7 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
         parsed.search = "";
         const normalized = parsed.toString().replace(/\/+$/, "");
 
-        setUrls((current) => [...current, { value: normalized, enabled: true }]);
+        setUrls((current) => [...current, { value: normalized, name: values.name, enabled: true }]);
 
         form.resetFields();
     };

@@ -1,37 +1,26 @@
 import React from "react";
-import { Alert, Button, Card, Flex, Space, Tag, Typography } from "antd";
-import { CheckCircleOutlined, CloudServerOutlined, SwapOutlined } from "@ant-design/icons";
-import { URL as EndpointUrl } from "../EndpointContext";
+import { Alert, Button, Form, Select, Space, Tag, Typography } from "antd";
+import { CloudServerOutlined, SwapOutlined } from "@ant-design/icons";
+import { URL } from "../../types";
 
 export interface PublishServerSelectorProps {
-    urls: EndpointUrl[];
-    authUrl: string;
+    urls: URL[];
     onConfirm: (url: string) => void;
 }
 
+type PublishServerFormValues = {
+    url: string;
+};
+
 export const PublishServerSelector: React.FunctionComponent<PublishServerSelectorProps> = ({
     urls,
-    authUrl,
     onConfirm,
 }) => {
-    const [selectedUrl, setSelectedUrl] = React.useState<string>(authUrl);
+    const [form] = Form.useForm<PublishServerFormValues>();
+    const selectedUrl = Form.useWatch("url", form);
 
-    React.useEffect(() => {
-        if (urls.length === 0) {
-            setSelectedUrl("");
-            return;
-        }
-
-        if (!urls.some((url) => url.value === selectedUrl)) {
-            const fallback = urls.find((url) => url.value === authUrl)?.value || urls[0].value;
-            setSelectedUrl(fallback);
-        }
-    }, [urls, selectedUrl, authUrl]);
-
-    const onContinue = () => {
-        if (!selectedUrl) return;
-        onConfirm(selectedUrl);
-    };
+    const selectedServer = urls.find((url) => url.value === selectedUrl);
+    const onContinue = (values: PublishServerFormValues) => onConfirm(values.url);
 
     return (
         <div className="PublishServer">
@@ -41,45 +30,46 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
             </Typography.Paragraph>
 
             {urls.length > 0 ? (
-                <Space direction="vertical" size={14} className="PublishServer__list">
-                    {urls.map((endpoint) => {
-                        const isSelected = selectedUrl === endpoint.value;
-                        return (
-                            <Card
-                                key={endpoint.value}
-                                hoverable
-                                className={`PublishServer__card${isSelected ? " PublishServer__card--selected" : ""}`}
-                                onClick={() => setSelectedUrl(endpoint.value)}
-                            >
-                                <Flex align="center" justify="space-between" gap={12} wrap>
-                                    <Flex align="center" gap={12}>
-                                        <CloudServerOutlined className="PublishServer__icon" />
-                                        <Typography.Text className="PublishServer__url">{endpoint.value}</Typography.Text>
-                                    </Flex>
-                                    <Space size={8}>
-                                        <Tag color={endpoint.enabled ? "success" : "default"}>
-                                            {endpoint.enabled ? "Enabled" : "Disabled"}
-                                        </Tag>
-                                        {isSelected && (
-                                            <Tag color="blue" icon={<CheckCircleOutlined />}>
-                                                Selected
-                                            </Tag>
-                                        )}
-                                    </Space>
-                                </Flex>
-                            </Card>
-                        );
-                    })}
-                    <Button
-                        type="primary"
-                        size="large"
-                        icon={<SwapOutlined />}
-                        disabled={!selectedUrl}
-                        onClick={onContinue}
+                <Form<PublishServerFormValues>
+                    form={form}
+                    layout="vertical"
+                    className="PublishServer__form"
+                    onFinish={onContinue}
+                >
+                    <Form.Item
+                        label="Server URL"
+                        name="url"
+                        rules={[{ required: true, message: "Please select a server URL." }]}
                     >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            placeholder="Select a server"
+                            options={urls.map((endpoint) => ({
+                                value: endpoint.value,
+                                label: endpoint.name?.trim()
+                                    ? `${endpoint.name} (${endpoint.value})`
+                                    : endpoint.value,
+                            }))}
+                        />
+                    </Form.Item>
+
+                    {selectedServer && (
+                        <Space size={8} wrap className="PublishServer__summary">
+                            <Tag color="blue" icon={<CloudServerOutlined />}>
+                                {selectedServer.name?.trim() || selectedServer.value}
+                            </Tag>
+                            <Tag color={selectedServer.enabled ? "success" : "default"}>
+                                {selectedServer.enabled ? "Enabled" : "Disabled"}
+                            </Tag>
+                            <Typography.Text className="PublishServer__url">{selectedServer.value}</Typography.Text>
+                        </Space>
+                    )}
+
+                    <Button type="primary" size="large" icon={<SwapOutlined />} htmlType="submit">
                         Use selected server
                     </Button>
-                </Space>
+                </Form>
             ) : (
                 <Alert
                     showIcon

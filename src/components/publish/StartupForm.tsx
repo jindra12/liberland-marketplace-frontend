@@ -129,7 +129,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Describe your startup (supports Markdown)" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="company" label="Company" rules={[{ required: true, message: "Please select a company" }]}>
                 <Select
                     loading={companiesQuery.isLoading}

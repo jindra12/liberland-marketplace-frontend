@@ -12,7 +12,7 @@ import {
     Comment_ReplyPostRelationshipInputRelationTo,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -24,42 +24,45 @@ const IdentityDetail: React.FunctionComponent = () => {
 
     return (
         <Loader query={identity}>
-            {(data) => (
-                <Flex flex={1} vertical gap="8px">
-                    <Space size={16} align="start" className="EntityDetail__header">
-                        {data.Identity?.image?.url && (
-                            <Avatar
-                                shape="circle"
-                                size={96}
-                                src={`${BACKEND_URL}${data.Identity.image.url}`}
-                            />
+            {(data) => {
+                const imageSrc = getImage(data.Identity);
+                return (
+                    <Flex flex={1} vertical gap="8px">
+                        <Space size={16} align="start" className="EntityDetail__header">
+                            {imageSrc && (
+                                <Avatar
+                                    shape="circle"
+                                    size={96}
+                                    src={imageSrc}
+                                />
+                            )}
+                            <div>
+                                <Typography.Title level={1} className="EntityDetail__title">
+                                    {data.Identity?.name}
+                                </Typography.Title>
+                            </div>
+                        </Space>
+                        {data.Identity?.website && (
+                            <>
+                                <Divider />
+                                <Button type="primary" href={data.Identity.website} target="_blank" rel="noreferrer">
+                                    <GlobalOutlined /> {data.Identity.website}
+                                </Button>
+                            </>
                         )}
-                        <div>
-                            <Typography.Title level={1} className="EntityDetail__title">
-                                {data.Identity?.name}
-                            </Typography.Title>
-                        </div>
-                    </Space>
-                    {data.Identity?.website && (
-                        <>
-                            <Divider />
-                            <Button type="primary" href={data.Identity.website} target="_blank" rel="noreferrer">
-                                <GlobalOutlined /> {data.Identity.website}
-                            </Button>
-                        </>
-                    )}
-                    <Divider />
-                    <Markdown>{data.Identity?.description}</Markdown>
-                    <Divider />
-                    <IdentityCompaniesList identityId={id!} />
-                    <Divider />
-                    <EntityCommentsSection
-                        targetId={id!}
-                        relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
-                        title="Comments"
-                    />
-                </Flex>
-            )}
+                        <Divider />
+                        <Markdown>{data.Identity?.description}</Markdown>
+                        <Divider />
+                        <IdentityCompaniesList identityId={id!} />
+                        <Divider />
+                        <EntityCommentsSection
+                            targetId={id!}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
+                            title="Comments"
+                        />
+                    </Flex>
+                );
+            }}
         </Loader>
     );
 };

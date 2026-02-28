@@ -83,7 +83,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item label="Price" required>
                 <Input.Group compact>
                     <Form.Item name="priceAmount" noStyle rules={[{ required: true, message: "Enter price" }]}>

@@ -50292,7 +50292,7 @@ export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: {
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null }> } | null };
+export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null, name?: string | null, description?: string | null }> } | null };
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -53253,6 +53253,8 @@ export const ListPublishedSyndicationUrlsDocument = `
   Syndications(draft: false, limit: 0) {
     docs {
       url
+      name
+      description
     }
   }
 }

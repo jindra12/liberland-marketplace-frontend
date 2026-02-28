@@ -5,6 +5,8 @@ query ListPublishedSyndicationUrls {
   ) {
     docs {
       url
+      name
+      description
     }
   }
 }

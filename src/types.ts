@@ -12,9 +12,21 @@ import type {
     Startup,
 } from "./generated/graphql";
 
+
+export type URL = {
+    enabled: boolean,
+    value: string,
+    name: string;
+};
+
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
 export type SearchOption = { value: string; label?: ReactNode, image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
+export type ImageDoc = {
+    __typename?: "Company" | "Identity" | "Job" | "Product" | "Startup";
+    image?: { url?: string | null } | null;
+    serverURL?: string | null;
+} | null;
 
 export type IdentityTagItem = {
     id: string;

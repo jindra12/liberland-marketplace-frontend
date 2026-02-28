@@ -1,10 +1,5 @@
-import * as React from "react";
 import {
-    FetchStatus,
     QueryKey,
-    QueryObserverResult,
-    QueryStatus,
-    RefetchOptions,
     useMutation,
     useQueries,
     UseMutationOptions,
@@ -12,8 +7,6 @@ import {
     UseQueryOptions,
     UseQueryResult,
 } from "@tanstack/react-query";
-import mergeWith from "lodash-es/mergeWith";
-import maxBy from "lodash-es/maxBy";
 import {
     ListCompaniesByCreatorDocument,
     useListCompaniesByCreatorQuery as useListCompaniesByCreatorQuerySingle,
@@ -108,82 +101,7 @@ import {
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
-
-const deepMergeConcatArrays = <T>(a: T, b: T): T =>
-    mergeWith({}, a, b, (left: any, right: any) => {
-        if (Array.isArray(left) && Array.isArray(right)) {
-            return [...left, ...right];
-        }
-        return undefined;
-    });
-
-type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
-
-const merger = <TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TQuery) => data.slice(1).reduce((acc, item) => {
-    return action(acc, item);
-}, data[0]);
-
-const combineResult = <TQuery>(
-    results: readonly QueryResult<TQuery>[],
-    mergeAction: (a: TQuery, b: TQuery) => TQuery,
-) => {
-    const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
-    const error = results.find((query) => query.error)?.error;
-    const failureReason = results.find((query) => query.failureReason)?.failureReason;
-
-    const isError = results.some((query) => query.isError);
-    const isPending = results.some((query) => query.isPending);
-    const isLoading = results.some((query) => query.isLoading);
-    const isFetching = results.some((query) => query.isFetching);
-    const isFetched = results.some((query) => query.isFetched);
-    const isFetchedAfterMount = results.some((query) => query.isFetchedAfterMount);
-    const isPaused = results.some((query) => query.isPaused);
-    const isPlaceholderData = results.some((query) => query.isPlaceholderData);
-    const isStale = results.some((query) => query.isStale);
-    const isSuccess = results.length > 0 && results.every((query) => query.isSuccess);
-
-    const status: QueryStatus = isPending ? "pending" : isError ? "error" : "success";
-    const fetchStatus: FetchStatus = isFetching ? "fetching" : isPaused ? "paused" : "idle";
-
-    const hasData = Array.isArray(data) ? data.length > 0 : Boolean(data);
-    const isLoadingError = isError && !hasData;
-    const isRefetchError = isError && hasData;
-
-    const refetch = async (
-        options?: RefetchOptions,
-    ): Promise<QueryObserverResult<TQuery, Error>> => {
-        const refetched = await Promise.all(results.map((query) => query.refetch(options)));
-        return combineResult(refetched, mergeAction);
-    };
-
-    return {
-        data,
-        dataUpdatedAt: maxBy(results, (query) => query.dataUpdatedAt)?.dataUpdatedAt || 0,
-        error,
-        errorUpdateCount: results.reduce((sum, query) => sum + query.errorUpdateCount, 0),
-        errorUpdatedAt: maxBy(results, (query) => query.errorUpdatedAt)?.errorUpdatedAt || 0,
-        failureCount: results.reduce((sum, query) => sum + query.failureCount, 0),
-        failureReason,
-        fetchStatus,
-        isError,
-        isFetched,
-        isFetchedAfterMount,
-        isFetching,
-        isInitialLoading: isLoading,
-        isLoading,
-        isLoadingError,
-        isPaused,
-        isPending,
-        isPlaceholderData,
-        isRefetchError,
-        isRefetching: isFetching && !isPending,
-        isStale,
-        isSuccess,
-        promise: Promise.all(results.map((query) => query.promise)),
-        refetch,
-        status,
-    } as QueryResult<TQuery>;
-};
+import { combineResult, deepMergeConcatArrays } from "../utils";
 
 export type GeneratedUseQueryHook<TQueryFnData, TVariables> =
     (<TData = TQueryFnData, TError = unknown>(
@@ -295,10 +213,6 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables>(
                 combineResult(result, mergeAction),
         });
     };
-}
-
-export const useSyndicationQuery = () => {
-    
 };
 
 export const useListCompaniesByCreatorQuery = enhancedQueryFactory(useListCompaniesByCreatorQuerySingle, ListCompaniesByCreatorDocument);

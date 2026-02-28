@@ -5,8 +5,7 @@ import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatSalary, formatEmploymentType } from "../../utils";
+import { formatSalary, formatEmploymentType, getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobMeta } from "../shared/jobDerived";
@@ -53,13 +52,13 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     </Flex>
                 ),
                 avatar: (job) => {
-                    const url = job.image?.url || job.company?.image?.url;
-                    return url ? (
+                    const imageSrc = getImage(job) || getImage(job.company);
+                    return imageSrc ? (
                         <Link to={`/jobs/${job.id}`}>
                             <Avatar
                                 shape="square"
                                 size={80}
-                                src={`${BACKEND_URL}${url}`}
+                                src={imageSrc}
                                 alt={job.title || ""}
                                 className="EntityList__avatar"
                             />
