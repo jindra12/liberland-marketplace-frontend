@@ -1,12 +1,12 @@
-// src/layout/AppHeader.tsx
 import React from "react";
 import { Layout, Menu, Drawer, Button, Grid, Space, Flex, Avatar } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LoginOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { SearchButton } from "./SearchButton";
 import { useAuth } from "react-oidc-context";
+import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { SearchButton } from "./SearchButton";
 import { EndpointDrawerButton } from "./EndpointDrawerButton";
+import { EndpointAuthAction, LoginButton } from "./LoginButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -39,14 +39,6 @@ export const AppHeader: React.FunctionComponent = () => {
         setDrawerOpen(false);
     };
 
-    const handlePublish = () => {
-        if (auth.isAuthenticated) {
-            navigate("/publish");
-        } else {
-            auth.signinRedirect();
-        }
-    };
-
     return (
         <Header className="AppHeader">
             <div className="AppHeader__inner">
@@ -66,13 +58,20 @@ export const AppHeader: React.FunctionComponent = () => {
                             selectedKeys={selectedKeys}
                             onClick={onMenuClick}
                         />
-                        <Button
-                            type="primary"
-                            icon={<PlusOutlined />}
-                            onClick={handlePublish}
-                        >
-                            Publish your ad
-                        </Button>
+                        <EndpointAuthAction>
+                            {({ runWithAuthOrLogin }) => (
+                                <Button
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        runWithAuthOrLogin(() => navigate("/publish"));
+                                    }}
+                                >
+                                    Publish your ad
+                                </Button>
+                            )}
+                        </EndpointAuthAction>
                         {auth.isAuthenticated ? (
                             <Link to="/profile">
                                 <Avatar
@@ -83,13 +82,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                 />
                             </Link>
                         ) : (
-                            <Button
-                                type="text"
-                                icon={<LoginOutlined />}
-                                onClick={() => auth.signinRedirect()}
-                            >
-                                Log in
-                            </Button>
+                            <LoginButton type="text" />
                         )}
                     </Flex>
                 ) : (
@@ -122,15 +115,25 @@ export const AppHeader: React.FunctionComponent = () => {
                                 onClick={onMenuClick}
                             />
                             <div className="AppHeader__drawerNav">
-                                <Button
-                                    block
-                                    type="primary"
-                                    icon={<PlusOutlined />}
-                                    onClick={() => { handlePublish(); setDrawerOpen(false); }}
-                                    className="AppHeader__drawerPublish"
-                                >
-                                    Publish your ad
-                                </Button>
+                                <EndpointAuthAction>
+                                    {({ runWithAuthOrLogin }) => (
+                                        <Button
+                                            block
+                                            type="primary"
+                                            icon={<PlusOutlined />}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                runWithAuthOrLogin(
+                                                    () => { navigate("/publish"); setDrawerOpen(false); },
+                                                    { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
+                                                );
+                                            }}
+                                            className="AppHeader__drawerPublish"
+                                        >
+                                            Publish your ad
+                                        </Button>
+                                    )}
+                                </EndpointAuthAction>
                                 {auth.isAuthenticated ? (
                                     <Button
                                         block
@@ -140,13 +143,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                         Profile
                                     </Button>
                                 ) : (
-                                    <Button
-                                        block
-                                        icon={<LoginOutlined />}
-                                        onClick={() => { auth.signinRedirect(); setDrawerOpen(false); }}
-                                    >
-                                        Log in
-                                    </Button>
+                                    <LoginButton block onAfterClick={() => setDrawerOpen(false)} />
                                 )}
                             </div>
                         </Drawer>

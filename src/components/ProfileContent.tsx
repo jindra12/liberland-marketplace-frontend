@@ -17,7 +17,6 @@ import {
 import {
     EditOutlined,
     EyeOutlined,
-    LogoutOutlined,
     PlusOutlined,
     UserOutlined,
     } from "@ant-design/icons";
@@ -34,6 +33,7 @@ import {
     useListProductsByCreatorQuery,
     useListStartupsByCreatorQuery,
 } from "./hooks";
+import { LoginButton } from "./LoginButton";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
@@ -98,11 +98,6 @@ export const ProfileContent: React.FunctionComponent = () => {
         } catch {
             message.error("Failed to change password");
         }
-    };
-
-    const handleLogout = async () => {
-        await auth.removeUser();
-        navigate("/");
     };
 
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
@@ -172,9 +167,7 @@ export const ProfileContent: React.FunctionComponent = () => {
             <Divider />
 
             <div className="Profile__actions">
-                <Button danger icon={<LogoutOutlined />} onClick={handleLogout}>
-                    Log out
-                </Button>
+                <LoginButton action="logout" danger onAfterAction={() => navigate("/")} />
             </div>
 
             <Divider />

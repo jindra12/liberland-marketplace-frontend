@@ -31,7 +31,6 @@ export const gqlFetcher = <TData, TVariables>(query: string, variables?: TVariab
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }
-
     const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
         `${defUrl}/api/graphql`,
         { query, variables },

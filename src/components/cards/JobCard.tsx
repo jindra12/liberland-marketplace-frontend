@@ -41,7 +41,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                         actions={[
                             (
                                 <Link key={`job-link-${job.id}`} to={`/jobs/${job.id}`}>
-                                    <Button>Details</Button>
+                                    <Button type="primary">Details</Button>
                                 </Link>
                             ),
                         ]}

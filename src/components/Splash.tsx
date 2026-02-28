@@ -35,7 +35,7 @@ const Splash: React.FunctionComponent = () => {
                 </div>
             </section>
 
-            <div className="SplashPage__sections">
+            <Flex vertical gap="16px" className="SplashPage__sections">
                 {hasError && (
                     <Alert
                         type="error"
@@ -57,9 +57,9 @@ const Splash: React.FunctionComponent = () => {
 
                 {identities.length > 0 && (
                     <Flex vertical gap={18} className="SplashPage__identityList">
-                        {identities.map((identity) => (
+                        {identities.map((identity, index) => (
                             <IdentityMarketSection
-                                key={identity.id}
+                                key={identity.id + identity.serverURL! + index}
                                 identityId={identity.id}
                                 identityName={identity.name || "Tribe"}
                                 identityUrl={identity.serverURL!}
@@ -67,7 +67,7 @@ const Splash: React.FunctionComponent = () => {
                         ))}
                     </Flex>
                 )}
-            </div>
+            </Flex>
         </Flex>
     );
 };

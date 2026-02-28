@@ -20,7 +20,7 @@ export type URL = {
 };
 
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
-export type SearchOption = { value: string; label?: ReactNode, image?: string | null };
+export type SearchOption = { key: string; value: string; id: string; label?: ReactNode, image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 export type ImageDoc = {
     __typename?: "Company" | "Identity" | "Job" | "Product" | "Startup";

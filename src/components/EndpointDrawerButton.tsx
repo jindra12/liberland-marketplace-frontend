@@ -11,7 +11,7 @@ import {
     Tag,
     Typography,
 } from "antd";
-import { DeleteOutlined, GlobalOutlined, LinkOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, DownOutlined, GlobalOutlined, LinkOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
 import { useEndpointContext } from "./EndpointContext";
 
 type AddEndpointValues = {
@@ -30,21 +30,35 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
         parsed.search = "";
         const normalized = parsed.toString().replace(/\/+$/, "");
 
-        setUrls((current) => [...current, { value: normalized, name: values.name, enabled: true }]);
+        setUrls((current) => [...current || [], { value: normalized, name: values.name, enabled: true }]);
 
         form.resetFields();
     };
 
     const toggleEndpoint = (value: string, endpointEnabled: boolean) => {
         setUrls((current) =>
-            current.map((endpoint) =>
+            current?.map((endpoint) =>
                 endpoint.value === value ? { ...endpoint, enabled: endpointEnabled } : endpoint,
-            ),
+            ) || [],
         );
     };
 
     const removeEndpoint = (value: string) => {
-        setUrls((current) => current.filter((endpoint) => endpoint.value !== value));
+        setUrls((current) => current?.filter((endpoint) => endpoint.value !== value) || []);
+    };
+
+    const moveEndpoint = (index: number, direction: -1 | 1) => {
+        setUrls((current) => {
+            const nextIndex = index + direction;
+            if (!current || index < 0 || nextIndex < 0 || index >= current.length || nextIndex >= current.length) {
+                return current || [];
+            }
+
+            const reordered = [...current];
+            const [item] = reordered.splice(index, 1);
+            reordered.splice(nextIndex, 0, item);
+            return reordered;
+        });
     };
 
     return (
@@ -67,7 +81,7 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                 extra={<Tag color={enabled.length ? "success" : "warning"}>{enabled.length} enabled</Tag>}
             >
                 <Typography.Paragraph type="secondary">
-                    Add any compatible backend URL, toggle it on or off, or remove it.
+                    Add any compatible backend URL, reorder it with arrows, toggle it on or off, or remove it.
                 </Typography.Paragraph>
 
                 <Form<AddEndpointValues>
@@ -135,9 +149,25 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                     bordered
                     dataSource={urls}
                     locale={{ emptyText: "No endpoints configured yet." }}
-                    renderItem={(endpoint) => (
+                    renderItem={(endpoint, index) => (
                         <List.Item
                             actions={[
+                                <Button
+                                    key={`up-${endpoint.value}`}
+                                    type="text"
+                                    icon={<UpOutlined />}
+                                    aria-label={`Move ${endpoint.value} up`}
+                                    disabled={index === 0}
+                                    onClick={() => moveEndpoint(index, -1)}
+                                />,
+                                <Button
+                                    key={`down-${endpoint.value}`}
+                                    type="text"
+                                    icon={<DownOutlined />}
+                                    aria-label={`Move ${endpoint.value} down`}
+                                    disabled={index === urls.length - 1}
+                                    onClick={() => moveEndpoint(index, 1)}
+                                />,
                                 <Switch
                                     key={`switch-${endpoint.value}`}
                                     checked={endpoint.enabled}

@@ -121,19 +121,13 @@ export const parseActionLink = (value?: string | null) => {
 };
 
 export const getImage = (doc?: ImageDoc) => {
-    switch (doc?.__typename) {
-        case "Company":
-        case "Identity":
-        case "Job":
-        case "Product":
-        case "Startup": 
-            try {
-                return new URL(doc?.image?.url!, doc?.serverURL!).toString();
-            } catch {
-                return "";
-            }
-        default:
-            return undefined;
+    if (!doc?.image?.url || !doc?.serverURL) {
+        return "";
+    }
+    try {
+        return new URL(doc.image.url!, doc.serverURL!).toString();
+    } catch {
+        return "";
     }
 };
 
@@ -301,13 +295,13 @@ export const combineResult = <TQuery>(
     mergeAction: (a: TQuery, b: TQuery) => TQuery,
 ) => {
     const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
-    const error = results.find((query) => query.error)?.error;
+    const error = results.every(query => query.isError) ? results.find((query) => query.error)?.error : undefined;
     const failureReason = results.find((query) => query.failureReason)?.failureReason;
 
-    const isError = results.some((query) => query.isError);
-    const isPending = results.some((query) => query.isPending);
-    const isLoading = results.some((query) => query.isLoading);
-    const isFetching = results.some((query) => query.isFetching);
+    const isError = results.every((query) => query.isError);
+    const isPending = results.every((query) => query.isPending);
+    const isLoading = results.every((query) => query.isLoading);
+    const isFetching = results.every((query) => query.isFetching);
     const isFetched = results.some((query) => query.isFetched);
     const isFetchedAfterMount = results.some((query) => query.isFetchedAfterMount);
     const isPaused = results.some((query) => query.isPaused);

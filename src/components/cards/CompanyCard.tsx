@@ -35,7 +35,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                         actions={[
                             (
                                 <Link key={`company-link-${company.id}`} to={`/companies/${company.id}`}>
-                                    <Button>Details</Button>
+                                    <Button type="primary">Details</Button>
                                 </Link>
                             ),
                         ]}

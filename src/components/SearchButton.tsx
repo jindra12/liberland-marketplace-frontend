@@ -24,7 +24,7 @@ export const SearchButton: React.FunctionComponent = () => {
     return (
         <>
             <Dropdown
-                trigger={["click", "hover"]}
+                trigger={["click"]}
                 menu={{ items, onClick }}
                 placement="bottomRight"
             >
@@ -36,6 +36,7 @@ export const SearchButton: React.FunctionComponent = () => {
             </Dropdown>
             {scope && (
                 <SearchContainer
+                    key={scope}
                     onClose={() => setScope(undefined)}
                     scope={scope}
                 />

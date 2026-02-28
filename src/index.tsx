@@ -47,10 +47,10 @@ const config = new QueryClient({
 });
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 root.render(
-    <EndpointContextProvider>
-        <AuthContextProvider>
-            <BrowserRouter>
-                <QueryClientProvider client={config}>
+    <QueryClientProvider client={config}>
+        <EndpointContextProvider>
+            <AuthContextProvider>
+                <BrowserRouter>
                     <AntProvider>
                         <React.Suspense fallback={<Spin />}>
                             <AppLayout>
@@ -58,11 +58,11 @@ root.render(
                                     <Route Component={suspense(Splash)} path="/" />
                                     <Route Component={suspense(Jobs)} path="/jobs" />
                                     <Route Component={suspense(Companies)} path="/companies" />
-                                    <Route Component={suspense(Identities)} path="/identities" />
+                                    <Route Component={suspense(Identities)} path="/tribes" />
                                     <Route Component={suspense(ProductsServices)} path="/products-services" />
                                     <Route Component={suspense(Job)} path="/jobs/:id" />
                                     <Route Component={suspense(Company)} path="/companies/:id" />
-                                    <Route Component={suspense(Identity)} path="/identities/:id" />
+                                    <Route Component={suspense(Identity)} path="/tribes/:id" />
                                     <Route Component={suspense(ProductService)} path="/products-services/:id" />
                                     <Route Component={suspense(Profile)} path="/profile" />
                                     <Route Component={suspense(Publish)} path="/publish" />
@@ -77,8 +77,8 @@ root.render(
                             </AppLayout>
                         </React.Suspense>
                     </AntProvider>
-                </QueryClientProvider>
-            </BrowserRouter>
-        </AuthContextProvider>
-    </EndpointContextProvider>
+                </BrowserRouter>
+            </AuthContextProvider>
+        </EndpointContextProvider>
+    </QueryClientProvider>
 );

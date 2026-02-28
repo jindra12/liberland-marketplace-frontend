@@ -36,7 +36,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                         actions={[
                             (
                                 <Link key={`product-link-${product.id}`} to={`/products-services/${product.id}`}>
-                                    <Button>Details</Button>
+                                    <Button type="primary">Details</Button>
                                 </Link>
                             ),
                         ]}
