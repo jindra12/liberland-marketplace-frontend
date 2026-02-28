@@ -1,6 +1,7 @@
 query CompanyById($id: String!) {
   Company(id: $id) {
     id
+    serverURL
     name
     _status
     description
@@ -9,11 +10,13 @@ query CompanyById($id: String!) {
     email
     allowedIdentities {
       id
+      serverURL
       name
       description
     }
     disallowedIdentities {
       id
+      serverURL
       name
       description
     }
@@ -22,6 +25,7 @@ query CompanyById($id: String!) {
     }
     identity {
       id
+      serverURL
       name
       description
       website

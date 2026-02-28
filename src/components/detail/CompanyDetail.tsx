@@ -1,14 +1,20 @@
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Tabs, Typography } from "antd";
+import { Avatar,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    Tabs,
+    Typography
+} from "antd";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
@@ -16,6 +22,7 @@ import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery } from "../hooks";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -27,7 +34,7 @@ const CompanyDetail: React.FunctionComponent = () => {
         <Loader query={company}>
             {(data) => {
                 const companyData = data.Company;
-                const imageUrl = companyData?.image?.url || companyData?.identity?.image?.url;
+                const imageSrc = getImage(companyData);
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
@@ -40,11 +47,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                 return (
                     <Flex flex={1} vertical gap="8px">
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={avatarSize}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
                             <Typography.Title level={1} className="EntityDetail__title">

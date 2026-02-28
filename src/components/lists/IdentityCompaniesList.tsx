@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListCompaniesByIdentityQuery } from "../../generated/graphql";
+
 import { CompanyListInternal } from "./CompanyListInternal";
+import { useListCompaniesByIdentityQuery } from "../hooks";
 
 type IdentityCompaniesListProps = {
     identityId: string;

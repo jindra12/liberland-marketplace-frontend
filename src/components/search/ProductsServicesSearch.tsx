@@ -2,8 +2,9 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
 import { DocType, SearchOption } from "../../types";
-import { useSearchProductsQuery } from "../../generated/graphql";
+
 import { getImage } from "../../utils";
+import { useSearchProductsQuery } from "../hooks";
 
 export interface ProductsServicesSearchProps {
     onClose: () => void;
@@ -25,26 +26,29 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
         if (!products.isFetched) {
             setOptions([]);
         } else if (products.data) {
-            setOptions(products
-                .data
-                .Searches
-                ?.docs
-                .reduce<SearchOption[]>((acc, { title, doc }) => {
-                    const value = (doc.value as DocType)?.id;
-                    if (!value) {
-                        return acc;
-                    }
-                    acc.push({ value, label: title, image: getImage(doc.value as DocType) });
-                    return acc;
-                }, []) ?? [])
+            setOptions((products.data.Searches?.docs ?? [])
+                .filter((searchDoc) => searchDoc.doc?.relationTo === "products")
+                .map((searchDoc, index) => {
+                    const doc = searchDoc.doc!.value as DocType;
+                    const value = `${doc.serverURL || ""}|${doc.id!}`;
+
+                    return {
+                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                        value,
+                        id: doc.id!,
+                        label: searchDoc.title,
+                        image: getImage(doc),
+                    };
+                }))
         }
     }, [products.isFetched, products.data]);
 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => { navigate(`/products-services/${value}`); props.onClose(); }}
+            onSelect={(_, option) => { navigate(`/products-services/${option.id}`); props.onClose(); }}
             options={options}
+            title="Product / Service search"
             runSearch={setTerm}
             setOptions={setOptions}
             isLoading={products.isLoading}

@@ -25,6 +25,7 @@ query SearchJobsBySecondaryIdentity(
   ) {
     docs {
       id
+      serverURL
       title
       description
       location
@@ -39,11 +40,13 @@ query SearchJobsBySecondaryIdentity(
       }
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
@@ -63,20 +66,24 @@ query SearchJobsBySecondaryIdentity(
       }
       company {
         id
+        serverURL
         name
         description
         allowedIdentities {
           id
+          serverURL
           name
           description
         }
         disallowedIdentities {
           id
+          serverURL
           name
           description
         }
         identity {
           id
+          serverURL
           name
           description
         }

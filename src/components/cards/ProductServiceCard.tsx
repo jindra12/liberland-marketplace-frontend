@@ -2,8 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatPrice } from "../../utils";
+import { formatPrice, getImage } from "../../utils";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -31,25 +30,25 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
                 const price = formatPrice(product.price?.amount, product.price?.currency);
-                const imageUrl = product.image?.url;
+                const imageSrc = getImage(product) || getImage(product.company);
                 return (
                     <List.Item
                         actions={[
                             (
                                 <Link key={`product-link-${product.id}`} to={`/products-services/${product.id}`}>
-                                    <Button>Details</Button>
+                                    <Button type="primary">Details</Button>
                                 </Link>
                             ),
                         ]}
                     >
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
-                                avatar={imageUrl ? (
+                                avatar={imageSrc ? (
                                     <Link to={`/products-services/${product.id}`}>
                                         <Avatar
                                             shape="square"
                                             size={48}
-                                            src={`${BACKEND_URL}${imageUrl}`}
+                                            src={imageSrc}
                                             className="SplashEntityCard__avatar"
                                         />
                                     </Link>

@@ -19,6 +19,7 @@ query SearchCompaniesBySecondaryIdentity(
   ) {
     docs {
       id
+      serverURL
       name
       description
       website
@@ -26,16 +27,19 @@ query SearchCompaniesBySecondaryIdentity(
       email
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       identity {
         id
+        serverURL
         name
         description
         image {

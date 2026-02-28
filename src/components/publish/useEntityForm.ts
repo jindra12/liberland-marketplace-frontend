@@ -10,6 +10,7 @@ interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     mode: "create" | "edit";
     existingImageId?: string | null;
     editId?: string | null;
+    url: string;
     createMutation: { isPending: boolean; mutateAsync: (vars: { data: never; draft: boolean }) => Promise<TCreate> };
     updateMutation: { isPending: boolean; mutateAsync: (vars: { id: string; data: never; draft: boolean }) => Promise<TUpdate> };
     buildData: (values: TValues, imageId: string | undefined | null) => object;
@@ -30,7 +31,8 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
 
     const onFinish = useCallback(async (values: TValues) => {
         const imageId = await resolveImageId(
-            values.imageFile as Parameters<typeof resolveImageId>[0],
+            config.url,
+            values.imageFile as Parameters<typeof resolveImageId>[1],
             config.existingImageId,
         );
 

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListProductsByCompanyQuery } from "../../generated/graphql";
+
 import { ProductServiceListInternal } from "./ProductServiceListInternal";
+import { useListProductsByCompanyQuery } from "../hooks";
 
 export interface CompanyProductsServicesListProps {
     companyId: string;

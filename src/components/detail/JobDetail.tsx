@@ -1,15 +1,20 @@
 import * as React from "react";
+import { Avatar,
+    Divider,
+    Flex,
+    Grid,
+    Space,
+    Typography,
+    Button
+} from "antd";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Space, Typography } from "antd";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useJobByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatSalary, formatEmploymentType } from "../../utils";
+import { formatSalary, formatEmploymentType, getImage } from "../../utils";
 import { ApplyButton } from "../ApplyButton";
 import { Markdown } from "../Markdown";
 import { IdentityGroups } from "./IdentityGroups";
@@ -17,6 +22,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useJobByIdQuery } from "../hooks";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -34,7 +40,7 @@ const JobDetail: React.FunctionComponent = () => {
                 );
                 const { bounty, positions, companyIdentity } = getJobMeta(job);
                 const empType = formatEmploymentType(job?.employmentType);
-                const url = job?.image?.url || job?.company?.image?.url;
+                const imageSrc = getImage(job) || getImage(job?.company);
                 const avatarSize = md ? 192 : 112;
                 const isInactive = job?.isActive === false;
                 const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
@@ -44,7 +50,7 @@ const JobDetail: React.FunctionComponent = () => {
                 return (
                     <Flex flex={1} vertical gap="8px">
                         <Space size={16} align="start" className="JobDetail__header">
-                            {url && <Avatar shape="circle" size={avatarSize} src={`${BACKEND_URL}${url}`} />}
+                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <div>
                                 <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
                                     <Flex justify="space-between" align="center" gap="16px" wrap>

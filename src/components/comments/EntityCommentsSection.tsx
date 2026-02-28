@@ -1,15 +1,13 @@
 import * as React from "react";
-import { Alert, Flex, Spin, Typography, theme } from "antd";
+import {
+    Alert,
+    Flex,
+    Spin,
+    Typography,
+    theme } from "antd";
 import { useAuth } from "react-oidc-context";
 import { CommentSection } from "react-comments-section";
 import "react-comments-section/dist/index.css";
-import {
-    useCreateCommentMutation,
-    useCreateReplyToCommentMutation,
-    useDeleteCommentMutation,
-    useListCommentsByTargetQuery,
-    useUpdateCommentContentMutation,
-} from "../../generated/graphql";
 import {
     COMMENT_RELATION_TO_QUERY_RELATION,
     ENTITY_COMMENTS_DEFAULT_LIMIT,
@@ -30,6 +28,13 @@ import {
     getCommentSectionStyles,
     getCommentThemeVars,
 } from "../../utils";
+import {
+    useCreateCommentMutation,
+    useCreateReplyToCommentMutation,
+    useDeleteCommentMutation,
+    useListCommentsByTargetQuery,
+    useUpdateCommentContentMutation,
+} from "../hooks";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = ({
     targetId,
@@ -44,7 +49,6 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     const queryRelationTo = COMMENT_RELATION_TO_QUERY_RELATION[relationTo];
     const comments = useListCommentsByTargetQuery(
         { targetId, relationTo: queryRelationTo, limit },
-        { enabled: Boolean(targetId) }
     );
     const createComment = useCreateCommentMutation();
     const createReply = useCreateReplyToCommentMutation();

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Typography } from "antd";
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 
 type CompanyItem = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["docs"]>[number];
 
@@ -29,25 +29,25 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
             dataSource={items}
             locale={{ emptyText: "No companies for this tribe" }}
             renderItem={(company) => {
-                const imageUrl = company.image?.url;
+                const imageSrc = getImage(company);
                 return (
                     <List.Item
                         actions={[
                             (
                                 <Link key={`company-link-${company.id}`} to={`/companies/${company.id}`}>
-                                    <Button>Details</Button>
+                                    <Button type="primary">Details</Button>
                                 </Link>
                             ),
                         ]}
                     >
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
-                                avatar={imageUrl ? (
+                                avatar={imageSrc ? (
                                     <Link to={`/companies/${company.id}`}>
                                         <Avatar
                                             shape="square"
                                             size={48}
-                                            src={`${BACKEND_URL}${imageUrl}`}
+                                            src={imageSrc}
                                             className="SplashEntityCard__avatar"
                                         />
                                     </Link>

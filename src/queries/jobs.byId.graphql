@@ -1,6 +1,7 @@
 query JobById($id: String!) {
   Job(id: $id) {
     id
+    serverURL
     title
     _status
     description
@@ -16,11 +17,13 @@ query JobById($id: String!) {
     }
     allowedIdentities {
       id
+      serverURL
       name
       description
     }
     disallowedIdentities {
       id
+      serverURL
       name
       description
     }
@@ -34,20 +37,24 @@ query JobById($id: String!) {
     }
     company {
       id
+      serverURL
       name
       description
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       identity {
         id
+        serverURL
         name
         description
       }

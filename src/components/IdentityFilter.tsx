@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Select } from "antd";
-import { useListIdentitiesQuery } from "../generated/graphql";
+
+import { useListIdentitiesQuery } from "./hooks";
 
 export interface IdentityFilterProps {
     selectedIds: string[];

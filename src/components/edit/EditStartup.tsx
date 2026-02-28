@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "antd";
-import { useStartupByIdQuery } from "../../generated/graphql";
+
 import { AuthGuard } from "../AuthGuard";
 import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { StartupForm } from "../publish/StartupForm";
+import { useStartupByIdQuery } from "../hooks";
 
 const EditStartup: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -38,6 +39,7 @@ const EditStartup: React.FunctionComponent = () => {
                                         existingImageUrl: startup?.image?.url,
                                         existingImageId: startup?.image?.id,
                                     }}
+                                    url={startup?.serverURL!}
                                 />
                             </OwnerGuard>
                         );

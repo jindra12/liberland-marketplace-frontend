@@ -1,17 +1,21 @@
 import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
-import {
-    useCreateProductMutation,
-    useUpdateProductMutation,
-    useListCompaniesByCreatorQuery,
-} from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
+import {
+    useCreateProductMutation,
+    useListCompaniesByCreatorQuery,
+    useUpdateProductMutation,
+} from "../hooks";
 
 interface ProductFormValues {
     name: string | null;
@@ -26,6 +30,7 @@ interface ProductFormValues {
 
 export interface ProductFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<ProductFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -33,7 +38,7 @@ export interface ProductFormProps {
     };
 }
 
-export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues }) => {
+export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
@@ -41,7 +46,6 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<ProductFormValues> = {
@@ -57,6 +61,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: ProductFormValues, imageId) => ({
             name: values.name,
             description: values.description,
@@ -78,7 +83,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item label="Price" required>
                 <Input.Group compact>
                     <Form.Item name="priceAmount" noStyle rules={[{ required: true, message: "Enter price" }]}>

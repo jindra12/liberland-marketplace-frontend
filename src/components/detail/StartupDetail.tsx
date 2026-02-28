@@ -1,6 +1,16 @@
 import * as React from "react";
+import { Avatar,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    message,
+    Space,
+    Tabs,
+    Tag,
+    Typography
+} from "antd";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, message, Space, Tabs, Tag, Typography } from "antd";
 import {
     MailOutlined,
     RocketOutlined,
@@ -9,20 +19,20 @@ import {
     EditOutlined,
     UserAddOutlined,
     UserDeleteOutlined,
-} from "@ant-design/icons";
+    } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import { useQueryClient } from "@tanstack/react-query";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useStartupByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { useStartupByIdQuery } from "../hooks";
 
 const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -37,7 +47,10 @@ const StartupDetail: React.FunctionComponent = () => {
 
     const handleJoin = async () => {
         try {
-            await joinMutation.mutateAsync(id!);
+            await joinMutation.mutateAsync({
+                startupId: id!,
+                url: startup.data!.Startup?.serverURL!
+            });
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
             message.success("You joined this startup!");
         } catch {
@@ -47,7 +60,10 @@ const StartupDetail: React.FunctionComponent = () => {
 
     const handleLeave = async () => {
         try {
-            await leaveMutation.mutateAsync(id!);
+            await leaveMutation.mutateAsync({
+                startupId: id!,
+                url: startup.data!.Startup?.serverURL!
+            });
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
             message.success("You left this startup");
         } catch {
@@ -59,7 +75,7 @@ const StartupDetail: React.FunctionComponent = () => {
         <Loader query={startup}>
             {(data) => {
                 const s = data.Startup;
-                const imageUrl = s?.image?.url || s?.identity?.image?.url;
+                const imageSrc = getImage(s) || getImage(s?.company);
                 const startupIdentity = s?.identity?.name ? {
                     id: s.identity.id,
                     name: s.identity.name,
@@ -74,11 +90,11 @@ const StartupDetail: React.FunctionComponent = () => {
                 return (
                     <div>
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={avatarSize}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
                             <Typography.Title level={1} className="EntityDetail__title">

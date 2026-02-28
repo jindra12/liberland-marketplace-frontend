@@ -3,13 +3,14 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
-import { AuthProvider } from "react-oidc-context";
-import { WebStorageStateStore } from "oidc-client-ts";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { AntProvider } from "./components/AntProvider";
-import { BACKEND_URL } from "./gqlFetcher";
+import { EndpointContextProvider } from "./components/EndpointContext";
+import { RouteErrorFallback } from "./components/RouteErrorFallback";
 
 import "./index.scss";
+import { AuthContextProvider } from "./components/AuthContext";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
@@ -32,30 +33,14 @@ const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
-    <React.Suspense fallback={<Spin />}>
-        <Component />
-    </React.Suspense>
+    <ErrorBoundary fallbackRender={({ error }) => (
+        <RouteErrorFallback error={error instanceof Error ? error : undefined} />
+    )}>
+        <React.Suspense fallback={<Spin />}>
+            <Component />
+        </React.Suspense>
+    </ErrorBoundary>
 );
-
-const oidcConfig = {
-    authority: `${BACKEND_URL}/api/auth`,
-    client_id: process.env.REACT_APP_OIDC_CLIENT_ID || "",
-    client_secret: process.env.REACT_APP_OIDC_CLIENT_SECRET || "",
-    redirect_uri:
-        process.env.REACT_APP_OIDC_REDIRECT_URI ||
-        `${window.location.origin}/auth/callback`,
-    scope: "openid profile email",
-    userStore: new WebStorageStateStore({ store: window.localStorage }),
-    metadata: {
-        issuer: `${BACKEND_URL}/api/auth`,
-        authorization_endpoint: `${BACKEND_URL}/api/auth/oauth2/authorize`,
-        token_endpoint: `${BACKEND_URL}/api/auth/oauth2/token`,
-        userinfo_endpoint: `${BACKEND_URL}/api/auth/oauth2/userinfo`,
-    },
-    onSigninCallback: () => {
-        window.history.replaceState({}, document.title, "/");
-    },
-};
 
 const config = new QueryClient({
     defaultOptions: {
@@ -68,36 +53,38 @@ const config = new QueryClient({
 });
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 root.render(
-    <AuthProvider {...oidcConfig}>
-        <BrowserRouter>
-            <QueryClientProvider client={config}>
-                <AntProvider>
-                    <React.Suspense fallback={<Spin />}>
-                        <AppLayout>
-                            <Routes>
-                                <Route Component={suspense(Splash)} path="/" />
-                                <Route Component={suspense(Jobs)} path="/jobs" />
-                                <Route Component={suspense(Companies)} path="/companies" />
-                                <Route Component={suspense(Identities)} path="/tribes" />
-                                <Route Component={suspense(ProductsServices)} path="/products-services" />
-                                <Route Component={suspense(Job)} path="/jobs/:id" />
-                                <Route Component={suspense(Company)} path="/companies/:id" />
-                                <Route Component={suspense(Identity)} path="/tribes/:id" />
-                                <Route Component={suspense(ProductService)} path="/products-services/:id" />
-                                <Route Component={suspense(Profile)} path="/profile" />
-                                <Route Component={suspense(Publish)} path="/publish" />
-                                <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
-                                <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
-                                <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
-                                <Route Component={suspense(Startups)} path="/startups" />
-                                <Route Component={suspense(Startup)} path="/startups/:id" />
-                                <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
-                                <Route Component={suspense(AuthCallback)} path="/auth/callback" />
-                            </Routes>
-                        </AppLayout>
-                    </React.Suspense>
-                </AntProvider>
-            </QueryClientProvider>
-        </BrowserRouter>
-    </AuthProvider>
+    <QueryClientProvider client={config}>
+        <EndpointContextProvider>
+            <AuthContextProvider>
+                <BrowserRouter>
+                    <AntProvider>
+                        <React.Suspense fallback={<Spin />}>
+                            <AppLayout>
+                                <Routes>
+                                    <Route Component={suspense(Splash)} path="/" />
+                                    <Route Component={suspense(Jobs)} path="/jobs" />
+                                    <Route Component={suspense(Companies)} path="/companies" />
+                                    <Route Component={suspense(Identities)} path="/tribes" />
+                                    <Route Component={suspense(ProductsServices)} path="/products-services" />
+                                    <Route Component={suspense(Job)} path="/jobs/:id" />
+                                    <Route Component={suspense(Company)} path="/companies/:id" />
+                                    <Route Component={suspense(Identity)} path="/tribes/:id" />
+                                    <Route Component={suspense(ProductService)} path="/products-services/:id" />
+                                    <Route Component={suspense(Profile)} path="/profile" />
+                                    <Route Component={suspense(Publish)} path="/publish" />
+                                    <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
+                                    <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
+                                    <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
+                                    <Route Component={suspense(Startups)} path="/startups" />
+                                    <Route Component={suspense(Startup)} path="/startups/:id" />
+                                    <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
+                                    <Route Component={suspense(AuthCallback)} path="/auth/callback" />
+                                </Routes>
+                            </AppLayout>
+                        </React.Suspense>
+                    </AntProvider>
+                </BrowserRouter>
+            </AuthContextProvider>
+        </EndpointContextProvider>
+    </QueryClientProvider>
 );

@@ -21,6 +21,7 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
           ... on Job {
             __typename
             id
+            serverURL
             title
             description
             positions
@@ -31,11 +32,13 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
             }
             allowedIdentities {
               id
+              serverURL
               name
               description
             }
             disallowedIdentities {
               id
+              serverURL
               name
               description
             }
@@ -50,20 +53,24 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
             }
             company {
               id
+              serverURL
               name
               description
               allowedIdentities {
                 id
+                serverURL
                 name
                 description
               }
               disallowedIdentities {
                 id
+                serverURL
                 name
                 description
               }
               identity {
                 id
+                serverURL
                 name
                 description
               }

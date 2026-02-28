@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Flex, Typography } from "antd";
-import { useListIdentitiesQuery } from "../../generated/graphql";
+
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
+import { useListIdentitiesQuery } from "../hooks";
+import { getImage } from "../../utils";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -47,7 +48,7 @@ export const IdentityList: React.FunctionComponent = () => {
                 ),
                 avatar: (identity) => identity.image?.url ? (
                     <Link to={`/tribes/${identity.id}`}>
-                        <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
+                        <Avatar src={getImage(identity)} size={120} />
                     </Link>
                 ) : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,

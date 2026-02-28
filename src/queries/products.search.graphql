@@ -21,6 +21,7 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
           ... on Product {
             __typename
             id
+            serverURL
             name
             description
             url
@@ -40,10 +41,12 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             }
             company {
               id
+              serverURL
               name
               description
               identity {
                 id
+                serverURL
                 name
                 description
               }

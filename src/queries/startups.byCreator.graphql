@@ -2,6 +2,7 @@ query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
   Startups(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
     docs {
       id
+      serverURL
       title
       _status
     }

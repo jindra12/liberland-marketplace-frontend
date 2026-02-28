@@ -1,15 +1,18 @@
 import React from "react";
-import { Form, Input, Select } from "antd";
-import type { UploadFile } from "antd/es/upload/interface";
 import {
-    useCreateCompanyMutation,
-    useUpdateCompanyMutation,
-    useListIdentitiesQuery,
-} from "../../generated/graphql";
+    Form,
+    Input,
+    Select } from "antd";
+import type { UploadFile } from "antd/es/upload/interface";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
+import {
+    useCreateCompanyMutation,
+    useListIdentitiesQuery,
+    useUpdateCompanyMutation,
+} from "../hooks";
 
 interface CompanyFormValues {
     name: string | null;
@@ -23,6 +26,7 @@ interface CompanyFormValues {
 
 export interface CompanyFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<CompanyFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -30,7 +34,7 @@ export interface CompanyFormProps {
     };
 }
 
-export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues }) => {
+export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues, url }) => {
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
 
@@ -45,6 +49,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: CompanyFormValues, imageId) => ({
             name: values.name,
             description: values.description,
@@ -66,7 +71,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
                 <Select
                     loading={identitiesQuery.isLoading}

@@ -5,11 +5,11 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListCompaniesQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
@@ -59,7 +59,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${company.image.url}`}
+                            src={getImage(company)}
                             className="EntityList__avatar"
                         />
                     </Link>

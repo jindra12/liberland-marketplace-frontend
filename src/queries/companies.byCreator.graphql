@@ -2,6 +2,7 @@ query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
   Companies(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
     docs {
       id
+      serverURL
       name
       _status
     }

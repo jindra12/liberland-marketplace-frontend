@@ -1,21 +1,26 @@
 import * as React from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { useAuth } from "react-oidc-context";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Typography } from "antd";
+import { Avatar,
+    Button,
+    Descriptions,
+    Divider,
+    Flex,
+    Grid,
+    Typography
+ } from "antd";
+import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
-    useProductByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
-import { formatPrice, parseActionLink } from "../../utils";
+import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
+import { formatPrice, parseActionLink, getImage } from "../../utils";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -32,7 +37,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
         <Loader query={query}>
             {(data) => {
                 const product = data.Product;
-                const imageUrl = product?.image?.url || product?.company?.image?.url;
+                const imageSrc = getImage(product) || getImage(product?.company);
                 const companyData = companyQuery.data?.Company;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
                 const inventory = typeof product?.inventory === "number"
@@ -53,11 +58,11 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 return (
                     <Flex flex={1} vertical gap="8px">
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={md ? 120 : 72}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
                             <Flex flex={1} vertical>
