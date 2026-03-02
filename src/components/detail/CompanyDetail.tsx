@@ -5,13 +5,19 @@ import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
+    useListJobsByCompanyQuery,
+    useListProductsByCompanyQuery,
+    useListStartupsByCompanyQuery,
+    useListCommentsByTargetQuery,
 } from "../../generated/graphql";
+import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../constants";
 import { Loader } from "../Loader";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
+import { CompanyVenturesList } from "../lists/CompanyVenturesList";
 import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -22,6 +28,15 @@ const CompanyDetail: React.FunctionComponent = () => {
     const company = useCompanyByIdQuery({ id: id! });
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
+
+    const jobsCount = useListJobsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
+    const productsCount = useListProductsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
+    const venturesCount = useListStartupsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
+    const commentsRelation = COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies];
+    const commentsCount = useListCommentsByTargetQuery(
+        { targetId: id!, relationTo: commentsRelation, limit: 1 },
+        { enabled: !!id },
+    );
 
     return (
         <Loader query={company}>
@@ -86,17 +101,22 @@ const CompanyDetail: React.FunctionComponent = () => {
                             items={[
                                 {
                                     key: "jobs",
-                                    label: "Jobs",
+                                    label: `Jobs (${jobsCount.data?.Jobs?.totalDocs ?? 0})`,
                                     children: <CompanyJobsList companyId={id!} />,
                                 },
                                 {
                                     key: "products-services",
-                                    label: "Products / Services",
+                                    label: `Products / Services (${productsCount.data?.Products?.totalDocs ?? 0})`,
                                     children: <CompanyProductsServicesList companyId={id!} />,
                                 },
                                 {
+                                    key: "ventures",
+                                    label: `Ventures (${venturesCount.data?.Startups?.totalDocs ?? 0})`,
+                                    children: <CompanyVenturesList companyId={id!} />,
+                                },
+                                {
                                     key: "comments",
-                                    label: "Comments",
+                                    label: `Comments (${commentsCount.data?.Comments?.totalDocs ?? 0})`,
                                     children: (
                                         <EntityCommentsSection
                                             targetId={id!}
