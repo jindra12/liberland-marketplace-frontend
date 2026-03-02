@@ -48835,6 +48835,16 @@ export type StartupByIdQueryVariables = Exact<{
 
 export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
+export type ListStartupsByIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
   draft: Scalars['Boolean']['input'];
@@ -51573,6 +51583,57 @@ useStartupByIdQuery.getKey = (variables: StartupByIdQueryVariables) => ['Startup
 
 
 useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables, options);
+
+export const ListStartupsByIdentityDocument = `
+    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Startups(
+    draft: false
+    where: {identity: {equals: $identityId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      stage
+      identity {
+        id
+        name
+      }
+      image {
+        id
+        url
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListStartupsByIdentityQuery = <
+      TData = ListStartupsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListStartupsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListStartupsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListStartupsByIdentity', variables],
+    queryFn: gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListStartupsByIdentityQuery.getKey = (variables: ListStartupsByIdentityQueryVariables) => ['ListStartupsByIdentity', variables];
+
+
+useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables, options);
 
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
