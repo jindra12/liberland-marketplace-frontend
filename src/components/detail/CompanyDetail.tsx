@@ -6,12 +6,14 @@ import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
 } from "../../generated/graphql";
+import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { Loader } from "../Loader";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
+import { CompanyStartupsList } from "../lists/CompanyStartupsList";
 import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -22,6 +24,8 @@ const CompanyDetail: React.FunctionComponent = () => {
     const company = useCompanyByIdQuery({ id: id! });
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
+
+    const counts = useCompanyTabCounts(id);
 
     return (
         <Loader query={company}>
@@ -86,17 +90,22 @@ const CompanyDetail: React.FunctionComponent = () => {
                             items={[
                                 {
                                     key: "jobs",
-                                    label: "Jobs",
+                                    label: `Jobs (${counts.jobs})`,
                                     children: <CompanyJobsList companyId={id!} />,
                                 },
                                 {
                                     key: "products-services",
-                                    label: "Products / Services",
+                                    label: `Products / Services (${counts.products})`,
                                     children: <CompanyProductsServicesList companyId={id!} />,
                                 },
                                 {
+                                    key: "ventures",
+                                    label: `Ventures (${counts.startups})`,
+                                    children: <CompanyStartupsList companyId={id!} />,
+                                },
+                                {
                                     key: "comments",
-                                    label: "Comments",
+                                    label: `Comments (${counts.comments})`,
                                     children: (
                                         <EntityCommentsSection
                                             targetId={id!}

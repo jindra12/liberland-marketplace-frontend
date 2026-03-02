@@ -33,9 +33,9 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
             await joinMutation.mutateAsync(startup.id);
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
-            message.success("You joined this startup!");
+            message.success("You joined this venture!");
         } catch {
-            message.error("Failed to join startup");
+            message.error("Failed to join venture");
         }
     };
 
@@ -45,9 +45,9 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
             await leaveMutation.mutateAsync(startup.id);
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
-            message.success("You left this startup");
+            message.success("You left this venture");
         } catch {
-            message.error("Failed to leave startup");
+            message.error("Failed to leave venture");
         }
     };
 
@@ -92,7 +92,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
             items={allItems}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
-            title="Startups"
+            title="Ventures"
             renderItem={{
                 title: (startup) => (
                     <Flex justify="space-between" align="center" wrap>
@@ -115,13 +115,13 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                 actions: (startup) => (
                     <Space>
                         <InvolvementButton startup={startup} refetch={props.query.refetch} />
-                        <Link to={`/startups/${startup.id}`}>
+                        <Link to={`/ventures/${startup.id}`}>
                             <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
                         </Link>
                     </Space>
                 ),
                 avatar: (startup) => startup.image?.url ? (
-                    <Link to={`/startups/${startup.id}`}>
+                    <Link to={`/ventures/${startup.id}`}>
                         <Avatar
                             shape="square"
                             size={80}

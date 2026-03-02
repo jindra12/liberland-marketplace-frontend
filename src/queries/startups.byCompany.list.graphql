@@ -1,0 +1,63 @@
+query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Startups(
+    draft: false
+    where: { company: { equals: $companyId } }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      stage
+      lookingFor
+      alreadyHave
+      fundsNeeded {
+        amount
+        currency
+      }
+      company {
+        id
+        name
+        email
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      involvedUsers {
+        id
+        name
+        email
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

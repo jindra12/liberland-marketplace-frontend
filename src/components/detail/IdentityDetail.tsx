@@ -1,20 +1,44 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Space, Typography } from "antd";
+import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useIdentityByIdQuery,
+    useListCompaniesByIdentityQuery,
+    useListJobsByIdentityQuery,
+    useListProductsByIdentityQuery,
+    useListStartupsByIdentityQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
-import { IdentityCompaniesList } from "../lists/IdentityCompaniesList";
+import { JobCard } from "../cards/JobCard";
+import { ProductServiceCard } from "../cards/ProductServiceCard";
+import { CompanyCard } from "../cards/CompanyCard";
+import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const identity = useIdentityByIdQuery({ id: id! });
+
+    const jobsQuery = useListJobsByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) }
+    );
+    const productsQuery = useListProductsByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) }
+    );
+    const companiesQuery = useListCompaniesByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) }
+    );
+    const startupsQuery = useListStartupsByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) }
+    );
 
     return (
         <Loader query={identity}>
@@ -45,7 +69,32 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <Divider />
                     <Markdown>{data.Identity?.description}</Markdown>
                     <Divider />
-                    <IdentityCompaniesList identityId={id!} />
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} xl={12}>
+                            <JobCard
+                                items={jobsQuery.data?.Jobs?.docs || []}
+                                loading={jobsQuery.isLoading}
+                            />
+                        </Col>
+                        <Col xs={24} xl={12}>
+                            <ProductServiceCard
+                                items={productsQuery.data?.Products?.docs || []}
+                                loading={productsQuery.isLoading}
+                            />
+                        </Col>
+                        <Col xs={24} xl={12}>
+                            <CompanyCard
+                                items={companiesQuery.data?.Companies?.docs || []}
+                                loading={companiesQuery.isLoading}
+                            />
+                        </Col>
+                        <Col xs={24} xl={12}>
+                            <StartupCard
+                                items={startupsQuery.data?.Startups?.docs || []}
+                                loading={startupsQuery.isLoading}
+                            />
+                        </Col>
+                    </Row>
                     <Divider />
                     <EntityCommentsSection
                         targetId={id!}

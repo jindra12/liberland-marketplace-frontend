@@ -39,9 +39,9 @@ const StartupDetail: React.FunctionComponent = () => {
         try {
             await joinMutation.mutateAsync(id!);
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
-            message.success("You joined this startup!");
+            message.success("You joined this venture!");
         } catch {
-            message.error("Failed to join startup");
+            message.error("Failed to join venture");
         }
     };
 
@@ -49,9 +49,9 @@ const StartupDetail: React.FunctionComponent = () => {
         try {
             await leaveMutation.mutateAsync(id!);
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
-            message.success("You left this startup");
+            message.success("You left this venture");
         } catch {
-            message.error("Failed to leave startup");
+            message.error("Failed to leave venture");
         }
     };
 
@@ -101,7 +101,7 @@ const StartupDetail: React.FunctionComponent = () => {
                             </Typography.Title>
                         </Flex>
                         {isOwner && (
-                            <Link to={`/startups/edit/${id}`}>
+                            <Link to={`/ventures/edit/${id}`}>
                                 <Button icon={<EditOutlined />}>Edit</Button>
                             </Link>
                         )}

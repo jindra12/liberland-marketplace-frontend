@@ -89,9 +89,9 @@ root.render(
                                 <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
                                 <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
                                 <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
-                                <Route Component={suspense(Startups)} path="/startups" />
-                                <Route Component={suspense(Startup)} path="/startups/:id" />
-                                <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
+                                <Route Component={suspense(Startups)} path="/ventures" />
+                                <Route Component={suspense(Startup)} path="/ventures/:id" />
+                                <Route Component={suspense(EditStartup)} path="/ventures/edit/:id" />
                                 <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                             </Routes>
                         </AppLayout>

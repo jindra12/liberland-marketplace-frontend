@@ -21,7 +21,7 @@ export const SearchContainer: React.FunctionComponent<SearchContainerProps> = (p
             return <JobSearch onClose={props.onClose} />
         case "products":
             return <ProductsServicesSearch onClose={props.onClose} />
-        case "startups":
+        case "ventures":
             return <StartupsSearch onClose={props.onClose} />
     }
 };

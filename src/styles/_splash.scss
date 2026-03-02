@@ -122,9 +122,25 @@
         padding-top: 4px;
     }
 
+    &__identityHeadingLink {
+        display: block;
+        margin-bottom: 10px;
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     &__identityHeading {
-        margin: 0 0 10px !important;
+        margin: 0 !important;
         color: #b8e6f5 !important;
+    }
+
+    &__identityAvatar {
+        border: 2px solid rgba(184, 230, 245, 0.3);
+        flex-shrink: 0;
     }
 
 }
