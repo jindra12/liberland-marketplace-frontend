@@ -1,9 +1,9 @@
 import React from "react";
 import {
-    Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Space, Tabs, Tag, Typography,
+    Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Popconfirm, Space, Tabs, Tag, Typography,
 } from "antd";
 import {
-    EditOutlined, EyeOutlined, LogoutOutlined, PlusOutlined, UserOutlined,
+    DeleteOutlined, EditOutlined, EyeOutlined, LogoutOutlined, PlusOutlined, UserOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
@@ -13,6 +13,10 @@ import {
     useListCompaniesByCreatorQuery,
     useListProductsByCreatorQuery,
     useListStartupsByCreatorQuery,
+    useDeleteJobMutation,
+    useDeleteCompanyMutation,
+    useDeleteProductMutation,
+    useDeleteStartupMutation,
 } from "../generated/graphql";
 import { formatEmploymentType } from "../utils";
 
@@ -35,6 +39,26 @@ export const ProfileContent: React.FunctionComponent = () => {
     const [passwordForm] = Form.useForm();
     const nicknameMutation = useUpdateUserNameMutation();
     const passwordMutation = useChangePasswordMutation();
+
+    const deleteJobMutation = useDeleteJobMutation();
+    const deleteCompanyMutation = useDeleteCompanyMutation();
+    const deleteProductMutation = useDeleteProductMutation();
+    const deleteStartupMutation = useDeleteStartupMutation();
+
+    const handleDelete = async (
+        mutation: { mutateAsync: (vars: { id: string }) => Promise<unknown> },
+        id: string,
+        label: string,
+        refetch: () => void,
+    ) => {
+        try {
+            await mutation.mutateAsync({ id });
+            message.success(`${label} deleted`);
+            refetch();
+        } catch {
+            message.error(`Failed to delete ${label.toLowerCase()}`);
+        }
+    };
 
     const jobsQuery = useListJobsByCreatorQuery(
         { userId },
@@ -185,6 +209,15 @@ export const ProfileContent: React.FunctionComponent = () => {
                                             <Link key="view" to={`/jobs/${job.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
+                                            <Popconfirm
+                                                key="delete"
+                                                title="Delete this job?"
+                                                onConfirm={() => handleDelete(deleteJobMutation, job.id, "Job", jobsQuery.refetch)}
+                                                okText="Delete"
+                                                okButtonProps={{ danger: true }}
+                                            >
+                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
+                                            </Popconfirm>,
                                         ]}
                                     >
                                         <List.Item.Meta
@@ -213,6 +246,15 @@ export const ProfileContent: React.FunctionComponent = () => {
                                             <Link key="view" to={`/companies/${company.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
+                                            <Popconfirm
+                                                key="delete"
+                                                title="Delete this company?"
+                                                onConfirm={() => handleDelete(deleteCompanyMutation, company.id, "Company", companiesQuery.refetch)}
+                                                okText="Delete"
+                                                okButtonProps={{ danger: true }}
+                                            >
+                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
+                                            </Popconfirm>,
                                         ]}
                                     >
                                         <List.Item.Meta title={<Space>{company.name}{company._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
@@ -238,6 +280,15 @@ export const ProfileContent: React.FunctionComponent = () => {
                                             <Link key="view" to={`/ventures/${venture.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
+                                            <Popconfirm
+                                                key="delete"
+                                                title="Delete this venture?"
+                                                onConfirm={() => handleDelete(deleteStartupMutation, venture.id, "Venture", venturesQuery.refetch)}
+                                                okText="Delete"
+                                                okButtonProps={{ danger: true }}
+                                            >
+                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
+                                            </Popconfirm>,
                                         ]}
                                     >
                                         <List.Item.Meta title={<Space>{venture.title}{venture._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
@@ -263,6 +314,15 @@ export const ProfileContent: React.FunctionComponent = () => {
                                             <Link key="view" to={`/products-services/${product.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
+                                            <Popconfirm
+                                                key="delete"
+                                                title="Delete this product?"
+                                                onConfirm={() => handleDelete(deleteProductMutation, product.id, "Product", productsQuery.refetch)}
+                                                okText="Delete"
+                                                okButtonProps={{ danger: true }}
+                                            >
+                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
+                                            </Popconfirm>,
                                         ]}
                                     >
                                         <List.Item.Meta title={<Space>{product.name}{product._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />

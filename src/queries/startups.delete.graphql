@@ -1,0 +1,5 @@
+mutation DeleteStartup($id: String!) {
+  deleteStartup(id: $id) {
+    id
+  }
+}
