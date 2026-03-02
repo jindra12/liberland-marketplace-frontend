@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
 import { Avatar,
     Button,
@@ -7,6 +7,7 @@ import { Avatar,
     Divider,
     Flex,
     Grid,
+    Tag,
     Typography
  } from "antd";
 import { useAuth } from "react-oidc-context";
@@ -21,6 +22,8 @@ import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { formatPrice, parseActionLink, getImage } from "../../utils";
+import { AddToCartButton } from "../cart/AddToCartButton";
+import { CartItemCount } from "../cart/CartItemCount";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -40,9 +43,13 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const imageSrc = getImage(product) || getImage(product?.company);
                 const companyData = companyQuery.data?.Company;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
-                const inventory = typeof product?.inventory === "number"
-                    ? product.inventory.toLocaleString("en-US")
+                const inventoryCount = typeof product?.inventory === "number"
+                    ? product.inventory
                     : undefined;
+                const inventory = typeof inventoryCount === "number"
+                    ? inventoryCount.toLocaleString("en-US")
+                    : undefined;
+                const price = formatPrice(product?.price?.amount, product?.price?.currency);
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
@@ -81,9 +88,27 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 <ProductDetailsSummary
                                     companyName={product?.company?.name}
                                     companyId={product?.company?.id}
-                                    price={formatPrice(product?.price?.amount, product?.price?.currency)}
-                                    inventory={inventory}
                                 />
+                                {product?.id && (
+                                    <Flex justify="space-between" align="center" wrap gap="16px" className="ProductDetail__purchaseRow">
+                                        <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
+                                            {price && <Tag color="success">{price}</Tag>}
+                                            {inventory && (
+                                                <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>
+                                            )}
+                                            <CartItemCount
+                                                productId={product.id}
+                                                serverURL={product.serverURL!}
+                                            />
+                                        </Flex>
+                                        <AddToCartButton
+                                            productId={product.id}
+                                            serverURL={product.serverURL!}
+                                            size={md ? "large" : "middle"}
+                                            maxAvailable={inventoryCount}
+                                        />
+                                    </Flex>
+                                )}
                             </Flex>
                         </Flex>
                         {isOwner && (
@@ -124,7 +149,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                             type="primary"
                                             href={orderLink}
                                         >
-                                            Order now
+                                            Visit Website
                                         </Button>
                                     )}
                                     {product?.company?.id && (

@@ -31,6 +31,7 @@ const Startups = React.lazy(() => import("./components/Startups"));
 const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
+const Cart = React.lazy(() => import("./components/Cart"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <ErrorBoundary fallbackRender={({ error }) => (
@@ -78,6 +79,7 @@ root.render(
                                     <Route Component={suspense(Startups)} path="/startups" />
                                     <Route Component={suspense(Startup)} path="/startups/:id" />
                                     <Route Component={suspense(EditStartup)} path="/startups/edit/:id" />
+                                    <Route Component={suspense(Cart)} path="/cart" />
                                     <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                                 </Routes>
                             </AppLayout>

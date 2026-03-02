@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
+import { Avatar, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
 import { formatPrice, getImage } from "../../utils";
+import { AddToCartButton } from "../cart/AddToCartButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -35,9 +36,13 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                     <List.Item
                         actions={[
                             (
-                                <Link key={`product-link-${product.id}`} to={`/products-services/${product.id}`}>
-                                    <Button type="primary">Details</Button>
-                                </Link>
+                                <AddToCartButton
+                                    key={`product-cart-${product.id}`}
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                    size="small"
+                                    maxAvailable={product.inventory ?? undefined}
+                                />
                             ),
                         ]}
                     >

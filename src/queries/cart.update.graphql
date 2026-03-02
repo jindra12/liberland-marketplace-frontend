@@ -1,0 +1,30 @@
+mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
+  updateCart(id: $id, data: $data, draft: $draft) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+}

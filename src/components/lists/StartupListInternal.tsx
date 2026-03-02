@@ -104,7 +104,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     <Flex justify="space-between" align="center" wrap>
                         <Flex align="center" gap={8}>
                             <RocketOutlined />
-                            {startup.title}
+                            <Link to={`/startups/${startup.id}`}>{startup.title}</Link>
                         </Flex>
                         <Flex gap={4} wrap>
                             <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -119,12 +119,14 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     </Flex>
                 ),
                 actions: (startup) => (
-                    <Space>
-                        <InvolvementButton startup={startup} refetch={props.query.refetch} />
-                        <Link to={`/startups/${startup.id}`}>
-                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
-                        </Link>
-                    </Space>
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
+                        <Space>
+                            <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                            <Link to={`/startups/${startup.id}`}>
+                                <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
+                            </Link>
+                        </Space>
+                    </Flex>
                 ),
                 avatar: (startup) => startup.image?.url ? (
                     <Link to={`/startups/${startup.id}`}>

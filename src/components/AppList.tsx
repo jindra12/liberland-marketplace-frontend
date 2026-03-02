@@ -53,10 +53,11 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     renderItem={(item) => (
                         (() => {
                             const actions = props.renderItem["actions"]?.(item);
+                            const wrappedActions = actions ? <div className="AppList__actions">{actions}</div> : undefined;
                             return (
                                 <List.Item
                                     extra={props.renderItem["extra"]?.(item)}
-                                    actions={actions ? [actions] : undefined}
+                                    actions={wrappedActions ? [wrappedActions] : undefined}
                                 >
                                     <List.Item.Meta
                                         title={props.renderItem["title"]?.(item)}

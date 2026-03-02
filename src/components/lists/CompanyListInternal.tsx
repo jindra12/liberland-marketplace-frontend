@@ -43,7 +43,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
-                        {company.name}
+                        <Link to={`/companies/${company.id}`}>{company.name}</Link>
                         {company.identity?.name && (
                             <IdentityTagLink
                                 identity={company.identity}
@@ -53,7 +53,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         )}
                     </Flex>
                 ),
-                actions: (company) => <Link to={`/companies/${company.id}`}><Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button></Link>,
+                actions: (company) => (
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
+                        <Link to={`/companies/${company.id}`}>
+                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
+                        </Link>
+                    </Flex>
+                ),
                 avatar: (company) => company.image?.url ? (
                     <Link to={`/companies/${company.id}`}>
                         <Avatar

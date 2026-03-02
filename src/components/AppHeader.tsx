@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Drawer, Button, Grid, Space, Flex, Avatar } from "antd";
+import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
@@ -8,6 +8,8 @@ import { SearchButton } from "./SearchButton";
 import { EndpointDrawerButton } from "./EndpointDrawerButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
+import { CartHeaderButton } from "./cart/CartHeaderButton";
+import { DesktopDrawer } from "./DesktopDrawer";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -49,47 +51,23 @@ export const AppHeader: React.FunctionComponent = () => {
                 </Link>
 
                 {md ? (
-                    <Flex align="center" gap={16}>
-                        <SearchButton />
-                        <EndpointDrawerButton />
-                        <Menu
-                            className="AppHeader__menu"
-                            mode="horizontal"
-                            items={items}
-                            selectedKeys={selectedKeys}
-                            onClick={onMenuClick}
-                        />
-                        <EndpointAuthAction>
-                            {({ runWithAuthOrLogin }) => (
-                                <Button
-                                    type="primary"
-                                    icon={<PlusOutlined />}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        runWithAuthOrLogin(() => navigate("/publish"));
-                                    }}
-                                >
-                                    Publish your ad
-                                </Button>
-                            )}
-                        </EndpointAuthAction>
-                        {auth.isAuthenticated ? (
-                            <Link to="/profile">
-                                <Avatar
-                                    className="AppHeader__avatar"
-                                    size="default"
-                                    src={auth.user?.profile?.picture}
-                                    icon={<UserOutlined />}
-                                />
-                            </Link>
-                        ) : (
-                            <LoginButton type="text" />
-                        )}
-                    </Flex>
+                    <>
+                        <Flex align="center" gap={16} className="AppHeader__desktopNav">
+                            <Menu
+                                className="AppHeader__menu"
+                                mode="horizontal"
+                                items={items}
+                                selectedKeys={selectedKeys}
+                                onClick={onMenuClick}
+                            />
+                            <DesktopDrawer />
+                        </Flex>
+                    </>
                 ) : (
                     <Space className="AppHeader__mobile" align="center">
                         <SearchButton />
                         <EndpointDrawerButton />
+                        <CartHeaderButton className="AppHeader__cartLink" />
                         <Button
                             className="AppHeader__burger"
                             type="text"
@@ -116,6 +94,10 @@ export const AppHeader: React.FunctionComponent = () => {
                                 onClick={onMenuClick}
                             />
                             <div className="AppHeader__drawerNav">
+                                <CartHeaderButton
+                                    className="AppHeader__drawerCart"
+                                    onClick={() => setDrawerOpen(false)}
+                                />
                                 <EndpointAuthAction>
                                     {({ runWithAuthOrLogin }) => (
                                         <Button

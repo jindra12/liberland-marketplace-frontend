@@ -34,11 +34,15 @@ export const IdentityList: React.FunctionComponent = () => {
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>
-                        <Typography.Link href={identity.website || "#"}>
+                        <Link to={`/tribes/${identity.id}`}>
                             <Typography.Title level={3} className="IdentityList__title">
                                 {identity.name}
                             </Typography.Title>
-                        </Typography.Link>
+                        </Link>
+                    </Flex>
+                ),
+                actions: (identity) => (
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
                         <Link to={`/tribes/${identity.id}`}>
                             <Button type="primary" size="small">
                                 Details

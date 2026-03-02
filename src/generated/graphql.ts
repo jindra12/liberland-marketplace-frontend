@@ -49840,6 +49840,30 @@ export type VersionsVariants = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type CartBySecretQueryVariables = Exact<{
+  secret: Scalars['String']['input'];
+}>;
+
+
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, url?: string | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+
+export type CreateCartMutationVariables = Exact<{
+  data: MutationCartInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+
+export type UpdateCartMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationCartUpdateInput;
+  draft: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -50154,7 +50178,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -50204,7 +50228,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -50303,6 +50327,206 @@ export type UpdateCommentContentMutationVariables = Exact<{
 export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
 
 
+
+export const CartBySecretDocument = `
+    query CartBySecret($secret: String!) {
+  Carts(
+    draft: false
+    limit: 1
+    sort: "-updatedAt"
+    where: {secret: {equals: $secret}}
+  ) {
+    docs {
+      id
+      secret
+      status
+      currency
+      subtotal
+      createdAt
+      updatedAt
+      purchasedAt
+      customer {
+        id
+        name
+        email
+      }
+      items {
+        id
+        quantity
+        product {
+          id
+          serverURL
+          name
+          description
+          inventory
+          url
+          price {
+            amount
+            currency
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+          }
+        }
+        variant {
+          id
+          title
+          inventory
+          priceInUSD
+          priceInUSDEnabled
+          options {
+            id
+            label
+            value
+            variantType {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    totalDocs
+  }
+}
+    `;
+
+export const useCartBySecretQuery = <
+      TData = CartBySecretQuery,
+      TError = unknown
+    >(
+      variables: CartBySecretQueryVariables,
+      options?: Omit<UseQueryOptions<CartBySecretQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CartBySecretQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CartBySecretQuery, TError, TData>(
+      {
+    queryKey: ['CartBySecret', variables],
+    queryFn: gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables),
+    ...options
+  }
+    )};
+
+useCartBySecretQuery.getKey = (variables: CartBySecretQueryVariables) => ['CartBySecret', variables];
+
+
+useCartBySecretQuery.fetcher = (variables: CartBySecretQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables, options);
+
+export const CreateCartDocument = `
+    mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
+  createCart(data: $data, draft: $draft) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+export const useCreateCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCartMutation, TError, CreateCartMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCartMutation, TError, CreateCartMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateCart'],
+    mutationFn: (variables?: CreateCartMutationVariables) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCartMutation.fetcher = (variables: CreateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options);
+
+export const UpdateCartDocument = `
+    mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
+  updateCart(id: $id, data: $data, draft: $draft) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+export const useUpdateCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCart'],
+    mutationFn: (variables?: UpdateCartMutationVariables) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
 
 export const ListCompaniesByCreatorDocument = `
     query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
@@ -52376,6 +52600,7 @@ export const ListProductsByCompanyDocument = `
       id
       serverURL
       name
+      inventory
       description
       url
       properties {
@@ -52692,6 +52917,7 @@ export const ListProductsDocument = `
       id
       serverURL
       name
+      inventory
       description
       url
       properties {

@@ -8,6 +8,12 @@ import {
     UseQueryResult,
 } from "@tanstack/react-query";
 import {
+    CartBySecretDocument,
+    useCartBySecretQuery as useCartBySecretQuerySingle,
+    CreateCartDocument,
+    useCreateCartMutation as useCreateCartMutationSingle,
+    UpdateCartDocument,
+    useUpdateCartMutation as useUpdateCartMutationSingle,
     ListCompaniesByCreatorDocument,
     useListCompaniesByCreatorQuery as useListCompaniesByCreatorQuerySingle,
     CompanyByIdDocument,
@@ -216,6 +222,7 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables>(
 };
 
 export const useListCompaniesByCreatorQuery = enhancedQueryFactory(useListCompaniesByCreatorQuerySingle, ListCompaniesByCreatorDocument);
+export const useCartBySecretQuery = enhancedQueryFactory(useCartBySecretQuerySingle, CartBySecretDocument);
 export const useCompanyByIdQuery = enhancedQueryFactory(useCompanyByIdQuerySingle, CompanyByIdDocument);
 export const useListCompaniesByIdentityQuery = enhancedQueryFactory(useListCompaniesByIdentityQuerySingle, ListCompaniesByIdentityDocument);
 export const useSearchCompaniesByIdentityQuery = enhancedQueryFactory(useSearchCompaniesByIdentityQuerySingle, SearchCompaniesByIdentityDocument);
@@ -249,6 +256,8 @@ export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingl
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
+export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
+export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutationSingle, UpdateCartDocument);
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);

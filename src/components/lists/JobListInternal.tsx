@@ -45,7 +45,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
-                        {job.title}
+                        <Link to={`/jobs/${job.id}`}>{job.title}</Link>
                         {job.company?.identity?.name && (
                             <IdentityTagLink identity={job.company.identity} color="success" />
                         )}
@@ -97,7 +97,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     </div>
                 ),
                 actions: (job) => (
-                    <Flex wrap gap="32px" align="center">
+                    <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
                         <Link to={`/jobs/${job.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
                         <ApplyButton url={job.applyUrl} />
                     </Flex>

@@ -10,6 +10,7 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
       id
       serverURL
       name
+      inventory
       description
       url
       properties {
