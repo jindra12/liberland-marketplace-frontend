@@ -103,6 +103,6 @@
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
     "typescript": "^5.8.3",
-    "vercel": "^43.3.0"
+    "vercel": "^50.25.6"
   }
 }
