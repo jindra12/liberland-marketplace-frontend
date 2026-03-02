@@ -1,11 +1,14 @@
 import * as React from "react";
-import { Col, Row, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Avatar, Col, Flex, Row, Typography } from "antd";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import {
     useListCompaniesByIdentityQuery,
     useListJobsByIdentityQuery,
     useListProductsByIdentityQuery,
     useListStartupsByIdentityQuery,
 } from "../../generated/graphql";
+import { BACKEND_URL } from "../../gqlFetcher";
 import { CompanyCard } from "../cards/CompanyCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
@@ -14,11 +17,13 @@ import { VentureCard } from "../cards/VentureCard";
 type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
+    identityImageUrl?: string;
 };
 
 export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = ({
     identityId,
     identityName,
+    identityImageUrl,
 }) => {
     const companiesQuery = useListCompaniesByIdentityQuery(
         { identityId, page: 1, limit: 3, sort: "-createdAt" },
@@ -54,9 +59,19 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
 
     return (
         <div className="SplashPage__identitySection">
-            <Typography.Title level={4} className="SplashPage__identityHeading">
-                {identityName}
-            </Typography.Title>
+            <Link to={`/tribes/${identityId}`} className="SplashPage__identityHeadingLink">
+                <Flex align="center" gap={12}>
+                    <Avatar
+                        size={40}
+                        src={identityImageUrl ? `${BACKEND_URL}${identityImageUrl}` : undefined}
+                        icon={!identityImageUrl ? <UsergroupAddOutlined /> : undefined}
+                        className="SplashPage__identityAvatar"
+                    />
+                    <Typography.Title level={4} className="SplashPage__identityHeading">
+                        {identityName}
+                    </Typography.Title>
+                </Flex>
+            </Link>
             <Row gutter={[16, 16]} className="SplashPage__cardsGrid">
                 <Col xs={24} xl={12}>
                     <JobCard
