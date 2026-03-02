@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useListStartupsByCompanyQuery } from "../../generated/graphql";
-import { VentureListInternal } from "./VentureListInternal";
+import { StartupListInternal } from "./StartupListInternal";
 
-export interface CompanyVenturesListProps {
+export interface CompanyStartupsListProps {
     companyId: string;
 }
 
-export const CompanyVenturesList: React.FunctionComponent<CompanyVenturesListProps> = (props) => {
+export const CompanyStartupsList: React.FunctionComponent<CompanyStartupsListProps> = (props) => {
     const [page, setPage] = React.useState(0);
     const query = useListStartupsByCompanyQuery({
         companyId: props.companyId,
@@ -15,7 +15,7 @@ export const CompanyVenturesList: React.FunctionComponent<CompanyVenturesListPro
     });
 
     return (
-        <VentureListInternal
+        <StartupListInternal
             page={page}
             query={query}
             setPage={setPage}

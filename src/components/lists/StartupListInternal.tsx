@@ -9,28 +9,28 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListStartupsQuery } from "../../generated/graphql";
-import { formatStageLabel, formatResourceLabel } from "../../ventureUtils";
-import { useJoinVentureMutation, useLeaveVentureMutation } from "../../ventureApi";
+import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
+import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 
-type VentureDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
+type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
-const InvolvementButton: React.FunctionComponent<{ venture: VentureDoc; refetch: () => void }> = ({ venture, refetch }) => {
+const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch: () => void }> = ({ startup, refetch }) => {
     const auth = useAuth();
     const queryClient = useQueryClient();
-    const joinMutation = useJoinVentureMutation();
-    const leaveMutation = useLeaveVentureMutation();
+    const joinMutation = useJoinStartupMutation();
+    const leaveMutation = useLeaveStartupMutation();
     const userId = auth.user?.profile?.sub;
 
     if (!auth.isAuthenticated) return null;
 
     const isInvolved = userId
-        ? venture.involvedUsers?.some((u) => u.id === userId) ?? false
+        ? startup.involvedUsers?.some((u) => u.id === userId) ?? false
         : false;
 
     const handleJoin = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await joinMutation.mutateAsync(venture.id);
+            await joinMutation.mutateAsync(startup.id);
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You joined this venture!");
@@ -42,7 +42,7 @@ const InvolvementButton: React.FunctionComponent<{ venture: VentureDoc; refetch:
     const handleLeave = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await leaveMutation.mutateAsync(venture.id);
+            await leaveMutation.mutateAsync(startup.id);
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You left this venture");
@@ -77,13 +77,13 @@ const InvolvementButton: React.FunctionComponent<{ venture: VentureDoc; refetch:
     );
 };
 
-export interface VentureListInternalProps {
+export interface StartupListInternalProps {
     query: UseQueryResult<ListStartupsQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
 }
 
-export const VentureListInternal: React.FunctionComponent<VentureListInternalProps> = (props) => {
+export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
     const allItems = props.query.data?.Startups?.docs || [];
 
     return (
@@ -94,17 +94,17 @@ export const VentureListInternal: React.FunctionComponent<VentureListInternalPro
             refetch={props.query.refetch}
             title="Ventures"
             renderItem={{
-                title: (venture) => (
+                title: (startup) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Flex align="center" gap={8}>
                             <RocketOutlined />
-                            {venture.title}
+                            {startup.title}
                         </Flex>
                         <Flex gap={4} wrap>
-                            <Tag color="blue">{formatStageLabel(venture.stage)}</Tag>
-                            {venture.identity?.name && (
+                            <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
+                            {startup.identity?.name && (
                                 <IdentityTagLink
-                                    identity={venture.identity}
+                                    identity={startup.identity}
                                     color="success"
                                     icon={<UsergroupAddOutlined />}
                                 />
@@ -112,36 +112,36 @@ export const VentureListInternal: React.FunctionComponent<VentureListInternalPro
                         </Flex>
                     </Flex>
                 ),
-                actions: (venture) => (
+                actions: (startup) => (
                     <Space>
-                        <InvolvementButton venture={venture} refetch={props.query.refetch} />
-                        <Link to={`/ventures/${venture.id}`}>
+                        <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                        <Link to={`/ventures/${startup.id}`}>
                             <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
                         </Link>
                     </Space>
                 ),
-                avatar: (venture) => venture.image?.url ? (
-                    <Link to={`/ventures/${venture.id}`}>
+                avatar: (startup) => startup.image?.url ? (
+                    <Link to={`/ventures/${startup.id}`}>
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${venture.image.url}`}
+                            src={`${BACKEND_URL}${startup.image.url}`}
                             className="EntityList__avatar"
                         />
                     </Link>
                 ) : undefined,
-                description: (venture) => (
-                    <Flex gap={4} wrap className="VentureList__meta">
-                        {venture.company?.name && (
-                            <Tag>{venture.company.name}</Tag>
+                description: (startup) => (
+                    <Flex gap={4} wrap className="StartupList__meta">
+                        {startup.company?.name && (
+                            <Tag>{startup.company.name}</Tag>
                         )}
-                        {venture.lookingFor?.map((r) => (
+                        {startup.lookingFor?.map((r) => (
                             <Tag key={r} color="orange">{formatResourceLabel(r)}</Tag>
                         ))}
                     </Flex>
                 ),
-                body: (venture) => (
-                    <Markdown className="Markdown--clamp3 EntityList__description">{venture.description}</Markdown>
+                body: (startup) => (
+                    <Markdown className="Markdown--clamp3 EntityList__description">{startup.description}</Markdown>
                 ),
             }}
         />

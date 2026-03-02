@@ -4,9 +4,9 @@ import { ArrowLeftOutlined, RocketOutlined, ShopOutlined, TeamOutlined, ToolOutl
 import { JobForm } from "./JobForm";
 import { CompanyForm } from "./CompanyForm";
 import { ProductForm } from "./ProductForm";
-import { VentureForm } from "./VentureForm";
+import { StartupForm } from "./StartupForm";
 
-type Category = "job" | "company" | "product" | "venture";
+type Category = "job" | "company" | "product" | "startup";
 
 export const PublishContent: React.FunctionComponent = () => {
     const [category, setCategory] = React.useState<Category>();
@@ -47,14 +47,14 @@ export const PublishContent: React.FunctionComponent = () => {
         );
     }
 
-    if (category === "venture") {
+    if (category === "startup") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
                 <Typography.Title level={3}>Launch a Venture</Typography.Title>
-                <VentureForm mode="create" />
+                <StartupForm mode="create" />
             </div>
         );
     }
@@ -93,7 +93,7 @@ export const PublishContent: React.FunctionComponent = () => {
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("venture")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("startup")}>
                     <Space size={16}>
                         <RocketOutlined className="Publish__categoryIcon" />
                         <div>

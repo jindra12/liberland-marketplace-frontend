@@ -12,7 +12,7 @@ export function useCompanyTabCounts(companyId: string | undefined) {
 
     const jobsQuery = useListJobsByCompanyQuery({ companyId: companyId!, limit: 1 }, { enabled });
     const productsQuery = useListProductsByCompanyQuery({ companyId: companyId!, limit: 1 }, { enabled });
-    const venturesQuery = useListStartupsByCompanyQuery({ companyId: companyId!, limit: 1 }, { enabled });
+    const startupsQuery = useListStartupsByCompanyQuery({ companyId: companyId!, limit: 1 }, { enabled });
 
     const commentsRelation = COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies];
     const commentsQuery = useListCommentsByTargetQuery(
@@ -23,7 +23,7 @@ export function useCompanyTabCounts(companyId: string | undefined) {
     return {
         jobs: jobsQuery.data?.Jobs?.totalDocs ?? 0,
         products: productsQuery.data?.Products?.totalDocs ?? 0,
-        ventures: venturesQuery.data?.Startups?.totalDocs ?? 0,
+        startups: startupsQuery.data?.Startups?.totalDocs ?? 0,
         comments: commentsQuery.data?.Comments?.totalDocs ?? 0,
     };
 }

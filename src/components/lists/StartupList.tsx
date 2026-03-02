@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useListStartupsQuery } from "../../generated/graphql";
-import { VentureListInternal } from "./VentureListInternal";
+import { StartupListInternal } from "./StartupListInternal";
 
-export const VentureList: React.FunctionComponent = () => {
+export const StartupList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
     const query = useListStartupsQuery({
         limit: 10,
@@ -10,7 +10,7 @@ export const VentureList: React.FunctionComponent = () => {
     });
 
     return (
-        <VentureListInternal
+        <StartupListInternal
             page={page}
             query={query}
             setPage={setPage}

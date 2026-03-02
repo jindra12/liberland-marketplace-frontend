@@ -12,7 +12,7 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { CompanyCard } from "../cards/CompanyCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
-import { VentureCard } from "../cards/VentureCard";
+import { StartupCard } from "../cards/StartupCard";
 
 type IdentityMarketSectionProps = {
     identityId: string;
@@ -48,7 +48,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
         { enabled: Boolean(identityId) }
     );
 
-    const venturesQuery = useListStartupsByIdentityQuery(
+    const startupsQuery = useListStartupsByIdentityQuery(
         {
             identityId,
             page: 1,
@@ -92,9 +92,9 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     />
                 </Col>
                 <Col xs={24} xl={12}>
-                    <VentureCard
-                        items={venturesQuery.data?.Startups?.docs || []}
-                        loading={venturesQuery.isLoading}
+                    <StartupCard
+                        items={startupsQuery.data?.Startups?.docs || []}
+                        loading={startupsQuery.isLoading}
                     />
                 </Col>
             </Row>

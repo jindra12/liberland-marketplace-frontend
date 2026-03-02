@@ -4,7 +4,7 @@ import { CompaniesSearch } from "./search/CompaniesSearch";
 import { IdentitiesSearch } from "./search/IdentitiesSearch";
 import { JobSearch } from "./search/JobSearch";
 import { ProductsServicesSearch } from "./search/ProductsServicesSearch";
-import { VenturesSearch } from "./search/VenturesSearch";
+import { StartupsSearch } from "./search/StartupsSearch";
 
 export interface SearchContainerProps {
     scope: SearchScope;
@@ -22,6 +22,6 @@ export const SearchContainer: React.FunctionComponent<SearchContainerProps> = (p
         case "products":
             return <ProductsServicesSearch onClose={props.onClose} />
         case "ventures":
-            return <VenturesSearch onClose={props.onClose} />
+            return <StartupsSearch onClose={props.onClose} />
     }
 };

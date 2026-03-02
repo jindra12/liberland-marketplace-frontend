@@ -4,14 +4,14 @@ import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListStartupsByIdentityQuery } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
 
-type VentureItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
+type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
 
-type VentureCardProps = {
-    items: VentureItem[];
+type StartupCardProps = {
+    items: StartupItem[];
     loading?: boolean;
 };
 
-export const VentureCard: React.FunctionComponent<VentureCardProps> = ({
+export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
     items,
     loading,
 }) => (
@@ -28,13 +28,13 @@ export const VentureCard: React.FunctionComponent<VentureCardProps> = ({
             loading={loading}
             dataSource={items}
             locale={{ emptyText: "No ventures for this tribe" }}
-            renderItem={(venture) => {
-                const imageUrl = venture.image?.url;
+            renderItem={(startup) => {
+                const imageUrl = startup.image?.url;
                 return (
                     <List.Item
                         actions={[
                             (
-                                <Link key={`venture-link-${venture.id}`} to={`/ventures/${venture.id}`}>
+                                <Link key={`startup-link-${startup.id}`} to={`/ventures/${startup.id}`}>
                                     <Button>Details</Button>
                                 </Link>
                             ),
@@ -43,7 +43,7 @@ export const VentureCard: React.FunctionComponent<VentureCardProps> = ({
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
                                 avatar={imageUrl ? (
-                                    <Link to={`/ventures/${venture.id}`}>
+                                    <Link to={`/ventures/${startup.id}`}>
                                         <Avatar
                                             shape="square"
                                             size={48}
@@ -53,13 +53,13 @@ export const VentureCard: React.FunctionComponent<VentureCardProps> = ({
                                     </Link>
                                 ) : undefined}
                                 title={(
-                                    <Link to={`/ventures/${venture.id}`} className="SplashEntityCard__itemLink">
-                                        {venture.title}
+                                    <Link to={`/ventures/${startup.id}`} className="SplashEntityCard__itemLink">
+                                        {startup.title}
                                     </Link>
                                 )}
                             />
                             <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                {venture.stage && <Tag>{venture.stage}</Tag>}
+                                {startup.stage && <Tag>{startup.stage}</Tag>}
                             </Space>
                         </div>
                     </List.Item>

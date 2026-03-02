@@ -47,7 +47,7 @@ const alreadyHaveOptions = [
     { value: Startup_AlreadyHave_MutationInput.Product, label: "Product" },
 ];
 
-interface VentureFormValues {
+interface StartupFormValues {
     title: string;
     description?: string;
     company?: string;
@@ -60,16 +60,16 @@ interface VentureFormValues {
     imageFile?: UploadFile[];
 }
 
-export interface VentureFormProps {
+export interface StartupFormProps {
     mode: "create" | "edit";
-    initialValues?: Partial<VentureFormValues> & {
+    initialValues?: Partial<StartupFormValues> & {
         id?: string;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
     };
 }
 
-export const VentureForm: React.FunctionComponent<VentureFormProps> = ({ mode, initialValues }) => {
+export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues }) => {
     const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
@@ -84,20 +84,20 @@ export const VentureForm: React.FunctionComponent<VentureFormProps> = ({ mode, i
     const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
 
-    const defaults: Partial<VentureFormValues> = {
+    const defaults: Partial<StartupFormValues> = {
         stage: Startup_Stage_MutationInput.Idea,
         ...initialValues,
     };
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
-        entityName: "Venture",
+        entityName: "Startup",
         routePrefix: "/ventures",
         mode,
         existingImageId: initialValues?.existingImageId,
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values: VentureFormValues, imageId) => ({
+        buildData: (values: StartupFormValues, imageId) => ({
             title: values.title,
             description: values.description,
             company: values.company,

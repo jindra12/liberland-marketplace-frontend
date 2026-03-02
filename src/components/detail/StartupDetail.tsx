@@ -21,17 +21,17 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../ventureUtils";
-import { useJoinVentureMutation, useLeaveVentureMutation } from "../../ventureApi";
+import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
+import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 
-const VentureDetail: React.FunctionComponent = () => {
+const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const venture = useStartupByIdQuery({ id: id! });
+    const startup = useStartupByIdQuery({ id: id! });
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
     const queryClient = useQueryClient();
-    const joinMutation = useJoinVentureMutation();
-    const leaveMutation = useLeaveVentureMutation();
+    const joinMutation = useJoinStartupMutation();
+    const leaveMutation = useLeaveStartupMutation();
 
     const userId = auth.user?.profile?.sub;
 
@@ -56,11 +56,11 @@ const VentureDetail: React.FunctionComponent = () => {
     };
 
     return (
-        <Loader query={venture}>
+        <Loader query={startup}>
             {(data) => {
                 const s = data.Startup;
                 const imageUrl = s?.image?.url || s?.identity?.image?.url;
-                const ventureIdentity = s?.identity?.name ? {
+                const startupIdentity = s?.identity?.name ? {
                     id: s.identity.id,
                     name: s.identity.name,
                 } : undefined;
@@ -89,9 +89,9 @@ const VentureDetail: React.FunctionComponent = () => {
                                     </Space>
                                     <Flex gap={8} wrap>
                                         <Tag color="blue">{formatStageLabel(s?.stage)}</Tag>
-                                        {ventureIdentity && (
+                                        {startupIdentity && (
                                             <IdentityTagLink
-                                                identity={ventureIdentity}
+                                                identity={startupIdentity}
                                                 color="success"
                                                 icon={<UsergroupAddOutlined />}
                                             />
@@ -108,7 +108,7 @@ const VentureDetail: React.FunctionComponent = () => {
 
                         <Divider />
 
-                        <Flex gap={16} wrap className="VentureDetail__meta">
+                        <Flex gap={16} wrap className="StartupDetail__meta">
                             {s?.company?.name && (
                                 <Tag icon={<TeamOutlined />}>{s.company.name}</Tag>
                             )}
@@ -131,7 +131,7 @@ const VentureDetail: React.FunctionComponent = () => {
                                     {!!s?.lookingFor?.length && (
                                         <div>
                                             <Typography.Text type="secondary">Looking for:</Typography.Text>
-                                            <Flex gap={4} wrap className="VentureDetail__tags">
+                                            <Flex gap={4} wrap className="StartupDetail__tags">
                                                 {s.lookingFor.map((r) => (
                                                     <Tag key={r} color="orange">{formatResourceLabel(r)}</Tag>
                                                 ))}
@@ -141,7 +141,7 @@ const VentureDetail: React.FunctionComponent = () => {
                                     {!!s?.alreadyHave?.length && (
                                         <div>
                                             <Typography.Text type="secondary">Already have:</Typography.Text>
-                                            <Flex gap={4} wrap className="VentureDetail__tags">
+                                            <Flex gap={4} wrap className="StartupDetail__tags">
                                                 {s.alreadyHave.map((r) => (
                                                     <Tag key={r} color="cyan">{formatResourceLabel(r)}</Tag>
                                                 ))}
@@ -155,7 +155,7 @@ const VentureDetail: React.FunctionComponent = () => {
                         {auth.isAuthenticated && (
                             <>
                                 <Divider />
-                                <div className="VentureDetail__joinAction">
+                                <div className="StartupDetail__joinAction">
                                     {isInvolved ? (
                                         <Button
                                             icon={<UserDeleteOutlined />}
@@ -226,4 +226,4 @@ const VentureDetail: React.FunctionComponent = () => {
     );
 };
 
-export default VentureDetail;
+export default StartupDetail;

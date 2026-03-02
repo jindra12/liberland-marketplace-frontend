@@ -16,7 +16,7 @@ import { Markdown } from "../Markdown";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { CompanyCard } from "../cards/CompanyCard";
-import { VentureCard } from "../cards/VentureCard";
+import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 
 const IdentityDetail: React.FunctionComponent = () => {
@@ -35,7 +35,7 @@ const IdentityDetail: React.FunctionComponent = () => {
         { identityId: id!, page: 1, limit: 3 },
         { enabled: Boolean(id) }
     );
-    const venturesQuery = useListStartupsByIdentityQuery(
+    const startupsQuery = useListStartupsByIdentityQuery(
         { identityId: id!, page: 1, limit: 3 },
         { enabled: Boolean(id) }
     );
@@ -89,9 +89,9 @@ const IdentityDetail: React.FunctionComponent = () => {
                             />
                         </Col>
                         <Col xs={24} xl={12}>
-                            <VentureCard
-                                items={venturesQuery.data?.Startups?.docs || []}
-                                loading={venturesQuery.isLoading}
+                            <StartupCard
+                                items={startupsQuery.data?.Startups?.docs || []}
+                                loading={startupsQuery.isLoading}
                             />
                         </Col>
                     </Row>

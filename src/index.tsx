@@ -26,9 +26,9 @@ const Publish = React.lazy(() => import("./components/Publish"));
 const EditJob = React.lazy(() => import("./components/edit/EditJob"));
 const EditCompany = React.lazy(() => import("./components/edit/EditCompany"));
 const EditProduct = React.lazy(() => import("./components/edit/EditProduct"));
-const Ventures = React.lazy(() => import("./components/Ventures"));
-const Venture = React.lazy(() => import("./components/detail/VentureDetail"));
-const EditVenture = React.lazy(() => import("./components/edit/EditVenture"));
+const Startups = React.lazy(() => import("./components/Startups"));
+const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
+const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
@@ -89,9 +89,9 @@ root.render(
                                 <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
                                 <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
                                 <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
-                                <Route Component={suspense(Ventures)} path="/ventures" />
-                                <Route Component={suspense(Venture)} path="/ventures/:id" />
-                                <Route Component={suspense(EditVenture)} path="/ventures/edit/:id" />
+                                <Route Component={suspense(Startups)} path="/ventures" />
+                                <Route Component={suspense(Startup)} path="/ventures/:id" />
+                                <Route Component={suspense(EditStartup)} path="/ventures/edit/:id" />
                                 <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                             </Routes>
                         </AppLayout>

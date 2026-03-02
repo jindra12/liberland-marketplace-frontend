@@ -69,7 +69,7 @@ export const ProfileContent: React.FunctionComponent = () => {
         { enabled: !!userId, refetchOnMount: "always" },
     );
 
-    const venturesQuery = useListStartupsByCreatorQuery(
+    const startupsQuery = useListStartupsByCreatorQuery(
         { userId },
         { enabled: !!userId, refetchOnMount: "always" },
     );
@@ -113,7 +113,7 @@ export const ProfileContent: React.FunctionComponent = () => {
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const products = productsQuery.data?.Products?.docs ?? [];
-    const ventures = venturesQuery.data?.Startups?.docs ?? [];
+    const startups = startupsQuery.data?.Startups?.docs ?? [];
 
     return (
         <div className="Profile">
@@ -265,25 +265,25 @@ export const ProfileContent: React.FunctionComponent = () => {
                     },
                     {
                         key: "ventures",
-                        label: `Ventures (${venturesQuery.data?.Startups?.totalDocs ?? 0})`,
+                        label: `Ventures (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
                         children: (
                             <List
-                                loading={venturesQuery.isLoading}
-                                dataSource={ventures}
+                                loading={startupsQuery.isLoading}
+                                dataSource={startups}
                                 locale={{ emptyText: "No ventures created yet" }}
-                                renderItem={(venture) => (
+                                renderItem={(startup) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/ventures/edit/${venture.id}`}>
+                                            <Link key="edit" to={`/ventures/edit/${startup.id}`}>
                                                 <Button size="small" icon={<EditOutlined />}>Edit</Button>
                                             </Link>,
-                                            <Link key="view" to={`/ventures/${venture.id}`}>
+                                            <Link key="view" to={`/ventures/${startup.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
                                             <Popconfirm
                                                 key="delete"
                                                 title="Delete this venture?"
-                                                onConfirm={() => handleDelete(deleteStartupMutation, venture.id, "Venture", venturesQuery.refetch)}
+                                                onConfirm={() => handleDelete(deleteStartupMutation, startup.id, "Venture", startupsQuery.refetch)}
                                                 okText="Delete"
                                                 okButtonProps={{ danger: true }}
                                             >
@@ -291,7 +291,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                                             </Popconfirm>,
                                         ]}
                                     >
-                                        <List.Item.Meta title={<Space>{venture.title}{venture._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
+                                        <List.Item.Meta title={<Space>{startup.title}{startup._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
                                     </List.Item>
                                 )}
                             />

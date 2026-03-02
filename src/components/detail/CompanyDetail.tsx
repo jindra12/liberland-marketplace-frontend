@@ -13,7 +13,7 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
-import { CompanyVenturesList } from "../lists/CompanyVenturesList";
+import { CompanyStartupsList } from "../lists/CompanyStartupsList";
 import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -100,8 +100,8 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 },
                                 {
                                     key: "ventures",
-                                    label: `Ventures (${counts.ventures})`,
-                                    children: <CompanyVenturesList companyId={id!} />,
+                                    label: `Ventures (${counts.startups})`,
+                                    children: <CompanyStartupsList companyId={id!} />,
                                 },
                                 {
                                     key: "comments",
