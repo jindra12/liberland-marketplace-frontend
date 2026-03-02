@@ -5,12 +5,8 @@ import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
     useCompanyByIdQuery,
-    useListJobsByCompanyQuery,
-    useListProductsByCompanyQuery,
-    useListStartupsByCompanyQuery,
-    useListCommentsByTargetQuery,
 } from "../../generated/graphql";
-import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../constants";
+import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { Loader } from "../Loader";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { BACKEND_URL } from "../../gqlFetcher";
@@ -29,14 +25,7 @@ const CompanyDetail: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
 
-    const jobsCount = useListJobsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
-    const productsCount = useListProductsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
-    const venturesCount = useListStartupsByCompanyQuery({ companyId: id!, limit: 1 }, { enabled: !!id });
-    const commentsRelation = COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies];
-    const commentsCount = useListCommentsByTargetQuery(
-        { targetId: id!, relationTo: commentsRelation, limit: 1 },
-        { enabled: !!id },
-    );
+    const counts = useCompanyTabCounts(id);
 
     return (
         <Loader query={company}>
@@ -101,22 +90,22 @@ const CompanyDetail: React.FunctionComponent = () => {
                             items={[
                                 {
                                     key: "jobs",
-                                    label: `Jobs (${jobsCount.data?.Jobs?.totalDocs ?? 0})`,
+                                    label: `Jobs (${counts.jobs})`,
                                     children: <CompanyJobsList companyId={id!} />,
                                 },
                                 {
                                     key: "products-services",
-                                    label: `Products / Services (${productsCount.data?.Products?.totalDocs ?? 0})`,
+                                    label: `Products / Services (${counts.products})`,
                                     children: <CompanyProductsServicesList companyId={id!} />,
                                 },
                                 {
                                     key: "ventures",
-                                    label: `Ventures (${venturesCount.data?.Startups?.totalDocs ?? 0})`,
+                                    label: `Ventures (${counts.ventures})`,
                                     children: <CompanyVenturesList companyId={id!} />,
                                 },
                                 {
                                     key: "comments",
-                                    label: `Comments (${commentsCount.data?.Comments?.totalDocs ?? 0})`,
+                                    label: `Comments (${counts.comments})`,
                                     children: (
                                         <EntityCommentsSection
                                             targetId={id!}
