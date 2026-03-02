@@ -21,17 +21,17 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
-import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../ventureUtils";
+import { useJoinVentureMutation, useLeaveVentureMutation } from "../../ventureApi";
 
-const StartupDetail: React.FunctionComponent = () => {
+const VentureDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const startup = useStartupByIdQuery({ id: id! });
+    const venture = useStartupByIdQuery({ id: id! });
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
     const queryClient = useQueryClient();
-    const joinMutation = useJoinStartupMutation();
-    const leaveMutation = useLeaveStartupMutation();
+    const joinMutation = useJoinVentureMutation();
+    const leaveMutation = useLeaveVentureMutation();
 
     const userId = auth.user?.profile?.sub;
 
@@ -39,9 +39,9 @@ const StartupDetail: React.FunctionComponent = () => {
         try {
             await joinMutation.mutateAsync(id!);
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
-            message.success("You joined this startup!");
+            message.success("You joined this venture!");
         } catch {
-            message.error("Failed to join startup");
+            message.error("Failed to join venture");
         }
     };
 
@@ -49,18 +49,18 @@ const StartupDetail: React.FunctionComponent = () => {
         try {
             await leaveMutation.mutateAsync(id!);
             await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
-            message.success("You left this startup");
+            message.success("You left this venture");
         } catch {
-            message.error("Failed to leave startup");
+            message.error("Failed to leave venture");
         }
     };
 
     return (
-        <Loader query={startup}>
+        <Loader query={venture}>
             {(data) => {
                 const s = data.Startup;
                 const imageUrl = s?.image?.url || s?.identity?.image?.url;
-                const startupIdentity = s?.identity?.name ? {
+                const ventureIdentity = s?.identity?.name ? {
                     id: s.identity.id,
                     name: s.identity.name,
                 } : undefined;
@@ -89,9 +89,9 @@ const StartupDetail: React.FunctionComponent = () => {
                                     </Space>
                                     <Flex gap={8} wrap>
                                         <Tag color="blue">{formatStageLabel(s?.stage)}</Tag>
-                                        {startupIdentity && (
+                                        {ventureIdentity && (
                                             <IdentityTagLink
-                                                identity={startupIdentity}
+                                                identity={ventureIdentity}
                                                 color="success"
                                                 icon={<UsergroupAddOutlined />}
                                             />
@@ -101,14 +101,14 @@ const StartupDetail: React.FunctionComponent = () => {
                             </Typography.Title>
                         </Flex>
                         {isOwner && (
-                            <Link to={`/startups/edit/${id}`}>
+                            <Link to={`/ventures/edit/${id}`}>
                                 <Button icon={<EditOutlined />}>Edit</Button>
                             </Link>
                         )}
 
                         <Divider />
 
-                        <Flex gap={16} wrap className="StartupDetail__meta">
+                        <Flex gap={16} wrap className="VentureDetail__meta">
                             {s?.company?.name && (
                                 <Tag icon={<TeamOutlined />}>{s.company.name}</Tag>
                             )}
@@ -131,7 +131,7 @@ const StartupDetail: React.FunctionComponent = () => {
                                     {!!s?.lookingFor?.length && (
                                         <div>
                                             <Typography.Text type="secondary">Looking for:</Typography.Text>
-                                            <Flex gap={4} wrap className="StartupDetail__tags">
+                                            <Flex gap={4} wrap className="VentureDetail__tags">
                                                 {s.lookingFor.map((r) => (
                                                     <Tag key={r} color="orange">{formatResourceLabel(r)}</Tag>
                                                 ))}
@@ -141,7 +141,7 @@ const StartupDetail: React.FunctionComponent = () => {
                                     {!!s?.alreadyHave?.length && (
                                         <div>
                                             <Typography.Text type="secondary">Already have:</Typography.Text>
-                                            <Flex gap={4} wrap className="StartupDetail__tags">
+                                            <Flex gap={4} wrap className="VentureDetail__tags">
                                                 {s.alreadyHave.map((r) => (
                                                     <Tag key={r} color="cyan">{formatResourceLabel(r)}</Tag>
                                                 ))}
@@ -155,7 +155,7 @@ const StartupDetail: React.FunctionComponent = () => {
                         {auth.isAuthenticated && (
                             <>
                                 <Divider />
-                                <div className="StartupDetail__joinAction">
+                                <div className="VentureDetail__joinAction">
                                     {isInvolved ? (
                                         <Button
                                             icon={<UserDeleteOutlined />}
@@ -226,4 +226,4 @@ const StartupDetail: React.FunctionComponent = () => {
     );
 };
 
-export default StartupDetail;
+export default VentureDetail;

@@ -4,9 +4,9 @@ import { ArrowLeftOutlined, RocketOutlined, ShopOutlined, TeamOutlined, ToolOutl
 import { JobForm } from "./JobForm";
 import { CompanyForm } from "./CompanyForm";
 import { ProductForm } from "./ProductForm";
-import { StartupForm } from "./StartupForm";
+import { VentureForm } from "./VentureForm";
 
-type Category = "job" | "company" | "product" | "startup";
+type Category = "job" | "company" | "product" | "venture";
 
 export const PublishContent: React.FunctionComponent = () => {
     const [category, setCategory] = React.useState<Category>();
@@ -47,14 +47,14 @@ export const PublishContent: React.FunctionComponent = () => {
         );
     }
 
-    if (category === "startup") {
+    if (category === "venture") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
-                <Typography.Title level={3}>Launch a Startup</Typography.Title>
-                <StartupForm mode="create" />
+                <Typography.Title level={3}>Launch a Venture</Typography.Title>
+                <VentureForm mode="create" />
             </div>
         );
     }
@@ -93,12 +93,12 @@ export const PublishContent: React.FunctionComponent = () => {
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("startup")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("venture")}>
                     <Space size={16}>
                         <RocketOutlined className="Publish__categoryIcon" />
                         <div>
-                            <Typography.Title level={4} className="Publish__categoryTitle">Startup</Typography.Title>
-                            <Typography.Text type="secondary">Launch a startup venture</Typography.Text>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Venture</Typography.Title>
+                            <Typography.Text type="secondary">Launch a new venture</Typography.Text>
                         </div>
                     </Space>
                 </Card>

@@ -47,7 +47,7 @@ const alreadyHaveOptions = [
     { value: Startup_AlreadyHave_MutationInput.Product, label: "Product" },
 ];
 
-interface StartupFormValues {
+interface VentureFormValues {
     title: string;
     description?: string;
     company?: string;
@@ -60,16 +60,16 @@ interface StartupFormValues {
     imageFile?: UploadFile[];
 }
 
-export interface StartupFormProps {
+export interface VentureFormProps {
     mode: "create" | "edit";
-    initialValues?: Partial<StartupFormValues> & {
+    initialValues?: Partial<VentureFormValues> & {
         id?: string;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
     };
 }
 
-export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues }) => {
+export const VentureForm: React.FunctionComponent<VentureFormProps> = ({ mode, initialValues }) => {
     const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
@@ -84,20 +84,20 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
     const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
 
-    const defaults: Partial<StartupFormValues> = {
+    const defaults: Partial<VentureFormValues> = {
         stage: Startup_Stage_MutationInput.Idea,
         ...initialValues,
     };
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
-        entityName: "Startup",
-        routePrefix: "/startups",
+        entityName: "Venture",
+        routePrefix: "/ventures",
         mode,
         existingImageId: initialValues?.existingImageId,
         editId: initialValues?.id,
         createMutation,
         updateMutation,
-        buildData: (values: StartupFormValues, imageId) => ({
+        buildData: (values: VentureFormValues, imageId) => ({
             title: values.title,
             description: values.description,
             company: values.company,
@@ -116,11 +116,11 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
 
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
-            <Form.Item name="title" label="Startup Name" rules={[{ required: true }]}>
+            <Form.Item name="title" label="Venture Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-                <MarkdownEditor rows={6} placeholder="Describe your startup (supports Markdown)" />
+                <MarkdownEditor rows={6} placeholder="Describe your venture (supports Markdown)" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
             <Form.Item name="company" label="Company" rules={[{ required: true, message: "Please select a company" }]}>
@@ -169,7 +169,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
             </Form.Item>
 
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Startup" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={mode} entityName="Venture" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

@@ -12,7 +12,7 @@ import type {
     Startup,
 } from "./generated/graphql";
 
-export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
+export type SearchScope = "jobs" | "companies" | "identities" | "products" | "ventures";
 export type SearchOption = { value: string; label?: ReactNode, image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 

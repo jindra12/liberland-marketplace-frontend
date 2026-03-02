@@ -45,7 +45,7 @@ export const ProfileContent: React.FunctionComponent = () => {
         { enabled: !!userId, refetchOnMount: "always" },
     );
 
-    const startupsQuery = useListStartupsByCreatorQuery(
+    const venturesQuery = useListStartupsByCreatorQuery(
         { userId },
         { enabled: !!userId, refetchOnMount: "always" },
     );
@@ -89,7 +89,7 @@ export const ProfileContent: React.FunctionComponent = () => {
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const products = productsQuery.data?.Products?.docs ?? [];
-    const startups = startupsQuery.data?.Startups?.docs ?? [];
+    const ventures = venturesQuery.data?.Startups?.docs ?? [];
 
     return (
         <div className="Profile">
@@ -222,25 +222,25 @@ export const ProfileContent: React.FunctionComponent = () => {
                         ),
                     },
                     {
-                        key: "startups",
-                        label: `Startups (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
+                        key: "ventures",
+                        label: `Ventures (${venturesQuery.data?.Startups?.totalDocs ?? 0})`,
                         children: (
                             <List
-                                loading={startupsQuery.isLoading}
-                                dataSource={startups}
-                                locale={{ emptyText: "No startups created yet" }}
-                                renderItem={(startup) => (
+                                loading={venturesQuery.isLoading}
+                                dataSource={ventures}
+                                locale={{ emptyText: "No ventures created yet" }}
+                                renderItem={(venture) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/startups/edit/${startup.id}`}>
+                                            <Link key="edit" to={`/ventures/edit/${venture.id}`}>
                                                 <Button size="small" icon={<EditOutlined />}>Edit</Button>
                                             </Link>,
-                                            <Link key="view" to={`/startups/${startup.id}`}>
+                                            <Link key="view" to={`/ventures/${venture.id}`}>
                                                 <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
                                             </Link>,
                                         ]}
                                     >
-                                        <List.Item.Meta title={<Space>{startup.title}{startup._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
+                                        <List.Item.Meta title={<Space>{venture.title}{venture._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
                                     </List.Item>
                                 )}
                             />

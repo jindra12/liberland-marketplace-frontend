@@ -5,15 +5,15 @@ import { DocType, SearchOption } from "../../types";
 import { useSearchStartupsQuery } from "../../generated/graphql";
 import { getImage } from "../../utils";
 
-export interface StartupsSearchProps {
+export interface VenturesSearchProps {
     onClose: () => void;
 }
 
-export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (props) => {
+export const VenturesSearch: React.FunctionComponent<VenturesSearchProps> = (props) => {
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState<string>();
-    const startups = useSearchStartupsQuery({
+    const ventures = useSearchStartupsQuery({
         searchTerm: term || "",
         limit: 5,
         page: 0,
@@ -22,27 +22,27 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
     });
 
     React.useEffect(() => {
-        if (!startups.isFetched) {
+        if (!ventures.isFetched) {
             setOptions([]);
-        } else if (startups.data) {
+        } else if (ventures.data) {
             setOptions(
-                startups
+                ventures
                     .data
                     .Searches
                     ?.docs
                     .map(({ title, doc }) => ({ value: (doc.value as DocType)?.id || "", label: title, image: getImage(doc.value as DocType) })) || []
             );
         }
-    }, [startups.isFetched, startups.data]);
+    }, [ventures.isFetched, ventures.data]);
 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { value }) => { navigate(`/startups/${value}`); props.onClose(); }}
+            onSelect={(_, { value }) => { navigate(`/ventures/${value}`); props.onClose(); }}
             options={options}
             runSearch={setTerm}
             setOptions={setOptions}
-            isLoading={startups.isLoading}
+            isLoading={ventures.isLoading}
         />
     );
 };

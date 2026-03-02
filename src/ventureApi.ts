@@ -2,7 +2,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { BACKEND_URL, getAccessToken } from "./gqlFetcher";
 
-const startupClient = () => {
+const ventureClient = () => {
     const token = getAccessToken();
     return axios.create({
         baseURL: `${BACKEND_URL}/api/startups`,
@@ -10,14 +10,14 @@ const startupClient = () => {
     });
 };
 
-export const useJoinStartupMutation = () =>
+export const useJoinVentureMutation = () =>
     useMutation({
-        mutationFn: (startupId: string) =>
-            startupClient().post(`/${startupId}/join`),
+        mutationFn: (ventureId: string) =>
+            ventureClient().post(`/${ventureId}/join`),
     });
 
-export const useLeaveStartupMutation = () =>
+export const useLeaveVentureMutation = () =>
     useMutation({
-        mutationFn: (startupId: string) =>
-            startupClient().post(`/${startupId}/leave`),
+        mutationFn: (ventureId: string) =>
+            ventureClient().post(`/${ventureId}/leave`),
     });
