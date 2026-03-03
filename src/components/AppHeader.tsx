@@ -16,7 +16,7 @@ const items = [
     { key: "/jobs", label: "Jobs" },
     { key: "/products-services", label: "Market" },
     { key: "/companies", label: "Companies" },
-    { key: "/startups", label: "Startups" },
+    { key: "/ventures", label: "Ventures" },
     { key: "/tribes", label: "Tribes" },
 ];
 
