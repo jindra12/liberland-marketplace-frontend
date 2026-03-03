@@ -57,7 +57,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = ({ url }
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
                     Back
                 </Button>
-                <Typography.Title level={3}>Launch a Startup</Typography.Title>
+                <Typography.Title level={3}>Launch a Venture</Typography.Title>
                 <StartupForm mode="create" url={url} />
             </div>
         );
@@ -101,8 +101,8 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = ({ url }
                     <Space size={16}>
                         <RocketOutlined className="Publish__categoryIcon" />
                         <div>
-                            <Typography.Title level={4} className="Publish__categoryTitle">Startup</Typography.Title>
-                            <Typography.Text type="secondary">Launch a startup venture</Typography.Text>
+                            <Typography.Title level={4} className="Publish__categoryTitle">Venture</Typography.Title>
+                            <Typography.Text type="secondary">Launch a venture</Typography.Text>
                         </div>
                     </Space>
                 </Card>

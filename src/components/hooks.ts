@@ -32,6 +32,8 @@ import {
     useSearchCompaniesQuery as useSearchCompaniesQuerySingle,
     CreateCompanyDocument,
     useCreateCompanyMutation as useCreateCompanyMutationSingle,
+    DeleteCompanyDocument,
+    useDeleteCompanyMutation as useDeleteCompanyMutationSingle,
     UpdateCompanyDocument,
     useUpdateCompanyMutation as useUpdateCompanyMutationSingle,
     IdentityByIdDocument,
@@ -54,6 +56,8 @@ import {
     useSearchJobsBySecondaryIdentityQuery as useSearchJobsBySecondaryIdentityQuerySingle,
     CreateJobDocument,
     useCreateJobMutation as useCreateJobMutationSingle,
+    DeleteJobDocument,
+    useDeleteJobMutation as useDeleteJobMutationSingle,
     UpdateJobDocument,
     useUpdateJobMutation as useUpdateJobMutationSingle,
     ListJobsDocument,
@@ -82,6 +86,8 @@ import {
     useSearchProductsByCompanyQuery as useSearchProductsByCompanyQuerySingle,
     CreateProductDocument,
     useCreateProductMutation as useCreateProductMutationSingle,
+    DeleteProductDocument,
+    useDeleteProductMutation as useDeleteProductMutationSingle,
     UpdateProductDocument,
     useUpdateProductMutation as useUpdateProductMutationSingle,
     ListProductsByCreatorDocument,
@@ -94,6 +100,8 @@ import {
     useSearchProductsQuery as useSearchProductsQuerySingle,
     ListStartupsByCreatorDocument,
     useListStartupsByCreatorQuery as useListStartupsByCreatorQuerySingle,
+    ListStartupsByIdentityDocument,
+    useListStartupsByIdentityQuery as useListStartupsByIdentityQuerySingle,
     StartupByIdDocument,
     useStartupByIdQuery as useStartupByIdQuerySingle,
     ListStartupsDocument,
@@ -102,6 +110,8 @@ import {
     useSearchStartupsQuery as useSearchStartupsQuerySingle,
     CreateStartupDocument,
     useCreateStartupMutation as useCreateStartupMutationSingle,
+    DeleteStartupDocument,
+    useDeleteStartupMutation as useDeleteStartupMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
 } from "../generated/graphql";
@@ -252,20 +262,25 @@ export const useProductByIdQuery = enhancedQueryFactory(useProductByIdQuerySingl
 export const useListProductsQuery = enhancedQueryFactory(useListProductsQuerySingle, ListProductsDocument);
 export const useSearchProductsQuery = enhancedQueryFactory(useSearchProductsQuerySingle, SearchProductsDocument);
 export const useListStartupsByCreatorQuery = enhancedQueryFactory(useListStartupsByCreatorQuerySingle, ListStartupsByCreatorDocument);
+export const useListStartupsByIdentityQuery = enhancedQueryFactory(useListStartupsByIdentityQuerySingle, ListStartupsByIdentityDocument);
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutationSingle, UpdateCartDocument);
+export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompanyMutationSingle, DeleteCompanyDocument);
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);
+export const useDeleteJobMutation = enhancedMutationFactory(useDeleteJobMutationSingle, DeleteJobDocument);
 export const useUpdateJobMutation = enhancedMutationFactory(useUpdateJobMutationSingle, UpdateJobDocument);
 export const useCreateProductMutation = enhancedMutationFactory(useCreateProductMutationSingle, CreateProductDocument);
+export const useDeleteProductMutation = enhancedMutationFactory(useDeleteProductMutationSingle, DeleteProductDocument);
 export const useUpdateProductMutation = enhancedMutationFactory(useUpdateProductMutationSingle, UpdateProductDocument);
 export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
+export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
 export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
 export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);

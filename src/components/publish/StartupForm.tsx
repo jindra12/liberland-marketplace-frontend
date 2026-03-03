@@ -97,7 +97,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Startup",
-        routePrefix: "/startups",
+        routePrefix: "/ventures",
         mode,
         existingImageId: initialValues?.existingImageId,
         editId: initialValues?.id,
@@ -123,11 +123,11 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
 
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
-            <Form.Item name="title" label="Startup Name" rules={[{ required: true }]}>
+            <Form.Item name="title" label="Venture Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-                <MarkdownEditor rows={6} placeholder="Describe your startup (supports Markdown)" />
+                <MarkdownEditor rows={6} placeholder="Describe your venture (supports Markdown)" />
             </Form.Item>
             <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="company" label="Company" rules={[{ required: true, message: "Please select a company" }]}>
@@ -176,7 +176,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
             </Form.Item>
 
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Startup" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={mode} entityName="Venture" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

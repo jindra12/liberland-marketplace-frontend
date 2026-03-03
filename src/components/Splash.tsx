@@ -63,6 +63,7 @@ const Splash: React.FunctionComponent = () => {
                                 identityId={identity.id}
                                 identityName={identity.name || "Tribe"}
                                 identityUrl={identity.serverURL!}
+                                identityImageUrl={identity.image?.url || undefined}
                             />
                         ))}
                     </Flex>

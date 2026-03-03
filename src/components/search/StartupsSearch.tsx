@@ -48,7 +48,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, option) => { navigate(`/startups/${option.id}`); props.onClose(); }}
+            onSelect={(_, { id }) => { navigate(`/ventures/${id}`); props.onClose(); }}
             options={options}
             title="Startup search"
             runSearch={setTerm}

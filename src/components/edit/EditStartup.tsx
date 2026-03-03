@@ -22,7 +22,7 @@ const EditStartup: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <Typography.Title level={3}>Edit Startup</Typography.Title>
+                                <Typography.Title level={3}>Edit Venture</Typography.Title>
                                 <StartupForm
                                     mode="edit"
                                     initialValues={{

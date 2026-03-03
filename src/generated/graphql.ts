@@ -49936,6 +49936,13 @@ export type CreateCompanyMutationVariables = Exact<{
 
 export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type DeleteCompanyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteCompanyMutation = { __typename?: 'Mutation', deleteCompany?: { __typename?: 'Company', id: string } | null };
+
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -50100,6 +50107,13 @@ export type CreateJobMutationVariables = Exact<{
 
 export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type DeleteJobMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteJobMutation = { __typename?: 'Mutation', deleteJob?: { __typename?: 'Job', id: string } | null };
+
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -50221,6 +50235,13 @@ export type CreateProductMutationVariables = Exact<{
 
 export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct?: { __typename?: 'Product', id: string } | null };
+
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -50255,6 +50276,16 @@ export type UpdateProductMutationVariables = Exact<{
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type ListStartupsByCompanyQueryVariables = Exact<{
+  companyId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+
 export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -50271,6 +50302,16 @@ export type StartupByIdQueryVariables = Exact<{
 
 export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
+export type ListStartupsByIdentityQueryVariables = Exact<{
+  identityId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
   draft: Scalars['Boolean']['input'];
@@ -50278,6 +50319,13 @@ export type CreateStartupMutationVariables = Exact<{
 
 
 export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+export type DeleteStartupMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteStartupMutation = { __typename?: 'Mutation', deleteStartup?: { __typename?: 'Startup', id: string } | null };
 
 export type ListStartupsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -51032,6 +51080,30 @@ export const useCreateCompanyMutation = <
 
 
 useCreateCompanyMutation.fetcher = (variables: CreateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables, options);
+
+export const DeleteCompanyDocument = `
+    mutation DeleteCompany($id: String!) {
+  deleteCompany(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteCompany'],
+    mutationFn: (variables?: DeleteCompanyMutationVariables) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables, options);
 
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -52112,6 +52184,30 @@ export const useCreateJobMutation = <
 
 useCreateJobMutation.fetcher = (variables: CreateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables, options);
 
+export const DeleteJobDocument = `
+    mutation DeleteJob($id: String!) {
+  deleteJob(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteJobMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteJob'],
+    mutationFn: (variables?: DeleteJobMutationVariables) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables, options);
+
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
@@ -52910,6 +53006,30 @@ export const useCreateProductMutation = <
 
 useCreateProductMutation.fetcher = (variables: CreateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, variables, options);
 
+export const DeleteProductDocument = `
+    mutation DeleteProduct($id: String!) {
+  deleteProduct(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteProductMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteProductMutation, TError, DeleteProductMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteProductMutation, TError, DeleteProductMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteProduct'],
+    mutationFn: (variables?: DeleteProductMutationVariables) => gqlFetcher<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteProductMutation.fetcher = (variables: DeleteProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, variables, options);
+
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(draft: false, page: $page, limit: $limit, sort: $sort) {
@@ -53123,6 +53243,93 @@ export const useUpdateProductMutation = <
 
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
 
+export const ListStartupsByCompanyDocument = `
+    query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Startups(
+    draft: false
+    where: {company: {equals: $companyId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      stage
+      lookingFor
+      alreadyHave
+      fundsNeeded {
+        amount
+        currency
+      }
+      company {
+        id
+        name
+        email
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      involvedUsers {
+        id
+        name
+        email
+      }
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListStartupsByCompanyQuery = <
+      TData = ListStartupsByCompanyQuery,
+      TError = unknown
+    >(
+      variables: ListStartupsByCompanyQueryVariables,
+      options?: Omit<UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListStartupsByCompanyQuery, TError, TData>(
+      {
+    queryKey: ['ListStartupsByCompany', variables],
+    queryFn: gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables),
+    ...options
+  }
+    )};
+
+useListStartupsByCompanyQuery.getKey = (variables: ListStartupsByCompanyQueryVariables) => ['ListStartupsByCompany', variables];
+
+
+useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables, options);
+
 export const ListStartupsByCreatorDocument = `
     query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
   Startups(
@@ -53244,6 +53451,57 @@ useStartupByIdQuery.getKey = (variables: StartupByIdQueryVariables) => ['Startup
 
 useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables, options);
 
+export const ListStartupsByIdentityDocument = `
+    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Startups(
+    draft: false
+    where: {identity: {equals: $identityId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      description
+      stage
+      identity {
+        id
+        name
+      }
+      image {
+        id
+        url
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListStartupsByIdentityQuery = <
+      TData = ListStartupsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListStartupsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListStartupsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListStartupsByIdentity', variables],
+    queryFn: gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListStartupsByIdentityQuery.getKey = (variables: ListStartupsByIdentityQueryVariables) => ['ListStartupsByIdentity', variables];
+
+
+useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables, options);
+
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
   createStartup(data: $data, draft: $draft) {
@@ -53273,6 +53531,30 @@ export const useCreateStartupMutation = <
 
 
 useCreateStartupMutation.fetcher = (variables: CreateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateStartupMutation, CreateStartupMutationVariables>(CreateStartupDocument, variables, options);
+
+export const DeleteStartupDocument = `
+    mutation DeleteStartup($id: String!) {
+  deleteStartup(id: $id) {
+    id
+  }
+}
+    `;
+
+export const useDeleteStartupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteStartupMutation, TError, DeleteStartupMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteStartupMutation, TError, DeleteStartupMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteStartup'],
+    mutationFn: (variables?: DeleteStartupMutationVariables) => gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables, options);
 
 export const ListStartupsDocument = `
     query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
