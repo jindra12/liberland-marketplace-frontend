@@ -13,9 +13,22 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
       company {
         id
         name
+        image {
+          id
+          url
+        }
       }
       location
       employmentType
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+      }
       postedAt
       _status
     }

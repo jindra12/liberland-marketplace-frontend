@@ -31,7 +31,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
                 const price = formatPrice(product.price?.amount, product.price?.currency);
-                const imageUrl = product.image?.url;
+                const imageUrl = product.image?.url || product.company?.image?.url;
                 return (
                     <List.Item
                         actions={[

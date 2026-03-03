@@ -13,6 +13,20 @@ const Splash: React.FunctionComponent = () => {
     const isLoading = identitiesQuery.isLoading;
     const hasError = Boolean(identitiesQuery.error);
 
+    const [identityCounts, setIdentityCounts] = React.useState<Record<string, number>>({});
+
+    const handleTotalCount = React.useCallback((identityId: string, count: number) => {
+        setIdentityCounts((prev) => {
+            if (prev[identityId] === count) return prev;
+            return { ...prev, [identityId]: count };
+        });
+    }, []);
+
+    const sortedIdentities = React.useMemo(
+        () => [...identities].sort((a, b) => (identityCounts[b.id] || 0) - (identityCounts[a.id] || 0)),
+        [identities, identityCounts],
+    );
+
     return (
         <Flex vertical gap={18} className="SplashPage">
             <section className="SplashPage__hero">
@@ -54,14 +68,15 @@ const Splash: React.FunctionComponent = () => {
                     <Empty description="No tribes found yet." />
                 )}
 
-                {identities.length > 0 && (
+                {sortedIdentities.length > 0 && (
                     <Flex vertical gap={18} className="SplashPage__identityList">
-                        {identities.map((identity) => (
+                        {sortedIdentities.map((identity) => (
                             <IdentityMarketSection
                                 key={identity.id}
                                 identityId={identity.id}
                                 identityName={identity.name || "Tribe"}
                                 identityImageUrl={identity.image?.url || undefined}
+                                onTotalCount={handleTotalCount}
                             />
                         ))}
                     </Flex>

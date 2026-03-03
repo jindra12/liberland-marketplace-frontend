@@ -18,12 +18,14 @@ type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
     identityImageUrl?: string;
+    onTotalCount?: (identityId: string, count: number) => void;
 };
 
 export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = ({
     identityId,
     identityName,
     identityImageUrl,
+    onTotalCount,
 }) => {
     const companiesQuery = useListCompaniesByIdentityQuery(
         { identityId, page: 1, limit: 3, sort: "-createdAt" },
@@ -56,6 +58,23 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
         },
         { enabled: Boolean(identityId) }
     );
+
+    React.useEffect(() => {
+        if (!onTotalCount) return;
+        const total =
+            (jobsQuery.data?.Jobs?.totalDocs || 0) +
+            (productsQuery.data?.Products?.totalDocs || 0) +
+            (companiesQuery.data?.Companies?.totalDocs || 0) +
+            (startupsQuery.data?.Startups?.totalDocs || 0);
+        onTotalCount(identityId, total);
+    }, [
+        identityId,
+        onTotalCount,
+        jobsQuery.data?.Jobs?.totalDocs,
+        productsQuery.data?.Products?.totalDocs,
+        companiesQuery.data?.Companies?.totalDocs,
+        startupsQuery.data?.Startups?.totalDocs,
+    ]);
 
     return (
         <div className="SplashPage__identitySection">
