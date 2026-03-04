@@ -82,7 +82,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
         />
         {remaining > 0 && identityId && (
             <Link to={`/jobs?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                And +{remaining} more
+                And +{remaining} more →
             </Link>
         )}
     </Card>

@@ -78,7 +78,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
         />
         {remaining > 0 && identityId && (
             <Link to={`/companies?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                And +{remaining} more
+                And +{remaining} more →
             </Link>
         )}
     </Card>
