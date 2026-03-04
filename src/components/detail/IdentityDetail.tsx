@@ -71,10 +71,10 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <Divider />
                     <Row gutter={[16, 16]}>
                         <Col xs={24} xl={12}>
-                            <JobCard
-                                items={jobsQuery.data?.Jobs?.docs || []}
-                                loading={jobsQuery.isLoading}
-                                totalDocs={jobsQuery.data?.Jobs?.totalDocs}
+                            <CompanyCard
+                                items={companiesQuery.data?.Companies?.docs || []}
+                                loading={companiesQuery.isLoading}
+                                totalDocs={companiesQuery.data?.Companies?.totalDocs}
                                 identityId={id}
                             />
                         </Col>
@@ -87,10 +87,10 @@ const IdentityDetail: React.FunctionComponent = () => {
                             />
                         </Col>
                         <Col xs={24} xl={12}>
-                            <CompanyCard
-                                items={companiesQuery.data?.Companies?.docs || []}
-                                loading={companiesQuery.isLoading}
-                                totalDocs={companiesQuery.data?.Companies?.totalDocs}
+                            <JobCard
+                                items={jobsQuery.data?.Jobs?.docs || []}
+                                loading={jobsQuery.isLoading}
+                                totalDocs={jobsQuery.data?.Jobs?.totalDocs}
                                 identityId={id}
                             />
                         </Col>

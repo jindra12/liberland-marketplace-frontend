@@ -74,10 +74,10 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             </Link>
             <Row gutter={[16, 16]} className="SplashPage__cardsGrid">
                 <Col xs={24} xl={12}>
-                    <JobCard
-                        items={jobsQuery.data?.Jobs?.docs || []}
-                        loading={jobsQuery.isLoading}
-                        totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
+                    <CompanyCard
+                        items={companiesQuery.data?.Companies?.docs || []}
+                        loading={companiesQuery.isLoading}
+                        totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
                         identityId={identityId}
                     />
                 </Col>
@@ -90,10 +90,10 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     />
                 </Col>
                 <Col xs={24} xl={12}>
-                    <CompanyCard
-                        items={companiesQuery.data?.Companies?.docs || []}
-                        loading={companiesQuery.isLoading}
-                        totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
+                    <JobCard
+                        items={jobsQuery.data?.Jobs?.docs || []}
+                        loading={jobsQuery.isLoading}
+                        totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
                         identityId={identityId}
                     />
                 </Col>
