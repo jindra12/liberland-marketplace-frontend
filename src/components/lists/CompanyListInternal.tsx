@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Flex } from "antd";
+import { Link, useSearchParams } from "react-router-dom";
+import { Avatar, Button, Divider, Flex, Typography } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
@@ -20,7 +20,11 @@ export interface CompanyListInternalProps {
 
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tribeParam = searchParams.get("tribe");
+    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>(
+        tribeParam ? [tribeParam] : []
+    );
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const items = selectedIdentityIds.length === 0
         ? allItems
@@ -32,15 +36,42 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             return selectedIdentityIds.some((id) => identityIds.includes(id));
         });
 
+    const hasMore = Boolean(props.query.data?.Companies?.hasNextPage);
+    const isTribeFiltered = selectedIdentityIds.length > 0;
+
+    // Auto-fetch next page when tribe filter yields 0 visible items but more pages exist
+    React.useEffect(() => {
+        if (isTribeFiltered && items.length === 0 && hasMore && !props.query.isLoading && !props.query.isFetching) {
+            props.setPage(props.page + 1);
+        }
+    }, [isTribeFiltered, items.length, hasMore, props.query.isLoading, props.query.isFetching, props.page, props.setPage]);
+
+    const tribeEndMessage = isTribeFiltered && !hasMore ? (
+        <div className="AppList__tribeEnd">
+            <Divider />
+            <Typography.Title level={4} className="AppList__tribeEndHeading">
+                No more results for this Tribe
+            </Typography.Title>
+            <Button
+                type="primary"
+                size="large"
+                href={window.location.pathname}
+            >
+                View items from all tribes
+            </Button>
+        </div>
+    ) : undefined;
+
     return (
         <AppList
-            hasMore={Boolean(props.query.data?.Companies?.hasNextPage)}
+            hasMore={hasMore}
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
             loading={props.query.isLoading && allItems.length === 0}
             title="Companies"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
+            endMessage={tribeEndMessage}
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>

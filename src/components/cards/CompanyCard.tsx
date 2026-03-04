@@ -9,12 +9,18 @@ type CompanyItem = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["doc
 type CompanyCardProps = {
     items: CompanyItem[];
     loading?: boolean;
+    totalDocs?: number;
+    identityId?: string;
 };
 
 export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
     items,
     loading,
-}) => (
+    totalDocs,
+    identityId,
+}) => {
+    const remaining = totalDocs != null ? totalDocs - items.length : 0;
+    return (
     <Card
         className="SplashEntityCard SplashEntityCard--companies"
         title={(
@@ -70,5 +76,11 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                 );
             }}
         />
+        {remaining > 0 && identityId && (
+            <Link to={`/companies?tribe=${identityId}`} className="SplashEntityCard__moreLink">
+                And +{remaining} more
+            </Link>
+        )}
     </Card>
-);
+    );
+};

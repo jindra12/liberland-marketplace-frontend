@@ -9,12 +9,18 @@ type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups
 type StartupCardProps = {
     items: StartupItem[];
     loading?: boolean;
+    totalDocs?: number;
+    identityId?: string;
 };
 
 export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
     items,
     loading,
-}) => (
+    totalDocs,
+    identityId,
+}) => {
+    const remaining = totalDocs != null ? totalDocs - items.length : 0;
+    return (
     <Card
         className="SplashEntityCard SplashEntityCard--ventures"
         title={(
@@ -66,5 +72,11 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                 );
             }}
         />
+        {remaining > 0 && identityId && (
+            <Link to={`/ventures?tribe=${identityId}`} className="SplashEntityCard__moreLink">
+                And +{remaining} more
+            </Link>
+        )}
     </Card>
-);
+    );
+};

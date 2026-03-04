@@ -12,6 +12,7 @@ export interface AppListProps<TItem> {
     filters?: React.ReactNode;
     emptyText?: React.ReactNode;
     loading?: boolean;
+    endMessage?: React.ReactNode;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
@@ -21,7 +22,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
             next={props.next}
             hasMore={props.hasMore}
             loader={<Flex justify="center" align="center"><Spin /></Flex>}
-            endMessage={(
+            endMessage={props.endMessage ?? (
                 <div>
                     <Divider size="large" />
                     <Typography.Text type="secondary">No more results</Typography.Text>

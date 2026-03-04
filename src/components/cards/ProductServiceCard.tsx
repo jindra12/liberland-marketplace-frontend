@@ -10,12 +10,18 @@ type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"
 type ProductServiceCardProps = {
     items: ProductItem[];
     loading?: boolean;
+    totalDocs?: number;
+    identityId?: string;
 };
 
 export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
     items,
     loading,
-}) => (
+    totalDocs,
+    identityId,
+}) => {
+    const remaining = totalDocs != null ? totalDocs - items.length : 0;
+    return (
     <Card
         className="SplashEntityCard SplashEntityCard--products"
         title={(
@@ -71,5 +77,11 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 );
             }}
         />
+        {remaining > 0 && identityId && (
+            <Link to={`/products-services?tribe=${identityId}`} className="SplashEntityCard__moreLink">
+                And +{remaining} more
+            </Link>
+        )}
     </Card>
-);
+    );
+};

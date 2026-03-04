@@ -10,12 +10,18 @@ type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 type JobCardProps = {
     items: JobItem[];
     loading?: boolean;
+    totalDocs?: number;
+    identityId?: string;
 };
 
 export const JobCard: React.FunctionComponent<JobCardProps> = ({
     items,
     loading,
-}) => (
+    totalDocs,
+    identityId,
+}) => {
+    const remaining = totalDocs != null ? totalDocs - items.length : 0;
+    return (
     <Card
         className="SplashEntityCard SplashEntityCard--jobs"
         title={(
@@ -74,5 +80,11 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                 );
             }}
         />
+        {remaining > 0 && identityId && (
+            <Link to={`/jobs?tribe=${identityId}`} className="SplashEntityCard__moreLink">
+                And +{remaining} more
+            </Link>
+        )}
     </Card>
-);
+    );
+};

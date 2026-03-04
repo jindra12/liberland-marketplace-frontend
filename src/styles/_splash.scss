@@ -210,3 +210,17 @@
 .SplashEntityCard__avatar {
     border-radius: 8px;
 }
+
+.SplashEntityCard__moreLink {
+    display: block;
+    padding: 10px 0 2px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #5eb8d9;
+    border-top: 1px solid rgba(184, 230, 245, 0.1);
+
+    &:hover {
+        color: #8fd4ec;
+    }
+}

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Space, Tag, message } from "antd";
+import { Link, useSearchParams } from "react-router-dom";
+import { Avatar, Button, Divider, Flex, Space, Tag, Typography, message } from "antd";
 import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
 import { AppList } from "../AppList";
+import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -85,15 +86,54 @@ export interface StartupListInternalProps {
 }
 
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tribeParam = searchParams.get("tribe");
+    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>(
+        tribeParam ? [tribeParam] : []
+    );
     const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
+    const items = selectedIdentityIds.length === 0
+        ? allItems
+        : allItems.filter((startup) => {
+            const identityId = startup.identity?.id;
+            return identityId ? selectedIdentityIds.includes(identityId) : false;
+        });
+
+    const hasMore = Boolean(props.query.data?.Startups?.hasNextPage);
+    const isTribeFiltered = selectedIdentityIds.length > 0;
+
+    // Auto-fetch next page when tribe filter yields 0 visible items but more pages exist
+    React.useEffect(() => {
+        if (isTribeFiltered && items.length === 0 && hasMore && !props.query.isLoading && !props.query.isFetching) {
+            props.setPage(props.page + 1);
+        }
+    }, [isTribeFiltered, items.length, hasMore, props.query.isLoading, props.query.isFetching, props.page, props.setPage]);
+
+    const tribeEndMessage = isTribeFiltered && !hasMore ? (
+        <div className="AppList__tribeEnd">
+            <Divider />
+            <Typography.Title level={4} className="AppList__tribeEndHeading">
+                No more results for this Tribe
+            </Typography.Title>
+            <Button
+                type="primary"
+                size="large"
+                href={window.location.pathname}
+            >
+                View items from all tribes
+            </Button>
+        </div>
+    ) : undefined;
 
     return (
         <AppList
-            hasMore={Boolean(props.query.data?.Startups?.hasNextPage)}
-            items={allItems}
+            hasMore={hasMore}
+            items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
             title="Ventures"
+            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
+            endMessage={tribeEndMessage}
             renderItem={{
                 title: (startup) => (
                     <Flex justify="space-between" align="center" wrap>
