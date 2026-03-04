@@ -1,10 +1,9 @@
 import * as React from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Avatar, Button, Flex } from "antd";
 import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
-import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { formatSalary, formatEmploymentType } from "../../utils";
 import { Markdown } from "../Markdown";
@@ -13,6 +12,7 @@ import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useTribeFilter } from "../../hooks/useTribeFilter";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -22,48 +22,20 @@ export interface JobListInternalProps {
 }
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const tribeParam = searchParams.get("tribe");
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>(
-        tribeParam ? [tribeParam] : []
-    );
     const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
-    const items = selectedIdentityIds.length === 0
-        ? allItems
-        : allItems.filter((job) => {
-            const identityIds = [
-                ...(job.allowedIdentities?.map((i) => i.id) || []),
-                ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
-                ...(job.company?.identity?.id ? [job.company.identity.id] : []),
-            ];
-            return selectedIdentityIds.some((id) => identityIds.includes(id));
-        });
-
-    const hasMore = !props.limited && Boolean(props.query.data?.Jobs?.hasNextPage);
-    const isTribeFiltered = selectedIdentityIds.length > 0;
-
-    // Auto-fetch next page when tribe filter yields 0 visible items but more pages exist
-    React.useEffect(() => {
-        if (isTribeFiltered && items.length === 0 && hasMore && !props.query.isLoading && !props.query.isFetching) {
-            props.setPage(props.page + 1);
-        }
-    }, [isTribeFiltered, items.length, hasMore, props.query.isLoading, props.query.isFetching, props.page, props.setPage]);
-
-    const tribeEndMessage = isTribeFiltered && !hasMore ? (
-        <div className="AppList__tribeEnd">
-            <Divider />
-            <Typography.Title level={4} className="AppList__tribeEndHeading">
-                No more results for this Tribe
-            </Typography.Title>
-            <Button
-                type="primary"
-                size="large"
-                href={window.location.pathname}
-            >
-                View items from all tribes
-            </Button>
-        </div>
-    ) : undefined;
+    const { items, hasMore, endMessage, filterNode } = useTribeFilter({
+        allItems,
+        hasNextPage: !props.limited && Boolean(props.query.data?.Jobs?.hasNextPage),
+        getIdentityIds: (job) => [
+            ...(job.allowedIdentities?.map((i) => i.id) || []),
+            ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
+            ...(job.company?.identity?.id ? [job.company.identity.id] : []),
+        ],
+        isLoading: props.query.isLoading,
+        isFetching: props.query.isFetching,
+        page: props.page,
+        setPage: props.setPage,
+    });
 
     return (
         <AppList
@@ -73,8 +45,8 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             next={() => props.setPage(props.page + 1)}
             loading={props.query.isLoading && allItems.length === 0}
             refetch={props.query.refetch}
-            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
-            endMessage={tribeEndMessage}
+            filters={filterNode}
+            endMessage={endMessage}
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
