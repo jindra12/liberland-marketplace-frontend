@@ -13,18 +13,9 @@ const Splash: React.FunctionComponent = () => {
     const isLoading = identitiesQuery.isLoading;
     const hasError = Boolean(identitiesQuery.error);
 
-    const [identityCounts, setIdentityCounts] = React.useState<Record<string, number>>({});
-
-    const handleTotalCount = React.useCallback((identityId: string, count: number) => {
-        setIdentityCounts((prev) => {
-            if (prev[identityId] === count) return prev;
-            return { ...prev, [identityId]: count };
-        });
-    }, []);
-
     const sortedIdentities = React.useMemo(
-        () => [...identities].sort((a, b) => (identityCounts[b.id] || 0) - (identityCounts[a.id] || 0)),
-        [identities, identityCounts],
+        () => [...identities].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
+        [identities],
     );
 
     return (
@@ -76,7 +67,6 @@ const Splash: React.FunctionComponent = () => {
                                 identityId={identity.id}
                                 identityName={identity.name || "Tribe"}
                                 identityImageUrl={identity.image?.url || undefined}
-                                onTotalCount={handleTotalCount}
                             />
                         ))}
                     </Flex>
