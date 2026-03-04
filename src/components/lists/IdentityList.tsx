@@ -13,15 +13,15 @@ export const IdentityList: React.FunctionComponent = () => {
         limit: 100,
         page: 1,
     });
-    const allItems = query.data?.Identities?.docs || [];
+    const allItems = query.data?.Identities?.docs;
 
     const sortedItems = React.useMemo(() => {
         const filtered = searchText
-            ? allItems.filter((identity) =>
+            ? allItems?.filter((identity) =>
                 identity.name.toLowerCase().includes(searchText.toLowerCase())
             )
             : allItems;
-        return [...filtered].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
+        return [...filtered || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
     }, [allItems, searchText]);
 
     return (

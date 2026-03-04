@@ -9,12 +9,12 @@ const Splash: React.FunctionComponent = () => {
         limit: 100,
         sort: "name",
     });
-    const identities = identitiesQuery.data?.Identities?.docs || [];
+    const identities = identitiesQuery.data?.Identities?.docs;
     const isLoading = identitiesQuery.isLoading;
     const hasError = Boolean(identitiesQuery.error);
 
     const sortedIdentities = React.useMemo(
-        () => [...identities].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
+        () => [...identities || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
         [identities],
     );
 
@@ -49,13 +49,13 @@ const Splash: React.FunctionComponent = () => {
                     />
                 )}
 
-                {!hasError && !identities.length && isLoading && (
+                {!hasError && !identities?.length && isLoading && (
                     <Flex justify="center" align="center" className="SplashPage__loading">
                         <Spin />
                     </Flex>
                 )}
 
-                {!hasError && !identities.length && !isLoading && (
+                {!hasError && !identities?.length && !isLoading && (
                     <Empty description="No tribes found yet." />
                 )}
 
