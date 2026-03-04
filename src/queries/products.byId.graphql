@@ -6,6 +6,7 @@ query ProductById($id: String!) {
     _status
     description
     url
+    orderable
     properties {
       id
       key

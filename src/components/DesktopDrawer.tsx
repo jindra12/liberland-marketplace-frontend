@@ -1,17 +1,19 @@
 import * as React from "react";
 import { Button, Drawer } from "antd";
 import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { SearchButton } from "./SearchButton";
 import { EndpointDrawerButton } from "./EndpointDrawerButton";
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
+import { useCartItems } from "./cart/useCartItems";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
     const navigate = useNavigate();
     const auth = useAuth();
+    const { totalQuantity } = useCartItems();
     const [desktopActionsOpen, setDesktopActionsOpen] = React.useState(false);
 
     return (
@@ -45,6 +47,15 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                     >
                         Cart
                     </CartHeaderButton>
+                    {totalQuantity > 0 && (
+                        <Link
+                            to="/order"
+                            className="AppHeader__desktopCart"
+                            onClick={() => setDesktopActionsOpen(false)}
+                        >
+                            <Button block type="primary">Order</Button>
+                        </Link>
+                    )}
                     <EndpointAuthAction>
                         {({ runWithAuthOrLogin }) => (
                             <Button

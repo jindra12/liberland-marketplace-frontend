@@ -9,6 +9,8 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
       id
       serverURL
       name
+      orderable
+      url
       companyIdentityId
       company {
         id

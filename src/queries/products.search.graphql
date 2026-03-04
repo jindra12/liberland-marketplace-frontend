@@ -25,6 +25,7 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             name
             description
             url
+            orderable
             properties {
               id
               key

@@ -60,6 +60,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
+                const isOrderable = product?.orderable !== false;
+                const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);
 
                 return (
@@ -101,12 +103,22 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 serverURL={product.serverURL!}
                                             />
                                         </Flex>
-                                        <AddToCartButton
-                                            productId={product.id}
-                                            serverURL={product.serverURL!}
-                                            size={md ? "large" : "middle"}
-                                            maxAvailable={inventoryCount}
-                                        />
+                                        {isOrderable ? (
+                                            <AddToCartButton
+                                                productId={product.id}
+                                                serverURL={product.serverURL!}
+                                                size={md ? "large" : "middle"}
+                                                maxAvailable={inventoryCount}
+                                            />
+                                        ) : orderNowLink ? (
+                                            <Button
+                                                type="primary"
+                                                href={orderNowLink}
+                                                size={md ? "large" : "middle"}
+                                            >
+                                                Order Now!
+                                            </Button>
+                                        ) : null}
                                     </Flex>
                                 )}
                             </Flex>

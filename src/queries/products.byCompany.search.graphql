@@ -25,6 +25,7 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             name
             description
             url
+            orderable
             properties {
               id
               key

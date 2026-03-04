@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Card, List, Space, Tag, Typography } from "antd";
+import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatPrice, getImage } from "../../utils";
+import { formatPrice, getImage, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
@@ -32,19 +32,23 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             renderItem={(product) => {
                 const price = formatPrice(product.price?.amount, product.price?.currency);
                 const imageSrc = getImage(product) || getImage(product.company);
+                const orderNowLink = parseActionLink(product.url);
+                const purchaseAction = product.orderable !== false ? (
+                    <AddToCartButton
+                        key={`product-cart-${product.id}`}
+                        productId={product.id}
+                        serverURL={product.serverURL!}
+                        size="small"
+                        maxAvailable={product.inventory ?? undefined}
+                    />
+                ) : orderNowLink ? (
+                    <Button key={`product-order-${product.id}`} type="primary" size="small" href={orderNowLink}>
+                        Order Now!
+                    </Button>
+                ) : undefined;
                 return (
                     <List.Item
-                        actions={[
-                            (
-                                <AddToCartButton
-                                    key={`product-cart-${product.id}`}
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                    size="small"
-                                    maxAvailable={product.inventory ?? undefined}
-                                />
-                            ),
-                        ]}
+                        actions={purchaseAction ? [purchaseAction] : []}
                     >
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta

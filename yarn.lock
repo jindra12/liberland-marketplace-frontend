@@ -2311,6 +2311,16 @@
     "@solana/wallet-adapter-base" "^0.9.17"
     bs58 "^5.0.0"
 
+"@geoapify/geocoder-autocomplete@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@geoapify/geocoder-autocomplete/-/geocoder-autocomplete-3.0.1.tgz#f0d3144e1083e7799d69abaf0367cffc97d90089"
+  integrity sha512-zCvnDtRZKASUwJ9jNcYn1+g17IlouQQINLov/SkPC5/2e7N8CYkcMqj/SKK1ARvUkvqbFC0rMvvkJa7P6Rme7A==
+
+"@geoapify/react-geocoder-autocomplete@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@geoapify/react-geocoder-autocomplete/-/react-geocoder-autocomplete-3.0.0.tgz#3193f413fceca184ab3dd157d219544b38bdaa49"
+  integrity sha512-vp7+Gup57PZEYfT/PWPAkvsmo/udDtuCidYyW1rjKV4KC1GltOgvBr6oV/MRitKuFlTN5brKeY1CCPberFDXtg==
+
 "@graphql-codegen/add@^6.0.0":
   version "6.0.0"
   resolved "https://registry.npmjs.org/@graphql-codegen/add/-/add-6.0.0.tgz"

@@ -1,0 +1,23 @@
+.Order__geoapifyInput {
+    .geoapify-geocoder-autocomplete-container {
+        width: 100%;
+    }
+
+    .geoapify-autocomplete-input {
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 8px;
+        border: 1px solid #d9d9d9;
+        padding: 0 11px;
+        height: 40px;
+        line-height: 38px;
+    }
+
+    .geoapify-autocomplete-items {
+        border: 1px solid #d9d9d9;
+        border-radius: 8px;
+        margin-top: 2px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+}

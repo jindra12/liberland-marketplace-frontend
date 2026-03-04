@@ -2,10 +2,15 @@ import * as React from "react";
 import { Button, ConfigProvider, Form, InputNumber, Space, message } from "antd";
 import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import type { ButtonProps } from "antd";
+import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
 import type { Cart, MutationCartUpdate_ItemsInput } from "../../generated/graphql";
 import { useCartBySecretQuery, useCreateCartMutation, useUpdateCartMutation } from "../hooks";
-import { notifyCartUpdated } from "./cartStorage";
+import {
+    CART_SECRETS_INDEX_KEY,
+    CartSecretEntry,
+    getCartSecretStorageKey,
+} from "./cartSecrets";
 
 type AddToCartButtonProps = {
     productId: string;
@@ -24,8 +29,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     size = "large",
     maxAvailable,
 }) => {
+    const queryClient = useQueryClient();
     const [form] = Form.useForm();
-    const [cartSecret, setCartSecret] = useLocalStorage<string>(`cart.secret.${serverURL}`, "");
+    const [cartSecret, setCartSecret] = useLocalStorage<string>(getCartSecretStorageKey(serverURL), "");
+    const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const cartQuery = useCartBySecretQuery(
         { secret: cartSecret, url: serverURL },
         { enabled: Boolean(cartSecret) },
@@ -66,7 +73,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         const createdSecret = result.createCart?.secret;
         if (createdSecret) {
             setCartSecret(createdSecret);
-            notifyCartUpdated();
+            setCartSecrets((prev) => [...prev || [], { url: serverURL, secret: createdSecret }]);
         }
     };
 
@@ -152,7 +159,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         try {
             setIsLoading(true);
             await addItemToCart(quantity);
-            notifyCartUpdated();
+            await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
             message.success("Added to cart");
         } catch {
             message.error("Could not add product to cart")
@@ -171,7 +178,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
 
             await removeItemFromExistingCart(existingCart as Cart);
             await cartQuery.refetch();
-            notifyCartUpdated();
+            await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
             message.success("Removed from cart");
         } catch {
             message.error("Could not remove product from cart");

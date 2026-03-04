@@ -4,6 +4,8 @@ query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 1
       id
       serverURL
       name
+      orderable
+      url
       _status
       properties {
         id

@@ -1,0 +1,37 @@
+mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
+  createOrder(data: $data, draft: $draft) {
+    id
+    status
+    currency
+    amount
+    customerEmail
+    createdAt
+    updatedAt
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+      }
+      variant {
+        id
+        title
+      }
+    }
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      state
+      country
+      phone
+    }
+  }
+}

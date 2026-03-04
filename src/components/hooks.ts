@@ -68,6 +68,8 @@ import {
     useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle,
     CreateCommentDocument,
     useCreateCommentMutation as useCreateCommentMutationSingle,
+    CreateOrderDocument,
+    useCreateOrderMutation as useCreateOrderMutationSingle,
     CreateReplyToCommentDocument,
     useCreateReplyToCommentMutation as useCreateReplyToCommentMutationSingle,
     DeleteCommentDocument,
@@ -272,6 +274,7 @@ export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutati
 export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompanyMutationSingle, DeleteCompanyDocument);
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
+export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);

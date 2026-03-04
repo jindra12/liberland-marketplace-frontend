@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Flex, Grid, Tag } from "antd";
+import { Avatar, Button, Flex, Grid, Tag } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
 import { BankOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
@@ -8,7 +8,7 @@ import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPrice, getImage } from "../../utils";
+import { formatPrice, getImage, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -51,27 +51,36 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         )}
                     </Flex>
                 ),
-                actions: (product) => (
-                    <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
-                        <Flex vertical gap="8px">
-                            {product.price?.amount !== null && product.price?.amount !== undefined && (
-                                <Tag color="success" icon={<BankOutlined />}>
-                                    {formatPrice(product.price?.amount, product.price?.currency)}
-                                </Tag>
-                            )}
-                            <CartItemCount
-                                productId={product.id}
-                                serverURL={product.serverURL!}
-                            />
+                actions: (product) => {
+                    const orderNowLink = parseActionLink(product.url);
+                    return (
+                        <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
+                            <Flex vertical gap="8px">
+                                {product.price?.amount !== null && product.price?.amount !== undefined && (
+                                    <Tag color="success" icon={<BankOutlined />}>
+                                        {formatPrice(product.price?.amount, product.price?.currency)}
+                                    </Tag>
+                                )}
+                                <CartItemCount
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                />
+                            </Flex>
+                            {product.orderable !== false ? (
+                                <AddToCartButton
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                    size={addToCartSize}
+                                    maxAvailable={product.inventory ?? undefined}
+                                />
+                            ) : orderNowLink ? (
+                                <Button type="primary" size={addToCartSize} href={orderNowLink}>
+                                    Order Now!
+                                </Button>
+                            ) : null}
                         </Flex>
-                        <AddToCartButton
-                            productId={product.id}
-                            serverURL={product.serverURL!}
-                            size={addToCartSize}
-                            maxAvailable={product.inventory ?? undefined}
-                        />
-                    </Flex>
-                ),
+                    );
+                },
                 avatar: (product) => product.image?.url ? (
                     <Link to={`/products-services/${product.id}`}>
                         <Avatar
