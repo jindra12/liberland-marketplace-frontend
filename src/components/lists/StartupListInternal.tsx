@@ -11,6 +11,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
@@ -84,11 +85,11 @@ export interface StartupListInternalProps {
 }
 
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
-    const allItems = props.query.data?.Startups?.docs || [];
+    const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
 
     return (
         <AppList
-            hasMore={!props.query.data?.Startups || props.query.data.Startups.hasNextPage}
+            hasMore={Boolean(props.query.data?.Startups?.hasNextPage)}
             items={allItems}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}

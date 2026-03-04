@@ -3,9 +3,9 @@ import { useListStartupsQuery } from "../../generated/graphql";
 import { StartupListInternal } from "./StartupListInternal";
 
 export const StartupList: React.FunctionComponent = () => {
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const query = useListStartupsQuery({
-        limit: 10,
+        limit: 20,
         page,
     });
 

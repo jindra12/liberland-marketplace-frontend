@@ -7,9 +7,9 @@ export interface JobListProps {
 }
 
 export const JobList: React.FunctionComponent<JobListProps> = (props) => {
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const query = useListJobsQuery({
-        limit: 10,
+        limit: 20,
         page,
     });
 

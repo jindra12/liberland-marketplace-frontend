@@ -12,6 +12,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { UseQueryResult } from "@tanstack/react-query";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -22,7 +23,7 @@ export interface JobListInternalProps {
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
     const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.query.data?.Jobs?.docs || [];
+    const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
     const items = selectedIdentityIds.length === 0
         ? allItems
         : allItems.filter((job) => {
@@ -36,11 +37,11 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
 
     return (
         <AppList
-            hasMore={!props.limited && (!props.query.data?.Jobs || props.query.data.Jobs.hasNextPage)}
+            hasMore={!props.limited && Boolean(props.query.data?.Jobs?.hasNextPage)}
             items={items}
             title="Jobs"
             next={() => props.setPage(props.page + 1)}
-            loading={props.query.isLoading}
+            loading={props.query.isLoading && allItems.length === 0}
             refetch={props.query.refetch}
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{

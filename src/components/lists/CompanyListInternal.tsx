@@ -10,6 +10,7 @@ import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListCompaniesQuery } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
@@ -20,7 +21,7 @@ export interface CompanyListInternalProps {
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.query.data?.Companies?.docs || [];
+    const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const items = selectedIdentityIds.length === 0
         ? allItems
         : allItems.filter((company) => {
@@ -33,11 +34,11 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
 
     return (
         <AppList
-            hasMore={!props.query.data?.Companies || props.query.data.Companies.hasNextPage}
+            hasMore={Boolean(props.query.data?.Companies?.hasNextPage)}
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
-            loading={props.query.isLoading}
+            loading={props.query.isLoading && allItems.length === 0}
             title="Companies"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{

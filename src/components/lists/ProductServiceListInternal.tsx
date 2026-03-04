@@ -10,6 +10,7 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { formatPrice, parseActionLink } from "../../utils";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -21,7 +22,7 @@ export interface ProductServiceListInternalProps {
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.query.data?.Products?.docs || [];
+    const allItems = useAccumulatedDocs(props.query.data?.Products?.docs, props.page);
     const items = selectedIdentityIds.length === 0
         ? allItems
         : allItems.filter((product) => {
@@ -31,11 +32,11 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
 
     return (
         <AppList
-            hasMore={!props.query.data?.Products || props.query.data.Products.hasNextPage}
+            hasMore={Boolean(props.query.data?.Products?.hasNextPage)}
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
-            loading={props.query.isLoading}
+            loading={props.query.isLoading && allItems.length === 0}
             title="Products / Services"
             filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
             renderItem={{
