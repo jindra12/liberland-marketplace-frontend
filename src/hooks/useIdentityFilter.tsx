@@ -13,7 +13,7 @@ interface UseTribeFilterOptions<TItem> {
     setPage: (page: number) => void;
 }
 
-export function useTribeFilter<TItem>(options: UseTribeFilterOptions<TItem>) {
+export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) {
     const { allItems, hasNextPage, getIdentityIds, isLoading, isFetching, page, setPage } = options;
 
     const [searchParams] = useSearchParams();

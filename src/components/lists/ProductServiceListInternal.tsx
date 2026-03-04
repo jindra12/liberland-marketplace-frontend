@@ -10,7 +10,7 @@ import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { formatPrice, parseActionLink } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useTribeFilter } from "../../hooks/useTribeFilter";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 
@@ -22,7 +22,7 @@ export interface ProductServiceListInternalProps {
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const allItems = useAccumulatedDocs(props.query.data?.Products?.docs, props.page);
-    const { items, hasMore, endMessage, filterNode } = useTribeFilter({
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.query.data?.Products?.hasNextPage),
         getIdentityIds: (product) => {

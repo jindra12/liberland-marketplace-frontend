@@ -12,7 +12,7 @@ import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useTribeFilter } from "../../hooks/useTribeFilter";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
@@ -87,7 +87,7 @@ export interface StartupListInternalProps {
 
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
     const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
-    const { items, hasMore, endMessage, filterNode } = useTribeFilter({
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.query.data?.Startups?.hasNextPage),
         getIdentityIds: (startup) => {

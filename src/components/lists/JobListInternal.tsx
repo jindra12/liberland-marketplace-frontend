@@ -12,7 +12,7 @@ import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useTribeFilter } from "../../hooks/useTribeFilter";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -23,7 +23,7 @@ export interface JobListInternalProps {
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
     const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
-    const { items, hasMore, endMessage, filterNode } = useTribeFilter({
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: !props.limited && Boolean(props.query.data?.Jobs?.hasNextPage),
         getIdentityIds: (job) => [

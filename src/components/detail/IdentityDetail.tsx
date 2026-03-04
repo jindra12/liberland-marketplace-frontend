@@ -74,7 +74,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <JobCard
                                 items={jobsQuery.data?.Jobs?.docs || []}
                                 loading={jobsQuery.isLoading}
-                                totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
+                                totalDocs={jobsQuery.data?.Jobs?.totalDocs}
                                 identityId={id}
                             />
                         </Col>
@@ -82,7 +82,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <ProductServiceCard
                                 items={productsQuery.data?.Products?.docs || []}
                                 loading={productsQuery.isLoading}
-                                totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
+                                totalDocs={productsQuery.data?.Products?.totalDocs}
                                 identityId={id}
                             />
                         </Col>
@@ -90,7 +90,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <CompanyCard
                                 items={companiesQuery.data?.Companies?.docs || []}
                                 loading={companiesQuery.isLoading}
-                                totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
+                                totalDocs={companiesQuery.data?.Companies?.totalDocs}
                                 identityId={id}
                             />
                         </Col>
@@ -98,7 +98,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <StartupCard
                                 items={startupsQuery.data?.Startups?.docs || []}
                                 loading={startupsQuery.isLoading}
-                                totalDocs={startupsQuery.data?.Startups?.totalDocs ?? undefined}
+                                totalDocs={startupsQuery.data?.Startups?.totalDocs}
                                 identityId={id}
                             />
                         </Col>

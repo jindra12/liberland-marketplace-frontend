@@ -10,7 +10,7 @@ import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useTribeFilter } from "../../hooks/useTribeFilter";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
@@ -21,7 +21,7 @@ export interface CompanyListInternalProps {
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
-    const { items, hasMore, endMessage, filterNode } = useTribeFilter({
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.query.data?.Companies?.hasNextPage),
         getIdentityIds: (company) => [
