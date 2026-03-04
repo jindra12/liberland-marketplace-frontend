@@ -74,24 +74,32 @@ const IdentityDetail: React.FunctionComponent = () => {
                             <JobCard
                                 items={jobsQuery.data?.Jobs?.docs || []}
                                 loading={jobsQuery.isLoading}
+                                totalDocs={jobsQuery.data?.Jobs?.totalDocs}
+                                identityId={id}
                             />
                         </Col>
                         <Col xs={24} xl={12}>
                             <ProductServiceCard
                                 items={productsQuery.data?.Products?.docs || []}
                                 loading={productsQuery.isLoading}
+                                totalDocs={productsQuery.data?.Products?.totalDocs}
+                                identityId={id}
                             />
                         </Col>
                         <Col xs={24} xl={12}>
                             <CompanyCard
                                 items={companiesQuery.data?.Companies?.docs || []}
                                 loading={companiesQuery.isLoading}
+                                totalDocs={companiesQuery.data?.Companies?.totalDocs}
+                                identityId={id}
                             />
                         </Col>
                         <Col xs={24} xl={12}>
                             <StartupCard
                                 items={startupsQuery.data?.Startups?.docs || []}
                                 loading={startupsQuery.isLoading}
+                                totalDocs={startupsQuery.data?.Startups?.totalDocs}
+                                identityId={id}
                             />
                         </Col>
                     </Row>

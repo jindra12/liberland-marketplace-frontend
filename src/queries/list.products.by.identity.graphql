@@ -12,6 +12,14 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
       company {
         id
         name
+        image {
+          id
+          url
+        }
+      }
+      image {
+        id
+        url
       }
       price {
         amount

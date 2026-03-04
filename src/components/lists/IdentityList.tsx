@@ -8,24 +8,27 @@ import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 
 export const IdentityList: React.FunctionComponent = () => {
-    const [page, setPage] = React.useState(0);
     const [searchText, setSearchText] = React.useState("");
     const query = useListIdentitiesQuery({
-        limit: 10,
-        page,
+        limit: 100,
+        page: 1,
     });
     const allItems = query.data?.Identities?.docs || [];
-    const items = searchText
-        ? allItems.filter((identity) =>
-            identity.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-        : allItems;
+
+    const sortedItems = React.useMemo(() => {
+        const filtered = searchText
+            ? allItems.filter((identity) =>
+                identity.name.toLowerCase().includes(searchText.toLowerCase())
+            )
+            : allItems;
+        return [...filtered].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
+    }, [allItems, searchText]);
 
     return (
         <AppList
-            hasMore={!query.data?.Identities || query.data.Identities.hasNextPage}
-            items={items}
-            next={() => setPage(page + 1)}
+            hasMore={false}
+            items={sortedItems}
+            next={() => {}}
             loading={query.isLoading}
             refetch={query.refetch}
             title="Tribes"

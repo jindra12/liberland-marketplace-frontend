@@ -4,12 +4,13 @@ import { Avatar, Button, Flex } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
-import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListCompaniesQuery } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
@@ -19,27 +20,30 @@ export interface CompanyListInternalProps {
 
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.query.data?.Companies?.docs || [];
-    const items = selectedIdentityIds.length === 0
-        ? allItems
-        : allItems.filter((company) => {
-            const identityIds = [
-                ...(company.allowedIdentities?.map((i) => i.id) || []),
-                ...(company.identity?.id ? [company.identity.id] : []),
-            ];
-            return selectedIdentityIds.some((id) => identityIds.includes(id));
-        });
+    const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
+        allItems,
+        hasNextPage: Boolean(props.query.data?.Companies?.hasNextPage),
+        getIdentityIds: (company) => [
+            ...(company.allowedIdentities?.map((i) => i.id) || []),
+            ...(company.identity?.id ? [company.identity.id] : []),
+        ],
+        isLoading: props.query.isLoading,
+        isFetching: props.query.isFetching,
+        page: props.page,
+        setPage: props.setPage,
+    });
 
     return (
         <AppList
-            hasMore={!props.query.data?.Companies || props.query.data.Companies.hasNextPage}
+            hasMore={hasMore}
             items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
-            loading={props.query.isLoading}
+            loading={props.query.isLoading && allItems.length === 0}
             title="Companies"
-            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
+            filters={filterNode}
+            endMessage={endMessage}
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>

@@ -4,7 +4,6 @@ import { Avatar, Button, Flex } from "antd";
 import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
-import { IdentityFilter } from "../IdentityFilter";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { formatSalary, formatEmploymentType } from "../../utils";
 import { Markdown } from "../Markdown";
@@ -12,6 +11,8 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { UseQueryResult } from "@tanstack/react-query";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -21,28 +22,31 @@ export interface JobListInternalProps {
 }
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.query.data?.Jobs?.docs || [];
-    const items = selectedIdentityIds.length === 0
-        ? allItems
-        : allItems.filter((job) => {
-            const identityIds = [
-                ...(job.allowedIdentities?.map((i) => i.id) || []),
-                ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
-                ...(job.company?.identity?.id ? [job.company.identity.id] : []),
-            ];
-            return selectedIdentityIds.some((id) => identityIds.includes(id));
-        });
+    const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
+        allItems,
+        hasNextPage: !props.limited && Boolean(props.query.data?.Jobs?.hasNextPage),
+        getIdentityIds: (job) => [
+            ...(job.allowedIdentities?.map((i) => i.id) || []),
+            ...(job.company?.allowedIdentities?.map((i) => i.id) || []),
+            ...(job.company?.identity?.id ? [job.company.identity.id] : []),
+        ],
+        isLoading: props.query.isLoading,
+        isFetching: props.query.isFetching,
+        page: props.page,
+        setPage: props.setPage,
+    });
 
     return (
         <AppList
-            hasMore={!props.limited && (!props.query.data?.Jobs || props.query.data.Jobs.hasNextPage)}
+            hasMore={hasMore}
             items={items}
             title="Jobs"
             next={() => props.setPage(props.page + 1)}
-            loading={props.query.isLoading}
+            loading={props.query.isLoading && allItems.length === 0}
             refetch={props.query.refetch}
-            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
+            filters={filterNode}
+            endMessage={endMessage}
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>

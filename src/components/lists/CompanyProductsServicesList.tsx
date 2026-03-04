@@ -7,11 +7,11 @@ export interface CompanyProductsServicesListProps {
 };
 
 export const CompanyProductsServicesList: React.FunctionComponent<CompanyProductsServicesListProps> = (props) => {
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const query = useListProductsByCompanyQuery({
         companyId: props.companyId,
         page,
-        limit: 10,
+        limit: 20,
     });
 
     return (

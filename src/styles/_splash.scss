@@ -164,6 +164,7 @@
 
     .ant-list-item {
         padding: 10px 0;
+        align-items: flex-start;
     }
 }
 
@@ -194,6 +195,8 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
+    min-width: 0;
 }
 
 .SplashEntityCard .ant-list-item-meta {
@@ -206,4 +209,30 @@
 
 .SplashEntityCard__avatar {
     border-radius: 8px;
+}
+
+.SplashEntityCard__moreLink {
+    display: block;
+    margin: 8px -14px -12px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0, 140, 210, 0.35);
+    border-top: 1px solid rgba(184, 230, 245, 0.18);
+    border-radius: 0 0 16px 16px;
+    letter-spacing: 0.3px;
+    transition: background 0.15s;
+
+    &:hover {
+        color: #fff;
+        background: rgba(0, 140, 210, 0.55);
+    }
+
+    .ant-btn-link {
+        color: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+    }
 }

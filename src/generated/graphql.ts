@@ -10511,6 +10511,7 @@ export type IdentitiesDocAccessFields = {
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
   description?: Maybe<IdentitiesDocAccessFields_Description>;
   image?: Maybe<IdentitiesDocAccessFields_Image>;
+  itemCount?: Maybe<IdentitiesDocAccessFields_ItemCount>;
   name?: Maybe<IdentitiesDocAccessFields_Name>;
   updatedAt?: Maybe<IdentitiesDocAccessFields_UpdatedAt>;
   website?: Maybe<IdentitiesDocAccessFields_Website>;
@@ -10628,6 +10629,34 @@ export type IdentitiesDocAccessFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type IdentitiesDocAccessFields_ItemCount = {
+  __typename?: 'IdentitiesDocAccessFields_itemCount';
+  create?: Maybe<IdentitiesDocAccessFields_ItemCount_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_ItemCount_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_ItemCount_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_ItemCount_Update>;
+};
+
+export type IdentitiesDocAccessFields_ItemCount_Create = {
+  __typename?: 'IdentitiesDocAccessFields_itemCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ItemCount_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_itemCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ItemCount_Read = {
+  __typename?: 'IdentitiesDocAccessFields_itemCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ItemCount_Update = {
+  __typename?: 'IdentitiesDocAccessFields_itemCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type IdentitiesDocAccessFields_Name = {
   __typename?: 'IdentitiesDocAccessFields_name';
   create?: Maybe<IdentitiesDocAccessFields_Name_Create>;
@@ -10718,6 +10747,7 @@ export type IdentitiesFields = {
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
   description?: Maybe<IdentitiesFields_Description>;
   image?: Maybe<IdentitiesFields_Image>;
+  itemCount?: Maybe<IdentitiesFields_ItemCount>;
   name?: Maybe<IdentitiesFields_Name>;
   updatedAt?: Maybe<IdentitiesFields_UpdatedAt>;
   website?: Maybe<IdentitiesFields_Website>;
@@ -10832,6 +10862,34 @@ export type IdentitiesFields_Image_Read = {
 
 export type IdentitiesFields_Image_Update = {
   __typename?: 'IdentitiesFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ItemCount = {
+  __typename?: 'IdentitiesFields_itemCount';
+  create?: Maybe<IdentitiesFields_ItemCount_Create>;
+  delete?: Maybe<IdentitiesFields_ItemCount_Delete>;
+  read?: Maybe<IdentitiesFields_ItemCount_Read>;
+  update?: Maybe<IdentitiesFields_ItemCount_Update>;
+};
+
+export type IdentitiesFields_ItemCount_Create = {
+  __typename?: 'IdentitiesFields_itemCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ItemCount_Delete = {
+  __typename?: 'IdentitiesFields_itemCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ItemCount_Read = {
+  __typename?: 'IdentitiesFields_itemCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ItemCount_Update = {
+  __typename?: 'IdentitiesFields_itemCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -10950,6 +11008,7 @@ export type Identity = {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
+  itemCount?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
@@ -11002,6 +11061,16 @@ export type Identity_Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Identity_ItemCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Identity_Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -11042,6 +11111,7 @@ export type Identity_Where = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -11055,6 +11125,7 @@ export type Identity_Where_And = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -11068,6 +11139,7 @@ export type Identity_Where_Or = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
@@ -44626,6 +44698,7 @@ export type MutationIdentityInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  itemCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -44636,6 +44709,7 @@ export type MutationIdentityUpdateInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  itemCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
@@ -48558,7 +48632,7 @@ export type ListIdentitiesQueryVariables = Exact<{
 }>;
 
 
-export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, name: string, description?: string | null, website?: string | null, itemCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchIdentitiesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -48708,7 +48782,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -48717,7 +48791,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -49756,6 +49830,7 @@ export const ListIdentitiesDocument = `
       name
       description
       website
+      itemCount
       image {
         id
         url
@@ -50799,9 +50874,22 @@ export const ListJobsByIdentityDocument = `
       company {
         id
         name
+        image {
+          id
+          url
+        }
       }
       location
       employmentType
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+      }
       postedAt
       _status
     }
@@ -50848,6 +50936,14 @@ export const ListProductsByIdentityDocument = `
       company {
         id
         name
+        image {
+          id
+          url
+        }
+      }
+      image {
+        id
+        url
       }
       price {
         amount
