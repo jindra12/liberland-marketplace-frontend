@@ -4,6 +4,10 @@
 
 .EntityList__avatar {
   border-radius: 8px;
+
+  img {
+    object-fit: contain;
+  }
 }
 
 .JobDetail__backBtn {

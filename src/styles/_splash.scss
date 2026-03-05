@@ -147,6 +147,8 @@
 
 .SplashEntityCard {
     height: 100%;
+    display: flex;
+    flex-direction: column;
     border-radius: 16px;
     border: 1px solid rgba(184, 230, 245, 0.14);
     background: linear-gradient(180deg, rgba(2, 34, 68, 0.65), rgba(2, 19, 40, 0.74));
@@ -160,6 +162,13 @@
 
     .ant-card-body {
         padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .ant-list {
+        flex: 1;
     }
 
     .ant-list-item {
@@ -209,11 +218,15 @@
 
 .SplashEntityCard__avatar {
     border-radius: 8px;
+
+    img {
+        object-fit: contain;
+    }
 }
 
 .SplashEntityCard__moreLink {
     display: block;
-    margin: 8px -14px -12px;
+    margin: auto -14px -12px;
     padding: 14px 16px;
     text-align: center;
     font-size: 15px;
