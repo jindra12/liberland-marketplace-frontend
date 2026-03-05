@@ -24,3 +24,26 @@ export const COMMENT_RELATION_TO_QUERY_RELATION: Record<
     [Comment_ReplyPostRelationshipInputRelationTo.Products]: Comment_ReplyPost_Relation_RelationTo.Products,
     [Comment_ReplyPostRelationshipInputRelationTo.Startups]: Comment_ReplyPost_Relation_RelationTo.Startups,
 };
+
+export const secondsLimit = 30;
+
+const COINBASE = "com.coinbase.wallet";
+const METAMASK = "io.metamask";
+const RAINBOW = "me.rainbow";
+const ZERION = "io.zerion.wallet";
+const RABBY = "io.rabby";
+
+export const thirdwebWallets = [
+    COINBASE,
+    METAMASK,
+    RAINBOW,
+    ZERION,
+    RABBY,
+] as const;
+
+export const optionsProps = {
+    className: "Exchange__image",
+    width: "18px",
+    height: "18px",
+    preview: false,
+};

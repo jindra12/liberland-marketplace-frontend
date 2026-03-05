@@ -173,3 +173,16 @@ export type JobDerivedInput = {
 };
 
 export type JobIdentityDedupeBy = "id" | "name";
+
+export interface ConnectButtonProps {
+    selectWallet: (wallet: string) => void;
+}
+
+export type Chains = "Ethereum" | "Solana" | "Tron";
+
+export interface FormModel {
+    amount: string;
+    orderId: string;
+    recipient: string;
+    transactionHash?: string;
+}
