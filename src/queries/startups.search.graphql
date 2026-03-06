@@ -35,6 +35,11 @@ query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
               id
               serverURL
               name
+              cryptoAddresses {
+                ethereum
+                tron
+                solana
+              }
             }
             image {
               id

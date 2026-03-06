@@ -12,6 +12,11 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
       name
       inventory
       description
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       url
       orderable
       properties {
@@ -37,6 +42,11 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
         serverURL
         name
         description
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
         identity {
           id
           serverURL

@@ -24,6 +24,11 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
             serverURL
             name
             description
+            cryptoAddresses {
+              ethereum
+              tron
+              solana
+            }
             website
             phone
             email

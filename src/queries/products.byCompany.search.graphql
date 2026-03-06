@@ -24,6 +24,11 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             serverURL
             name
             description
+            cryptoAddresses {
+              ethereum
+              tron
+              solana
+            }
             url
             orderable
             properties {
@@ -45,6 +50,11 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
               serverURL
               name
               description
+              cryptoAddresses {
+                ethereum
+                tron
+                solana
+              }
               identity {
                 id
                 serverURL

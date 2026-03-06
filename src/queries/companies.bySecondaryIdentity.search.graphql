@@ -22,6 +22,11 @@ query SearchCompaniesBySecondaryIdentity(
       serverURL
       name
       description
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       website
       phone
       email

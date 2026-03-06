@@ -1,7 +1,13 @@
-mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
-  createOrder(data: $data, draft: $draft) {
+mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+  updateOrder(id: $id, data: $data, draft: $draft) {
     id
     status
+    payerAddress
+    transactionHashes {
+      chain
+      transactionHash
+      id
+    }
     currency
     amount
     customerEmail

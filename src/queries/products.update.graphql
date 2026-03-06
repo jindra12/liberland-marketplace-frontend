@@ -2,6 +2,11 @@ mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft:
   updateProduct(id: $id, data: $data, draft: $draft) {
     id
     name
+    cryptoAddresses {
+      ethereum
+      tron
+      solana
+    }
     _status
     properties {
       id

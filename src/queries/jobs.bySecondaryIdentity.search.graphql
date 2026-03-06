@@ -69,6 +69,11 @@ query SearchJobsBySecondaryIdentity(
         serverURL
         name
         description
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
         allowedIdentities {
           id
           serverURL

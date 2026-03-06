@@ -47,6 +47,11 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
               serverURL
               name
               description
+              cryptoAddresses {
+                ethereum
+                tron
+                solana
+              }
               allowedIdentities {
                 id
                 serverURL

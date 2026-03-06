@@ -4,6 +4,11 @@ query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 1
       id
       serverURL
       name
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       orderable
       url
       _status

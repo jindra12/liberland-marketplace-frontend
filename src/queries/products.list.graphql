@@ -6,6 +6,11 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       name
       inventory
       description
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       url
       orderable
       properties {
@@ -31,6 +36,11 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
         serverURL
         name
         description
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
         identity {
           id
           serverURL

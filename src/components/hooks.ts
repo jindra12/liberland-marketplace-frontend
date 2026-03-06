@@ -116,6 +116,9 @@ import {
     useDeleteStartupMutation as useDeleteStartupMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
+    UpdateOrderDocument,
+    UpdateOrderMutation,
+    UpdateOrderMutationVariables,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
@@ -275,6 +278,10 @@ export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompany
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
+export const useUpdateOrderMutation = enhancedMutationFactory(
+    useCreateOrderMutationSingle as unknown as GeneratedUseMutationHook<UpdateOrderMutation, UpdateOrderMutationVariables>,
+    UpdateOrderDocument,
+);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);

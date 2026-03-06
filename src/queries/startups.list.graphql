@@ -16,6 +16,11 @@ query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
         id
         serverURL
         name
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
         email
       }
       identity {

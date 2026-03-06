@@ -20,6 +20,11 @@ mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
         id
         serverURL
         name
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
       }
       variant {
         id

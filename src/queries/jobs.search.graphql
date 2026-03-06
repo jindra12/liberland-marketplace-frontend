@@ -56,6 +56,11 @@ query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: 
               serverURL
               name
               description
+              cryptoAddresses {
+                ethereum
+                tron
+                solana
+              }
               allowedIdentities {
                 id
                 serverURL

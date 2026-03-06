@@ -11,6 +11,11 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
       serverURL
       name
       description
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       website
       phone
       email

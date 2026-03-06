@@ -16,6 +16,11 @@ query ListCompaniesBySecondaryIdentity(
       serverURL
       name
       description
+      cryptoAddresses {
+        ethereum
+        tron
+        solana
+      }
       website
       phone
       email

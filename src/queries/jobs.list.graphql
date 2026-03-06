@@ -46,6 +46,11 @@ query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
         serverURL
         name
         description
+        cryptoAddresses {
+          ethereum
+          tron
+          solana
+        }
         allowedIdentities {
           id
           serverURL
