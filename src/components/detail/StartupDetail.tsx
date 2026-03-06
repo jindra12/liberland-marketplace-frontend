@@ -23,6 +23,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { DetailBackButton } from "../shared/DetailBackButton";
 
 const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -56,6 +57,8 @@ const StartupDetail: React.FunctionComponent = () => {
     };
 
     return (
+        <>
+        <DetailBackButton />
         <Loader query={startup}>
             {(data) => {
                 const s = data.Startup;
@@ -223,6 +226,7 @@ const StartupDetail: React.FunctionComponent = () => {
                 );
             }}
         </Loader>
+        </>
     );
 };
 

@@ -22,12 +22,12 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
             next={props.next}
             hasMore={props.hasMore}
             loader={<Flex justify="center" align="center"><Spin /></Flex>}
-            endMessage={props.endMessage ?? (
+            endMessage={props.items.length === 0 ? <></> : (props.endMessage ?? (
                 <div>
                     <Divider size="large" />
                     <Typography.Text type="secondary">No more results</Typography.Text>
                 </div>
-            )}
+            ))}
             scrollThreshold={0.7}
             refreshFunction={props.refetch}
             className="InfinityScroll"

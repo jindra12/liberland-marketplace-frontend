@@ -15,6 +15,7 @@ import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
+import { DetailBackButton } from "../shared/DetailBackButton";
 import { formatPrice, parseActionLink } from "../../utils";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
@@ -29,6 +30,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
     );
 
     return (
+        <>
+        <DetailBackButton />
         <Loader query={query}>
             {(data) => {
                 const product = data.Product;
@@ -140,6 +143,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 );
             }}
         </Loader>
+        </>
     );
 };
 

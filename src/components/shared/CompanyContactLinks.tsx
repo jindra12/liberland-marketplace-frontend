@@ -19,7 +19,6 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
     className,
 }) => {
     const normalizedEmail = typeof email === "string" ? email : undefined;
-    const hasContent = Boolean(identity?.name || website || normalizedEmail || phone);
     const items: Array<{ key: string; title: string; value: React.ReactNode; }> = [];
 
     if (website) {
@@ -58,7 +57,7 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
         });
     }
 
-    if (!hasContent) {
+    if (items.length === 0) {
         return null;
     }
 

@@ -18,6 +18,7 @@ import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { DetailBackButton } from "../shared/DetailBackButton";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -28,6 +29,8 @@ const CompanyDetail: React.FunctionComponent = () => {
     const counts = useCompanyTabCounts(id);
 
     return (
+        <>
+        <DetailBackButton />
         <Loader query={company}>
             {(data) => {
                 const companyData = data.Company;
@@ -120,6 +123,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                 );
             }}
         </Loader>
+        </>
     );
 };
 

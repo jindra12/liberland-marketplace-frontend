@@ -54,16 +54,20 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         )}
                     </Flex>
                 ),
-                avatar: (product) => product.image?.url ? (
-                    <Link to={`/products-services/${product.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={`${BACKEND_URL}${product.image.url}`}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
+                avatar: (product) => {
+                    const companyImg = (product.company as { image?: { url?: string } } | null)?.image?.url;
+                    const imgUrl = product.image?.url || companyImg;
+                    return imgUrl ? (
+                        <Link to={`/products-services/${product.id}`}>
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={`${BACKEND_URL}${imgUrl}`}
+                                className="EntityList__avatar"
+                            />
+                        </Link>
+                    ) : undefined;
+                },
                 description: (product) => {
                     const price = formatPrice(product.price?.amount, product.price?.currency);
                     return (

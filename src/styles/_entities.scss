@@ -1,5 +1,9 @@
-.EntityDetail__header {
+.EntityDetail__header,
+.JobDetail__header {
     margin-bottom: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.02);
 
     .ant-avatar img {
         object-fit: contain;
@@ -56,6 +60,12 @@
 
 .CompanyDetailLinks {
     max-width: 500px;
+}
+
+.DetailBackButton {
+    margin-bottom: 8px;
+    padding-left: 0 !important;
+    font-weight: 500;
 }
 
 .EntityCommentsSection {
@@ -190,5 +200,12 @@
 @media (max-width: 991px) {
     .EntityDetail__subLists {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .EntityDetail__header,
+    .JobDetail__header {
+        background: rgba(255, 255, 255, 0.03);
     }
 }

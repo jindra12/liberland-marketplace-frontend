@@ -1,6 +1,6 @@
 import * as React from "react";
 import { UseQueryResult } from "@tanstack/react-query";
-import { Button, Result, Spin } from "antd";
+import { Button, Flex, Result, Skeleton } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
 import { convertStatusCode, getErrorMessage } from "../utils";
@@ -20,7 +20,15 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
     } = props.query;
 
     if (isLoading) {
-        return <Spin />;
+        return (
+            <Flex vertical gap={24}>
+                <Flex gap={16} align="center">
+                    <Skeleton.Avatar active size={80} shape="square" />
+                    <Skeleton active title={{ width: "60%" }} paragraph={{ rows: 1, width: ["40%"] }} />
+                </Flex>
+                <Skeleton active paragraph={{ rows: 4 }} />
+            </Flex>
+        );
     }
 
     if (error) {

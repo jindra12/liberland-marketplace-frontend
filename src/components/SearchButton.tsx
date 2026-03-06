@@ -16,6 +16,17 @@ export const SearchButton: React.FunctionComponent = () => {
         { key: "products", label: "Products / Services" },
     ];
 
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+                e.preventDefault();
+                setScope("jobs");
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
     const onClick: MenuProps["onClick"] = (info) => {
         const key = info.key as SearchScope;
         setScope(key);

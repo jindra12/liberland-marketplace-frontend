@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Layout } from "antd";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { AppHeader } from "./AppHeader";
 
@@ -14,7 +14,20 @@ const AppLayout: React.FunctionComponent<React.PropsWithChildren> = (props) => {
             <Layout.Content>
                 {isSplash ? props.children : <div className="AppLayout__container">{props.children}</div>}
             </Layout.Content>
-            <Layout.Footer>© {new Date().getFullYear()} NSwap</Layout.Footer>
+            <Layout.Footer>
+                <div className="AppLayout__footerInner">
+                    <nav className="AppLayout__footerNav">
+                        <Link to="/companies">Companies</Link>
+                        <Link to="/products-services">Products</Link>
+                        <Link to="/jobs">Jobs</Link>
+                        <Link to="/ventures">Ventures</Link>
+                        <Link to="/tribes">Tribes</Link>
+                    </nav>
+                    <div className="AppLayout__footerCopy">
+                        © {new Date().getFullYear()} NSwap — Your syndicated free marketplace
+                    </div>
+                </div>
+            </Layout.Footer>
         </Layout>
     );
 };

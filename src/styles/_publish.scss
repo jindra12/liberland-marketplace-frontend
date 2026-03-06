@@ -20,8 +20,38 @@
         }
     }
 
+    &__categoryIconWrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        flex-shrink: 0;
+
+        &--job {
+            background: rgba(22, 119, 255, 0.08);
+            color: #1677FF;
+        }
+
+        &--company {
+            background: rgba(46, 204, 135, 0.08);
+            color: #2ECC87;
+        }
+
+        &--product {
+            background: rgba(250, 140, 22, 0.08);
+            color: #FA8C16;
+        }
+
+        &--startup {
+            background: rgba(114, 46, 209, 0.08);
+            color: #722ED1;
+        }
+    }
+
     &__categoryIcon {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     &__categoryTitle {

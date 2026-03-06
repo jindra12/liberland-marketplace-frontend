@@ -32,16 +32,16 @@ export const lightToken: Partial<AliasToken> = {
     fontFamily:
         "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
 
-    fontSize: 15,
-    fontSizeSM: 13,
-    fontSizeLG: 17,
-    fontSizeXL: 20,
+    fontSize: 16,
+    fontSizeSM: 14,
+    fontSizeLG: 18,
+    fontSizeXL: 22,
 
-    fontSizeHeading1: 40,
-    fontSizeHeading2: 30,
-    fontSizeHeading3: 24,
-    fontSizeHeading4: 20,
-    fontSizeHeading5: 17,
+    fontSizeHeading1: 42,
+    fontSizeHeading2: 32,
+    fontSizeHeading3: 26,
+    fontSizeHeading4: 21,
+    fontSizeHeading5: 18,
 
     lineHeight: 1.6,
     lineHeightSM: 1.5,

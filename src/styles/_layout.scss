@@ -27,7 +27,7 @@
         border-top: 1px solid rgba(0, 0, 0, 0.06);
         text-align: center;
         font-size: 13px;
-        padding: 20px 24px;
+        padding: 28px 24px;
         letter-spacing: -0.1px;
     }
 
@@ -37,4 +37,39 @@
         flex-direction: column;
         min-height: 0;
     }
+}
+
+.AppLayout__footerInner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.AppLayout__footerNav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    a {
+        color: inherit;
+        opacity: 0.6;
+        font-weight: 500;
+        font-size: 13px;
+        text-decoration: none;
+        transition: opacity 0.15s;
+
+        &:hover {
+            opacity: 1;
+            color: inherit;
+        }
+    }
+}
+
+.AppLayout__footerCopy {
+    opacity: 0.4;
+    font-size: 12px;
 }

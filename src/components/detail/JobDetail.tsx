@@ -17,6 +17,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { DetailBackButton } from "../shared/DetailBackButton";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -24,6 +25,8 @@ const JobDetail: React.FunctionComponent = () => {
     const auth = useAuth();
     const query = useJobByIdQuery({ id: id! });
     return (
+        <>
+        <DetailBackButton />
         <Loader query={query}>
             {(data) => {
                 const job = data.Job;
@@ -97,6 +100,7 @@ const JobDetail: React.FunctionComponent = () => {
                 );
             }}
         </Loader>
+        </>
     );
 };
 

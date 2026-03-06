@@ -68,7 +68,9 @@ export const PublishContent: React.FunctionComponent = () => {
             <Space direction="vertical" size={16} className="Publish__categories">
                 <Card hoverable className="Publish__category" onClick={() => setCategory("job")}>
                     <Space size={16}>
-                        <ToolOutlined className="Publish__categoryIcon" />
+                        <div className="Publish__categoryIconWrap Publish__categoryIconWrap--job">
+                            <ToolOutlined className="Publish__categoryIcon" />
+                        </div>
                         <div>
                             <Typography.Title level={4} className="Publish__categoryTitle">Job</Typography.Title>
                             <Typography.Text type="secondary">Post a job listing</Typography.Text>
@@ -77,7 +79,9 @@ export const PublishContent: React.FunctionComponent = () => {
                 </Card>
                 <Card hoverable className="Publish__category" onClick={() => setCategory("company")}>
                     <Space size={16}>
-                        <TeamOutlined className="Publish__categoryIcon" />
+                        <div className="Publish__categoryIconWrap Publish__categoryIconWrap--company">
+                            <TeamOutlined className="Publish__categoryIcon" />
+                        </div>
                         <div>
                             <Typography.Title level={4} className="Publish__categoryTitle">Company</Typography.Title>
                             <Typography.Text type="secondary">Create a company profile</Typography.Text>
@@ -86,7 +90,9 @@ export const PublishContent: React.FunctionComponent = () => {
                 </Card>
                 <Card hoverable className="Publish__category" onClick={() => setCategory("product")}>
                     <Space size={16}>
-                        <ShopOutlined className="Publish__categoryIcon" />
+                        <div className="Publish__categoryIconWrap Publish__categoryIconWrap--product">
+                            <ShopOutlined className="Publish__categoryIcon" />
+                        </div>
                         <div>
                             <Typography.Title level={4} className="Publish__categoryTitle">Product</Typography.Title>
                             <Typography.Text type="secondary">List a product or service</Typography.Text>
@@ -95,7 +101,9 @@ export const PublishContent: React.FunctionComponent = () => {
                 </Card>
                 <Card hoverable className="Publish__category" onClick={() => setCategory("startup")}>
                     <Space size={16}>
-                        <RocketOutlined className="Publish__categoryIcon" />
+                        <div className="Publish__categoryIconWrap Publish__categoryIconWrap--startup">
+                            <RocketOutlined className="Publish__categoryIcon" />
+                        </div>
                         <div>
                             <Typography.Title level={4} className="Publish__categoryTitle">Venture</Typography.Title>
                             <Typography.Text type="secondary">Launch a new venture</Typography.Text>

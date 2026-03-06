@@ -18,6 +18,7 @@ import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { CompanyCard } from "../cards/CompanyCard";
 import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { DetailBackButton } from "../shared/DetailBackButton";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -41,6 +42,8 @@ const IdentityDetail: React.FunctionComponent = () => {
     );
 
     return (
+        <>
+        <DetailBackButton />
         <Loader query={identity}>
             {(data) => (
                 <Flex flex={1} vertical gap="8px">
@@ -112,6 +115,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                 </Flex>
             )}
         </Loader>
+        </>
     );
 };
 
