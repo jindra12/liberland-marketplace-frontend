@@ -2,56 +2,56 @@ import { OverrideToken } from "antd/es/theme/interface";
 import { AliasToken } from "antd/es/theme/internal";
 
 export const darkToken: Partial<AliasToken> = {
-    colorPrimary: "#00A7D8",
-    colorInfo: "#00A7D8",
-    colorLink: "#00A7D8",
+    colorPrimary: "#3DA9FC",
+    colorInfo: "#3DA9FC",
+    colorLink: "#3DA9FC",
 
-    colorSuccess: "#14C8A2",
-    colorWarning: "#FFC857",
-    colorError: "#FF3B6B",
+    colorSuccess: "#2ECC87",
+    colorWarning: "#F5A623",
+    colorError: "#EF4565",
 
-    colorBgLayout: "#02162F",
-    colorBgContainer: "#021328",
-    colorBgElevated: "#022244",
+    colorBgLayout: "#0B1622",
+    colorBgContainer: "#111D2E",
+    colorBgElevated: "#162536",
 
-    colorText: "#F6FBFF",
-    colorTextSecondary: "#B8E6F5",
-    colorTextTertiary: "#A1ABB6",
-    colorTextQuaternary: "#7C8897",
+    colorText: "#E8F1FA",
+    colorTextSecondary: "#94A3B8",
+    colorTextTertiary: "#6B7B8F",
+    colorTextQuaternary: "#4A5568",
 
-    colorBorder: "#013A6D",
-    colorBorderSecondary: "#022A51",
-    colorSplit: "#01325F",
+    colorBorder: "#1E3048",
+    colorBorderSecondary: "#172738",
+    colorSplit: "#1E3048",
 
-    colorFill: "#022A51",
-    colorFillSecondary: "#022244",
-    colorFillTertiary: "#021C3A",
+    colorFill: "#1A2B3E",
+    colorFillSecondary: "#162536",
+    colorFillTertiary: "#111D2E",
 
-    borderRadius: 14,
+    borderRadius: 12,
 
     fontFamily:
-        "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
+        "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
 
-    fontSize: 17,
-    fontSizeSM: 15,
-    fontSizeLG: 19,
-    fontSizeXL: 22,
+    fontSize: 15,
+    fontSizeSM: 13,
+    fontSizeLG: 17,
+    fontSizeXL: 20,
 
-    fontSizeHeading1: 44,
-    fontSizeHeading2: 34,
-    fontSizeHeading3: 28,
-    fontSizeHeading4: 24,
-    fontSizeHeading5: 20,
+    fontSizeHeading1: 40,
+    fontSizeHeading2: 30,
+    fontSizeHeading3: 24,
+    fontSizeHeading4: 20,
+    fontSizeHeading5: 17,
 
-    lineHeight: 1.5,
-    lineHeightSM: 1.45,
-    lineHeightLG: 1.55,
+    lineHeight: 1.6,
+    lineHeightSM: 1.5,
+    lineHeightLG: 1.6,
 
-    lineHeightHeading1: 1.1,
-    lineHeightHeading2: 1.12,
-    lineHeightHeading3: 1.18,
-    lineHeightHeading4: 1.2,
-    lineHeightHeading5: 1.25,
+    lineHeightHeading1: 1.15,
+    lineHeightHeading2: 1.2,
+    lineHeightHeading3: 1.25,
+    lineHeightHeading4: 1.3,
+    lineHeightHeading5: 1.35,
 
     controlHeight: 40,
     controlHeightSM: 32,
@@ -60,18 +60,23 @@ export const darkToken: Partial<AliasToken> = {
 
 export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key] } = {
     Layout: {
-        headerBg: "#021328",
-        bodyBg: "#02162F",
-        siderBg: "#021328",
+        headerBg: "rgba(11, 22, 34, 0.85)",
+        bodyBg: "#0B1622",
+        siderBg: "#111D2E",
     },
     Menu: {
         itemBg: "transparent",
-        itemSelectedBg: "#022A51",
-        itemSelectedColor: "#F6FBFF",
-        itemHoverBg: "#022244",
+        itemSelectedBg: "#1A2B3E",
+        itemSelectedColor: "#3DA9FC",
+        itemHoverBg: "#162536",
     },
     Card: {
-        borderRadiusLG: 18,
+        borderRadiusLG: 16,
+    },
+    Button: {
+        borderRadius: 10,
+        borderRadiusLG: 12,
+        borderRadiusSM: 8,
     },
     List: {
         titleMarginBottom: 2,

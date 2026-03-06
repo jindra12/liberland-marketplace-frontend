@@ -57,7 +57,6 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         )}
                     </Flex>
                 ),
-                actions: (company) => <Link to={`/companies/${company.id}`}><Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button></Link>,
                 avatar: (company) => company.image?.url ? (
                     <Link to={`/companies/${company.id}`}>
                         <Avatar
@@ -76,6 +75,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     />
                 ),
                 body: (company) => <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>,
+                actions: (company) => (
+                    <Flex wrap gap={12} align="center">
+                        <Link to={`/companies/${company.id}`}>
+                            <Button size="large" className="ActionBtn">Details</Button>
+                        </Link>
+                    </Flex>
+                ),
             }}
         />
     );

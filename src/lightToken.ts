@@ -2,56 +2,56 @@ import { OverrideToken } from "antd/es/theme/interface";
 import { AliasToken } from "antd/es/theme/internal";
 
 export const lightToken: Partial<AliasToken> = {
-    colorPrimary: "#0066B8",
-    colorInfo: "#00A7D8",
-    colorLink: "#0066B8",
+    colorPrimary: "#0062CC",
+    colorInfo: "#0094D4",
+    colorLink: "#0062CC",
 
-    colorSuccess: "#14C8A2",
-    colorWarning: "#FFC857",
-    colorError: "#FF3B6B",
+    colorSuccess: "#0FBE8F",
+    colorWarning: "#F5A623",
+    colorError: "#EF4565",
 
-    colorBgLayout: "#F9FCFF",
+    colorBgLayout: "#F5F7FA",
     colorBgContainer: "#FFFFFF",
     colorBgElevated: "#FFFFFF",
 
-    colorText: "#02162F",
-    colorTextSecondary: "#01325F",
-    colorTextTertiary: "#747F8D",
-    colorTextQuaternary: "#A6ADB6",
+    colorText: "#0D1B2A",
+    colorTextSecondary: "#3D5A80",
+    colorTextTertiary: "#8B9BB4",
+    colorTextQuaternary: "#B0BCC9",
 
-    colorBorder: "#B8D6ED",
-    colorBorderSecondary: "#D9E8F4",
-    colorSplit: "#D9E8F4",
+    colorBorder: "#D6DEE8",
+    colorBorderSecondary: "#E8EDF2",
+    colorSplit: "#E8EDF2",
 
-    colorFill: "#E6F0F8",
-    colorFillSecondary: "#F2F7FB",
-    colorFillTertiary: "#F7FAFD",
+    colorFill: "#E8EDF2",
+    colorFillSecondary: "#F0F3F7",
+    colorFillTertiary: "#F5F7FA",
 
-    borderRadius: 14,
+    borderRadius: 12,
 
     fontFamily:
-        "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
+        "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\"",
 
-    fontSize: 17,
-    fontSizeSM: 15,
-    fontSizeLG: 19,
-    fontSizeXL: 22,
+    fontSize: 15,
+    fontSizeSM: 13,
+    fontSizeLG: 17,
+    fontSizeXL: 20,
 
-    fontSizeHeading1: 44,
-    fontSizeHeading2: 34,
-    fontSizeHeading3: 28,
-    fontSizeHeading4: 24,
-    fontSizeHeading5: 20,
+    fontSizeHeading1: 40,
+    fontSizeHeading2: 30,
+    fontSizeHeading3: 24,
+    fontSizeHeading4: 20,
+    fontSizeHeading5: 17,
 
-    lineHeight: 1.5,
-    lineHeightSM: 1.45,
-    lineHeightLG: 1.55,
+    lineHeight: 1.6,
+    lineHeightSM: 1.5,
+    lineHeightLG: 1.6,
 
-    lineHeightHeading1: 1.1,
-    lineHeightHeading2: 1.12,
-    lineHeightHeading3: 1.18,
-    lineHeightHeading4: 1.2,
-    lineHeightHeading5: 1.25,
+    lineHeightHeading1: 1.15,
+    lineHeightHeading2: 1.2,
+    lineHeightHeading3: 1.25,
+    lineHeightHeading4: 1.3,
+    lineHeightHeading5: 1.35,
 
     controlHeight: 40,
     controlHeightSM: 32,
@@ -60,18 +60,23 @@ export const lightToken: Partial<AliasToken> = {
 
 export const lightComponents: { [key in keyof OverrideToken]?: OverrideToken[key] } = {
     Layout: {
-        headerBg: "#FFFFFF",
-        bodyBg: "#F9FCFF",
+        headerBg: "rgba(255, 255, 255, 0.85)",
+        bodyBg: "#F5F7FA",
         siderBg: "#FFFFFF",
     },
     Menu: {
         itemBg: "transparent",
-        itemSelectedBg: "#E6F0F8",
-        itemSelectedColor: "#0066B8",
-        itemHoverBg: "#F2F7FB",
+        itemSelectedBg: "#E8F0FE",
+        itemSelectedColor: "#0062CC",
+        itemHoverBg: "#F0F3F7",
     },
     Card: {
-        borderRadiusLG: 18,
+        borderRadiusLG: 16,
+    },
+    Button: {
+        borderRadius: 10,
+        borderRadiusLG: 12,
+        borderRadiusSM: 8,
     },
     List: {
         titleMarginBottom: 2,

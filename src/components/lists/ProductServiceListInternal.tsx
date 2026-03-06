@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Tag } from "antd";
+import { Avatar, Button, Flex, Space, Tag } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
 import { BankOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
@@ -54,27 +54,6 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         )}
                     </Flex>
                 ),
-                actions: (product) => (
-                    (() => {
-                        const orderLink = parseActionLink(product.url);
-                        return (
-                            <Flex wrap gap="32px" align="center">
-                                <Link to={`/products-services/${product.id}`}>
-                                    <Button size="large" className="ActionBtn">Details</Button>
-                                </Link>
-                                {orderLink && (
-                                    <Button
-                                        size="large"
-                                        type="primary"
-                                        href={orderLink}
-                                    >
-                                        Order now!
-                                    </Button>
-                                )}
-                            </Flex>
-                        );
-                    })()
-                ),
                 avatar: (product) => product.image?.url ? (
                     <Link to={`/products-services/${product.id}`}>
                         <Avatar
@@ -85,19 +64,40 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         />
                     </Link>
                 ) : undefined,
-                description: (product) => (
+                description: (product) => {
+                    const price = formatPrice(product.price?.amount, product.price?.currency);
+                    return (
+                        <Space size={[8, 4]} wrap>
+                            {product.company?.name && (
+                                <Tag>{product.company.name}</Tag>
+                            )}
+                            {price && <Tag color="success" icon={<BankOutlined />}>{price}</Tag>}
+                        </Space>
+                    );
+                },
+                body: (product) => (
                     <Markdown className="Markdown--clamp3 EntityList__description">
                         {product.description}
                     </Markdown>
                 ),
-                body: (product) => {
-                    const price = formatPrice(product.price?.amount, product.price?.currency);
-                    return price ? (
-                        <>
-                            <Tag color="success" icon={<BankOutlined />}>{price}</Tag>
-                            <Divider />
-                        </>
-                    ) : null;
+                actions: (product) => {
+                    const orderLink = parseActionLink(product.url);
+                    return (
+                        <Flex wrap gap={12} align="center">
+                            <Link to={`/products-services/${product.id}`}>
+                                <Button size="large" className="ActionBtn">Details</Button>
+                            </Link>
+                            {orderLink && (
+                                <Button
+                                    size="large"
+                                    type="primary"
+                                    href={orderLink}
+                                >
+                                    Order now!
+                                </Button>
+                            )}
+                        </Flex>
+                    );
                 },
             }}
         />

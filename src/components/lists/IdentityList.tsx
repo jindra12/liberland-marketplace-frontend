@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Flex, Typography } from "antd";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useListIdentitiesQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
@@ -35,25 +36,38 @@ export const IdentityList: React.FunctionComponent = () => {
             filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
-                    <Flex align="center" gap={12}>
-                        <Typography.Link href={identity.website || "#"}>
-                            <Typography.Title level={3} className="IdentityList__title">
-                                {identity.name}
-                            </Typography.Title>
-                        </Typography.Link>
-                        <Link to={`/tribes/${identity.id}`}>
-                            <Button type="primary" size="small">
-                                Details
-                            </Button>
-                        </Link>
+                    <Flex justify="space-between" align="center" wrap>
+                        <Typography.Title level={5} className="IdentityList__title">
+                            {identity.name}
+                        </Typography.Title>
                     </Flex>
                 ),
-                avatar: (identity) => identity.image?.url ? (
+                avatar: (identity) => (
                     <Link to={`/tribes/${identity.id}`}>
-                        <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
+                        <Avatar
+                            shape="square"
+                            size={80}
+                            src={identity.image?.url ? `${BACKEND_URL}${identity.image.url}` : undefined}
+                            icon={!identity.image?.url ? <UsergroupAddOutlined /> : undefined}
+                            className="EntityList__avatar"
+                        />
                     </Link>
-                ) : undefined,
-                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
+                ),
+                description: (identity) => (
+                    <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>
+                ),
+                actions: (identity) => (
+                    <Flex wrap gap={12} align="center">
+                        <Link to={`/tribes/${identity.id}`}>
+                            <Button size="large" className="ActionBtn">Details</Button>
+                        </Link>
+                        {identity.website && (
+                            <Button size="large" href={identity.website} target="_blank" rel="noopener noreferrer">
+                                Website
+                            </Button>
+                        )}
+                    </Flex>
+                ),
             }}
         />
     );

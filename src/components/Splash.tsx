@@ -1,17 +1,46 @@
 import * as React from "react";
-import { Alert, Empty, Flex, Spin, Tag, Typography } from "antd";
-import { useListIdentitiesQuery } from "../generated/graphql";
+import { Alert, Empty, Flex, Spin, Typography } from "antd";
+import {
+    TeamOutlined,
+    ShopOutlined,
+    ToolOutlined,
+    RocketOutlined,
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import {
+    useListIdentitiesQuery,
+    useListCompaniesQuery,
+    useListJobsQuery,
+    useListProductsQuery,
+    useListStartupsQuery,
+} from "../generated/graphql";
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
 
+const categories = [
+    { label: "Companies", path: "/companies", icon: <TeamOutlined /> },
+    { label: "Products & Services", path: "/products-services", icon: <ShopOutlined /> },
+    { label: "Jobs", path: "/jobs", icon: <ToolOutlined /> },
+    { label: "Ventures", path: "/ventures", icon: <RocketOutlined /> },
+];
+
 const Splash: React.FunctionComponent = () => {
-    const identitiesQuery = useListIdentitiesQuery({
-        page: 1,
-        limit: 100,
-        sort: "name",
-    });
-    const identities = identitiesQuery.data?.Identities?.docs;
+    const identitiesQuery = useListIdentitiesQuery({ page: 1, limit: 100, sort: "name" });
+    const companiesQuery = useListCompaniesQuery({ page: 1, limit: 1 });
+    const jobsQuery = useListJobsQuery({ page: 1, limit: 1 });
+    const productsQuery = useListProductsQuery({ page: 1, limit: 1 });
+    const startupsQuery = useListStartupsQuery({ page: 1, limit: 1 });
+
+    const identities = identitiesQuery.data?.Identities?.docs || [];
     const isLoading = identitiesQuery.isLoading;
     const hasError = Boolean(identitiesQuery.error);
+
+    const stats = [
+        { count: companiesQuery.data?.Companies?.totalDocs ?? 0, label: "Companies" },
+        { count: productsQuery.data?.Products?.totalDocs ?? 0, label: "Products" },
+        { count: jobsQuery.data?.Jobs?.totalDocs ?? 0, label: "Jobs" },
+        { count: startupsQuery.data?.Startups?.totalDocs ?? 0, label: "Ventures" },
+        { count: identitiesQuery.data?.Identities?.totalDocs ?? 0, label: "Tribes" },
+    ];
 
     const sortedIdentities = React.useMemo(
         () => [...identities || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
@@ -19,22 +48,42 @@ const Splash: React.FunctionComponent = () => {
     );
 
     return (
-        <Flex vertical gap={18} className="SplashPage">
-            <section className="SplashPage__hero">
-                <div className="SplashPage__heroInner">
-                    <div className="SplashPage__heroCopy">
-                        <Tag className="SplashPage__eyebrow">Tribe-first discovery</Tag>
-                        <Typography.Title level={1} className="SplashPage__heroTitle">
-                            NSwap
-                        </Typography.Title>
-                        <Typography.Paragraph className="SplashPage__heroDescription">
-                            Network swap market. Those who organize into tribes outcompete those who do not. Empower your tribe. Carve a piece of the world in your image.
-                        </Typography.Paragraph>
-                    </div>
-                    <div className="SplashPage__heroVisual">
-                        <div className="SplashPage__heroLogo">
-                            <img className="SplashPage__heroGlyph" src="/logo.svg" alt="NSwap logo" />
-                        </div>
+        <Flex vertical gap={24} className="SplashPage">
+            <section className="SplashHero">
+                <div className="SplashHero__orb SplashHero__orb--1" />
+                <div className="SplashHero__orb SplashHero__orb--2" />
+                <div className="SplashHero__orb SplashHero__orb--3" />
+                <div className="SplashHero__grid" />
+
+                <div className="SplashHero__content">
+                    <Typography.Title level={1} className="SplashHero__title">
+                        Discover <span className="SplashHero__titleAccent">companies</span>,{" "}
+                        <span className="SplashHero__titleAccent">jobs</span>,{" "}
+                        <span className="SplashHero__titleAccent">products</span> &{" "}
+                        <span className="SplashHero__titleAccent">ventures</span>
+                    </Typography.Title>
+
+                    <Typography.Paragraph className="SplashHero__subtitle">
+                        Tribe-first marketplace. Those who organize into tribes outcompete those who do not.
+                        Explore the catalogue or publish your own.
+                    </Typography.Paragraph>
+
+                    <nav className="SplashHero__categories">
+                        {categories.map((cat) => (
+                            <Link key={cat.path} to={cat.path} className="SplashHero__categoryPill">
+                                {cat.icon}
+                                <span>{cat.label}</span>
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <div className="SplashHero__stats">
+                        {stats.map((s) => (
+                            <div key={s.label} className="SplashHero__stat">
+                                <span className="SplashHero__statCount">{s.count}</span>
+                                <span className="SplashHero__statLabel">{s.label}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -60,7 +109,7 @@ const Splash: React.FunctionComponent = () => {
                 )}
 
                 {sortedIdentities.length > 0 && (
-                    <Flex vertical gap={18} className="SplashPage__identityList">
+                    <Flex vertical gap={24} className="SplashPage__identityList">
                         {sortedIdentities.map((identity) => (
                             <IdentityMarketSection
                                 key={identity.id}

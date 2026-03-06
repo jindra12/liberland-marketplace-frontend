@@ -7,11 +7,15 @@
         max-width: 1200px;
         width: 100%;
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 32px 24px;
         display: flex;
         justify-content: center;
         flex: 1;
         min-height: 100%;
+
+        @include md-min {
+            padding: 24px 16px;
+        }
     }
 
     .ant-layout-header,
@@ -20,7 +24,11 @@
     }
 
     .ant-layout-footer {
-        border-top: 1px solid rgba(0, 167, 216, 0.4);
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        text-align: center;
+        font-size: 13px;
+        padding: 20px 24px;
+        letter-spacing: -0.1px;
     }
 
     .ant-layout-content {

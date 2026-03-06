@@ -18,7 +18,9 @@ export const AntProvider: React.FunctionComponent<React.PropsWithChildren> = (pr
         <ThemeConfig.Provider value={{ dark, setDark }}>
             <ConfigProvider
                 theme={{
-                    algorithm: [theme.darkAlgorithm, dark ? theme.compactAlgorithm : theme.defaultAlgorithm],
+                    algorithm: dark
+                        ? [theme.darkAlgorithm, theme.compactAlgorithm]
+                        : [theme.defaultAlgorithm],
                     token: dark ? darkToken : lightToken,
                     components: dark ? darkComponents : lightComponents
                 }}

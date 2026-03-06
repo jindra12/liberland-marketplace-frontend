@@ -102,7 +102,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     </div>
                 ),
                 actions: (job) => (
-                    <Flex wrap gap="32px" align="center">
+                    <Flex wrap gap={12} align="center">
                         <Link to={`/jobs/${job.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
                         <ApplyButton url={job.applyUrl} />
                     </Flex>

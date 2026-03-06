@@ -1,13 +1,18 @@
 .EntityDetail__header {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 
     .ant-avatar img {
         object-fit: contain;
+    }
+
+    .ant-avatar {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 }
 
 .EntityDetail__title {
     flex: 1;
+    letter-spacing: -0.5px;
 }
 
 .EntityDetail__identity {
@@ -54,7 +59,7 @@
 }
 
 .EntityCommentsSection {
-    margin-top: 8px;
+    margin-top: 12px;
     --ecs-bg-overlay: inherit;
     --ecs-bg-form: inherit;
     --ecs-bg-elevated: inherit;
@@ -66,7 +71,7 @@
     --ecs-primary: inherit;
     --ecs-primary-hover: inherit;
     --ecs-font-family: inherit;
-    --ecs-radius: 8px;
+    --ecs-radius: 10px;
 }
 
 .EntityCommentsSection .overlay {

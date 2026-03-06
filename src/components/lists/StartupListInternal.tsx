@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Space, Tag, message } from "antd";
+import { Avatar, Button, Flex, Tag, message } from "antd";
 import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
@@ -129,12 +129,12 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     </Flex>
                 ),
                 actions: (startup) => (
-                    <Space>
-                        <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                    <Flex wrap gap={12} align="center">
                         <Link to={`/ventures/${startup.id}`}>
-                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
+                            <Button size="large" className="ActionBtn">Details</Button>
                         </Link>
-                    </Space>
+                        <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                    </Flex>
                 ),
                 avatar: (startup) => startup.image?.url ? (
                     <Link to={`/ventures/${startup.id}`}>

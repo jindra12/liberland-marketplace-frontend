@@ -3,7 +3,7 @@
     margin: 0 auto;
 
     &__back {
-        margin-bottom: 16px;
+        margin-bottom: 20px;
     }
 
     &__categories {
@@ -12,7 +12,12 @@
 
     &__category {
         cursor: pointer;
-        transition: border-color 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
     }
 
     &__categoryIcon {

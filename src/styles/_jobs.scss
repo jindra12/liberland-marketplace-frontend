@@ -1,48 +1,50 @@
 .JobList__description {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .EntityList__avatar {
-  border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 
-  img {
-    object-fit: contain;
-  }
+    img {
+        object-fit: contain;
+    }
 }
 
 .JobDetail__backBtn {
-  margin-bottom: 16px;
-  font-size: 18px;
+    margin-bottom: 16px;
+    font-size: 18px;
 }
 
 .JobDetail__header {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .JobDetail__title {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
 }
 
 .ActionBtn {
-  min-width: 120px;
+    min-width: 120px;
 }
 
 .JobInactiveNotice {
-  display: block;
+    display: block;
 }
 
 .JobDetail__description {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .EntityList__body {
-  width: 100%;
+    width: 100%;
 }
 
 .EntityList__description {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .IdentityList__title {
-  margin: 0 !important;
+    margin: 0 !important;
 }
