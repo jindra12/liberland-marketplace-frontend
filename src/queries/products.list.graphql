@@ -12,14 +12,12 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
         }
       url
       orderable
+      priceInUSDEnabled
+      priceInUSD
       properties {
         id
         key
         value
-      }
-      price {
-        amount
-        currency
       }
       image {
         id

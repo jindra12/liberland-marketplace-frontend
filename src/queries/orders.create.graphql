@@ -1,6 +1,7 @@
 mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
   createOrder(data: $data, draft: $draft) {
     id
+    secret
     status
     payerAddress
     customer {
@@ -58,6 +59,13 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
         cryptoAddresses {
           chain
           address
+        }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
         }
       }
       variant {

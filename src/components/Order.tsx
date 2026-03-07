@@ -1,50 +1,18 @@
 import * as React from "react";
-import {
-    Alert,
-    Button,
-    Card,
-    Col,
-    Flex,
-    Form,
-    Input,
-    Row,
-    Spin,
-    Typography,
-    message,
-} from "antd";
+import { Alert, Flex, Form, Spin, Typography, message } from "antd";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import type { ListProductsQuery } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
-import type { ListProductsQuery, MutationOrder_ShippingAddressInput } from "../generated/graphql";
-import { useCreateOrderMutation, useUpdateCartMutation } from "./hooks";
+import { useCreateOrderMutation, useUpdateCartMutation, useUpdateOrderMutation } from "./hooks";
 import { useCartItems } from "./cart/useCartItems";
-import { ProductServiceListInternal } from "./lists/ProductServiceListInternal";
-import { GeoapifyAddressFormItem } from "./order/GeoapifyAddressFormItem";
-
-type OrderFormValues = {
-    customerEmail: string;
-    shippingAddress: MutationOrder_ShippingAddressInput;
-};
-
-const readText = (value: unknown) => {
-    return typeof value === "string" && value.trim() ? value.trim() : undefined;
-};
-
-const inferNames = (fullName?: string) => {
-    if (!fullName) {
-        return {
-            firstName: undefined,
-            lastName: undefined,
-        };
-    }
-
-    const [firstName, ...rest] = fullName.split(/\s+/);
-    return {
-        firstName,
-        lastName: rest.join(" ") || undefined,
-    };
-};
+import { OrderCreateStep } from "./order/OrderCreateStep";
+import { OrderPaymentStep } from "./order/OrderPaymentStep";
+import type { OrderFormValues, SubmittedOrder } from "./order/types";
+import {
+    collectRequiredChainsForCarts,
+    inferNameParts,
+} from "../utils";
 
 const Order: React.FunctionComponent = () => {
     const [form] = Form.useForm<OrderFormValues>();
@@ -53,18 +21,22 @@ const Order: React.FunctionComponent = () => {
 
     const [page, setPage] = React.useState(0);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
     const createOrderMutation = useCreateOrderMutation();
     const updateCartMutation = useUpdateCartMutation();
+    const updateOrderMutation = useUpdateOrderMutation();
 
     const cartsWithItems = React.useMemo(() => carts.filter((cart) => cart.items.length > 0), [carts]);
+    const requiredChains = React.useMemo(() => collectRequiredChainsForCarts(cartsWithItems), [cartsWithItems]);
 
-    const profile = auth.user?.profile as Record<string, unknown> | undefined;
-    const profileEmail = readText(profile?.email);
-    const profileGivenName = readText(profile?.given_name);
-    const profileFamilyName = readText(profile?.family_name);
-    const inferredNames = inferNames(readText(profile?.name));
+    const profile = auth.user?.profile;
+    const profileEmail = profile?.email;
+    const profileGivenName = profile?.given_name;
+    const profileFamilyName = profile?.family_name;
+    const profileName = profile?.name;
+    const inferredNames = inferNameParts(profileName);
 
     const prefillFirstName = profileGivenName || inferredNames.firstName;
     const prefillLastName = profileFamilyName || inferredNames.lastName;
@@ -82,6 +54,28 @@ const Order: React.FunctionComponent = () => {
             return undefined as unknown as any;
         },
     }) as UseQueryResult<ListProductsQuery, unknown>, [isLoading, products, refetch]);
+
+    const updatePayerAddress = React.useCallback(async (entry: SubmittedOrder, walletAddress: string) => {
+        if (!entry.order.id) {
+            return;
+        }
+
+        try {
+            await updateOrderMutation.mutateAsync({
+                url: entry.url,
+                orderId: entry.order.id,
+                secret: entry.secret,
+                draft: false,
+                data: {
+                    payerAddress: walletAddress,
+                },
+            });
+            message.success(`Saved payer address for order ${entry.order.id}`);
+        } catch (error) {
+            console.error(error);
+            message.error(`Could not save payer address for order ${entry.order.id}`);
+        }
+    }, [updateOrderMutation]);
 
     const onSubmit = async (values: OrderFormValues) => {
         if (cartsWithItems.length === 0) {
@@ -105,7 +99,7 @@ const Order: React.FunctionComponent = () => {
                     throw new Error("Cart has no orderable items");
                 }
 
-                await createOrderMutation.mutateAsync({
+                const createOrderResult = await createOrderMutation.mutateAsync({
                     url: cart.url,
                     draft: false,
                     data: {
@@ -115,6 +109,11 @@ const Order: React.FunctionComponent = () => {
                     },
                 });
 
+                const createdOrder = createOrderResult.createOrder;
+                if (!createdOrder?.id) {
+                    throw new Error("Order creation did not return an order id");
+                }
+
                 await updateCartMutation.mutateAsync({
                     url: cart.url,
                     id: cart.cartId,
@@ -123,6 +122,11 @@ const Order: React.FunctionComponent = () => {
                         items: [],
                     },
                 });
+
+                return {
+                    cart,
+                    order: createdOrder,
+                };
             }));
 
             const summary = settled.reduce((acc, result, index) => {
@@ -130,6 +134,11 @@ const Order: React.FunctionComponent = () => {
                     return {
                         ...acc,
                         submittedCarts: acc.submittedCarts + 1,
+                        submittedOrders: [...acc.submittedOrders, {
+                            url: result.value.cart.url,
+                            secret: result.value.cart.secret,
+                            order: result.value.order,
+                        }],
                     };
                 }
 
@@ -144,7 +153,10 @@ const Order: React.FunctionComponent = () => {
             }, {
                 submittedCarts: 0,
                 failedProductNames: [] as string[],
+                submittedOrders: [] as SubmittedOrder[],
             });
+
+            setSubmittedOrders(summary.submittedOrders);
 
             if (summary.submittedCarts > 0) {
                 await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
@@ -172,7 +184,7 @@ const Order: React.FunctionComponent = () => {
         }
     };
 
-    if (isLoading) {
+    if (isLoading && submittedOrders.length === 0) {
         return (
             <Flex vertical gap={16}>
                 <Typography.Title level={2}>Order</Typography.Title>
@@ -181,7 +193,7 @@ const Order: React.FunctionComponent = () => {
         );
     }
 
-    if (totalQuantity <= 0) {
+    if (totalQuantity <= 0 && submittedOrders.length === 0) {
         return (
             <Flex vertical gap={16}>
                 <Typography.Title level={2}>Order</Typography.Title>
@@ -190,11 +202,6 @@ const Order: React.FunctionComponent = () => {
                     showIcon
                     message="Your cart is empty"
                     description="Add products before creating an order."
-                    action={(
-                        <Link to="/cart">
-                            <Button type="primary">Go to cart</Button>
-                        </Link>
-                    )}
                 />
             </Flex>
         );
@@ -203,95 +210,27 @@ const Order: React.FunctionComponent = () => {
     return (
         <Flex vertical gap={16}>
             <Typography.Title level={2}>Order</Typography.Title>
-            <Typography.Paragraph type="secondary">
-                One click will submit one order per server/cart using the same shipping and contact details.
-            </Typography.Paragraph>
-
-            <Form
-                id="order-form"
-                layout="vertical"
-                form={form}
-                onFinish={onSubmit}
-                initialValues={{
-                    customerEmail: profileEmail,
-                    shippingAddress: {
-                        country: "United States",
-                        firstName: prefillFirstName,
-                        lastName: prefillLastName,
-                    },
-                }}
-            >
-                <Card title="Shipping">
-                    <Form.Item
-                        name="customerEmail"
-                        label="Email"
-                        rules={[
-                            { required: true, message: "Required" },
-                            { type: "email", message: "Invalid email" },
-                        ]}
-                    >
-                        <Input type="email" placeholder="you@example.com" />
-                    </Form.Item>
-
-                    <Row gutter={12}>
-                        <Col xs={24} md={12}>
-                            <Form.Item
-                                name={["shippingAddress", "firstName"]}
-                                label="First name"
-                                rules={[{ required: true, message: "Required" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12}>
-                            <Form.Item
-                                name={["shippingAddress", "lastName"]}
-                                label="Last name"
-                                rules={[{ required: true, message: "Required" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-
-                    <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" />
-
-                    <Row gutter={12}>
-                        <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "company"]} label="Company (optional)">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "phone"]} label="Phone (optional)">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Card>
-            </Form>
-
-            <ProductServiceListInternal
-                page={page}
-                setPage={setPage}
-                query={query}
-                title="Order summary"
-            />
-
-            <Flex justify="space-between" wrap gap={12}>
-                <Link to="/cart">
-                    <Button>Back to cart</Button>
-                </Link>
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    form="order-form"
-                    loading={isSubmitting}
-                    disabled={cartsWithItems.length === 0}
-                >
-                    Create order
-                </Button>
-            </Flex>
+            {submittedOrders.length > 0 ? (
+                <OrderPaymentStep
+                    submittedOrders={submittedOrders}
+                    onPayerAddressSelected={updatePayerAddress}
+                    onBackToOrderForm={() => setSubmittedOrders([])}
+                />
+            ) : (
+                <OrderCreateStep
+                    form={form}
+                    query={query}
+                    onSubmit={onSubmit}
+                    page={page}
+                    setPage={setPage}
+                    isSubmitting={isSubmitting}
+                    cartsWithItemsCount={cartsWithItems.length}
+                    profileEmail={profileEmail}
+                    prefillFirstName={prefillFirstName}
+                    prefillLastName={prefillLastName}
+                    requiredChains={requiredChains}
+                />
+            )}
         </Flex>
     );
 };

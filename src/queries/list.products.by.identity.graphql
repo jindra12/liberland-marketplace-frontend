@@ -16,6 +16,8 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
       orderable
       url
       companyIdentityId
+      priceInUSDEnabled
+      priceInUSD
       company {
         id
         serverURL
@@ -24,10 +26,6 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
           chain
           address
         }
-      }
-      price {
-        amount
-        currency
       }
       _status
       createdAt

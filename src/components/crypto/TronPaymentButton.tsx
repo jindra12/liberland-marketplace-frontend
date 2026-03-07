@@ -11,12 +11,20 @@ import { FormModel } from "../../types";
 export interface TronPaymentButtonProps {
     formModel: FormModel;
     setTransactionId: (txId: string) => void;
+    onPayerAddressSelected?: (address: string) => void;
 }
 
 export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> = (props) => {
     const { address, connected, signTransaction } = useWallet();
     const canPay = address && connected && window.tronWeb;
     const [loading, setLoading] = React.useState(false);
+    const { onPayerAddressSelected } = props;
+
+    React.useEffect(() => {
+        if (address && connected) {
+            onPayerAddressSelected?.(address);
+        }
+    }, [address, connected, onPayerAddressSelected]);
 
     const sendPayment = async () => {
         if (window.tronWeb && canPay) {
@@ -43,14 +51,14 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
         type: "button",
         className: "TronButton TronButton--payment",
         disabled: loading,
-        icon: require("../tron.svg").default,
+        icon: require("../../assets/tron.svg").default,
     };
 
     return (
         <Flex wrap gap="15px" justify="center" align="center" flex={1} className="TronwebModal TronwebModal--payment">
             {canPay && (
                 <Button
-                    icon={<Image src={require("../tron.svg").default} width="22px" height="22px" preview={false} />}
+                    icon={<Image src={require("../../assets/tron.svg").default} width="22px" height="22px" preview={false} />}
                     className="TronButton TronButton--payment TronButton--main"
                     loading={loading}
                     onClick={sendPayment}

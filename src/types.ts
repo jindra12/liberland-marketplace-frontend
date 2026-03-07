@@ -3,11 +3,17 @@ import type { OidcStandardClaims } from "oidc-client-ts";
 import type { CommentSection } from "react-comments-section";
 import type { Space, Tag } from "antd";
 import type {
+    CartBySecretQuery,
     Comment_ReplyPostRelationshipInputRelationTo,
     Company,
+    CreateOrderMutation,
     Identity,
     Job,
+    ListProductsByCompanyQuery,
+    ListProductsByIdentityQuery,
     ListCommentsByTargetQuery,
+    ListProductsQuery,
+    ProductByIdQuery,
     Product,
     Startup,
 } from "./generated/graphql";
@@ -27,6 +33,35 @@ export type ImageDoc = {
     image?: { url?: string | null } | null;
     serverURL?: string | null;
 } | null;
+
+type ListProductsDoc = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
+type ListProductsByCompanyDoc = NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
+type ListProductsByIdentityDoc = NonNullable<NonNullable<ListProductsByIdentityQuery["Products"]>["docs"]>[number];
+type ProductByIdDoc = NonNullable<ProductByIdQuery["Product"]>;
+type CartBySecretDoc = NonNullable<NonNullable<CartBySecretQuery["Carts"]>["docs"]>[number];
+
+export type PurchasableProduct =
+    | ListProductsDoc
+    | ListProductsByCompanyDoc
+    | ListProductsByIdentityDoc
+    | ProductByIdDoc;
+
+export type CartForRequiredChains = Pick<CartBySecretDoc, "items">;
+export type OrderForPayments = NonNullable<CreateOrderMutation["createOrder"]>;
+
+export type CryptoChain = "ethereum" | "solana" | "tron";
+
+export type ChainPrice = {
+    chain: CryptoChain;
+    expectedNativeAmount?: number | null;
+    nativePerStable?: number | null;
+    stablePerNative?: number | null;
+    fetchedAt?: unknown;
+};
+
+export type CryptoWalletOwner =
+    | Pick<PurchasableProduct, "cryptoAddresses">
+    | NonNullable<PurchasableProduct["company"]>;
 
 export type IdentityTagItem = {
     id: string;

@@ -19,11 +19,19 @@ const client = createThirdwebClient({
 export interface ThirdwebPayButtonProps {
     formModel: FormModel;
     setTransactionId: (txId: string) => void;
+    onPayerAddressSelected?: (address: string) => void;
 }
 
 export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> = (props) => {
     const account = useActiveAccount();
     const { mutateAsync, isPending, isError, isSuccess } = useSendAndConfirmTransaction();
+    const { onPayerAddressSelected } = props;
+
+    React.useEffect(() => {
+        if (account?.address) {
+            onPayerAddressSelected?.(account.address);
+        }
+    }, [account?.address, onPayerAddressSelected]);
 
     const onPay = async () => {
         try {

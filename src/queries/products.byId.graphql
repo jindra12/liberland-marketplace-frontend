@@ -1,14 +1,40 @@
 query ProductById($id: String!) {
   Product(id: $id) {
     id
+    inventory
+    enableVariants
+    variantTypes {
+      id
+      label
+      name
+    }
+    variants {
+      docs {
+        id
+        title
+        inventory
+        priceInUSDEnabled
+        priceInUSD
+        options {
+          id
+          label
+          value
+        }
+      }
+      hasNextPage
+      totalDocs
+    }
+    priceInUSDEnabled
+    priceInUSD
     serverURL
     name
+    companyIdentityId
     _status
     description
     cryptoAddresses {
-          chain
-          address
-        }
+      chain
+      address
+    }
     url
     orderable
     properties {
@@ -16,20 +42,18 @@ query ProductById($id: String!) {
       key
       value
     }
-    inventory
-    price {
-      amount
-      currency
-    }
+    updatedAt
+    createdAt
+    deletedAt
     company {
       id
       serverURL
       name
       description
       cryptoAddresses {
-          chain
-          address
-        }
+        chain
+        address
+      }
       createdBy {
         id
       }
@@ -42,17 +66,15 @@ query ProductById($id: String!) {
       image {
         id
         url
-        alt
         filename
+        mimeType
         width
         height
-        mimeType
       }
     }
     image {
       id
       url
-      alt
       filename
       width
       height

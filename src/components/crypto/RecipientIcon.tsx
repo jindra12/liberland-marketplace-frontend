@@ -18,10 +18,10 @@ export const RecipientIcon: React.FunctionComponent<RecipientIconProps> = (props
     };
     switch (props.chain) {
         case "Ethereum":
-            return <Image src={require("../ethereum.svg").default} {...modifiedProps} />;
+            return <Image src={require("../../assets/ethereum.svg").default} {...modifiedProps} />;
         case "Solana":
-            return <Image src={require("../solana.svg").default} {...modifiedProps} />;
+            return <Image src={require("../../assets/solana.svg").default} {...modifiedProps} />;
         case "Tron":
-            return <Image src={require("../tron.svg").default} {...modifiedProps} />;
+            return <Image src={require("../../assets/tron.svg").default} {...modifiedProps} />;
     }
 };

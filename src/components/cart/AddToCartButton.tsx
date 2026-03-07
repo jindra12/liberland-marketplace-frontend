@@ -18,7 +18,7 @@ type AddToCartButtonProps = {
     serverURL: string;
     block?: boolean;
     size?: ButtonProps["size"];
-    maxAvailable?: number;
+    maxAvailable?: number | null;
 };
 
 export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({

@@ -36,7 +36,7 @@ export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) 
         type: "button",
         style: btnStyle,
         className: "TronConnect",
-        icon: require("../tron.svg").default,
+        icon: require("../../assets/tron.svg").default,
     };
 
     return (

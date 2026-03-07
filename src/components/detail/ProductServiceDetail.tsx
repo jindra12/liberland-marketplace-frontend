@@ -21,7 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
-import { formatPrice, parseActionLink, getImage } from "../../utils";
+import { formatPrice, parseActionLink, getImage, isProductPurchasable } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -49,7 +49,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const inventory = typeof inventoryCount === "number"
                     ? inventoryCount.toLocaleString("en-US")
                     : undefined;
-                const price = formatPrice(product?.price?.amount, product?.price?.currency);
+                const price = product?.priceInUSDEnabled ? formatPrice(product?.priceInUSD, "USD") : null;
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
@@ -60,7 +60,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
-                const isOrderable = product?.orderable !== false;
+                const canPurchase = isProductPurchasable(product);
                 const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);
 
@@ -103,7 +103,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 serverURL={product.serverURL!}
                                             />
                                         </Flex>
-                                        {isOrderable ? (
+                                        {canPurchase ? (
                                             <AddToCartButton
                                                 productId={product.id}
                                                 serverURL={product.serverURL!}

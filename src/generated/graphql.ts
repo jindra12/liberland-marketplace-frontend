@@ -21886,10 +21886,10 @@ export enum OrderUpdate_Status_MutationInput {
 export type Order_CryptoPrices = {
   __typename?: 'Order_CryptoPrices';
   chain?: Maybe<Order_CryptoPrices_Chain>;
-  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
   fetchedAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['String']['output']>;
-  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  nativePerStable?: Maybe<Scalars['String']['output']>;
   stablePerNative?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -21907,9 +21907,9 @@ export enum Order_CryptoPrices_Chain_MutationInput {
 
 export type Order_EthPrice = {
   __typename?: 'Order_EthPrice';
-  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
   fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  nativePerStable?: Maybe<Scalars['String']['output']>;
   stablePerNative?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -21948,9 +21948,9 @@ export type Order_ShippingAddress = {
 
 export type Order_SolanaPrice = {
   __typename?: 'Order_SolanaPrice';
-  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
   fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  nativePerStable?: Maybe<Scalars['String']['output']>;
   stablePerNative?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -21981,9 +21981,9 @@ export enum Order_TransactionHashes_Chain_MutationInput {
 
 export type Order_TronPrice = {
   __typename?: 'Order_TronPrice';
-  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
   fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  nativePerStable?: Maybe<Scalars['String']['output']>;
   stablePerNative?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -22023,13 +22023,14 @@ export type Order_CryptoPrices__Chain_Operator = {
 };
 
 export type Order_CryptoPrices__ExpectedNativeAmount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_CryptoPrices__FetchedAt_Operator = {
@@ -22054,12 +22055,13 @@ export type Order_CryptoPrices__Id_Operator = {
 };
 
 export type Order_CryptoPrices__NativePerStable_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_CryptoPrices__StablePerNative_Operator = {
@@ -22113,17 +22115,19 @@ export type Order_Customer_Operator = {
 };
 
 export type Order_EthPrice__ExpectedNativeAmount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_EthPrice__FetchedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   less_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -22133,16 +22137,19 @@ export type Order_EthPrice__FetchedAt_Operator = {
 };
 
 export type Order_EthPrice__NativePerStable_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_EthPrice__StablePerNative_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['Float']['input']>;
   greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
   less_than?: InputMaybe<Scalars['Float']['input']>;
@@ -22332,17 +22339,19 @@ export type Order_ShippingAddress__Title_Operator = {
 };
 
 export type Order_SolanaPrice__ExpectedNativeAmount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_SolanaPrice__FetchedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   less_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -22352,16 +22361,19 @@ export type Order_SolanaPrice__FetchedAt_Operator = {
 };
 
 export type Order_SolanaPrice__NativePerStable_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_SolanaPrice__StablePerNative_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['Float']['input']>;
   greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
   less_than?: InputMaybe<Scalars['Float']['input']>;
@@ -22452,17 +22464,19 @@ export type Order_Transactions_Operator = {
 };
 
 export type Order_TronPrice__ExpectedNativeAmount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_TronPrice__FetchedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   less_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -22472,16 +22486,19 @@ export type Order_TronPrice__FetchedAt_Operator = {
 };
 
 export type Order_TronPrice__NativePerStable_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Order_TronPrice__StablePerNative_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['Float']['input']>;
   greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
   less_than?: InputMaybe<Scalars['Float']['input']>;
@@ -33288,7 +33305,6 @@ export type Product = {
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
-  price?: Maybe<Product_Price>;
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
@@ -33317,20 +33333,6 @@ export enum ProductUpdate_CryptoAddresses_Chain_MutationInput {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
-}
-
-export enum ProductUpdate_Price_Currency_MutationInput {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
 }
 
 export enum ProductUpdate__Status_MutationInput {
@@ -33368,7 +33370,6 @@ export type ProductVersion_Version = {
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
-  price?: Maybe<ProductVersion_Version_Price>;
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
@@ -33403,26 +33404,6 @@ export enum ProductVersion_Version_CryptoAddresses_Chain {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
-}
-
-export type ProductVersion_Version_Price = {
-  __typename?: 'ProductVersion_Version_Price';
-  amount?: Maybe<Scalars['Float']['output']>;
-  currency?: Maybe<ProductVersion_Version_Price_Currency>;
-};
-
-export enum ProductVersion_Version_Price_Currency {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
 }
 
 export type ProductVersion_Version_Properties = {
@@ -33460,40 +33441,6 @@ export enum Product_CryptoAddresses_Chain_MutationInput {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
-}
-
-export type Product_Price = {
-  __typename?: 'Product_Price';
-  amount?: Maybe<Scalars['Float']['output']>;
-  currency?: Maybe<Product_Price_Currency>;
-};
-
-export enum Product_Price_Currency {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
-}
-
-export enum Product_Price_Currency_MutationInput {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
 }
 
 export type Product_Properties = {
@@ -33677,37 +33624,6 @@ export type Product_PriceInUsd_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type Product_Price__Amount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
-};
-
-export enum Product_Price__Currency_Input {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
-}
-
-export type Product_Price__Currency_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Product_Price__Currency_Input>>>;
-  equals?: InputMaybe<Product_Price__Currency_Input>;
-  in?: InputMaybe<Array<InputMaybe<Product_Price__Currency_Input>>>;
-  not_equals?: InputMaybe<Product_Price__Currency_Input>;
-  not_in?: InputMaybe<Array<InputMaybe<Product_Price__Currency_Input>>>;
-};
-
 export type Product_Properties__Id_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -33801,8 +33717,6 @@ export type Product_Where = {
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
-  price__amount?: InputMaybe<Product_Price__Amount_Operator>;
-  price__currency?: InputMaybe<Product_Price__Currency_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
@@ -33831,8 +33745,6 @@ export type Product_Where_And = {
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
-  price__amount?: InputMaybe<Product_Price__Amount_Operator>;
-  price__currency?: InputMaybe<Product_Price__Currency_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
@@ -33861,8 +33773,6 @@ export type Product_Where_Or = {
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
-  price__amount?: InputMaybe<Product_Price__Amount_Operator>;
-  price__currency?: InputMaybe<Product_Price__Currency_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
@@ -33925,7 +33835,6 @@ export type ProductsDocAccessFields = {
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   orderable?: Maybe<ProductsDocAccessFields_Orderable>;
-  price?: Maybe<ProductsDocAccessFields_Price>;
   priceInUSD?: Maybe<ProductsDocAccessFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
@@ -34335,15 +34244,6 @@ export type ProductsDocAccessFields_Orderable_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_Price = {
-  __typename?: 'ProductsDocAccessFields_price';
-  create?: Maybe<ProductsDocAccessFields_Price_Create>;
-  delete?: Maybe<ProductsDocAccessFields_Price_Delete>;
-  fields?: Maybe<ProductsDocAccessFields_Price_Fields>;
-  read?: Maybe<ProductsDocAccessFields_Price_Read>;
-  update?: Maybe<ProductsDocAccessFields_Price_Update>;
-};
-
 export type ProductsDocAccessFields_PriceInUsd = {
   __typename?: 'ProductsDocAccessFields_priceInUSD';
   create?: Maybe<ProductsDocAccessFields_PriceInUsd_Create>;
@@ -34397,88 +34297,6 @@ export type ProductsDocAccessFields_PriceInUsd_Read = {
 
 export type ProductsDocAccessFields_PriceInUsd_Update = {
   __typename?: 'ProductsDocAccessFields_priceInUSD_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Create = {
-  __typename?: 'ProductsDocAccessFields_price_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Delete = {
-  __typename?: 'ProductsDocAccessFields_price_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Fields = {
-  __typename?: 'ProductsDocAccessFields_price_Fields';
-  amount?: Maybe<ProductsDocAccessFields_Price_Amount>;
-  currency?: Maybe<ProductsDocAccessFields_Price_Currency>;
-};
-
-export type ProductsDocAccessFields_Price_Read = {
-  __typename?: 'ProductsDocAccessFields_price_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Update = {
-  __typename?: 'ProductsDocAccessFields_price_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Amount = {
-  __typename?: 'ProductsDocAccessFields_price_amount';
-  create?: Maybe<ProductsDocAccessFields_Price_Amount_Create>;
-  delete?: Maybe<ProductsDocAccessFields_Price_Amount_Delete>;
-  read?: Maybe<ProductsDocAccessFields_Price_Amount_Read>;
-  update?: Maybe<ProductsDocAccessFields_Price_Amount_Update>;
-};
-
-export type ProductsDocAccessFields_Price_Amount_Create = {
-  __typename?: 'ProductsDocAccessFields_price_amount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Amount_Delete = {
-  __typename?: 'ProductsDocAccessFields_price_amount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Amount_Read = {
-  __typename?: 'ProductsDocAccessFields_price_amount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Amount_Update = {
-  __typename?: 'ProductsDocAccessFields_price_amount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Currency = {
-  __typename?: 'ProductsDocAccessFields_price_currency';
-  create?: Maybe<ProductsDocAccessFields_Price_Currency_Create>;
-  delete?: Maybe<ProductsDocAccessFields_Price_Currency_Delete>;
-  read?: Maybe<ProductsDocAccessFields_Price_Currency_Read>;
-  update?: Maybe<ProductsDocAccessFields_Price_Currency_Update>;
-};
-
-export type ProductsDocAccessFields_Price_Currency_Create = {
-  __typename?: 'ProductsDocAccessFields_price_currency_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Currency_Delete = {
-  __typename?: 'ProductsDocAccessFields_price_currency_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Currency_Read = {
-  __typename?: 'ProductsDocAccessFields_price_currency_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_Price_Currency_Update = {
-  __typename?: 'ProductsDocAccessFields_price_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -34756,7 +34574,6 @@ export type ProductsFields = {
   inventory?: Maybe<ProductsFields_Inventory>;
   name?: Maybe<ProductsFields_Name>;
   orderable?: Maybe<ProductsFields_Orderable>;
-  price?: Maybe<ProductsFields_Price>;
   priceInUSD?: Maybe<ProductsFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
@@ -35166,15 +34983,6 @@ export type ProductsFields_Orderable_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_Price = {
-  __typename?: 'ProductsFields_price';
-  create?: Maybe<ProductsFields_Price_Create>;
-  delete?: Maybe<ProductsFields_Price_Delete>;
-  fields?: Maybe<ProductsFields_Price_Fields>;
-  read?: Maybe<ProductsFields_Price_Read>;
-  update?: Maybe<ProductsFields_Price_Update>;
-};
-
 export type ProductsFields_PriceInUsd = {
   __typename?: 'ProductsFields_priceInUSD';
   create?: Maybe<ProductsFields_PriceInUsd_Create>;
@@ -35228,88 +35036,6 @@ export type ProductsFields_PriceInUsd_Read = {
 
 export type ProductsFields_PriceInUsd_Update = {
   __typename?: 'ProductsFields_priceInUSD_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Create = {
-  __typename?: 'ProductsFields_price_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Delete = {
-  __typename?: 'ProductsFields_price_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Fields = {
-  __typename?: 'ProductsFields_price_Fields';
-  amount?: Maybe<ProductsFields_Price_Amount>;
-  currency?: Maybe<ProductsFields_Price_Currency>;
-};
-
-export type ProductsFields_Price_Read = {
-  __typename?: 'ProductsFields_price_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Update = {
-  __typename?: 'ProductsFields_price_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Amount = {
-  __typename?: 'ProductsFields_price_amount';
-  create?: Maybe<ProductsFields_Price_Amount_Create>;
-  delete?: Maybe<ProductsFields_Price_Amount_Delete>;
-  read?: Maybe<ProductsFields_Price_Amount_Read>;
-  update?: Maybe<ProductsFields_Price_Amount_Update>;
-};
-
-export type ProductsFields_Price_Amount_Create = {
-  __typename?: 'ProductsFields_price_amount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Amount_Delete = {
-  __typename?: 'ProductsFields_price_amount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Amount_Read = {
-  __typename?: 'ProductsFields_price_amount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Amount_Update = {
-  __typename?: 'ProductsFields_price_amount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Currency = {
-  __typename?: 'ProductsFields_price_currency';
-  create?: Maybe<ProductsFields_Price_Currency_Create>;
-  delete?: Maybe<ProductsFields_Price_Currency_Delete>;
-  read?: Maybe<ProductsFields_Price_Currency_Read>;
-  update?: Maybe<ProductsFields_Price_Currency_Update>;
-};
-
-export type ProductsFields_Price_Currency_Create = {
-  __typename?: 'ProductsFields_price_currency_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Currency_Delete = {
-  __typename?: 'ProductsFields_price_currency_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Currency_Read = {
-  __typename?: 'ProductsFields_price_currency_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_Price_Currency_Update = {
-  __typename?: 'ProductsFields_price_currency_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48767,15 +48493,15 @@ export type MutationOrderInput = {
   currency?: InputMaybe<Order_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
-  ethPrice: MutationOrder_EthPriceInput;
+  ethPrice?: InputMaybe<MutationOrder_EthPriceInput>;
   items?: InputMaybe<Array<InputMaybe<MutationOrder_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrder_ShippingAddressInput>;
-  solanaPrice: MutationOrder_SolanaPriceInput;
+  solanaPrice?: InputMaybe<MutationOrder_SolanaPriceInput>;
   status?: InputMaybe<Order_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrder_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  tronPrice: MutationOrder_TronPriceInput;
+  tronPrice?: InputMaybe<MutationOrder_TronPriceInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -48786,32 +48512,32 @@ export type MutationOrderUpdateInput = {
   currency?: InputMaybe<OrderUpdate_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
-  ethPrice: MutationOrderUpdate_EthPriceInput;
+  ethPrice?: InputMaybe<MutationOrderUpdate_EthPriceInput>;
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrderUpdate_ShippingAddressInput>;
-  solanaPrice: MutationOrderUpdate_SolanaPriceInput;
+  solanaPrice?: InputMaybe<MutationOrderUpdate_SolanaPriceInput>;
   status?: InputMaybe<OrderUpdate_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  tronPrice: MutationOrderUpdate_TronPriceInput;
+  tronPrice?: InputMaybe<MutationOrderUpdate_TronPriceInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationOrderUpdate_CryptoPricesInput = {
   chain: OrderUpdate_CryptoPrices_Chain_MutationInput;
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
   fetchedAt: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable: Scalars['Float']['input'];
+  nativePerStable: Scalars['String']['input'];
   stablePerNative: Scalars['Float']['input'];
 };
 
 export type MutationOrderUpdate_EthPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrderUpdate_ItemsInput = {
@@ -48836,10 +48562,10 @@ export type MutationOrderUpdate_ShippingAddressInput = {
 };
 
 export type MutationOrderUpdate_SolanaPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrderUpdate_TransactionHashesInput = {
@@ -48850,26 +48576,26 @@ export type MutationOrderUpdate_TransactionHashesInput = {
 };
 
 export type MutationOrderUpdate_TronPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrder_CryptoPricesInput = {
   chain: Order_CryptoPrices_Chain_MutationInput;
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
   fetchedAt: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable: Scalars['Float']['input'];
+  nativePerStable: Scalars['String']['input'];
   stablePerNative: Scalars['Float']['input'];
 };
 
 export type MutationOrder_EthPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrder_ItemsInput = {
@@ -48894,10 +48620,10 @@ export type MutationOrder_ShippingAddressInput = {
 };
 
 export type MutationOrder_SolanaPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrder_TransactionHashesInput = {
@@ -48908,10 +48634,10 @@ export type MutationOrder_TransactionHashesInput = {
 };
 
 export type MutationOrder_TronPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
-  fetchedAt: Scalars['String']['input'];
-  nativePerStable: Scalars['Float']['input'];
-  stablePerNative: Scalars['Float']['input'];
+  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
+  fetchedAt?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable?: InputMaybe<Scalars['String']['input']>;
+  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationPageInput = {
@@ -49181,7 +48907,6 @@ export type MutationProductInput = {
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
-  price: MutationProduct_PriceInput;
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
@@ -49204,7 +48929,6 @@ export type MutationProductUpdateInput = {
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
-  price: MutationProductUpdate_PriceInput;
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
@@ -49219,11 +48943,6 @@ export type MutationProductUpdate_CryptoAddressesInput = {
   chain?: InputMaybe<ProductUpdate_CryptoAddresses_Chain_MutationInput>;
 };
 
-export type MutationProductUpdate_PriceInput = {
-  amount: Scalars['Float']['input'];
-  currency: ProductUpdate_Price_Currency_MutationInput;
-};
-
 export type MutationProductUpdate_PropertiesInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   key: Scalars['String']['input'];
@@ -49233,11 +48952,6 @@ export type MutationProductUpdate_PropertiesInput = {
 export type MutationProduct_CryptoAddressesInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   chain?: InputMaybe<Product_CryptoAddresses_Chain_MutationInput>;
-};
-
-export type MutationProduct_PriceInput = {
-  amount: Scalars['Float']['input'];
-  currency: Product_Price_Currency_MutationInput;
 };
 
 export type MutationProduct_PropertiesInput = {
@@ -51685,37 +51399,6 @@ export type VersionsProduct_Version__PriceInUsd_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type VersionsProduct_Version__Price__Amount_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
-};
-
-export enum VersionsProduct_Version__Price__Currency_Input {
-  Btc = 'BTC',
-  Eth = 'ETH',
-  Eur = 'EUR',
-  Gbp = 'GBP',
-  Hnl = 'HNL',
-  Lld = 'LLD',
-  Llm = 'LLM',
-  Sgd = 'SGD',
-  Usd = 'USD',
-  Usdc = 'USDC',
-  Xmr = 'XMR'
-}
-
-export type VersionsProduct_Version__Price__Currency_Operator = {
-  all?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__Price__Currency_Input>>>;
-  equals?: InputMaybe<VersionsProduct_Version__Price__Currency_Input>;
-  in?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__Price__Currency_Input>>>;
-  not_equals?: InputMaybe<VersionsProduct_Version__Price__Currency_Input>;
-  not_in?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__Price__Currency_Input>>>;
-};
-
 export type VersionsProduct_Version__Properties__Id_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -51814,8 +51497,6 @@ export type VersionsProduct_Where = {
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
-  version__price__amount?: InputMaybe<VersionsProduct_Version__Price__Amount_Operator>;
-  version__price__currency?: InputMaybe<VersionsProduct_Version__Price__Currency_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
@@ -51849,8 +51530,6 @@ export type VersionsProduct_Where_And = {
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
-  version__price__amount?: InputMaybe<VersionsProduct_Version__Price__Amount_Operator>;
-  version__price__currency?: InputMaybe<VersionsProduct_Version__Price__Currency_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
@@ -51884,8 +51563,6 @@ export type VersionsProduct_Where_Or = {
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
-  version__price__amount?: InputMaybe<VersionsProduct_Version__Price__Amount_Operator>;
-  version__price__currency?: InputMaybe<VersionsProduct_Version__Price__Currency_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
@@ -52670,7 +52347,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, url?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -52999,7 +52676,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -53015,16 +52692,16 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
-  id: Scalars['String']['input'];
+  orderId: Scalars['String']['input'];
   data: MutationOrderUpdateInput;
   draft: Scalars['Boolean']['input'];
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -53034,7 +52711,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -53067,7 +52744,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, inventory?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -53091,7 +52768,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -53254,10 +52931,8 @@ export const CartBySecretDocument = `
           }
           inventory
           url
-          price {
-            amount
-            currency
-          }
+          priceInUSD
+          priceInUSDEnabled
           image {
             id
             url
@@ -55528,6 +55203,8 @@ export const ListProductsByIdentityDocument = `
       orderable
       url
       companyIdentityId
+      priceInUSDEnabled
+      priceInUSD
       company {
         id
         serverURL
@@ -55536,10 +55213,6 @@ export const ListProductsByIdentityDocument = `
           chain
           address
         }
-      }
-      price {
-        amount
-        currency
       }
       _status
       createdAt
@@ -55685,6 +55358,13 @@ export const CreateOrderDocument = `
           chain
           address
         }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
+        }
       }
       variant {
         id
@@ -55725,8 +55405,8 @@ export const useCreateOrderMutation = <
 useCreateOrderMutation.fetcher = (variables: CreateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables, options);
 
 export const UpdateOrderDocument = `
-    mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
-  updateOrder(id: $id, data: $data, draft: $draft) {
+    mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+  updateOrder(id: $orderId, data: $data, draft: $draft) {
     id
     status
     payerAddress
@@ -55785,6 +55465,13 @@ export const UpdateOrderDocument = `
         cryptoAddresses {
           chain
           address
+        }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
         }
       }
       variant {
@@ -55846,14 +55533,12 @@ export const ListProductsByCompanyDocument = `
       }
       url
       orderable
+      priceInUSDEnabled
+      priceInUSD
       properties {
         id
         key
         value
-      }
-      price {
-        amount
-        currency
       }
       image {
         id
@@ -56064,8 +55749,34 @@ export const ProductByIdDocument = `
     query ProductById($id: String!) {
   Product(id: $id) {
     id
+    inventory
+    enableVariants
+    variantTypes {
+      id
+      label
+      name
+    }
+    variants {
+      docs {
+        id
+        title
+        inventory
+        priceInUSDEnabled
+        priceInUSD
+        options {
+          id
+          label
+          value
+        }
+      }
+      hasNextPage
+      totalDocs
+    }
+    priceInUSDEnabled
+    priceInUSD
     serverURL
     name
+    companyIdentityId
     _status
     description
     cryptoAddresses {
@@ -56079,11 +55790,9 @@ export const ProductByIdDocument = `
       key
       value
     }
-    inventory
-    price {
-      amount
-      currency
-    }
+    updatedAt
+    createdAt
+    deletedAt
     company {
       id
       serverURL
@@ -56105,17 +55814,15 @@ export const ProductByIdDocument = `
       image {
         id
         url
-        alt
         filename
+        mimeType
         width
         height
-        mimeType
       }
     }
     image {
       id
       url
-      alt
       filename
       width
       height
@@ -56224,14 +55931,12 @@ export const ListProductsDocument = `
       }
       url
       orderable
+      priceInUSDEnabled
+      priceInUSD
       properties {
         id
         key
         value
-      }
-      price {
-        amount
-        currency
       }
       image {
         id

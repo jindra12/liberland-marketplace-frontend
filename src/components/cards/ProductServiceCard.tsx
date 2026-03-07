@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatPrice, getImage, parseActionLink } from "../../utils";
+import { formatPrice, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
@@ -30,16 +30,17 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             dataSource={items}
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
-                const price = formatPrice(product.price?.amount, product.price?.currency);
+                const price = product.priceInUSDEnabled ? formatPrice(product.priceInUSD, "USD") : null;
                 const imageSrc = getImage(product) || getImage(product.company);
                 const orderNowLink = parseActionLink(product.url);
-                const purchaseAction = product.orderable !== false ? (
+                const canPurchase = isProductPurchasable(product);
+                const purchaseAction = canPurchase ? (
                     <AddToCartButton
                         key={`product-cart-${product.id}`}
                         productId={product.id}
                         serverURL={product.serverURL!}
                         size="small"
-                        maxAvailable={product.inventory ?? undefined}
+                        maxAvailable={product.inventory}
                     />
                 ) : orderNowLink ? (
                     <Button key={`product-order-${product.id}`} type="primary" size="small" href={orderNowLink}>

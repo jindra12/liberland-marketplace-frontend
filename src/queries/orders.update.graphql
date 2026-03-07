@@ -1,6 +1,7 @@
-mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
-  updateOrder(id: $id, data: $data, draft: $draft) {
+mutation UpdateOrder($orderId: String!, $secret: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+  updateOrder(id: $orderId, secret: $secret, data: $data, draft: $draft) {
     id
+    secret
     status
     payerAddress
     customer {
@@ -58,6 +59,13 @@ mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boo
         cryptoAddresses {
           chain
           address
+        }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
         }
       }
       variant {

@@ -15,6 +15,7 @@ import { SolanaConnect } from "./SolanaConnect";
 export interface SolanaPayProps {
     setTransactionId: (txId: string) => void,
     model: FormModel;
+    onPayerAddressSelected?: (address: string) => void;
 }
 
 const connection = new Connection(process.env.REACT_APP_HELIUS!, "confirmed");
@@ -22,6 +23,14 @@ const connection = new Connection(process.env.REACT_APP_HELIUS!, "confirmed");
 export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     const [sender, setSender] = React.useState<string>();
     const { sendTransaction, connected, connect } = useWallet();
+    const { onPayerAddressSelected } = props;
+
+    React.useEffect(() => {
+        if (sender) {
+            onPayerAddressSelected?.(sender);
+        }
+    }, [onPayerAddressSelected, sender]);
+
     const pay = useMutation({
         mutationKey: ["onpay"],
         mutationFn: async () => {
@@ -75,7 +84,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                 <Button
                     icon={pay.isPending
                         ? <Spin />
-                        : <Image src={require("../../solana.svg").default} width="22px" height="22px" preview={false} />}
+                        : <Image src={require("../../assets/solana.svg").default} width="22px" height="22px" preview={false} />}
                     className="SolanaButton SolanaButton--payment SolanaButton--main"
                     type="primary"
                     disabled={pay.isPending || pay.isSuccess}

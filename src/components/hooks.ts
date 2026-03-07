@@ -117,8 +117,9 @@ import {
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
-    UpdateOrderMutation,
-    UpdateOrderMutationVariables,
+    useUpdateOrderMutation as useUpdateOrderMutationSingle,
+    type UpdateOrderMutation,
+    type UpdateOrderMutationVariables,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
@@ -154,6 +155,8 @@ export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
 
 type MutationVariablesWithUrl<TVariables extends object | undefined> =
     (TVariables extends undefined ? {} : TVariables) & { url?: string };
+
+type UpdateOrderMutationVariablesWithSecret = UpdateOrderMutationVariables & { secret: string };
 
 export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
     <TError = unknown, TContext = unknown>(
@@ -279,7 +282,10 @@ export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompany
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
 export const useUpdateOrderMutation = enhancedMutationFactory(
-    useCreateOrderMutationSingle as unknown as GeneratedUseMutationHook<UpdateOrderMutation, UpdateOrderMutationVariables>,
+    useUpdateOrderMutationSingle as unknown as GeneratedUseMutationHook<
+        UpdateOrderMutation,
+        UpdateOrderMutationVariablesWithSecret
+    >,
     UpdateOrderDocument,
 );
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);

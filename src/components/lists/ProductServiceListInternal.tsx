@@ -8,7 +8,7 @@ import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPrice, getImage, parseActionLink } from "../../utils";
+import { formatPrice, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -53,12 +53,13 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 ),
                 actions: (product) => {
                     const orderNowLink = parseActionLink(product.url);
+                    const canPurchase = isProductPurchasable(product);
                     return (
                         <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
                             <Flex vertical gap="8px">
-                                {product.price?.amount !== null && product.price?.amount !== undefined && (
+                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
                                     <Tag color="success" icon={<BankOutlined />}>
-                                        {formatPrice(product.price?.amount, product.price?.currency)}
+                                        {formatPrice(product.priceInUSD, "USD")}
                                     </Tag>
                                 )}
                                 <CartItemCount
@@ -66,12 +67,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     serverURL={product.serverURL!}
                                 />
                             </Flex>
-                            {product.orderable !== false ? (
+                            {canPurchase ? (
                                 <AddToCartButton
                                     productId={product.id}
                                     serverURL={product.serverURL!}
                                     size={addToCartSize}
-                                    maxAvailable={product.inventory ?? undefined}
+                                    maxAvailable={product.inventory}
                                 />
                             ) : orderNowLink ? (
                                 <Button type="primary" size={addToCartSize} href={orderNowLink}>
