@@ -6053,9 +6053,8 @@ export type CompaniesDocAccessFields_CryptoAddresses_Delete = {
 
 export type CompaniesDocAccessFields_CryptoAddresses_Fields = {
   __typename?: 'CompaniesDocAccessFields_cryptoAddresses_Fields';
-  ethereum?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Ethereum>;
-  solana?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Solana>;
-  tron?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Tron>;
+  address?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Address>;
+  chain?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Chain>;
 };
 
 export type CompaniesDocAccessFields_CryptoAddresses_Read = {
@@ -6068,87 +6067,59 @@ export type CompaniesDocAccessFields_CryptoAddresses_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Ethereum = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_ethereum';
-  create?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Ethereum_Create>;
-  delete?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Ethereum_Delete>;
-  read?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Ethereum_Read>;
-  update?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Ethereum_Update>;
+export type CompaniesDocAccessFields_CryptoAddresses_Address = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_address';
+  create?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Address_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Address_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Address_Read>;
+  update?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Address_Update>;
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Ethereum_Create = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_ethereum_Create';
+export type CompaniesDocAccessFields_CryptoAddresses_Address_Create = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_address_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Ethereum_Delete = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_ethereum_Delete';
+export type CompaniesDocAccessFields_CryptoAddresses_Address_Delete = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_address_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Ethereum_Read = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_ethereum_Read';
+export type CompaniesDocAccessFields_CryptoAddresses_Address_Read = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_address_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Ethereum_Update = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_ethereum_Update';
+export type CompaniesDocAccessFields_CryptoAddresses_Address_Update = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_address_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Solana = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_solana';
-  create?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Solana_Create>;
-  delete?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Solana_Delete>;
-  read?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Solana_Read>;
-  update?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Solana_Update>;
+export type CompaniesDocAccessFields_CryptoAddresses_Chain = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_chain';
+  create?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Chain_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Chain_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Chain_Read>;
+  update?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Chain_Update>;
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Solana_Create = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_solana_Create';
+export type CompaniesDocAccessFields_CryptoAddresses_Chain_Create = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_chain_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Solana_Delete = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_solana_Delete';
+export type CompaniesDocAccessFields_CryptoAddresses_Chain_Delete = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_chain_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Solana_Read = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_solana_Read';
+export type CompaniesDocAccessFields_CryptoAddresses_Chain_Read = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_chain_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesDocAccessFields_CryptoAddresses_Solana_Update = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_solana_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesDocAccessFields_CryptoAddresses_Tron = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_tron';
-  create?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Tron_Create>;
-  delete?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Tron_Delete>;
-  read?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Tron_Read>;
-  update?: Maybe<CompaniesDocAccessFields_CryptoAddresses_Tron_Update>;
-};
-
-export type CompaniesDocAccessFields_CryptoAddresses_Tron_Create = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_tron_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesDocAccessFields_CryptoAddresses_Tron_Delete = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_tron_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesDocAccessFields_CryptoAddresses_Tron_Read = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_tron_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesDocAccessFields_CryptoAddresses_Tron_Update = {
-  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_tron_Update';
+export type CompaniesDocAccessFields_CryptoAddresses_Chain_Update = {
+  __typename?: 'CompaniesDocAccessFields_cryptoAddresses_chain_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6584,9 +6555,8 @@ export type CompaniesFields_CryptoAddresses_Delete = {
 
 export type CompaniesFields_CryptoAddresses_Fields = {
   __typename?: 'CompaniesFields_cryptoAddresses_Fields';
-  ethereum?: Maybe<CompaniesFields_CryptoAddresses_Ethereum>;
-  solana?: Maybe<CompaniesFields_CryptoAddresses_Solana>;
-  tron?: Maybe<CompaniesFields_CryptoAddresses_Tron>;
+  address?: Maybe<CompaniesFields_CryptoAddresses_Address>;
+  chain?: Maybe<CompaniesFields_CryptoAddresses_Chain>;
 };
 
 export type CompaniesFields_CryptoAddresses_Read = {
@@ -6599,87 +6569,59 @@ export type CompaniesFields_CryptoAddresses_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Ethereum = {
-  __typename?: 'CompaniesFields_cryptoAddresses_ethereum';
-  create?: Maybe<CompaniesFields_CryptoAddresses_Ethereum_Create>;
-  delete?: Maybe<CompaniesFields_CryptoAddresses_Ethereum_Delete>;
-  read?: Maybe<CompaniesFields_CryptoAddresses_Ethereum_Read>;
-  update?: Maybe<CompaniesFields_CryptoAddresses_Ethereum_Update>;
+export type CompaniesFields_CryptoAddresses_Address = {
+  __typename?: 'CompaniesFields_cryptoAddresses_address';
+  create?: Maybe<CompaniesFields_CryptoAddresses_Address_Create>;
+  delete?: Maybe<CompaniesFields_CryptoAddresses_Address_Delete>;
+  read?: Maybe<CompaniesFields_CryptoAddresses_Address_Read>;
+  update?: Maybe<CompaniesFields_CryptoAddresses_Address_Update>;
 };
 
-export type CompaniesFields_CryptoAddresses_Ethereum_Create = {
-  __typename?: 'CompaniesFields_cryptoAddresses_ethereum_Create';
+export type CompaniesFields_CryptoAddresses_Address_Create = {
+  __typename?: 'CompaniesFields_cryptoAddresses_address_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Ethereum_Delete = {
-  __typename?: 'CompaniesFields_cryptoAddresses_ethereum_Delete';
+export type CompaniesFields_CryptoAddresses_Address_Delete = {
+  __typename?: 'CompaniesFields_cryptoAddresses_address_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Ethereum_Read = {
-  __typename?: 'CompaniesFields_cryptoAddresses_ethereum_Read';
+export type CompaniesFields_CryptoAddresses_Address_Read = {
+  __typename?: 'CompaniesFields_cryptoAddresses_address_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Ethereum_Update = {
-  __typename?: 'CompaniesFields_cryptoAddresses_ethereum_Update';
+export type CompaniesFields_CryptoAddresses_Address_Update = {
+  __typename?: 'CompaniesFields_cryptoAddresses_address_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Solana = {
-  __typename?: 'CompaniesFields_cryptoAddresses_solana';
-  create?: Maybe<CompaniesFields_CryptoAddresses_Solana_Create>;
-  delete?: Maybe<CompaniesFields_CryptoAddresses_Solana_Delete>;
-  read?: Maybe<CompaniesFields_CryptoAddresses_Solana_Read>;
-  update?: Maybe<CompaniesFields_CryptoAddresses_Solana_Update>;
+export type CompaniesFields_CryptoAddresses_Chain = {
+  __typename?: 'CompaniesFields_cryptoAddresses_chain';
+  create?: Maybe<CompaniesFields_CryptoAddresses_Chain_Create>;
+  delete?: Maybe<CompaniesFields_CryptoAddresses_Chain_Delete>;
+  read?: Maybe<CompaniesFields_CryptoAddresses_Chain_Read>;
+  update?: Maybe<CompaniesFields_CryptoAddresses_Chain_Update>;
 };
 
-export type CompaniesFields_CryptoAddresses_Solana_Create = {
-  __typename?: 'CompaniesFields_cryptoAddresses_solana_Create';
+export type CompaniesFields_CryptoAddresses_Chain_Create = {
+  __typename?: 'CompaniesFields_cryptoAddresses_chain_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Solana_Delete = {
-  __typename?: 'CompaniesFields_cryptoAddresses_solana_Delete';
+export type CompaniesFields_CryptoAddresses_Chain_Delete = {
+  __typename?: 'CompaniesFields_cryptoAddresses_chain_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Solana_Read = {
-  __typename?: 'CompaniesFields_cryptoAddresses_solana_Read';
+export type CompaniesFields_CryptoAddresses_Chain_Read = {
+  __typename?: 'CompaniesFields_cryptoAddresses_chain_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type CompaniesFields_CryptoAddresses_Solana_Update = {
-  __typename?: 'CompaniesFields_cryptoAddresses_solana_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesFields_CryptoAddresses_Tron = {
-  __typename?: 'CompaniesFields_cryptoAddresses_tron';
-  create?: Maybe<CompaniesFields_CryptoAddresses_Tron_Create>;
-  delete?: Maybe<CompaniesFields_CryptoAddresses_Tron_Delete>;
-  read?: Maybe<CompaniesFields_CryptoAddresses_Tron_Read>;
-  update?: Maybe<CompaniesFields_CryptoAddresses_Tron_Update>;
-};
-
-export type CompaniesFields_CryptoAddresses_Tron_Create = {
-  __typename?: 'CompaniesFields_cryptoAddresses_tron_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesFields_CryptoAddresses_Tron_Delete = {
-  __typename?: 'CompaniesFields_cryptoAddresses_tron_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesFields_CryptoAddresses_Tron_Read = {
-  __typename?: 'CompaniesFields_cryptoAddresses_tron_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type CompaniesFields_CryptoAddresses_Tron_Update = {
-  __typename?: 'CompaniesFields_cryptoAddresses_tron_Update';
+export type CompaniesFields_CryptoAddresses_Chain_Update = {
+  __typename?: 'CompaniesFields_cryptoAddresses_chain_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -7019,6 +6961,12 @@ export type Company = {
   website?: Maybe<Scalars['String']['output']>;
 };
 
+export enum CompanyUpdate_CryptoAddresses_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
 export enum CompanyUpdate__Status_MutationInput {
   Draft = 'draft',
   Published = 'published'
@@ -7060,10 +7008,15 @@ export type CompanyVersion_Version = {
 
 export type CompanyVersion_Version_CryptoAddresses = {
   __typename?: 'CompanyVersion_Version_CryptoAddresses';
-  ethereum?: Maybe<Scalars['String']['output']>;
-  solana?: Maybe<Scalars['String']['output']>;
-  tron?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Scalars['String']['output']>;
+  chain?: Maybe<CompanyVersion_Version_CryptoAddresses_Chain>;
 };
+
+export enum CompanyVersion_Version_CryptoAddresses_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
 export enum CompanyVersion_Version__Status {
   Draft = 'draft',
@@ -7072,10 +7025,21 @@ export enum CompanyVersion_Version__Status {
 
 export type Company_CryptoAddresses = {
   __typename?: 'Company_CryptoAddresses';
-  ethereum?: Maybe<Scalars['String']['output']>;
-  solana?: Maybe<Scalars['String']['output']>;
-  tron?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Scalars['String']['output']>;
+  chain?: Maybe<Company_CryptoAddresses_Chain>;
 };
+
+export enum Company_CryptoAddresses_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export enum Company_CryptoAddresses_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
 export enum Company__Status {
   Draft = 'draft',
@@ -7129,7 +7093,7 @@ export type Company_CreatedBy_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
-export type Company_CryptoAddresses__Ethereum_Operator = {
+export type Company_CryptoAddresses__Address_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -7140,26 +7104,19 @@ export type Company_CryptoAddresses__Ethereum_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type Company_CryptoAddresses__Solana_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
+export enum Company_CryptoAddresses__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
-export type Company_CryptoAddresses__Tron_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
+export type Company_CryptoAddresses__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Company_CryptoAddresses__Chain_Input>>>;
+  equals?: InputMaybe<Company_CryptoAddresses__Chain_Input>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Company_CryptoAddresses__Chain_Input>>>;
+  not_equals?: InputMaybe<Company_CryptoAddresses__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Company_CryptoAddresses__Chain_Input>>>;
 };
 
 export type Company_Description_Operator = {
@@ -7279,9 +7236,8 @@ export type Company_Where = {
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Company_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Company_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Company_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Company_CryptoAddresses__Chain_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
   disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
@@ -7302,9 +7258,8 @@ export type Company_Where_And = {
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Company_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Company_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Company_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Company_CryptoAddresses__Chain_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
   disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
@@ -7325,9 +7280,8 @@ export type Company_Where_Or = {
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Company_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Company_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Company_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Company_CryptoAddresses__Chain_Operator>;
   description?: InputMaybe<Company_Description_Operator>;
   disallowedIdentities?: InputMaybe<Company_DisallowedIdentities_Operator>;
   email?: InputMaybe<Company_Email_Operator>;
@@ -21893,13 +21847,16 @@ export type Order = {
   currency?: Maybe<Order_Currency>;
   customer?: Maybe<User>;
   customerEmail?: Maybe<Scalars['EmailAddress']['output']>;
+  ethPrice?: Maybe<Order_EthPrice>;
   id: Scalars['String']['output'];
   items?: Maybe<Array<Order_Items>>;
   payerAddress?: Maybe<Scalars['String']['output']>;
   shippingAddress?: Maybe<Order_ShippingAddress>;
+  solanaPrice?: Maybe<Order_SolanaPrice>;
   status?: Maybe<Order_Status>;
   transactionHashes?: Maybe<Array<Order_TransactionHashes>>;
   transactions?: Maybe<Array<Transaction>>;
+  tronPrice?: Maybe<Order_TronPrice>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -21948,6 +21905,14 @@ export enum Order_CryptoPrices_Chain_MutationInput {
   Tron = 'tron'
 }
 
+export type Order_EthPrice = {
+  __typename?: 'Order_EthPrice';
+  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
+  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  stablePerNative?: Maybe<Scalars['Float']['output']>;
+};
+
 export type Order_Items = {
   __typename?: 'Order_Items';
   id?: Maybe<Scalars['String']['output']>;
@@ -21981,11 +21946,25 @@ export type Order_ShippingAddress = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
+export type Order_SolanaPrice = {
+  __typename?: 'Order_SolanaPrice';
+  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
+  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  stablePerNative?: Maybe<Scalars['Float']['output']>;
+};
+
 export type Order_TransactionHashes = {
   __typename?: 'Order_TransactionHashes';
   chain?: Maybe<Order_TransactionHashes_Chain>;
   id?: Maybe<Scalars['String']['output']>;
+  product?: Maybe<Product>;
   transactionHash?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type Order_TransactionHashesProductArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum Order_TransactionHashes_Chain {
@@ -21999,6 +21978,14 @@ export enum Order_TransactionHashes_Chain_MutationInput {
   Solana = 'solana',
   Tron = 'tron'
 }
+
+export type Order_TronPrice = {
+  __typename?: 'Order_TronPrice';
+  expectedNativeAmount?: Maybe<Scalars['Float']['output']>;
+  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
+  nativePerStable?: Maybe<Scalars['Float']['output']>;
+  stablePerNative?: Maybe<Scalars['Float']['output']>;
+};
 
 export type Order_Amount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
@@ -22123,6 +22110,44 @@ export type Order_Customer_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Order_EthPrice__ExpectedNativeAmount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_EthPrice__FetchedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Order_EthPrice__NativePerStable_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_EthPrice__StablePerNative_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Order_Id_Operator = {
@@ -22306,6 +22331,44 @@ export type Order_ShippingAddress__Title_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Order_SolanaPrice__ExpectedNativeAmount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_SolanaPrice__FetchedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Order_SolanaPrice__NativePerStable_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_SolanaPrice__StablePerNative_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export enum Order_Status {
   Cancelled = 'cancelled',
   Completed = 'completed',
@@ -22361,6 +22424,14 @@ export type Order_TransactionHashes__Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Order_TransactionHashes__Product_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Order_TransactionHashes__TransactionHash_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -22378,6 +22449,44 @@ export type Order_Transactions_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Order_TronPrice__ExpectedNativeAmount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_TronPrice__FetchedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Order_TronPrice__NativePerStable_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_TronPrice__StablePerNative_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Order_UpdatedAt_Operator = {
@@ -22405,6 +22514,10 @@ export type Order_Where = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
+  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
+  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
+  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
+  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22422,11 +22535,20 @@ export type Order_Where = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
+  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
+  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
+  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
+  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
+  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
+  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
+  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
+  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
+  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22444,6 +22566,10 @@ export type Order_Where_And = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
+  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
+  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
+  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
+  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22461,11 +22587,20 @@ export type Order_Where_And = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
+  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
+  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
+  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
+  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
+  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
+  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
+  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
+  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
+  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22483,6 +22618,10 @@ export type Order_Where_Or = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
+  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
+  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
+  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
+  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22500,11 +22639,20 @@ export type Order_Where_Or = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
+  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
+  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
+  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
+  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
+  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
+  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
+  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
+  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
+  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22555,12 +22703,15 @@ export type OrdersDocAccessFields = {
   currency?: Maybe<OrdersDocAccessFields_Currency>;
   customer?: Maybe<OrdersDocAccessFields_Customer>;
   customerEmail?: Maybe<OrdersDocAccessFields_CustomerEmail>;
+  ethPrice?: Maybe<OrdersDocAccessFields_EthPrice>;
   items?: Maybe<OrdersDocAccessFields_Items>;
   payerAddress?: Maybe<OrdersDocAccessFields_PayerAddress>;
   shippingAddress?: Maybe<OrdersDocAccessFields_ShippingAddress>;
+  solanaPrice?: Maybe<OrdersDocAccessFields_SolanaPrice>;
   status?: Maybe<OrdersDocAccessFields_Status>;
   transactionHashes?: Maybe<OrdersDocAccessFields_TransactionHashes>;
   transactions?: Maybe<OrdersDocAccessFields_Transactions>;
+  tronPrice?: Maybe<OrdersDocAccessFields_TronPrice>;
   updatedAt?: Maybe<OrdersDocAccessFields_UpdatedAt>;
 };
 
@@ -22908,6 +23059,155 @@ export type OrdersDocAccessFields_Customer_Read = {
 
 export type OrdersDocAccessFields_Customer_Update = {
   __typename?: 'OrdersDocAccessFields_customer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice = {
+  __typename?: 'OrdersDocAccessFields_ethPrice';
+  create?: Maybe<OrdersDocAccessFields_EthPrice_Create>;
+  delete?: Maybe<OrdersDocAccessFields_EthPrice_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_EthPrice_Fields>;
+  read?: Maybe<OrdersDocAccessFields_EthPrice_Read>;
+  update?: Maybe<OrdersDocAccessFields_EthPrice_Update>;
+};
+
+export type OrdersDocAccessFields_EthPrice_Create = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_Delete = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_Fields = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative>;
+};
+
+export type OrdersDocAccessFields_EthPrice_Read = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_Update = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount';
+  create?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_FetchedAt = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt';
+  create?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Update>;
+};
+
+export type OrdersDocAccessFields_EthPrice_FetchedAt_Create = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_FetchedAt_Read = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_FetchedAt_Update = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_NativePerStable = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable';
+  create?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Update>;
+};
+
+export type OrdersDocAccessFields_EthPrice_NativePerStable_Create = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_NativePerStable_Read = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_NativePerStable_Update = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_StablePerNative = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative';
+  create?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Update>;
+};
+
+export type OrdersDocAccessFields_EthPrice_StablePerNative_Create = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_StablePerNative_Read = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_EthPrice_StablePerNative_Update = {
+  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -23440,6 +23740,155 @@ export type OrdersDocAccessFields_ShippingAddress_Title_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_SolanaPrice = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice';
+  create?: Maybe<OrdersDocAccessFields_SolanaPrice_Create>;
+  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_SolanaPrice_Fields>;
+  read?: Maybe<OrdersDocAccessFields_SolanaPrice_Read>;
+  update?: Maybe<OrdersDocAccessFields_SolanaPrice_Update>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_Create = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_Delete = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_Fields = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_Read = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_Update = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount';
+  create?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_FetchedAt = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt';
+  create?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Update>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Create = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Read = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Update = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_NativePerStable = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable';
+  create?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Update>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Create = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Read = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Update = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_StablePerNative = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative';
+  create?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Update>;
+};
+
+export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Create = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Read = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Update = {
+  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_Status = {
   __typename?: 'OrdersDocAccessFields_status';
   create?: Maybe<OrdersDocAccessFields_Status_Create>;
@@ -23491,6 +23940,7 @@ export type OrdersDocAccessFields_TransactionHashes_Fields = {
   __typename?: 'OrdersDocAccessFields_transactionHashes_Fields';
   chain?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain>;
   id?: Maybe<OrdersDocAccessFields_TransactionHashes_Id>;
+  product?: Maybe<OrdersDocAccessFields_TransactionHashes_Product>;
   transactionHash?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash>;
 };
 
@@ -23560,6 +24010,34 @@ export type OrdersDocAccessFields_TransactionHashes_Id_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_TransactionHashes_Product = {
+  __typename?: 'OrdersDocAccessFields_transactionHashes_product';
+  create?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Delete>;
+  read?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Read>;
+  update?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Update>;
+};
+
+export type OrdersDocAccessFields_TransactionHashes_Product_Create = {
+  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TransactionHashes_Product_Delete = {
+  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TransactionHashes_Product_Read = {
+  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TransactionHashes_Product_Update = {
+  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_TransactionHashes_TransactionHash = {
   __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash';
   create?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash_Create>;
@@ -23616,6 +24094,155 @@ export type OrdersDocAccessFields_Transactions_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_TronPrice = {
+  __typename?: 'OrdersDocAccessFields_tronPrice';
+  create?: Maybe<OrdersDocAccessFields_TronPrice_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TronPrice_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_TronPrice_Fields>;
+  read?: Maybe<OrdersDocAccessFields_TronPrice_Read>;
+  update?: Maybe<OrdersDocAccessFields_TronPrice_Update>;
+};
+
+export type OrdersDocAccessFields_TronPrice_Create = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_Delete = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_Fields = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative>;
+};
+
+export type OrdersDocAccessFields_TronPrice_Read = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_Update = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount';
+  create?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_FetchedAt = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt';
+  create?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Update>;
+};
+
+export type OrdersDocAccessFields_TronPrice_FetchedAt_Create = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_FetchedAt_Read = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_FetchedAt_Update = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_NativePerStable = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable';
+  create?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Update>;
+};
+
+export type OrdersDocAccessFields_TronPrice_NativePerStable_Create = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_NativePerStable_Read = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_NativePerStable_Update = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_StablePerNative = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative';
+  create?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Update>;
+};
+
+export type OrdersDocAccessFields_TronPrice_StablePerNative_Create = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_StablePerNative_Read = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_TronPrice_StablePerNative_Update = {
+  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_UpdatedAt = {
   __typename?: 'OrdersDocAccessFields_updatedAt';
   create?: Maybe<OrdersDocAccessFields_UpdatedAt_Create>;
@@ -23652,12 +24279,15 @@ export type OrdersFields = {
   currency?: Maybe<OrdersFields_Currency>;
   customer?: Maybe<OrdersFields_Customer>;
   customerEmail?: Maybe<OrdersFields_CustomerEmail>;
+  ethPrice?: Maybe<OrdersFields_EthPrice>;
   items?: Maybe<OrdersFields_Items>;
   payerAddress?: Maybe<OrdersFields_PayerAddress>;
   shippingAddress?: Maybe<OrdersFields_ShippingAddress>;
+  solanaPrice?: Maybe<OrdersFields_SolanaPrice>;
   status?: Maybe<OrdersFields_Status>;
   transactionHashes?: Maybe<OrdersFields_TransactionHashes>;
   transactions?: Maybe<OrdersFields_Transactions>;
+  tronPrice?: Maybe<OrdersFields_TronPrice>;
   updatedAt?: Maybe<OrdersFields_UpdatedAt>;
 };
 
@@ -24005,6 +24635,155 @@ export type OrdersFields_Customer_Read = {
 
 export type OrdersFields_Customer_Update = {
   __typename?: 'OrdersFields_customer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice = {
+  __typename?: 'OrdersFields_ethPrice';
+  create?: Maybe<OrdersFields_EthPrice_Create>;
+  delete?: Maybe<OrdersFields_EthPrice_Delete>;
+  fields?: Maybe<OrdersFields_EthPrice_Fields>;
+  read?: Maybe<OrdersFields_EthPrice_Read>;
+  update?: Maybe<OrdersFields_EthPrice_Update>;
+};
+
+export type OrdersFields_EthPrice_Create = {
+  __typename?: 'OrdersFields_ethPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_Delete = {
+  __typename?: 'OrdersFields_ethPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_Fields = {
+  __typename?: 'OrdersFields_ethPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersFields_EthPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersFields_EthPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersFields_EthPrice_StablePerNative>;
+};
+
+export type OrdersFields_EthPrice_Read = {
+  __typename?: 'OrdersFields_ethPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_Update = {
+  __typename?: 'OrdersFields_ethPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount';
+  create?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersFields_EthPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_FetchedAt = {
+  __typename?: 'OrdersFields_ethPrice_fetchedAt';
+  create?: Maybe<OrdersFields_EthPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersFields_EthPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersFields_EthPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersFields_EthPrice_FetchedAt_Update>;
+};
+
+export type OrdersFields_EthPrice_FetchedAt_Create = {
+  __typename?: 'OrdersFields_ethPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersFields_ethPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_FetchedAt_Read = {
+  __typename?: 'OrdersFields_ethPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_FetchedAt_Update = {
+  __typename?: 'OrdersFields_ethPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_NativePerStable = {
+  __typename?: 'OrdersFields_ethPrice_nativePerStable';
+  create?: Maybe<OrdersFields_EthPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersFields_EthPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersFields_EthPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersFields_EthPrice_NativePerStable_Update>;
+};
+
+export type OrdersFields_EthPrice_NativePerStable_Create = {
+  __typename?: 'OrdersFields_ethPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersFields_ethPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_NativePerStable_Read = {
+  __typename?: 'OrdersFields_ethPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_NativePerStable_Update = {
+  __typename?: 'OrdersFields_ethPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_StablePerNative = {
+  __typename?: 'OrdersFields_ethPrice_stablePerNative';
+  create?: Maybe<OrdersFields_EthPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersFields_EthPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersFields_EthPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersFields_EthPrice_StablePerNative_Update>;
+};
+
+export type OrdersFields_EthPrice_StablePerNative_Create = {
+  __typename?: 'OrdersFields_ethPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersFields_ethPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_StablePerNative_Read = {
+  __typename?: 'OrdersFields_ethPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_EthPrice_StablePerNative_Update = {
+  __typename?: 'OrdersFields_ethPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -24537,6 +25316,155 @@ export type OrdersFields_ShippingAddress_Title_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersFields_SolanaPrice = {
+  __typename?: 'OrdersFields_solanaPrice';
+  create?: Maybe<OrdersFields_SolanaPrice_Create>;
+  delete?: Maybe<OrdersFields_SolanaPrice_Delete>;
+  fields?: Maybe<OrdersFields_SolanaPrice_Fields>;
+  read?: Maybe<OrdersFields_SolanaPrice_Read>;
+  update?: Maybe<OrdersFields_SolanaPrice_Update>;
+};
+
+export type OrdersFields_SolanaPrice_Create = {
+  __typename?: 'OrdersFields_solanaPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_Delete = {
+  __typename?: 'OrdersFields_solanaPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_Fields = {
+  __typename?: 'OrdersFields_solanaPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersFields_SolanaPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersFields_SolanaPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersFields_SolanaPrice_StablePerNative>;
+};
+
+export type OrdersFields_SolanaPrice_Read = {
+  __typename?: 'OrdersFields_solanaPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_Update = {
+  __typename?: 'OrdersFields_solanaPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount';
+  create?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_FetchedAt = {
+  __typename?: 'OrdersFields_solanaPrice_fetchedAt';
+  create?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Update>;
+};
+
+export type OrdersFields_SolanaPrice_FetchedAt_Create = {
+  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_FetchedAt_Read = {
+  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_FetchedAt_Update = {
+  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_NativePerStable = {
+  __typename?: 'OrdersFields_solanaPrice_nativePerStable';
+  create?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Update>;
+};
+
+export type OrdersFields_SolanaPrice_NativePerStable_Create = {
+  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_NativePerStable_Read = {
+  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_NativePerStable_Update = {
+  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_StablePerNative = {
+  __typename?: 'OrdersFields_solanaPrice_stablePerNative';
+  create?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Update>;
+};
+
+export type OrdersFields_SolanaPrice_StablePerNative_Create = {
+  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_StablePerNative_Read = {
+  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_SolanaPrice_StablePerNative_Update = {
+  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersFields_Status = {
   __typename?: 'OrdersFields_status';
   create?: Maybe<OrdersFields_Status_Create>;
@@ -24588,6 +25516,7 @@ export type OrdersFields_TransactionHashes_Fields = {
   __typename?: 'OrdersFields_transactionHashes_Fields';
   chain?: Maybe<OrdersFields_TransactionHashes_Chain>;
   id?: Maybe<OrdersFields_TransactionHashes_Id>;
+  product?: Maybe<OrdersFields_TransactionHashes_Product>;
   transactionHash?: Maybe<OrdersFields_TransactionHashes_TransactionHash>;
 };
 
@@ -24657,6 +25586,34 @@ export type OrdersFields_TransactionHashes_Id_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersFields_TransactionHashes_Product = {
+  __typename?: 'OrdersFields_transactionHashes_product';
+  create?: Maybe<OrdersFields_TransactionHashes_Product_Create>;
+  delete?: Maybe<OrdersFields_TransactionHashes_Product_Delete>;
+  read?: Maybe<OrdersFields_TransactionHashes_Product_Read>;
+  update?: Maybe<OrdersFields_TransactionHashes_Product_Update>;
+};
+
+export type OrdersFields_TransactionHashes_Product_Create = {
+  __typename?: 'OrdersFields_transactionHashes_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TransactionHashes_Product_Delete = {
+  __typename?: 'OrdersFields_transactionHashes_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TransactionHashes_Product_Read = {
+  __typename?: 'OrdersFields_transactionHashes_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TransactionHashes_Product_Update = {
+  __typename?: 'OrdersFields_transactionHashes_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersFields_TransactionHashes_TransactionHash = {
   __typename?: 'OrdersFields_transactionHashes_transactionHash';
   create?: Maybe<OrdersFields_TransactionHashes_TransactionHash_Create>;
@@ -24710,6 +25667,155 @@ export type OrdersFields_Transactions_Read = {
 
 export type OrdersFields_Transactions_Update = {
   __typename?: 'OrdersFields_transactions_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice = {
+  __typename?: 'OrdersFields_tronPrice';
+  create?: Maybe<OrdersFields_TronPrice_Create>;
+  delete?: Maybe<OrdersFields_TronPrice_Delete>;
+  fields?: Maybe<OrdersFields_TronPrice_Fields>;
+  read?: Maybe<OrdersFields_TronPrice_Read>;
+  update?: Maybe<OrdersFields_TronPrice_Update>;
+};
+
+export type OrdersFields_TronPrice_Create = {
+  __typename?: 'OrdersFields_tronPrice_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_Delete = {
+  __typename?: 'OrdersFields_tronPrice_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_Fields = {
+  __typename?: 'OrdersFields_tronPrice_Fields';
+  expectedNativeAmount?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount>;
+  fetchedAt?: Maybe<OrdersFields_TronPrice_FetchedAt>;
+  nativePerStable?: Maybe<OrdersFields_TronPrice_NativePerStable>;
+  stablePerNative?: Maybe<OrdersFields_TronPrice_StablePerNative>;
+};
+
+export type OrdersFields_TronPrice_Read = {
+  __typename?: 'OrdersFields_tronPrice_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_Update = {
+  __typename?: 'OrdersFields_tronPrice_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_ExpectedNativeAmount = {
+  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount';
+  create?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Create>;
+  delete?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Delete>;
+  read?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Read>;
+  update?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Update>;
+};
+
+export type OrdersFields_TronPrice_ExpectedNativeAmount_Create = {
+  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_ExpectedNativeAmount_Delete = {
+  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_ExpectedNativeAmount_Read = {
+  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_ExpectedNativeAmount_Update = {
+  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_FetchedAt = {
+  __typename?: 'OrdersFields_tronPrice_fetchedAt';
+  create?: Maybe<OrdersFields_TronPrice_FetchedAt_Create>;
+  delete?: Maybe<OrdersFields_TronPrice_FetchedAt_Delete>;
+  read?: Maybe<OrdersFields_TronPrice_FetchedAt_Read>;
+  update?: Maybe<OrdersFields_TronPrice_FetchedAt_Update>;
+};
+
+export type OrdersFields_TronPrice_FetchedAt_Create = {
+  __typename?: 'OrdersFields_tronPrice_fetchedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_FetchedAt_Delete = {
+  __typename?: 'OrdersFields_tronPrice_fetchedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_FetchedAt_Read = {
+  __typename?: 'OrdersFields_tronPrice_fetchedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_FetchedAt_Update = {
+  __typename?: 'OrdersFields_tronPrice_fetchedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_NativePerStable = {
+  __typename?: 'OrdersFields_tronPrice_nativePerStable';
+  create?: Maybe<OrdersFields_TronPrice_NativePerStable_Create>;
+  delete?: Maybe<OrdersFields_TronPrice_NativePerStable_Delete>;
+  read?: Maybe<OrdersFields_TronPrice_NativePerStable_Read>;
+  update?: Maybe<OrdersFields_TronPrice_NativePerStable_Update>;
+};
+
+export type OrdersFields_TronPrice_NativePerStable_Create = {
+  __typename?: 'OrdersFields_tronPrice_nativePerStable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_NativePerStable_Delete = {
+  __typename?: 'OrdersFields_tronPrice_nativePerStable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_NativePerStable_Read = {
+  __typename?: 'OrdersFields_tronPrice_nativePerStable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_NativePerStable_Update = {
+  __typename?: 'OrdersFields_tronPrice_nativePerStable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_StablePerNative = {
+  __typename?: 'OrdersFields_tronPrice_stablePerNative';
+  create?: Maybe<OrdersFields_TronPrice_StablePerNative_Create>;
+  delete?: Maybe<OrdersFields_TronPrice_StablePerNative_Delete>;
+  read?: Maybe<OrdersFields_TronPrice_StablePerNative_Read>;
+  update?: Maybe<OrdersFields_TronPrice_StablePerNative_Update>;
+};
+
+export type OrdersFields_TronPrice_StablePerNative_Create = {
+  __typename?: 'OrdersFields_tronPrice_stablePerNative_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_StablePerNative_Delete = {
+  __typename?: 'OrdersFields_tronPrice_stablePerNative_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_StablePerNative_Read = {
+  __typename?: 'OrdersFields_tronPrice_stablePerNative_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_TronPrice_StablePerNative_Update = {
+  __typename?: 'OrdersFields_tronPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -32207,6 +33313,12 @@ export type ProductVariantsArgs = {
   where?: InputMaybe<Variant_Where>;
 };
 
+export enum ProductUpdate_CryptoAddresses_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
 export enum ProductUpdate_Price_Currency_MutationInput {
   Btc = 'BTC',
   Eth = 'ETH',
@@ -32283,10 +33395,15 @@ export type ProductVersion_VersionVariantsArgs = {
 
 export type ProductVersion_Version_CryptoAddresses = {
   __typename?: 'ProductVersion_Version_CryptoAddresses';
-  ethereum?: Maybe<Scalars['String']['output']>;
-  solana?: Maybe<Scalars['String']['output']>;
-  tron?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Scalars['String']['output']>;
+  chain?: Maybe<ProductVersion_Version_CryptoAddresses_Chain>;
 };
+
+export enum ProductVersion_Version_CryptoAddresses_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
 export type ProductVersion_Version_Price = {
   __typename?: 'ProductVersion_Version_Price';
@@ -32329,10 +33446,21 @@ export enum ProductVersion_Version__Status {
 
 export type Product_CryptoAddresses = {
   __typename?: 'Product_CryptoAddresses';
-  ethereum?: Maybe<Scalars['String']['output']>;
-  solana?: Maybe<Scalars['String']['output']>;
-  tron?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Scalars['String']['output']>;
+  chain?: Maybe<Product_CryptoAddresses_Chain>;
 };
+
+export enum Product_CryptoAddresses_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export enum Product_CryptoAddresses_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
 export type Product_Price = {
   __typename?: 'Product_Price';
@@ -32436,7 +33564,7 @@ export type Product_CreatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type Product_CryptoAddresses__Ethereum_Operator = {
+export type Product_CryptoAddresses__Address_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -32447,26 +33575,19 @@ export type Product_CryptoAddresses__Ethereum_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type Product_CryptoAddresses__Solana_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
+export enum Product_CryptoAddresses__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
-export type Product_CryptoAddresses__Tron_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
+export type Product_CryptoAddresses__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Product_CryptoAddresses__Chain_Input>>>;
+  equals?: InputMaybe<Product_CryptoAddresses__Chain_Input>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Product_CryptoAddresses__Chain_Input>>>;
+  not_equals?: InputMaybe<Product_CryptoAddresses__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Product_CryptoAddresses__Chain_Input>>>;
 };
 
 export type Product_DeletedAt_Operator = {
@@ -32668,9 +33789,8 @@ export type Product_Where = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Product_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Product_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Product_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
@@ -32699,9 +33819,8 @@ export type Product_Where_And = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Product_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Product_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Product_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
@@ -32730,9 +33849,8 @@ export type Product_Where_Or = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
-  cryptoAddresses__ethereum?: InputMaybe<Product_CryptoAddresses__Ethereum_Operator>;
-  cryptoAddresses__solana?: InputMaybe<Product_CryptoAddresses__Solana_Operator>;
-  cryptoAddresses__tron?: InputMaybe<Product_CryptoAddresses__Tron_Operator>;
+  cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
+  cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
   description?: InputMaybe<Product_Description_Operator>;
   enableVariants?: InputMaybe<Product_EnableVariants_Operator>;
@@ -32951,9 +34069,8 @@ export type ProductsDocAccessFields_CryptoAddresses_Delete = {
 
 export type ProductsDocAccessFields_CryptoAddresses_Fields = {
   __typename?: 'ProductsDocAccessFields_cryptoAddresses_Fields';
-  ethereum?: Maybe<ProductsDocAccessFields_CryptoAddresses_Ethereum>;
-  solana?: Maybe<ProductsDocAccessFields_CryptoAddresses_Solana>;
-  tron?: Maybe<ProductsDocAccessFields_CryptoAddresses_Tron>;
+  address?: Maybe<ProductsDocAccessFields_CryptoAddresses_Address>;
+  chain?: Maybe<ProductsDocAccessFields_CryptoAddresses_Chain>;
 };
 
 export type ProductsDocAccessFields_CryptoAddresses_Read = {
@@ -32966,87 +34083,59 @@ export type ProductsDocAccessFields_CryptoAddresses_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Ethereum = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_ethereum';
-  create?: Maybe<ProductsDocAccessFields_CryptoAddresses_Ethereum_Create>;
-  delete?: Maybe<ProductsDocAccessFields_CryptoAddresses_Ethereum_Delete>;
-  read?: Maybe<ProductsDocAccessFields_CryptoAddresses_Ethereum_Read>;
-  update?: Maybe<ProductsDocAccessFields_CryptoAddresses_Ethereum_Update>;
+export type ProductsDocAccessFields_CryptoAddresses_Address = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_address';
+  create?: Maybe<ProductsDocAccessFields_CryptoAddresses_Address_Create>;
+  delete?: Maybe<ProductsDocAccessFields_CryptoAddresses_Address_Delete>;
+  read?: Maybe<ProductsDocAccessFields_CryptoAddresses_Address_Read>;
+  update?: Maybe<ProductsDocAccessFields_CryptoAddresses_Address_Update>;
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Ethereum_Create = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_ethereum_Create';
+export type ProductsDocAccessFields_CryptoAddresses_Address_Create = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_address_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Ethereum_Delete = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_ethereum_Delete';
+export type ProductsDocAccessFields_CryptoAddresses_Address_Delete = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_address_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Ethereum_Read = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_ethereum_Read';
+export type ProductsDocAccessFields_CryptoAddresses_Address_Read = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_address_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Ethereum_Update = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_ethereum_Update';
+export type ProductsDocAccessFields_CryptoAddresses_Address_Update = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_address_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Solana = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_solana';
-  create?: Maybe<ProductsDocAccessFields_CryptoAddresses_Solana_Create>;
-  delete?: Maybe<ProductsDocAccessFields_CryptoAddresses_Solana_Delete>;
-  read?: Maybe<ProductsDocAccessFields_CryptoAddresses_Solana_Read>;
-  update?: Maybe<ProductsDocAccessFields_CryptoAddresses_Solana_Update>;
+export type ProductsDocAccessFields_CryptoAddresses_Chain = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_chain';
+  create?: Maybe<ProductsDocAccessFields_CryptoAddresses_Chain_Create>;
+  delete?: Maybe<ProductsDocAccessFields_CryptoAddresses_Chain_Delete>;
+  read?: Maybe<ProductsDocAccessFields_CryptoAddresses_Chain_Read>;
+  update?: Maybe<ProductsDocAccessFields_CryptoAddresses_Chain_Update>;
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Solana_Create = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_solana_Create';
+export type ProductsDocAccessFields_CryptoAddresses_Chain_Create = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_chain_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Solana_Delete = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_solana_Delete';
+export type ProductsDocAccessFields_CryptoAddresses_Chain_Delete = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_chain_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Solana_Read = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_solana_Read';
+export type ProductsDocAccessFields_CryptoAddresses_Chain_Read = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_chain_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsDocAccessFields_CryptoAddresses_Solana_Update = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_solana_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_CryptoAddresses_Tron = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_tron';
-  create?: Maybe<ProductsDocAccessFields_CryptoAddresses_Tron_Create>;
-  delete?: Maybe<ProductsDocAccessFields_CryptoAddresses_Tron_Delete>;
-  read?: Maybe<ProductsDocAccessFields_CryptoAddresses_Tron_Read>;
-  update?: Maybe<ProductsDocAccessFields_CryptoAddresses_Tron_Update>;
-};
-
-export type ProductsDocAccessFields_CryptoAddresses_Tron_Create = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_tron_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_CryptoAddresses_Tron_Delete = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_tron_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_CryptoAddresses_Tron_Read = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_tron_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsDocAccessFields_CryptoAddresses_Tron_Update = {
-  __typename?: 'ProductsDocAccessFields_cryptoAddresses_tron_Update';
+export type ProductsDocAccessFields_CryptoAddresses_Chain_Update = {
+  __typename?: 'ProductsDocAccessFields_cryptoAddresses_chain_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -33811,9 +34900,8 @@ export type ProductsFields_CryptoAddresses_Delete = {
 
 export type ProductsFields_CryptoAddresses_Fields = {
   __typename?: 'ProductsFields_cryptoAddresses_Fields';
-  ethereum?: Maybe<ProductsFields_CryptoAddresses_Ethereum>;
-  solana?: Maybe<ProductsFields_CryptoAddresses_Solana>;
-  tron?: Maybe<ProductsFields_CryptoAddresses_Tron>;
+  address?: Maybe<ProductsFields_CryptoAddresses_Address>;
+  chain?: Maybe<ProductsFields_CryptoAddresses_Chain>;
 };
 
 export type ProductsFields_CryptoAddresses_Read = {
@@ -33826,87 +34914,59 @@ export type ProductsFields_CryptoAddresses_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Ethereum = {
-  __typename?: 'ProductsFields_cryptoAddresses_ethereum';
-  create?: Maybe<ProductsFields_CryptoAddresses_Ethereum_Create>;
-  delete?: Maybe<ProductsFields_CryptoAddresses_Ethereum_Delete>;
-  read?: Maybe<ProductsFields_CryptoAddresses_Ethereum_Read>;
-  update?: Maybe<ProductsFields_CryptoAddresses_Ethereum_Update>;
+export type ProductsFields_CryptoAddresses_Address = {
+  __typename?: 'ProductsFields_cryptoAddresses_address';
+  create?: Maybe<ProductsFields_CryptoAddresses_Address_Create>;
+  delete?: Maybe<ProductsFields_CryptoAddresses_Address_Delete>;
+  read?: Maybe<ProductsFields_CryptoAddresses_Address_Read>;
+  update?: Maybe<ProductsFields_CryptoAddresses_Address_Update>;
 };
 
-export type ProductsFields_CryptoAddresses_Ethereum_Create = {
-  __typename?: 'ProductsFields_cryptoAddresses_ethereum_Create';
+export type ProductsFields_CryptoAddresses_Address_Create = {
+  __typename?: 'ProductsFields_cryptoAddresses_address_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Ethereum_Delete = {
-  __typename?: 'ProductsFields_cryptoAddresses_ethereum_Delete';
+export type ProductsFields_CryptoAddresses_Address_Delete = {
+  __typename?: 'ProductsFields_cryptoAddresses_address_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Ethereum_Read = {
-  __typename?: 'ProductsFields_cryptoAddresses_ethereum_Read';
+export type ProductsFields_CryptoAddresses_Address_Read = {
+  __typename?: 'ProductsFields_cryptoAddresses_address_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Ethereum_Update = {
-  __typename?: 'ProductsFields_cryptoAddresses_ethereum_Update';
+export type ProductsFields_CryptoAddresses_Address_Update = {
+  __typename?: 'ProductsFields_cryptoAddresses_address_Update';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Solana = {
-  __typename?: 'ProductsFields_cryptoAddresses_solana';
-  create?: Maybe<ProductsFields_CryptoAddresses_Solana_Create>;
-  delete?: Maybe<ProductsFields_CryptoAddresses_Solana_Delete>;
-  read?: Maybe<ProductsFields_CryptoAddresses_Solana_Read>;
-  update?: Maybe<ProductsFields_CryptoAddresses_Solana_Update>;
+export type ProductsFields_CryptoAddresses_Chain = {
+  __typename?: 'ProductsFields_cryptoAddresses_chain';
+  create?: Maybe<ProductsFields_CryptoAddresses_Chain_Create>;
+  delete?: Maybe<ProductsFields_CryptoAddresses_Chain_Delete>;
+  read?: Maybe<ProductsFields_CryptoAddresses_Chain_Read>;
+  update?: Maybe<ProductsFields_CryptoAddresses_Chain_Update>;
 };
 
-export type ProductsFields_CryptoAddresses_Solana_Create = {
-  __typename?: 'ProductsFields_cryptoAddresses_solana_Create';
+export type ProductsFields_CryptoAddresses_Chain_Create = {
+  __typename?: 'ProductsFields_cryptoAddresses_chain_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Solana_Delete = {
-  __typename?: 'ProductsFields_cryptoAddresses_solana_Delete';
+export type ProductsFields_CryptoAddresses_Chain_Delete = {
+  __typename?: 'ProductsFields_cryptoAddresses_chain_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Solana_Read = {
-  __typename?: 'ProductsFields_cryptoAddresses_solana_Read';
+export type ProductsFields_CryptoAddresses_Chain_Read = {
+  __typename?: 'ProductsFields_cryptoAddresses_chain_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type ProductsFields_CryptoAddresses_Solana_Update = {
-  __typename?: 'ProductsFields_cryptoAddresses_solana_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_CryptoAddresses_Tron = {
-  __typename?: 'ProductsFields_cryptoAddresses_tron';
-  create?: Maybe<ProductsFields_CryptoAddresses_Tron_Create>;
-  delete?: Maybe<ProductsFields_CryptoAddresses_Tron_Delete>;
-  read?: Maybe<ProductsFields_CryptoAddresses_Tron_Read>;
-  update?: Maybe<ProductsFields_CryptoAddresses_Tron_Update>;
-};
-
-export type ProductsFields_CryptoAddresses_Tron_Create = {
-  __typename?: 'ProductsFields_cryptoAddresses_tron_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_CryptoAddresses_Tron_Delete = {
-  __typename?: 'ProductsFields_cryptoAddresses_tron_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_CryptoAddresses_Tron_Read = {
-  __typename?: 'ProductsFields_cryptoAddresses_tron_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type ProductsFields_CryptoAddresses_Tron_Update = {
-  __typename?: 'ProductsFields_cryptoAddresses_tron_Update';
+export type ProductsFields_CryptoAddresses_Chain_Update = {
+  __typename?: 'ProductsFields_cryptoAddresses_chain_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -47229,15 +48289,13 @@ export type MutationCompanyUpdateInput = {
 };
 
 export type MutationCompanyUpdate_CryptoAddressesInput = {
-  ethereum?: InputMaybe<Scalars['String']['input']>;
-  solana?: InputMaybe<Scalars['String']['input']>;
-  tron?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  chain?: InputMaybe<CompanyUpdate_CryptoAddresses_Chain_MutationInput>;
 };
 
 export type MutationCompany_CryptoAddressesInput = {
-  ethereum?: InputMaybe<Scalars['String']['input']>;
-  solana?: InputMaybe<Scalars['String']['input']>;
-  tron?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  chain?: InputMaybe<Company_CryptoAddresses_Chain_MutationInput>;
 };
 
 export type MutationFooterInput = {
@@ -47709,12 +48767,15 @@ export type MutationOrderInput = {
   currency?: InputMaybe<Order_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
+  ethPrice: MutationOrder_EthPriceInput;
   items?: InputMaybe<Array<InputMaybe<MutationOrder_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrder_ShippingAddressInput>;
+  solanaPrice: MutationOrder_SolanaPriceInput;
   status?: InputMaybe<Order_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrder_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  tronPrice: MutationOrder_TronPriceInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -47725,12 +48786,15 @@ export type MutationOrderUpdateInput = {
   currency?: InputMaybe<OrderUpdate_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
+  ethPrice: MutationOrderUpdate_EthPriceInput;
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrderUpdate_ShippingAddressInput>;
+  solanaPrice: MutationOrderUpdate_SolanaPriceInput;
   status?: InputMaybe<OrderUpdate_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  tronPrice: MutationOrderUpdate_TronPriceInput;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -47739,6 +48803,13 @@ export type MutationOrderUpdate_CryptoPricesInput = {
   expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
   fetchedAt: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
+};
+
+export type MutationOrderUpdate_EthPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
   nativePerStable: Scalars['Float']['input'];
   stablePerNative: Scalars['Float']['input'];
 };
@@ -47764,10 +48835,25 @@ export type MutationOrderUpdate_ShippingAddressInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationOrderUpdate_SolanaPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
+};
+
 export type MutationOrderUpdate_TransactionHashesInput = {
   chain: OrderUpdate_TransactionHashes_Chain_MutationInput;
   id?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   transactionHash: Scalars['String']['input'];
+};
+
+export type MutationOrderUpdate_TronPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
 };
 
 export type MutationOrder_CryptoPricesInput = {
@@ -47775,6 +48861,13 @@ export type MutationOrder_CryptoPricesInput = {
   expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
   fetchedAt: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
+};
+
+export type MutationOrder_EthPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
   nativePerStable: Scalars['Float']['input'];
   stablePerNative: Scalars['Float']['input'];
 };
@@ -47800,10 +48893,25 @@ export type MutationOrder_ShippingAddressInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationOrder_SolanaPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
+};
+
 export type MutationOrder_TransactionHashesInput = {
   chain: Order_TransactionHashes_Chain_MutationInput;
   id?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
   transactionHash: Scalars['String']['input'];
+};
+
+export type MutationOrder_TronPriceInput = {
+  expectedNativeAmount?: InputMaybe<Scalars['Float']['input']>;
+  fetchedAt: Scalars['String']['input'];
+  nativePerStable: Scalars['Float']['input'];
+  stablePerNative: Scalars['Float']['input'];
 };
 
 export type MutationPageInput = {
@@ -48107,9 +49215,8 @@ export type MutationProductUpdateInput = {
 };
 
 export type MutationProductUpdate_CryptoAddressesInput = {
-  ethereum?: InputMaybe<Scalars['String']['input']>;
-  solana?: InputMaybe<Scalars['String']['input']>;
-  tron?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  chain?: InputMaybe<ProductUpdate_CryptoAddresses_Chain_MutationInput>;
 };
 
 export type MutationProductUpdate_PriceInput = {
@@ -48124,9 +49231,8 @@ export type MutationProductUpdate_PropertiesInput = {
 };
 
 export type MutationProduct_CryptoAddressesInput = {
-  ethereum?: InputMaybe<Scalars['String']['input']>;
-  solana?: InputMaybe<Scalars['String']['input']>;
-  tron?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  chain?: InputMaybe<Product_CryptoAddresses_Chain_MutationInput>;
 };
 
 export type MutationProduct_PriceInput = {
@@ -49047,7 +50153,7 @@ export type VersionsCompany_Version__CreatedBy_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
-export type VersionsCompany_Version__CryptoAddresses__Ethereum_Operator = {
+export type VersionsCompany_Version__CryptoAddresses__Address_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -49058,26 +50164,19 @@ export type VersionsCompany_Version__CryptoAddresses__Ethereum_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type VersionsCompany_Version__CryptoAddresses__Solana_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
+export enum VersionsCompany_Version__CryptoAddresses__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
-export type VersionsCompany_Version__CryptoAddresses__Tron_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
+export type VersionsCompany_Version__CryptoAddresses__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Input>>>;
+  equals?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Input>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Input>>>;
+  not_equals?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Input>>>;
 };
 
 export type VersionsCompany_Version__Description_Operator = {
@@ -49191,9 +50290,8 @@ export type VersionsCompany_Where = {
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Operator>;
   version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
   version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
@@ -49218,9 +50316,8 @@ export type VersionsCompany_Where_And = {
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Operator>;
   version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
   version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
@@ -49245,9 +50342,8 @@ export type VersionsCompany_Where_Or = {
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Chain_Operator>;
   version__description?: InputMaybe<VersionsCompany_Version__Description_Operator>;
   version__disallowedIdentities?: InputMaybe<VersionsCompany_Version__DisallowedIdentities_Operator>;
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
@@ -50487,7 +51583,7 @@ export type VersionsProduct_Version__CreatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type VersionsProduct_Version__CryptoAddresses__Ethereum_Operator = {
+export type VersionsProduct_Version__CryptoAddresses__Address_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -50498,26 +51594,19 @@ export type VersionsProduct_Version__CryptoAddresses__Ethereum_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type VersionsProduct_Version__CryptoAddresses__Solana_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
+export enum VersionsProduct_Version__CryptoAddresses__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
 
-export type VersionsProduct_Version__CryptoAddresses__Tron_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
+export type VersionsProduct_Version__CryptoAddresses__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Input>>>;
+  equals?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Input>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Input>>>;
+  not_equals?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Input>>>;
 };
 
 export type VersionsProduct_Version__DeletedAt_Operator = {
@@ -50714,9 +51803,8 @@ export type VersionsProduct_Where = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
@@ -50750,9 +51838,8 @@ export type VersionsProduct_Where_And = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
@@ -50786,9 +51873,8 @@ export type VersionsProduct_Where_Or = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
-  version__cryptoAddresses__ethereum?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Ethereum_Operator>;
-  version__cryptoAddresses__solana?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Solana_Operator>;
-  version__cryptoAddresses__tron?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Tron_Operator>;
+  version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
+  version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
   version__description?: InputMaybe<VersionsProduct_Version__Description_Operator>;
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
@@ -51584,7 +52670,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, url?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, url?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -51592,7 +52678,7 @@ export type CreateCartMutationVariables = Exact<{
 }>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type UpdateCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51601,7 +52687,7 @@ export type UpdateCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -51610,14 +52696,14 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51627,7 +52713,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -51639,7 +52725,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -51654,7 +52740,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51665,7 +52751,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
@@ -51673,7 +52759,7 @@ export type CreateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51689,7 +52775,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -51700,7 +52786,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -51714,7 +52800,7 @@ export type UpdateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -51780,7 +52866,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -51794,7 +52880,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -51813,7 +52899,7 @@ export type JobByIdQueryVariables = Exact<{
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51824,7 +52910,7 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51836,7 +52922,7 @@ export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type CreateJobMutationVariables = Exact<{
   data: MutationJobInput;
@@ -51860,7 +52946,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -51873,7 +52959,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -51904,7 +52990,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -51913,7 +52999,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -51929,7 +53015,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51938,7 +53024,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, id?: string | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: number | null, expectedNativeAmount?: number | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -51948,7 +53034,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -51963,7 +53049,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -51974,14 +53060,14 @@ export type ListProductsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
+export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, inventory?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, inventory?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -51989,7 +53075,7 @@ export type CreateProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52005,7 +53091,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, price?: { __typename?: 'Product_Price', amount?: number | null, currency?: Product_Price_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52019,7 +53105,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -52030,7 +53116,7 @@ export type UpdateProductMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52040,7 +53126,7 @@ export type ListStartupsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -52056,7 +53142,7 @@ export type StartupByIdQueryVariables = Exact<{
 }>;
 
 
-export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
 export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52090,7 +53176,7 @@ export type ListStartupsQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type SearchStartupsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52105,7 +53191,7 @@ export type SearchStartupsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
-          | { __typename: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', ethereum?: string | null, tron?: string | null, solana?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
          | null } }> } | null };
 
 export type UpdateStartupMutationVariables = Exact<{
@@ -52163,9 +53249,8 @@ export const CartBySecretDocument = `
           name
           description
           cryptoAddresses {
-            ethereum
-            tron
-            solana
+            chain
+            address
           }
           inventory
           url
@@ -52188,9 +53273,8 @@ export const CartBySecretDocument = `
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
+              chain
+              address
             }
             identity {
               id
@@ -52268,9 +53352,8 @@ export const CreateCartDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {
@@ -52322,9 +53405,8 @@ export const UpdateCartDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {
@@ -52365,9 +53447,8 @@ export const ListCompaniesByCreatorDocument = `
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       _status
     }
@@ -52406,9 +53487,8 @@ export const CompanyByIdDocument = `
     _status
     description
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     website
     phone
@@ -52493,9 +53573,8 @@ export const ListCompaniesByIdentityDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       website
       phone
@@ -52593,9 +53672,8 @@ export const SearchCompaniesByIdentityDocument = `
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
+              chain
+              address
             }
             website
             phone
@@ -52688,9 +53766,8 @@ export const ListCompaniesBySecondaryIdentityDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       website
       phone
@@ -52780,9 +53857,8 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       website
       phone
@@ -52863,9 +53939,8 @@ export const CreateCompanyDocument = `
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     _status
     image {
@@ -52925,9 +54000,8 @@ export const ListCompaniesDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       website
       phone
@@ -53025,9 +54099,8 @@ export const SearchCompaniesDocument = `
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
+              chain
+              address
             }
             website
             phone
@@ -53102,9 +54175,8 @@ export const UpdateCompanyDocument = `
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     _status
     image {
@@ -53425,9 +54497,8 @@ export const ListJobsByCompanyDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id
@@ -53537,9 +54608,8 @@ export const SearchJobsByCompanyDocument = `
               name
               description
               cryptoAddresses {
-                ethereum
-                tron
-                solana
+                chain
+                address
               }
               allowedIdentities {
                 id
@@ -53692,9 +54762,8 @@ export const JobByIdDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       allowedIdentities {
         id
@@ -53814,9 +54883,8 @@ export const ListJobsBySecondaryIdentityDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id
@@ -53936,9 +55004,8 @@ export const SearchJobsBySecondaryIdentityDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id
@@ -54109,9 +55176,8 @@ export const ListJobsDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id
@@ -54230,9 +55296,8 @@ export const SearchJobsDocument = `
               name
               description
               cryptoAddresses {
-                ethereum
-                tron
-                solana
+                chain
+                address
               }
               allowedIdentities {
                 id
@@ -54407,9 +55472,8 @@ export const ListJobsByIdentityDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       location
@@ -54458,9 +55522,8 @@ export const ListProductsByIdentityDocument = `
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       orderable
       url
@@ -54470,9 +55533,8 @@ export const ListProductsByIdentityDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       price {
@@ -54566,6 +55628,47 @@ export const CreateOrderDocument = `
   createOrder(data: $data, draft: $draft) {
     id
     status
+    payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    ethPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    solanaPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    tronPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    transactionHashes {
+      id
+      chain
+      transactionHash
+      product {
+        id
+      }
+    }
     currency
     amount
     customerEmail
@@ -54579,9 +55682,8 @@ export const CreateOrderDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {
@@ -54628,10 +55730,45 @@ export const UpdateOrderDocument = `
     id
     status
     payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    ethPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    solanaPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    tronPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
     transactionHashes {
+      id
       chain
       transactionHash
-      id
+      product {
+        id
+      }
     }
     currency
     amount
@@ -54646,9 +55783,8 @@ export const UpdateOrderDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {
@@ -54705,9 +55841,8 @@ export const ListProductsByCompanyDocument = `
       inventory
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       url
       orderable
@@ -54735,9 +55870,8 @@ export const ListProductsByCompanyDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         identity {
           id
@@ -54803,9 +55937,8 @@ export const SearchProductsByCompanyDocument = `
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
+              chain
+              address
             }
             url
             orderable
@@ -54829,9 +55962,8 @@ export const SearchProductsByCompanyDocument = `
               name
               description
               cryptoAddresses {
-                ethereum
-                tron
-                solana
+                chain
+                address
               }
               identity {
                 id
@@ -54890,9 +56022,8 @@ export const ListProductsByCreatorDocument = `
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       orderable
       url
@@ -54938,9 +56069,8 @@ export const ProductByIdDocument = `
     _status
     description
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     url
     orderable
@@ -54960,9 +56090,8 @@ export const ProductByIdDocument = `
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       createdBy {
         id
@@ -55023,9 +56152,8 @@ export const CreateProductDocument = `
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     _status
     properties {
@@ -55091,9 +56219,8 @@ export const ListProductsDocument = `
       inventory
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       url
       orderable
@@ -55121,9 +56248,8 @@ export const ListProductsDocument = `
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         identity {
           id
@@ -55198,9 +56324,8 @@ export const SearchProductsDocument = `
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
+              chain
+              address
             }
             url
             orderable
@@ -55224,9 +56349,8 @@ export const SearchProductsDocument = `
               name
               description
               cryptoAddresses {
-                ethereum
-                tron
-                solana
+                chain
+                address
               }
               identity {
                 id
@@ -55287,9 +56411,8 @@ export const UpdateProductDocument = `
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
+      chain
+      address
     }
     _status
     properties {
@@ -55345,9 +56468,8 @@ export const ListStartupsByCompanyDocument = `
         id
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         email
       }
@@ -55473,9 +56595,8 @@ export const StartupByIdDocument = `
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
+        chain
+        address
       }
       email
     }
@@ -55664,9 +56785,8 @@ export const ListStartupsDocument = `
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         email
       }
@@ -55767,9 +56887,8 @@ export const SearchStartupsDocument = `
               serverURL
               name
               cryptoAddresses {
-                ethereum
-                tron
-                solana
+                chain
+                address
               }
             }
             image {

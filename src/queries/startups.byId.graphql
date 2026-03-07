@@ -17,10 +17,9 @@ query StartupById($id: String!) {
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       email
     }
     createdBy {

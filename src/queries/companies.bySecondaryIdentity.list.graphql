@@ -17,10 +17,9 @@ query ListCompaniesBySecondaryIdentity(
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       website
       phone
       email

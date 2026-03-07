@@ -25,10 +25,9 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             name
             description
             cryptoAddresses {
-              ethereum
-              tron
-              solana
-            }
+          chain
+          address
+        }
             url
             orderable
             properties {
@@ -51,10 +50,9 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
               name
               description
               cryptoAddresses {
-                ethereum
-                tron
-                solana
-              }
+          chain
+          address
+        }
               identity {
                 id
                 serverURL

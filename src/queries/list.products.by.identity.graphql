@@ -10,10 +10,9 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       orderable
       url
       companyIdentityId
@@ -22,9 +21,8 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       price {

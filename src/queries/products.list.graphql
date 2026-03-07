@@ -7,10 +7,9 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       inventory
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       url
       orderable
       properties {
@@ -37,9 +36,8 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         identity {
           id

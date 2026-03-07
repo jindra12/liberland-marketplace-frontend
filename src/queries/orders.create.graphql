@@ -2,6 +2,47 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
   createOrder(data: $data, draft: $draft) {
     id
     status
+    payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    ethPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    solanaPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    tronPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    transactionHashes {
+      id
+      chain
+      transactionHash
+      product {
+        id
+      }
+    }
     currency
     amount
     customerEmail
@@ -15,9 +56,8 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {

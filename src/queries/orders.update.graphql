@@ -3,10 +3,45 @@ mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boo
     id
     status
     payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    ethPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    solanaPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    tronPrice {
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
     transactionHashes {
+      id
       chain
       transactionHash
-      id
+      product {
+        id
+      }
     }
     currency
     amount
@@ -21,9 +56,8 @@ mutation UpdateOrder($id: String!, $data: mutationOrderUpdateInput!, $draft: Boo
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {

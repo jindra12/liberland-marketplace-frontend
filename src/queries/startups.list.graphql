@@ -17,9 +17,8 @@ query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         email
       }

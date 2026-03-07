@@ -6,10 +6,9 @@ query ProductById($id: String!) {
     _status
     description
     cryptoAddresses {
-      ethereum
-      tron
-      solana
-    }
+          chain
+          address
+        }
     url
     orderable
     properties {
@@ -28,10 +27,9 @@ query ProductById($id: String!) {
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       createdBy {
         id
       }

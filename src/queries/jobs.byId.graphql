@@ -41,10 +41,9 @@ query JobById($id: String!) {
       name
       description
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       allowedIdentities {
         id
         serverURL

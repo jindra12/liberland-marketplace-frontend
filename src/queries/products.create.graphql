@@ -3,10 +3,9 @@ mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
-    }
+          chain
+          address
+        }
     _status
     properties {
       id

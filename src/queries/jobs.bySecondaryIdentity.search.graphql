@@ -70,9 +70,8 @@ query SearchJobsBySecondaryIdentity(
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id

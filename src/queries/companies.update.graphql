@@ -3,10 +3,9 @@ mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft:
     id
     name
     cryptoAddresses {
-      ethereum
-      tron
-      solana
-    }
+          chain
+          address
+        }
     _status
     image {
       id

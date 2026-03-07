@@ -64,9 +64,8 @@ query ListJobsBySecondaryIdentity(
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id

@@ -21,9 +21,8 @@ mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boole
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       variant {

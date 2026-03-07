@@ -35,9 +35,8 @@ query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $so
         name
         description
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
         allowedIdentities {
           id

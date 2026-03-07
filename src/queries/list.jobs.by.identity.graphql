@@ -16,9 +16,8 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
         serverURL
         name
         cryptoAddresses {
-          ethereum
-          tron
-          solana
+          chain
+          address
         }
       }
       location

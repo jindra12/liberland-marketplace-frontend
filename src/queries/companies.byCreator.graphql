@@ -5,10 +5,9 @@ query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
       serverURL
       name
       cryptoAddresses {
-        ethereum
-        tron
-        solana
-      }
+          chain
+          address
+        }
       _status
     }
     totalDocs
