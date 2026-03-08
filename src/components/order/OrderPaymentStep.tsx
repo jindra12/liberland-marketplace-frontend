@@ -6,6 +6,7 @@ import {
     buildOrderEntryKey,
     collectOrderChainPrices,
     formatNativeCryptoAmount,
+    formatPriceFromCents,
     resolveOrderRecipientAddress,
 } from "../../utils";
 import { ThirdwebPayButton } from "../crypto/ThirdwebPayButton";
@@ -28,13 +29,14 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
 
             {props.submittedOrders.map((entry) => {
                 const chainPrices = collectOrderChainPrices(entry.order);
+                const orderTotal = formatPriceFromCents(entry.order.amount, entry.order.currency);
                 return (
                     <Card
                         key={buildOrderEntryKey(entry.url, entry.order.id)}
                         title={`Order ${entry.order.id}`}
                         extra={(
                             <Tag color="processing">
-                                {entry.order.currency} {entry.order.amount ?? "N/A"}
+                                {orderTotal || "N/A"}
                             </Tag>
                         )}
                     >
@@ -50,7 +52,8 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                 renderItem={(chainPrice) => {
                                     const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
                                     const expectedAmount = chainPrice.expectedNativeAmount;
-                                    const canPay = Boolean(recipient && expectedAmount && expectedAmount > 0);
+                                    const hasExpectedAmount = expectedAmount && expectedAmount > 0;
+                                    const canPay = Boolean(recipient && hasExpectedAmount);
 
                                     return (
                                         <List.Item
@@ -103,6 +106,10 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                             />
                                                         )}
                                                     </Flex>
+                                                ) : !hasExpectedAmount ? (
+                                                    <Tag key={`${entry.order.id}-${chainPrice.chain}-unpriced`} color="warning">
+                                                        Price unavailable for this chain
+                                                    </Tag>
                                                 ) : (
                                                     <Tag key={`${entry.order.id}-${chainPrice.chain}-missing`} color="error">
                                                         Missing recipient wallet for this chain

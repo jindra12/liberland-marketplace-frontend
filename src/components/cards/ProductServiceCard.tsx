@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatPrice, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { formatPriceFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -31,7 +31,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             dataSource={items}
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
-                const price = product.priceInUSDEnabled ? formatPrice(product.priceInUSD, "USD") : null;
+                const price = product.priceInUSDEnabled ? formatPriceFromCents(product.priceInUSD, "USD") : null;
                 const imageSrc = getImage(product) || getImage(product.company);
                 const orderNowLink = parseActionLink(product.url);
                 const canPurchase = isProductPurchasable(product);

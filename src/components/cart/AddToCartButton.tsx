@@ -9,7 +9,6 @@ import { useCartBySecretQuery, useCreateCartMutation, useUpdateCartMutation } fr
 import {
     CART_SECRETS_INDEX_KEY,
     CartSecretEntry,
-    getCartSecretStorageKey,
 } from "./cartSecrets";
 
 type AddToCartButtonProps = {
@@ -32,8 +31,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     const queryClient = useQueryClient();
     const [form] = Form.useForm();
     const [messageApi, messageContextHolder] = message.useMessage();
-    const [cartSecret, setCartSecret] = useLocalStorage<string>(getCartSecretStorageKey(serverURL), "");
-    const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const [cartSecrets, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const cartSecret = React.useMemo(() => (
+        (cartSecrets || []).find((entry) => entry.url === serverURL)?.secret || ""
+    ), [cartSecrets, serverURL]);
     const cartQuery = useCartBySecretQuery(
         { secret: cartSecret, url: serverURL },
         { enabled: Boolean(cartSecret) },
@@ -73,8 +74,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
 
         const createdSecret = result.createCart?.secret;
         if (createdSecret) {
-            setCartSecret(createdSecret);
-            setCartSecrets((prev) => [...prev || [], { url: serverURL, secret: createdSecret }]);
+            setCartSecrets((prev) => {
+                const filtered = (prev || []).filter((entry) => entry.url !== serverURL);
+                return [...filtered, { url: serverURL, secret: createdSecret }];
+            });
         }
     };
 

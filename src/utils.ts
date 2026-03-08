@@ -94,6 +94,24 @@ export const formatPrice = (amount?: number | null, currency?: string | null): s
     return `${cur} ${fmt}`;
 };
 
+export const fromCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return amount / 100;
+};
+
+export const toCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return Math.round(amount * 100);
+};
+
+export const formatPriceFromCents = (amount?: number | null, currency?: string | null): string | null => {
+    return formatPrice(fromCents(amount), currency);
+};
+
 export const formatPositions = (positions?: number | null): string | null => {
     if (!positions || positions === 1) return null;
     const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;
@@ -174,56 +192,28 @@ export const formatNativeCryptoAmount = (amount?: string | number | null) => {
     return parsed.toLocaleString("en-US", { maximumFractionDigits: 8 });
 };
 
-export const collectOrderChainPrices = (order: Pick<OrderForPayments, "cryptoPrices" | "ethPrice" | "solanaPrice" | "tronPrice">): ChainPrice[] => {
-    const fromArray = (order.cryptoPrices || []).reduce<ChainPrice[]>((result, price) => {
+export const collectOrderChainPrices = (order: Pick<OrderForPayments, "cryptoPrices">): ChainPrice[] => {
+    const fromArray = (order.cryptoPrices || []).reduce<Partial<Record<CryptoChain, ChainPrice>>>((result, price) => {
         const chain = toCryptoChain(price?.chain);
         if (!chain) {
             return result;
         }
 
-        const expectedNativeAmount = toFiniteNumber(price?.expectedNativeAmount);
-        const nativePerStable = toFiniteNumber(price?.nativePerStable);
-        const stablePerNative = toFiniteNumber(price?.stablePerNative);
-
-        result.push({
+        result[chain] = {
             chain,
-            expectedNativeAmount,
-            nativePerStable,
-            stablePerNative,
+            expectedNativeAmount: toFiniteNumber(price?.expectedNativeAmount),
+            nativePerStable: toFiniteNumber(price?.nativePerStable),
+            stablePerNative: toFiniteNumber(price?.stablePerNative),
             fetchedAt: price?.fetchedAt,
-        });
+        };
         return result;
-    }, []);
+    }, {});
 
-    if (fromArray.length > 0) {
-        return fromArray;
-    }
-
-    const fallback: ChainPrice[] = [
-        {
-            chain: "ethereum",
-            expectedNativeAmount: toFiniteNumber(order.ethPrice?.expectedNativeAmount),
-            nativePerStable: toFiniteNumber(order.ethPrice?.nativePerStable),
-            stablePerNative: toFiniteNumber(order.ethPrice?.stablePerNative),
-            fetchedAt: order.ethPrice?.fetchedAt,
-        },
-        {
-            chain: "solana",
-            expectedNativeAmount: toFiniteNumber(order.solanaPrice?.expectedNativeAmount),
-            nativePerStable: toFiniteNumber(order.solanaPrice?.nativePerStable),
-            stablePerNative: toFiniteNumber(order.solanaPrice?.stablePerNative),
-            fetchedAt: order.solanaPrice?.fetchedAt,
-        },
-        {
-            chain: "tron",
-            expectedNativeAmount: toFiniteNumber(order.tronPrice?.expectedNativeAmount),
-            nativePerStable: toFiniteNumber(order.tronPrice?.nativePerStable),
-            stablePerNative: toFiniteNumber(order.tronPrice?.stablePerNative),
-            fetchedAt: order.tronPrice?.fetchedAt,
-        },
-    ];
-
-    return fallback.filter((entry) => entry.expectedNativeAmount !== undefined);
+    const chainOrder: CryptoChain[] = ["ethereum", "solana", "tron"];
+    return chainOrder
+        .map((chain) => fromArray[chain])
+        .filter((entry): entry is ChainPrice => Boolean(entry))
+        .filter((entry) => typeof entry.expectedNativeAmount === "number" && entry.expectedNativeAmount > 0);
 };
 
 export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "items">, chain: CryptoChain) => {

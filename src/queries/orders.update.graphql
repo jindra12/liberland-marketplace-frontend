@@ -1,7 +1,6 @@
-mutation UpdateOrder($orderId: String!, $secret: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
-  updateOrder(id: $orderId, secret: $secret, data: $data, draft: $draft) {
+mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+  updateOrder(id: $orderId, data: $data, draft: $draft) {
     id
-    secret
     status
     payerAddress
     customer {
@@ -13,24 +12,6 @@ mutation UpdateOrder($orderId: String!, $secret: String!, $data: mutationOrderUp
     cryptoPrices {
       id
       chain
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    ethPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    solanaPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    tronPrice {
       stablePerNative
       nativePerStable
       expectedNativeAmount

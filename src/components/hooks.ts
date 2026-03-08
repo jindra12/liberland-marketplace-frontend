@@ -12,6 +12,8 @@ import {
     useCartBySecretQuery as useCartBySecretQuerySingle,
     CreateCartDocument,
     useCreateCartMutation as useCreateCartMutationSingle,
+    DeleteCartDocument,
+    useDeleteCartMutation as useDeleteCartMutationSingle,
     UpdateCartDocument,
     useUpdateCartMutation as useUpdateCartMutationSingle,
     ListCompaniesByCreatorDocument,
@@ -118,8 +120,6 @@ import {
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
     useUpdateOrderMutation as useUpdateOrderMutationSingle,
-    type UpdateOrderMutation,
-    type UpdateOrderMutationVariables,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
@@ -155,8 +155,6 @@ export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
 
 type MutationVariablesWithUrl<TVariables extends object | undefined> =
     (TVariables extends undefined ? {} : TVariables) & { url?: string };
-
-type UpdateOrderMutationVariablesWithSecret = UpdateOrderMutationVariables & { secret: string };
 
 export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
     <TError = unknown, TContext = unknown>(
@@ -276,18 +274,13 @@ export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySin
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
+export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);
 export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutationSingle, UpdateCartDocument);
 export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompanyMutationSingle, DeleteCompanyDocument);
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
-export const useUpdateOrderMutation = enhancedMutationFactory(
-    useUpdateOrderMutationSingle as unknown as GeneratedUseMutationHook<
-        UpdateOrderMutation,
-        UpdateOrderMutationVariablesWithSecret
-    >,
-    UpdateOrderDocument,
-);
+export const useUpdateOrderMutation = enhancedMutationFactory(useUpdateOrderMutationSingle, UpdateOrderDocument);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);

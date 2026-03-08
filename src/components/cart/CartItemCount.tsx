@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tag } from "antd";
 import useLocalStorage from "use-local-storage";
 import { useCartBySecretQuery } from "../hooks";
-import { getCartSecretStorageKey } from "./cartSecrets";
+import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
 
 type CartItemCountProps = {
     productId: string;
@@ -17,7 +17,10 @@ export const CartItemCount: React.FunctionComponent<CartItemCountProps> = ({
     serverURL,
     hideWhenZero = false,
 }) => {
-    const [cartSecret] = useLocalStorage<string>(getCartSecretStorageKey(serverURL), "");
+    const [cartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const cartSecret = React.useMemo(() => (
+        (cartSecrets || []).find((entry) => entry.url === serverURL)?.secret || ""
+    ), [cartSecrets, serverURL]);
     const cartQuery = useCartBySecretQuery(
         { secret: cartSecret, url: serverURL },
         { enabled: Boolean(cartSecret) },

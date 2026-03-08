@@ -21847,16 +21847,13 @@ export type Order = {
   currency?: Maybe<Order_Currency>;
   customer?: Maybe<User>;
   customerEmail?: Maybe<Scalars['EmailAddress']['output']>;
-  ethPrice?: Maybe<Order_EthPrice>;
   id: Scalars['String']['output'];
   items?: Maybe<Array<Order_Items>>;
   payerAddress?: Maybe<Scalars['String']['output']>;
   shippingAddress?: Maybe<Order_ShippingAddress>;
-  solanaPrice?: Maybe<Order_SolanaPrice>;
   status?: Maybe<Order_Status>;
   transactionHashes?: Maybe<Array<Order_TransactionHashes>>;
   transactions?: Maybe<Array<Transaction>>;
-  tronPrice?: Maybe<Order_TronPrice>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -21905,14 +21902,6 @@ export enum Order_CryptoPrices_Chain_MutationInput {
   Tron = 'tron'
 }
 
-export type Order_EthPrice = {
-  __typename?: 'Order_EthPrice';
-  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
-  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['String']['output']>;
-  stablePerNative?: Maybe<Scalars['Float']['output']>;
-};
-
 export type Order_Items = {
   __typename?: 'Order_Items';
   id?: Maybe<Scalars['String']['output']>;
@@ -21946,14 +21935,6 @@ export type Order_ShippingAddress = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export type Order_SolanaPrice = {
-  __typename?: 'Order_SolanaPrice';
-  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
-  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['String']['output']>;
-  stablePerNative?: Maybe<Scalars['Float']['output']>;
-};
-
 export type Order_TransactionHashes = {
   __typename?: 'Order_TransactionHashes';
   chain?: Maybe<Order_TransactionHashes_Chain>;
@@ -21978,14 +21959,6 @@ export enum Order_TransactionHashes_Chain_MutationInput {
   Solana = 'solana',
   Tron = 'tron'
 }
-
-export type Order_TronPrice = {
-  __typename?: 'Order_TronPrice';
-  expectedNativeAmount?: Maybe<Scalars['String']['output']>;
-  fetchedAt?: Maybe<Scalars['DateTime']['output']>;
-  nativePerStable?: Maybe<Scalars['String']['output']>;
-  stablePerNative?: Maybe<Scalars['Float']['output']>;
-};
 
 export type Order_Amount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
@@ -22112,49 +22085,6 @@ export type Order_Customer_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-};
-
-export type Order_EthPrice__ExpectedNativeAmount_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_EthPrice__FetchedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type Order_EthPrice__NativePerStable_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_EthPrice__StablePerNative_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Order_Id_Operator = {
@@ -22338,49 +22268,6 @@ export type Order_ShippingAddress__Title_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type Order_SolanaPrice__ExpectedNativeAmount_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_SolanaPrice__FetchedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type Order_SolanaPrice__NativePerStable_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_SolanaPrice__StablePerNative_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
-};
-
 export enum Order_Status {
   Cancelled = 'cancelled',
   Completed = 'completed',
@@ -22463,49 +22350,6 @@ export type Order_Transactions_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
-export type Order_TronPrice__ExpectedNativeAmount_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_TronPrice__FetchedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type Order_TronPrice__NativePerStable_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_TronPrice__StablePerNative_Operator = {
-  equals?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['Float']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  less_than?: InputMaybe<Scalars['Float']['input']>;
-  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
-  not_equals?: InputMaybe<Scalars['Float']['input']>;
-};
-
 export type Order_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -22531,10 +22375,6 @@ export type Order_Where = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
-  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
-  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
-  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
-  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22552,20 +22392,12 @@ export type Order_Where = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
-  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
-  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
-  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
-  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
   transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
-  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
-  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
-  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
-  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22583,10 +22415,6 @@ export type Order_Where_And = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
-  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
-  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
-  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
-  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22604,20 +22432,12 @@ export type Order_Where_And = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
-  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
-  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
-  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
-  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
   transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
-  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
-  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
-  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
-  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22635,10 +22455,6 @@ export type Order_Where_Or = {
   currency?: InputMaybe<Order_Currency_Operator>;
   customer?: InputMaybe<Order_Customer_Operator>;
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
-  ethPrice__expectedNativeAmount?: InputMaybe<Order_EthPrice__ExpectedNativeAmount_Operator>;
-  ethPrice__fetchedAt?: InputMaybe<Order_EthPrice__FetchedAt_Operator>;
-  ethPrice__nativePerStable?: InputMaybe<Order_EthPrice__NativePerStable_Operator>;
-  ethPrice__stablePerNative?: InputMaybe<Order_EthPrice__StablePerNative_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
@@ -22656,20 +22472,12 @@ export type Order_Where_Or = {
   shippingAddress__postalCode?: InputMaybe<Order_ShippingAddress__PostalCode_Operator>;
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
-  solanaPrice__expectedNativeAmount?: InputMaybe<Order_SolanaPrice__ExpectedNativeAmount_Operator>;
-  solanaPrice__fetchedAt?: InputMaybe<Order_SolanaPrice__FetchedAt_Operator>;
-  solanaPrice__nativePerStable?: InputMaybe<Order_SolanaPrice__NativePerStable_Operator>;
-  solanaPrice__stablePerNative?: InputMaybe<Order_SolanaPrice__StablePerNative_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
   transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
   transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
   transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
   transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
-  tronPrice__expectedNativeAmount?: InputMaybe<Order_TronPrice__ExpectedNativeAmount_Operator>;
-  tronPrice__fetchedAt?: InputMaybe<Order_TronPrice__FetchedAt_Operator>;
-  tronPrice__nativePerStable?: InputMaybe<Order_TronPrice__NativePerStable_Operator>;
-  tronPrice__stablePerNative?: InputMaybe<Order_TronPrice__StablePerNative_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
 
@@ -22720,15 +22528,12 @@ export type OrdersDocAccessFields = {
   currency?: Maybe<OrdersDocAccessFields_Currency>;
   customer?: Maybe<OrdersDocAccessFields_Customer>;
   customerEmail?: Maybe<OrdersDocAccessFields_CustomerEmail>;
-  ethPrice?: Maybe<OrdersDocAccessFields_EthPrice>;
   items?: Maybe<OrdersDocAccessFields_Items>;
   payerAddress?: Maybe<OrdersDocAccessFields_PayerAddress>;
   shippingAddress?: Maybe<OrdersDocAccessFields_ShippingAddress>;
-  solanaPrice?: Maybe<OrdersDocAccessFields_SolanaPrice>;
   status?: Maybe<OrdersDocAccessFields_Status>;
   transactionHashes?: Maybe<OrdersDocAccessFields_TransactionHashes>;
   transactions?: Maybe<OrdersDocAccessFields_Transactions>;
-  tronPrice?: Maybe<OrdersDocAccessFields_TronPrice>;
   updatedAt?: Maybe<OrdersDocAccessFields_UpdatedAt>;
 };
 
@@ -23076,155 +22881,6 @@ export type OrdersDocAccessFields_Customer_Read = {
 
 export type OrdersDocAccessFields_Customer_Update = {
   __typename?: 'OrdersDocAccessFields_customer_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice = {
-  __typename?: 'OrdersDocAccessFields_ethPrice';
-  create?: Maybe<OrdersDocAccessFields_EthPrice_Create>;
-  delete?: Maybe<OrdersDocAccessFields_EthPrice_Delete>;
-  fields?: Maybe<OrdersDocAccessFields_EthPrice_Fields>;
-  read?: Maybe<OrdersDocAccessFields_EthPrice_Read>;
-  update?: Maybe<OrdersDocAccessFields_EthPrice_Update>;
-};
-
-export type OrdersDocAccessFields_EthPrice_Create = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_Delete = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_Fields = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative>;
-};
-
-export type OrdersDocAccessFields_EthPrice_Read = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_Update = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount';
-  create?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_FetchedAt = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt';
-  create?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersDocAccessFields_EthPrice_FetchedAt_Update>;
-};
-
-export type OrdersDocAccessFields_EthPrice_FetchedAt_Create = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_FetchedAt_Read = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_FetchedAt_Update = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_NativePerStable = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable';
-  create?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersDocAccessFields_EthPrice_NativePerStable_Update>;
-};
-
-export type OrdersDocAccessFields_EthPrice_NativePerStable_Create = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_NativePerStable_Read = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_NativePerStable_Update = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_StablePerNative = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative';
-  create?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersDocAccessFields_EthPrice_StablePerNative_Update>;
-};
-
-export type OrdersDocAccessFields_EthPrice_StablePerNative_Create = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_StablePerNative_Read = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_EthPrice_StablePerNative_Update = {
-  __typename?: 'OrdersDocAccessFields_ethPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -23757,155 +23413,6 @@ export type OrdersDocAccessFields_ShippingAddress_Title_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type OrdersDocAccessFields_SolanaPrice = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice';
-  create?: Maybe<OrdersDocAccessFields_SolanaPrice_Create>;
-  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_Delete>;
-  fields?: Maybe<OrdersDocAccessFields_SolanaPrice_Fields>;
-  read?: Maybe<OrdersDocAccessFields_SolanaPrice_Read>;
-  update?: Maybe<OrdersDocAccessFields_SolanaPrice_Update>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_Create = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_Delete = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_Fields = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_Read = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_Update = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount';
-  create?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_FetchedAt = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt';
-  create?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersDocAccessFields_SolanaPrice_FetchedAt_Update>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Create = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Read = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_FetchedAt_Update = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_NativePerStable = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable';
-  create?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersDocAccessFields_SolanaPrice_NativePerStable_Update>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Create = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Read = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_NativePerStable_Update = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_StablePerNative = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative';
-  create?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersDocAccessFields_SolanaPrice_StablePerNative_Update>;
-};
-
-export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Create = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Read = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_SolanaPrice_StablePerNative_Update = {
-  __typename?: 'OrdersDocAccessFields_solanaPrice_stablePerNative_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
 export type OrdersDocAccessFields_Status = {
   __typename?: 'OrdersDocAccessFields_status';
   create?: Maybe<OrdersDocAccessFields_Status_Create>;
@@ -24111,155 +23618,6 @@ export type OrdersDocAccessFields_Transactions_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type OrdersDocAccessFields_TronPrice = {
-  __typename?: 'OrdersDocAccessFields_tronPrice';
-  create?: Maybe<OrdersDocAccessFields_TronPrice_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TronPrice_Delete>;
-  fields?: Maybe<OrdersDocAccessFields_TronPrice_Fields>;
-  read?: Maybe<OrdersDocAccessFields_TronPrice_Read>;
-  update?: Maybe<OrdersDocAccessFields_TronPrice_Update>;
-};
-
-export type OrdersDocAccessFields_TronPrice_Create = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_Delete = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_Fields = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative>;
-};
-
-export type OrdersDocAccessFields_TronPrice_Read = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_Update = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount';
-  create?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_FetchedAt = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt';
-  create?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersDocAccessFields_TronPrice_FetchedAt_Update>;
-};
-
-export type OrdersDocAccessFields_TronPrice_FetchedAt_Create = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_FetchedAt_Read = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_FetchedAt_Update = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_NativePerStable = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable';
-  create?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersDocAccessFields_TronPrice_NativePerStable_Update>;
-};
-
-export type OrdersDocAccessFields_TronPrice_NativePerStable_Create = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_NativePerStable_Read = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_NativePerStable_Update = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_StablePerNative = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative';
-  create?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersDocAccessFields_TronPrice_StablePerNative_Update>;
-};
-
-export type OrdersDocAccessFields_TronPrice_StablePerNative_Create = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_StablePerNative_Read = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TronPrice_StablePerNative_Update = {
-  __typename?: 'OrdersDocAccessFields_tronPrice_stablePerNative_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
 export type OrdersDocAccessFields_UpdatedAt = {
   __typename?: 'OrdersDocAccessFields_updatedAt';
   create?: Maybe<OrdersDocAccessFields_UpdatedAt_Create>;
@@ -24296,15 +23654,12 @@ export type OrdersFields = {
   currency?: Maybe<OrdersFields_Currency>;
   customer?: Maybe<OrdersFields_Customer>;
   customerEmail?: Maybe<OrdersFields_CustomerEmail>;
-  ethPrice?: Maybe<OrdersFields_EthPrice>;
   items?: Maybe<OrdersFields_Items>;
   payerAddress?: Maybe<OrdersFields_PayerAddress>;
   shippingAddress?: Maybe<OrdersFields_ShippingAddress>;
-  solanaPrice?: Maybe<OrdersFields_SolanaPrice>;
   status?: Maybe<OrdersFields_Status>;
   transactionHashes?: Maybe<OrdersFields_TransactionHashes>;
   transactions?: Maybe<OrdersFields_Transactions>;
-  tronPrice?: Maybe<OrdersFields_TronPrice>;
   updatedAt?: Maybe<OrdersFields_UpdatedAt>;
 };
 
@@ -24652,155 +24007,6 @@ export type OrdersFields_Customer_Read = {
 
 export type OrdersFields_Customer_Update = {
   __typename?: 'OrdersFields_customer_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice = {
-  __typename?: 'OrdersFields_ethPrice';
-  create?: Maybe<OrdersFields_EthPrice_Create>;
-  delete?: Maybe<OrdersFields_EthPrice_Delete>;
-  fields?: Maybe<OrdersFields_EthPrice_Fields>;
-  read?: Maybe<OrdersFields_EthPrice_Read>;
-  update?: Maybe<OrdersFields_EthPrice_Update>;
-};
-
-export type OrdersFields_EthPrice_Create = {
-  __typename?: 'OrdersFields_ethPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_Delete = {
-  __typename?: 'OrdersFields_ethPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_Fields = {
-  __typename?: 'OrdersFields_ethPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersFields_EthPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersFields_EthPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersFields_EthPrice_StablePerNative>;
-};
-
-export type OrdersFields_EthPrice_Read = {
-  __typename?: 'OrdersFields_ethPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_Update = {
-  __typename?: 'OrdersFields_ethPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount';
-  create?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersFields_EthPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersFields_EthPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersFields_ethPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_FetchedAt = {
-  __typename?: 'OrdersFields_ethPrice_fetchedAt';
-  create?: Maybe<OrdersFields_EthPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersFields_EthPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersFields_EthPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersFields_EthPrice_FetchedAt_Update>;
-};
-
-export type OrdersFields_EthPrice_FetchedAt_Create = {
-  __typename?: 'OrdersFields_ethPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersFields_ethPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_FetchedAt_Read = {
-  __typename?: 'OrdersFields_ethPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_FetchedAt_Update = {
-  __typename?: 'OrdersFields_ethPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_NativePerStable = {
-  __typename?: 'OrdersFields_ethPrice_nativePerStable';
-  create?: Maybe<OrdersFields_EthPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersFields_EthPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersFields_EthPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersFields_EthPrice_NativePerStable_Update>;
-};
-
-export type OrdersFields_EthPrice_NativePerStable_Create = {
-  __typename?: 'OrdersFields_ethPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersFields_ethPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_NativePerStable_Read = {
-  __typename?: 'OrdersFields_ethPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_NativePerStable_Update = {
-  __typename?: 'OrdersFields_ethPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_StablePerNative = {
-  __typename?: 'OrdersFields_ethPrice_stablePerNative';
-  create?: Maybe<OrdersFields_EthPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersFields_EthPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersFields_EthPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersFields_EthPrice_StablePerNative_Update>;
-};
-
-export type OrdersFields_EthPrice_StablePerNative_Create = {
-  __typename?: 'OrdersFields_ethPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersFields_ethPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_StablePerNative_Read = {
-  __typename?: 'OrdersFields_ethPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_EthPrice_StablePerNative_Update = {
-  __typename?: 'OrdersFields_ethPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -25333,155 +24539,6 @@ export type OrdersFields_ShippingAddress_Title_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type OrdersFields_SolanaPrice = {
-  __typename?: 'OrdersFields_solanaPrice';
-  create?: Maybe<OrdersFields_SolanaPrice_Create>;
-  delete?: Maybe<OrdersFields_SolanaPrice_Delete>;
-  fields?: Maybe<OrdersFields_SolanaPrice_Fields>;
-  read?: Maybe<OrdersFields_SolanaPrice_Read>;
-  update?: Maybe<OrdersFields_SolanaPrice_Update>;
-};
-
-export type OrdersFields_SolanaPrice_Create = {
-  __typename?: 'OrdersFields_solanaPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_Delete = {
-  __typename?: 'OrdersFields_solanaPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_Fields = {
-  __typename?: 'OrdersFields_solanaPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersFields_SolanaPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersFields_SolanaPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersFields_SolanaPrice_StablePerNative>;
-};
-
-export type OrdersFields_SolanaPrice_Read = {
-  __typename?: 'OrdersFields_solanaPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_Update = {
-  __typename?: 'OrdersFields_solanaPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount';
-  create?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersFields_SolanaPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersFields_solanaPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_FetchedAt = {
-  __typename?: 'OrdersFields_solanaPrice_fetchedAt';
-  create?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersFields_SolanaPrice_FetchedAt_Update>;
-};
-
-export type OrdersFields_SolanaPrice_FetchedAt_Create = {
-  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_FetchedAt_Read = {
-  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_FetchedAt_Update = {
-  __typename?: 'OrdersFields_solanaPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_NativePerStable = {
-  __typename?: 'OrdersFields_solanaPrice_nativePerStable';
-  create?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersFields_SolanaPrice_NativePerStable_Update>;
-};
-
-export type OrdersFields_SolanaPrice_NativePerStable_Create = {
-  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_NativePerStable_Read = {
-  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_NativePerStable_Update = {
-  __typename?: 'OrdersFields_solanaPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_StablePerNative = {
-  __typename?: 'OrdersFields_solanaPrice_stablePerNative';
-  create?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersFields_SolanaPrice_StablePerNative_Update>;
-};
-
-export type OrdersFields_SolanaPrice_StablePerNative_Create = {
-  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_StablePerNative_Read = {
-  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_SolanaPrice_StablePerNative_Update = {
-  __typename?: 'OrdersFields_solanaPrice_stablePerNative_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
 export type OrdersFields_Status = {
   __typename?: 'OrdersFields_status';
   create?: Maybe<OrdersFields_Status_Create>;
@@ -25684,155 +24741,6 @@ export type OrdersFields_Transactions_Read = {
 
 export type OrdersFields_Transactions_Update = {
   __typename?: 'OrdersFields_transactions_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice = {
-  __typename?: 'OrdersFields_tronPrice';
-  create?: Maybe<OrdersFields_TronPrice_Create>;
-  delete?: Maybe<OrdersFields_TronPrice_Delete>;
-  fields?: Maybe<OrdersFields_TronPrice_Fields>;
-  read?: Maybe<OrdersFields_TronPrice_Read>;
-  update?: Maybe<OrdersFields_TronPrice_Update>;
-};
-
-export type OrdersFields_TronPrice_Create = {
-  __typename?: 'OrdersFields_tronPrice_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_Delete = {
-  __typename?: 'OrdersFields_tronPrice_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_Fields = {
-  __typename?: 'OrdersFields_tronPrice_Fields';
-  expectedNativeAmount?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount>;
-  fetchedAt?: Maybe<OrdersFields_TronPrice_FetchedAt>;
-  nativePerStable?: Maybe<OrdersFields_TronPrice_NativePerStable>;
-  stablePerNative?: Maybe<OrdersFields_TronPrice_StablePerNative>;
-};
-
-export type OrdersFields_TronPrice_Read = {
-  __typename?: 'OrdersFields_tronPrice_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_Update = {
-  __typename?: 'OrdersFields_tronPrice_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_ExpectedNativeAmount = {
-  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount';
-  create?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Create>;
-  delete?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Delete>;
-  read?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Read>;
-  update?: Maybe<OrdersFields_TronPrice_ExpectedNativeAmount_Update>;
-};
-
-export type OrdersFields_TronPrice_ExpectedNativeAmount_Create = {
-  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_ExpectedNativeAmount_Delete = {
-  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_ExpectedNativeAmount_Read = {
-  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_ExpectedNativeAmount_Update = {
-  __typename?: 'OrdersFields_tronPrice_expectedNativeAmount_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_FetchedAt = {
-  __typename?: 'OrdersFields_tronPrice_fetchedAt';
-  create?: Maybe<OrdersFields_TronPrice_FetchedAt_Create>;
-  delete?: Maybe<OrdersFields_TronPrice_FetchedAt_Delete>;
-  read?: Maybe<OrdersFields_TronPrice_FetchedAt_Read>;
-  update?: Maybe<OrdersFields_TronPrice_FetchedAt_Update>;
-};
-
-export type OrdersFields_TronPrice_FetchedAt_Create = {
-  __typename?: 'OrdersFields_tronPrice_fetchedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_FetchedAt_Delete = {
-  __typename?: 'OrdersFields_tronPrice_fetchedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_FetchedAt_Read = {
-  __typename?: 'OrdersFields_tronPrice_fetchedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_FetchedAt_Update = {
-  __typename?: 'OrdersFields_tronPrice_fetchedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_NativePerStable = {
-  __typename?: 'OrdersFields_tronPrice_nativePerStable';
-  create?: Maybe<OrdersFields_TronPrice_NativePerStable_Create>;
-  delete?: Maybe<OrdersFields_TronPrice_NativePerStable_Delete>;
-  read?: Maybe<OrdersFields_TronPrice_NativePerStable_Read>;
-  update?: Maybe<OrdersFields_TronPrice_NativePerStable_Update>;
-};
-
-export type OrdersFields_TronPrice_NativePerStable_Create = {
-  __typename?: 'OrdersFields_tronPrice_nativePerStable_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_NativePerStable_Delete = {
-  __typename?: 'OrdersFields_tronPrice_nativePerStable_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_NativePerStable_Read = {
-  __typename?: 'OrdersFields_tronPrice_nativePerStable_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_NativePerStable_Update = {
-  __typename?: 'OrdersFields_tronPrice_nativePerStable_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_StablePerNative = {
-  __typename?: 'OrdersFields_tronPrice_stablePerNative';
-  create?: Maybe<OrdersFields_TronPrice_StablePerNative_Create>;
-  delete?: Maybe<OrdersFields_TronPrice_StablePerNative_Delete>;
-  read?: Maybe<OrdersFields_TronPrice_StablePerNative_Read>;
-  update?: Maybe<OrdersFields_TronPrice_StablePerNative_Update>;
-};
-
-export type OrdersFields_TronPrice_StablePerNative_Create = {
-  __typename?: 'OrdersFields_tronPrice_stablePerNative_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_StablePerNative_Delete = {
-  __typename?: 'OrdersFields_tronPrice_stablePerNative_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_StablePerNative_Read = {
-  __typename?: 'OrdersFields_tronPrice_stablePerNative_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TronPrice_StablePerNative_Update = {
-  __typename?: 'OrdersFields_tronPrice_stablePerNative_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48493,15 +47401,12 @@ export type MutationOrderInput = {
   currency?: InputMaybe<Order_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
-  ethPrice?: InputMaybe<MutationOrder_EthPriceInput>;
   items?: InputMaybe<Array<InputMaybe<MutationOrder_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrder_ShippingAddressInput>;
-  solanaPrice?: InputMaybe<MutationOrder_SolanaPriceInput>;
   status?: InputMaybe<Order_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrder_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  tronPrice?: InputMaybe<MutationOrder_TronPriceInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -48512,15 +47417,12 @@ export type MutationOrderUpdateInput = {
   currency?: InputMaybe<OrderUpdate_Currency_MutationInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   customerEmail?: InputMaybe<Scalars['String']['input']>;
-  ethPrice?: InputMaybe<MutationOrderUpdate_EthPriceInput>;
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   shippingAddress?: InputMaybe<MutationOrderUpdate_ShippingAddressInput>;
-  solanaPrice?: InputMaybe<MutationOrderUpdate_SolanaPriceInput>;
   status?: InputMaybe<OrderUpdate_Status_MutationInput>;
   transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  tronPrice?: InputMaybe<MutationOrderUpdate_TronPriceInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -48531,13 +47433,6 @@ export type MutationOrderUpdate_CryptoPricesInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   nativePerStable: Scalars['String']['input'];
   stablePerNative: Scalars['Float']['input'];
-};
-
-export type MutationOrderUpdate_EthPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrderUpdate_ItemsInput = {
@@ -48561,25 +47456,11 @@ export type MutationOrderUpdate_ShippingAddressInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type MutationOrderUpdate_SolanaPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
-};
-
 export type MutationOrderUpdate_TransactionHashesInput = {
   chain: OrderUpdate_TransactionHashes_Chain_MutationInput;
   id?: InputMaybe<Scalars['String']['input']>;
   product?: InputMaybe<Scalars['String']['input']>;
   transactionHash: Scalars['String']['input'];
-};
-
-export type MutationOrderUpdate_TronPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrder_CryptoPricesInput = {
@@ -48589,13 +47470,6 @@ export type MutationOrder_CryptoPricesInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   nativePerStable: Scalars['String']['input'];
   stablePerNative: Scalars['Float']['input'];
-};
-
-export type MutationOrder_EthPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationOrder_ItemsInput = {
@@ -48619,25 +47493,11 @@ export type MutationOrder_ShippingAddressInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type MutationOrder_SolanaPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
-};
-
 export type MutationOrder_TransactionHashesInput = {
   chain: Order_TransactionHashes_Chain_MutationInput;
   id?: InputMaybe<Scalars['String']['input']>;
   product?: InputMaybe<Scalars['String']['input']>;
   transactionHash: Scalars['String']['input'];
-};
-
-export type MutationOrder_TronPriceInput = {
-  expectedNativeAmount?: InputMaybe<Scalars['String']['input']>;
-  fetchedAt?: InputMaybe<Scalars['String']['input']>;
-  nativePerStable?: InputMaybe<Scalars['String']['input']>;
-  stablePerNative?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type MutationPageInput = {
@@ -52357,6 +51217,14 @@ export type CreateCartMutationVariables = Exact<{
 
 export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
+export type DeleteCartMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type DeleteCartMutation = { __typename?: 'Mutation', deleteCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+
 export type UpdateCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
   data: MutationCartUpdateInput;
@@ -52692,7 +51560,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -52701,7 +51569,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, ethPrice?: { __typename?: 'Order_EthPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, solanaPrice?: { __typename?: 'Order_SolanaPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, tronPrice?: { __typename?: 'Order_TronPrice', stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null } | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -53055,6 +51923,59 @@ export const useCreateCartMutation = <
 
 
 useCreateCartMutation.fetcher = (variables: CreateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options);
+
+export const DeleteCartDocument = `
+    mutation DeleteCart($id: String!, $trash: Boolean) {
+  deleteCart(id: $id, trash: $trash) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
+        }
+      }
+      variant {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+export const useDeleteCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteCart'],
+    mutationFn: (variables?: DeleteCartMutationVariables) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCartMutation.fetcher = (variables: DeleteCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables, options);
 
 export const UpdateCartDocument = `
     mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
@@ -55316,24 +54237,6 @@ export const CreateOrderDocument = `
       expectedNativeAmount
       fetchedAt
     }
-    ethPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    solanaPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    tronPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
     transactionHashes {
       id
       chain
@@ -55419,24 +54322,6 @@ export const UpdateOrderDocument = `
     cryptoPrices {
       id
       chain
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    ethPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    solanaPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    tronPrice {
       stablePerNative
       nativePerStable
       expectedNativeAmount

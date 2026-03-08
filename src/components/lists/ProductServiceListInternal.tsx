@@ -8,7 +8,7 @@ import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPrice, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { formatPriceFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -61,7 +61,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                             <Flex vertical gap="8px">
                                 {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
                                     <Tag color="success" icon={<BankOutlined />}>
-                                        {formatPrice(product.priceInUSD, "USD")}
+                                        {formatPriceFromCents(product.priceInUSD, "USD")}
                                     </Tag>
                                 )}
                                 <CartItemCount

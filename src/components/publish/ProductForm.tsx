@@ -17,6 +17,7 @@ import {
     useListCompaniesByCreatorQuery,
     useUpdateProductMutation,
 } from "../hooks";
+import { toCents } from "../../utils";
 
 interface ProductFormValues {
     name: string | null;
@@ -65,7 +66,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             url: values.url,
             company: values.company,
             priceInUSDEnabled: true,
-            priceInUSD: values.priceInUSD,
+            priceInUSD: toCents(values.priceInUSD),
             inventory: values.inventory,
             ...(imageId !== undefined && { image: imageId }),
         }),

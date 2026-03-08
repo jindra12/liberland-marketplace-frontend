@@ -4,7 +4,6 @@ export type CreatedOrder = NonNullable<CreateOrderMutation["createOrder"]>;
 
 export type SubmittedOrder = {
     url: string;
-    secret: string;
     order: CreatedOrder;
 };
 

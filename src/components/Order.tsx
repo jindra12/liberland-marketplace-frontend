@@ -2,10 +2,12 @@ import * as React from "react";
 import { Alert, Flex, Form, Spin, Typography, message } from "antd";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
+import useLocalStorage from "use-local-storage";
 import type { ListProductsQuery, Order as OrderType } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
-import { useCreateOrderMutation, useUpdateCartMutation, useUpdateOrderMutation } from "./hooks";
+import { useCreateOrderMutation, useDeleteCartMutation, useUpdateOrderMutation } from "./hooks";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
+import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import type { OrderFormValues, SubmittedOrder } from "./order/types";
@@ -22,10 +24,11 @@ const Order: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
+    const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
     const createOrderMutation = useCreateOrderMutation();
-    const updateCartMutation = useUpdateCartMutation();
+    const deleteCartMutation = useDeleteCartMutation();
     const updateOrderMutation = useUpdateOrderMutation();
 
     const cartsWithItems = React.useMemo(() => carts.filter((cart) => cart.items.length > 0), [carts]);
@@ -64,7 +67,6 @@ const Order: React.FunctionComponent = () => {
             await updateOrderMutation.mutateAsync({
                 url: entry.url,
                 orderId: entry.order.id,
-                secret: entry.secret,
                 draft: false,
                 data: {
                     payerAddress: walletAddress,
@@ -98,7 +100,8 @@ const Order: React.FunctionComponent = () => {
                     .filter((item) => Boolean(item.product) && item.quantity > 0);
 
                 if (items.length === 0) {
-                    throw new Error("Cart has no orderable items");
+                    message.error("Cart has no orderable items");
+                    return;
                 }
 
                 const createOrderResult = await createOrderMutation.mutateAsync({
@@ -112,17 +115,16 @@ const Order: React.FunctionComponent = () => {
                 });
 
                 const createdOrder = createOrderResult.createOrder;
+
                 if (!createdOrder?.id) {
-                    throw new Error("Order creation did not return an order id");
+                    message.error("Order creation did not return an order id");
+                    return;
                 }
 
-                await updateCartMutation.mutateAsync({
+                await deleteCartMutation.mutateAsync({
                     url: cart.url,
                     id: cart.cartId,
-                    draft: false,
-                    data: {
-                        items: [],
-                    },
+                    trash: false,
                 });
 
                 ordered.push({
@@ -137,7 +139,6 @@ const Order: React.FunctionComponent = () => {
                     submittedCarts: acc.submittedCarts + 1,
                     submittedOrders: [...acc.submittedOrders, {
                         url: result.cart.url,
-                        secret: result.cart.secret,
                         order: result.order,
                     }],
                 };
@@ -145,6 +146,11 @@ const Order: React.FunctionComponent = () => {
                 submittedCarts: 0,
                 submittedOrders: [] as SubmittedOrder[],
             });
+
+            if (summary.submittedOrders.length > 0) {
+                const submittedCartKeys = new Set(ordered.map((entry) => `${entry.cart.url}::${entry.cart.secret}`));
+                setCartSecrets((prev) => (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)));
+            }
 
             setSubmittedOrders(summary.submittedOrders);
 

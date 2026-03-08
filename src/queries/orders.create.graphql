@@ -1,7 +1,6 @@
 mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
   createOrder(data: $data, draft: $draft) {
     id
-    secret
     status
     payerAddress
     customer {
@@ -13,24 +12,6 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
     cryptoPrices {
       id
       chain
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    ethPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    solanaPrice {
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    tronPrice {
       stablePerNative
       nativePerStable
       expectedNativeAmount

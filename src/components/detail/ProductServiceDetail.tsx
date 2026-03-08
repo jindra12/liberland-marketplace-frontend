@@ -21,7 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
-import { formatPrice, parseActionLink, getImage, isProductPurchasable } from "../../utils";
+import { formatPriceFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -49,7 +49,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const inventory = typeof inventoryCount === "number"
                     ? inventoryCount.toLocaleString("en-US")
                     : undefined;
-                const price = product?.priceInUSDEnabled ? formatPrice(product?.priceInUSD, "USD") : null;
+                const price = product?.priceInUSDEnabled ? formatPriceFromCents(product?.priceInUSD, "USD") : null;
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
