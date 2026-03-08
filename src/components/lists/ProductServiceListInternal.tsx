@@ -19,11 +19,13 @@ export interface ProductServiceListInternalProps {
     setPage: (page: number) => void;
     page: number;
     title?: string;
+    showOrderNowFallback?: boolean;
 }
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const screens = Grid.useBreakpoint();
     const addToCartSize = screens.lg ? "large" : "middle";
+    const showOrderNowFallback = props.showOrderNowFallback ?? true;
     const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
     const allItems = props.query.data?.Products?.docs || [];
     const items = selectedIdentityIds.length === 0
@@ -74,7 +76,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     size={addToCartSize}
                                     maxAvailable={product.inventory}
                                 />
-                            ) : orderNowLink ? (
+                            ) : showOrderNowFallback && orderNowLink ? (
                                 <Button type="primary" size={addToCartSize} href={orderNowLink}>
                                     Order Now!
                                 </Button>

@@ -4,6 +4,7 @@ import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
 import { formatPrice, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
+import { CartItemCount } from "../cart/CartItemCount";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -74,6 +75,11 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                     <Typography.Text type="secondary">{product.company.name}</Typography.Text>
                                 )}
                                 {price && <Tag color="gold">{price}</Tag>}
+                                <CartItemCount
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                    hideWhenZero
+                                />
                             </Space>
                         </div>
                     </List.Item>

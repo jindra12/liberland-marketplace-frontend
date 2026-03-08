@@ -25,20 +25,21 @@ const Cart: React.FunctionComponent = () => {
     }) as UseQueryResult<ListProductsQuery, unknown>, [isLoading, products, refetch]);
 
     return (
-        <Flex vertical gap={16}>
-            {totalQuantity > 0 && (
-                <Flex justify="flex-end">
-                    <Link to="/order">
-                        <Button type="primary">Proceed to order</Button>
-                    </Link>
-                </Flex>
-            )}
+        <Flex vertical gap={24} className="CartPage">
             <ProductServiceListInternal
                 page={page}
                 setPage={setPage}
                 query={query}
                 title="Cart"
+                showOrderNowFallback={false}
             />
+            {totalQuantity > 0 && (
+                <Link to="/order" className="CartPage__orderLink">
+                    <Button type="primary" size="large" block className="CartPage__orderButton">
+                        Proceed to order
+                    </Button>
+                </Link>
+            )}
         </Flex>
     );
 };

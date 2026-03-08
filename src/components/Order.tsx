@@ -2,10 +2,10 @@ import * as React from "react";
 import { Alert, Flex, Form, Spin, Typography, message } from "antd";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import type { ListProductsQuery } from "../generated/graphql";
+import type { ListProductsQuery, Order as OrderType } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
 import { useCreateOrderMutation, useUpdateCartMutation, useUpdateOrderMutation } from "./hooks";
-import { useCartItems } from "./cart/useCartItems";
+import { CartSummary, useCartItems } from "./cart/useCartItems";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import type { OrderFormValues, SubmittedOrder } from "./order/types";
@@ -86,7 +86,9 @@ const Order: React.FunctionComponent = () => {
         setIsSubmitting(true);
 
         try {
-            const settled = await Promise.allSettled(cartsWithItems.map(async (cart) => {
+            const ordered: { cart: CartSummary; order: OrderType }[] = [];
+            for (let i = 0; i < cartsWithItems.length; i++) {
+                const cart = cartsWithItems[i];
                 const items = cart.items
                     .map((item) => ({
                         product: item.product?.id,
@@ -123,36 +125,24 @@ const Order: React.FunctionComponent = () => {
                     },
                 });
 
-                return {
+                ordered.push({
                     cart,
-                    order: createdOrder,
-                };
-            }));
+                    order: createdOrder as OrderType,
+                });
+            }
 
-            const summary = settled.reduce((acc, result, index) => {
-                if (result.status === "fulfilled") {
-                    return {
-                        ...acc,
-                        submittedCarts: acc.submittedCarts + 1,
-                        submittedOrders: [...acc.submittedOrders, {
-                            url: result.value.cart.url,
-                            secret: result.value.cart.secret,
-                            order: result.value.order,
-                        }],
-                    };
-                }
-
-                const failedNames = cartsWithItems[index]?.items
-                    .map((item) => item.product?.name)
-                    .filter((name): name is string => Boolean(name)) || [];
-
+            const summary = ordered.reduce((acc, result) => {
                 return {
                     ...acc,
-                    failedProductNames: [...acc.failedProductNames, ...failedNames],
+                    submittedCarts: acc.submittedCarts + 1,
+                    submittedOrders: [...acc.submittedOrders, {
+                        url: result.cart.url,
+                        secret: result.cart.secret,
+                        order: result.order,
+                    }],
                 };
             }, {
                 submittedCarts: 0,
-                failedProductNames: [] as string[],
                 submittedOrders: [] as SubmittedOrder[],
             });
 
@@ -173,12 +163,7 @@ const Order: React.FunctionComponent = () => {
                 return;
             }
 
-            const uniqueFailedProductNames = Array.from(new Set(summary.failedProductNames));
-            const failedProducts = uniqueFailedProductNames.length > 0
-                ? uniqueFailedProductNames.join(", ")
-                : "some products";
-
-            message.warning(`Here's what you could not buy: ${failedProducts}`);
+            message.warning(`Order was partially created`);
         } finally {
             setIsSubmitting(false);
         }
@@ -186,7 +171,7 @@ const Order: React.FunctionComponent = () => {
 
     if (isLoading && submittedOrders.length === 0) {
         return (
-            <Flex vertical gap={16}>
+            <Flex vertical gap={16} className="OrderPage">
                 <Typography.Title level={2}>Order</Typography.Title>
                 <Spin />
             </Flex>
@@ -195,7 +180,7 @@ const Order: React.FunctionComponent = () => {
 
     if (totalQuantity <= 0 && submittedOrders.length === 0) {
         return (
-            <Flex vertical gap={16}>
+            <Flex vertical gap={16} className="OrderPage">
                 <Typography.Title level={2}>Order</Typography.Title>
                 <Alert
                     type="info"
@@ -208,7 +193,7 @@ const Order: React.FunctionComponent = () => {
     }
 
     return (
-        <Flex vertical gap={16}>
+        <Flex vertical gap={16} className="OrderPage">
             <Typography.Title level={2}>Order</Typography.Title>
             {submittedOrders.length > 0 ? (
                 <OrderPaymentStep

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, Col, Form, Input, Row } from "antd";
+import { Alert, Col, Form, Input, Row, theme } from "antd";
 import type { NamePath } from "antd/es/form/interface";
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from "@geoapify/react-geocoder-autocomplete";
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
@@ -49,10 +49,26 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
     label = "Shipping address",
     required = true,
 }) => {
+    const { token } = theme.useToken();
     const form = Form.useFormInstance();
     const [searchValue, setSearchValue] = React.useState("");
     const basePath = React.useMemo(() => toPath(name), [name]);
     const geoapifyApiKey = (process.env.REACT_APP_GEOAPIFY_API_KEY || "").trim();
+    const geoapifyStyles = React.useMemo(() => ({
+        "--geoapify-bg-container": token.colorBgContainer,
+        "--geoapify-bg-elevated": token.colorBgElevated,
+        "--geoapify-text": token.colorText,
+        "--geoapify-text-secondary": token.colorTextSecondary,
+        "--geoapify-text-tertiary": token.colorTextTertiary,
+        "--geoapify-text-placeholder": token.colorTextPlaceholder,
+        "--geoapify-border": token.colorBorder,
+        "--geoapify-border-secondary": token.colorBorderSecondary,
+        "--geoapify-shadow": token.boxShadowSecondary,
+        "--geoapify-hover-bg": token.controlItemBgHover,
+        "--geoapify-outline": token.controlOutline,
+        "--geoapify-primary-border": token.colorPrimaryBorder,
+        "--geoapify-radius": `${token.borderRadius}px`,
+    } as React.CSSProperties), [token]);
 
     const setAddressField = React.useCallback((field: string, value?: string) => {
         form.setFieldValue([...basePath, field], value);
@@ -80,12 +96,13 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
             <Form.Item
                 label={label}
                 required={required}
+                className="Order__geoapifySearchItem"
                 extra={geoapifyApiKey
                     ? "Start typing and pick a suggestion, then adjust fields below if needed."
                     : "Geoapify key is missing. Enter the shipping address manually below."}
             >
                 {geoapifyApiKey ? (
-                    <div className="Order__geoapifyInput">
+                    <div className="Order__geoapifyInput" style={geoapifyStyles}>
                         <GeoapifyContext apiKey={geoapifyApiKey}>
                             <GeoapifyGeocoderAutocomplete
                                 placeholder="Search shipping address"

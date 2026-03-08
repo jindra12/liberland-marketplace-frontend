@@ -9,3 +9,18 @@
 .AddToCartButton__quantity--small {
     width: 72px;
 }
+
+.CartPage {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.CartPage__orderLink {
+    display: block;
+    width: 100%;
+}
+
+.CartPage__orderButton {
+    min-height: 48px;
+    font-weight: 600;
+}

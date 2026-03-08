@@ -8,12 +8,14 @@ type CartItemCountProps = {
     productId: string;
     variantId?: string;
     serverURL: string;
+    hideWhenZero?: boolean;
 };
 
 export const CartItemCount: React.FunctionComponent<CartItemCountProps> = ({
     productId,
     variantId,
     serverURL,
+    hideWhenZero = false,
 }) => {
     const [cartSecret] = useLocalStorage<string>(getCartSecretStorageKey(serverURL), "");
     const cartQuery = useCartBySecretQuery(
@@ -25,6 +27,10 @@ export const CartItemCount: React.FunctionComponent<CartItemCountProps> = ({
         item.product?.id === productId && (item.variant?.id ?? "") === (variantId ?? "")
     ));
     const quantity = itemInCart?.quantity ?? 0;
+
+    if (hideWhenZero && quantity <= 0) {
+        return null;
+    }
 
     return <Tag color={quantity > 0 ? "blue" : "default"}>In cart: {quantity}</Tag>;
 };

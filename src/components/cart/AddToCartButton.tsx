@@ -31,6 +31,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
 }) => {
     const queryClient = useQueryClient();
     const [form] = Form.useForm();
+    const [messageApi, messageContextHolder] = message.useMessage();
     const [cartSecret, setCartSecret] = useLocalStorage<string>(getCartSecretStorageKey(serverURL), "");
     const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const cartQuery = useCartBySecretQuery(
@@ -147,7 +148,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
 
     const handleFinish = async (values: { quantity?: number }) => {
         if (remainingQuantity !== undefined && remainingQuantity <= 0) {
-            message.info("No more inventory available");
+            messageApi.info("No more inventory available");
             return;
         }
 
@@ -160,9 +161,12 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
             setIsLoading(true);
             await addItemToCart(quantity);
             await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
-            message.success("Added to cart");
-        } catch {
-            message.error("Could not add product to cart")
+            messageApi.success("Added to cart");
+        } catch (error) {
+            const errorMessage = error instanceof Error && error.message
+                ? error.message
+                : "Could not add product to cart";
+            messageApi.error(`Could not add product to cart: ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }
@@ -172,16 +176,19 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         try {
             setIsLoading(true);
             if (!existingCart?.id) {
-                message.info("Item is not in cart");
+                messageApi.info("Item is not in cart");
                 return;
             }
 
             await removeItemFromExistingCart(existingCart as Cart);
             await cartQuery.refetch();
             await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
-            message.success("Removed from cart");
-        } catch {
-            message.error("Could not remove product from cart");
+            messageApi.success("Removed from cart");
+        } catch (error) {
+            const errorMessage = error instanceof Error && error.message
+                ? error.message
+                : "Could not remove product from cart";
+            messageApi.error(`Could not remove product from cart: ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }
@@ -197,6 +204,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                 },
             }}
         >
+            {messageContextHolder}
             <Form form={form} onFinish={handleFinish} initialValues={{ quantity: 1 }}>
                 <Space.Compact block={block}>
                     <Form.Item name="quantity" noStyle>

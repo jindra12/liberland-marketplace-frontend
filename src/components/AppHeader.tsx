@@ -10,11 +10,12 @@ import { EndpointAuthAction } from "./EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { DesktopDrawer } from "./DesktopDrawer";
+import { useCartItems } from "./cart/useCartItems";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
 
-const items = [
+const baseItems = [
     { key: "/jobs", label: "Jobs" },
     { key: "/products-services", label: "Market" },
     { key: "/companies", label: "Companies" },
@@ -22,7 +23,7 @@ const items = [
     { key: "/tribes", label: "Tribes" },
 ];
 
-const getSelectedKeys = (pathname: string) => {
+const getSelectedKeys = (pathname: string, items: { key: string; label: string }[]) => {
     const found = items.find(({ key }) => pathname.startsWith(key))?.key;
     return found ? [found] : [];
 };
@@ -32,10 +33,18 @@ export const AppHeader: React.FunctionComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const auth = useAuth();
+    const { totalQuantity } = useCartItems();
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-    const selectedKeys = getSelectedKeys(location.pathname);
+    const items = React.useMemo(() => {
+        if (totalQuantity > 0) {
+            return [...baseItems, { key: "/cart", label: "Cart" }];
+        }
+        return baseItems;
+    }, [totalQuantity]);
+
+    const selectedKeys = getSelectedKeys(location.pathname, items);
 
     const onMenuClick: MenuProps["onClick"] = (info) => {
         navigate(info.key);
@@ -94,10 +103,6 @@ export const AppHeader: React.FunctionComponent = () => {
                                 onClick={onMenuClick}
                             />
                             <div className="AppHeader__drawerNav">
-                                <CartHeaderButton
-                                    className="AppHeader__drawerCart"
-                                    onClick={() => setDrawerOpen(false)}
-                                />
                                 <EndpointAuthAction>
                                     {({ runWithAuthOrLogin }) => (
                                         <Button

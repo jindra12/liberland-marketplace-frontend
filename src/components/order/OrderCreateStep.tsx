@@ -49,7 +49,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                 <Alert
                     showIcon
                     type="info"
-                    message={`Likely payment chains: ${requiredChainText}`}
+                    message={`You'll pay on: ${requiredChainText}`}
                     description="This is based on wallet chains configured on products/companies currently in your carts."
                 />
             )}
@@ -123,6 +123,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                 setPage={props.setPage}
                 query={props.query}
                 title="Order summary"
+                showOrderNowFallback={false}
             />
 
             <Flex justify="space-between" wrap gap={12}>
