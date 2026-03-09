@@ -81,9 +81,9 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         }
     };
 
-    const addItemToExistingCart = async (existingCart: Cart, quantity: number) => {
+    const toItemsByKey = (existingCart: Cart): Record<string, MutationCartUpdate_ItemsInput> => {
         const existingItems = existingCart.items || [];
-        const itemsByKey: Record<string, MutationCartUpdate_ItemsInput> = Object.fromEntries(
+        return Object.fromEntries(
             existingItems.map((item) => {
                 const mutationItem: MutationCartUpdate_ItemsInput = {
                     quantity: item.quantity ?? 1,
@@ -94,6 +94,24 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                 return [`${item.product?.id ?? ""}::${item.variant?.id ?? ""}`, mutationItem];
             }),
         );
+    };
+
+    const updateExistingCartItems = async (
+        existingCart: Cart,
+        itemsByKey: Record<string, MutationCartUpdate_ItemsInput>,
+    ) => {
+        await updateCart.mutateAsync({
+            url: serverURL,
+            id: existingCart.id,
+            draft: false,
+            data: {
+                items: Object.values(itemsByKey),
+            },
+        });
+    };
+
+    const addItemToExistingCart = async (existingCart: Cart, quantity: number) => {
+        const itemsByKey = toItemsByKey(existingCart);
 
         const productKey = `${productId}::${variantId ?? ""}`;
         const productItem = (itemsByKey[productKey] ||= {
@@ -103,14 +121,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         });
         productItem.quantity += quantity;
 
-        await updateCart.mutateAsync({
-            url: serverURL,
-            id: existingCart.id,
-            draft: false,
-            data: {
-                items: Object.values(itemsByKey),
-            },
-        });
+        await updateExistingCartItems(existingCart, itemsByKey);
     };
 
     const addItemToCart = async (quantity: number) => {
@@ -123,30 +134,12 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     };
 
     const removeItemFromExistingCart = async (existingCart: Cart) => {
-        const existingItems = existingCart.items || [];
-        const itemsByKey: Record<string, MutationCartUpdate_ItemsInput> = Object.fromEntries(
-            existingItems.map((item) => {
-                const mutationItem: MutationCartUpdate_ItemsInput = {
-                    quantity: item.quantity ?? 1,
-                };
-                mutationItem.id = item.id!;
-                mutationItem.product = item.product?.id;
-                mutationItem.variant = item.variant?.id;
-                return [`${item.product?.id ?? ""}::${item.variant?.id ?? ""}`, mutationItem];
-            }),
-        );
+        const itemsByKey = toItemsByKey(existingCart);
 
         const productKey = `${productId}::${variantId ?? ""}`;
         delete itemsByKey[productKey];
 
-        await updateCart.mutateAsync({
-            url: serverURL,
-            id: existingCart.id,
-            draft: false,
-            data: {
-                items: Object.values(itemsByKey),
-            },
-        });
+        await updateExistingCartItems(existingCart, itemsByKey);
     };
 
     const handleFinish = async (values: { quantity?: number }) => {

@@ -1,8 +1,9 @@
 import * as React from "react";
+import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatPriceFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -31,7 +32,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             dataSource={items}
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
-                const price = product.priceInUSDEnabled ? formatPriceFromCents(product.priceInUSD, "USD") : null;
+                const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                 const imageSrc = getImage(product) || getImage(product.company);
                 const orderNowLink = parseActionLink(product.url);
                 const canPurchase = isProductPurchasable(product);
@@ -74,11 +75,14 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                 {product.company?.name && (
                                     <Typography.Text type="secondary">{product.company.name}</Typography.Text>
                                 )}
-                                {price && <Tag color="gold">{price}</Tag>}
+                                {price && (
+                                    <Tag color="gold" icon={<DollarOutlined />}>
+                                        {`Price: ${price}`}
+                                    </Tag>
+                                )}
                                 <CartItemCount
                                     productId={product.id}
                                     serverURL={product.serverURL!}
-                                    hideWhenZero
                                 />
                             </Space>
                         </div>

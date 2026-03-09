@@ -1,4 +1,6 @@
 import * as React from "react";
+import Flex from "antd/es/flex";
+import Grid from "antd/es/grid";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ConnectButtonProps } from "../../types";
@@ -14,6 +16,8 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
     const [startedProcess, setStartedProcess] = React.useState(false);
     const { setVisible } = useWalletModal();
     const { select, disconnect, connected } = useWallet();
+    const screens = Grid.useBreakpoint();
+    const stackButtons = !screens.lg;
 
     return (
         <>
@@ -25,18 +29,20 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
                     }}
                 />
             )}
-            <SolanaButton
-                onSelect={async () => {
-                    if (connected) {
-                        await disconnect();
-                    }
-                    setStartedProcess(true);
-                    select(null);
-                    setVisible(true);
-                }}
-                label={props.label}
-                payment={props.payment}
-            />
+            <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
+                <SolanaButton
+                    onSelect={async () => {
+                        if (connected) {
+                            await disconnect();
+                        }
+                        setStartedProcess(true);
+                        select(null);
+                        setVisible(true);
+                    }}
+                    label={props.label}
+                    payment={props.payment}
+                />
+            </Flex>
         </>
     );
 };

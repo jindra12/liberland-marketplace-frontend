@@ -1,4 +1,6 @@
 import * as React from "react";
+import Flex from "antd/es/flex";
+import Grid from "antd/es/grid";
 import { WalletModalProvider, WalletActionButton, ButtonProps } from "@tronweb3/tronwallet-adapter-react-ui";
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import useToken from "antd/es/theme/useToken";
@@ -6,6 +8,9 @@ import { ConnectButtonProps } from "../../types";
 
 export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) => {
     const { address, connected } = useWallet();
+    const screens = Grid.useBreakpoint();
+    const stackButtons = !screens.lg;
+
     React.useEffect(() => {
         if (address && connected) {
             props.selectWallet(address);
@@ -41,9 +46,11 @@ export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) 
 
     return (
         <WalletModalProvider>
-            <WalletActionButton {...buttonProps}>
-                Select
-            </WalletActionButton>
+            <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
+                <WalletActionButton {...buttonProps}>
+                    Select
+                </WalletActionButton>
+            </Flex>
         </WalletModalProvider>
     );
 };

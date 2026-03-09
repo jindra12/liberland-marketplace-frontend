@@ -49,8 +49,8 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                 <Alert
                     showIcon
                     type="info"
-                    message={`You'll pay on: ${requiredChainText}`}
-                    description="This is based on wallet chains configured on products/companies currently in your carts."
+                    message="Payment information"
+                    description={`You'll pay on ${requiredChainText}`}
                 />
             )}
 

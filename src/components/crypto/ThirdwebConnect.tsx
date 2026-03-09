@@ -3,6 +3,7 @@ import { createThirdwebClient } from "thirdweb";
 import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { mainnet } from "thirdweb/chains";
 import Flex from "antd/es/flex";
+import Grid from "antd/es/grid";
 import useToken from "antd/es/theme/useToken";
 import { createWallet } from "thirdweb/wallets";
 import { ConnectButtonProps } from "../../types";
@@ -17,6 +18,8 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, token] = useToken();
     const account = useActiveAccount();
+    const screens = Grid.useBreakpoint();
+    const stackButtons = !screens.lg;
 
     React.useEffect(() => {
         if (account?.address) {
@@ -43,24 +46,26 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
     };
 
     return (
-        <ConnectButton
-            client={client}
-            chain={mainnet}
-            detailsButton={{
-                style: btnStyle,
-            }}
-            autoConnect={false}
-            wallets={thirdwebWallets.map(w => createWallet(w))}
-            connectButton={{
-                label: (
-                    <Flex wrap gap="10px" justify="center" align="center">
-                        <RecipientIcon chain="Ethereum" size={22} />
-                        Select
-                    </Flex>
-                ),
-                style: btnStyle,
-                className: "",
-            }}
-        />
+        <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
+            <ConnectButton
+                client={client}
+                chain={mainnet}
+                detailsButton={{
+                    style: btnStyle,
+                }}
+                autoConnect={false}
+                wallets={thirdwebWallets.map(w => createWallet(w))}
+                connectButton={{
+                    label: (
+                        <Flex wrap gap="10px" justify="center" align="center">
+                            <RecipientIcon chain="Ethereum" size={22} />
+                            Select
+                        </Flex>
+                    ),
+                    style: btnStyle,
+                    className: "",
+                }}
+            />
+        </Flex>
     );
 };

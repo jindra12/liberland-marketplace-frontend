@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Alert, Button, Card, Flex, List, Tag, Typography, message } from "antd";
+import { DollarOutlined } from "@ant-design/icons";
+import { Alert, Button, Card, Divider, Flex, Grid, List, Tag, Typography } from "antd";
 import {
     CRYPTO_CHAIN_LABELS,
     CRYPTO_CHAIN_TICKERS,
@@ -7,6 +8,7 @@ import {
     collectOrderChainPrices,
     formatNativeCryptoAmount,
     formatPriceFromCents,
+    formatUsdFromCents,
     resolveOrderRecipientAddress,
 } from "../../utils";
 import { ThirdwebPayButton } from "../crypto/ThirdwebPayButton";
@@ -18,9 +20,54 @@ type OrderPaymentStepProps = {
     submittedOrders: SubmittedOrder[];
     onPayerAddressSelected: (entry: SubmittedOrder, walletAddress: string) => Promise<void>;
     onBackToOrderForm: () => void;
+    onAllPaymentsComplete: () => void;
+};
+
+const buildPaymentKey = (entry: SubmittedOrder, chain: "ethereum" | "solana" | "tron") => {
+    return `${entry.url}::${entry.order.id}::${chain}`;
 };
 
 export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = (props) => {
+    const { lg } = Grid.useBreakpoint();
+    const [completedPaymentKeys, setCompletedPaymentKeys] = React.useState<Record<string, true>>({});
+
+    const requiredPaymentKeys = React.useMemo(() => {
+        return props.submittedOrders.reduce<string[]>((acc, entry) => {
+            const chainPriceKeys = collectOrderChainPrices(entry.order)
+                .filter((chainPrice) => {
+                    const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
+                    const expectedAmount = chainPrice.expectedNativeAmount;
+                    return Boolean(recipient && expectedAmount && expectedAmount > 0);
+                })
+                .map((chainPrice) => buildPaymentKey(entry, chainPrice.chain));
+
+            return [...acc, ...chainPriceKeys];
+        }, []);
+    }, [props.submittedOrders]);
+
+    const markPaymentSubmitted = React.useCallback(
+        (entry: SubmittedOrder, chain: "ethereum" | "solana" | "tron") => {
+            const key = buildPaymentKey(entry, chain);
+            if (completedPaymentKeys[key]) {
+                return;
+            }
+
+            const nextCompletedPaymentKeys: Record<string, true> = {
+                ...completedPaymentKeys,
+                [key]: true,
+            };
+
+            setCompletedPaymentKeys(nextCompletedPaymentKeys);
+
+            const allDone = requiredPaymentKeys.every((requiredKey) => Boolean(nextCompletedPaymentKeys[requiredKey]));
+
+            if (allDone) {
+                props.onAllPaymentsComplete();
+            }
+        },
+        [completedPaymentKeys, props, requiredPaymentKeys],
+    );
+
     return (
         <>
             <Typography.Paragraph type="secondary">
@@ -29,14 +76,14 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
 
             {props.submittedOrders.map((entry) => {
                 const chainPrices = collectOrderChainPrices(entry.order);
-                const orderTotal = formatPriceFromCents(entry.order.amount, entry.order.currency);
+                const orderTotal = formatUsdFromCents(entry.order.amount) || formatPriceFromCents(entry.order.amount, entry.order.currency);
                 return (
                     <Card
                         key={buildOrderEntryKey(entry.url, entry.order.id)}
                         title={`Order ${entry.order.id}`}
                         extra={(
-                            <Tag color="processing">
-                                {orderTotal || "N/A"}
+                            <Tag color={orderTotal ? "gold" : "default"} icon={orderTotal ? <DollarOutlined /> : undefined}>
+                                {orderTotal ? `Price: ${orderTotal}` : "Price: N/A"}
                             </Tag>
                         )}
                     >
@@ -49,6 +96,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                         ) : (
                             <List
                                 dataSource={chainPrices}
+                                itemLayout={lg ? "horizontal" : "vertical"}
                                 renderItem={(chainPrice) => {
                                     const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
                                     const expectedAmount = chainPrice.expectedNativeAmount;
@@ -59,7 +107,8 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                         <List.Item
                                             actions={[
                                                 canPay ? (
-                                                    <Flex key={`${entry.order.id}-${chainPrice.chain}`} align="center" gap={8}>
+                                                    <Flex key={`${entry.order.id}-${chainPrice.chain}`} align="center" gap={8} vertical>
+                                                        {!lg && <Divider />}
                                                         {chainPrice.chain === "ethereum" && (
                                                             <ThirdwebPayButton
                                                                 formModel={{
@@ -70,8 +119,8 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={(txId) => {
-                                                                    message.success(`Ethereum payment submitted: ${txId}`);
+                                                                setTransactionId={() => {
+                                                                    markPaymentSubmitted(entry, chainPrice.chain);
                                                                 }}
                                                             />
                                                         )}
@@ -85,8 +134,8 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={(txId) => {
-                                                                    message.success(`Solana payment submitted: ${txId}`);
+                                                                setTransactionId={() => {
+                                                                    markPaymentSubmitted(entry, chainPrice.chain);
                                                                 }}
                                                             />
                                                         )}
@@ -100,8 +149,8 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={(txId) => {
-                                                                    message.success(`Tron payment submitted: ${txId}`);
+                                                                setTransactionId={() => {
+                                                                    markPaymentSubmitted(entry, chainPrice.chain);
                                                                 }}
                                                             />
                                                         )}

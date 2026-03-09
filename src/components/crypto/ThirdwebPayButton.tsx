@@ -2,12 +2,12 @@ import * as React from "react";
 import { createThirdwebClient, prepareTransaction, toWei } from "thirdweb";
 import { ConnectButton, useActiveAccount, useSendAndConfirmTransaction } from "thirdweb/react";
 import { mainnet } from "thirdweb/chains";
-import truncate from "lodash-es/truncate";
 import Flex from "antd/es/flex";
 import { createWallet } from "thirdweb/wallets";
 import Button from "antd/es/button";
 import message from "antd/es/message";
 import Spin from "antd/es/spin";
+import Result from "antd/es/result";
 import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
 import { FormModel } from "../../types";
 import { thirdwebWallets } from "../../constants";
@@ -31,7 +31,8 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
         if (account?.address) {
             onPayerAddressSelected?.(account.address);
         }
-    }, [account?.address, onPayerAddressSelected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [account?.address]);
 
     const onPay = async () => {
         try {
@@ -65,11 +66,14 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                     htmlType="button"
                     className="ThirdwebPay ThirdwebPay--payment"
                     onClick={onPay}
-                    disabled={isPending || isError || isSuccess}
+                    disabled={isPending || isSuccess}
                     icon={isPending ? <Spin /> : <MoneyCollectOutlined />}
                 >
-                    Pay with {truncate(account.address)}
+                    Pay with Ethereum
                 </Button>
+            )}
+            {isError && (
+                <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />
             )}
         </Flex>
     );

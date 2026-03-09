@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
 import { Avatar,
     Button,
@@ -21,7 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
-import { formatPriceFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
+import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -49,7 +49,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const inventory = typeof inventoryCount === "number"
                     ? inventoryCount.toLocaleString("en-US")
                     : undefined;
-                const price = product?.priceInUSDEnabled ? formatPriceFromCents(product?.priceInUSD, "USD") : null;
+                const price = product?.priceInUSDEnabled ? formatUsdFromCents(product?.priceInUSD) : null;
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
@@ -94,7 +94,11 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 {product?.id && (
                                     <Flex justify="space-between" align="center" wrap gap="16px" className="ProductDetail__purchaseRow">
                                         <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
-                                            {price && <Tag color="success">{price}</Tag>}
+                                            {price && (
+                                                <Tag color="success" icon={<DollarOutlined />}>
+                                                    {`Price: ${price}`}
+                                                </Tag>
+                                            )}
                                             {inventory && (
                                                 <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>
                                             )}

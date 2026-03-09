@@ -2,10 +2,10 @@ import * as React from "react";
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import Button from "antd/es/button";
 import Image from "antd/es/image";
-import truncate from "lodash-es/truncate";
 import { ButtonProps, WalletActionButton, WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
 import Flex from "antd/es/flex";
 import message from "antd/es/message";
+import Result from "antd/es/result";
 import { FormModel } from "../../types";
 
 export interface TronPaymentButtonProps {
@@ -18,18 +18,20 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     const { address, connected, signTransaction } = useWallet();
     const canPay = address && connected && window.tronWeb;
     const [loading, setLoading] = React.useState(false);
-    const { onPayerAddressSelected } = props;
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         if (address && connected) {
-            onPayerAddressSelected?.(address);
+            props.onPayerAddressSelected?.(address);
         }
-    }, [address, connected, onPayerAddressSelected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [address, connected]);
 
     const sendPayment = async () => {
         if (window.tronWeb && canPay) {
             try {
                 setLoading(true);
+                setErrorMessage(null);
                 const amountInSun = window.tronWeb.toSun(Number(props.formModel.amount));
                 const unsignedTx = await window.tronWeb.transactionBuilder.sendTrx(
                     props.formModel.recipient,
@@ -41,7 +43,9 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                 props.setTransactionId(transaction.txid);
             } catch (err) {
                 console.error(err);
-                message.error("Transaction failed");
+                const nextErrorMessage = "Transaction failed";
+                setErrorMessage(nextErrorMessage);
+                message.error(nextErrorMessage);
             } finally {
                 setLoading(false);
             }
@@ -55,7 +59,14 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     };
 
     return (
-        <Flex wrap gap="15px" justify="center" align="center" flex={1} className="TronwebModal TronwebModal--payment">
+        <Flex
+            wrap
+            gap="15px"
+            justify="center"
+            align="center"
+            flex={1}
+            className="TronwebModal TronwebModal--payment"
+        >
             {canPay && (
                 <Button
                     icon={<Image src={require("../../assets/tron.svg").default} width="22px" height="22px" preview={false} />}
@@ -68,9 +79,12 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
             )}
             <WalletModalProvider>
                 <WalletActionButton {...buttonProps}>
-                    {canPay ? `Connected: ${truncate(address, { length: 10 })}` : "Connect"}
+                    {canPay ? "Connected" : "Connect"}
                 </WalletActionButton>
             </WalletModalProvider>
+            {errorMessage && (
+                <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />
+            )}
         </Flex>
     );
 };

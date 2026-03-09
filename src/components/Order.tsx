@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Alert, Flex, Form, Spin, Typography, message } from "antd";
+import { Alert, Button, Flex, Form, Result, Spin, Typography, message } from "antd";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
 import type { ListProductsQuery, Order as OrderType } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
+import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation, useDeleteCartMutation, useUpdateOrderMutation } from "./hooks";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
@@ -20,10 +21,12 @@ const Order: React.FunctionComponent = () => {
     const [form] = Form.useForm<OrderFormValues>();
     const queryClient = useQueryClient();
     const auth = useAuth();
+    const navigate = useNavigate();
 
     const [page, setPage] = React.useState(0);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
+    const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
     const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
@@ -58,7 +61,21 @@ const Order: React.FunctionComponent = () => {
         },
     }) as UseQueryResult<ListProductsQuery, unknown>, [isLoading, products, refetch]);
 
-    const updatePayerAddress = React.useCallback(async (entry: SubmittedOrder, walletAddress: string) => {
+    React.useEffect(() => {
+        if (!showPaymentSuccess) {
+            return;
+        }
+
+        const timeout = window.setTimeout(() => {
+            navigate("/");
+        }, 4000);
+
+        return () => {
+            window.clearTimeout(timeout);
+        };
+    }, [navigate, showPaymentSuccess]);
+
+    const updatePayerAddress = async (entry: SubmittedOrder, walletAddress: string) => {
         if (!entry.order.id) {
             return;
         }
@@ -77,7 +94,7 @@ const Order: React.FunctionComponent = () => {
             console.error(error);
             message.error(`Could not save payer address for order ${entry.order.id}`);
         }
-    }, [updateOrderMutation]);
+    };
 
     const onSubmit = async (values: OrderFormValues) => {
         if (cartsWithItems.length === 0) {
@@ -85,6 +102,7 @@ const Order: React.FunctionComponent = () => {
             return;
         }
 
+        setShowPaymentSuccess(false);
         setIsSubmitting(true);
 
         try {
@@ -169,11 +187,35 @@ const Order: React.FunctionComponent = () => {
                 return;
             }
 
-            message.warning(`Order was partially created`);
+            message.warning("Order was partially created");
+        } catch (error) {
+            console.error("Order creation failed", error);
+            const errorMessage = error instanceof Error && error.message
+                ? error.message
+                : "Unexpected error while creating order";
+            message.error(`Could not create order: ${errorMessage}`);
         } finally {
             setIsSubmitting(false);
         }
     };
+
+    if (showPaymentSuccess) {
+        return (
+            <Flex vertical gap={16} className="OrderPage">
+                <Typography.Title level={2}>Order</Typography.Title>
+                <Result
+                    status="success"
+                    title="All payments completed"
+                    subTitle="Thank you for shopping with us. You will be redirected to the homepage shortly."
+                    extra={[
+                        <Button key="go-home" type="primary" onClick={() => navigate("/")}>
+                            Go to homepage
+                        </Button>,
+                    ]}
+                />
+            </Flex>
+        );
+    }
 
     if (isLoading && submittedOrders.length === 0) {
         return (
@@ -205,7 +247,13 @@ const Order: React.FunctionComponent = () => {
                 <OrderPaymentStep
                     submittedOrders={submittedOrders}
                     onPayerAddressSelected={updatePayerAddress}
-                    onBackToOrderForm={() => setSubmittedOrders([])}
+                    onBackToOrderForm={() => {
+                        setShowPaymentSuccess(false);
+                        setSubmittedOrders([]);
+                    }}
+                    onAllPaymentsComplete={() => {
+                        setShowPaymentSuccess(true);
+                    }}
                 />
             ) : (
                 <OrderCreateStep

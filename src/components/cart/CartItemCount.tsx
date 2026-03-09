@@ -15,7 +15,7 @@ export const CartItemCount: React.FunctionComponent<CartItemCountProps> = ({
     productId,
     variantId,
     serverURL,
-    hideWhenZero = false,
+    hideWhenZero = true,
 }) => {
     const [cartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const cartSecret = React.useMemo(() => (

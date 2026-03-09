@@ -112,6 +112,17 @@ export const formatPriceFromCents = (amount?: number | null, currency?: string |
     return formatPrice(fromCents(amount), currency);
 };
 
+export const formatUsdFromCents = (amount?: number | null): string | null => {
+    const dollars = fromCents(amount);
+    if (dollars == null) {
+        return null;
+    }
+    return dollars.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+};
+
 export const formatPositions = (positions?: number | null): string | null => {
     if (!positions || positions === 1) return null;
     const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;

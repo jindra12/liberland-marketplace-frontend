@@ -2,13 +2,13 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Flex, Grid, Tag } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
-import { BankOutlined } from "@ant-design/icons";
+import { DollarOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { IdentityFilter } from "../IdentityFilter";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { formatPriceFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 
@@ -60,8 +60,8 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
                             <Flex vertical gap="8px">
                                 {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<BankOutlined />}>
-                                        {formatPriceFromCents(product.priceInUSD, "USD")}
+                                    <Tag color="success" icon={<DollarOutlined />}>
+                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                     </Tag>
                                 )}
                                 <CartItemCount
