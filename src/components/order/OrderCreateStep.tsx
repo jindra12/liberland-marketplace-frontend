@@ -11,7 +11,6 @@ import {
     Typography,
 } from "antd";
 import type { FormInstance } from "antd";
-import type { UseQueryResult } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
@@ -22,7 +21,9 @@ import type { OrderFormValues } from "./types";
 
 type OrderCreateStepProps = {
     form: FormInstance<OrderFormValues>;
-    query: UseQueryResult<ListProductsQuery, unknown>;
+    products: NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>;
+    isProductsLoading: boolean;
+    refetchProducts: () => Promise<void>;
     onSubmit: (values: OrderFormValues) => Promise<void>;
     page: number;
     setPage: (page: number) => void;
@@ -119,9 +120,13 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             </Form>
 
             <ProductServiceListInternal
+                source="static"
                 page={props.page}
                 setPage={props.setPage}
-                query={props.query}
+                products={props.products}
+                isLoading={props.isProductsLoading}
+                hasNextPage={false}
+                refetch={props.refetchProducts}
                 title="Order summary"
                 showOrderNowFallback={false}
             />

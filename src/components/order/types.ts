@@ -1,4 +1,9 @@
-import type { CreateOrderMutation, MutationOrder_ShippingAddressInput } from "../../generated/graphql";
+import type {
+    CreateOrderMutation,
+    MutationOrder_ShippingAddressInput,
+    MutationOrderUpdate_TransactionHashesInput,
+} from "../../generated/graphql";
+import type { CryptoChain } from "../../types";
 
 export type CreatedOrder = NonNullable<CreateOrderMutation["createOrder"]>;
 
@@ -10,4 +15,12 @@ export type SubmittedOrder = {
 export type OrderFormValues = {
     customerEmail: string;
     shippingAddress: MutationOrder_ShippingAddressInput;
+};
+
+export type TransactionHashUpdateRow = MutationOrderUpdate_TransactionHashesInput;
+
+export type SaveTransactionHashParams = {
+    entry: SubmittedOrder;
+    chain: CryptoChain;
+    txHash: string;
 };

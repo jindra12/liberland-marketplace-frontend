@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DollarOutlined } from "@ant-design/icons";
-import { Alert, Button, Card, Divider, Flex, Grid, List, Tag, Typography } from "antd";
+import { Alert, Button, Card, Divider, Flex, Grid, List, Tag, Typography, message } from "antd";
 import {
     CRYPTO_CHAIN_LABELS,
     CRYPTO_CHAIN_TICKERS,
@@ -14,7 +14,16 @@ import {
 import { ThirdwebPayButton } from "../crypto/ThirdwebPayButton";
 import { SolanaPay } from "../crypto/SolanaPay";
 import { TronPaymentButton } from "../crypto/TronPaymentButton";
-import type { SubmittedOrder } from "./types";
+import { useUpdateOrderMutation } from "../hooks";
+import type { CryptoChain } from "../../types";
+import type { SaveTransactionHashParams, SubmittedOrder } from "./types";
+import {
+    appendTransactionHashRows,
+    buildPaymentKey,
+    collectProductIdsForChain,
+    replaceSubmittedOrderInList,
+    toExistingTransactionHashRows,
+} from "./utils";
 
 type OrderPaymentStepProps = {
     submittedOrders: SubmittedOrder[];
@@ -23,16 +32,18 @@ type OrderPaymentStepProps = {
     onAllPaymentsComplete: () => void;
 };
 
-const buildPaymentKey = (entry: SubmittedOrder, chain: "ethereum" | "solana" | "tron") => {
-    return `${entry.url}::${entry.order.id}::${chain}`;
-};
-
 export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = (props) => {
     const { lg } = Grid.useBreakpoint();
-    const [completedPaymentKeys, setCompletedPaymentKeys] = React.useState<Record<string, true>>({});
+    const updateOrderMutation = useUpdateOrderMutation();
+    const [submittedOrdersState, setSubmittedOrdersState] = React.useState<SubmittedOrder[]>(props.submittedOrders);
+    const [completedPaymentKeys, setCompletedPaymentKeys] = React.useState<Record<string, boolean>>({});
+
+    React.useEffect(() => {
+        setSubmittedOrdersState(props.submittedOrders);
+    }, [props.submittedOrders]);
 
     const requiredPaymentKeys = React.useMemo(() => {
-        return props.submittedOrders.reduce<string[]>((acc, entry) => {
+        return submittedOrdersState.reduce<string[]>((acc, entry) => {
             const chainPriceKeys = collectOrderChainPrices(entry.order)
                 .filter((chainPrice) => {
                     const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
@@ -43,29 +54,68 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
 
             return [...acc, ...chainPriceKeys];
         }, []);
-    }, [props.submittedOrders]);
+    }, [submittedOrdersState]);
 
     const markPaymentSubmitted = React.useCallback(
-        (entry: SubmittedOrder, chain: "ethereum" | "solana" | "tron") => {
+        (entry: SubmittedOrder, chain: CryptoChain) => {
             const key = buildPaymentKey(entry, chain);
             if (completedPaymentKeys[key]) {
                 return;
             }
 
-            const nextCompletedPaymentKeys: Record<string, true> = {
+            const nextCompletedPaymentKeys = {
                 ...completedPaymentKeys,
                 [key]: true,
             };
-
             setCompletedPaymentKeys(nextCompletedPaymentKeys);
 
             const allDone = requiredPaymentKeys.every((requiredKey) => Boolean(nextCompletedPaymentKeys[requiredKey]));
-
             if (allDone) {
                 props.onAllPaymentsComplete();
             }
         },
         [completedPaymentKeys, props, requiredPaymentKeys],
+    );
+
+    const saveTransactionHash = React.useCallback(
+        async ({ entry, chain, txHash }: SaveTransactionHashParams): Promise<boolean> => {
+            const orderId = entry.order.id;
+            const productIds = collectProductIdsForChain(entry.order, chain);
+            const existingRows = toExistingTransactionHashRows(entry.order);
+            const { nextRows } = appendTransactionHashRows({
+                existingRows,
+                productIds,
+                chain,
+                txHash,
+            });
+
+            try {
+                const result = await updateOrderMutation.mutateAsync({
+                    url: entry.url,
+                    orderId,
+                    draft: false,
+                    data: {
+                        transactionHashes: nextRows,
+                    },
+                });
+
+                const updatedOrder = result.updateOrder;
+                if (updatedOrder?.id) {
+                    setSubmittedOrdersState((prev) => replaceSubmittedOrderInList(prev, {
+                        url: entry.url,
+                        order: updatedOrder as SubmittedOrder["order"],
+                    }));
+                }
+
+                message.success(`Saved transaction hash for order ${orderId}`);
+                return true;
+            } catch (error) {
+                console.error(error);
+                message.error(`Could not save transaction hash for order ${orderId}`);
+                return false;
+            }
+        },
+        [updateOrderMutation],
     );
 
     return (
@@ -74,7 +124,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                 Orders submitted. Pay each order using the chain amount below.
             </Typography.Paragraph>
 
-            {props.submittedOrders.map((entry) => {
+            {submittedOrdersState.map((entry) => {
                 const chainPrices = collectOrderChainPrices(entry.order);
                 const orderTotal = formatUsdFromCents(entry.order.amount) || formatPriceFromCents(entry.order.amount, entry.order.currency);
                 return (
@@ -102,6 +152,22 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                     const expectedAmount = chainPrice.expectedNativeAmount;
                                     const hasExpectedAmount = expectedAmount && expectedAmount > 0;
                                     const canPay = Boolean(recipient && hasExpectedAmount);
+                                    const handleTransactionId = async (txHash: string) => {
+                                        const isSaved = await saveTransactionHash({
+                                            entry,
+                                            chain: chainPrice.chain,
+                                            txHash,
+                                        });
+
+                                        if (!isSaved) {
+                                            return;
+                                        }
+
+                                        markPaymentSubmitted(
+                                            entry,
+                                            chainPrice.chain,
+                                        );
+                                    };
 
                                     return (
                                         <List.Item
@@ -119,9 +185,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={() => {
-                                                                    markPaymentSubmitted(entry, chainPrice.chain);
-                                                                }}
+                                                                setTransactionId={handleTransactionId}
                                                             />
                                                         )}
                                                         {chainPrice.chain === "solana" && (
@@ -134,9 +198,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={() => {
-                                                                    markPaymentSubmitted(entry, chainPrice.chain);
-                                                                }}
+                                                                setTransactionId={handleTransactionId}
                                                             />
                                                         )}
                                                         {chainPrice.chain === "tron" && (
@@ -149,9 +211,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 onPayerAddressSelected={async (wallet) => {
                                                                     await props.onPayerAddressSelected(entry, wallet);
                                                                 }}
-                                                                setTransactionId={() => {
-                                                                    markPaymentSubmitted(entry, chainPrice.chain);
-                                                                }}
+                                                                setTransactionId={handleTransactionId}
                                                             />
                                                         )}
                                                     </Flex>

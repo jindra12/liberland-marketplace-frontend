@@ -26,6 +26,7 @@ import {
     buildCommentData,
     getCommentCurrentUser,
     getCommentSectionStyles,
+    getCommentThemeVars,
 } from "../../utils";
 import {
     useCreateCommentMutation,
@@ -68,6 +69,8 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     const refetchComments = React.useCallback(async () => {
         await comments.refetch();
     }, [comments]);
+
+    const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
 
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
 
@@ -158,6 +161,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     return (
         <div
             className={["EntityCommentsSection", !auth.isAuthenticated && "EntityCommentsSection--anonymous", className].filter(Boolean).join(" ")}
+            style={commentThemeVars}
         >
             <Typography.Title level={4} className="EntityCommentsSection__title">
                 {title}

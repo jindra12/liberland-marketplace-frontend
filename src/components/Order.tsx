@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Alert, Button, Flex, Form, Result, Spin, Typography, message } from "antd";
-import type { UseQueryResult } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
-import type { ListProductsQuery, Order as OrderType } from "../generated/graphql";
+import type { Order as OrderType } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation, useDeleteCartMutation, useUpdateOrderMutation } from "./hooks";
@@ -46,20 +45,6 @@ const Order: React.FunctionComponent = () => {
 
     const prefillFirstName = profileGivenName || inferredNames.firstName;
     const prefillLastName = profileFamilyName || inferredNames.lastName;
-
-    const query = React.useMemo(() => ({
-        data: {
-            Products: {
-                docs: products,
-                hasNextPage: false,
-            },
-        },
-        isLoading,
-        refetch: async () => {
-            await refetch();
-            return undefined as unknown as any;
-        },
-    }) as UseQueryResult<ListProductsQuery, unknown>, [isLoading, products, refetch]);
 
     React.useEffect(() => {
         if (!showPaymentSuccess) {
@@ -258,7 +243,9 @@ const Order: React.FunctionComponent = () => {
             ) : (
                 <OrderCreateStep
                     form={form}
-                    query={query}
+                    products={products}
+                    isProductsLoading={isLoading}
+                    refetchProducts={refetch}
                     onSubmit={onSubmit}
                     page={page}
                     setPage={setPage}

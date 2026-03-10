@@ -76,7 +76,7 @@ export const AppHeader: React.FunctionComponent = () => {
                     <Space className="AppHeader__mobile" align="center">
                         <SearchButton />
                         <EndpointDrawerButton />
-                        <CartHeaderButton className="AppHeader__cartLink" />
+                        <CartHeaderButton />
                         <Button
                             className="AppHeader__burger"
                             type="text"
