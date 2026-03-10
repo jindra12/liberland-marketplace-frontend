@@ -13,7 +13,7 @@ type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
     identityUrl: string;
-    identityImageUrl?: string;
+    identityImageUrl?: string | null;
 };
 
 export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = ({

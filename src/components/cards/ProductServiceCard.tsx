@@ -1,8 +1,11 @@
 import * as React from "react";
+import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatPrice, getImage } from "../../utils";
+import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { AddToCartButton } from "../cart/AddToCartButton";
+import { CartItemCount } from "../cart/CartItemCount";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -29,17 +32,26 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             dataSource={items}
             locale={{ emptyText: "No products/services for this tribe" }}
             renderItem={(product) => {
-                const price = formatPrice(product.price?.amount, product.price?.currency);
+                const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                 const imageSrc = getImage(product) || getImage(product.company);
+                const orderNowLink = parseActionLink(product.url);
+                const canPurchase = isProductPurchasable(product);
+                const purchaseAction = canPurchase ? (
+                    <AddToCartButton
+                        key={`product-cart-${product.id}`}
+                        productId={product.id}
+                        serverURL={product.serverURL!}
+                        size="small"
+                        maxAvailable={product.inventory}
+                    />
+                ) : orderNowLink ? (
+                    <Button key={`product-order-${product.id}`} type="primary" size="small" href={orderNowLink}>
+                        Order Now!
+                    </Button>
+                ) : undefined;
                 return (
                     <List.Item
-                        actions={[
-                            (
-                                <Link key={`product-link-${product.id}`} to={`/products-services/${product.id}`}>
-                                    <Button type="primary">Details</Button>
-                                </Link>
-                            ),
-                        ]}
+                        actions={purchaseAction ? [purchaseAction] : []}
                     >
                         <div className="SplashEntityCard__itemBody">
                             <List.Item.Meta
@@ -63,7 +75,15 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                 {product.company?.name && (
                                     <Typography.Text type="secondary">{product.company.name}</Typography.Text>
                                 )}
-                                {price && <Tag color="gold">{price}</Tag>}
+                                {price && (
+                                    <Tag color="gold" icon={<DollarOutlined />}>
+                                        {`Price: ${price}`}
+                                    </Tag>
+                                )}
+                                <CartItemCount
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                />
                             </Space>
                         </div>
                     </List.Item>

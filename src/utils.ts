@@ -5,14 +5,20 @@ import mergeWith from "lodash-es/mergeWith";
 import maxBy from "lodash-es/maxBy";
 import {
     AuthProfile,
+    CartForRequiredChains,
+    ChainPrice,
     CommentCurrentUser,
     CommentDataItem,
     CommentDoc,
     CommentGrouping,
     CommentSectionStyles,
     CommentThemeVars,
+    CryptoChain,
+    CryptoWalletOwner,
     EntityCommentsThemeToken,
     ImageDoc,
+    OrderForPayments,
+    PurchasableProduct,
 } from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
 import { isCryptoCurrency } from "./components/publish/constants";
@@ -88,12 +94,184 @@ export const formatPrice = (amount?: number | null, currency?: string | null): s
     return `${cur} ${fmt}`;
 };
 
+export const fromCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return amount / 100;
+};
+
+export const toCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return Math.round(amount * 100);
+};
+
+export const formatPriceFromCents = (amount?: number | null, currency?: string | null): string | null => {
+    return formatPrice(fromCents(amount), currency);
+};
+
+export const formatUsdFromCents = (amount?: number | null): string | null => {
+    const dollars = fromCents(amount);
+    if (dollars == null) {
+        return null;
+    }
+    return dollars.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+};
+
 export const formatPositions = (positions?: number | null): string | null => {
     if (!positions || positions === 1) return null;
     const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;
     const value = positions.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
     return `${value} position${positions === 1 ? "" : "s"}`;
 };
+
+export const CRYPTO_CHAIN_LABELS: Record<CryptoChain, string> = {
+    ethereum: "Ethereum",
+    solana: "Solana",
+    tron: "Tron",
+};
+
+export const CRYPTO_CHAIN_TICKERS: Record<CryptoChain, string> = {
+    ethereum: "ETH",
+    solana: "SOL",
+    tron: "TRX",
+};
+const toFiniteNumber = (value?: string | number | null) => {
+    if (value === null || value === undefined) {
+        return undefined;
+    }
+
+    if (typeof value === "number") {
+        return Number.isFinite(value) ? value : undefined;
+    }
+
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+export const hasCryptoWallet = (entity?: CryptoWalletOwner | null) => {
+    const address = entity?.cryptoAddresses?.address;
+    return typeof address === "string" && address.trim().length > 0;
+};
+
+export const isProductPurchasable = (product?: PurchasableProduct | null) => {
+    if (!product || product.orderable !== true) {
+        return false;
+    }
+
+    return hasCryptoWallet(product) || hasCryptoWallet(product.company);
+};
+
+export const inferNameParts = (fullName?: string) => {
+    if (!fullName) {
+        return {
+            firstName: undefined,
+            lastName: undefined,
+        };
+    }
+
+    const [firstName, ...rest] = fullName.split(/\s+/);
+    const lastName = rest.join(" ");
+    return {
+        firstName,
+        lastName: lastName.length > 0 ? lastName : undefined,
+    };
+};
+
+export const toCryptoChain = (value: unknown): CryptoChain | undefined => {
+    const chain = typeof value === "string" ? value.toLowerCase() : "";
+    switch (chain) {
+        case "ethereum":
+        case "solana":
+        case "tron":
+            return chain;
+        default:
+            return undefined;
+    }
+};
+
+export const formatNativeCryptoAmount = (amount?: string | number | null) => {
+    const parsed = toFiniteNumber(amount);
+    if (parsed === undefined) {
+        return "N/A";
+    }
+    return parsed.toLocaleString("en-US", { maximumFractionDigits: 8 });
+};
+
+export const collectOrderChainPrices = (order: Pick<OrderForPayments, "cryptoPrices">): ChainPrice[] => {
+    const fromArray = (order.cryptoPrices || []).reduce<Partial<Record<CryptoChain, ChainPrice>>>((result, price) => {
+        const chain = toCryptoChain(price?.chain);
+        if (!chain) {
+            return result;
+        }
+
+        result[chain] = {
+            chain,
+            expectedNativeAmount: toFiniteNumber(price?.expectedNativeAmount),
+            nativePerStable: toFiniteNumber(price?.nativePerStable),
+            stablePerNative: toFiniteNumber(price?.stablePerNative),
+            fetchedAt: price?.fetchedAt,
+        };
+        return result;
+    }, {});
+
+    const chainOrder: CryptoChain[] = ["ethereum", "solana", "tron"];
+    return chainOrder
+        .map((chain) => fromArray[chain])
+        .filter((entry): entry is ChainPrice => Boolean(entry))
+        .filter((entry) => typeof entry.expectedNativeAmount === "number" && entry.expectedNativeAmount > 0);
+};
+
+export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "items">, chain: CryptoChain) => {
+    return (order.items || []).reduce<string | undefined>((resolved, item) => {
+        if (resolved) {
+            return resolved;
+        }
+
+        const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
+        const productAddressRaw = item?.product?.cryptoAddresses?.address;
+        const productAddress = typeof productAddressRaw === "string" ? productAddressRaw.trim() : "";
+        if (productChain === chain && productAddress) {
+            return productAddress;
+        }
+
+        const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
+        const companyAddressRaw = item?.product?.company?.cryptoAddresses?.address;
+        const companyAddress = typeof companyAddressRaw === "string" ? companyAddressRaw.trim() : "";
+        if (companyChain === chain && companyAddress) {
+            return companyAddress;
+        }
+
+        return undefined;
+    }, undefined);
+};
+
+export const collectRequiredChainsForCarts = (carts: CartForRequiredChains[]): CryptoChain[] => {
+    const chains = carts.reduce<Set<CryptoChain>>((acc, cart) => {
+        return (cart.items || []).reduce<Set<CryptoChain>>((innerAcc, item) => {
+            const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
+            if (productChain) {
+                innerAcc.add(productChain);
+            }
+
+            const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
+            if (companyChain) {
+                innerAcc.add(companyChain);
+            }
+
+            return innerAcc;
+        }, acc);
+    }, new Set<CryptoChain>());
+
+    return Array.from(chains.values());
+};
+
+export const buildOrderEntryKey = (url: string, orderId: string) => `${url}::${orderId}`;
 
 const employmentTypeLabels: Record<Job_EmploymentType, string> = {
     [Job_EmploymentType.FullTime]: "Full-time",

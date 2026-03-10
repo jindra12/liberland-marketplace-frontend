@@ -22,6 +22,10 @@ query SearchCompaniesBySecondaryIdentity(
       serverURL
       name
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       website
       phone
       email

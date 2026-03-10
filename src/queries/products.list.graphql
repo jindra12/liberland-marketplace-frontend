@@ -4,16 +4,20 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       id
       serverURL
       name
+      inventory
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       url
+      orderable
+      priceInUSDEnabled
+      priceInUSD
       properties {
         id
         key
         value
-      }
-      price {
-        amount
-        currency
       }
       image {
         id
@@ -29,6 +33,10 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
         serverURL
         name
         description
+        cryptoAddresses {
+          chain
+          address
+        }
         identity {
           id
           serverURL

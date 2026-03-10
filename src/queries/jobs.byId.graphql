@@ -40,6 +40,10 @@ query JobById($id: String!) {
       serverURL
       name
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       allowedIdentities {
         id
         serverURL

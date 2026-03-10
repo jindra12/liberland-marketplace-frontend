@@ -11,6 +11,10 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
       serverURL
       name
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       website
       phone
       email

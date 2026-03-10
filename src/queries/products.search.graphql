@@ -24,7 +24,12 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             serverURL
             name
             description
+            cryptoAddresses {
+          chain
+          address
+        }
             url
+            orderable
             properties {
               id
               key
@@ -44,6 +49,10 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
               serverURL
               name
               description
+              cryptoAddresses {
+          chain
+          address
+        }
               identity {
                 id
                 serverURL

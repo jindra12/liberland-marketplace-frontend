@@ -69,6 +69,10 @@ query SearchJobsBySecondaryIdentity(
         serverURL
         name
         description
+        cryptoAddresses {
+          chain
+          address
+        }
         allowedIdentities {
           id
           serverURL

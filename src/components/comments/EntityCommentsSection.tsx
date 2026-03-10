@@ -71,6 +71,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     }, [comments]);
 
     const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
+
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
 
     const onSubmitAction = React.useCallback(async (payload: CommentSubmitPayload) => {

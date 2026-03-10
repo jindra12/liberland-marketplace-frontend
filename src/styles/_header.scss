@@ -48,7 +48,7 @@
     }
 
     &__menu {
-        flex: 1;
+        flex: 0 1 auto;
         min-width: 0;
         justify-content: flex-end;
         border-bottom: 0;
@@ -63,7 +63,15 @@
         margin-left: auto;
     }
 
+    &__desktopNav {
+        margin-left: auto;
+    }
+
     &__burger {
+        border-radius: 12px;
+    }
+
+    &__quickActionsBtn {
         border-radius: 12px;
     }
 
@@ -82,8 +90,29 @@
         }
     }
 
+    &__cartLink {
+        display: inline-flex;
+        align-items: center;
+    }
+
     &__drawerNav {
         padding: 16px 24px;
+    }
+
+    &__desktopDrawerNav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__desktopCart {
+        display: block;
+        text-decoration: none;
+    }
+
+    &__drawerCart {
+        display: inline-flex;
+        margin-bottom: 8px;
     }
 
     &__drawerPublish {

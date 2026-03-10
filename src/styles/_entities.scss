@@ -178,6 +178,14 @@
     margin-bottom: 16px;
 }
 
+.ProductDetail__purchaseRow {
+    margin-top: 8px;
+}
+
+.ProductDetail__purchaseMeta {
+    flex: 1;
+}
+
 @media (max-width: 991px) {
     .EntityDetail__subLists {
         grid-template-columns: 1fr;

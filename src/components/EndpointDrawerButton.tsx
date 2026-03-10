@@ -10,6 +10,7 @@ import {
     Tag,
     Typography,
 } from "antd";
+import type { ButtonProps } from "antd";
 import { DownOutlined, GlobalOutlined, LinkOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
 import { useEndpointContext } from "./EndpointContext";
 
@@ -18,7 +19,19 @@ type AddEndpointValues = {
     name: string;
 };
 
-export const EndpointDrawerButton: React.FunctionComponent = () => {
+type EndpointDrawerButtonProps = {
+    type?: ButtonProps["type"];
+    block?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+};
+
+export const EndpointDrawerButton: React.FunctionComponent<EndpointDrawerButtonProps> = ({
+    type = "text",
+    block,
+    className,
+    children,
+}) => {
     const { urls, enabled, setUrls } = useEndpointContext();
     const [open, setOpen] = React.useState(false);
     const [form] = Form.useForm<AddEndpointValues>();
@@ -59,14 +72,18 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
     return (
         <>
             <Button
-                type="text"
+                type={type}
+                block={block}
+                className={className}
                 aria-label="Manage endpoints"
                 icon={<GlobalOutlined />}
                 onClick={(event) => {
                     event.preventDefault();
                     setOpen(true);
                 }}
-            />
+            >
+                {children}
+            </Button>
             <Drawer
                 title="Data Endpoints"
                 placement="right"
@@ -83,11 +100,11 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                     form={form}
                     layout="inline"
                     onFinish={addEndpoint}
-                    style={{ marginBottom: 16, width: "100%" }}
+                    className="EndpointDrawerButton__form"
                 >
                     <Form.Item
                         name="url"
-                        style={{ flex: 1, marginRight: 8, marginBottom: 8 }}
+                        className="EndpointDrawerButton__urlItem"
                         rules={[
                             { required: true, message: "URL is required." },
                             {
@@ -125,7 +142,7 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                             allowClear
                         />
                     </Form.Item>
-                    <Form.Item style={{ marginBottom: 8 }}>
+                    <Form.Item className="EndpointDrawerButton__submitItem">
                         <Button type="primary" icon={<PlusOutlined />} htmlType="submit">
                             Add
                         </Button>
@@ -137,7 +154,7 @@ export const EndpointDrawerButton: React.FunctionComponent = () => {
                         showIcon
                         type="warning"
                         message="No endpoints are enabled. Query results will be empty."
-                        style={{ marginBottom: 16 }}
+                        className="EndpointDrawerButton__warning"
                     />
                 )}
                 <List

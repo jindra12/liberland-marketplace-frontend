@@ -5,6 +5,10 @@ query CompanyById($id: String!) {
     name
     _status
     description
+    cryptoAddresses {
+          chain
+          address
+        }
     website
     phone
     email

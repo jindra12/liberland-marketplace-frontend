@@ -17,6 +17,7 @@ export const CompanyProductsServicesList: React.FunctionComponent<CompanyProduct
 
     return (
         <ProductServiceListInternal
+            source="query"
             page={page}
             query={query}
             setPage={setPage}

@@ -35,6 +35,10 @@ query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
               id
               serverURL
               name
+              cryptoAddresses {
+          chain
+          address
+        }
             }
             image {
               id

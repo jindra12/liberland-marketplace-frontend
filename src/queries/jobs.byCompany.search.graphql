@@ -47,6 +47,10 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
               serverURL
               name
               description
+              cryptoAddresses {
+          chain
+          address
+        }
               allowedIdentities {
                 id
                 serverURL

@@ -1,12 +1,24 @@
 import React from "react";
 import { Button, Dropdown } from "antd";
-import type { MenuProps } from "antd";
+import type { ButtonProps, MenuProps } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 import { SearchScope } from "../types";
 import { SearchContainer } from "./SearchContainer";
 
-export const SearchButton: React.FunctionComponent = () => {
+type SearchButtonProps = {
+    type?: ButtonProps["type"];
+    block?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+};
+
+export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
+    type = "text",
+    block,
+    className,
+    children,
+}) => {
     const [scope, setScope] = React.useState<SearchScope>();
     const items: { key: SearchScope, label: string }[] = [
         { key: "jobs", label: "Jobs" },
@@ -29,10 +41,14 @@ export const SearchButton: React.FunctionComponent = () => {
                 placement="bottomRight"
             >
                 <Button
-                    type="text"
+                    type={type}
+                    block={block}
+                    className={className}
                     icon={<SearchOutlined />}
                     onClick={(e) => e.preventDefault()}
-                />
+                >
+                    {children}
+                </Button>
             </Dropdown>
             {scope && (
                 <SearchContainer

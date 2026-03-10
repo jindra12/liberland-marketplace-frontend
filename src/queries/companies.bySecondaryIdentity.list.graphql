@@ -16,6 +16,10 @@ query ListCompaniesBySecondaryIdentity(
       serverURL
       name
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       website
       phone
       email

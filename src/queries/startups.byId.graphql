@@ -16,6 +16,10 @@ query StartupById($id: String!) {
       id
       serverURL
       name
+      cryptoAddresses {
+          chain
+          address
+        }
       email
     }
     createdBy {

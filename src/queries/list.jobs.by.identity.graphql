@@ -15,6 +15,10 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
         id
         serverURL
         name
+        cryptoAddresses {
+          chain
+          address
+        }
       }
       location
       employmentType
