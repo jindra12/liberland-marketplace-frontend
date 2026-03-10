@@ -1,7 +1,6 @@
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, Flex, List, Spin, Typography } from "antd";
-import uniqueId from "lodash-es/uniqueId";
 
 export interface AppListProps<TItem> {
     items: TItem[];
@@ -13,27 +12,26 @@ export interface AppListProps<TItem> {
     filters?: React.ReactNode;
     emptyText?: React.ReactNode;
     loading?: boolean;
+    endMessage?: React.ReactNode;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
-    const id = React.useMemo(() => uniqueId("infinite"), []);
     return (
-        <div id={id}>
-            <InfiniteScroll
-                dataLength={props.items.length}
-                next={props.next}
-                hasMore={props.hasMore}
-                loader={<Flex justify="center" align="center"><Spin /></Flex>}
-                endMessage={(
-                    <div>
-                        <Divider size="large" />
-                        <Typography.Text type="secondary">No more results</Typography.Text>
-                    </div>
-                )}
-                scrollableTarget={id}
-                refreshFunction={props.refetch}
-                className="InfinityScroll"
-            >
+        <InfiniteScroll
+            dataLength={props.items.length}
+            next={props.next}
+            hasMore={props.hasMore}
+            loader={<Flex justify="center" align="center"><Spin /></Flex>}
+            endMessage={props.endMessage ?? (
+                <div>
+                    <Divider size="large" />
+                    <Typography.Text type="secondary">No more results</Typography.Text>
+                </div>
+            )}
+            scrollThreshold={0.7}
+            refreshFunction={props.refetch}
+            className="InfinityScroll"
+        >
                 <List
                     itemLayout="vertical"
                     dataSource={props.items}
@@ -70,7 +68,6 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                         })()
                     )}
                 />
-            </InfiniteScroll>
-        </div>
+        </InfiniteScroll>
     );
 };

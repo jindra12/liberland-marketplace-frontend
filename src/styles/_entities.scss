@@ -1,5 +1,9 @@
 .EntityDetail__header {
     margin-bottom: 16px;
+
+    .ant-avatar img {
+        object-fit: contain;
+    }
 }
 
 .EntityDetail__title {

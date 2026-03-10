@@ -11,6 +11,8 @@ import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 import { getImage } from "../../utils";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
@@ -90,15 +92,29 @@ export interface StartupListInternalProps {
 }
 
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
-    const allItems = props.query.data?.Startups?.docs || [];
+    const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
+        allItems,
+        hasNextPage: Boolean(props.query.data?.Startups?.hasNextPage),
+        getIdentityIds: (startup) => {
+            const id = startup.identity?.id;
+            return id ? [id] : [];
+        },
+        isLoading: props.query.isLoading,
+        isFetching: props.query.isFetching,
+        page: props.page,
+        setPage: props.setPage,
+    });
 
     return (
         <AppList
-            hasMore={!props.query.data?.Startups || props.query.data.Startups.hasNextPage}
-            items={allItems}
+            hasMore={hasMore}
+            items={items}
             next={() => props.setPage(props.page + 1)}
             refetch={props.query.refetch}
             title="Ventures"
+            filters={filterNode}
+            endMessage={endMessage}
             renderItem={{
                 title: (startup) => (
                     <Flex justify="space-between" align="center" wrap>

@@ -8,11 +8,13 @@ Network Marketplace Frontend — a React app connecting users to syndicated free
 
 ## Commands
 
-- `npm run dev` — Start dev server (react-app-rewired)
-- `npm run build` — Production build
-- `npm test` — Run tests (react-app-rewired test, Jest + Testing Library)
-- `npm run codegen` — Regenerate GraphQL types/hooks from `.graphql` files (requires backend running)
-- `npm run deploy` — Deploy to Vercel
+Use **yarn** (not npm) for all package management and scripts.
+
+- `yarn dev` — Start dev server (react-app-rewired)
+- `yarn build` — Production build
+- `yarn test` — Run tests (react-app-rewired test, Jest + Testing Library)
+- `yarn codegen` — Regenerate GraphQL types/hooks from `.graphql` files (requires backend running)
+- `yarn deploy` — Deploy to Vercel
 - `postinstall` runs `patch-package` automatically
 
 ## Architecture
@@ -30,6 +32,10 @@ Components follow a three-layer pattern per entity (jobs, companies, identities,
 
 Search components (`SearchJobs.tsx`, etc.) live in `src/components/search/` and are orchestrated by `SearchContainer` with a shared `AutoSuggest` component.
 
+Card components live in `src/components/cards/` — reusable across homepage, detail pages, and search results. Homepage card grid (`IdentityMarketSection`) uses a `Row`/`Col` 2x2 layout (`xs={24} xl={12}`), same pattern reused on tribe detail pages.
+
+Delete mutations follow the pattern: `mutation DeleteX($id: String!) { deleteX(id: $id) { id } }` in `src/queries/`. `ProfileContent.tsx` uses these with `Popconfirm`.
+
 ### Routing
 React Router v7 with lazy-loaded routes defined in `App.tsx`. Entity routes follow `/:entity` (list) and `/:entity/:id` (detail) patterns.
 
@@ -45,6 +51,9 @@ Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/li
 - `src/generated/graphql.ts` — Auto-generated, do not edit manually
 - `src/components/AppList.tsx` — Reusable infinite scroll list
 - `src/components/Loader.tsx` — Query loading/error state wrapper
+- `src/components/publish/constants.ts` — Shared constants for publish forms (e.g., `currencyOptions`)
+- `src/components/publish/MarkdownEditor.tsx` — Thin wrapper around `@uiw/react-md-editor`
+- `src/components/cards/` — Reusable card components (`JobCard`, `ProductServiceCard`, `CompanyCard`, `StartupCard`)
 - `codegen.ts` — GraphQL code generator config
 - `config-overrides.js` — Webpack polyfill overrides
 
@@ -52,9 +61,11 @@ Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/li
 
 - Ant Design for all UI components; SCSS for custom styles (`src/styles/`)
 - **No inline styles** — always use CSS classes in SCSS files instead of `style={{...}}` props
+- Component styles follow BEM-like naming in SCSS (e.g., `Publish__back`, `Profile__listingsHeader`, `ImageUpload__label`)
 - React Query configured with all automatic refetching disabled (refetchOnMount, refetchOnReconnect, refetchOnWindowFocus all false)
 - TypeScript strict mode enabled
-- When adding new entities/queries: create `.graphql` file, run `npm run codegen`, then build components using the generated hooks
+- When adding new entities/queries: create `.graphql` file, run `yarn codegen`, then build components using the generated hooks
+- **Startup vs Venture naming:** Internal code uses "Startup" (file names, components, variables, types, hooks, CSS classes, cache keys). User-visible strings use "Venture" (labels, messages, headings, route paths `/ventures`). The `entityName` in `useEntityForm` must be `"Startup"` for cache invalidation; `FormSubmitButtons` gets `entityName="Venture"` for the UI label.
 
 ## Testing with Playwright
 

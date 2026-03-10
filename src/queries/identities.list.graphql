@@ -6,6 +6,7 @@ query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
       name
       description
       website
+      itemCount
       image {
         id
         url

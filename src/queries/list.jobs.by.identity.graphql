@@ -19,9 +19,22 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
           chain
           address
         }
+        image {
+          id
+          url
+        }
       }
       location
       employmentType
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+      }
       postedAt
       _status
     }

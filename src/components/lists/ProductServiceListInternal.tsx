@@ -5,12 +5,13 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
-import { IdentityFilter } from "../IdentityFilter";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
+import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 type ProductListItem =
@@ -41,19 +42,6 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     const screens = Grid.useBreakpoint();
     const addToCartSize = screens.lg ? "large" : "middle";
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>([]);
-    const allItems = props.source === "query"
-        ? (props.query.data?.Products?.docs || [])
-        : props.products;
-    const items = selectedIdentityIds.length === 0
-        ? allItems
-        : allItems.filter((product) => {
-            const identityId = product.company?.identity?.id;
-            return identityId ? selectedIdentityIds.includes(identityId) : false;
-        });
-    const hasMore = props.source === "query"
-        ? props.query.data?.Products?.hasNextPage || false
-        : props.hasNextPage;
     const isLoading = props.source === "query"
         ? props.query.isLoading
         : props.isLoading;
@@ -63,6 +51,24 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     const handleRefetch = () => {
         refetch();
     };
+    const allItems = useAccumulatedDocs(
+        props.source === "query"
+            ? (props.query.data?.Products?.docs || [])
+            : props.products,
+        props.page
+    );
+    const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
+        allItems,
+        hasNextPage: Boolean(props.source === "query" ? props.query.data?.Products?.hasNextPage : props.hasNextPage),
+        getIdentityIds: (product) => {
+            const id = product.company?.identity?.id;
+            return id ? [id] : [];
+        },
+        isLoading,
+        isFetching: props.source === "query" ? props.query.isFetching : props.isLoading,
+        page: props.page,
+        setPage: props.setPage,
+    });
 
     return (
         <AppList
@@ -72,7 +78,8 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             refetch={handleRefetch}
             loading={isLoading}
             title={props.title || "Products / Services"}
-            filters={<IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />}
+            filters={filterNode}
+            endMessage={endMessage}
             renderItem={{
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
