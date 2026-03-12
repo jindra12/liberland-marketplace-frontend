@@ -1,5 +1,4 @@
 import * as React from "react";
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spin } from "antd";
@@ -13,8 +12,6 @@ import { AuthContextProvider } from "./components/AuthContext";
 import { TronContext } from "./components/crypto/TronContext";
 import { SolanaContext } from "./components/crypto/SolanaContext";
 import { CartMutationProvider } from "./components/cart/CartMutationContext";
-
-import "./index.scss";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
@@ -37,6 +34,7 @@ const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 const Cart = React.lazy(() => import("./components/Cart"));
 const Order = React.lazy(() => import("./components/Order"));
+const NotFound = React.lazy(() => import("./components/NotFound"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
     <ErrorBoundary fallbackRender={({ error }) => (
@@ -57,8 +55,8 @@ const config = new QueryClient({
         },
     },
 });
-const root = ReactDOM.createRoot(document.querySelector("#root")!);
-root.render(
+
+const Main: React.FunctionComponent = () => (
     <QueryClientProvider client={config}>
         <EndpointContextProvider>
             <TronContext>
@@ -91,6 +89,7 @@ root.render(
                                                     <Route Component={suspense(Startup)} path="/ventures/:id" />
                                                     <Route Component={suspense(EditStartup)} path="/ventures/edit/:id" />
                                                     <Route Component={suspense(AuthCallback)} path="/auth/callback" />
+                                                    <Route Component={suspense(NotFound)} path="*" />
                                                 </Routes>
                                             </AppLayout>
                                         </React.Suspense>
@@ -104,3 +103,5 @@ root.render(
         </EndpointContextProvider>
     </QueryClientProvider>
 );
+
+export default Main;

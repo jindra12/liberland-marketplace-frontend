@@ -1,0 +1,18 @@
+diff --git a/node_modules/react-comments-section/dist/index.modern.js b/node_modules/react-comments-section/dist/index.modern.js
+index 98d033a..00ddac0 100644
+--- a/node_modules/react-comments-section/dist/index.modern.js
++++ b/node_modules/react-comments-section/dist/index.modern.js
+@@ -1,13 +1,10 @@
+ import React__default, { createContext, useState, useEffect, useRef, useContext, createElement } from 'react';
+ import Picker from 'emoji-picker-react';
+-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+ import { EditorState, ContentState, convertToRaw } from 'draft-js';
+ import { Editor } from 'react-draft-wysiwyg';
+ import draftToHtml from 'draftjs-to-html';
+ import htmlToDraft from 'html-to-draftjs';
+ import { Menu, MenuItem } from '@szhsin/react-menu';
+-import '@szhsin/react-menu/dist/core.css';
+-import 'react-responsive-modal/styles.css';
+ import { Modal } from 'react-responsive-modal';
+ 
+ var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
