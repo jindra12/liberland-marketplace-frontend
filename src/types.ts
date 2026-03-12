@@ -216,7 +216,7 @@ export interface ConnectButtonProps {
 export type Chains = "Ethereum" | "Solana" | "Tron";
 
 export interface FormModel {
-    amount: string;
+    amount: bigint;
     orderId: string;
     recipient: string;
     transactionHash?: string;

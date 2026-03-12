@@ -14,6 +14,9 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       orderable
       priceInUSDEnabled
       priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       properties {
         id
         key

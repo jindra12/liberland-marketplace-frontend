@@ -10,6 +10,7 @@ import { SolanaButton } from "./SolanaButton";
 export interface SolanaConnectProps extends ConnectButtonProps {
     payment?: boolean;
     label?: React.ReactNode;
+    disabled?: boolean;
 }
 
 export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props) => {
@@ -41,6 +42,7 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
                     }}
                     label={props.label}
                     payment={props.payment}
+                    disabled={props.disabled}
                 />
             </Flex>
         </>

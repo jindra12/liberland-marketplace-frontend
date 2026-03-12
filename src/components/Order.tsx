@@ -232,10 +232,6 @@ const Order: React.FunctionComponent = () => {
                 <OrderPaymentStep
                     submittedOrders={submittedOrders}
                     onPayerAddressSelected={updatePayerAddress}
-                    onBackToOrderForm={() => {
-                        setShowPaymentSuccess(false);
-                        setSubmittedOrders([]);
-                    }}
                     onAllPaymentsComplete={() => {
                         setShowPaymentSuccess(true);
                     }}

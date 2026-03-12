@@ -1,5 +1,5 @@
-query ProductById($id: String!) {
-  Product(id: $id) {
+query ProductById($id: String!, $draft: Boolean) {
+  Product(id: $id, draft: $draft) {
     id
     inventory
     enableVariants
@@ -26,6 +26,9 @@ query ProductById($id: String!) {
     }
     priceInUSDEnabled
     priceInUSD
+    priceInETH
+    priceInSOL
+    priceInTRX
     serverURL
     name
     companyIdentityId

@@ -12,9 +12,10 @@ import { Result } from "antd";
 import message from "antd/es/message";
 import { FormModel } from "../../types";
 import { SolanaConnect } from "./SolanaConnect";
+import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 
 export interface SolanaPayProps {
-    setTransactionId: (txId: string) => void,
+    setTransactionId: (txId: string) => Promise<void>,
     model: FormModel;
     onPayerAddressSelected?: (address: string) => void;
 }
@@ -36,6 +37,7 @@ const connection = new Connection(process.env.REACT_APP_HELIUS!, "confirmed");
 export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     const [sender, setSender] = React.useState<string>();
     const { sendTransaction, connected, connect } = useWallet();
+    const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
 
     React.useEffect(() => {
         if (sender) {
@@ -47,13 +49,17 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     const pay = useMutation({
         mutationKey: ["onpay"],
         mutationFn: async () => {
+            if (isPaymentPending) {
+                return;
+            }
+
+            setIsPaymentPending(true);
             try {
                 if (!connected) {
                     await connect();
                 }
                 const recipient = new PublicKey(props.model.recipient);
-                // @solana/pay native SOL transfers allow max 9 decimal places.
-                const amount = BigNumber(props.model.amount).decimalPlaces(9, BigNumber.ROUND_DOWN);
+                const amount = new BigNumber(props.model.amount.toString()).div("1000000000");
                 const reference = await getSolanaOrderReference(props.model.orderId);
                 const message = "LiberStake transfer from Solana";
                 const transaction = await createTransfer(
@@ -79,17 +85,19 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                     },
                     "confirmed",
                 );
-                props.setTransactionId(signature);
+                await props.setTransactionId(signature);
             } catch (e) {
                 console.error(e);
                 message.error("Transaction failed");
                 throw e;
+            } finally {
+                setIsPaymentPending(false);
             }
         }
     });
     return (
         <>
-            <Flex wrap gap="15px" justify="center" align="center">
+            <Flex wrap gap="15px" justify="center" align="center" className="CryptoPaymentGroup">
                 {sender && (
                     <Button
                         icon={pay.isPending
@@ -97,7 +105,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                             : <Image src={require("../../assets/solana.svg").default} width="22px" height="22px" preview={false} />}
                         className="SolanaButton SolanaButton--payment SolanaButton--main"
                         type="primary"
-                        disabled={pay.isPending || pay.isSuccess}
+                        disabled={pay.isPending || pay.isSuccess || isPaymentPending}
                         onClick={() => pay.mutate()}
                     >
                         {pay.isPending ? "Loading..." : "Pay"}
@@ -107,6 +115,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                     selectWallet={(address) => setSender(address)}
                     payment
                     label="Connect wallet"
+                    disabled={pay.isPending || isPaymentPending}
                 />
             </Flex>
             {pay.isError && (

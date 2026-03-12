@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, ConfigProvider, Form, InputNumber, Space, message } from "antd";
-import { CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { CloseOutlined, MinusOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import type { ButtonProps } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
@@ -10,6 +10,7 @@ import {
     CART_SECRETS_INDEX_KEY,
     CartSecretEntry,
 } from "./cartSecrets";
+import { useCartMutationContext } from "./CartMutationContext";
 
 type AddToCartButtonProps = {
     productId: string;
@@ -41,7 +42,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     );
     const createCart = useCreateCartMutation();
     const updateCart = useUpdateCartMutation();
-    const [isLoading, setIsLoading] = React.useState(false);
+    const { isMutating, setIsMutating } = useCartMutationContext();
     const quantityInputClassName = [
         "AddToCartButton__quantity",
         size === "small" ? "AddToCartButton__quantity--small" : "AddToCartButton__quantity--default",
@@ -53,6 +54,9 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     ));
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
+    const watchedQuantity = Form.useWatch("quantity", form);
+    const inputQuantity = typeof watchedQuantity === "number" && watchedQuantity > 0 ? watchedQuantity : 1;
+    const shouldRemovePartially = hasItemInCart && inputQuantity < currentItemQuantity;
     const remainingQuantity = typeof maxAvailable === "number"
         ? Math.max(0, maxAvailable - currentItemQuantity)
         : undefined;
@@ -133,16 +137,31 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         await cartQuery.refetch();
     };
 
-    const removeItemFromExistingCart = async (existingCart: Cart) => {
+    const removeItemFromExistingCart = async (existingCart: Cart, quantityToRemove: number) => {
         const itemsByKey = toItemsByKey(existingCart);
 
         const productKey = `${productId}::${variantId ?? ""}`;
-        delete itemsByKey[productKey];
+        const cartItem = itemsByKey[productKey];
+        const currentQuantity = cartItem?.quantity ?? 0;
+
+        if (!cartItem || currentQuantity <= 0) {
+            return;
+        }
+
+        if (quantityToRemove >= currentQuantity) {
+            delete itemsByKey[productKey];
+        } else {
+            cartItem.quantity = currentQuantity - quantityToRemove;
+        }
 
         await updateExistingCartItems(existingCart, itemsByKey);
     };
 
     const handleFinish = async (values: { quantity?: number }) => {
+        if (isMutating) {
+            return;
+        }
+
         if (remainingQuantity !== undefined && remainingQuantity <= 0) {
             messageApi.info("No more inventory available");
             return;
@@ -153,8 +172,8 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
             ? Math.min(requestedQuantity, remainingQuantity)
             : requestedQuantity;
 
+        setIsMutating(true);
         try {
-            setIsLoading(true);
             await addItemToCart(quantity);
             await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
             messageApi.success("Added to cart");
@@ -164,19 +183,24 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                 : "Could not add product to cart";
             messageApi.error(`Could not add product to cart: ${errorMessage}`);
         } finally {
-            setIsLoading(false);
+            setIsMutating(false);
         }
     };
 
     const handleRemove = async () => {
-        try {
-            setIsLoading(true);
-            if (!existingCart?.id) {
-                messageApi.info("Item is not in cart");
-                return;
-            }
+        if (isMutating) {
+            return;
+        }
 
-            await removeItemFromExistingCart(existingCart as Cart);
+        if (!existingCart?.id) {
+            messageApi.info("Item is not in cart");
+            return;
+        }
+
+        setIsMutating(true);
+        try {
+            const quantityToRemove = shouldRemovePartially ? inputQuantity : currentItemQuantity;
+            await removeItemFromExistingCart(existingCart as Cart, quantityToRemove);
             await cartQuery.refetch();
             await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
             messageApi.success("Removed from cart");
@@ -186,7 +210,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                 : "Could not remove product from cart";
             messageApi.error(`Could not remove product from cart: ${errorMessage}`);
         } finally {
-            setIsLoading(false);
+            setIsMutating(false);
         }
     };
 
@@ -211,7 +235,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                             precision={0}
                             size={size}
                             className={quantityInputClassName}
-                            disabled={remainingQuantity !== undefined && remainingQuantity <= 0}
+                            disabled={isMutating || (remainingQuantity !== undefined && remainingQuantity <= 0)}
                         />
                     </Form.Item>
                     <Button
@@ -219,8 +243,8 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                         size={size}
                         icon={<ShoppingCartOutlined />}
                         htmlType="submit"
-                        loading={isLoading}
-                        disabled={remainingQuantity !== undefined && remainingQuantity <= 0}
+                        loading={isMutating}
+                        disabled={isMutating || (remainingQuantity !== undefined && remainingQuantity <= 0)}
                     >
                         Buy
                     </Button>
@@ -228,9 +252,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                         <Button
                             size={size}
                             danger
-                            icon={<CloseOutlined />}
+                            icon={shouldRemovePartially ? <MinusOutlined /> : <CloseOutlined />}
                             onClick={handleRemove}
-                            loading={isLoading}
+                            loading={isMutating}
+                            disabled={isMutating}
                         />
                     )}
                 </Space.Compact>

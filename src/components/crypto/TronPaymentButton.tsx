@@ -7,15 +7,17 @@ import Flex from "antd/es/flex";
 import message from "antd/es/message";
 import Result from "antd/es/result";
 import { FormModel } from "../../types";
+import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 
 export interface TronPaymentButtonProps {
     formModel: FormModel;
-    setTransactionId: (txId: string) => void;
+    setTransactionId: (txId: string) => Promise<void>;
     onPayerAddressSelected?: (address: string) => void;
 }
 
 export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> = (props) => {
     const { address, connected, signTransaction } = useWallet();
+    const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
     const canPay = address && connected && window.tronWeb;
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -28,19 +30,24 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     }, [address, connected]);
 
     const sendPayment = async () => {
+        if (isPaymentPending) {
+            return;
+        }
+
         if (window.tronWeb && canPay) {
             try {
+                setIsPaymentPending(true);
                 setLoading(true);
                 setErrorMessage(null);
-                const amountInSun = window.tronWeb.toSun(Number(props.formModel.amount));
+                const amountInSun = props.formModel.amount.toString();
                 const unsignedTx = await window.tronWeb.transactionBuilder.sendTrx(
                     props.formModel.recipient,
-                    Number(amountInSun),
+                    amountInSun as unknown as number,
                     address,
                 );
                 const signedTx = await signTransaction(unsignedTx);
                 const transaction = await window.tronWeb.trx.sendRawTransaction(signedTx);
-                props.setTransactionId(transaction.txid);
+                await props.setTransactionId(transaction.txid);
             } catch (err) {
                 console.error(err);
                 const nextErrorMessage = "Transaction failed";
@@ -48,13 +55,14 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                 message.error(nextErrorMessage);
             } finally {
                 setLoading(false);
+                setIsPaymentPending(false);
             }
         }
     };
     const buttonProps: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement> = {
         type: "button",
         className: "TronButton TronButton--payment",
-        disabled: loading,
+        disabled: loading || isPaymentPending,
         icon: require("../../assets/tron.svg").default,
     };
 
@@ -65,13 +73,14 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
             justify="center"
             align="center"
             flex={1}
-            className="TronwebModal TronwebModal--payment"
+            className="CryptoPaymentGroup TronwebModal TronwebModal--payment"
         >
             {canPay && (
                 <Button
                     icon={<Image src={require("../../assets/tron.svg").default} width="22px" height="22px" preview={false} />}
                     className="TronButton TronButton--payment TronButton--main"
                     loading={loading}
+                    disabled={isPaymentPending}
                     onClick={sendPayment}
                 >
                     Pay

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createThirdwebClient, prepareTransaction, toWei } from "thirdweb";
+import { createThirdwebClient, prepareTransaction } from "thirdweb";
 import { ConnectButton, useActiveAccount, useSendAndConfirmTransaction } from "thirdweb/react";
 import { mainnet } from "thirdweb/chains";
 import Flex from "antd/es/flex";
@@ -11,6 +11,7 @@ import Result from "antd/es/result";
 import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
 import { FormModel } from "../../types";
 import { thirdwebWallets } from "../../constants";
+import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 
 const client = createThirdwebClient({
     clientId: process.env.REACT_APP_THIRDWEB!,
@@ -18,7 +19,7 @@ const client = createThirdwebClient({
 
 export interface ThirdwebPayButtonProps {
     formModel: FormModel;
-    setTransactionId: (txId: string) => void;
+    setTransactionId: (txId: string) => Promise<void>;
     onPayerAddressSelected?: (address: string) => void;
 }
 
@@ -26,6 +27,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     const account = useActiveAccount();
     const { mutateAsync, isPending, isError, isSuccess } = useSendAndConfirmTransaction();
     const { onPayerAddressSelected } = props;
+    const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
 
     React.useEffect(() => {
         if (account?.address) {
@@ -35,25 +37,32 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     }, [account?.address]);
 
     const onPay = async () => {
+        if (isPaymentPending) {
+            return;
+        }
+
+        setIsPaymentPending(true);
         try {
             const tx = prepareTransaction({
                 chain: mainnet,
                 client,
                 to: props.formModel.recipient,
-                value: toWei(props.formModel.amount),
+                value: props.formModel.amount,
             });
             const {
                 transactionHash
             } = await mutateAsync(tx);
-            props.setTransactionId(transactionHash);
+            await props.setTransactionId(transactionHash);
         } catch (e) {
             console.error(e);
             message.error("Transaction failed");
+        } finally {
+            setIsPaymentPending(false);
         }
     };
 
     return (
-        <Flex wrap gap="15px" justify="center" align="center" flex={1}>
+        <Flex wrap gap="15px" justify="center" align="center" flex={1} className="CryptoPaymentGroup">
             <ConnectButton
                 client={client}
                 chain={mainnet}
@@ -66,7 +75,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                     htmlType="button"
                     className="ThirdwebPay ThirdwebPay--payment"
                     onClick={onPay}
-                    disabled={isPending || isSuccess}
+                    disabled={isPending || isSuccess || isPaymentPending}
                     icon={isPending ? <Spin /> : <MoneyCollectOutlined />}
                 >
                     Pay with Ethereum

@@ -1,12 +1,10 @@
 import * as React from "react";
 import { DollarOutlined } from "@ant-design/icons";
-import { Alert, Button, Card, Divider, Flex, Grid, List, Tag, Typography, message } from "antd";
+import { Alert, Card, Divider, Flex, Grid, List, Result, Tag, Typography, message } from "antd";
 import {
     CRYPTO_CHAIN_LABELS,
     CRYPTO_CHAIN_TICKERS,
     buildOrderEntryKey,
-    collectOrderChainPrices,
-    formatNativeCryptoAmount,
     formatPriceFromCents,
     formatUsdFromCents,
     resolveOrderRecipientAddress,
@@ -20,15 +18,17 @@ import type { SaveTransactionHashParams, SubmittedOrder } from "./types";
 import {
     appendTransactionHashRows,
     buildPaymentKey,
+    collectOrderChainPaymentAmounts,
     collectProductIdsForChain,
+    type ChainPaymentAmount,
     replaceSubmittedOrderInList,
     toExistingTransactionHashRows,
 } from "./utils";
+import { OrderPaymentLockProvider } from "./OrderPaymentLockContext";
 
 type OrderPaymentStepProps = {
     submittedOrders: SubmittedOrder[];
     onPayerAddressSelected: (entry: SubmittedOrder, walletAddress: string) => Promise<void>;
-    onBackToOrderForm: () => void;
     onAllPaymentsComplete: () => void;
 };
 
@@ -44,13 +44,12 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
 
     const requiredPaymentKeys = React.useMemo(() => {
         return submittedOrdersState.reduce<string[]>((acc, entry) => {
-            const chainPriceKeys = collectOrderChainPrices(entry.order)
-                .filter((chainPrice) => {
-                    const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
-                    const expectedAmount = chainPrice.expectedNativeAmount;
-                    return Boolean(recipient && expectedAmount && expectedAmount > 0);
+            const chainPriceKeys = collectOrderChainPaymentAmounts(entry.order)
+                .filter((chainPayment) => {
+                    const recipient = resolveOrderRecipientAddress(entry.order, chainPayment.chain);
+                    return Boolean(recipient && chainPayment.amountInSmallestUnit > 0n);
                 })
-                .map((chainPrice) => buildPaymentKey(entry, chainPrice.chain));
+                .map((chainPayment) => buildPaymentKey(entry, chainPayment.chain));
 
             return [...acc, ...chainPriceKeys];
         }, []);
@@ -59,22 +58,25 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
     const markPaymentSubmitted = React.useCallback(
         (entry: SubmittedOrder, chain: CryptoChain) => {
             const key = buildPaymentKey(entry, chain);
-            if (completedPaymentKeys[key]) {
-                return;
-            }
+            setCompletedPaymentKeys((previous) => {
+                if (previous[key]) {
+                    return previous;
+                }
 
-            const nextCompletedPaymentKeys = {
-                ...completedPaymentKeys,
-                [key]: true,
-            };
-            setCompletedPaymentKeys(nextCompletedPaymentKeys);
+                const nextCompletedPaymentKeys = {
+                    ...previous,
+                    [key]: true,
+                };
 
-            const allDone = requiredPaymentKeys.every((requiredKey) => Boolean(nextCompletedPaymentKeys[requiredKey]));
-            if (allDone) {
-                props.onAllPaymentsComplete();
-            }
+                const allDone = requiredPaymentKeys.every((requiredKey) => Boolean(nextCompletedPaymentKeys[requiredKey]));
+                if (allDone) {
+                    props.onAllPaymentsComplete();
+                }
+
+                return nextCompletedPaymentKeys;
+            });
         },
-        [completedPaymentKeys, props, requiredPaymentKeys],
+        [props, requiredPaymentKeys],
     );
 
     const saveTransactionHash = React.useCallback(
@@ -119,13 +121,13 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
     );
 
     return (
-        <>
+        <OrderPaymentLockProvider>
             <Typography.Paragraph type="secondary">
                 Orders submitted. Pay each order using the chain amount below.
             </Typography.Paragraph>
 
             {submittedOrdersState.map((entry) => {
-                const chainPrices = collectOrderChainPrices(entry.order);
+                const chainPayments = collectOrderChainPaymentAmounts(entry.order);
                 const orderTotal = formatUsdFromCents(entry.order.amount) || formatPriceFromCents(entry.order.amount, entry.order.currency);
                 return (
                     <Card
@@ -137,25 +139,26 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                             </Tag>
                         )}
                     >
-                        {chainPrices.length === 0 ? (
+                        {chainPayments.length === 0 ? (
                             <Alert
                                 showIcon
                                 type="warning"
-                                message="No crypto prices available for this order yet."
+                                message="No chain-native prices available for this order."
                             />
                         ) : (
                             <List
-                                dataSource={chainPrices}
+                                dataSource={chainPayments}
                                 itemLayout={lg ? "horizontal" : "vertical"}
-                                renderItem={(chainPrice) => {
-                                    const recipient = resolveOrderRecipientAddress(entry.order, chainPrice.chain);
-                                    const expectedAmount = chainPrice.expectedNativeAmount;
-                                    const hasExpectedAmount = expectedAmount && expectedAmount > 0;
+                                renderItem={(chainPayment: ChainPaymentAmount) => {
+                                    const recipient = resolveOrderRecipientAddress(entry.order, chainPayment.chain);
+                                    const hasExpectedAmount = chainPayment.amountInSmallestUnit > 0n;
                                     const canPay = Boolean(recipient && hasExpectedAmount);
+                                    const paymentKey = buildPaymentKey(entry, chainPayment.chain);
+                                    const isPaymentCompleted = Boolean(completedPaymentKeys[paymentKey]);
                                     const handleTransactionId = async (txHash: string) => {
                                         const isSaved = await saveTransactionHash({
                                             entry,
-                                            chain: chainPrice.chain,
+                                            chain: chainPayment.chain,
                                             txHash,
                                         });
 
@@ -165,20 +168,30 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
 
                                         markPaymentSubmitted(
                                             entry,
-                                            chainPrice.chain,
+                                            chainPayment.chain,
                                         );
                                     };
 
                                     return (
                                         <List.Item
                                             actions={[
-                                                canPay ? (
-                                                    <Flex key={`${entry.order.id}-${chainPrice.chain}`} align="center" gap={8} vertical>
+                                                isPaymentCompleted ? (
+                                                    <div
+                                                        key={`${entry.order.id}-${chainPayment.chain}-success`}
+                                                        className="CryptoPaymentGroup"
+                                                    >
+                                                        <Result
+                                                            status="success"
+                                                            title="Payment submitted"
+                                                        />
+                                                    </div>
+                                                ) : canPay ? (
+                                                    <Flex key={`${entry.order.id}-${chainPayment.chain}`} align="center" gap={8} vertical>
                                                         {!lg && <Divider />}
-                                                        {chainPrice.chain === "ethereum" && (
+                                                        {chainPayment.chain === "ethereum" && (
                                                             <ThirdwebPayButton
                                                                 formModel={{
-                                                                    amount: String(expectedAmount),
+                                                                    amount: chainPayment.amountInSmallestUnit,
                                                                     orderId: entry.order.id,
                                                                     recipient: recipient!,
                                                                 }}
@@ -188,10 +201,10 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 setTransactionId={handleTransactionId}
                                                             />
                                                         )}
-                                                        {chainPrice.chain === "solana" && (
+                                                        {chainPayment.chain === "solana" && (
                                                             <SolanaPay
                                                                 model={{
-                                                                    amount: String(expectedAmount),
+                                                                    amount: chainPayment.amountInSmallestUnit,
                                                                     orderId: entry.order.id,
                                                                     recipient: recipient!,
                                                                 }}
@@ -201,10 +214,10 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                                 setTransactionId={handleTransactionId}
                                                             />
                                                         )}
-                                                        {chainPrice.chain === "tron" && (
+                                                        {chainPayment.chain === "tron" && (
                                                             <TronPaymentButton
                                                                 formModel={{
-                                                                    amount: String(expectedAmount),
+                                                                    amount: chainPayment.amountInSmallestUnit,
                                                                     orderId: entry.order.id,
                                                                     recipient: recipient!,
                                                                 }}
@@ -216,25 +229,22 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                                                         )}
                                                     </Flex>
                                                 ) : !hasExpectedAmount ? (
-                                                    <Tag key={`${entry.order.id}-${chainPrice.chain}-unpriced`} color="warning">
+                                                    <Tag key={`${entry.order.id}-${chainPayment.chain}-unpriced`} color="warning">
                                                         Price unavailable for this chain
                                                     </Tag>
                                                 ) : (
-                                                    <Tag key={`${entry.order.id}-${chainPrice.chain}-missing`} color="error">
+                                                    <Tag key={`${entry.order.id}-${chainPayment.chain}-missing`} color="error">
                                                         Missing recipient wallet for this chain
                                                     </Tag>
                                                 ),
                                             ]}
                                         >
                                             <List.Item.Meta
-                                                title={`${CRYPTO_CHAIN_LABELS[chainPrice.chain]} (${CRYPTO_CHAIN_TICKERS[chainPrice.chain]})`}
+                                                title={`${CRYPTO_CHAIN_LABELS[chainPayment.chain]} (${CRYPTO_CHAIN_TICKERS[chainPayment.chain]})`}
                                                 description={(
                                                     <Flex vertical gap={4}>
                                                         <Typography.Text>
-                                                            Amount due: {formatNativeCryptoAmount(expectedAmount)} {CRYPTO_CHAIN_TICKERS[chainPrice.chain]}
-                                                        </Typography.Text>
-                                                        <Typography.Text type="secondary">
-                                                            Rate: {formatNativeCryptoAmount(chainPrice.stablePerNative)} USD per {CRYPTO_CHAIN_TICKERS[chainPrice.chain]}
+                                                            Amount due: {chainPayment.amount} {CRYPTO_CHAIN_TICKERS[chainPayment.chain]}
                                                         </Typography.Text>
                                                         {recipient && (
                                                             <Typography.Text type="secondary">
@@ -252,12 +262,6 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                     </Card>
                 );
             })}
-
-            <Flex justify="space-between" wrap gap={12}>
-                <Button onClick={props.onBackToOrderForm}>
-                    Back to order form
-                </Button>
-            </Flex>
-        </>
+        </OrderPaymentLockProvider>
     );
 };

@@ -18,6 +18,9 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
       companyIdentityId
       priceInUSDEnabled
       priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       company {
         id
         serverURL

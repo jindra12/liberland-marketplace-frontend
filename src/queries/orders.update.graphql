@@ -37,6 +37,9 @@ mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft
         id
         serverURL
         name
+        priceInETH
+        priceInSOL
+        priceInTRX
         cryptoAddresses {
           chain
           address

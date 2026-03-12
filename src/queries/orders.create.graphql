@@ -37,6 +37,9 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
         id
         serverURL
         name
+        priceInETH
+        priceInSOL
+        priceInTRX
         cryptoAddresses {
           chain
           address

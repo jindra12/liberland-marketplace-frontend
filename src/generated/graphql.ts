@@ -32432,6 +32432,9 @@ export type Product = {
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
+  priceInETH?: Maybe<Scalars['String']['output']>;
+  priceInSOL?: Maybe<Scalars['String']['output']>;
+  priceInTRX?: Maybe<Scalars['String']['output']>;
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
@@ -32498,6 +32501,9 @@ export type ProductVersion_Version = {
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
+  priceInETH?: Maybe<Scalars['String']['output']>;
+  priceInSOL?: Maybe<Scalars['String']['output']>;
+  priceInTRX?: Maybe<Scalars['String']['output']>;
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
@@ -32746,6 +32752,39 @@ export type Product_Orderable_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Product_PriceInEth_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_PriceInSol_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_PriceInTrx_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Product_PriceInUsdEnabled_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -32854,6 +32893,9 @@ export type Product_Where = {
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
+  priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
+  priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
@@ -32883,6 +32925,9 @@ export type Product_Where_And = {
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
+  priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
+  priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
@@ -32912,6 +32957,9 @@ export type Product_Where_Or = {
   inventory?: InputMaybe<Product_Inventory_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
+  priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
+  priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
   priceInUSD?: InputMaybe<Product_PriceInUsd_Operator>;
   priceInUSDEnabled?: InputMaybe<Product_PriceInUsdEnabled_Operator>;
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
@@ -32977,6 +33025,9 @@ export type ProductsDocAccessFields = {
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   orderable?: Maybe<ProductsDocAccessFields_Orderable>;
+  priceInETH?: Maybe<ProductsDocAccessFields_PriceInEth>;
+  priceInSOL?: Maybe<ProductsDocAccessFields_PriceInSol>;
+  priceInTRX?: Maybe<ProductsDocAccessFields_PriceInTrx>;
   priceInUSD?: Maybe<ProductsDocAccessFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
@@ -33414,6 +33465,90 @@ export type ProductsDocAccessFields_Orderable_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_PriceInEth = {
+  __typename?: 'ProductsDocAccessFields_priceInETH';
+  create?: Maybe<ProductsDocAccessFields_PriceInEth_Create>;
+  delete?: Maybe<ProductsDocAccessFields_PriceInEth_Delete>;
+  read?: Maybe<ProductsDocAccessFields_PriceInEth_Read>;
+  update?: Maybe<ProductsDocAccessFields_PriceInEth_Update>;
+};
+
+export type ProductsDocAccessFields_PriceInEth_Create = {
+  __typename?: 'ProductsDocAccessFields_priceInETH_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInEth_Delete = {
+  __typename?: 'ProductsDocAccessFields_priceInETH_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInEth_Read = {
+  __typename?: 'ProductsDocAccessFields_priceInETH_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInEth_Update = {
+  __typename?: 'ProductsDocAccessFields_priceInETH_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInSol = {
+  __typename?: 'ProductsDocAccessFields_priceInSOL';
+  create?: Maybe<ProductsDocAccessFields_PriceInSol_Create>;
+  delete?: Maybe<ProductsDocAccessFields_PriceInSol_Delete>;
+  read?: Maybe<ProductsDocAccessFields_PriceInSol_Read>;
+  update?: Maybe<ProductsDocAccessFields_PriceInSol_Update>;
+};
+
+export type ProductsDocAccessFields_PriceInSol_Create = {
+  __typename?: 'ProductsDocAccessFields_priceInSOL_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInSol_Delete = {
+  __typename?: 'ProductsDocAccessFields_priceInSOL_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInSol_Read = {
+  __typename?: 'ProductsDocAccessFields_priceInSOL_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInSol_Update = {
+  __typename?: 'ProductsDocAccessFields_priceInSOL_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInTrx = {
+  __typename?: 'ProductsDocAccessFields_priceInTRX';
+  create?: Maybe<ProductsDocAccessFields_PriceInTrx_Create>;
+  delete?: Maybe<ProductsDocAccessFields_PriceInTrx_Delete>;
+  read?: Maybe<ProductsDocAccessFields_PriceInTrx_Read>;
+  update?: Maybe<ProductsDocAccessFields_PriceInTrx_Update>;
+};
+
+export type ProductsDocAccessFields_PriceInTrx_Create = {
+  __typename?: 'ProductsDocAccessFields_priceInTRX_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInTrx_Delete = {
+  __typename?: 'ProductsDocAccessFields_priceInTRX_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInTrx_Read = {
+  __typename?: 'ProductsDocAccessFields_priceInTRX_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PriceInTrx_Update = {
+  __typename?: 'ProductsDocAccessFields_priceInTRX_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_PriceInUsd = {
   __typename?: 'ProductsDocAccessFields_priceInUSD';
   create?: Maybe<ProductsDocAccessFields_PriceInUsd_Create>;
@@ -33745,6 +33880,9 @@ export type ProductsFields = {
   inventory?: Maybe<ProductsFields_Inventory>;
   name?: Maybe<ProductsFields_Name>;
   orderable?: Maybe<ProductsFields_Orderable>;
+  priceInETH?: Maybe<ProductsFields_PriceInEth>;
+  priceInSOL?: Maybe<ProductsFields_PriceInSol>;
+  priceInTRX?: Maybe<ProductsFields_PriceInTrx>;
   priceInUSD?: Maybe<ProductsFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
@@ -34179,6 +34317,90 @@ export type ProductsFields_Orderable_Read = {
 
 export type ProductsFields_Orderable_Update = {
   __typename?: 'ProductsFields_orderable_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInEth = {
+  __typename?: 'ProductsFields_priceInETH';
+  create?: Maybe<ProductsFields_PriceInEth_Create>;
+  delete?: Maybe<ProductsFields_PriceInEth_Delete>;
+  read?: Maybe<ProductsFields_PriceInEth_Read>;
+  update?: Maybe<ProductsFields_PriceInEth_Update>;
+};
+
+export type ProductsFields_PriceInEth_Create = {
+  __typename?: 'ProductsFields_priceInETH_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInEth_Delete = {
+  __typename?: 'ProductsFields_priceInETH_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInEth_Read = {
+  __typename?: 'ProductsFields_priceInETH_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInEth_Update = {
+  __typename?: 'ProductsFields_priceInETH_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInSol = {
+  __typename?: 'ProductsFields_priceInSOL';
+  create?: Maybe<ProductsFields_PriceInSol_Create>;
+  delete?: Maybe<ProductsFields_PriceInSol_Delete>;
+  read?: Maybe<ProductsFields_PriceInSol_Read>;
+  update?: Maybe<ProductsFields_PriceInSol_Update>;
+};
+
+export type ProductsFields_PriceInSol_Create = {
+  __typename?: 'ProductsFields_priceInSOL_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInSol_Delete = {
+  __typename?: 'ProductsFields_priceInSOL_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInSol_Read = {
+  __typename?: 'ProductsFields_priceInSOL_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInSol_Update = {
+  __typename?: 'ProductsFields_priceInSOL_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInTrx = {
+  __typename?: 'ProductsFields_priceInTRX';
+  create?: Maybe<ProductsFields_PriceInTrx_Create>;
+  delete?: Maybe<ProductsFields_PriceInTrx_Delete>;
+  read?: Maybe<ProductsFields_PriceInTrx_Read>;
+  update?: Maybe<ProductsFields_PriceInTrx_Update>;
+};
+
+export type ProductsFields_PriceInTrx_Create = {
+  __typename?: 'ProductsFields_priceInTRX_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInTrx_Delete = {
+  __typename?: 'ProductsFields_priceInTRX_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInTrx_Read = {
+  __typename?: 'ProductsFields_priceInTRX_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PriceInTrx_Update = {
+  __typename?: 'ProductsFields_priceInTRX_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48138,6 +48360,9 @@ export type MutationProductInput = {
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
+  priceInETH?: InputMaybe<Scalars['String']['input']>;
+  priceInSOL?: InputMaybe<Scalars['String']['input']>;
+  priceInTRX?: InputMaybe<Scalars['String']['input']>;
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
@@ -48161,6 +48386,9 @@ export type MutationProductUpdateInput = {
   inventory?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
+  priceInETH?: InputMaybe<Scalars['String']['input']>;
+  priceInSOL?: InputMaybe<Scalars['String']['input']>;
+  priceInTRX?: InputMaybe<Scalars['String']['input']>;
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
@@ -50653,6 +50881,39 @@ export type VersionsProduct_Version__Orderable_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsProduct_Version__PriceInEth_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__PriceInSol_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__PriceInTrx_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsProduct_Version__PriceInUsdEnabled_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -50766,6 +51027,9 @@ export type VersionsProduct_Where = {
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
+  version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
+  version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
@@ -50800,6 +51064,9 @@ export type VersionsProduct_Where_And = {
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
+  version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
+  version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
@@ -50834,6 +51101,9 @@ export type VersionsProduct_Where_Or = {
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
+  version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
+  version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
   version__priceInUSD?: InputMaybe<VersionsProduct_Version__PriceInUsd_Operator>;
   version__priceInUSDEnabled?: InputMaybe<VersionsProduct_Version__PriceInUsdEnabled_Operator>;
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
@@ -51633,7 +51903,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -51970,7 +52240,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -51986,7 +52256,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -51995,7 +52265,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52005,7 +52275,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52035,10 +52305,11 @@ export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -52062,7 +52333,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52228,6 +52499,9 @@ export const CartBySecretDocument = `
           url
           priceInUSD
           priceInUSDEnabled
+          priceInETH
+          priceInSOL
+          priceInTRX
           image {
             id
             url
@@ -54567,6 +54841,9 @@ export const ListProductsByIdentityDocument = `
       companyIdentityId
       priceInUSDEnabled
       priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       company {
         id
         serverURL
@@ -54706,6 +54983,9 @@ export const CreateOrderDocument = `
         id
         serverURL
         name
+        priceInETH
+        priceInSOL
+        priceInTRX
         cryptoAddresses {
           chain
           address
@@ -54796,6 +55076,9 @@ export const UpdateOrderDocument = `
         id
         serverURL
         name
+        priceInETH
+        priceInSOL
+        priceInTRX
         cryptoAddresses {
           chain
           address
@@ -54869,6 +55152,9 @@ export const ListProductsByCompanyDocument = `
       orderable
       priceInUSDEnabled
       priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       properties {
         id
         key
@@ -55080,8 +55366,8 @@ useListProductsByCreatorQuery.getKey = (variables?: ListProductsByCreatorQueryVa
 useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables, options);
 
 export const ProductByIdDocument = `
-    query ProductById($id: String!) {
-  Product(id: $id) {
+    query ProductById($id: String!, $draft: Boolean) {
+  Product(id: $id, draft: $draft) {
     id
     inventory
     enableVariants
@@ -55108,6 +55394,9 @@ export const ProductByIdDocument = `
     }
     priceInUSDEnabled
     priceInUSD
+    priceInETH
+    priceInSOL
+    priceInTRX
     serverURL
     name
     companyIdentityId
@@ -55267,6 +55556,9 @@ export const ListProductsDocument = `
       orderable
       priceInUSDEnabled
       priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       properties {
         id
         key
