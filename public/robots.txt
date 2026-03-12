@@ -1,3 +1,15 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /auth/callback
+Disallow: /cart
+Disallow: /order
+Disallow: /profile
+Disallow: /publish
+Disallow: /jobs/edit/
+Disallow: /companies/edit/
+Disallow: /products-services/edit/
+Disallow: /ventures/edit/
+Disallow: /404
+
+Sitemap: https://nswap.io/sitemap.xml
