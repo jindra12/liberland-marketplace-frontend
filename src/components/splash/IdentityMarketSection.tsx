@@ -61,24 +61,36 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
         },
         { enabled: Boolean(identityId) }
     );
+    const identityHost = React.useMemo(() => {
+        try {
+            return new URL(identityUrl).host;
+        } catch {
+            return "Syndicated marketplace";
+        }
+    }, [identityUrl]);
 
     return (
         <div className="SplashPage__identitySection">
             <Link to={`/tribes/${identityId}`} className="SplashPage__identityHeadingLink">
-                <Flex align="center" gap={12}>
+                <Flex align="center" gap={14} className="SplashPage__identityHeader">
                     <Avatar
-                        size={40}
+                        size={48}
                         src={identityImageUrl ? `${BACKEND_URL}${identityImageUrl}` : undefined}
                         icon={!identityImageUrl ? <UsergroupAddOutlined /> : undefined}
                         className="SplashPage__identityAvatar"
                     />
-                    <Typography.Title level={4} className="SplashPage__identityHeading">
-                        {identityName}
-                    </Typography.Title>
+                    <Flex vertical gap={2}>
+                        <Typography.Title level={3} className="SplashPage__identityHeading">
+                            {identityName}
+                        </Typography.Title>
+                        <Typography.Text className="SplashPage__identityMeta">
+                            {identityHost}
+                        </Typography.Text>
+                    </Flex>
                 </Flex>
             </Link>
-            <Row gutter={[16, 16]} className="SplashPage__cardsGrid">
-                <Col xs={24} xl={12}>
+            <Row gutter={[20, 20]} className="SplashPage__cardsGrid">
+                <Col xs={24} lg={12}>
                     <CompanyCard
                         items={companiesQuery.data?.Companies?.docs || []}
                         loading={companiesQuery.isLoading}
@@ -86,7 +98,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                         identityId={identityId}
                     />
                 </Col>
-                <Col xs={24} xl={12}>
+                <Col xs={24} lg={12}>
                     <ProductServiceCard
                         items={productsQuery.data?.Products?.docs || []}
                         loading={productsQuery.isLoading}
@@ -94,7 +106,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                         identityId={identityId}
                     />
                 </Col>
-                <Col xs={24} xl={12}>
+                <Col xs={24} lg={12}>
                     <JobCard
                         items={jobsQuery.data?.Jobs?.docs || []}
                         loading={jobsQuery.isLoading}
@@ -102,7 +114,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                         identityId={identityId}
                     />
                 </Col>
-                <Col xs={24} xl={12}>
+                <Col xs={24} lg={12}>
                     <StartupCard
                         items={startupsQuery.data?.Startups?.docs || []}
                         loading={startupsQuery.isLoading}

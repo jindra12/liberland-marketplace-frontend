@@ -42,7 +42,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                             actions={[
                                 (
                                     <Link key={`startup-link-${startup.id}`} to={`/ventures/${startup.id}`}>
-                                        <Button>Details</Button>
+                                        <Button type="primary">Details</Button>
                                     </Link>
                                 ),
                             ]}

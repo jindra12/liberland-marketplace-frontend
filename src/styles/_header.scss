@@ -1,18 +1,34 @@
 .AppHeader {
-    padding: 0;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 167, 216, 0.4);
+    padding: 0 16px;
+    height: auto;
+    line-height: normal;
+    background: transparent !important;
+    position: sticky;
+    top: 0;
+    z-index: 20;
 
     &__inner {
-        height: 72px;
+        width: min(1520px, 100%);
+        min-height: 74px;
+        margin: 16px auto 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 16px;
+        padding: 12px 18px;
         gap: 16px;
+        border-radius: 28px;
+        border: 1px solid rgba(20, 48, 74, 0.9);
+        background: rgba(3, 15, 27, 0.68);
+        backdrop-filter: blur(14px);
+        box-shadow: inset 0 0 0 1px rgba(21, 62, 111, 0.2);
     }
 
     &__drawer {
+        .ant-drawer-content,
+        .ant-drawer-header {
+            background: #071625;
+        }
+
         .ant-drawer-title {
             display: flex;
             padding-left: 10px;
@@ -28,22 +44,25 @@
     }
 
     &__logo {
-        width: 34px;
-        height: 34px;
+        width: 38px;
+        height: 38px;
         display: block;
     }
 
     &__name {
-        font-weight: 700;
-        font-size: 18px;
+        font-weight: 800;
+        font-size: 20px;
         line-height: 1;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 220px;
+        max-width: 240px;
 
         @include sm-min {
             max-width: 160px;
+            font-size: 17px;
         }
     }
 
@@ -51,11 +70,22 @@
         flex: 0 1 auto;
         min-width: 0;
         justify-content: flex-end;
-        border-bottom: 0;
+        border-bottom: 0 !important;
+        background: transparent !important;
 
         .ant-menu-item {
-            border-radius: 12px;
+            min-height: 46px;
+            border-radius: 999px;
             margin-inline: 4px;
+            padding-inline: 16px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        &::after {
+            display: none !important;
         }
     }
 
@@ -65,14 +95,23 @@
 
     &__desktopNav {
         margin-left: auto;
+        min-width: 0;
+    }
+
+    &__desktopActions {
+        flex-shrink: 0;
     }
 
     &__burger {
-        border-radius: 12px;
+        border-radius: 999px;
     }
 
     &__quickActionsBtn {
-        border-radius: 12px;
+        border-radius: 999px;
+    }
+
+    &__publishBtn {
+        border-radius: 999px;
     }
 
     &__drawerTitle {
@@ -102,7 +141,7 @@
     &__desktopDrawerNav {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
 
     &__desktopCart {
@@ -117,5 +156,23 @@
 
     &__drawerPublish {
         margin-bottom: 8px;
+    }
+}
+
+@include md-min {
+    .AppHeader {
+        padding-inline: 14px;
+
+        &__inner {
+            margin-top: 12px;
+            min-height: 64px;
+            padding: 10px 14px;
+            border-radius: 22px;
+        }
+
+        &__logo {
+            width: 34px;
+            height: 34px;
+        }
     }
 }

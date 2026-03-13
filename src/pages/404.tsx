@@ -11,8 +11,8 @@ const NotFoundPage: React.FunctionComponent = () => {
                 canonicalPath="/404"
                 noIndex
             />
-            <main style={{ padding: "40px 20px", fontFamily: "Inter, sans-serif" }}>
-                <h1>404: Page not found</h1>
+            <main className="NotFoundPage">
+                <h1 className="NotFoundPage__title">404: Page not found</h1>
                 <p>The page you requested does not exist.</p>
                 <p>
                     <Link href="/">Go back to the homepage</Link>

@@ -60,18 +60,33 @@ export const AppHeader: React.FunctionComponent = () => {
                 </Link>
 
                 {md ? (
-                    <>
-                        <Flex align="center" gap={16} className="AppHeader__desktopNav">
-                            <Menu
-                                className="AppHeader__menu"
-                                mode="horizontal"
-                                items={items}
-                                selectedKeys={selectedKeys}
-                                onClick={onMenuClick}
-                            />
+                    <Flex align="center" gap={16} className="AppHeader__desktopNav">
+                        <Menu
+                            className="AppHeader__menu"
+                            mode="horizontal"
+                            items={items}
+                            selectedKeys={selectedKeys}
+                            onClick={onMenuClick}
+                        />
+                        <Flex align="center" gap={12} className="AppHeader__desktopActions">
                             <DesktopDrawer />
+                            <EndpointAuthAction>
+                                {({ runWithAuthOrLogin }) => (
+                                    <Button
+                                        type="primary"
+                                        icon={<PlusOutlined />}
+                                        className="AppHeader__publishBtn"
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            runWithAuthOrLogin(() => navigate("/publish"));
+                                        }}
+                                    >
+                                        Publish your ad
+                                    </Button>
+                                )}
+                            </EndpointAuthAction>
                         </Flex>
-                    </>
+                    </Flex>
                 ) : (
                     <Space className="AppHeader__mobile" align="center">
                         <SearchButton />

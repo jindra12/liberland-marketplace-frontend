@@ -1,8 +1,47 @@
 import * as React from "react";
-import { Alert, Empty, Flex, Spin, Tag, Typography } from "antd";
+import { Alert, Button, Empty, Flex, Spin, Typography } from "antd";
+import { Link } from "react-router-dom";
 
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
 import { useListIdentitiesQuery } from "./hooks";
+
+const routeCards = [
+    {
+        key: "companies",
+        eyebrow: "Companies",
+        title: "Profiles and related activity",
+        description: "Review company pages, contact links, and the offers connected to each profile.",
+        to: "/companies",
+    },
+    {
+        key: "market",
+        eyebrow: "Market",
+        title: "Products and services",
+        description: "Browse orderable listings published by participating companies.",
+        to: "/products-services",
+    },
+    {
+        key: "jobs",
+        eyebrow: "Jobs",
+        title: "Open roles and hiring pages",
+        description: "Find published jobs with company context and direct detail pages.",
+        to: "/jobs",
+    },
+    {
+        key: "ventures",
+        eyebrow: "Ventures",
+        title: "Startup and venture listings",
+        description: "Explore emerging projects shared by tribes, founders, and companies.",
+        to: "/ventures",
+    },
+    {
+        key: "tribes",
+        eyebrow: "Tribes",
+        title: "Identity groups and ecosystems",
+        description: "See how companies, jobs, products, and ventures cluster around communities.",
+        to: "/tribes",
+    },
+];
 
 const Splash: React.FunctionComponent = () => {
     const identitiesQuery = useListIdentitiesQuery({
@@ -20,27 +59,49 @@ const Splash: React.FunctionComponent = () => {
     );
 
     return (
-        <Flex vertical gap={18} className="SplashPage">
+        <Flex vertical gap={24} className="SplashPage">
             <section className="SplashPage__hero">
-                <div className="SplashPage__heroInner">
-                    <div className="SplashPage__heroCopy">
-                        <Tag className="SplashPage__eyebrow">Tribe-first discovery</Tag>
-                        <Typography.Title level={1} className="SplashPage__heroTitle">
-                            NSwap
-                        </Typography.Title>
-                        <Typography.Paragraph className="SplashPage__heroDescription">
-                            Network swap market. Those who organize into tribes outcompete those who do not. Empower your tribe. Carve a piece of the world in your image.
-                        </Typography.Paragraph>
-                    </div>
-                    <div className="SplashPage__heroVisual">
-                        <div className="SplashPage__heroLogo">
-                            <img className="SplashPage__heroGlyph" src="/logo.svg" alt="NSwap logo" />
-                        </div>
-                    </div>
-                </div>
+                <Flex vertical align="center" gap={18} className="SplashPage__heroInner">
+                    <span className="SplashPage__eyebrow">Beacon Catalogue</span>
+                    <Typography.Title level={1} className="SplashPage__heroTitle">
+                        Discover <span className="SplashPage__heroAccent">companies, jobs, products</span> and ventures.
+                    </Typography.Title>
+                    <Typography.Paragraph className="SplashPage__heroDescription">
+                        Tribe-first marketplace. Browse company profiles, orderable market listings, published jobs,
+                        venture pages, and active tribes across syndicated endpoints.
+                    </Typography.Paragraph>
+                    <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
+                        <Link to="/products-services">
+                            <Button type="primary" size="large">Explore market</Button>
+                        </Link>
+                        <Link to="/tribes">
+                            <Button size="large">Browse tribes</Button>
+                        </Link>
+                    </Flex>
+                    <Flex wrap justify="center" gap={10} className="SplashPage__routePills">
+                        <Link to="/companies" className="SplashPage__routePill">Companies <span>profiles</span></Link>
+                        <Link to="/products-services" className="SplashPage__routePill">Market <span>orderable</span></Link>
+                        <Link to="/jobs" className="SplashPage__routePill">Jobs <span>published</span></Link>
+                        <Link to="/ventures" className="SplashPage__routePill">Ventures <span>startup</span></Link>
+                        <Link to="/tribes" className="SplashPage__routePill">Tribes <span>identity</span></Link>
+                    </Flex>
+                    <Flex wrap gap={16} justify="center" className="SplashPage__summaryGrid">
+                        {routeCards.map((card) => (
+                            <Link key={card.key} to={card.to} className="SplashPage__summaryCard">
+                                <span className="SplashPage__summaryEyebrow">{card.eyebrow}</span>
+                                <Typography.Title level={4} className="SplashPage__summaryTitle">
+                                    {card.title}
+                                </Typography.Title>
+                                <Typography.Paragraph className="SplashPage__summaryDescription">
+                                    {card.description}
+                                </Typography.Paragraph>
+                            </Link>
+                        ))}
+                    </Flex>
+                </Flex>
             </section>
 
-            <Flex vertical gap="16px" className="SplashPage__sections">
+            <Flex vertical gap={20} className="SplashPage__sections">
                 {hasError && (
                     <Alert
                         type="error"
@@ -61,7 +122,7 @@ const Splash: React.FunctionComponent = () => {
                 )}
 
                 {sortedIdentities.length > 0 && (
-                    <Flex vertical gap={18} className="SplashPage__identityList">
+                    <Flex vertical gap={24} className="SplashPage__identityList">
                         {sortedIdentities.map((identity, index) => (
                             <IdentityMarketSection
                                 key={identity.id + identity.serverURL! + index}
