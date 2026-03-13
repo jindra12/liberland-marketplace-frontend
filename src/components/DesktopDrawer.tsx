@@ -17,7 +17,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
         <>
             <Button
                 className="AppHeader__quickActionsBtn"
-                type="primary"
+                type="default"
                 icon={<MenuOutlined />}
                 aria-label="Open quick actions"
                 onClick={() => setDesktopActionsOpen(true)}

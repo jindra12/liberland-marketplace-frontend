@@ -39,6 +39,7 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
                 trigger={["click"]}
                 menu={{ items, onClick }}
                 placement="bottomRight"
+                overlayClassName="SearchButton__menuOverlay"
             >
                 <Button
                     type={type}

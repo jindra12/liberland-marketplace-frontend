@@ -49,7 +49,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
 
                 return (
-                    <Flex flex={1} vertical gap="8px">
+                    <Flex flex={1} vertical gap={12}>
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageSrc && (
                                 <Avatar

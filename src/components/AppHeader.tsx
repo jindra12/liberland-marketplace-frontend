@@ -60,14 +60,16 @@ export const AppHeader: React.FunctionComponent = () => {
                 </Link>
 
                 {md ? (
-                    <Flex align="center" gap={16} className="AppHeader__desktopNav">
-                        <Menu
-                            className="AppHeader__menu"
-                            mode="horizontal"
-                            items={items}
-                            selectedKeys={selectedKeys}
-                            onClick={onMenuClick}
-                        />
+                    <>
+                        <div className="AppHeader__menuSlot">
+                            <Menu
+                                className="AppHeader__menu"
+                                mode="horizontal"
+                                items={items}
+                                selectedKeys={selectedKeys}
+                                onClick={onMenuClick}
+                            />
+                        </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
                             <DesktopDrawer />
                             <EndpointAuthAction>
@@ -86,14 +88,14 @@ export const AppHeader: React.FunctionComponent = () => {
                                 )}
                             </EndpointAuthAction>
                         </Flex>
-                    </Flex>
+                    </>
                 ) : (
-                    <Space className="AppHeader__mobile" align="center">
-                        <SearchButton />
-                        <EndpointDrawerButton />
-                        <CartHeaderButton />
+                    <Space className="AppHeader__mobile" align="center" size={8}>
+                        <SearchButton className="AppHeader__iconButton" />
+                        <EndpointDrawerButton className="AppHeader__iconButton" />
+                        <CartHeaderButton className="AppHeader__iconButton" />
                         <Button
-                            className="AppHeader__burger"
+                            className="AppHeader__burger AppHeader__iconButton"
                             type="text"
                             icon={<MenuOutlined />}
                             aria-label="Open navigation"
@@ -112,6 +114,7 @@ export const AppHeader: React.FunctionComponent = () => {
                             }
                         >
                             <Menu
+                                className="AppHeader__drawerMenu"
                                 mode="inline"
                                 items={items}
                                 selectedKeys={selectedKeys}

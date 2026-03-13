@@ -48,7 +48,7 @@ const JobDetail: React.FunctionComponent = () => {
                 const isOwner = auth.user?.profile?.sub && job?.createdBy?.id === auth.user.profile.sub;
 
                 return (
-                    <Flex flex={1} vertical gap="8px">
+                    <Flex flex={1} vertical gap={12}>
                         <Space size={16} align="start" className="JobDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <div>

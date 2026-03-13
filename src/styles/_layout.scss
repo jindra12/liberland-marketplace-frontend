@@ -26,18 +26,19 @@
         display: flex;
         flex-direction: column;
         min-height: 0;
-        padding-bottom: 2rem;
+        padding-top: clamp(8px, 1.6vw, 18px);
+        padding-bottom: 2.5rem;
         background: transparent;
     }
 
     &__content--splash {
-        padding-bottom: 2.5rem;
+        padding-bottom: 3rem;
     }
 
     &__container {
         width: min(1520px, 100%);
         margin: 0 auto;
-        padding: 0 16px 32px;
+        padding: 4px 20px 40px;
         display: flex;
         justify-content: center;
         flex: 1;
@@ -46,11 +47,26 @@
 
     &__surface {
         width: 100%;
-        padding: clamp(22px, 3vw, 32px);
-        border-radius: 32px;
-        border: 1px solid rgba(20, 48, 74, 0.9);
+        padding: clamp(28px, 3vw, 40px);
+        border-radius: 34px;
         background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-        box-shadow: 0 28px 68px rgba(0, 0, 0, 0.34);
+        box-shadow:
+            0 28px 60px rgba(0, 0, 0, 0.28),
+            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+    }
+
+    &__surface .ant-divider {
+        margin: 32px 0;
+        border-color: rgba(28, 61, 86, 0.34);
+    }
+
+    &__surface .ant-tabs-top > .ant-tabs-nav {
+        margin-bottom: 28px;
+    }
+
+    &__surface .ant-tabs-tab {
+        padding-top: 8px;
+        padding-bottom: 12px;
     }
 
     &__footer {
@@ -66,8 +82,8 @@
         min-height: 40px;
         padding: 0 16px;
         border-radius: 999px;
-        border: 1px solid rgba(20, 48, 74, 0.9);
         background: rgba(6, 20, 35, 0.84);
+        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
         color: rgba(188, 217, 203, 0.78);
         font-size: 12px;
         font-weight: 700;
@@ -105,8 +121,8 @@
         }
 
         &__surface {
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 26px;
+            padding: 24px 20px;
         }
     }
 }

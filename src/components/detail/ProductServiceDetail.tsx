@@ -65,7 +65,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const orderLink = parseActionLink(product?.url);
 
                 return (
-                    <Flex flex={1} vertical gap="8px">
+                    <Flex flex={1} vertical gap={12}>
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageSrc && (
                                 <Avatar

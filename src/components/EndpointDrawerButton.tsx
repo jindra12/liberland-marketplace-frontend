@@ -85,6 +85,7 @@ export const EndpointDrawerButton: React.FunctionComponent<EndpointDrawerButtonP
                 {children}
             </Button>
             <Drawer
+                className="EndpointDrawerButton__drawer"
                 title="Data Endpoints"
                 placement="right"
                 width={480}
@@ -159,6 +160,7 @@ export const EndpointDrawerButton: React.FunctionComponent<EndpointDrawerButtonP
                 )}
                 <List
                     bordered
+                    className="EndpointDrawerButton__list"
                     dataSource={urls}
                     locale={{ emptyText: "No endpoints configured yet." }}
                     renderItem={(endpoint, index) => (
