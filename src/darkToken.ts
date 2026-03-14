@@ -85,8 +85,12 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
     Button: {
         fontWeight: 800,
         controlHeightLG: 52,
-        paddingInlineLG: 22,
+        paddingInline: 20,
+        paddingInlineLG: 20,
+        paddingInlineSM: 20,
         borderRadius: 999,
+        borderRadiusLG: 999,
+        borderRadiusSM: 999,
         defaultBg: "rgba(3, 14, 24, 0.9)",
         defaultBorderColor: "rgba(24, 56, 82, 0.34)",
         defaultColor: "#EEF8F3",

@@ -34,7 +34,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                 className="SplashEntityCard__list"
                 loading={loading}
                 dataSource={items}
-                locale={{ emptyText: "No ventures for this tribe" }}
+                locale={{ emptyText: "Coming soon!" }}
                 renderItem={(startup) => {
                     const imageUrl = startup.image?.url;
                     return (
@@ -42,7 +42,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                             actions={[
                                 (
                                     <Link key={`startup-link-${startup.id}`} to={`/ventures/${startup.id}`}>
-                                        <Button type="primary">Details</Button>
+                                        <Button type="primary" size="small">Details</Button>
                                     </Link>
                                 ),
                             ]}

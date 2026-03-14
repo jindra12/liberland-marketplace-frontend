@@ -32,7 +32,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
             className="SplashEntityCard__list"
             loading={loading}
             dataSource={items}
-            locale={{ emptyText: "No companies for this tribe" }}
+            locale={{ emptyText: "Coming soon!" }}
             renderItem={(company) => {
                 const imageSrc = getImage(company);
                 return (
@@ -40,7 +40,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                         actions={[
                             (
                                 <Link key={`company-link-${company.id}`} to={`/companies/${company.id}`}>
-                                    <Button type="primary">Details</Button>
+                                    <Button type="primary" size="small">Details</Button>
                                 </Link>
                             ),
                         ]}

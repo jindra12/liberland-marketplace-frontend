@@ -34,7 +34,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                 className="SplashEntityCard__list"
                 loading={loading}
                 dataSource={items}
-                locale={{ emptyText: "No jobs for this tribe" }}
+                locale={{ emptyText: "Coming soon!" }}
                 renderItem={(job) => {
                     const employmentType = formatEmploymentType(job.employmentType);
                     const salary = formatSalary(
@@ -48,7 +48,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                             actions={[
                                 (
                                     <Link key={`job-link-${job.id}`} to={`/jobs/${job.id}`}>
-                                        <Button type="primary">Details</Button>
+                                        <Button type="primary" size="small">Details</Button>
                                     </Link>
                                 ),
                             ]}

@@ -37,7 +37,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 className="SplashEntityCard__list"
                 loading={loading}
                 dataSource={items}
-                locale={{ emptyText: "No products/services for this tribe" }}
+                locale={{ emptyText: "Coming soon!" }}
                 renderItem={(product) => {
                     const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                     const imageSrc = getImage(product) || getImage(product.company);

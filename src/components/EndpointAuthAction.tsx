@@ -50,9 +50,22 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     }, []);
 
     const runWithEndpointSelection = React.useCallback((action: EndpointAction) => {
+        if (urls.length === 1) {
+            const [onlyEndpoint] = urls;
+
+            if (onlyEndpoint.value !== authUrl) {
+                setPendingAction({ action, targetAuthUrl: onlyEndpoint.value });
+                setAuthUrl(onlyEndpoint.value);
+                return;
+            }
+
+            void runPendingAction({ action, targetAuthUrl: onlyEndpoint.value });
+            return;
+        }
+
         setPendingAction({ action });
         setOpen(true);
-    }, []);
+    }, [authUrl, runPendingAction, setAuthUrl, urls]);
 
     const runWithAuthOrLogin = React.useCallback(
         async (
