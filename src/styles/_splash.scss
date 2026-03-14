@@ -1,4 +1,6 @@
 .SplashPage {
+    position: relative;
+    isolation: isolate;
     width: 100%;
     max-width: none;
     margin: 0;
@@ -6,6 +8,8 @@
     box-sizing: border-box;
 
     &__hero {
+        position: relative;
+        z-index: 1;
         width: min(1520px, 100%);
         margin: 0 auto;
         border-radius: 0;
@@ -15,6 +19,7 @@
 
     &__heroInner {
         position: relative;
+        isolation: isolate;
         padding: clamp(38px, 5vw, 62px) clamp(24px, 4vw, 44px);
         border-radius: 38px;
         background:
@@ -30,6 +35,7 @@
             content: "";
             position: absolute;
             inset: 0;
+            z-index: 0;
             background:
                 linear-gradient(rgba(76, 143, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(76, 143, 255, 0.05) 1px, transparent 1px);
@@ -182,6 +188,8 @@
     }
 
     &__sections {
+        position: relative;
+        z-index: 1;
         width: min(1520px, 100%);
         margin: 26px auto 0;
         padding: 0 0 0;
@@ -405,6 +413,200 @@
         font-size: 13px;
         line-height: 1.5;
         max-width: 18rem;
+    }
+}
+
+.SplashAmbientBackground {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    contain: layout paint;
+
+    &__glow {
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.32;
+        pointer-events: none;
+
+        &--left {
+            top: 0;
+            left: -8%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(71, 137, 255, 0.18) 0%, rgba(71, 137, 255, 0) 72%);
+        }
+
+        &--right {
+            top: 2%;
+            right: -6%;
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(74, 155, 255, 0.18) 0%, rgba(74, 155, 255, 0) 74%);
+        }
+
+        &--center {
+            top: -4%;
+            left: 50%;
+            width: 560px;
+            height: 320px;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(121, 230, 177, 0.1) 0%, rgba(121, 230, 177, 0) 72%);
+        }
+    }
+
+    &__grid {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-rows: repeat(10, minmax(0, 1fr));
+        padding: 18px 20px 12px;
+        box-sizing: border-box;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
+        align-self: center;
+        width: clamp(60px, 7vw, 108px);
+        height: clamp(60px, 7vw, 108px);
+        backface-visibility: hidden;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
+        animation-name: SplashAmbientDriftCenter;
+        animation-duration: 28s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+
+        &:nth-child(3n + 1) {
+            justify-self: start;
+            animation-name: SplashAmbientDriftLeft;
+        }
+
+        &:nth-child(3n + 2) {
+            justify-self: center;
+            animation-name: SplashAmbientDriftCenter;
+        }
+
+        &:nth-child(3n) {
+            justify-self: end;
+            animation-name: SplashAmbientDriftRight;
+        }
+
+        &:nth-child(4n + 1) {
+            align-self: start;
+        }
+
+        &:nth-child(4n + 2) {
+            align-self: center;
+        }
+
+        &:nth-child(4n + 3) {
+            align-self: end;
+        }
+
+        &:nth-child(2n) {
+            animation-duration: 34s;
+            animation-delay: -6s;
+        }
+
+        &:nth-child(5n) {
+            animation-duration: 38s;
+            animation-delay: -12s;
+        }
+
+        &:nth-child(7n) {
+            width: clamp(54px, 6vw, 84px);
+            height: clamp(54px, 6vw, 84px);
+        }
+
+        &--company .SplashAmbientBackground__image {
+            opacity: 0.2;
+        }
+
+        &--job .SplashAmbientBackground__image {
+            opacity: 0.18;
+        }
+
+        &--startup .SplashAmbientBackground__image {
+            opacity: 0.19;
+        }
+
+        &--identity .SplashAmbientBackground__image {
+            opacity: 0.16;
+        }
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(4px) saturate(0.96);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &__item {
+            animation: none;
+        }
+    }
+}
+
+@keyframes SplashAmbientDriftCenter {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    33% {
+        transform: translate3d(0, -5px, 0);
+    }
+
+    66% {
+        transform: translate3d(0, 4px, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes SplashAmbientDriftLeft {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    33% {
+        transform: translate3d(-5px, -6px, 0);
+    }
+
+    66% {
+        transform: translate3d(3px, 4px, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes SplashAmbientDriftRight {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    33% {
+        transform: translate3d(5px, -6px, 0);
+    }
+
+    66% {
+        transform: translate3d(-3px, 4px, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
     }
 }
 

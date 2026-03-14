@@ -40,6 +40,8 @@ import {
     useUpdateCompanyMutation as useUpdateCompanyMutationSingle,
     IdentityByIdDocument,
     useIdentityByIdQuery as useIdentityByIdQuerySingle,
+    EntityImageUrlsDocument,
+    useEntityImageUrlsQuery as useEntityImageUrlsQuerySingle,
     ListIdentitiesDocument,
     useListIdentitiesQuery as useListIdentitiesQuerySingle,
     SearchIdentitiesDocument,
@@ -247,6 +249,7 @@ export const useSearchCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(u
 export const useListCompaniesQuery = enhancedQueryFactory(useListCompaniesQuerySingle, ListCompaniesDocument);
 export const useSearchCompaniesQuery = enhancedQueryFactory(useSearchCompaniesQuerySingle, SearchCompaniesDocument);
 export const useIdentityByIdQuery = enhancedQueryFactory(useIdentityByIdQuerySingle, IdentityByIdDocument);
+export const useEntityImageUrlsQuery = enhancedQueryFactory(useEntityImageUrlsQuerySingle, EntityImageUrlsDocument);
 export const useListIdentitiesQuery = enhancedQueryFactory(useListIdentitiesQuerySingle, ListIdentitiesDocument);
 export const useSearchIdentitiesQuery = enhancedQueryFactory(useSearchIdentitiesQuerySingle, SearchIdentitiesDocument);
 export const useListJobsByCompanyQuery = enhancedQueryFactory(useListJobsByCompanyQuerySingle, ListJobsByCompanyDocument);
