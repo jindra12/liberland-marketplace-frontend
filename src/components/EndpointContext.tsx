@@ -11,7 +11,7 @@ import {
 } from "../generated/graphql";
 import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
-import { combineResult, deepMergeConcatArrays } from "../utils";
+import { combineResult, deepMergeConcatArrays, mergeSyndicationUrls } from "../utils";
 
 export interface EndpointContextType {
     urls: URL[];
@@ -31,6 +31,8 @@ export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[])
             queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
                 ListPublishedSyndicationUrlsDocument,
                 {},
+                undefined,
+                url.value,
             )
         })),
         combine: (result) => {
@@ -38,21 +40,10 @@ export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[])
         },
     });
     React.useEffect(() => {
-        setUrls(maybeUrls => {
-            const urls = maybeUrls || [];
-            const nextOnes = queries
-                .data
-                ?.Syndications
-                ?.docs
-                .map(({ url, name }) => ({ value: url!, enabled: false, name: name! }))
-                .filter(({ value }) => !urls.some((url) => url.value === value)) || [];
-
-            return [
-                ...urls,
-                ...nextOnes,
-            ];
-        });
+        setUrls((maybeUrls) => mergeSyndicationUrls(maybeUrls, queries.data?.Syndications?.docs || []));
     }, [queries.data, setUrls]);
+
+    return queries;
 };
 
 export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {

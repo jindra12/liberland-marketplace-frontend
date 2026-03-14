@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Typography } from "antd";
+import { Avatar, Button, Flex, Grid, Typography } from "antd";
 
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
@@ -10,6 +10,7 @@ import { getImage } from "../../utils";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [searchText, setSearchText] = React.useState("");
+    const { md } = Grid.useBreakpoint();
     const query = useListIdentitiesQuery({
         limit: 100,
         page: 1,
@@ -55,7 +56,7 @@ export const IdentityList: React.FunctionComponent = () => {
                 ),
                 avatar: (identity) => identity.image?.url ? (
                     <Link to={`/tribes/${identity.id}`}>
-                        <Avatar src={getImage(identity)} size={120} />
+                        <Avatar src={getImage(identity)} size={md ? 120 : 88} />
                     </Link>
                 ) : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,

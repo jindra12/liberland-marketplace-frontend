@@ -51,30 +51,32 @@ const JobDetail: React.FunctionComponent = () => {
                     <Flex flex={1} vertical gap={12}>
                         <Space size={16} align="start" className="JobDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
-                            <div>
+                            <div className="EntityDetail__headerBody JobDetail__headerBody">
                                 <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
-                                    <Flex justify="space-between" align="center" gap="16px" wrap>
-                                        {job?.title}
-                                        {companyIdentity && (
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        )}
-                                    </Flex>
+                                    {job?.title}
                                 </Typography.Title>
-                                <JobDetailsSummary
-                                    companyName={job?.company?.name}
-                                    location={job?.location}
-                                    employmentType={empType}
-                                    salary={salary}
-                                    bounty={bounty}
-                                    positions={positions}
-                                    postedAt={postedAt}
-                                    isInactive={isInactive}
-                                    metaSize={[12, 8]}
-                                />
+                                {companyIdentity && (
+                                    <div className="JobDetail__identityRow">
+                                        <IdentityTagLink
+                                            identity={companyIdentity}
+                                            color="success"
+                                            icon={<UsergroupAddOutlined />}
+                                        />
+                                    </div>
+                                )}
+                                <div className="JobDetail__summary">
+                                    <JobDetailsSummary
+                                        companyName={job?.company?.name}
+                                        location={job?.location}
+                                        employmentType={empType}
+                                        salary={salary}
+                                        bounty={bounty}
+                                        positions={positions}
+                                        postedAt={postedAt}
+                                        isInactive={isInactive}
+                                        metaSize={[12, 8]}
+                                    />
+                                </div>
                             </div>
                         </Space>
                         {isOwner && (
@@ -97,7 +99,6 @@ const JobDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
-                            title="Comments"
                         />
                     </Flex>
                 );

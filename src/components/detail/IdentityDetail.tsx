@@ -50,7 +50,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                     src={imageSrc}
                                 />
                             )}
-                            <div>
+                            <div className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
                                     {data.Identity?.name}
                                 </Typography.Title>
@@ -105,7 +105,6 @@ const IdentityDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
-                            title="Comments"
                         />
                     </Flex>
                 );

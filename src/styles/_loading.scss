@@ -1,0 +1,280 @@
+.LoadingSkeleton {
+    width: 100%;
+
+    .ant-skeleton,
+    .ant-skeleton-content,
+    .ant-skeleton-paragraph,
+    .ant-skeleton-title {
+        width: 100%;
+    }
+
+    .ant-skeleton-input,
+    .ant-skeleton-button,
+    .ant-skeleton-avatar,
+    .ant-skeleton-paragraph > li {
+        background: linear-gradient(90deg, rgba(10, 31, 49, 0.92), rgba(17, 54, 84, 0.84), rgba(10, 31, 49, 0.92));
+    }
+
+    .ant-skeleton-paragraph > li + li {
+        margin-top: 12px;
+    }
+
+    &--boot {
+        min-height: 100vh;
+        padding: 18px 20px 40px;
+        background:
+            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.18), transparent 22%),
+            radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.18), transparent 24%),
+            radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.08), transparent 20%),
+            linear-gradient(180deg, #020a12 0%, #04101d 44%, #03101a 100%);
+    }
+
+    &--surface {
+        padding: 12px 0 0;
+    }
+
+    &--detail,
+    &--collection,
+    &--splashSections {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__appShell {
+        width: min(1480px, 100%);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__headerShell,
+    &__heroShell,
+    &__surface,
+    &__tribeSection,
+    &__detailHeader,
+    &__detailBlock,
+    &__collectionCard,
+    &__summaryCard {
+        border-radius: 30px;
+        background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
+        box-shadow:
+            0 20px 44px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+    }
+
+    &__headerShell {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 18px;
+        padding: 14px 18px;
+    }
+
+    &__headerBrand {
+        width: 140px;
+    }
+
+    &__headerMenu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    &__headerMenuItem {
+        width: 104px;
+    }
+
+    &__headerActions {
+        display: flex;
+        gap: 12px;
+    }
+
+    &__headerAction {
+        width: 120px;
+    }
+
+    &__headerAction--primary {
+        width: 180px;
+    }
+
+    &__heroShell,
+    &__surface,
+    &__tribeSection,
+    &__detailBlock,
+    &__collectionCard {
+        padding: 28px;
+    }
+
+    &__eyebrow {
+        width: 128px;
+        margin-bottom: 18px;
+    }
+
+    &__heroTitle {
+        width: min(720px, 100%);
+    }
+
+    &__heroTitle--secondary {
+        width: min(560px, 100%);
+        margin-top: 12px;
+    }
+
+    &__heroCopy {
+        width: min(620px, 100%);
+        margin-top: 18px;
+    }
+
+    &__heroActions {
+        display: flex;
+        gap: 14px;
+        margin-top: 24px;
+    }
+
+    &__heroAction {
+        width: 180px;
+    }
+
+    &__summaryGrid,
+    &__collectionGrid,
+    &__tribeGrid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    &__summaryGrid {
+        margin-top: 28px;
+    }
+
+    &__tribeGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: 22px;
+    }
+
+    &__summaryCard {
+        padding: 22px;
+    }
+
+    &__surfaceHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 24px;
+    }
+
+    &__surfaceTitle {
+        width: min(320px, 100%);
+    }
+
+    &__surfaceFilters {
+        width: 200px;
+    }
+
+    &__collectionCardBody {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__detailHeader {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        padding: 28px;
+    }
+
+    &__detailHeaderBody {
+        flex: 1;
+    }
+
+    &__detailTitle {
+        width: min(420px, 100%);
+        margin-bottom: 18px;
+    }
+
+    &__detailMeta {
+        width: min(540px, 100%);
+    }
+
+    &__detailTabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    &__detailTab {
+        width: 128px;
+    }
+
+    &__tribeHeaderBody {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: min(280px, 100%);
+        flex: 1;
+    }
+}
+
+@include lg-min {
+    .LoadingSkeleton {
+        &__summaryGrid,
+        &__collectionGrid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+}
+
+@include md-min {
+    .LoadingSkeleton {
+        &--boot {
+            padding: 14px 14px 32px;
+        }
+
+        &__headerShell {
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+        }
+
+        &__headerMenu,
+        &__headerActions {
+            grid-column: 1 / -1;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        &__heroShell,
+        &__surface,
+        &__tribeSection,
+        &__detailHeader,
+        &__detailBlock,
+        &__collectionCard {
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        &__heroActions {
+            flex-direction: column;
+        }
+
+        &__heroAction,
+        &__surfaceFilters,
+        &__detailTab {
+            width: 100%;
+        }
+
+        &__surfaceHeader,
+        &__detailHeader {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__summaryGrid,
+        &__collectionGrid,
+        &__tribeGrid {
+            grid-template-columns: 1fr;
+        }
+    }
+}

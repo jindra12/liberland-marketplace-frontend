@@ -5,6 +5,7 @@ import { Avatar,
     Divider,
     Flex,
     Grid,
+    Space,
     Tabs,
     Typography
 } from "antd";
@@ -45,12 +46,12 @@ const CompanyDetail: React.FunctionComponent = () => {
                 } : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
-                const avatarSize = md ? 120 : 64;
+                const avatarSize = md ? 120 : 72;
                 const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
 
                 return (
-                    <Flex flex={1} vertical gap={12}>
-                        <Flex gap="32px" align="center" wrap className="EntityDetail__header">
+                    <Flex flex={1} vertical gap={md ? 18 : 16} className="CompanyDetail">
+                        <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
                             {imageSrc && (
                                 <Avatar
                                     shape="circle"
@@ -58,19 +59,28 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     src={imageSrc}
                                 />
                             )}
-                            <Typography.Title level={1} className="EntityDetail__title">
-                                <Flex justify="space-between" align="center" gap="16px" wrap>
-                                    {companyData?.name}
+                            <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
+                                <div className="EntityDetail__titleBlock">
+                                    <Typography.Text className="EntityDetail__eyebrow">
+                                        Company
+                                    </Typography.Text>
+                                    <div className="EntityDetail__titleRow">
+                                        <Typography.Title level={1} className="EntityDetail__title">
+                                            {companyData?.name}
+                                        </Typography.Title>
+                                    </div>
                                     {companyIdentity && (
-                                        <IdentityTagLink
-                                            identity={companyIdentity}
-                                            color="success"
-                                            icon={<UsergroupAddOutlined />}
-                                        />
+                                        <div className="CompanyDetail__identityRow">
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
+                                        </div>
                                     )}
-                                </Flex>
-                            </Typography.Title>
-                        </Flex>
+                                </div>
+                            </Flex>
+                        </Space>
                         {isOwner && (
                             <Link to={`/companies/edit/${id}`}>
                                 <Button icon={<EditOutlined />}>Edit</Button>
@@ -112,12 +122,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 },
                                 {
                                     key: "comments",
-                                    label: `Comments (${counts.comments})`,
+                                    label: "Discussion",
                                     children: (
                                         <EntityCommentsSection
                                             targetId={id!}
                                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                                            title="Comments"
                                         />
                                     ),
                                 },

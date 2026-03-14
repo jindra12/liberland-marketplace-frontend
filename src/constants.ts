@@ -3,7 +3,6 @@ import {
     Comment_ReplyPost_Relation_RelationTo,
 } from "./generated/graphql";
 
-export const ENTITY_COMMENTS_DEFAULT_TITLE = "Comments";
 export const ENTITY_COMMENTS_DEFAULT_LIMIT = 100;
 export const ENTITY_COMMENTS_DEFAULT_PLACEHOLDER = "Write your comment...";
 

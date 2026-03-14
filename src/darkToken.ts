@@ -10,22 +10,22 @@ export const darkToken: Partial<AliasToken> = {
     colorWarning: "#FFC857",
     colorError: "#FF3B6B",
 
-    colorBgLayout: "#030D17",
-    colorBgContainer: "#061423",
-    colorBgElevated: "#081B2E",
+    colorBgLayout: "#01060D",
+    colorBgContainer: "#04101A",
+    colorBgElevated: "#051522",
 
     colorText: "#EEF8F3",
     colorTextSecondary: "#BCD9CB",
     colorTextTertiary: "#8FA99D",
     colorTextQuaternary: "#6E857B",
 
-    colorBorder: "rgba(31, 67, 96, 0.52)",
-    colorBorderSecondary: "rgba(22, 49, 71, 0.34)",
-    colorSplit: "rgba(28, 61, 86, 0.34)",
+    colorBorder: "rgba(25, 57, 82, 0.5)",
+    colorBorderSecondary: "rgba(18, 40, 58, 0.32)",
+    colorSplit: "rgba(22, 50, 72, 0.32)",
 
-    colorFill: "#0A1E31",
-    colorFillSecondary: "#081B2D",
-    colorFillTertiary: "#061628",
+    colorFill: "#081625",
+    colorFillSecondary: "#061321",
+    colorFillTertiary: "#04101B",
 
     borderRadius: 18,
 
@@ -61,8 +61,8 @@ export const darkToken: Partial<AliasToken> = {
 export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key] } = {
     Layout: {
         headerBg: "transparent",
-        bodyBg: "#030D17",
-        siderBg: "#061423",
+        bodyBg: "#01060D",
+        siderBg: "#04101A",
     },
     Menu: {
         itemBg: "transparent",
@@ -73,7 +73,7 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
         itemSelectedColor: "#EEF8F3",
         horizontalItemSelectedColor: "#EEF8F3",
         horizontalItemHoverColor: "#EEF8F3",
-        popupBg: "#071723",
+        popupBg: "#05131F",
     },
     Card: {
         borderRadiusLG: 24,
@@ -87,37 +87,37 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
         controlHeightLG: 52,
         paddingInlineLG: 22,
         borderRadius: 999,
-        defaultBg: "rgba(4, 17, 30, 0.82)",
-        defaultBorderColor: "rgba(31, 67, 96, 0.36)",
+        defaultBg: "rgba(3, 14, 24, 0.9)",
+        defaultBorderColor: "rgba(24, 56, 82, 0.34)",
         defaultColor: "#EEF8F3",
-        defaultHoverBg: "rgba(7, 24, 40, 0.94)",
-        defaultHoverBorderColor: "rgba(44, 91, 130, 0.48)",
+        defaultHoverBg: "rgba(5, 18, 31, 0.96)",
+        defaultHoverBorderColor: "rgba(37, 77, 110, 0.46)",
         defaultHoverColor: "#EEF8F3",
         primaryColor: "#03121D",
         primaryShadow: "0 18px 36px rgba(47, 140, 255, 0.22)",
     },
     Drawer: {
-        colorBgElevated: "#071723",
+        colorBgElevated: "#05131F",
     },
     Dropdown: {
-        colorBgElevated: "#071723",
+        colorBgElevated: "#05131F",
     },
     Input: {
-        colorBgContainer: "rgba(6, 20, 35, 0.9)",
-        colorBorder: "rgba(31, 67, 96, 0.42)",
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(24, 56, 82, 0.4)",
         colorTextPlaceholder: "#8FA99D",
         activeBorderColor: "#5AA6FF",
         hoverBorderColor: "#2F8CFF",
     },
     Select: {
-        colorBgContainer: "rgba(6, 20, 35, 0.9)",
-        colorBorder: "rgba(31, 67, 96, 0.42)",
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(24, 56, 82, 0.4)",
         optionSelectedBg: "rgba(10, 31, 49, 0.92)",
     },
     Tag: {
-        defaultBg: "rgba(8, 25, 39, 0.82)",
+        defaultBg: "rgba(6, 18, 29, 0.86)",
         defaultColor: "#BCD9CB",
-        colorBorder: "rgba(31, 67, 96, 0.36)",
+        colorBorder: "rgba(24, 56, 82, 0.34)",
     },
     List: {
         titleMarginBottom: 2,

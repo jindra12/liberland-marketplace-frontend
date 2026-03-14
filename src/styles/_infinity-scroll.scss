@@ -8,6 +8,7 @@
     .ant-list-header {
         margin-bottom: 18px;
         padding: 0;
+        border-bottom: 0;
     }
 
     .ant-list-item {
@@ -53,6 +54,23 @@
     letter-spacing: -0.04em;
 }
 
+.AppList__titleSlot {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.AppList__filters {
+    flex: 0 1 520px;
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    min-width: 320px;
+
+    > * {
+        width: 100%;
+    }
+}
+
 .AppList__actions {
     width: 100%;
     display: flex;
@@ -78,4 +96,21 @@
 
 .AppList__tribeEndHeading {
     margin-bottom: 16px !important;
+}
+
+@include md-min {
+    .AppList__header {
+        align-items: stretch !important;
+    }
+
+    .AppList__titleSlot,
+    .AppList__filters {
+        flex: 1 1 100%;
+        max-width: none;
+        min-width: 0;
+    }
+
+    .AppList__title {
+        font-size: 34px !important;
+    }
 }

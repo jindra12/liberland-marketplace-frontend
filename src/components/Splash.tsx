@@ -1,8 +1,10 @@
 import * as React from "react";
-import { Alert, Button, Empty, Flex, Spin, Typography } from "antd";
+import { Alert, Button, Empty, Flex, Typography } from "antd";
 import { Link } from "react-router-dom";
 
+import { SplashSectionsSkeleton } from "./LoadingSkeleton/SplashSectionsSkeleton";
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
+import { SyndicationSection } from "./splash/SyndicationSection";
 import { useListIdentitiesQuery } from "./hooks";
 
 const routeCards = [
@@ -112,9 +114,9 @@ const Splash: React.FunctionComponent = () => {
                 )}
 
                 {!hasError && !identities?.length && isLoading && (
-                    <Flex justify="center" align="center" className="SplashPage__loading">
-                        <Spin />
-                    </Flex>
+                    <div className="SplashPage__loading">
+                        <SplashSectionsSkeleton />
+                    </div>
                 )}
 
                 {!hasError && !identities?.length && !isLoading && (
@@ -134,6 +136,8 @@ const Splash: React.FunctionComponent = () => {
                         ))}
                     </Flex>
                 )}
+
+                <SyndicationSection />
             </Flex>
         </Flex>
     );

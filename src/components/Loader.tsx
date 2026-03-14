@@ -1,10 +1,11 @@
 import * as React from "react";
+import { AxiosError } from "axios";
 import { UseQueryResult } from "@tanstack/react-query";
-import { Button, Result, Spin } from "antd";
+import { Button, Result } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
 import { convertStatusCode, getErrorMessage } from "../utils";
-import { AxiosError } from "axios";
+import { DetailPageSkeleton } from "./LoadingSkeleton/DetailPageSkeleton";
 
 export interface LoaderProps<TData> {
     query: UseQueryResult<TData, unknown>;
@@ -20,7 +21,7 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
     } = props.query;
 
     if (isLoading) {
-        return <Spin />;
+        return <DetailPageSkeleton />;
     }
 
     if (error) {

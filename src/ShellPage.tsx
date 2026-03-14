@@ -20,6 +20,7 @@ const SECTION_LINKS: Array<{ name: string; path: string; description: string }> 
     { name: "Companies", path: "/companies", description: "Review company profiles and their related market activity." },
     { name: "Ventures", path: "/ventures", description: "Explore startup and venture listings shared by communities and companies." },
     { name: "Tribes", path: "/tribes", description: "Explore identity groups and their associated marketplaces." },
+    { name: "Syndication", path: "/syndication", description: "Manage syndicated marketplace URLs available to your frontend." },
 ];
 
 const normalizePath = (path: string): string => {
@@ -277,6 +278,16 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         title: "Edit venture | NSwap",
         description: "Internal editor for updating venture details.",
         noIndex: true,
+    },
+    "/syndication": {
+        title: "Syndication | NSwap",
+        description: "Manage syndicated marketplace URLs, add new endpoints, and control which ones are enabled locally.",
+        buildJsonLd: buildCollectionJsonLd("Syndication", "/syndication", "Locally managed syndicated marketplace URLs."),
+    },
+    "/syndication/[id]": {
+        title: "Syndicated URL detail | NSwap",
+        description: "Review one syndicated marketplace URL and control whether it is enabled locally.",
+        buildJsonLd: buildDetailJsonLd("Syndication", "/syndication", "Syndicated URL detail", "Detail page for one syndicated marketplace URL."),
     },
     "/publish": {
         title: "Publish | NSwap",

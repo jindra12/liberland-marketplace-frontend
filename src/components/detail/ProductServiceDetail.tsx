@@ -63,6 +63,24 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const canPurchase = isProductPurchasable(product);
                 const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);
+                const purchaseControl = product?.id ? (
+                    canPurchase ? (
+                        <AddToCartButton
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            size={md ? "large" : "middle"}
+                            maxAvailable={inventoryCount}
+                        />
+                    ) : orderNowLink ? (
+                        <Button
+                            type="primary"
+                            href={orderNowLink}
+                            size={md ? "large" : "middle"}
+                        >
+                            Order Now!
+                        </Button>
+                    ) : null
+                ) : null;
 
                 return (
                     <Flex flex={1} vertical gap={12}>
@@ -74,25 +92,27 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     src={imageSrc}
                                 />
                             )}
-                            <Flex flex={1} vertical>
+                            <Flex flex={1} vertical className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
-                                    <Flex justify="space-between" align="center" gap="16px" wrap>
-                                        {product?.name}
-                                        {companyIdentity && (
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        )}
-                                    </Flex>
+                                    {product?.name}
                                 </Typography.Title>
-                                <ProductDetailsSummary
-                                    companyName={product?.company?.name}
-                                    companyId={product?.company?.id}
-                                />
+                                {companyIdentity && (
+                                    <div className="ProductDetail__identityRow">
+                                        <IdentityTagLink
+                                            identity={companyIdentity}
+                                            color="success"
+                                            icon={<UsergroupAddOutlined />}
+                                        />
+                                    </div>
+                                )}
+                                <div className="ProductDetail__summary">
+                                    <ProductDetailsSummary
+                                        companyName={product?.company?.name}
+                                        companyId={product?.company?.id}
+                                    />
+                                </div>
                                 {product?.id && (
-                                    <Flex justify="space-between" align="center" wrap gap="16px" className="ProductDetail__purchaseRow">
+                                    <div className="ProductDetail__purchaseSection">
                                         <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
                                             {price && (
                                                 <Tag color="success" icon={<DollarOutlined />}>
@@ -107,23 +127,15 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 serverURL={product.serverURL!}
                                             />
                                         </Flex>
-                                        {canPurchase ? (
-                                            <AddToCartButton
-                                                productId={product.id}
-                                                serverURL={product.serverURL!}
-                                                size={md ? "large" : "middle"}
-                                                maxAvailable={inventoryCount}
-                                            />
-                                        ) : orderNowLink ? (
-                                            <Button
-                                                type="primary"
-                                                href={orderNowLink}
-                                                size={md ? "large" : "middle"}
-                                            >
-                                                Order Now!
-                                            </Button>
-                                        ) : null}
-                                    </Flex>
+                                        {purchaseControl && (
+                                            <>
+                                                <Divider className="ProductDetail__purchaseDivider" />
+                                                <div className="ProductDetail__purchaseControl">
+                                                    {purchaseControl}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 )}
                             </Flex>
                         </Flex>
@@ -180,7 +192,6 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                            title="Comments"
                         />
                     </Flex>
                 );
