@@ -57,12 +57,10 @@ export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = 
                     onPreview={handlePreview}
                     multiple={false}
                 >
-                    {!previewSrc && (
-                        <div>
-                            <PlusOutlined />
-                            <div className="ImageUpload__label">Upload</div>
-                        </div>
-                    )}
+                    <div>
+                        <PlusOutlined />
+                        <div className="ImageUpload__label">Upload</div>
+                    </div>
                 </Upload>
             </Form.Item>
             <Modal open={previewOpen} footer={null} onCancel={() => setPreviewOpen(false)}>

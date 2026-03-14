@@ -12,6 +12,7 @@ import {
     insertUniqueEndpoint,
     setEndpointEnabled,
 } from "../../utils";
+import { Markdown } from "../Markdown";
 
 const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
@@ -125,9 +126,9 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                         </Flex>
                     ),
                     body: (entry) => (
-                        <Typography.Paragraph className="SyndicationList__description">
-                            {entry.description?.trim() || "No description has been published for this syndicated URL yet."}
-                        </Typography.Paragraph>
+                        <Markdown className="Markdown--clamp3 SyndicationList__description">
+                            {entry.description}
+                        </Markdown>
                     ),
                     actions: (entry) => (
                         <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">

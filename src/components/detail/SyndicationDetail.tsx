@@ -7,6 +7,7 @@ import { useEndpointContext } from "../EndpointContext";
 import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../../utils";
+import { Markdown } from "../Markdown";
 
 const SyndicationDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -78,7 +79,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
                     </Flex>
                 </Flex>
             </Flex>
-
             <Flex wrap gap={12}>
                 <Button
                     type={entry.enabled ? "default" : "primary"}
@@ -95,15 +95,15 @@ const SyndicationDetail: React.FunctionComponent = () => {
                     <Button size="large">Back to list</Button>
                 </Link>
             </Flex>
-
             <Divider />
-
-            <Typography.Paragraph className="SyndicationDetail__description">
-                {entry.description?.trim() || "No description has been published for this syndicated URL yet."}
-            </Typography.Paragraph>
-
-            <Divider />
-
+            {entry.description && (
+                <>
+                    <Markdown className="SyndicationDetail__description">
+                        {entry.description}
+                    </Markdown>
+                    <Divider />
+                </>
+            )}
             <Descriptions bordered column={1} size="small" className="SyndicationDetail__meta">
                 <Descriptions.Item label="Name">
                     {title}
