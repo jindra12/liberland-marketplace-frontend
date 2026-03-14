@@ -3,9 +3,8 @@ import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
 import type { MenuProps } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { SearchButton } from "./SearchButton";
-import { EndpointDrawerButton } from "./EndpointDrawerButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
 import { CartHeaderButton } from "./cart/CartHeaderButton";
@@ -15,7 +14,7 @@ import { useCartItems } from "./cart/useCartItems";
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
 
-const baseItems = [
+const desktopBaseItems = [
     { key: "/jobs", label: "Jobs" },
     { key: "/products-services", label: "Market" },
     { key: "/companies", label: "Companies" },
@@ -29,7 +28,7 @@ const getSelectedKeys = (pathname: string, items: { key: string; label: string }
 };
 
 export const AppHeader: React.FunctionComponent = () => {
-    const { md } = useBreakpoint();
+    const { xl } = useBreakpoint();
     const navigate = useNavigate();
     const location = useLocation();
     const auth = useAuth();
@@ -37,14 +36,22 @@ export const AppHeader: React.FunctionComponent = () => {
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-    const items = React.useMemo(() => {
+    const desktopItems = React.useMemo(() => {
         if (totalQuantity > 0) {
-            return [...baseItems, { key: "/cart", label: "Cart" }];
+            return [...desktopBaseItems, { key: "/cart", label: "Cart" }];
         }
-        return baseItems;
+        return desktopBaseItems;
     }, [totalQuantity]);
 
-    const selectedKeys = getSelectedKeys(location.pathname, items);
+    const drawerItems = React.useMemo(() => {
+        if (totalQuantity > 0) {
+            return [...desktopBaseItems, { key: "/cart", label: "Cart" }];
+        }
+        return desktopBaseItems;
+    }, [totalQuantity]);
+
+    const selectedDesktopKeys = getSelectedKeys(location.pathname, desktopItems);
+    const selectedDrawerKeys = getSelectedKeys(location.pathname, drawerItems);
 
     const onMenuClick: MenuProps["onClick"] = (info) => {
         navigate(info.key);
@@ -59,26 +66,50 @@ export const AppHeader: React.FunctionComponent = () => {
                     <span className="AppHeader__name">NSwap</span>
                 </Link>
 
-                {md ? (
+                {xl ? (
                     <>
-                        <Flex align="center" gap={16} className="AppHeader__desktopNav">
+                        <div className="AppHeader__menuSlot">
                             <Menu
                                 className="AppHeader__menu"
                                 mode="horizontal"
-                                items={items}
-                                selectedKeys={selectedKeys}
+                                disabledOverflow
+                                items={desktopItems}
+                                selectedKeys={selectedDesktopKeys}
                                 onClick={onMenuClick}
                             />
+                        </div>
+                        <Flex align="center" gap={12} className="AppHeader__desktopActions">
                             <DesktopDrawer />
+                            <EndpointAuthAction>
+                                {({ runWithAuthOrLogin }) => (
+                                    <Button
+                                        type="primary"
+                                        icon={<PlusOutlined />}
+                                        className="AppHeader__publishBtn"
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            runWithAuthOrLogin(() => navigate("/publish"));
+                                        }}
+                                    >
+                                        Publish your ad
+                                    </Button>
+                                )}
+                            </EndpointAuthAction>
                         </Flex>
                     </>
                 ) : (
-                    <Space className="AppHeader__mobile" align="center">
-                        <SearchButton />
-                        <EndpointDrawerButton />
-                        <CartHeaderButton />
+                    <Space className="AppHeader__mobile" align="center" size={8}>
+                        <SearchButton className="AppHeader__iconButton" />
                         <Button
-                            className="AppHeader__burger"
+                            className="AppHeader__iconButton"
+                            type="text"
+                            icon={<GlobalOutlined />}
+                            aria-label="Open syndication"
+                            onClick={() => navigate("/syndication")}
+                        />
+                        {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
+                        <Button
+                            className="AppHeader__burger AppHeader__iconButton"
                             type="text"
                             icon={<MenuOutlined />}
                             aria-label="Open navigation"
@@ -96,43 +127,46 @@ export const AppHeader: React.FunctionComponent = () => {
                                 </div>
                             }
                         >
-                            <Menu
-                                mode="inline"
-                                items={items}
-                                selectedKeys={selectedKeys}
-                                onClick={onMenuClick}
-                            />
-                            <div className="AppHeader__drawerNav">
-                                <EndpointAuthAction>
-                                    {({ runWithAuthOrLogin }) => (
+                            <div className="AppHeader__drawerBody">
+                                <Menu
+                                    className="AppHeader__drawerMenu"
+                                    mode="inline"
+                                    items={drawerItems}
+                                    selectedKeys={selectedDrawerKeys}
+                                    onClick={onMenuClick}
+                                />
+                                <div className="AppHeader__drawerNav">
+                                    <EndpointAuthAction>
+                                        {({ runWithAuthOrLogin }) => (
+                                            <Button
+                                                block
+                                                type="primary"
+                                                icon={<PlusOutlined />}
+                                                onClick={(event) => {
+                                                    event.preventDefault();
+                                                    runWithAuthOrLogin(
+                                                        () => { navigate("/publish"); setDrawerOpen(false); },
+                                                        { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
+                                                    );
+                                                }}
+                                                className="AppHeader__drawerPublish"
+                                            >
+                                                Publish your ad
+                                            </Button>
+                                        )}
+                                    </EndpointAuthAction>
+                                    {auth.isAuthenticated ? (
                                         <Button
                                             block
-                                            type="primary"
-                                            icon={<PlusOutlined />}
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                runWithAuthOrLogin(
-                                                    () => { navigate("/publish"); setDrawerOpen(false); },
-                                                    { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
-                                                );
-                                            }}
-                                            className="AppHeader__drawerPublish"
+                                            icon={<UserOutlined />}
+                                            onClick={() => { navigate("/profile"); setDrawerOpen(false); }}
                                         >
-                                            Publish your ad
+                                            Profile
                                         </Button>
+                                    ) : (
+                                        <LoginButton block onAfterClick={() => setDrawerOpen(false)} />
                                     )}
-                                </EndpointAuthAction>
-                                {auth.isAuthenticated ? (
-                                    <Button
-                                        block
-                                        icon={<UserOutlined />}
-                                        onClick={() => { navigate("/profile"); setDrawerOpen(false); }}
-                                    >
-                                        Profile
-                                    </Button>
-                                ) : (
-                                    <LoginButton block onAfterClick={() => setDrawerOpen(false)} />
-                                )}
+                                </div>
                             </div>
                         </Drawer>
                     </Space>

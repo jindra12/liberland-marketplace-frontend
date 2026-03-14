@@ -1,0 +1,30 @@
+query EntityImageUrls {
+  companies: Companies(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  jobs: Jobs(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  startups: Startups(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  identities: Identities(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+}

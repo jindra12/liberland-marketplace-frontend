@@ -98,7 +98,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 }}
             />
             {remaining > 0 && identityId && (
-                <Link to={`/jobs?tribe=${identityId}`} className="SplashEntityCard__moreLink">
+                <Link to={`/products-services?tribe=${identityId}`} className="SplashEntityCard__moreLink">
                     <Button type="link" icon={<RightOutlined />} iconPosition="end">
                         And +{remaining} more
                     </Button>

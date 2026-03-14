@@ -79,6 +79,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         website={company.website}
                         email={company.email}
                         phone={company.phone}
+                        variant="compact"
                     />
                 ),
                 body: (company) => <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>,

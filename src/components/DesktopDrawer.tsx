@@ -4,7 +4,6 @@ import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { SearchButton } from "./SearchButton";
-import { EndpointDrawerButton } from "./EndpointDrawerButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
 
@@ -17,7 +16,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
         <>
             <Button
                 className="AppHeader__quickActionsBtn"
-                type="primary"
+                type="default"
                 icon={<MenuOutlined />}
                 aria-label="Open quick actions"
                 onClick={() => setDesktopActionsOpen(true)}
@@ -34,7 +33,6 @@ export const DesktopDrawer: React.FunctionComponent = () => {
             >
                 <div className="AppHeader__desktopDrawerNav">
                     <SearchButton type="default" block>Search</SearchButton>
-                    <EndpointDrawerButton type="default" block>Endpoints</EndpointDrawerButton>
                     <EndpointAuthAction>
                         {({ runWithAuthOrLogin }) => (
                             <Button

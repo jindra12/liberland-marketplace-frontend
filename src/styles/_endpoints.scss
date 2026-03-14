@@ -1,18 +1,83 @@
-.EndpointDrawerButton__form {
-    margin-bottom: 16px;
+.SyndicationList__addCompact {
     width: 100%;
+
+    .ant-input-affix-wrapper,
+    .ant-btn {
+        min-height: 52px;
+    }
+
+    .ant-input-affix-wrapper {
+        padding-inline: 16px;
+    }
+
+    .ant-input {
+        font-size: 16px;
+    }
+
+    .ant-btn {
+        min-width: 148px;
+        padding-inline: 24px;
+        font-weight: 700;
+    }
 }
 
-.EndpointDrawerButton__urlItem {
-    flex: 1;
-    margin-right: 8px;
-    margin-bottom: 8px;
+.SyndicationList__avatar.ant-avatar {
+    background: linear-gradient(145deg, rgba(10, 63, 120, 0.98), rgba(23, 121, 89, 0.92));
+    color: #eef8f3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.EndpointDrawerButton__submitItem {
-    margin-bottom: 8px;
+.SyndicationList__host {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.EndpointDrawerButton__warning {
-    margin-bottom: 16px;
+.SyndicationList__description {
+    margin: 0 !important;
+    color: rgba(188, 217, 203, 0.84);
+}
+
+.SyndicationDetail__avatar.ant-avatar {
+    background: linear-gradient(145deg, rgba(10, 63, 120, 0.98), rgba(23, 121, 89, 0.92));
+    color: #eef8f3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.SyndicationDetail__description {
+    margin: 0 !important;
+    max-width: 64rem;
+    color: rgba(188, 217, 203, 0.86);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.SyndicationDetail__meta .ant-descriptions-view {
+    overflow: hidden;
+    border-radius: 22px;
+    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.05);
+}
+
+.SyndicationDetail__meta .ant-descriptions-item-label {
+    width: 180px;
+}
+
+@include md-min {
+    .SyndicationList__addCompact {
+        width: 100%;
+
+        .ant-btn {
+            min-width: 132px;
+            padding-inline: 18px;
+        }
+    }
+
+    .SyndicationDetail__description {
+        font-size: 16px;
+    }
+
+    .SyndicationDetail__meta .ant-descriptions-item-label {
+        width: auto;
+    }
 }

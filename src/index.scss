@@ -3,6 +3,7 @@
 @import "./styles/queries";
 @import "./styles/header";
 @import "./styles/layout";
+@import "./styles/loading";
 @import "./styles/splash";
 @import "./styles/jobs";
 @import "./styles/entities";
@@ -19,4 +20,18 @@
 body {
     padding: 0;
     margin: 0;
+    background: #030d17;
+    color: #eef8f3;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#__next {
+    min-height: 100vh;
+}
+
+::selection {
+    background: rgba(90, 166, 255, 0.32);
+    color: #eef8f3;
 }

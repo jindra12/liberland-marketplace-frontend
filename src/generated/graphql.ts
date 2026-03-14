@@ -52067,6 +52067,11 @@ export type DeleteCommentMutationVariables = Exact<{
 
 export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: { __typename?: 'Comment', id: string } | null };
 
+export type EntityImageUrlsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EntityImageUrlsQuery = { __typename?: 'Query', companies?: { __typename?: 'Companies', docs: Array<{ __typename?: 'Company', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, jobs?: { __typename?: 'Jobs', docs: Array<{ __typename?: 'Job', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, startups?: { __typename?: 'Startups', docs: Array<{ __typename?: 'Startup', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, identities?: { __typename?: 'Identities', docs: Array<{ __typename?: 'Identity', image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -53592,6 +53597,60 @@ export const useDeleteCommentMutation = <
 
 
 useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
+
+export const EntityImageUrlsDocument = `
+    query EntityImageUrls {
+  companies: Companies(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  jobs: Jobs(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  startups: Startups(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  identities: Identities(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+}
+    `;
+
+export const useEntityImageUrlsQuery = <
+      TData = EntityImageUrlsQuery,
+      TError = unknown
+    >(
+      variables?: EntityImageUrlsQueryVariables,
+      options?: Omit<UseQueryOptions<EntityImageUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<EntityImageUrlsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<EntityImageUrlsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables],
+    queryFn: gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables),
+    ...options
+  }
+    )};
+
+useEntityImageUrlsQuery.getKey = (variables?: EntityImageUrlsQueryVariables) => variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables];
+
+
+useEntityImageUrlsQuery.fetcher = (variables?: EntityImageUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables, options);
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {

@@ -4,13 +4,17 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useCartItems } from "./useCartItems";
 
-export const CartHeaderButton: React.FunctionComponent = () => {
+type CartHeaderButtonProps = {
+    className?: string;
+};
+
+export const CartHeaderButton: React.FunctionComponent<CartHeaderButtonProps> = ({ className }) => {
     const { totalQuantity } = useCartItems();
 
     return (
-        <Link to="/cart" aria-label="Cart">
+        <Link to="/cart" aria-label="Cart" className="AppHeader__cartLink">
             <Badge count={totalQuantity} size="small" showZero>
-                <Button type="text" icon={<ShoppingCartOutlined />} />
+                <Button className={className} type="text" icon={<ShoppingCartOutlined />} />
             </Badge>
         </Link>
     );

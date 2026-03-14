@@ -23,6 +23,13 @@ export type URL = {
     enabled: boolean,
     value: string,
     name: string;
+    description?: string | null;
+};
+
+export type SyndicationDoc = {
+    url?: string | null;
+    name?: string | null;
+    description?: string | null;
 };
 
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
@@ -129,7 +136,6 @@ export type JobDetailsSummaryProps = {
 export type EntityCommentsSectionProps = {
     targetId: string;
     relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    title?: string;
     limit?: number;
     placeholder?: string;
     className?: string;
@@ -180,6 +186,8 @@ export type EntityCommentsThemeToken = {
     borderRadius: number;
     padding: number;
     fontSizeHeading4: number;
+    fontSizeHeading5: number;
+    lineHeightHeading5: number;
 };
 export type CommentSectionStyles = {
     overlayStyle: CSSProperties;

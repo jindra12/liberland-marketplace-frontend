@@ -19,6 +19,8 @@ import {
     ImageDoc,
     OrderForPayments,
     PurchasableProduct,
+    SyndicationDoc,
+    URL as EndpointUrl,
 } from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
 import { isCryptoCurrency } from "./components/publish/constants";
@@ -156,7 +158,7 @@ const toFiniteNumber = (value?: string | number | null) => {
 
 export const hasCryptoWallet = (entity?: CryptoWalletOwner | null) => {
     const address = entity?.cryptoAddresses?.address;
-    return typeof address === "string" && address.trim().length > 0;
+    return typeof address === "string" && address.length > 0;
 };
 
 export const isProductPurchasable = (product?: PurchasableProduct | null) => {
@@ -235,14 +237,14 @@ export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "item
 
         const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
         const productAddressRaw = item?.product?.cryptoAddresses?.address;
-        const productAddress = typeof productAddressRaw === "string" ? productAddressRaw.trim() : "";
+        const productAddress = typeof productAddressRaw === "string" ? productAddressRaw : "";
         if (productChain === chain && productAddress) {
             return productAddress;
         }
 
         const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
         const companyAddressRaw = item?.product?.company?.cryptoAddresses?.address;
-        const companyAddress = typeof companyAddressRaw === "string" ? companyAddressRaw.trim() : "";
+        const companyAddress = typeof companyAddressRaw === "string" ? companyAddressRaw : "";
         if (companyChain === chain && companyAddress) {
             return companyAddress;
         }
@@ -273,6 +275,116 @@ export const collectRequiredChainsForCarts = (carts: CartForRequiredChains[]): C
 
 export const buildOrderEntryKey = (url: string, orderId: string) => `${url}::${orderId}`;
 
+export const normalizeSyndicationUrl = (value: string): string => {
+    const parsed = new globalThis.URL(value);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        throw new Error("invalid protocol");
+    }
+
+    parsed.hash = "";
+    parsed.search = "";
+    return parsed.toString().replace(/\/+$/, "");
+};
+
+export const tryNormalizeEndpointUrl = (value?: string | null): string | undefined => {
+    const text = typeof value === "string" ? value : "";
+    if (!text) {
+        return undefined;
+    }
+
+    try {
+        return normalizeSyndicationUrl(text);
+    } catch {
+        return undefined;
+    }
+};
+
+export const getSyndicationHost = (value: string): string => {
+    try {
+        return new globalThis.URL(value).host;
+    } catch {
+        return value;
+    }
+};
+
+export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): string => {
+    return entry.name || getSyndicationHost(entry.value);
+};
+
+export const createEndpointEntry = (
+    value: string,
+    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
+): EndpointUrl => {
+    const normalizedValue = normalizeSyndicationUrl(value);
+
+    return {
+        enabled: options.enabled ?? true,
+        value: normalizedValue,
+        name: options.name || getSyndicationHost(normalizedValue),
+        description: options.description ?? undefined,
+    };
+};
+
+export const insertUniqueEndpoint = (
+    current: EndpointUrl[] | undefined,
+    entry: EndpointUrl,
+): EndpointUrl[] => {
+    const items = current || [];
+
+    if (items.some((existing) => existing.value === entry.value)) {
+        throw new Error("duplicate");
+    }
+
+    return [...items, entry];
+};
+
+export const setEndpointEnabled = (
+    current: EndpointUrl[] | undefined,
+    value: string,
+    nextEnabled: boolean,
+): EndpointUrl[] => {
+    return (current || []).map((entry) => (
+        entry.value === value ? { ...entry, enabled: nextEnabled } : entry
+    ));
+};
+
+export const mergeSyndicationUrls = (
+    current: EndpointUrl[] | undefined,
+    docs: SyndicationDoc[],
+): EndpointUrl[] => {
+    const items = current || [];
+    const discovered = docs
+        .map((doc) => {
+            const normalizedValue = tryNormalizeEndpointUrl(doc.url);
+            return normalizedValue
+                ? createEndpointEntry(normalizedValue, {
+                    enabled: false,
+                    name: doc.name ?? undefined,
+                    description: doc.description,
+                })
+                : undefined;
+        })
+        .filter((entry): entry is EndpointUrl => Boolean(entry));
+
+    return discovered.reduce<EndpointUrl[]>((merged, discoveredEntry) => {
+        const hasMatch = merged.some((entry) => entry.value === discoveredEntry.value);
+
+        if (!hasMatch) {
+            return [...merged, discoveredEntry];
+        }
+
+        return merged.map((entry) => (
+            entry.value === discoveredEntry.value
+                ? {
+                    ...entry,
+                    name: discoveredEntry.name || entry.name,
+                    description: discoveredEntry.description ?? entry.description,
+                }
+                : entry
+        ));
+    }, items);
+};
+
 const employmentTypeLabels: Record<Job_EmploymentType, string> = {
     [Job_EmploymentType.FullTime]: "Full-time",
     [Job_EmploymentType.PartTime]: "Part-time",
@@ -286,7 +398,7 @@ export const formatEmploymentType = (type?: Job_EmploymentType | null): string |
 };
 
 export const parseActionLink = (value?: string | null) => {
-    const text = typeof value === "string" ? value.trim() : "";
+    const text = typeof value === "string" ? value : "";
     if (!text) return undefined;
 
     const [match] = Autolinker.parse(text, {
@@ -450,7 +562,9 @@ export const getCommentSectionStyles = (token: EntityCommentsThemeToken): Commen
     titleStyle: {
         color: token.colorTextHeading,
         fontFamily: token.fontFamily,
-        fontSize: token.fontSizeHeading4,
+        fontSize: token.fontSizeHeading5,
+        fontWeight: 800,
+        lineHeight: token.lineHeightHeading5,
     },
 });
 

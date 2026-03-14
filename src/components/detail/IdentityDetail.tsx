@@ -41,7 +41,7 @@ const IdentityDetail: React.FunctionComponent = () => {
             {(data) => {
                 const imageSrc = getImage(data.Identity);
                 return (
-                    <Flex flex={1} vertical gap="8px">
+                    <Flex flex={1} vertical gap={12}>
                         <Space size={16} align="start" className="EntityDetail__header">
                             {imageSrc && (
                                 <Avatar
@@ -50,7 +50,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                     src={imageSrc}
                                 />
                             )}
-                            <div>
+                            <div className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
                                     {data.Identity?.name}
                                 </Typography.Title>
@@ -64,11 +64,6 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 </Button>
                             </>
                         )}
-                        <div>
-                            <Typography.Title level={1} className="EntityDetail__title">
-                                {data.Identity?.name}
-                            </Typography.Title>
-                        </div>
                         <Divider />
                         <Markdown>{data.Identity?.description}</Markdown>
                         <Divider />
@@ -110,7 +105,6 @@ const IdentityDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
-                            title="Comments"
                         />
                     </Flex>
                 );

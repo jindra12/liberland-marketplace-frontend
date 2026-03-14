@@ -11,10 +11,18 @@ const AppLayout: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     return (
         <Layout className="AppLayout">
             <AppHeader />
-            <Layout.Content>
-                {isSplash ? props.children : <div className="AppLayout__container">{props.children}</div>}
+            <Layout.Content className={`AppLayout__content${isSplash ? " AppLayout__content--splash" : ""}`}>
+                {isSplash ? (
+                    props.children
+                ) : (
+                    <div className="AppLayout__container">
+                        <div className="AppLayout__surface">{props.children}</div>
+                    </div>
+                )}
             </Layout.Content>
-            <Layout.Footer>© {new Date().getFullYear()} NSwap</Layout.Footer>
+            <Layout.Footer className="AppLayout__footer">
+                <span className="AppLayout__footerText">© {new Date().getFullYear()} NSwap</span>
+            </Layout.Footer>
         </Layout>
     );
 };

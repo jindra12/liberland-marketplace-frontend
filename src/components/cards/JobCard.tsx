@@ -54,29 +54,27 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                             ]}
                         >
                             <div className="SplashEntityCard__itemBody">
-                                <div className="SplashEntityCard__itemBody">
-                                    <List.Item.Meta
-                                        avatar={imageSrc ? (
-                                            <Link to={`/jobs/${job.id}`}>
-                                                <Avatar
-                                                    shape="square"
-                                                    size={48}
-                                                    src={imageSrc}
-                                                    className="SplashEntityCard__avatar"
-                                                />
-                                            </Link>
-                                        ) : undefined}
-                                        title={(
-                                            <Link to={`/jobs/${job.id}`} className="SplashEntityCard__itemLink">
-                                                {job.title}
-                                            </Link>
-                                        )}
-                                    />
-                                    <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                        {employmentType && <Tag>{employmentType}</Tag>}
-                                        {salary && <Tag color="gold">{salary}</Tag>}
-                                    </Space>
-                                </div>
+                                <List.Item.Meta
+                                    avatar={imageSrc ? (
+                                        <Link to={`/jobs/${job.id}`}>
+                                            <Avatar
+                                                shape="square"
+                                                size={48}
+                                                src={imageSrc}
+                                                className="SplashEntityCard__avatar"
+                                            />
+                                        </Link>
+                                    ) : undefined}
+                                    title={(
+                                        <Link to={`/jobs/${job.id}`} className="SplashEntityCard__itemLink">
+                                            {job.title}
+                                        </Link>
+                                    )}
+                                />
+                                <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                                    {employmentType && <Tag>{employmentType}</Tag>}
+                                    {salary && <Tag color="gold">{salary}</Tag>}
+                                </Space>
                             </div>
                         </List.Item>
                     );

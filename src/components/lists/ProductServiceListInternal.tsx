@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Tag } from "antd";
+import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
 import { UseQueryResult } from "@tanstack/react-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
@@ -92,9 +92,22 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 actions: (product) => {
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
+                    const purchaseControl = canPurchase ? (
+                        <AddToCartButton
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            size={addToCartSize}
+                            maxAvailable={product.inventory}
+                        />
+                    ) : showOrderNowFallback && orderNowLink ? (
+                        <Button type="primary" size={addToCartSize} href={orderNowLink}>
+                            Order Now!
+                        </Button>
+                    ) : null;
+
                     return (
                         <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
-                            <Flex vertical gap="8px">
+                            <Flex vertical gap="8px" className="ProductList__metaColumn">
                                 {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
                                     <Tag color="success" icon={<DollarOutlined />}>
                                         {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
@@ -105,17 +118,11 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     serverURL={product.serverURL!}
                                 />
                             </Flex>
-                            {canPurchase ? (
-                                <AddToCartButton
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                    size={addToCartSize}
-                                    maxAvailable={product.inventory}
-                                />
-                            ) : showOrderNowFallback && orderNowLink ? (
-                                <Button type="primary" size={addToCartSize} href={orderNowLink}>
-                                    Order Now!
-                                </Button>
+                            {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">
+                                    {purchaseControl}
+                                </div>
                             ) : null}
                         </Flex>
                     );

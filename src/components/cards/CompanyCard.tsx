@@ -46,32 +46,30 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                         ]}
                     >
                         <div className="SplashEntityCard__itemBody">
-                            <div className="SplashEntityCard__itemBody">
-                                <List.Item.Meta
-                                    avatar={imageSrc ? (
-                                        <Link to={`/companies/${company.id}`}>
-                                            <Avatar
-                                                shape="square"
-                                                size={48}
-                                                src={imageSrc}
-                                                className="SplashEntityCard__avatar"
-                                            />
-                                        </Link>
-                                    ) : null}
-                                    title={(
-                                        <Link to={`/companies/${company.id}`} className="SplashEntityCard__itemLink">
-                                            {company.name}
-                                        </Link>
-                                    )}
-                                />
-                                <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                    {company.website && (
-                                        <Typography.Link href={company.website} target="_blank" rel="noreferrer">
-                                            Website
-                                        </Typography.Link>
-                                    )}
-                                </Space>
-                            </div>
+                            <List.Item.Meta
+                                avatar={imageSrc ? (
+                                    <Link to={`/companies/${company.id}`}>
+                                        <Avatar
+                                            shape="square"
+                                            size={48}
+                                            src={imageSrc}
+                                            className="SplashEntityCard__avatar"
+                                        />
+                                    </Link>
+                                ) : null}
+                                title={(
+                                    <Link to={`/companies/${company.id}`} className="SplashEntityCard__itemLink">
+                                        {company.name}
+                                    </Link>
+                                )}
+                            />
+                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                                {company.website && (
+                                    <Typography.Link href={company.website} target="_blank" rel="noreferrer">
+                                        Website
+                                    </Typography.Link>
+                                )}
+                            </Space>
                         </div>
                     </List.Item>
                 );
