@@ -21,6 +21,7 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
           ... on Job {
             __typename
             id
+            serverURL
             title
             description
             positions
@@ -31,30 +32,40 @@ query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 
             }
             allowedIdentities {
               id
+              serverURL
               name
               description
             }
             disallowedIdentities {
               id
+              serverURL
               name
               description
             }
             company {
               id
+              serverURL
               name
               description
+              cryptoAddresses {
+          chain
+          address
+        }
               allowedIdentities {
                 id
+                serverURL
                 name
                 description
               }
               disallowedIdentities {
                 id
+                serverURL
                 name
                 description
               }
               identity {
                 id
+                serverURL
                 name
                 description
               }

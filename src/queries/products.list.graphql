@@ -2,17 +2,25 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
   Products(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
+      serverURL
       name
+      inventory
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       url
+      orderable
+      priceInUSDEnabled
+      priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
       properties {
         id
         key
         value
-      }
-      price {
-        amount
-        currency
       }
       image {
         id
@@ -25,10 +33,16 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
       }
       company {
         id
+        serverURL
         name
         description
+        cryptoAddresses {
+          chain
+          address
+        }
         identity {
           id
+          serverURL
           name
           description
         }

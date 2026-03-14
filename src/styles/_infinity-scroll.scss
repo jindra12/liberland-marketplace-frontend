@@ -1,9 +1,81 @@
 .InfinityScroll {
     width: 100%;
+
+    .ant-list {
+        background: transparent;
+    }
+
+    .ant-list-header {
+        margin-bottom: 18px;
+        padding: 0;
+        border-bottom: 0;
+    }
+
+    .ant-list-item {
+        margin-bottom: 20px;
+        padding: 28px 28px 24px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
+        box-shadow:
+            0 18px 40px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(147, 214, 255, 0.05);
+    }
+
+    .ant-list-item-meta-title {
+        margin-bottom: 8px !important;
+        font-size: 22px;
+        line-height: 1.08;
+    }
+
+    .ant-list-item-meta-description {
+        color: rgba(188, 217, 203, 0.78);
+    }
+
+    .ant-list .ant-list-item .ant-list-item-action {
+        width: 100%;
+        margin-top: 0;
+        margin-inline-start: 0 !important;
+    }
+
+    .ant-list .ant-list-item .ant-list-item-action > li {
+        width: 100%;
+        padding: 0;
+    }
+
+    .ant-list .ant-list-item .ant-list-item-action > li::after {
+        display: none;
+    }
 }
 
 .AppList__title {
     margin: 0 !important;
+    font-size: 40px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.04em;
+}
+
+.AppList__titleSlot {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.AppList__filters {
+    flex: 0 1 520px;
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    min-width: 320px;
+
+    > * {
+        width: 100%;
+    }
+}
+
+.AppList__actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
 }
 
 .infinite-scroll-component__outerdiv,[id^='infinite'] {
@@ -17,8 +89,28 @@
 .AppList__tribeEnd {
     text-align: center;
     padding: 32px 16px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
+    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.05);
 }
 
 .AppList__tribeEndHeading {
     margin-bottom: 16px !important;
+}
+
+@include md-min {
+    .AppList__header {
+        align-items: stretch !important;
+    }
+
+    .AppList__titleSlot,
+    .AppList__filters {
+        flex: 1 1 100%;
+        max-width: none;
+        min-width: 0;
+    }
+
+    .AppList__title {
+        font-size: 34px !important;
+    }
 }

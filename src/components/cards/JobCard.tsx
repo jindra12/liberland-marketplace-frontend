@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListJobsQuery } from "../../generated/graphql";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatEmploymentType, formatSalary } from "../../utils";
+import { formatEmploymentType, formatSalary, getImage } from "../../utils";
 
 type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 
@@ -18,8 +17,8 @@ type JobCardProps = {
 export const JobCard: React.FunctionComponent<JobCardProps> = ({
     items,
     loading,
-    totalDocs,
     identityId,
+    totalDocs,
 }) => {
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
@@ -43,25 +42,25 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                         job.salaryRange?.max,
                         job.salaryRange?.currency
                     );
-                    const imageUrl = job.image?.url || job.company?.image?.url;
+                    const imageSrc = getImage(job) || getImage(job.company);
                     return (
                         <List.Item
                             actions={[
                                 (
                                     <Link key={`job-link-${job.id}`} to={`/jobs/${job.id}`}>
-                                        <Button>Details</Button>
+                                        <Button type="primary">Details</Button>
                                     </Link>
                                 ),
                             ]}
                         >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
-                                    avatar={imageUrl ? (
+                                    avatar={imageSrc ? (
                                         <Link to={`/jobs/${job.id}`}>
                                             <Avatar
                                                 shape="square"
                                                 size={48}
-                                                src={`${BACKEND_URL}${imageUrl}`}
+                                                src={imageSrc}
                                                 className="SplashEntityCard__avatar"
                                             />
                                         </Link>

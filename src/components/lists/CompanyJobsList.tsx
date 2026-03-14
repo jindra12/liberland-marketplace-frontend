@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListJobsByCompanyQuery } from "../../generated/graphql";
+
 import { JobListInternal } from "./JobListInternal";
+import { useListJobsByCompanyQuery } from "../hooks";
 
 export interface CompanyJobsListProps {
     companyId: string;

@@ -1,17 +1,29 @@
 import React from "react";
 import { Button, Dropdown } from "antd";
-import type { MenuProps } from "antd";
+import type { ButtonProps, MenuProps } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 import { SearchScope } from "../types";
 import { SearchContainer } from "./SearchContainer";
 
-export const SearchButton: React.FunctionComponent = () => {
+type SearchButtonProps = {
+    type?: ButtonProps["type"];
+    block?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+};
+
+export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
+    type = "text",
+    block,
+    className,
+    children,
+}) => {
     const [scope, setScope] = React.useState<SearchScope>();
     const items: { key: SearchScope, label: string }[] = [
         { key: "jobs", label: "Jobs" },
         { key: "companies", label: "Companies" },
-        { key: "ventures", label: "Ventures" },
+        { key: "startups", label: "Ventures" },
         { key: "identities", label: "Tribes" },
         { key: "products", label: "Products / Services" },
     ];
@@ -24,18 +36,24 @@ export const SearchButton: React.FunctionComponent = () => {
     return (
         <>
             <Dropdown
-                trigger={["click", "hover"]}
+                trigger={["click"]}
                 menu={{ items, onClick }}
                 placement="bottomRight"
+                overlayClassName="SearchButton__menuOverlay"
             >
                 <Button
-                    type="text"
+                    type={type}
+                    block={block}
+                    className={className}
                     icon={<SearchOutlined />}
                     onClick={(e) => e.preventDefault()}
-                />
+                >
+                    {children}
+                </Button>
             </Dropdown>
             {scope && (
                 <SearchContainer
+                    key={scope}
                     onClose={() => setScope(undefined)}
                     scope={scope}
                 />

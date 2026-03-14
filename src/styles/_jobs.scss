@@ -17,10 +17,23 @@
 
 .JobDetail__header {
   margin-bottom: 16px;
+  width: 100%;
 }
 
 .JobDetail__title {
-  margin-bottom: 8px;
+  margin-bottom: 0 !important;
+}
+
+.JobDetail__headerBody {
+  min-width: 0;
+}
+
+.JobDetail__identityRow {
+  margin-top: 12px;
+}
+
+.JobDetail__summary {
+  margin-top: 14px;
 }
 
 .ActionBtn {
@@ -45,4 +58,75 @@
 
 .IdentityList__title {
   margin: 0 !important;
+}
+
+.EntityList__actionsRow {
+  width: 100%;
+}
+
+.ProductList__actionsRow {
+  width: 100%;
+}
+
+.ProductList__metaColumn {
+  min-width: 0;
+}
+
+.ProductList__purchaseControl {
+  flex-shrink: 0;
+}
+
+.ProductList__mobileDivider {
+  display: none;
+}
+
+@include md-min {
+  .JobDetail__header {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .JobDetail__headerBody {
+    width: 100%;
+  }
+
+  .JobDetail__title {
+    width: 100%;
+    font-size: 34px !important;
+    line-height: 1.04 !important;
+  }
+
+  .JobDetail__identityRow {
+    margin-top: 14px;
+  }
+
+  .JobDetail__summary {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .ProductList__actionsRow {
+    flex-direction: column;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+
+  .ProductList__metaColumn {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .ProductList__mobileDivider.ant-divider {
+    display: block;
+    width: 100%;
+    margin: 6px 0 0;
+    border-color: rgba(22, 50, 72, 0.34);
+  }
+
+  .ProductList__purchaseControl {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
 }

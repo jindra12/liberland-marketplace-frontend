@@ -8,11 +8,17 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
   ) {
     docs {
       id
+      serverURL
       title
       companyIdentityId
       company {
         id
+        serverURL
         name
+        cryptoAddresses {
+          chain
+          address
+        }
         image {
           id
           url

@@ -1,21 +1,29 @@
 import * as React from "react";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { useAuth } from "react-oidc-context";
+import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Typography } from "antd";
+import { Avatar,
+    Button,
+    Descriptions,
+    Divider,
+    Flex,
+    Grid,
+    Tag,
+    Typography
+ } from "antd";
+import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
-    useProductByIdQuery,
 } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
-import { formatPrice, parseActionLink } from "../../utils";
+import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
+import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
+import { AddToCartButton } from "../cart/AddToCartButton";
+import { CartItemCount } from "../cart/CartItemCount";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -32,12 +40,16 @@ const ProductServiceDetail: React.FunctionComponent = () => {
         <Loader query={query}>
             {(data) => {
                 const product = data.Product;
-                const imageUrl = product?.image?.url || product?.company?.image?.url;
+                const imageSrc = getImage(product) || getImage(product?.company);
                 const companyData = companyQuery.data?.Company;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
-                const inventory = typeof product?.inventory === "number"
-                    ? product.inventory.toLocaleString("en-US")
+                const inventoryCount = typeof product?.inventory === "number"
+                    ? product.inventory
                     : undefined;
+                const inventory = typeof inventoryCount === "number"
+                    ? inventoryCount.toLocaleString("en-US")
+                    : undefined;
+                const price = product?.priceInUSDEnabled ? formatUsdFromCents(product?.priceInUSD) : null;
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
@@ -48,37 +60,83 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
+                const canPurchase = isProductPurchasable(product);
+                const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);
+                const purchaseControl = product?.id ? (
+                    canPurchase ? (
+                        <AddToCartButton
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            size={md ? "large" : "middle"}
+                            maxAvailable={inventoryCount}
+                        />
+                    ) : orderNowLink ? (
+                        <Button
+                            type="primary"
+                            href={orderNowLink}
+                            size={md ? "large" : "middle"}
+                        >
+                            Order Now!
+                        </Button>
+                    ) : null
+                ) : null;
 
                 return (
-                    <Flex flex={1} vertical gap="8px">
+                    <Flex flex={1} vertical gap={12}>
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={md ? 120 : 72}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
-                            <Flex flex={1} vertical>
+                            <Flex flex={1} vertical className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
-                                    <Flex justify="space-between" align="center" gap="16px" wrap>
-                                        {product?.name}
-                                        {companyIdentity && (
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        )}
-                                    </Flex>
+                                    {product?.name}
                                 </Typography.Title>
-                                <ProductDetailsSummary
-                                    companyName={product?.company?.name}
-                                    companyId={product?.company?.id}
-                                    price={formatPrice(product?.price?.amount, product?.price?.currency)}
-                                    inventory={inventory}
-                                />
+                                {companyIdentity && (
+                                    <div className="ProductDetail__identityRow">
+                                        <IdentityTagLink
+                                            identity={companyIdentity}
+                                            color="success"
+                                            icon={<UsergroupAddOutlined />}
+                                        />
+                                    </div>
+                                )}
+                                <div className="ProductDetail__summary">
+                                    <ProductDetailsSummary
+                                        companyName={product?.company?.name}
+                                        companyId={product?.company?.id}
+                                    />
+                                </div>
+                                {product?.id && (
+                                    <div className="ProductDetail__purchaseSection">
+                                        <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
+                                            {price && (
+                                                <Tag color="success" icon={<DollarOutlined />}>
+                                                    {`Price: ${price}`}
+                                                </Tag>
+                                            )}
+                                            {inventory && (
+                                                <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>
+                                            )}
+                                            <CartItemCount
+                                                productId={product.id}
+                                                serverURL={product.serverURL!}
+                                            />
+                                        </Flex>
+                                        {purchaseControl && (
+                                            <>
+                                                <Divider className="ProductDetail__purchaseDivider" />
+                                                <div className="ProductDetail__purchaseControl">
+                                                    {purchaseControl}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
                             </Flex>
                         </Flex>
                         {isOwner && (
@@ -119,7 +177,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                             type="primary"
                                             href={orderLink}
                                         >
-                                            Order now
+                                            Visit Website
                                         </Button>
                                     )}
                                     {product?.company?.id && (
@@ -134,7 +192,6 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                            title="Comments"
                         />
                     </Flex>
                 );

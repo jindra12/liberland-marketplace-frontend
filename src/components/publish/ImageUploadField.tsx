@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Modal, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 
 const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]) => {
     if (Array.isArray(e)) return e;
@@ -11,18 +11,26 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]) => {
 
 interface ImageUploadFieldProps {
     existingImageUrl?: string | null;
+    serverUrl: string;
 }
 
-export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = ({ existingImageUrl }) => {
+export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = ({ existingImageUrl, serverUrl }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewSrc, setPreviewSrc] = useState("");
+    const existingImageSrc = existingImageUrl
+        ? getImage({
+            __typename: "Product",
+            image: { url: existingImageUrl },
+            serverURL: serverUrl,
+        })
+        : undefined;
 
-    const defaultFileList: UploadFile[] = existingImageUrl
+    const defaultFileList: UploadFile[] = existingImageSrc
         ? [{
             uid: "-1",
             name: "Current image",
             status: "done",
-            url: `${BACKEND_URL}${existingImageUrl}`,
+            url: existingImageSrc,
         }]
         : [];
 

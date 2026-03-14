@@ -5,12 +5,12 @@ import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlin
 import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
 import { AppList } from "../AppList";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { getImage } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
@@ -32,7 +32,10 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
     const handleJoin = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await joinMutation.mutateAsync(startup.id);
+            await joinMutation.mutateAsync({
+                startupId: startup.id,
+                url: startup.serverURL!,
+            });
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You joined this venture!");
@@ -44,7 +47,10 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
     const handleLeave = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
-            await leaveMutation.mutateAsync(startup.id);
+            await leaveMutation.mutateAsync({
+                startupId: startup.id,
+                url: startup.serverURL!,
+            });
             await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
             refetch();
             message.success("You left this venture");
@@ -114,7 +120,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     <Flex justify="space-between" align="center" wrap>
                         <Flex align="center" gap={8}>
                             <RocketOutlined />
-                            {startup.title}
+                            <Link to={`/startups/${startup.id}`}>{startup.title}</Link>
                         </Flex>
                         <Flex gap={4} wrap>
                             <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -129,19 +135,21 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     </Flex>
                 ),
                 actions: (startup) => (
-                    <Space>
-                        <InvolvementButton startup={startup} refetch={props.query.refetch} />
-                        <Link to={`/ventures/${startup.id}`}>
-                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
-                        </Link>
-                    </Space>
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
+                        <Space>
+                            <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                            <Link to={`/ventures/${startup.id}`}>
+                                <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
+                            </Link>
+                        </Space>
+                    </Flex>
                 ),
                 avatar: (startup) => startup.image?.url ? (
                     <Link to={`/ventures/${startup.id}`}>
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${startup.image.url}`}
+                            src={getImage(startup) || getImage(startup?.company)}
                             className="EntityList__avatar"
                         />
                     </Link>

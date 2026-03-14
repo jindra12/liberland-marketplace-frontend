@@ -20,6 +20,10 @@ query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
       company {
         id
         name
+        cryptoAddresses {
+          chain
+          address
+        }
         email
       }
       identity {

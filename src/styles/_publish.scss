@@ -48,6 +48,48 @@
     }
 }
 
+.PublishServer {
+    max-width: 760px;
+    margin: 0 auto;
+
+    &__form {
+        width: 100%;
+    }
+
+    &__summary {
+        margin-bottom: 16px;
+    }
+
+    &__list {
+        width: 100%;
+    }
+
+    &__card {
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            border-color: rgba(0, 167, 216, 0.45);
+        }
+    }
+
+    &__card--selected {
+        border-color: rgba(0, 167, 216, 0.75);
+        box-shadow: 0 6px 18px rgba(0, 167, 216, 0.14);
+    }
+
+    &__icon {
+        font-size: 20px;
+        color: #00a7d8;
+    }
+
+    &__url {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        word-break: break-all;
+    }
+}
+
 .ImageUpload {
     &__label {
         margin-top: 8px;

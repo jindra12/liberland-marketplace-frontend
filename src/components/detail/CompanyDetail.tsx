@@ -1,15 +1,22 @@
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Tabs, Typography } from "antd";
+import { Avatar,
+    Button,
+    Divider,
+    Flex,
+    Grid,
+    Space,
+    Tabs,
+    Typography
+} from "antd";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import {
     Comment_ReplyPostRelationshipInputRelationTo,
-    useCompanyByIdQuery,
 } from "../../generated/graphql";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { Loader } from "../Loader";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { BACKEND_URL } from "../../gqlFetcher";
+import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
@@ -18,6 +25,7 @@ import { IdentityGroups } from "./IdentityGroups";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery } from "../hooks";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -31,39 +39,48 @@ const CompanyDetail: React.FunctionComponent = () => {
         <Loader query={company}>
             {(data) => {
                 const companyData = data.Company;
-                const imageUrl = companyData?.image?.url || companyData?.identity?.image?.url;
+                const imageSrc = getImage(companyData);
                 const companyIdentity = companyData?.identity?.name ? {
                     id: companyData.identity.id,
                     name: companyData.identity.name,
                 } : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
-                const avatarSize = md ? 120 : 64;
+                const avatarSize = md ? 120 : 72;
                 const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
 
                 return (
-                    <Flex flex={1} vertical gap="8px">
-                        <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageUrl && (
+                    <Flex flex={1} vertical gap={md ? 18 : 16} className="CompanyDetail">
+                        <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
+                            {imageSrc && (
                                 <Avatar
                                     shape="circle"
                                     size={avatarSize}
-                                    src={`${BACKEND_URL}${imageUrl}`}
+                                    src={imageSrc}
                                 />
                             )}
-                            <Typography.Title level={1} className="EntityDetail__title">
-                                <Flex justify="space-between" align="center" gap="16px" wrap>
-                                    {companyData?.name}
+                            <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
+                                <div className="EntityDetail__titleBlock">
+                                    <Typography.Text className="EntityDetail__eyebrow">
+                                        Company
+                                    </Typography.Text>
+                                    <div className="EntityDetail__titleRow">
+                                        <Typography.Title level={1} className="EntityDetail__title">
+                                            {companyData?.name}
+                                        </Typography.Title>
+                                    </div>
                                     {companyIdentity && (
-                                        <IdentityTagLink
-                                            identity={companyIdentity}
-                                            color="success"
-                                            icon={<UsergroupAddOutlined />}
-                                        />
+                                        <div className="CompanyDetail__identityRow">
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
+                                        </div>
                                     )}
-                                </Flex>
-                            </Typography.Title>
-                        </Flex>
+                                </div>
+                            </Flex>
+                        </Space>
                         {isOwner && (
                             <Link to={`/companies/edit/${id}`}>
                                 <Button icon={<EditOutlined />}>Edit</Button>
@@ -99,18 +116,17 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     children: <CompanyProductsServicesList companyId={id!} />,
                                 },
                                 {
-                                    key: "ventures",
+                                    key: "startups",
                                     label: `Ventures (${counts.startups})`,
                                     children: <CompanyStartupsList companyId={id!} />,
                                 },
                                 {
                                     key: "comments",
-                                    label: `Comments (${counts.comments})`,
+                                    label: "Discussion",
                                     children: (
                                         <EntityCommentsSection
                                             targetId={id!}
                                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                                            title="Comments"
                                         />
                                     ),
                                 },

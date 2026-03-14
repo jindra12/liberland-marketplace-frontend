@@ -3,22 +3,25 @@ import {
     Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Popconfirm, Space, Tabs, Tag, Typography,
 } from "antd";
 import {
-    DeleteOutlined, EditOutlined, EyeOutlined, LogoutOutlined, PlusOutlined, UserOutlined,
+    DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, UserOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import { useChangePasswordMutation, useUpdateUserNameMutation } from "../authApi";
+import { useChangePasswordMutation,
+    useUpdateUserNameMutation } from "../authApi";
+
+import { formatEmploymentType } from "../utils";
 import {
-    useListJobsByCreatorQuery,
-    useListCompaniesByCreatorQuery,
-    useListProductsByCreatorQuery,
-    useListStartupsByCreatorQuery,
-    useDeleteJobMutation,
     useDeleteCompanyMutation,
+    useDeleteJobMutation,
     useDeleteProductMutation,
     useDeleteStartupMutation,
-} from "../generated/graphql";
-import { formatEmploymentType } from "../utils";
+    useListCompaniesByCreatorQuery,
+    useListJobsByCreatorQuery,
+    useListProductsByCreatorQuery,
+    useListStartupsByCreatorQuery,
+} from "./hooks";
+import { LoginButton } from "./LoginButton";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
@@ -80,9 +83,9 @@ export const ProfileContent: React.FunctionComponent = () => {
         { enabled: companyIds.length > 0, refetchOnMount: "always" },
     );
 
-    const handleNickname = async (values: { name: string }) => {
+    const handleNickname = async (values: { url: string; name: string }) => {
         try {
-            await nicknameMutation.mutateAsync(values.name);
+            await nicknameMutation.mutateAsync(values);
             await auth.signinSilent();
             message.success("Nickname updated");
             nicknameForm.resetFields();
@@ -91,23 +94,18 @@ export const ProfileContent: React.FunctionComponent = () => {
         }
     };
 
-    const handlePassword = async (values: { currentPassword: string; newPassword: string; confirm: string }) => {
+    const handlePassword = async (values: { url: string; currentPassword: string; newPassword: string; confirm: string }) => {
         if (values.newPassword !== values.confirm) {
             message.error("Passwords do not match");
             return;
         }
         try {
-            await passwordMutation.mutateAsync({ currentPassword: values.currentPassword, newPassword: values.newPassword });
+            await passwordMutation.mutateAsync(values);
             message.success("Password changed");
             passwordForm.resetFields();
         } catch {
             message.error("Failed to change password");
         }
-    };
-
-    const handleLogout = async () => {
-        await auth.removeUser();
-        navigate("/");
     };
 
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
@@ -177,9 +175,7 @@ export const ProfileContent: React.FunctionComponent = () => {
             <Divider />
 
             <div className="Profile__actions">
-                <Button danger icon={<LogoutOutlined />} onClick={handleLogout}>
-                    Log out
-                </Button>
+                <LoginButton action="logout" danger onAfterAction={() => navigate("/")} />
             </div>
 
             <Divider />
@@ -264,7 +260,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                         ),
                     },
                     {
-                        key: "ventures",
+                        key: "startups",
                         label: `Ventures (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
                         children: (
                             <List

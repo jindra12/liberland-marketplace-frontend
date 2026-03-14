@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListJobsQuery } from "../../generated/graphql";
+
 import { JobListInternal } from "./JobListInternal";
+import { useListJobsQuery } from "../hooks";
 
 export interface JobListProps {
     limited?: boolean;

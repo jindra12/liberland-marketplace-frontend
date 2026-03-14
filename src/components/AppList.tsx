@@ -1,6 +1,7 @@
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, Flex, List, Spin, Typography } from "antd";
+import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton";
 
 export interface AppListProps<TItem> {
     items: TItem[];
@@ -16,6 +17,10 @@ export interface AppListProps<TItem> {
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
+    if (props.loading && props.items.length === 0) {
+        return <CollectionListSkeleton />;
+    }
+
     return (
         <InfiniteScroll
             dataLength={props.items.length}
@@ -38,23 +43,26 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     size="large"
                     loading={props.loading}
                     header={(
-                        <Flex justify="space-between" gap="16px" wrap align="center">
-                            <Flex flex={6}>
+                        <Flex justify="space-between" gap="16px" wrap align="center" className="AppList__header">
+                            <Flex className="AppList__titleSlot">
                                 <Typography.Title level={2} className="AppList__title">
                                     {props.title}
                                 </Typography.Title>
                             </Flex>
-                            <Flex flex={4} justify="flex-end">{props.filters}</Flex>
+                            <Flex justify="flex-end" className="AppList__filters">
+                                {props.filters}
+                            </Flex>
                         </Flex>
                     )}
                     locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                     renderItem={(item) => (
                         (() => {
                             const actions = props.renderItem["actions"]?.(item);
+                            const wrappedActions = actions ? <div className="AppList__actions">{actions}</div> : undefined;
                             return (
                                 <List.Item
                                     extra={props.renderItem["extra"]?.(item)}
-                                    actions={actions ? [actions] : undefined}
+                                    actions={wrappedActions ? [wrappedActions] : undefined}
                                 >
                                     <List.Item.Meta
                                         title={props.renderItem["title"]?.(item)}

@@ -1,0 +1,12 @@
+diff --git a/node_modules/@uiw/react-markdown-preview/esm/preview.js b/node_modules/@uiw/react-markdown-preview/esm/preview.js
+index 7e449f1..2fa9a9d 100644
+--- a/node_modules/@uiw/react-markdown-preview/esm/preview.js
++++ b/node_modules/@uiw/react-markdown-preview/esm/preview.js
+@@ -7,7 +7,6 @@ import gfm from 'remark-gfm';
+ import raw from 'rehype-raw';
+ import { remarkAlert } from 'remark-github-blockquote-alert';
+ import { useCopied } from "./plugins/useCopied.js";
+-import "./styles/markdown.css";
+ 
+ /**
+  * https://github.com/uiwjs/react-md-editor/issues/607

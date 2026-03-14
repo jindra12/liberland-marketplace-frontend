@@ -1,0 +1,74 @@
+.OrderPage {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.Order__geoapifySearchItem {
+    margin-bottom: 12px;
+
+    .ant-form-item-extra {
+        margin-top: 6px;
+    }
+}
+
+.Order__geoapifyInput {
+    margin: 2px 0 4px;
+
+    .geoapify-geocoder-autocomplete-container {
+        width: 100%;
+    }
+
+    .geoapify-autocomplete-input {
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--geoapify-radius, 8px);
+        border: 1px solid var(--geoapify-border, #d9d9d9);
+        background: var(--geoapify-bg-container, #ffffff);
+        color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
+        padding: 0 11px;
+        height: 40px;
+        line-height: 38px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .geoapify-autocomplete-input::placeholder {
+        color: var(--geoapify-text-placeholder, rgba(0, 0, 0, 0.25));
+    }
+
+    .geoapify-autocomplete-input:focus {
+        border-color: var(--geoapify-primary-border, #4096ff);
+        box-shadow: 0 0 0 2px var(--geoapify-outline, rgba(5, 145, 255, 0.1));
+    }
+
+    .geoapify-autocomplete-items {
+        border: 1px solid var(--geoapify-border-secondary, #f0f0f0);
+        border-radius: var(--geoapify-radius, 8px);
+        margin-top: 4px;
+        box-shadow: var(--geoapify-shadow, 0 6px 18px rgba(0, 0, 0, 0.08));
+        background: var(--geoapify-bg-elevated, #ffffff);
+        color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
+        overflow: hidden;
+        z-index: 1050;
+    }
+
+    .geoapify-autocomplete-items div {
+        color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
+    }
+
+    .geoapify-autocomplete-items div:hover,
+    .geoapify-autocomplete-items .active {
+        background-color: var(--geoapify-hover-bg, rgba(0, 0, 0, 0.04));
+    }
+
+    .geoapify-autocomplete-items .secondary-part {
+        color: var(--geoapify-text-secondary, rgba(0, 0, 0, 0.45));
+    }
+
+    .geoapify-close-button {
+        color: var(--geoapify-text-tertiary, rgba(0, 0, 0, 0.45));
+    }
+
+    .geoapify-close-button:hover {
+        color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
+    }
+}

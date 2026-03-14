@@ -1,46 +1,83 @@
-query ProductById($id: String!) {
-  Product(id: $id) {
+query ProductById($id: String!, $draft: Boolean) {
+  Product(id: $id, draft: $draft) {
     id
+    inventory
+    enableVariants
+    variantTypes {
+      id
+      label
+      name
+    }
+    variants {
+      docs {
+        id
+        title
+        inventory
+        priceInUSDEnabled
+        priceInUSD
+        options {
+          id
+          label
+          value
+        }
+      }
+      hasNextPage
+      totalDocs
+    }
+    priceInUSDEnabled
+    priceInUSD
+    priceInETH
+    priceInSOL
+    priceInTRX
+    serverURL
     name
+    companyIdentityId
     _status
     description
+    cryptoAddresses {
+      chain
+      address
+    }
     url
+    orderable
     properties {
       id
       key
       value
     }
-    inventory
-    price {
-      amount
-      currency
-    }
+    updatedAt
+    createdAt
+    deletedAt
     company {
       id
+      serverURL
       name
       description
+      cryptoAddresses {
+        chain
+        address
+      }
       createdBy {
         id
       }
       identity {
         id
+        serverURL
         name
         description
       }
       image {
         id
         url
-        alt
         filename
+        mimeType
         width
         height
-        mimeType
       }
     }
     image {
       id
       url
-      alt
       filename
       width
       height

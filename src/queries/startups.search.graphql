@@ -21,6 +21,7 @@ query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
           ... on Startup {
             __typename
             id
+            serverURL
             title
             description
             stage
@@ -32,7 +33,12 @@ query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             }
             company {
               id
+              serverURL
               name
+              cryptoAddresses {
+          chain
+          address
+        }
             }
             image {
               id
@@ -45,6 +51,7 @@ query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
             }
             identity {
               id
+              serverURL
               name
               description
             }

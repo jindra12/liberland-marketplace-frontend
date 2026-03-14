@@ -2,31 +2,129 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    background:
+        radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.12), transparent 22%),
+        radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.12), transparent 24%),
+        radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.05), transparent 20%),
+        linear-gradient(180deg, #01050a 0%, #010911 44%, #01070d 100%);
+
+    &::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+            linear-gradient(rgba(76, 143, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(76, 143, 255, 0.035) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 100%);
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        padding-top: clamp(8px, 1.6vw, 18px);
+        padding-bottom: 2.5rem;
+        background: transparent;
+    }
+
+    &__content--splash {
+        padding-bottom: 3rem;
+    }
 
     &__container {
-        max-width: 1200px;
-        width: 100%;
+        width: min(1520px, 100%);
         margin: 0 auto;
-        padding: 2rem 1rem;
+        padding: 4px 20px 40px;
         display: flex;
         justify-content: center;
         flex: 1;
         min-height: 100%;
     }
 
+    &__surface {
+        width: 100%;
+        padding: clamp(28px, 3vw, 40px);
+        border-radius: 34px;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(47, 140, 255, 0.06), transparent 34%),
+            linear-gradient(180deg, rgba(3, 12, 22, 0.95), rgba(2, 10, 19, 0.97));
+        box-shadow:
+            0 28px 60px rgba(0, 0, 0, 0.36),
+            inset 0 1px 0 rgba(147, 214, 255, 0.05);
+    }
+
+    &__surface .ant-divider {
+        margin: 32px 0;
+        border-color: rgba(20, 47, 69, 0.34);
+    }
+
+    &__surface .ant-tabs-top > .ant-tabs-nav {
+        margin-bottom: 28px;
+    }
+
+    &__surface .ant-tabs-tab {
+        padding-top: 8px;
+        padding-bottom: 12px;
+    }
+
+    &__footer {
+        border-top: 0;
+        padding: 0 16px 28px;
+        text-align: center;
+        background: transparent !important;
+    }
+
+    &__footerText {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border-radius: 999px;
+        background: rgba(3, 12, 22, 0.88);
+        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.05);
+        color: rgba(188, 217, 203, 0.78);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
     .ant-layout-header,
     .ant-layout-footer {
         flex: 0 0 auto;
-    }
-
-    .ant-layout-footer {
-        border-top: 1px solid rgba(0, 167, 216, 0.4);
+        background: transparent;
     }
 
     .ant-layout-content {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        min-height: 0;
+        background: transparent;
+    }
+}
+
+.NotFoundPage {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(56px, 10vw, 96px) 20px;
+    text-align: center;
+}
+
+.NotFoundPage__title {
+    margin-bottom: 16px;
+}
+
+@include md-min {
+    .AppLayout {
+        &__container {
+            padding-inline: 14px;
+            padding-bottom: 24px;
+        }
+
+        &__surface {
+            border-radius: 26px;
+            padding: 24px 20px;
+        }
     }
 }

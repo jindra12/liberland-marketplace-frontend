@@ -3,18 +3,72 @@ import type { OidcStandardClaims } from "oidc-client-ts";
 import type { CommentSection } from "react-comments-section";
 import type { Space, Tag } from "antd";
 import type {
+    CartBySecretQuery,
     Comment_ReplyPostRelationshipInputRelationTo,
     Company,
+    CreateOrderMutation,
     Identity,
     Job,
+    ListProductsByCompanyQuery,
+    ListProductsByIdentityQuery,
     ListCommentsByTargetQuery,
+    ListProductsQuery,
+    ProductByIdQuery,
     Product,
     Startup,
 } from "./generated/graphql";
 
-export type SearchScope = "jobs" | "companies" | "identities" | "products" | "ventures";
-export type SearchOption = { value: string; label?: ReactNode, image?: string | null };
+
+export type URL = {
+    enabled: boolean,
+    value: string,
+    name: string;
+    description?: string | null;
+};
+
+export type SyndicationDoc = {
+    url?: string | null;
+    name?: string | null;
+    description?: string | null;
+};
+
+export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
+export type SearchOption = { key: string; value: string; id: string; label?: ReactNode, image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
+export type ImageDoc = {
+    __typename?: "Company" | "Identity" | "Job" | "Product" | "Startup";
+    image?: { url?: string | null } | null;
+    serverURL?: string | null;
+} | null;
+
+type ListProductsDoc = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
+type ListProductsByCompanyDoc = NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
+type ListProductsByIdentityDoc = NonNullable<NonNullable<ListProductsByIdentityQuery["Products"]>["docs"]>[number];
+type ProductByIdDoc = NonNullable<ProductByIdQuery["Product"]>;
+type CartBySecretDoc = NonNullable<NonNullable<CartBySecretQuery["Carts"]>["docs"]>[number];
+
+export type PurchasableProduct =
+    | ListProductsDoc
+    | ListProductsByCompanyDoc
+    | ListProductsByIdentityDoc
+    | ProductByIdDoc;
+
+export type CartForRequiredChains = Pick<CartBySecretDoc, "items">;
+export type OrderForPayments = NonNullable<CreateOrderMutation["createOrder"]>;
+
+export type CryptoChain = "ethereum" | "solana" | "tron";
+
+export type ChainPrice = {
+    chain: CryptoChain;
+    expectedNativeAmount?: number | null;
+    nativePerStable?: number | null;
+    stablePerNative?: number | null;
+    fetchedAt?: unknown;
+};
+
+export type CryptoWalletOwner =
+    | Pick<PurchasableProduct, "cryptoAddresses">
+    | NonNullable<PurchasableProduct["company"]>;
 
 export type IdentityTagItem = {
     id: string;
@@ -82,7 +136,6 @@ export type JobDetailsSummaryProps = {
 export type EntityCommentsSectionProps = {
     targetId: string;
     relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    title?: string;
     limit?: number;
     placeholder?: string;
     className?: string;
@@ -133,6 +186,8 @@ export type EntityCommentsThemeToken = {
     borderRadius: number;
     padding: number;
     fontSizeHeading4: number;
+    fontSizeHeading5: number;
+    lineHeightHeading5: number;
 };
 export type CommentSectionStyles = {
     overlayStyle: CSSProperties;
@@ -161,3 +216,16 @@ export type JobDerivedInput = {
 };
 
 export type JobIdentityDedupeBy = "id" | "name";
+
+export interface ConnectButtonProps {
+    selectWallet: (wallet: string) => void;
+}
+
+export type Chains = "Ethereum" | "Solana" | "Tron";
+
+export interface FormModel {
+    amount: bigint;
+    orderId: string;
+    recipient: string;
+    transactionHash?: string;
+}

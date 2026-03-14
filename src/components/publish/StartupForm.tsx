@@ -1,21 +1,27 @@
 import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Select } from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
 import {
     Startup_Stage_MutationInput,
     Startup_LookingFor_MutationInput,
     Startup_AlreadyHave_MutationInput,
-    useCreateStartupMutation,
-    useUpdateStartupMutation,
-    useListCompaniesByCreatorQuery,
-    useListIdentitiesQuery,
 } from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { currencyOptions } from "./constants";
+import {
+    useCreateStartupMutation,
+    useListCompaniesByCreatorQuery,
+    useListIdentitiesQuery,
+    useUpdateStartupMutation,
+} from "../hooks";
 
 const stageOptions = [
     { value: Startup_Stage_MutationInput.Idea, label: "Idea" },
@@ -62,6 +68,7 @@ interface StartupFormValues {
 
 export interface StartupFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<StartupFormValues> & {
         id?: string;
         existingImageUrl?: string | null;
@@ -69,7 +76,7 @@ export interface StartupFormProps {
     };
 }
 
-export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues }) => {
+export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
@@ -77,7 +84,6 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 
@@ -97,6 +103,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: StartupFormValues, imageId) => ({
             title: values.title,
             description: values.description,
@@ -122,7 +129,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Describe your venture (supports Markdown)" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
             <Form.Item name="company" label="Company" rules={[{ required: true, message: "Please select a company" }]}>
                 <Select
                     loading={companiesQuery.isLoading}

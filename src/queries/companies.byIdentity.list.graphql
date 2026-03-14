@@ -8,23 +8,31 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
   ) {
     docs {
       id
+      serverURL
       name
       description
+      cryptoAddresses {
+          chain
+          address
+        }
       website
       phone
       email
       allowedIdentities {
         id
+        serverURL
         name
         description
       }
       disallowedIdentities {
         id
+        serverURL
         name
         description
       }
       identity {
         id
+        serverURL
         name
         description
         image {

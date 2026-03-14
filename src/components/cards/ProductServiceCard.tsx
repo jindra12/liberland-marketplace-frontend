@@ -1,10 +1,12 @@
 import * as React from "react";
+import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListProductsQuery } from "../../generated/graphql";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatPrice } from "../../utils";
+import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
+import { AddToCartButton } from "../cart/AddToCartButton";
+import { CartItemCount } from "../cart/CartItemCount";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -18,8 +20,8 @@ type ProductServiceCardProps = {
 export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
     items,
     loading,
-    totalDocs,
     identityId,
+    totalDocs,
 }) => {
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
@@ -37,26 +39,35 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 dataSource={items}
                 locale={{ emptyText: "No products/services for this tribe" }}
                 renderItem={(product) => {
-                    const price = formatPrice(product.price?.amount, product.price?.currency);
-                    const imageUrl = product.image?.url || product.company?.image?.url;
+                    const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
+                    const imageSrc = getImage(product) || getImage(product.company);
+                    const orderNowLink = parseActionLink(product.url);
+                    const canPurchase = isProductPurchasable(product);
+                    const purchaseAction = canPurchase ? (
+                        <AddToCartButton
+                            key={`product-cart-${product.id}`}
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            size="small"
+                            maxAvailable={product.inventory}
+                        />
+                    ) : orderNowLink ? (
+                        <Button key={`product-order-${product.id}`} type="primary" size="small" href={orderNowLink}>
+                            Order Now!
+                        </Button>
+                    ) : undefined;
                     return (
                         <List.Item
-                            actions={[
-                                (
-                                    <Link key={`product-link-${product.id}`} to={`/products-services/${product.id}`}>
-                                        <Button>Details</Button>
-                                    </Link>
-                                ),
-                            ]}
+                            actions={purchaseAction ? [purchaseAction] : []}
                         >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
-                                    avatar={imageUrl ? (
+                                    avatar={imageSrc ? (
                                         <Link to={`/products-services/${product.id}`}>
                                             <Avatar
                                                 shape="square"
                                                 size={48}
-                                                src={`${BACKEND_URL}${imageUrl}`}
+                                                src={imageSrc}
                                                 className="SplashEntityCard__avatar"
                                             />
                                         </Link>
@@ -71,7 +82,15 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                     {product.company?.name && (
                                         <Typography.Text type="secondary">{product.company.name}</Typography.Text>
                                     )}
-                                    {price && <Tag color="gold">{price}</Tag>}
+                                    {price && (
+                                        <Tag color="gold" icon={<DollarOutlined />}>
+                                            {`Price: ${price}`}
+                                        </Tag>
+                                    )}
+                                    <CartItemCount
+                                        productId={product.id}
+                                        serverURL={product.serverURL!}
+                                    />
                                 </Space>
                             </div>
                         </List.Item>

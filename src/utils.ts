@@ -1,18 +1,28 @@
 import { ResultStatusType } from "antd/es/result";
 import Autolinker from "autolinker";
+import { FetchStatus, QueryObserverResult, QueryStatus, RefetchOptions, UseQueryResult } from "@tanstack/react-query";
+import mergeWith from "lodash-es/mergeWith";
+import maxBy from "lodash-es/maxBy";
 import {
     AuthProfile,
+    CartForRequiredChains,
+    ChainPrice,
     CommentCurrentUser,
     CommentDataItem,
     CommentDoc,
     CommentGrouping,
     CommentSectionStyles,
     CommentThemeVars,
-    DocType,
+    CryptoChain,
+    CryptoWalletOwner,
     EntityCommentsThemeToken,
+    ImageDoc,
+    OrderForPayments,
+    PurchasableProduct,
+    SyndicationDoc,
+    URL as EndpointUrl,
 } from "./types";
 import { Job_EmploymentType } from "./generated/graphql";
-import { BACKEND_URL } from "./gqlFetcher";
 import { isCryptoCurrency } from "./components/publish/constants";
 import {
     ENTITY_COMMENTS_ANONYMOUS_NAME,
@@ -86,11 +96,293 @@ export const formatPrice = (amount?: number | null, currency?: string | null): s
     return `${cur} ${fmt}`;
 };
 
+export const fromCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return amount / 100;
+};
+
+export const toCents = (amount?: number | null): number | null => {
+    if (amount == null) {
+        return null;
+    }
+    return Math.round(amount * 100);
+};
+
+export const formatPriceFromCents = (amount?: number | null, currency?: string | null): string | null => {
+    return formatPrice(fromCents(amount), currency);
+};
+
+export const formatUsdFromCents = (amount?: number | null): string | null => {
+    const dollars = fromCents(amount);
+    if (dollars == null) {
+        return null;
+    }
+    return dollars.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+};
+
 export const formatPositions = (positions?: number | null): string | null => {
     if (!positions || positions === 1) return null;
     const maxFractionDigits = Number.isInteger(positions) ? 0 : 2;
     const value = positions.toLocaleString("en-US", { maximumFractionDigits: maxFractionDigits });
     return `${value} position${positions === 1 ? "" : "s"}`;
+};
+
+export const CRYPTO_CHAIN_LABELS: Record<CryptoChain, string> = {
+    ethereum: "Ethereum",
+    solana: "Solana",
+    tron: "Tron",
+};
+
+export const CRYPTO_CHAIN_TICKERS: Record<CryptoChain, string> = {
+    ethereum: "ETH",
+    solana: "SOL",
+    tron: "TRX",
+};
+const toFiniteNumber = (value?: string | number | null) => {
+    if (value === null || value === undefined) {
+        return undefined;
+    }
+
+    if (typeof value === "number") {
+        return Number.isFinite(value) ? value : undefined;
+    }
+
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+export const hasCryptoWallet = (entity?: CryptoWalletOwner | null) => {
+    const address = entity?.cryptoAddresses?.address;
+    return typeof address === "string" && address.length > 0;
+};
+
+export const isProductPurchasable = (product?: PurchasableProduct | null) => {
+    if (!product || product.orderable !== true) {
+        return false;
+    }
+
+    return hasCryptoWallet(product) || hasCryptoWallet(product.company);
+};
+
+export const inferNameParts = (fullName?: string) => {
+    if (!fullName) {
+        return {
+            firstName: undefined,
+            lastName: undefined,
+        };
+    }
+
+    const [firstName, ...rest] = fullName.split(/\s+/);
+    const lastName = rest.join(" ");
+    return {
+        firstName,
+        lastName: lastName.length > 0 ? lastName : undefined,
+    };
+};
+
+export const toCryptoChain = (value: unknown): CryptoChain | undefined => {
+    const chain = typeof value === "string" ? value.toLowerCase() : "";
+    switch (chain) {
+        case "ethereum":
+        case "solana":
+        case "tron":
+            return chain;
+        default:
+            return undefined;
+    }
+};
+
+export const formatNativeCryptoAmount = (amount?: string | number | null) => {
+    const parsed = toFiniteNumber(amount);
+    if (parsed === undefined) {
+        return "N/A";
+    }
+    return parsed.toLocaleString("en-US", { maximumFractionDigits: 8 });
+};
+
+export const collectOrderChainPrices = (order: Pick<OrderForPayments, "cryptoPrices">): ChainPrice[] => {
+    const fromArray = (order.cryptoPrices || []).reduce<Partial<Record<CryptoChain, ChainPrice>>>((result, price) => {
+        const chain = toCryptoChain(price?.chain);
+        if (!chain) {
+            return result;
+        }
+
+        result[chain] = {
+            chain,
+            expectedNativeAmount: toFiniteNumber(price?.expectedNativeAmount),
+            nativePerStable: toFiniteNumber(price?.nativePerStable),
+            stablePerNative: toFiniteNumber(price?.stablePerNative),
+            fetchedAt: price?.fetchedAt,
+        };
+        return result;
+    }, {});
+
+    const chainOrder: CryptoChain[] = ["ethereum", "solana", "tron"];
+    return chainOrder
+        .map((chain) => fromArray[chain])
+        .filter((entry): entry is ChainPrice => Boolean(entry))
+        .filter((entry) => typeof entry.expectedNativeAmount === "number" && entry.expectedNativeAmount > 0);
+};
+
+export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "items">, chain: CryptoChain) => {
+    return (order.items || []).reduce<string | undefined>((resolved, item) => {
+        if (resolved) {
+            return resolved;
+        }
+
+        const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
+        const productAddressRaw = item?.product?.cryptoAddresses?.address;
+        const productAddress = typeof productAddressRaw === "string" ? productAddressRaw : "";
+        if (productChain === chain && productAddress) {
+            return productAddress;
+        }
+
+        const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
+        const companyAddressRaw = item?.product?.company?.cryptoAddresses?.address;
+        const companyAddress = typeof companyAddressRaw === "string" ? companyAddressRaw : "";
+        if (companyChain === chain && companyAddress) {
+            return companyAddress;
+        }
+
+        return undefined;
+    }, undefined);
+};
+
+export const collectRequiredChainsForCarts = (carts: CartForRequiredChains[]): CryptoChain[] => {
+    const chains = carts.reduce<Set<CryptoChain>>((acc, cart) => {
+        return (cart.items || []).reduce<Set<CryptoChain>>((innerAcc, item) => {
+            const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
+            if (productChain) {
+                innerAcc.add(productChain);
+            }
+
+            const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
+            if (companyChain) {
+                innerAcc.add(companyChain);
+            }
+
+            return innerAcc;
+        }, acc);
+    }, new Set<CryptoChain>());
+
+    return Array.from(chains.values());
+};
+
+export const buildOrderEntryKey = (url: string, orderId: string) => `${url}::${orderId}`;
+
+export const normalizeSyndicationUrl = (value: string): string => {
+    const parsed = new globalThis.URL(value);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        throw new Error("invalid protocol");
+    }
+
+    parsed.hash = "";
+    parsed.search = "";
+    return parsed.toString().replace(/\/+$/, "");
+};
+
+export const tryNormalizeEndpointUrl = (value?: string | null): string | undefined => {
+    const text = typeof value === "string" ? value : "";
+    if (!text) {
+        return undefined;
+    }
+
+    try {
+        return normalizeSyndicationUrl(text);
+    } catch {
+        return undefined;
+    }
+};
+
+export const getSyndicationHost = (value: string): string => {
+    try {
+        return new globalThis.URL(value).host;
+    } catch {
+        return value;
+    }
+};
+
+export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): string => {
+    return entry.name || getSyndicationHost(entry.value);
+};
+
+export const createEndpointEntry = (
+    value: string,
+    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
+): EndpointUrl => {
+    const normalizedValue = normalizeSyndicationUrl(value);
+
+    return {
+        enabled: options.enabled ?? true,
+        value: normalizedValue,
+        name: options.name || getSyndicationHost(normalizedValue),
+        description: options.description ?? undefined,
+    };
+};
+
+export const insertUniqueEndpoint = (
+    current: EndpointUrl[] | undefined,
+    entry: EndpointUrl,
+): EndpointUrl[] => {
+    const items = current || [];
+
+    if (items.some((existing) => existing.value === entry.value)) {
+        throw new Error("duplicate");
+    }
+
+    return [...items, entry];
+};
+
+export const setEndpointEnabled = (
+    current: EndpointUrl[] | undefined,
+    value: string,
+    nextEnabled: boolean,
+): EndpointUrl[] => {
+    return (current || []).map((entry) => (
+        entry.value === value ? { ...entry, enabled: nextEnabled } : entry
+    ));
+};
+
+export const mergeSyndicationUrls = (
+    current: EndpointUrl[] | undefined,
+    docs: SyndicationDoc[],
+): EndpointUrl[] => {
+    const items = current || [];
+    const discovered = docs
+        .map((doc) => {
+            const normalizedValue = tryNormalizeEndpointUrl(doc.url);
+            return normalizedValue
+                ? createEndpointEntry(normalizedValue, {
+                    enabled: false,
+                    name: doc.name ?? undefined,
+                    description: doc.description,
+                })
+                : undefined;
+        })
+        .filter((entry): entry is EndpointUrl => Boolean(entry));
+
+    return discovered.reduce<EndpointUrl[]>((merged, discoveredEntry) => {
+        const hasMatch = merged.some((entry) => entry.value === discoveredEntry.value);
+
+        if (!hasMatch) {
+            return [...merged, discoveredEntry];
+        }
+
+        return merged.map((entry) => (
+            entry.value === discoveredEntry.value
+                ? {
+                    ...entry,
+                    name: discoveredEntry.name || entry.name,
+                    description: discoveredEntry.description ?? entry.description,
+                }
+                : entry
+        ));
+    }, items);
 };
 
 const employmentTypeLabels: Record<Job_EmploymentType, string> = {
@@ -106,7 +398,7 @@ export const formatEmploymentType = (type?: Job_EmploymentType | null): string |
 };
 
 export const parseActionLink = (value?: string | null) => {
-    const text = typeof value === "string" ? value.trim() : "";
+    const text = typeof value === "string" ? value : "";
     if (!text) return undefined;
 
     const [match] = Autolinker.parse(text, {
@@ -118,18 +410,14 @@ export const parseActionLink = (value?: string | null) => {
     return match.getAnchorHref();
 };
 
-export const getImage = (doc?: DocType) => {
-    switch (doc?.__typename) {
-        case "Company":
-        case "Identity":
-        case "Job":
-        case "Product":
-        case "Startup": {
-            const url = doc?.image?.url;
-            return url ? `${BACKEND_URL}${url}` : undefined;
-        }
-        default:
-            return undefined;
+export const getImage = (doc?: ImageDoc) => {
+    if (!doc?.image?.url || !doc?.serverURL) {
+        return "";
+    }
+    try {
+        return new URL(doc.image.url!, doc.serverURL!).toString();
+    } catch {
+        return "";
     }
 };
 
@@ -274,6 +562,83 @@ export const getCommentSectionStyles = (token: EntityCommentsThemeToken): Commen
     titleStyle: {
         color: token.colorTextHeading,
         fontFamily: token.fontFamily,
-        fontSize: token.fontSizeHeading4,
+        fontSize: token.fontSizeHeading5,
+        fontWeight: 800,
+        lineHeight: token.lineHeightHeading5,
     },
 });
+
+export const deepMergeConcatArrays = <T>(a: T, b: T): T =>
+    mergeWith({}, a, b, (left: any, right: any) => {
+        if (Array.isArray(left) && Array.isArray(right)) {
+            return [...left, ...right];
+        }
+        return undefined;
+    });
+
+type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
+
+const merger = <TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TQuery) => data.slice(1).reduce((acc, item) => {
+    return action(acc, item);
+}, data[0]);
+
+export const combineResult = <TQuery>(
+    results: readonly QueryResult<TQuery>[],
+    mergeAction: (a: TQuery, b: TQuery) => TQuery,
+) => {
+    const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
+    const error = results.every(query => query.isError) ? results.find((query) => query.error)?.error : undefined;
+    const failureReason = results.find((query) => query.failureReason)?.failureReason;
+
+    const isError = results.every((query) => query.isError);
+    const isPending = results.every((query) => query.isPending);
+    const isLoading = results.every((query) => query.isLoading);
+    const isFetching = results.every((query) => query.isFetching);
+    const isFetched = results.some((query) => query.isFetched);
+    const isFetchedAfterMount = results.some((query) => query.isFetchedAfterMount);
+    const isPaused = results.some((query) => query.isPaused);
+    const isPlaceholderData = results.some((query) => query.isPlaceholderData);
+    const isStale = results.some((query) => query.isStale);
+    const isSuccess = results.length > 0 && results.every((query) => query.isSuccess);
+
+    const status: QueryStatus = isPending ? "pending" : isError ? "error" : "success";
+    const fetchStatus: FetchStatus = isFetching ? "fetching" : isPaused ? "paused" : "idle";
+
+    const hasData = Array.isArray(data) ? data.length > 0 : Boolean(data);
+    const isLoadingError = isError && !hasData;
+    const isRefetchError = isError && hasData;
+
+    const refetch = async (
+        options?: RefetchOptions,
+    ): Promise<QueryObserverResult<TQuery, Error>> => {
+        const refetched = await Promise.all(results.map((query) => query.refetch(options)));
+        return combineResult(refetched, mergeAction);
+    };
+
+    return {
+        data,
+        dataUpdatedAt: maxBy(results, (query) => query.dataUpdatedAt)?.dataUpdatedAt || 0,
+        error,
+        errorUpdateCount: results.reduce((sum, query) => sum + query.errorUpdateCount, 0),
+        errorUpdatedAt: maxBy(results, (query) => query.errorUpdatedAt)?.errorUpdatedAt || 0,
+        failureCount: results.reduce((sum, query) => sum + query.failureCount, 0),
+        failureReason,
+        fetchStatus,
+        isError,
+        isFetched,
+        isFetchedAfterMount,
+        isFetching,
+        isInitialLoading: isLoading,
+        isLoading,
+        isLoadingError,
+        isPaused,
+        isPending,
+        isPlaceholderData,
+        isRefetchError,
+        isRefetching: isFetching && !isPending,
+        isStale,
+        isSuccess,
+        refetch,
+        status,
+    } as QueryResult<TQuery>;
+};

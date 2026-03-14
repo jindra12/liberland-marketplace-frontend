@@ -2,6 +2,10 @@ mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft:
   updateProduct(id: $id, data: $data, draft: $draft) {
     id
     name
+    cryptoAddresses {
+          chain
+          address
+        }
     _status
     properties {
       id

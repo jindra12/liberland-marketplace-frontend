@@ -10,6 +10,7 @@ import { uploadMedia } from "../../mediaApi";
  * - null if the image was removed
  */
 export const resolveImageId = async (
+    url: string,
     fileList: UploadFile[] | undefined,
     existingImageId?: string | null,
 ): Promise<string | undefined | null> => {
@@ -25,6 +26,6 @@ export const resolveImageId = async (
     }
 
     // New file selected — upload it
-    const doc = await uploadMedia(file.originFileObj as File);
+    const doc = await uploadMedia(url, file.originFileObj as File);
     return doc.id;
 };

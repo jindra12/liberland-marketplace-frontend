@@ -4,11 +4,11 @@ import { Avatar, Button, Flex } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListCompaniesQuery } from "../../generated/graphql";
+import { getImage } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
@@ -47,7 +47,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
-                        {company.name}
+                        <Link to={`/companies/${company.id}`}>{company.name}</Link>
                         {company.identity?.name && (
                             <IdentityTagLink
                                 identity={company.identity}
@@ -57,13 +57,19 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         )}
                     </Flex>
                 ),
-                actions: (company) => <Link to={`/companies/${company.id}`}><Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button></Link>,
+                actions: (company) => (
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
+                        <Link to={`/companies/${company.id}`}>
+                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
+                        </Link>
+                    </Flex>
+                ),
                 avatar: (company) => company.image?.url ? (
                     <Link to={`/companies/${company.id}`}>
                         <Avatar
                             shape="square"
                             size={80}
-                            src={`${BACKEND_URL}${company.image.url}`}
+                            src={getImage(company)}
                             className="EntityList__avatar"
                         />
                     </Link>
@@ -73,6 +79,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         website={company.website}
                         email={company.email}
                         phone={company.phone}
+                        variant="compact"
                     />
                 ),
                 body: (company) => <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>,

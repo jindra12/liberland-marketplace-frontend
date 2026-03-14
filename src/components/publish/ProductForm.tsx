@@ -1,23 +1,28 @@
 import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import { DollarOutlined } from "@ant-design/icons";
+import {
+    Form,
+    Input,
+    InputNumber,
+    Select,
+} from "antd";
 import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
-import {
-    useCreateProductMutation,
-    useUpdateProductMutation,
-    useListCompaniesByCreatorQuery,
-} from "../../generated/graphql";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { currencyOptions } from "./constants";
+import {
+    useCreateProductMutation,
+    useListCompaniesByCreatorQuery,
+    useUpdateProductMutation,
+} from "../hooks";
+import { toCents } from "../../utils";
 
 interface ProductFormValues {
     name: string | null;
     description?: string | null;
-    priceAmount?: number | null;
-    priceCurrency: string | null;
+    priceInUSD?: number | null;
     url?: string | null;
     inventory?: number | null;
     company?: string | null;
@@ -26,6 +31,7 @@ interface ProductFormValues {
 
 export interface ProductFormProps {
     mode: "create" | "edit";
+    url: string;
     initialValues?: Partial<ProductFormValues> & {
         id?: string | null;
         existingImageUrl?: string | null;
@@ -33,7 +39,7 @@ export interface ProductFormProps {
     };
 }
 
-export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues }) => {
+export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues, url }) => {
     const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
@@ -41,13 +47,9 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
         { userId },
-        { enabled: !!userId },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
-    const defaults: Partial<ProductFormValues> = {
-        ...initialValues,
-        priceCurrency: initialValues?.priceCurrency ? initialValues.priceCurrency : "USD",
-    };
+    const defaults: Partial<ProductFormValues> = { ...initialValues };
 
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
@@ -57,12 +59,14 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
         editId: initialValues?.id,
         createMutation,
         updateMutation,
+        url,
         buildData: (values: ProductFormValues, imageId) => ({
             name: values.name,
             description: values.description,
             url: values.url,
             company: values.company,
-            price: { amount: values.priceAmount, currency: values.priceCurrency },
+            priceInUSDEnabled: true,
+            priceInUSD: toCents(values.priceInUSD),
             inventory: values.inventory,
             ...(imageId !== undefined && { image: imageId }),
         }),
@@ -78,16 +82,13 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} />
-            <Form.Item label="Price" required>
-                <Input.Group compact>
-                    <Form.Item name="priceAmount" noStyle rules={[{ required: true, message: "Enter price" }]}>
-                        <InputNumber placeholder="Amount" min={0} className="Publish__amountInput" />
-                    </Form.Item>
-                    <Form.Item name="priceCurrency" noStyle rules={[{ required: true, message: "Select currency" }]}>
-                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" />
-                    </Form.Item>
-                </Input.Group>
+            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
+            <Form.Item
+                name="priceInUSD"
+                label="Price (USD)"
+                rules={[{ required: true, message: "Enter USD price" }]}
+            >
+                <InputNumber suffix={<DollarOutlined />} placeholder="USD amount" min={0} className="Publish__amountInput" />
             </Form.Item>
             <Form.Item name="url" label="Product URL">
                 <Input />

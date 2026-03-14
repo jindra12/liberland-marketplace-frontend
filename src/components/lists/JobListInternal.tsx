@@ -4,8 +4,7 @@ import { Avatar, Button, Flex } from "antd";
 import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
-import { BACKEND_URL } from "../../gqlFetcher";
-import { formatSalary, formatEmploymentType } from "../../utils";
+import { formatSalary, formatEmploymentType, getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobMeta } from "../shared/jobDerived";
@@ -50,20 +49,20 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
-                        {job.title}
+                        <Link to={`/jobs/${job.id}`}>{job.title}</Link>
                         {job.company?.identity?.name && (
                             <IdentityTagLink identity={job.company.identity} color="success" />
                         )}
                     </Flex>
                 ),
                 avatar: (job) => {
-                    const url = job.image?.url || job.company?.image?.url;
-                    return url ? (
+                    const imageSrc = getImage(job) || getImage(job.company);
+                    return imageSrc ? (
                         <Link to={`/jobs/${job.id}`}>
                             <Avatar
                                 shape="square"
                                 size={80}
-                                src={`${BACKEND_URL}${url}`}
+                                src={imageSrc}
                                 alt={job.title || ""}
                                 className="EntityList__avatar"
                             />
@@ -102,7 +101,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     </div>
                 ),
                 actions: (job) => (
-                    <Flex wrap gap="32px" align="center">
+                    <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
                         <Link to={`/jobs/${job.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
                         <ApplyButton url={job.applyUrl} />
                     </Flex>

@@ -21,23 +21,31 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
           ... on Company {
             __typename
             id
+            serverURL
             name
             description
+            cryptoAddresses {
+          chain
+          address
+        }
             website
             phone
             email
             allowedIdentities {
               id
+              serverURL
               name
               description
             }
             disallowedIdentities {
               id
+              serverURL
               name
               description
             }
             identity {
               id
+              serverURL
               name
               description
               image {

@@ -2,11 +2,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "antd";
 import dayjs from "dayjs";
-import { useJobByIdQuery, Job_EmploymentType_MutationInput } from "../../generated/graphql";
+import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
 import { AuthGuard } from "../AuthGuard";
 import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { JobForm } from "../publish/JobForm";
+import { useJobByIdQuery } from "../hooks";
 
 const EditJob: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -43,6 +44,7 @@ const EditJob: React.FunctionComponent = () => {
                                         existingImageUrl: job?.image?.url,
                                         existingImageId: job?.image?.id,
                                     }}
+                                    url={job?.serverURL!}
                                 />
                             </OwnerGuard>
                         );

@@ -1,14 +1,16 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Typography } from "antd";
-import { useListIdentitiesQuery } from "../../generated/graphql";
+import { Avatar, Button, Flex, Grid, Typography } from "antd";
+
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { Markdown } from "../Markdown";
+import { useListIdentitiesQuery } from "../hooks";
+import { getImage } from "../../utils";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [searchText, setSearchText] = React.useState("");
+    const { md } = Grid.useBreakpoint();
     const query = useListIdentitiesQuery({
         limit: 100,
         page: 1,
@@ -36,11 +38,15 @@ export const IdentityList: React.FunctionComponent = () => {
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>
-                        <Typography.Link href={identity.website || "#"}>
+                        <Link to={`/tribes/${identity.id}`}>
                             <Typography.Title level={3} className="IdentityList__title">
                                 {identity.name}
                             </Typography.Title>
-                        </Typography.Link>
+                        </Link>
+                    </Flex>
+                ),
+                actions: (identity) => (
+                    <Flex justify="flex-end" className="EntityList__actionsRow">
                         <Link to={`/tribes/${identity.id}`}>
                             <Button type="primary" size="small">
                                 Details
@@ -50,7 +56,7 @@ export const IdentityList: React.FunctionComponent = () => {
                 ),
                 avatar: (identity) => identity.image?.url ? (
                     <Link to={`/tribes/${identity.id}`}>
-                        <Avatar src={`${BACKEND_URL}${identity.image.url}`} size={120} />
+                        <Avatar src={getImage(identity)} size={md ? 120 : 88} />
                     </Link>
                 ) : undefined,
                 description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,

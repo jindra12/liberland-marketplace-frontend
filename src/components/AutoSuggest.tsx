@@ -10,6 +10,7 @@ export interface AutoSuggestProps {
     onClose: () => void;
     onSelect: (value: string, option: SearchOption) => void;
     isLoading: boolean;
+    title: string;
 }
 
 export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) => {
@@ -17,16 +18,14 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
     const [value, setValue] = React.useState("");
 
     const onSearch: AutoCompleteProps["onSearch"] = async (text) => {
-        const trimmed = text.trim();
+        setValue(text);
 
-        setValue(trimmed);
-
-        if (!trimmed) {
+        if (!text) {
             props.setOptions([]);
             return;
         }
 
-        props.runSearch(trimmed);
+        props.runSearch(text);
     };
 
     return (
@@ -34,7 +33,7 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
             open
             onClose={props.onClose}
             width="100%"
-            title="Search"
+            title={props.title}
             closable
             destroyOnHidden
             afterOpenChange={(open) => {

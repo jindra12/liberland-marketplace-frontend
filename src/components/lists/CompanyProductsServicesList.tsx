@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListProductsByCompanyQuery } from "../../generated/graphql";
+
 import { ProductServiceListInternal } from "./ProductServiceListInternal";
+import { useListProductsByCompanyQuery } from "../hooks";
 
 export interface CompanyProductsServicesListProps {
     companyId: string;
@@ -16,6 +17,7 @@ export const CompanyProductsServicesList: React.FunctionComponent<CompanyProduct
 
     return (
         <ProductServiceListInternal
+            source="query"
             page={page}
             query={query}
             setPage={setPage}

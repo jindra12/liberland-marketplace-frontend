@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListProductsQuery } from "../../generated/graphql";
+
 import { ProductServiceListInternal } from "./ProductServiceListInternal";
+import { useListProductsQuery } from "../hooks";
 
 export const ProductsServicesList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(1);
@@ -11,6 +12,7 @@ export const ProductsServicesList: React.FunctionComponent = () => {
 
     return (
         <ProductServiceListInternal
+            source="query"
             page={page}
             query={query}
             setPage={setPage}

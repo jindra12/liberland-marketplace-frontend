@@ -21,18 +21,25 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
           ... on Company {
             __typename
             id
+            serverURL
             name
             description
+            cryptoAddresses {
+          chain
+          address
+        }
             website
             phone
             email
             allowedIdentities {
               id
+              serverURL
               name
               description
             }
             disallowedIdentities {
               id
+              serverURL
               name
               description
             }
@@ -47,6 +54,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
             }
             identity {
               id
+              serverURL
               name
               description
             }

@@ -21,9 +21,15 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
           ... on Product {
             __typename
             id
+            serverURL
             name
             description
+            cryptoAddresses {
+          chain
+          address
+        }
             url
+            orderable
             properties {
               id
               key
@@ -40,10 +46,16 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
             }
             company {
               id
+              serverURL
               name
               description
+              cryptoAddresses {
+          chain
+          address
+        }
               identity {
                 id
+                serverURL
                 name
                 description
               }

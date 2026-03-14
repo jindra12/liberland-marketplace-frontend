@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useListStartupsQuery } from "../../generated/graphql";
+
 import { StartupListInternal } from "./StartupListInternal";
+import { useListStartupsQuery } from "../hooks";
 
 export const StartupList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(1);

@@ -1,20 +1,16 @@
 import * as React from "react";
-import { Alert, Flex, Spin, Typography, theme } from "antd";
+import {
+    Alert,
+    Flex,
+    Spin,
+    theme } from "antd";
 import { useAuth } from "react-oidc-context";
 import { CommentSection } from "react-comments-section";
 import "react-comments-section/dist/index.css";
 import {
-    useCreateCommentMutation,
-    useCreateReplyToCommentMutation,
-    useDeleteCommentMutation,
-    useListCommentsByTargetQuery,
-    useUpdateCommentContentMutation,
-} from "../../generated/graphql";
-import {
     COMMENT_RELATION_TO_QUERY_RELATION,
     ENTITY_COMMENTS_DEFAULT_LIMIT,
     ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
-    ENTITY_COMMENTS_DEFAULT_TITLE,
 } from "../../constants";
 import {
     AuthProfile,
@@ -30,11 +26,17 @@ import {
     getCommentSectionStyles,
     getCommentThemeVars,
 } from "../../utils";
+import {
+    useCreateCommentMutation,
+    useCreateReplyToCommentMutation,
+    useDeleteCommentMutation,
+    useListCommentsByTargetQuery,
+    useUpdateCommentContentMutation,
+} from "../hooks";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = ({
     targetId,
     relationTo,
-    title = ENTITY_COMMENTS_DEFAULT_TITLE,
     limit = ENTITY_COMMENTS_DEFAULT_LIMIT,
     placeholder = ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
     className,
@@ -44,7 +46,6 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     const queryRelationTo = COMMENT_RELATION_TO_QUERY_RELATION[relationTo];
     const comments = useListCommentsByTargetQuery(
         { targetId, relationTo: queryRelationTo, limit },
-        { enabled: Boolean(targetId) }
     );
     const createComment = useCreateCommentMutation();
     const createReply = useCreateReplyToCommentMutation();
@@ -67,6 +68,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     }, [comments]);
 
     const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
+
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
 
     const onSubmitAction = React.useCallback(async (payload: CommentSubmitPayload) => {
@@ -158,9 +160,6 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             className={["EntityCommentsSection", !auth.isAuthenticated && "EntityCommentsSection--anonymous", className].filter(Boolean).join(" ")}
             style={commentThemeVars}
         >
-            <Typography.Title level={4} className="EntityCommentsSection__title">
-                {title}
-            </Typography.Title>
             <CommentSection
                 key={`${relationTo}-${targetId}-${auth.isAuthenticated ? "auth" : "anonymous"}`}
                 currentUser={currentUser}

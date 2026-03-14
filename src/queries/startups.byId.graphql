@@ -1,6 +1,7 @@
 query StartupById($id: String!) {
   Startup(id: $id) {
     id
+    serverURL
     title
     _status
     description
@@ -13,7 +14,12 @@ query StartupById($id: String!) {
     }
     company {
       id
+      serverURL
       name
+      cryptoAddresses {
+          chain
+          address
+        }
       email
     }
     createdBy {
@@ -21,6 +27,7 @@ query StartupById($id: String!) {
     }
     identity {
       id
+      serverURL
       name
       description
       website
