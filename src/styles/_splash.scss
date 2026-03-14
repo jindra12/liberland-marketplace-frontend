@@ -71,7 +71,7 @@
         max-width: 11ch;
         text-align: center;
         color: #eef8f3 !important;
-        line-height: 0.94 !important;
+        line-height: 0.98 !important;
         letter-spacing: -0.055em;
         text-wrap: balance;
         font-size: 86px !important;
@@ -93,6 +93,9 @@
         background: linear-gradient(135deg, #79e6b1, #7ee3df 48%, #5aa6ff 100%);
         -webkit-background-clip: text;
         background-clip: text;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        padding-inline-end: 0.04em;
         color: transparent;
     }
 
