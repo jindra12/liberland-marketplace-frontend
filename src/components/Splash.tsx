@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Alert, Button, Empty, Flex, Grid, Typography } from "antd";
+import { Alert, Button, Empty, Flex, Typography } from "antd";
 import { Link } from "react-router-dom";
 
 import { SplashSectionsSkeleton } from "./LoadingSkeleton/SplashSectionsSkeleton";
-import { SplashAmbientBackground } from "./splash/SplashAmbientBackground";
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
 import { SyndicationSection } from "./splash/SyndicationSection";
 import { useListIdentitiesQuery } from "./hooks";
@@ -47,7 +46,6 @@ const routeCards = [
 ];
 
 const Splash: React.FunctionComponent = () => {
-    const { xl } = Grid.useBreakpoint();
     const identitiesQuery = useListIdentitiesQuery({
         page: 1,
         limit: 100,
@@ -64,7 +62,6 @@ const Splash: React.FunctionComponent = () => {
 
     return (
         <Flex vertical gap={24} className="SplashPage">
-            {xl && <SplashAmbientBackground />}
             <section className="SplashPage__hero">
                 <Flex vertical align="center" gap={18} className="SplashPage__heroInner">
                     <span className="SplashPage__eyebrow">Beacon Catalogue</span>
