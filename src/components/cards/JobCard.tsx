@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListJobsQuery } from "../../generated/graphql";
 import { formatEmploymentType, formatSalary, getImage } from "../../utils";
+import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 
 type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 
@@ -20,6 +21,8 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
     identityId,
     totalDocs,
 }) => {
+    const { md } = Grid.useBreakpoint();
+    const navigate = useNavigate();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -45,13 +48,15 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                     const imageSrc = getImage(job) || getImage(job.company);
                     return (
                         <List.Item
-                            actions={[
-                                (
-                                    <Link key={`job-link-${job.id}`} to={`/jobs/${job.id}`}>
-                                        <Button type="primary" size="small">Details</Button>
-                                    </Link>
-                                ),
-                            ]}
+                            actions={md ? [(
+                                <SplashShareDetailActionRow
+                                    key={`job-actions-${job.id}`}
+                                    detailPath={`/jobs/${job.id}`}
+                                    title={job.title || "Job"}
+                                    text={`Check out ${job.title} on NSwap.`}
+                                    onDetailsClick={() => navigate(`/jobs/${job.id}`)}
+                                />
+                            )] : undefined}
                         >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
@@ -75,6 +80,14 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                                     {employmentType && <Tag>{employmentType}</Tag>}
                                     {salary && <Tag color="gold">{salary}</Tag>}
                                 </Space>
+                                {!md && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={`/jobs/${job.id}`}
+                                        title={job.title || "Job"}
+                                        text={`Check out ${job.title} on NSwap.`}
+                                        onDetailsClick={() => navigate(`/jobs/${job.id}`)}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );

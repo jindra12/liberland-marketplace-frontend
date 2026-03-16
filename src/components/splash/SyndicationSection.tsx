@@ -1,11 +1,13 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, Flex, Tag, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Card, Flex, Space, Tag, Typography } from "antd";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName } from "../../utils";
+import { NativeShareButton } from "../share/NativeShareButton";
 
 export const SyndicationSection: React.FunctionComponent = () => {
+    const navigate = useNavigate();
     const { urls, enabled } = useEndpointContext();
     const items = React.useMemo(() => (
         [...urls].sort((left, right) => {
@@ -87,9 +89,20 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                     <Typography.Text className="SplashPage__syndicationCardMetaCopy">
                                         {endpoint.enabled ? "Included in marketplace browsing." : "Stored locally until enabled."}
                                     </Typography.Text>
-                                    <Link to={detailHref}>
-                                        <Button type="primary">Details</Button>
-                                    </Link>
+                                    <Space.Compact className="SplashPage__syndicationCardCompactActions">
+                                        <NativeShareButton
+                                            path={detailHref}
+                                            title={getSyndicationName(endpoint)}
+                                            text={`Check out ${getSyndicationName(endpoint)} on NSwap.`}
+                                            className="NativeShareButton"
+                                        />
+                                        <Button
+                                            type="primary"
+                                            onClick={() => navigate(detailHref)}
+                                        >
+                                            Details
+                                        </Button>
+                                    </Space.Compact>
                                 </Flex>
                             </Flex>
                         </Card>

@@ -39,6 +39,10 @@
     color: rgba(188, 217, 203, 0.84);
 }
 
+.SyndicationList__compactActions.ant-space-compact {
+    width: 100%;
+}
+
 .SyndicationDetail__avatar.ant-avatar {
     background: linear-gradient(145deg, rgba(10, 63, 120, 0.98), rgba(23, 121, 89, 0.92));
     color: #eef8f3;
@@ -71,6 +75,23 @@
             min-width: 132px;
             padding-inline: 18px;
         }
+    }
+
+    .SyndicationList__actionsRow {
+        align-items: stretch;
+    }
+
+    .SyndicationList__compactActions.ant-space-compact {
+        width: 100%;
+    }
+
+    .SyndicationList__compactActions.ant-space-compact > * {
+        flex: 1 1 0;
+    }
+
+    .SyndicationList__compactActions .ant-btn {
+        width: 100%;
+        justify-content: center;
     }
 
     .SyndicationDetail__description {

@@ -26,6 +26,7 @@ import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -48,6 +49,8 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 72;
                 const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
+                const shareTitle = companyData?.name ?? "Company";
+                const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="CompanyDetail">
@@ -101,6 +104,8 @@ const CompanyDetail: React.FunctionComponent = () => {
                             disallowedIdentities={disallowedIdentities}
                             className="EntityDetail__identityGroups"
                         />
+                        <Divider />
+                        <DetailShareSection label="Share this company" title={shareTitle} text={shareText} />
                         <Divider />
                         <Tabs
                             defaultActiveKey="jobs"

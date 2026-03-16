@@ -1,0 +1,182 @@
+.ShareSection {
+    width: 100%;
+}
+
+.ShareSection--mobile {
+    align-items: stretch;
+}
+
+.ShareSection__label {
+    color: rgba(188, 217, 203, 0.72);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.ShareSection__buttons {
+    justify-content: flex-end;
+}
+
+.ShareSection__iconButton {
+    display: inline-flex;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.ShareSection__iconButton:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+}
+
+.NativeShareButton.ant-btn {
+    font-weight: 700;
+}
+
+.ShareSection__nativeButton.ant-btn {
+    min-width: 124px;
+    font-weight: 700;
+}
+
+.ShareSection__mobileButton.ant-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.SplashEntityCard__actionGroup {
+    justify-content: flex-end;
+}
+
+.SplashEntityCard__inlineActions {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.SplashEntityCard__actionGroup--productsDesktop {
+    align-items: flex-end;
+}
+
+.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction {
+    width: min(100%, 250px);
+}
+
+.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction > * {
+    width: 100%;
+}
+
+.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction .ant-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.ProductList__controls {
+    align-items: center;
+}
+
+.rws-backdrop {
+    backdrop-filter: blur(10px);
+}
+
+.rws-container {
+    background: linear-gradient(180deg, rgba(7, 20, 35, 0.98), rgba(4, 16, 29, 0.98));
+    border-radius: 24px 24px 0 0;
+    box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(147, 214, 255, 0.08);
+}
+
+.rws-header {
+    color: #eef8f3;
+}
+
+.rws-close {
+    background: rgba(8, 25, 39, 0.88);
+    color: #eef8f3;
+    font-weight: 700;
+}
+
+.rws-icons {
+    gap: 16px;
+}
+
+.rws-icon {
+    border-radius: 14px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.rws-icon:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+@include md-min {
+    .ShareSection {
+        align-items: flex-start !important;
+    }
+
+    .ShareSection__buttons {
+        justify-content: flex-start;
+    }
+
+    .SplashEntityCard__actionGroup,
+    .ProductList__controls {
+        justify-content: flex-start;
+    }
+
+    .SplashEntityCard__actionGroup.ant-space {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .SplashEntityCard__actionGroup.ant-space .ant-space-item,
+    .SplashEntityCard__actionGroup .ant-form,
+    .SplashEntityCard__actionGroup .AddToCartButton__compact,
+    .SplashEntityCard__actionGroup .ant-btn {
+        width: 100%;
+    }
+
+    .SplashEntityCard__actionGroup .NativeShareButton.ant-btn {
+        justify-content: center;
+    }
+
+    .SplashEntityCard__actionGroup--compact.ant-space-compact {
+        width: 100%;
+    }
+
+    .SplashEntityCard__actionGroup--compact.ant-space-compact > * {
+        flex: 1 1 0;
+    }
+
+    .SplashEntityCard__actionGroup--compact .ant-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .SplashEntityCard--products .ant-list-item-action,
+    .SplashEntityCard--products .ant-list-item-action > li {
+        display: flex;
+        justify-content: center;
+    }
+
+    .SplashEntityCard--products .SplashEntityCard__actionGroup.ant-space {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .SplashEntityCard--products .SplashEntityCard__actionGroup.ant-space .ant-space-item {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .SplashEntityCard--products .AddToCartButton__compact.ant-space-compact {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .rws-icons {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+}

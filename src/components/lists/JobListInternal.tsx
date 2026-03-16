@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex } from "antd";
+import { Avatar, Flex, Grid } from "antd";
 import { ListJobsQuery } from "../../generated/graphql";
 import { ApplyButton } from "../ApplyButton";
 import { AppList } from "../AppList";
@@ -9,6 +9,7 @@ import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
@@ -21,6 +22,7 @@ export interface JobListInternalProps {
 }
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
+    const { md } = Grid.useBreakpoint();
     const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -101,10 +103,26 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     </div>
                 ),
                 actions: (job) => (
-                    <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
-                        <Link to={`/jobs/${job.id}`}><Button size="large" className="ActionBtn">Details</Button></Link>
-                        <ApplyButton url={job.applyUrl} />
-                    </Flex>
+                    md ? (
+                        <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
+                            <ListShareDetailButtons
+                                detailPath={`/jobs/${job.id}`}
+                                title={job.title}
+                                text={`Check out ${job.title} on NSwap.`}
+                            />
+                            <ApplyButton url={job.applyUrl} />
+                        </Flex>
+                    ) : (
+                        <Flex vertical gap="12px" className="EntityList__actionsRow JobList__actionsRow">
+                            <ListShareDetailButtons
+                                compact
+                                detailPath={`/jobs/${job.id}`}
+                                title={job.title}
+                                text={`Check out ${job.title} on NSwap.`}
+                            />
+                            <ApplyButton url={job.applyUrl} block />
+                        </Flex>
+                    )
                 ),
             }}
         />

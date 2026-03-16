@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Typography } from "antd";
+import { Avatar, Flex, Grid, Typography } from "antd";
 
 import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
 import { Markdown } from "../Markdown";
 import { useListIdentitiesQuery } from "../hooks";
 import { getImage } from "../../utils";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [searchText, setSearchText] = React.useState("");
@@ -46,13 +47,26 @@ export const IdentityList: React.FunctionComponent = () => {
                     </Flex>
                 ),
                 actions: (identity) => (
-                    <Flex justify="flex-end" className="EntityList__actionsRow">
-                        <Link to={`/tribes/${identity.id}`}>
-                            <Button type="primary" size="small">
-                                Details
-                            </Button>
-                        </Link>
-                    </Flex>
+                    md ? (
+                        <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
+                            <ListShareDetailButtons
+                                detailPath={`/tribes/${identity.id}`}
+                                title={identity.name}
+                                text={`Check out ${identity.name} on NSwap.`}
+                                desktopDetailButtonType="primary"
+                            />
+                        </Flex>
+                    ) : (
+                        <Flex vertical gap="12px" className="EntityList__actionsRow IdentityList__actionsRow">
+                            <ListShareDetailButtons
+                                compact
+                                detailPath={`/tribes/${identity.id}`}
+                                title={identity.name}
+                                text={`Check out ${identity.name} on NSwap.`}
+                                desktopDetailButtonType="primary"
+                            />
+                        </Flex>
+                    )
                 ),
                 avatar: (identity) => identity.image?.url ? (
                     <Link to={`/tribes/${identity.id}`}>

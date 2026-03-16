@@ -54,6 +54,17 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     ));
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
+    const usesSplitLayout = !hasItemInCart;
+    const formClassName = [
+        "AddToCartButton",
+        usesSplitLayout ? "AddToCartButton--split" : "",
+    ].filter(Boolean).join(" ");
+    const compactClassName = [
+        "AddToCartButton__compact",
+        usesSplitLayout ? "AddToCartButton__compact--split" : "",
+        block ? "AddToCartButton__compact--block" : "",
+        hasItemInCart ? "AddToCartButton__compact--hasRemove" : "",
+    ].filter(Boolean).join(" ");
     const watchedQuantity = Form.useWatch("quantity", form);
     const inputQuantity = typeof watchedQuantity === "number" && watchedQuantity > 0 ? watchedQuantity : 1;
     const shouldRemovePartially = hasItemInCart && inputQuantity < currentItemQuantity;
@@ -225,8 +236,8 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
             }}
         >
             {messageContextHolder}
-            <Form form={form} onFinish={handleFinish} initialValues={{ quantity: 1 }}>
-                <Space.Compact block={block}>
+            <Form className={formClassName} form={form} onFinish={handleFinish} initialValues={{ quantity: 1 }}>
+                <Space.Compact block={block} className={compactClassName}>
                     <Form.Item name="quantity" noStyle>
                         <InputNumber
                             min={1}
