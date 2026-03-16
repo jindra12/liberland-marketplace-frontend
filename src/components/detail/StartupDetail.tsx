@@ -32,6 +32,7 @@ import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 import { useStartupByIdQuery } from "../hooks";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -85,6 +86,8 @@ const StartupDetail: React.FunctionComponent = () => {
                     ? involvedUsers.some((u) => u.id === userId)
                     : false;
                 const isOwner = userId && (s?.createdBy as { id?: string } | null)?.id === userId;
+                const shareTitle = s?.title ?? "Venture";
+                const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="StartupDetail">
@@ -209,6 +212,8 @@ const StartupDetail: React.FunctionComponent = () => {
                             </>
                         )}
 
+                        <Divider className="StartupDetail__divider" />
+                        <DetailShareSection label="Share this venture" title={shareTitle} text={shareText} />
                         <Divider className="StartupDetail__divider" />
                         <Tabs
                             className="StartupDetail__section StartupDetail__tabs"

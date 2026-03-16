@@ -411,6 +411,10 @@
         margin-top: auto;
     }
 
+    &__syndicationCardCompactActions.ant-space-compact {
+        flex-shrink: 0;
+    }
+
     &__syndicationCardMetaCopy {
         color: rgba(188, 217, 203, 0.7);
         font-size: 13px;
@@ -578,6 +582,23 @@
             }
         }
 
+        &__syndicationCardActions {
+            align-items: stretch;
+        }
+
+        &__syndicationCardCompactActions.ant-space-compact {
+            width: 100%;
+        }
+
+        &__syndicationCardCompactActions.ant-space-compact > * {
+            flex: 1 1 0;
+        }
+
+        &__syndicationCardCompactActions .ant-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
         &__identityHeading {
             font-size: 24px !important;
         }
@@ -593,6 +614,22 @@
         .ant-card-body {
             padding: 16px;
         }
+
+        .ant-list-item {
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .ant-list-item-action {
+            width: 100%;
+            margin-top: 0;
+            margin-inline-start: 0;
+        }
+
+        .ant-list-item-action > li {
+            width: 100%;
+            padding: 0;
+        }
     }
 
     .SplashEntityCard__title {
@@ -601,6 +638,10 @@
 
     .SplashEntityCard__itemLink {
         font-size: 17px;
+    }
+
+    .SplashEntityCard__itemBody {
+        width: 100%;
     }
 
     .SplashPage__syndicationCardTitle {

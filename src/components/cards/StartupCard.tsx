@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListStartupsByIdentityQuery } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 
 type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
 
@@ -20,6 +21,8 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
     totalDocs,
     identityId,
 }) => {
+    const { md } = Grid.useBreakpoint();
+    const navigate = useNavigate();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -39,13 +42,15 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                     const imageUrl = startup.image?.url;
                     return (
                         <List.Item
-                            actions={[
-                                (
-                                    <Link key={`startup-link-${startup.id}`} to={`/ventures/${startup.id}`}>
-                                        <Button type="primary" size="small">Details</Button>
-                                    </Link>
-                                ),
-                            ]}
+                            actions={md ? [(
+                                <SplashShareDetailActionRow
+                                    key={`startup-actions-${startup.id}`}
+                                    detailPath={`/ventures/${startup.id}`}
+                                    title={startup.title || "Venture"}
+                                    text={`Check out ${startup.title} on NSwap.`}
+                                    onDetailsClick={() => navigate(`/ventures/${startup.id}`)}
+                                />
+                            )] : undefined}
                         >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
@@ -68,6 +73,14 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                                 <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                                     {startup.stage && <Tag>{startup.stage}</Tag>}
                                 </Space>
+                                {!md && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={`/ventures/${startup.id}`}
+                                        title={startup.title || "Venture"}
+                                        text={`Check out ${startup.title} on NSwap.`}
+                                        onDetailsClick={() => navigate(`/ventures/${startup.id}`)}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );

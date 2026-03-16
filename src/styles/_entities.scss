@@ -386,10 +386,17 @@
     display: flex;
     justify-content: center;
     padding-top: 16px;
+    max-width: 500px;
 
     .ant-form {
         display: flex;
         justify-content: center;
+        width: 100%;
+    }
+
+    > .ant-btn,
+    > .ant-space-compact {
+        width: 100%;
     }
 }
 

@@ -104,6 +104,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                         loading={productsQuery.isLoading}
                         totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
                         identityId={identityId}
+                        desktopActionLayout="stacked"
                     />
                 </Col>
                 <Col xs={24} lg={12}>

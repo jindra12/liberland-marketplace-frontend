@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Input, Space, Tag, Typography, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
@@ -13,6 +13,7 @@ import {
     setEndpointEnabled,
 } from "../../utils";
 import { Markdown } from "../Markdown";
+import { NativeShareButton } from "../share/NativeShareButton";
 
 const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
@@ -24,6 +25,8 @@ const byPriority = (entry: URL) => {
 };
 
 export const SyndicationListInternal: React.FunctionComponent = () => {
+    const { md } = Grid.useBreakpoint();
+    const navigate = useNavigate();
     const { urls, setUrls } = useEndpointContext();
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
@@ -131,20 +134,56 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                         </Markdown>
                     ),
                     actions: (entry) => (
-                        <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
-                            <Button
-                                size="large"
-                                icon={<PoweroffOutlined />}
-                                onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
-                            >
-                                {entry.enabled ? "Disable" : "Enable"}
-                            </Button>
-                            <Link to={buildSyndicationHref(entry.value)}>
-                                <Button type="primary" variant="filled" className="ActionBtn" size="large">
-                                    Details
+                        md ? (
+                            <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
+                                <NativeShareButton
+                                    path={buildSyndicationHref(entry.value)}
+                                    title={getSyndicationName(entry)}
+                                    text={`Check out ${getSyndicationName(entry)} on NSwap.`}
+                                    size="large"
+                                    className="NativeShareButton"
+                                />
+                                <Button
+                                    size="large"
+                                    icon={<PoweroffOutlined />}
+                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                >
+                                    {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
-                            </Link>
-                        </Flex>
+                                <Link to={buildSyndicationHref(entry.value)}>
+                                    <Button type="primary" variant="filled" className="ActionBtn" size="large">
+                                        Details
+                                    </Button>
+                                </Link>
+                            </Flex>
+                        ) : (
+                            <Flex vertical gap="12px" className="EntityList__actionsRow SyndicationList__actionsRow">
+                                <Space.Compact block className="SyndicationList__compactActions">
+                                    <NativeShareButton
+                                        path={buildSyndicationHref(entry.value)}
+                                        title={getSyndicationName(entry)}
+                                        text={`Check out ${getSyndicationName(entry)} on NSwap.`}
+                                        size="large"
+                                        className="NativeShareButton"
+                                    />
+                                    <Button
+                                        size="large"
+                                        className="ActionBtn"
+                                        onClick={() => navigate(buildSyndicationHref(entry.value))}
+                                    >
+                                        Details
+                                    </Button>
+                                </Space.Compact>
+                                <Button
+                                    size="large"
+                                    block
+                                    icon={<PoweroffOutlined />}
+                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                >
+                                    {entry.enabled ? "Disable" : "Enable"}
+                                </Button>
+                            </Flex>
+                        )
                     ),
                 }}
             />

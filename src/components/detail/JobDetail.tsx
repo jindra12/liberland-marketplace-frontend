@@ -23,6 +23,7 @@ import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -46,6 +47,8 @@ const JobDetail: React.FunctionComponent = () => {
                 const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
                 const { allowedIdentities, disallowedIdentities } = getJobIdentityAccess(job, "name");
                 const isOwner = auth.user?.profile?.sub && job?.createdBy?.id === auth.user.profile.sub;
+                const shareTitle = job?.title ?? "Job";
+                const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
                     <Flex flex={1} vertical gap={12}>
@@ -95,6 +98,8 @@ const JobDetail: React.FunctionComponent = () => {
                                 <ApplyButton url={job?.applyUrl} />
                             </div>
                         </Flex>
+                        <Divider />
+                        <DetailShareSection label="Share this job" title={shareTitle} text={shareText} />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}

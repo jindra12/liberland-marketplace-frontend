@@ -40,6 +40,10 @@
   min-width: 120px;
 }
 
+.ListShareDetailButtons--compact.ant-space-compact {
+  width: 100%;
+}
+
 .JobInactiveNotice {
   display: block;
 }
@@ -70,14 +74,41 @@
 
 .ProductList__metaColumn {
   min-width: 0;
+  align-items: flex-start;
+  flex: 0 0 auto;
 }
 
 .ProductList__purchaseControl {
   flex-shrink: 0;
 }
 
+.ProductList__controls {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
 .ProductList__mobileDivider {
   display: none;
+}
+
+.ProductList__compactActions.ant-space-compact {
+  width: 100%;
+}
+
+.JobList__compactActions.ant-space-compact {
+  width: 100%;
+}
+
+.CompanyList__compactActions.ant-space-compact {
+  width: 100%;
+}
+
+.IdentityList__compactActions.ant-space-compact {
+  width: 100%;
+}
+
+.StartupList__compactActions.ant-space-compact {
+  width: 100%;
 }
 
 @include md-min {
@@ -105,10 +136,104 @@
     margin-top: 16px;
   }
 
+  .JobList__actionsRow {
+    align-items: stretch;
+  }
+
+  .ListShareDetailButtons--compact.ant-space-compact {
+    width: 100%;
+  }
+
+  .ListShareDetailButtons--compact.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .ListShareDetailButtons--compact .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .CompanyList__actionsRow {
+    align-items: stretch;
+  }
+
+  .IdentityList__actionsRow {
+    align-items: stretch;
+  }
+
+  .JobList__compactActions.ant-space-compact {
+    width: 100%;
+  }
+
+  .JobList__compactActions.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .JobList__compactActions .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .CompanyList__compactActions.ant-space-compact {
+    width: 100%;
+  }
+
+  .CompanyList__compactActions.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .CompanyList__compactActions .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .IdentityList__compactActions.ant-space-compact {
+    width: 100%;
+  }
+
+  .IdentityList__compactActions.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .IdentityList__compactActions .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .StartupList__actionsRow {
+    align-items: stretch;
+  }
+
+  .StartupList__compactActions.ant-space-compact {
+    width: 100%;
+  }
+
+  .StartupList__compactActions.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .StartupList__compactActions .ant-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .ProductList__actionsRow {
     flex-direction: column;
     align-items: stretch !important;
     justify-content: flex-start !important;
+  }
+
+  .ProductList__compactActions.ant-space-compact {
+    width: 100%;
+  }
+
+  .ProductList__compactActions.ant-space-compact > * {
+    flex: 1 1 0;
+  }
+
+  .ProductList__compactActions .ant-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .ProductList__metaColumn {
@@ -125,8 +250,16 @@
 
   .ProductList__purchaseControl {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    display: block;
     padding-top: 8px;
+  }
+
+  .ProductList__purchaseControl > * {
+    width: 100%;
+  }
+
+  .ProductList__purchaseControl .ant-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

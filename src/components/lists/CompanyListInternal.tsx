@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex } from "antd";
+import { Avatar, Flex, Grid } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { UseQueryResult } from "@tanstack/react-query";
 import { AppList } from "../AppList";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { ListCompaniesQuery } from "../../generated/graphql";
 import { getImage } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -20,6 +21,7 @@ export interface CompanyListInternalProps {
 
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
+    const { md } = Grid.useBreakpoint();
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -58,11 +60,26 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     </Flex>
                 ),
                 actions: (company) => (
-                    <Flex justify="flex-end" className="EntityList__actionsRow">
-                        <Link to={`/companies/${company.id}`}>
-                            <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
-                        </Link>
-                    </Flex>
+                    md ? (
+                        <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
+                            <ListShareDetailButtons
+                                detailPath={`/companies/${company.id}`}
+                                title={company.name}
+                                text={`Check out ${company.name} on NSwap.`}
+                                desktopDetailButtonType="primary"
+                            />
+                        </Flex>
+                    ) : (
+                        <Flex vertical gap="12px" className="EntityList__actionsRow CompanyList__actionsRow">
+                            <ListShareDetailButtons
+                                compact
+                                detailPath={`/companies/${company.id}`}
+                                title={company.name}
+                                text={`Check out ${company.name} on NSwap.`}
+                                desktopDetailButtonType="primary"
+                            />
+                        </Flex>
+                    )
                 ),
                 avatar: (company) => company.image?.url ? (
                     <Link to={`/companies/${company.id}`}>

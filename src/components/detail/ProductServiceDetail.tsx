@@ -24,6 +24,7 @@ import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -63,9 +64,12 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const canPurchase = isProductPurchasable(product);
                 const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);
+                const shareTitle = product?.name ?? "Product";
+                const shareText = `Check out ${shareTitle} on NSwap.`;
                 const purchaseControl = product?.id ? (
                     canPurchase ? (
                         <AddToCartButton
+                            block
                             productId={product.id}
                             serverURL={product.serverURL!}
                             size={md ? "large" : "middle"}
@@ -73,6 +77,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         />
                     ) : orderNowLink ? (
                         <Button
+                            block
                             type="primary"
                             href={orderNowLink}
                             size={md ? "large" : "middle"}
@@ -188,6 +193,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 </Flex>
                             </>
                         )}
+                        <Divider />
+                        <DetailShareSection label="Share this product" title={shareTitle} text={shareText} />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}

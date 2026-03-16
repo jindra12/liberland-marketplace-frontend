@@ -3,13 +3,22 @@ import { Button } from "antd";
 
 export interface ApplyButtonProps {
     url?: string | null;
+    block?: boolean;
 }
 
-export const ApplyButton: React.FunctionComponent<ApplyButtonProps> = ({ url }) => {
+export const ApplyButton: React.FunctionComponent<ApplyButtonProps> = ({ url, block }) => {
     if (!url) return null;
     const href = url.startsWith("http") ? url : `https://${url}`;
     return (
-        <Button type="primary" size="large" className="ActionBtn" href={href} target="_blank" rel="noopener noreferrer">
+        <Button
+            type="primary"
+            size="large"
+            className="ActionBtn"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            block={block}
+        >
             Apply
         </Button>
     );

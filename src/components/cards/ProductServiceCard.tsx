@@ -1,12 +1,13 @@
 import * as React from "react";
 import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Card, List, Space, Tag, Typography } from "antd";
+import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListProductsQuery } from "../../generated/graphql";
 import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
+import { SplashProductActionControls } from "./SplashProductActionControls";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -15,6 +16,7 @@ type ProductServiceCardProps = {
     loading?: boolean;
     totalDocs?: number;
     identityId?: string;
+    desktopActionLayout?: "inline" | "stacked";
 };
 
 export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
@@ -22,7 +24,9 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
     loading,
     identityId,
     totalDocs,
+    desktopActionLayout = "inline",
 }) => {
+    const { md } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -43,27 +47,39 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                     const imageSrc = getImage(product) || getImage(product.company);
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
+                    const detailPath = `/products-services/${product.id}`;
+                    const shareTitle = product.name || "Product";
+                    const shareText = `Check out ${product.name} on NSwap.`;
                     const purchaseAction = canPurchase ? (
                         <AddToCartButton
-                            key={`product-cart-${product.id}`}
                             productId={product.id}
                             serverURL={product.serverURL!}
+                            block
                             size="small"
                             maxAvailable={product.inventory}
                         />
                     ) : orderNowLink ? (
-                        <Button key={`product-order-${product.id}`} type="primary" size="small" href={orderNowLink}>
+                        <Button type="primary" size="small" href={orderNowLink}>
                             Order Now!
                         </Button>
                     ) : undefined;
                     return (
                         <List.Item
-                            actions={purchaseAction ? [purchaseAction] : []}
+                            actions={md ? [(
+                                <SplashProductActionControls
+                                    key={`product-actions-${product.id}`}
+                                    detailPath={detailPath}
+                                    title={shareTitle}
+                                    text={shareText}
+                                    purchaseAction={purchaseAction}
+                                    desktopLayout={desktopActionLayout}
+                                />
+                            )] : undefined}
                         >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
                                     avatar={imageSrc ? (
-                                        <Link to={`/products-services/${product.id}`}>
+                                        <Link to={detailPath}>
                                             <Avatar
                                                 shape="square"
                                                 size={48}
@@ -73,15 +89,12 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                         </Link>
                                     ) : undefined}
                                     title={(
-                                        <Link to={`/products-services/${product.id}`} className="SplashEntityCard__itemLink">
+                                        <Link to={detailPath} className="SplashEntityCard__itemLink">
                                             {product.name}
                                         </Link>
                                     )}
                                 />
                                 <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                    {product.company?.name && (
-                                        <Typography.Text type="secondary">{product.company.name}</Typography.Text>
-                                    )}
                                     {price && (
                                         <Tag color="gold" icon={<DollarOutlined />}>
                                             {`Price: ${price}`}
@@ -92,6 +105,15 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                         serverURL={product.serverURL!}
                                     />
                                 </Space>
+                                {!md && (
+                                    <SplashProductActionControls
+                                        detailPath={detailPath}
+                                        title={shareTitle}
+                                        text={shareText}
+                                        purchaseAction={purchaseAction}
+                                        inline
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );

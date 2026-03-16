@@ -8,6 +8,7 @@ import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../../utils";
 import { Markdown } from "../Markdown";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const SyndicationDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -52,6 +53,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
 
     const host = getSyndicationHost(entry.value);
     const title = getSyndicationName(entry);
+    const shareText = `Check out ${title} on NSwap.`;
 
     return (
         <Flex flex={1} vertical gap={12}>
@@ -104,6 +106,8 @@ const SyndicationDetail: React.FunctionComponent = () => {
                     <Divider />
                 </>
             )}
+            <DetailShareSection label="Share this endpoint" title={title} text={shareText} />
+            <Divider />
             <Descriptions bordered column={1} size="small" className="SyndicationDetail__meta">
                 <Descriptions.Item label="Name">
                     {title}

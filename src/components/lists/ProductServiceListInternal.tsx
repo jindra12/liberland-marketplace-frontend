@@ -10,6 +10,7 @@ import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
@@ -41,6 +42,7 @@ type ProductServiceListInternalProps = {
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const screens = Grid.useBreakpoint();
     const addToCartSize = screens.lg ? "large" : "middle";
+    const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
     const isLoading = props.source === "query"
         ? props.query.isLoading
@@ -90,23 +92,51 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     </Flex>
                 ),
                 actions: (product) => {
+                    const detailHref = `/products-services/${product.id}`;
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
                         <AddToCartButton
                             productId={product.id}
                             serverURL={product.serverURL!}
+                            block={isMobile}
                             size={addToCartSize}
                             maxAvailable={product.inventory}
                         />
                     ) : showOrderNowFallback && orderNowLink ? (
-                        <Button type="primary" size={addToCartSize} href={orderNowLink}>
+                        <Button type="primary" size={addToCartSize} href={orderNowLink} block={isMobile}>
                             Order Now!
                         </Button>
                     ) : null;
 
-                    return (
-                        <Flex align="center" justify="space-between" gap="16px" className="ProductList__actionsRow">
+                    return isMobile ? (
+                        <Flex vertical gap="12px" className="ProductList__actionsRow">
+                            <Flex vertical gap="8px" className="ProductList__metaColumn">
+                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
+                                    <Tag color="success" icon={<DollarOutlined />}>
+                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                    </Tag>
+                                )}
+                                <CartItemCount
+                                    productId={product.id}
+                                    serverURL={product.serverURL!}
+                                />
+                            </Flex>
+                            <ListShareDetailButtons
+                                compact
+                                detailPath={detailHref}
+                                title={product.name}
+                                text={`Check out ${product.name} on NSwap.`}
+                                size={addToCartSize}
+                            />
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">
+                                    {purchaseControl}
+                                </div>
+                            ) : null}
+                        </Flex>
+                    ) : (
+                        <Flex align="center" justify="space-between" gap="16px" wrap className="ProductList__actionsRow">
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
                                 {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
                                     <Tag color="success" icon={<DollarOutlined />}>
@@ -119,11 +149,19 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                 />
                             </Flex>
                             {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
-                            {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">
-                                    {purchaseControl}
-                                </div>
-                            ) : null}
+                            <Flex gap="12px" wrap justify="flex-end" className="ProductList__controls">
+                                <ListShareDetailButtons
+                                    detailPath={detailHref}
+                                    title={product.name}
+                                    text={`Check out ${product.name} on NSwap.`}
+                                    size={addToCartSize}
+                                />
+                                {purchaseControl ? (
+                                    <div className="ProductList__purchaseControl">
+                                        {purchaseControl}
+                                    </div>
+                                ) : null}
+                            </Flex>
                         </Flex>
                     );
                 },

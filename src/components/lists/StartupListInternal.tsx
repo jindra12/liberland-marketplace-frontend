@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Space, Tag, message } from "antd";
+import { Avatar, Button, Flex, Grid, Tag, message } from "antd";
 import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
 import { AppList } from "../AppList";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
@@ -16,7 +17,11 @@ import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 
-const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch: () => void }> = ({ startup, refetch }) => {
+const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch: () => void; block?: boolean }> = ({
+    startup,
+    refetch,
+    block,
+}) => {
     const auth = useAuth();
     const queryClient = useQueryClient();
     const joinMutation = useJoinStartupMutation();
@@ -66,6 +71,7 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
                 onClick={handleLeave}
                 loading={leaveMutation.isPending}
                 size="large"
+                block={block}
             >
                 Remove Involvement
             </Button>
@@ -79,6 +85,7 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
             onClick={handleJoin}
             loading={joinMutation.isPending}
             size="large"
+            block={block}
         >
             Get Involved
         </Button>
@@ -92,6 +99,7 @@ export interface StartupListInternalProps {
 }
 
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
+    const { md } = Grid.useBreakpoint();
     const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -120,7 +128,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     <Flex justify="space-between" align="center" wrap>
                         <Flex align="center" gap={8}>
                             <RocketOutlined />
-                            <Link to={`/startups/${startup.id}`}>{startup.title}</Link>
+                            <Link to={`/ventures/${startup.id}`}>{startup.title}</Link>
                         </Flex>
                         <Flex gap={4} wrap>
                             <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -135,14 +143,30 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     </Flex>
                 ),
                 actions: (startup) => (
-                    <Flex justify="flex-end" className="EntityList__actionsRow">
-                        <Space>
-                            <InvolvementButton startup={startup} refetch={props.query.refetch} />
-                            <Link to={`/ventures/${startup.id}`}>
-                                <Button type="primary" variant="filled" className="ActionBtn" size="large">Details</Button>
-                            </Link>
-                        </Space>
-                    </Flex>
+                    md ? (
+                        <Flex justify="flex-end" className="EntityList__actionsRow">
+                            <Flex wrap gap="12px" align="center">
+                                <ListShareDetailButtons
+                                    detailPath={`/ventures/${startup.id}`}
+                                    title={startup.title}
+                                    text={`Check out ${startup.title} on NSwap.`}
+                                    desktopDetailButtonType="primary"
+                                />
+                                <InvolvementButton startup={startup} refetch={props.query.refetch} />
+                            </Flex>
+                        </Flex>
+                    ) : (
+                        <Flex vertical gap="12px" className="EntityList__actionsRow StartupList__actionsRow">
+                            <ListShareDetailButtons
+                                compact
+                                detailPath={`/ventures/${startup.id}`}
+                                title={startup.title}
+                                text={`Check out ${startup.title} on NSwap.`}
+                                desktopDetailButtonType="primary"
+                            />
+                            <InvolvementButton startup={startup} refetch={props.query.refetch} block />
+                        </Flex>
+                    )
                 ),
                 avatar: (startup) => startup.image?.url ? (
                     <Link to={`/ventures/${startup.id}`}>

@@ -14,6 +14,7 @@ import { CompanyCard } from "../cards/CompanyCard";
 import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useIdentityByIdQuery, useListCompaniesByIdentityQuery, useListJobsByIdentityQuery, useListProductsByIdentityQuery, useListStartupsByIdentityQuery } from "../hooks";
+import { DetailShareSection } from "../share/DetailShareSection";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -40,6 +41,8 @@ const IdentityDetail: React.FunctionComponent = () => {
         <Loader query={identity}>
             {(data) => {
                 const imageSrc = getImage(data.Identity);
+                const shareTitle = data.Identity?.name ?? "Tribe";
+                const shareText = `Check out ${shareTitle} on NSwap.`;
                 return (
                     <Flex flex={1} vertical gap={12}>
                         <Space size={16} align="start" className="EntityDetail__header">
@@ -101,6 +104,8 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 />
                             </Col>
                         </Row>
+                        <Divider />
+                        <DetailShareSection label="Share this tribe" title={shareTitle} text={shareText} />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}
