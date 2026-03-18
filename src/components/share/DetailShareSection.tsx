@@ -23,6 +23,12 @@ type SharePayload = {
     text: string;
     url: string;
     onCopyLink: () => void;
+    subscriptionTarget?: SubscriptionTarget | null;
+};
+
+type ShareButtonConfig = {
+    key: string;
+    render: (payload: SharePayload) => React.ReactNode;
 };
 
 type DetailShareSectionProps = {
@@ -33,7 +39,7 @@ type DetailShareSectionProps = {
     subscriptionTarget?: SubscriptionTarget | null;
 };
 
-const SHARE_BUTTONS = [
+const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
         key: "copy",
         render: ({ onCopyLink }: SharePayload) => (
@@ -45,6 +51,11 @@ const SHARE_BUTTONS = [
                 Copy Link
             </Button>
         ),
+    },
+    {
+        key: "subscribe",
+        render: ({ subscriptionTarget }: SharePayload) =>
+            subscriptionTarget ? <SubscribeButton {...subscriptionTarget} /> : null,
     },
     {
         key: "x",
@@ -110,6 +121,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
         onCopyLink: () => {
             void copyLink(shareUrl);
         },
+        subscriptionTarget,
     };
 
     if (!md) {
@@ -159,14 +171,8 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                     {label}
                 </Typography.Text>
                 <Flex wrap gap="12px" align="center" className="ShareSection__actions">
-                    <Space size={[12, 12]} wrap className="ShareSection__utilityButtons">
-                        {SHARE_BUTTONS[0].render(payload)}
-                        {subscriptionTarget ? (
-                            <SubscribeButton {...subscriptionTarget} />
-                        ) : null}
-                    </Space>
                     <Space size={[12, 12]} wrap className="ShareSection__buttons">
-                        {SHARE_BUTTONS.slice(1).map(({ key, render }) => (
+                        {SHARE_BUTTONS.map(({ key, render }) => (
                             <React.Fragment key={key}>
                                 {render(payload)}
                             </React.Fragment>
