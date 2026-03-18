@@ -3,6 +3,8 @@ import { Button, Flex, Space } from "antd";
 import type { ButtonProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { NativeShareButton } from "./NativeShareButton";
+import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
+import type { SubscriptionTarget } from "./SubscribeButton/types";
 
 type ListShareDetailButtonsProps = {
     detailPath: string;
@@ -11,6 +13,7 @@ type ListShareDetailButtonsProps = {
     size?: ButtonProps["size"];
     compact?: boolean;
     desktopDetailButtonType?: ButtonProps["type"];
+    subscriptionTarget?: SubscriptionTarget | null;
 };
 
 export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = ({
@@ -20,6 +23,7 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     size = "large",
     compact = false,
     desktopDetailButtonType,
+    subscriptionTarget,
 }) => {
     const navigate = useNavigate();
 
@@ -32,6 +36,12 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 size={size}
                 className="NativeShareButton"
             />
+            {subscriptionTarget ? (
+                <SubscribeButton
+                    {...subscriptionTarget}
+                    size={size}
+                />
+            ) : null}
             <Button
                 size={size}
                 className="ActionBtn"
@@ -49,6 +59,12 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 size={size}
                 className="NativeShareButton"
             />
+            {subscriptionTarget ? (
+                <SubscribeButton
+                    {...subscriptionTarget}
+                    size={size}
+                />
+            ) : null}
             <Button
                 type={desktopDetailButtonType}
                 size={size}

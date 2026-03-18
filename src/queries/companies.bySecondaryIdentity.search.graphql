@@ -19,6 +19,7 @@ query SearchCompaniesBySecondaryIdentity(
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       name
       description

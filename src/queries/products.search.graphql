@@ -21,6 +21,7 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
           ... on Product {
             __typename
             id
+            isSubscribed
             serverURL
             name
             description

@@ -7,6 +7,7 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       name
       cryptoAddresses {

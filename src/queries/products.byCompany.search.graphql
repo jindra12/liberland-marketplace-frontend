@@ -21,6 +21,7 @@ query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: In
           ... on Product {
             __typename
             id
+            isSubscribed
             serverURL
             name
             description

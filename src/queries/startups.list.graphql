@@ -2,6 +2,7 @@ query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
   Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
+      isSubscribed
       serverURL
       title
       description

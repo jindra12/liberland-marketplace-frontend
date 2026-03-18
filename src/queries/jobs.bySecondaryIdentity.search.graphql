@@ -25,6 +25,7 @@ query SearchJobsBySecondaryIdentity(
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       title
       description

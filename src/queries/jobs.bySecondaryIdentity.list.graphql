@@ -19,6 +19,7 @@ query ListJobsBySecondaryIdentity(
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       title
       description

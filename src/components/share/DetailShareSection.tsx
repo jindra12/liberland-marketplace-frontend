@@ -15,6 +15,8 @@ import {
 } from "react-share";
 import { NativeShareButton } from "./NativeShareButton";
 import { useCopyLink } from "./useCopyLink";
+import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
+import type { SubscriptionTarget } from "./SubscribeButton/types";
 
 type SharePayload = {
     title: string;
@@ -28,6 +30,7 @@ type DetailShareSectionProps = {
     title: string;
     text: string;
     url?: string;
+    subscriptionTarget?: SubscriptionTarget | null;
 };
 
 const SHARE_BUTTONS = [
@@ -95,6 +98,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
     title,
     text,
     url,
+    subscriptionTarget,
 }) => {
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
@@ -116,14 +120,32 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                     <Typography.Text className="ShareSection__label">
                         {label}
                     </Typography.Text>
-                    <NativeShareButton
-                        url={shareUrl}
-                        title={title}
-                        text={text}
-                        label="Share"
-                        size="large"
-                        className="NativeShareButton ShareSection__mobileButton"
-                    />
+                    {subscriptionTarget ? (
+                        <Space.Compact block className="ShareSection__mobileActions">
+                            <NativeShareButton
+                                url={shareUrl}
+                                title={title}
+                                text={text}
+                                label="Share"
+                                size="large"
+                                className="NativeShareButton ShareSection__mobileButton"
+                            />
+                            <SubscribeButton
+                                {...subscriptionTarget}
+                                size="large"
+                                className="ShareSection__mobileButton"
+                            />
+                        </Space.Compact>
+                    ) : (
+                        <NativeShareButton
+                            url={shareUrl}
+                            title={title}
+                            text={text}
+                            label="Share"
+                            size="large"
+                            className="NativeShareButton ShareSection__mobileButton"
+                        />
+                    )}
                 </Flex>
             </>
         );
@@ -136,13 +158,21 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                 <Typography.Text className="ShareSection__label">
                     {label}
                 </Typography.Text>
-                <Space size={[12, 12]} wrap className="ShareSection__buttons">
-                    {SHARE_BUTTONS.map(({ key, render }) => (
-                        <React.Fragment key={key}>
-                            {render(payload)}
-                        </React.Fragment>
-                    ))}
-                </Space>
+                <Flex wrap gap="12px" align="center" className="ShareSection__actions">
+                    <Space size={[12, 12]} wrap className="ShareSection__utilityButtons">
+                        {SHARE_BUTTONS[0].render(payload)}
+                        {subscriptionTarget ? (
+                            <SubscribeButton {...subscriptionTarget} />
+                        ) : null}
+                    </Space>
+                    <Space size={[12, 12]} wrap className="ShareSection__buttons">
+                        {SHARE_BUTTONS.slice(1).map(({ key, render }) => (
+                            <React.Fragment key={key}>
+                                {render(payload)}
+                            </React.Fragment>
+                        ))}
+                    </Space>
+                </Flex>
             </Flex>
         </>
     );

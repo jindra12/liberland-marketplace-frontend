@@ -1,6 +1,7 @@
 query ProductById($id: String!, $draft: Boolean) {
   Product(id: $id, draft: $draft) {
     id
+    isSubscribed
     inventory
     enableVariants
     variantTypes {

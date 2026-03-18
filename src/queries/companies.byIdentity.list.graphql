@@ -8,6 +8,7 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       name
       description

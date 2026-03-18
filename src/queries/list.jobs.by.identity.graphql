@@ -8,6 +8,7 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       title
       companyIdentityId

@@ -21,6 +21,7 @@ query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $pag
           ... on Company {
             __typename
             id
+            isSubscribed
             serverURL
             name
             description

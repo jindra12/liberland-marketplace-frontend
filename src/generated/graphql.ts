@@ -7011,6 +7011,7 @@ export type Company = {
   disallowedIdentities?: Maybe<Array<Identity>>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   name?: Maybe<Scalars['String']['output']>;
@@ -11467,6 +11468,7 @@ export type Identity = {
   createdBy: User;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   itemCount?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
@@ -11635,6 +11637,7 @@ export type Job = {
   disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<Job_EmploymentType>;
   id: Scalars['String']['output'];
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -32428,6 +32431,7 @@ export type Product = {
   description?: Maybe<Scalars['String']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -38736,6 +38740,7 @@ export type Startup = {
   description?: Maybe<Scalars['String']['output']>;
   fundsNeeded?: Maybe<Startup_FundsNeeded>;
   id: Scalars['String']['output'];
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   involvedUsers?: Maybe<Array<User>>;
@@ -51903,7 +51908,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -51911,7 +51916,7 @@ export type CreateCartMutationVariables = Exact<{
 }>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type DeleteCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51919,7 +51924,7 @@ export type DeleteCartMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCartMutation = { __typename?: 'Mutation', deleteCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type DeleteCartMutation = { __typename?: 'Mutation', deleteCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type UpdateCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51928,7 +51933,7 @@ export type UpdateCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -51937,14 +51942,14 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51954,7 +51959,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -51966,7 +51971,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -51981,7 +51986,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51992,7 +51997,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
@@ -52000,7 +52005,7 @@ export type CreateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52016,7 +52021,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52027,7 +52032,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -52041,7 +52046,7 @@ export type UpdateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -52070,14 +52075,14 @@ export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: {
 export type EntityImageUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EntityImageUrlsQuery = { __typename?: 'Query', companies?: { __typename?: 'Companies', docs: Array<{ __typename?: 'Company', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, jobs?: { __typename?: 'Jobs', docs: Array<{ __typename?: 'Job', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, startups?: { __typename?: 'Startups', docs: Array<{ __typename?: 'Startup', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, identities?: { __typename?: 'Identities', docs: Array<{ __typename?: 'Identity', image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type EntityImageUrlsQuery = { __typename?: 'Query', companies?: { __typename?: 'Companies', docs: Array<{ __typename?: 'Company', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, jobs?: { __typename?: 'Jobs', docs: Array<{ __typename?: 'Job', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, startups?: { __typename?: 'Startups', docs: Array<{ __typename?: 'Startup', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, identities?: { __typename?: 'Identities', docs: Array<{ __typename?: 'Identity', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type IdentityByIdQuery = { __typename?: 'Query', Identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type IdentityByIdQuery = { __typename?: 'Query', Identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListIdentitiesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -52086,7 +52091,7 @@ export type ListIdentitiesQueryVariables = Exact<{
 }>;
 
 
-export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, itemCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, itemCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchIdentitiesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52098,7 +52103,7 @@ export type SearchIdentitiesQueryVariables = Exact<{
 
 export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
-          | { __typename: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
@@ -52112,7 +52117,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52126,7 +52131,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -52138,14 +52143,14 @@ export type ListJobsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null }> } | null };
+export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null }> } | null };
 
 export type JobByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52156,7 +52161,7 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52168,7 +52173,7 @@ export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type CreateJobMutationVariables = Exact<{
   data: MutationJobInput;
@@ -52176,7 +52181,7 @@ export type CreateJobMutationVariables = Exact<{
 }>;
 
 
-export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteJobMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52192,7 +52197,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52205,7 +52210,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -52217,7 +52222,7 @@ export type UpdateJobMutationVariables = Exact<{
 }>;
 
 
-export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListCommentsByTargetQueryVariables = Exact<{
   targetId: Scalars['String']['input'];
@@ -52236,7 +52241,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -52245,7 +52250,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -52261,7 +52266,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -52270,7 +52275,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52280,7 +52285,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52295,7 +52300,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -52306,7 +52311,7 @@ export type ListProductsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
+export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52314,7 +52319,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -52322,7 +52327,7 @@ export type CreateProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52338,7 +52343,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52352,7 +52357,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -52363,7 +52368,7 @@ export type UpdateProductMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52373,7 +52378,7 @@ export type ListStartupsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -52382,14 +52387,14 @@ export type ListStartupsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByCreatorQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, docs: Array<{ __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null }> } | null };
+export type ListStartupsByCreatorQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null }> } | null };
 
 export type StartupByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
 export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52399,7 +52404,7 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
@@ -52407,7 +52412,7 @@ export type CreateStartupMutationVariables = Exact<{
 }>;
 
 
-export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteStartupMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52423,7 +52428,7 @@ export type ListStartupsQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type SearchStartupsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52438,7 +52443,7 @@ export type SearchStartupsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
-          | { __typename: 'Startup', id: string, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null }
          | null } }> } | null };
 
 export type UpdateStartupMutationVariables = Exact<{
@@ -52448,7 +52453,7 @@ export type UpdateStartupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -52467,46 +52472,2868 @@ export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComm
 
 export const CartBySecretDocument = `
     query CartBySecret($secret: String!) {
-  Carts(
-    draft: false
-    limit: 1
-    sort: "-updatedAt"
-    where: {secret: {equals: $secret}}
-  ) {
-    docs {
-      id
-      secret
-      status
-      currency
-      subtotal
-      createdAt
-      updatedAt
-      purchasedAt
-      customer {
-        id
-        name
-        email
+      Carts(
+        draft: false
+        limit: 1
+        sort: "-updatedAt"
+        where: { secret: { equals: $secret } }
+      ) {
+        docs {
+          id
+          secret
+          status
+          currency
+          subtotal
+          createdAt
+          updatedAt
+          purchasedAt
+          customer {
+            id
+            name
+            email
+          }
+          items {
+            id
+            quantity
+            product {
+              id
+              serverURL
+              name
+              description
+              orderable
+              cryptoAddresses {
+              chain
+              address
+            }
+              inventory
+              url
+              priceInUSD
+              priceInUSDEnabled
+              priceInETH
+              priceInSOL
+              priceInTRX
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+              company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+              chain
+              address
+            }
+                identity {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+              }
+            }
+            variant {
+              id
+              title
+              inventory
+              priceInUSD
+              priceInUSDEnabled
+              options {
+                id
+                label
+                value
+                variantType {
+                  id
+                  name
+                }
+              }
+            }
+          }
+        }
+        totalDocs
       }
-      items {
+    }
+    `;
+
+export const useCartBySecretQuery = <
+      TData = CartBySecretQuery,
+      TError = unknown
+    >(
+      variables: CartBySecretQueryVariables,
+      options?: Omit<UseQueryOptions<CartBySecretQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CartBySecretQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CartBySecretQuery, TError, TData>(
+      {
+    queryKey: ['CartBySecret', variables],
+    queryFn: gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables),
+    ...options
+  }
+    )};
+
+useCartBySecretQuery.getKey = (variables: CartBySecretQueryVariables) => ['CartBySecret', variables];
+
+
+useCartBySecretQuery.fetcher = (variables: CartBySecretQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables, options);
+
+export const CreateCartDocument = `
+    mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
+      createCart(data: $data, draft: $draft) {
         id
-        quantity
-        product {
+        secret
+        status
+        currency
+        subtotal
+        createdAt
+        updatedAt
+        purchasedAt
+        customer {
+          id
+          name
+          email
+        }
+        items {
+          id
+          quantity
+          product {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+          }
+          variant {
+            id
+            title
+          }
+        }
+      }
+    }
+    `;
+
+export const useCreateCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCartMutation, TError, CreateCartMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCartMutation, TError, CreateCartMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateCart'],
+    mutationFn: (variables?: CreateCartMutationVariables) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCartMutation.fetcher = (variables: CreateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options);
+
+export const DeleteCartDocument = `
+    mutation DeleteCart($id: String!, $trash: Boolean) {
+      deleteCart(id: $id, trash: $trash) {
+        id
+        secret
+        status
+        currency
+        subtotal
+        createdAt
+        updatedAt
+        purchasedAt
+        customer {
+          id
+          name
+          email
+        }
+        items {
+          id
+          quantity
+          product {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+          }
+          variant {
+            id
+            title
+          }
+        }
+      }
+    }
+    `;
+
+export const useDeleteCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteCart'],
+    mutationFn: (variables?: DeleteCartMutationVariables) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCartMutation.fetcher = (variables: DeleteCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables, options);
+
+export const UpdateCartDocument = `
+    mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
+      updateCart(id: $id, data: $data, draft: $draft) {
+        id
+        secret
+        status
+        currency
+        subtotal
+        createdAt
+        updatedAt
+        purchasedAt
+        customer {
+          id
+          name
+          email
+        }
+        items {
+          id
+          quantity
+          product {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+          }
+          variant {
+            id
+            title
+          }
+        }
+      }
+    }
+    `;
+
+export const useUpdateCartMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCart'],
+    mutationFn: (variables?: UpdateCartMutationVariables) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
+
+export const ListCompaniesByCreatorDocument = `
+    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+      Companies(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          cryptoAddresses {
+              chain
+              address
+            }
+          _status
+        }
+        totalDocs
+      }
+    }
+    `;
+
+export const useListCompaniesByCreatorQuery = <
+      TData = ListCompaniesByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListCompaniesByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables],
+    queryFn: gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQueryVariables) => variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables];
+
+
+useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables, options);
+
+export const CompanyByIdDocument = `
+    query CompanyById($id: String!) {
+      Company(id: $id) {
+        id
+        isSubscribed
+        serverURL
+        name
+        _status
+        description
+        cryptoAddresses {
+              chain
+              address
+            }
+        website
+        phone
+        email
+        allowedIdentities {
           id
           serverURL
           name
           description
-          orderable
-          cryptoAddresses {
-            chain
-            address
+        }
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        createdBy {
+          id
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+          website
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
           }
-          inventory
+        }
+        image {
+          id
           url
-          priceInUSD
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    `;
+
+export const useCompanyByIdQuery = <
+      TData = CompanyByIdQuery,
+      TError = unknown
+    >(
+      variables: CompanyByIdQueryVariables,
+      options?: Omit<UseQueryOptions<CompanyByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CompanyByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CompanyByIdQuery, TError, TData>(
+      {
+    queryKey: ['CompanyById', variables],
+    queryFn: gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useCompanyByIdQuery.getKey = (variables: CompanyByIdQueryVariables) => ['CompanyById', variables];
+
+
+useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables, options);
+
+export const ListCompaniesByIdentityDocument = `
+    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+      Companies(
+        draft: false
+        where: { identity: { equals: $identityId } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          website
+          phone
+          email
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListCompaniesByIdentityQuery = <
+      TData = ListCompaniesByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListCompaniesByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListCompaniesByIdentity', variables],
+    queryFn: gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesByIdentityQuery.getKey = (variables: ListCompaniesByIdentityQueryVariables) => ['ListCompaniesByIdentity', variables];
+
+
+useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables, options);
+
+export const SearchCompaniesByIdentityDocument = `
+    query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: companies } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Company {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                name
+                description
+                cryptoAddresses {
+              chain
+              address
+            }
+                website
+                phone
+                email
+                allowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                disallowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                identity {
+                  id
+                  serverURL
+                  name
+                  description
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+              }
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchCompaniesByIdentityQuery = <
+      TData = SearchCompaniesByIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchCompaniesByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchCompaniesByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchCompaniesByIdentity', variables],
+    queryFn: gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentityQueryVariables) => ['SearchCompaniesByIdentity', variables];
+
+
+useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
+
+export const ListCompaniesBySecondaryIdentityDocument = `
+    query ListCompaniesBySecondaryIdentity(
+      $identityId: JSON!
+      $page: Int = 1
+      $limit: Int = 20
+      $sort: String
+    ) {
+      Companies(
+        draft: false
+        where: { allowedIdentities: { in: [$identityId] } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          website
+          phone
+          email
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListCompaniesBySecondaryIdentityQuery = <
+      TData = ListCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => ['ListCompaniesBySecondaryIdentity', variables];
+
+
+useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
+
+export const SearchCompaniesBySecondaryIdentityDocument = `
+    query SearchCompaniesBySecondaryIdentity(
+      $identityId: JSON!
+      $searchTerm: String!
+      $page: Int = 1
+      $limit: Int = 20
+      $sort: String
+    ) {
+      Companies(
+        draft: false
+        where: {
+          AND: [
+            { name: { contains: $searchTerm } }
+            { allowedIdentities: { in: [$identityId] } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          website
+          phone
+          email
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchCompaniesBySecondaryIdentityQuery = <
+      TData = SearchCompaniesBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchCompaniesBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchCompaniesBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchCompaniesBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => ['SearchCompaniesBySecondaryIdentity', variables];
+
+
+useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
+
+export const CreateCompanyDocument = `
+    mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
+      createCompany(data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+              chain
+              address
+            }
+        _status
+        image {
+          id
+          url
+        }
+      }
+    }
+    `;
+
+export const useCreateCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateCompany'],
+    mutationFn: (variables?: CreateCompanyMutationVariables) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCompanyMutation.fetcher = (variables: CreateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables, options);
+
+export const DeleteCompanyDocument = `
+    mutation DeleteCompany($id: String!) {
+      deleteCompany(id: $id) {
+        id
+      }
+    }
+    `;
+
+export const useDeleteCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteCompany'],
+    mutationFn: (variables?: DeleteCompanyMutationVariables) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables, options);
+
+export const ListCompaniesDocument = `
+    query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
+      Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          website
+          phone
+          email
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListCompaniesQuery = <
+      TData = ListCompaniesQuery,
+      TError = unknown
+    >(
+      variables?: ListCompaniesQueryVariables,
+      options?: Omit<UseQueryOptions<ListCompaniesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCompaniesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListCompanies'] : ['ListCompanies', variables],
+    queryFn: gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables),
+    ...options
+  }
+    )};
+
+useListCompaniesQuery.getKey = (variables?: ListCompaniesQueryVariables) => variables === undefined ? ['ListCompanies'] : ['ListCompanies', variables];
+
+
+useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables, options);
+
+export const SearchCompaniesDocument = `
+    query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: companies } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Company {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                name
+                description
+                cryptoAddresses {
+              chain
+              address
+            }
+                website
+                phone
+                email
+                allowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                disallowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+                identity {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+              }
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchCompaniesQuery = <
+      TData = SearchCompaniesQuery,
+      TError = unknown
+    >(
+      variables: SearchCompaniesQueryVariables,
+      options?: Omit<UseQueryOptions<SearchCompaniesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchCompaniesQuery, TError, TData>(
+      {
+    queryKey: ['SearchCompanies', variables],
+    queryFn: gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => ['SearchCompanies', variables];
+
+
+useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
+
+export const UpdateCompanyDocument = `
+    mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
+      updateCompany(id: $id, data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+              chain
+              address
+            }
+        _status
+        image {
+          id
+          url
+        }
+      }
+    }
+    `;
+
+export const useUpdateCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateCompany'],
+    mutationFn: (variables?: UpdateCompanyMutationVariables) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateCompanyMutation.fetcher = (variables: UpdateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables, options);
+
+export const CreateCommentDocument = `
+    mutation CreateComment(
+      $replyToPost: Comment_ReplyPostRelationshipInput!
+      $content: String!
+    ) {
+      createComment(
+        data: {
+          content: $content
+          replyPost: $replyToPost
+        }
+      ) {
+        id
+        content
+        createdBy {
+          id
+          name
+          email
+        }
+        anonymousHash
+        createdAt
+      }
+    }
+    `;
+
+export const useCreateCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateComment'],
+    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
+
+export const CreateReplyToCommentDocument = `
+    mutation CreateReplyToComment(
+      $replyToPost: Comment_ReplyPostRelationshipInput!
+      $parentCommentId: String!
+      $content: String!
+    ) {
+      createComment(
+        data: {
+          content: $content
+          replyPost: $replyToPost
+          replyComment: $parentCommentId
+        }
+      ) {
+        id
+        content
+        replyComment {
+          id
+        }
+        createdBy {
+          id
+          name
+          email
+        }
+        anonymousHash
+        createdAt
+      }
+    }
+    `;
+
+export const useCreateReplyToCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
+    
+    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateReplyToComment'],
+    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
+
+export const DeleteCommentDocument = `
+    mutation DeleteComment($id: String!) {
+      deleteComment(id: $id) {
+        id
+      }
+    }
+    `;
+
+export const useDeleteCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteComment'],
+    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
+
+export const EntityImageUrlsDocument = `
+    query EntityImageUrls {
+      companies: Companies(draft: false, page: 1, limit: 3) {
+        docs {
+          image {
+            url
+          }
+        }
+      }
+      jobs: Jobs(draft: false, page: 1, limit: 3) {
+        docs {
+          image {
+            url
+          }
+        }
+      }
+      startups: Startups(draft: false, page: 1, limit: 3) {
+        docs {
+          image {
+            url
+          }
+        }
+      }
+      identities: Identities(draft: false, page: 1, limit: 3) {
+        docs {
+          image {
+            url
+          }
+        }
+      }
+    }
+    `;
+
+export const useEntityImageUrlsQuery = <
+      TData = EntityImageUrlsQuery,
+      TError = unknown
+    >(
+      variables?: EntityImageUrlsQueryVariables,
+      options?: Omit<UseQueryOptions<EntityImageUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<EntityImageUrlsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<EntityImageUrlsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables],
+    queryFn: gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables),
+    ...options
+  }
+    )};
+
+useEntityImageUrlsQuery.getKey = (variables?: EntityImageUrlsQueryVariables) => variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables];
+
+
+useEntityImageUrlsQuery.fetcher = (variables?: EntityImageUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables, options);
+
+export const IdentityByIdDocument = `
+    query IdentityById($id: String!) {
+      Identity(id: $id, draft: false) {
+        id
+        isSubscribed
+        serverURL
+        name
+        description
+        website
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    `;
+
+export const useIdentityByIdQuery = <
+      TData = IdentityByIdQuery,
+      TError = unknown
+    >(
+      variables: IdentityByIdQueryVariables,
+      options?: Omit<UseQueryOptions<IdentityByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<IdentityByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<IdentityByIdQuery, TError, TData>(
+      {
+    queryKey: ['IdentityById', variables],
+    queryFn: gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useIdentityByIdQuery.getKey = (variables: IdentityByIdQueryVariables) => ['IdentityById', variables];
+
+
+useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables, options);
+
+export const ListIdentitiesDocument = `
+    query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
+      Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          description
+          website
+          itemCount
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListIdentitiesQuery = <
+      TData = ListIdentitiesQuery,
+      TError = unknown
+    >(
+      variables?: ListIdentitiesQueryVariables,
+      options?: Omit<UseQueryOptions<ListIdentitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListIdentitiesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListIdentitiesQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListIdentities'] : ['ListIdentities', variables],
+    queryFn: gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables),
+    ...options
+  }
+    )};
+
+useListIdentitiesQuery.getKey = (variables?: ListIdentitiesQueryVariables) => variables === undefined ? ['ListIdentities'] : ['ListIdentities', variables];
+
+
+useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables, options);
+
+export const SearchIdentitiesDocument = `
+    query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: identities } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Identity {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                name
+                description
+                website
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+              }
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchIdentitiesQuery = <
+      TData = SearchIdentitiesQuery,
+      TError = unknown
+    >(
+      variables: SearchIdentitiesQueryVariables,
+      options?: Omit<UseQueryOptions<SearchIdentitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchIdentitiesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchIdentitiesQuery, TError, TData>(
+      {
+    queryKey: ['SearchIdentities', variables],
+    queryFn: gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchIdentitiesQuery.getKey = (variables: SearchIdentitiesQueryVariables) => ['SearchIdentities', variables];
+
+
+useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables, options);
+
+export const ListJobsByCompanyDocument = `
+    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+      Jobs(
+        draft: false
+        where: { company: { equals: $companyId } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          description
+          positions
+          isActive
+          bounty {
+            amount
+            currency
+          }
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListJobsByCompanyQuery = <
+      TData = ListJobsByCompanyQuery,
+      TError = unknown
+    >(
+      variables: ListJobsByCompanyQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCompanyQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsByCompanyQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsByCompany', variables],
+    queryFn: gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsByCompanyQuery.getKey = (variables: ListJobsByCompanyQueryVariables) => ['ListJobsByCompany', variables];
+
+
+useListJobsByCompanyQuery.fetcher = (variables: ListJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables, options);
+
+export const SearchJobsByCompanyDocument = `
+    query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: jobs } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Job {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                title
+                description
+                positions
+                isActive
+                bounty {
+                  amount
+                  currency
+                }
+                allowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                disallowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                company {
+                  id
+                  serverURL
+                  name
+                  description
+                  cryptoAddresses {
+              chain
+              address
+            }
+                  allowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  disallowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  identity {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+              }
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchJobsByCompanyQuery = <
+      TData = SearchJobsByCompanyQuery,
+      TError = unknown
+    >(
+      variables: SearchJobsByCompanyQueryVariables,
+      options?: Omit<UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchJobsByCompanyQuery, TError, TData>(
+      {
+    queryKey: ['SearchJobsByCompany', variables],
+    queryFn: gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariables) => ['SearchJobsByCompany', variables];
+
+
+useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
+
+export const ListJobsByCreatorDocument = `
+    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+      Jobs(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          employmentType
+          postedAt
+          _status
+        }
+        totalDocs
+      }
+    }
+    `;
+
+export const useListJobsByCreatorQuery = <
+      TData = ListJobsByCreatorQuery,
+      TError = unknown
+    >(
+      variables?: ListJobsByCreatorQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsByCreatorQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables],
+    queryFn: gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables) => variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables];
+
+
+useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables, options);
+
+export const JobByIdDocument = `
+    query JobById($id: String!) {
+      Job(id: $id) {
+        id
+        isSubscribed
+        serverURL
+        title
+        _status
+        description
+        location
+        employmentType
+        positions
+        postedAt
+        isActive
+        applyUrl
+        bounty {
+          amount
+          currency
+        }
+        allowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        salaryRange {
+          min
+          max
+          currency
+        }
+        createdBy {
+          id
+        }
+        company {
+          id
+          serverURL
+          name
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+    }
+    `;
+
+export const useJobByIdQuery = <
+      TData = JobByIdQuery,
+      TError = unknown
+    >(
+      variables: JobByIdQueryVariables,
+      options?: Omit<UseQueryOptions<JobByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<JobByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<JobByIdQuery, TError, TData>(
+      {
+    queryKey: ['JobById', variables],
+    queryFn: gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', variables];
+
+
+useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
+
+export const ListJobsBySecondaryIdentityDocument = `
+    query ListJobsBySecondaryIdentity(
+      $identityId: JSON!
+      $companyIds: [JSON!] = []
+      $page: Int = 1
+      $limit: Int = 20
+      $sort: String
+    ) {
+      Jobs(
+        draft: false
+        where: {
+          OR: [
+            { allowedIdentities: { in: [$identityId] } }
+            { company: { in: $companyIds } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          description
+          location
+          employmentType
+          positions
+          postedAt
+          isActive
+          applyUrl
+          bounty {
+            amount
+            currency
+          }
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          salaryRange {
+            min
+            max
+            currency
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListJobsBySecondaryIdentityQuery = <
+      TData = ListJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => ['ListJobsBySecondaryIdentity', variables];
+
+
+useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
+
+export const SearchJobsBySecondaryIdentityDocument = `
+    query SearchJobsBySecondaryIdentity(
+      $identityId: JSON!
+      $companyIds: [JSON!] = []
+      $searchTerm: String!
+      $page: Int = 1
+      $limit: Int = 20
+      $sort: String
+    ) {
+      Jobs(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            {
+              OR: [
+                { allowedIdentities: { in: [$identityId] } }
+                { company: { in: $companyIds } }
+              ]
+            }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          description
+          location
+          employmentType
+          positions
+          postedAt
+          isActive
+          applyUrl
+          bounty {
+            amount
+            currency
+          }
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          salaryRange {
+            min
+            max
+            currency
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchJobsBySecondaryIdentityQuery = <
+      TData = SearchJobsBySecondaryIdentityQuery,
+      TError = unknown
+    >(
+      variables: SearchJobsBySecondaryIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchJobsBySecondaryIdentityQuery, TError, TData>(
+      {
+    queryKey: ['SearchJobsBySecondaryIdentity', variables],
+    queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => ['SearchJobsBySecondaryIdentity', variables];
+
+
+useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
+
+export const CreateJobDocument = `
+    mutation CreateJob($data: mutationJobInput!, $draft: Boolean!) {
+      createJob(data: $data, draft: $draft) {
+        id
+        title
+        employmentType
+        positions
+        postedAt
+        _status
+        image {
+          id
+          url
+        }
+      }
+    }
+    `;
+
+export const useCreateJobMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>) => {
+    
+    return useMutation<CreateJobMutation, TError, CreateJobMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateJob'],
+    mutationFn: (variables?: CreateJobMutationVariables) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateJobMutation.fetcher = (variables: CreateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables, options);
+
+export const DeleteJobDocument = `
+    mutation DeleteJob($id: String!) {
+      deleteJob(id: $id) {
+        id
+      }
+    }
+    `;
+
+export const useDeleteJobMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>) => {
+    
+    return useMutation<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>(
+      {
+    mutationKey: ['DeleteJob'],
+    mutationFn: (variables?: DeleteJobMutationVariables) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables, options);
+
+export const ListJobsDocument = `
+    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
+      Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          description
+          location
+          employmentType
+          positions
+          postedAt
+          isActive
+          applyUrl
+          bounty {
+            amount
+            currency
+          }
+          allowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+          }
+          salaryRange {
+            min
+            max
+            currency
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListJobsQuery = <
+      TData = ListJobsQuery,
+      TError = unknown
+    >(
+      variables?: ListJobsQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['ListJobs'] : ['ListJobs', variables],
+    queryFn: gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsQuery.getKey = (variables?: ListJobsQueryVariables) => variables === undefined ? ['ListJobs'] : ['ListJobs', variables];
+
+
+useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables, options);
+
+export const SearchJobsDocument = `
+    query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: jobs } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Job {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                title
+                description
+                positions
+                isActive
+                bounty {
+                  amount
+                  currency
+                }
+                allowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                disallowedIdentities {
+                  id
+                  serverURL
+                  name
+                  description
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+                company {
+                  id
+                  serverURL
+                  name
+                  description
+                  cryptoAddresses {
+              chain
+              address
+            }
+                  allowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  disallowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  identity {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                }
+              }
+            }
+          }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+      }
+    }
+    `;
+
+export const useSearchJobsQuery = <
+      TData = SearchJobsQuery,
+      TError = unknown
+    >(
+      variables: SearchJobsQueryVariables,
+      options?: Omit<UseQueryOptions<SearchJobsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SearchJobsQuery, TError, TData>(
+      {
+    queryKey: ['SearchJobs', variables],
+    queryFn: gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJobs', variables];
+
+
+useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
+
+export const UpdateJobDocument = `
+    mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
+      updateJob(id: $id, data: $data, draft: $draft) {
+        id
+        title
+        employmentType
+        positions
+        postedAt
+        _status
+        image {
+          id
+          url
+        }
+      }
+    }
+    `;
+
+export const useUpdateJobMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateJob'],
+    mutationFn: (variables?: UpdateJobMutationVariables) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
+
+export const ListCommentsByTargetDocument = `
+    query ListCommentsByTarget(
+      $targetId: String!
+      $relationTo: String!
+      $limit: Int = 50
+      $page: Int = 1
+    ) {
+      Comments(
+        where: {
+          AND: [
+            { replyPostRelationTo: { equals: $relationTo } }
+            { replyPostValue: { equals: $targetId } }
+          ]
+        }
+        sort: "createdAt"
+        limit: $limit
+        page: $page
+      ) {
+        docs {
+          id
+          content
+          createdBy {
+            id
+            name
+            email
+          }
+          anonymousHash
+          replyPostRelationTo
+          replyPostValue
+          createdAt
+          updatedAt
+          replyComment {
+            id
+          }
+          replyPost {
+            relationTo
+          }
+        }
+        totalDocs
+        hasNextPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListCommentsByTargetQuery = <
+      TData = ListCommentsByTargetQuery,
+      TError = unknown
+    >(
+      variables: ListCommentsByTargetQueryVariables,
+      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCommentsByTargetQuery, TError, TData>(
+      {
+    queryKey: ['ListCommentsByTarget', variables],
+    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
+    ...options
+  }
+    )};
+
+useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
+
+
+useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+
+export const ListJobsByIdentityDocument = `
+    query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+      Jobs(
+        draft: false
+        where: { companyIdentityId: { equals: $identityId } }
+        sort: "-postedAt"
+        limit: $limit
+        page: $page
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          companyIdentityId
+          company {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+            image {
+              id
+              url
+            }
+          }
+          location
+          employmentType
+          salaryRange {
+            min
+            max
+            currency
+          }
+          image {
+            id
+            url
+          }
+          postedAt
+          _status
+        }
+        totalDocs
+        hasNextPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListJobsByIdentityQuery = <
+      TData = ListJobsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListJobsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListJobsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListJobsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListJobsByIdentity', variables],
+    queryFn: gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListJobsByIdentityQuery.getKey = (variables: ListJobsByIdentityQueryVariables) => ['ListJobsByIdentity', variables];
+
+
+useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables, options);
+
+export const ListProductsByIdentityDocument = `
+    query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+      Products(
+        where: { companyIdentityId: { equals: $identityId } }
+        sort: "-createdAt"
+        limit: $limit
+        page: $page
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          cryptoAddresses {
+              chain
+              address
+            }
+          orderable
+          url
+          companyIdentityId
           priceInUSDEnabled
+          priceInUSD
           priceInETH
           priceInSOL
           priceInTRX
+          company {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+            image {
+              id
+              url
+            }
+          }
+          image {
+            id
+            url
+          }
+          _status
+          createdAt
+        }
+        totalDocs
+        hasNextPage
+        nextPage
+      }
+    }
+    `;
+
+export const useListProductsByIdentityQuery = <
+      TData = ListProductsByIdentityQuery,
+      TError = unknown
+    >(
+      variables: ListProductsByIdentityQueryVariables,
+      options?: Omit<UseQueryOptions<ListProductsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListProductsByIdentityQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListProductsByIdentityQuery, TError, TData>(
+      {
+    queryKey: ['ListProductsByIdentity', variables],
+    queryFn: gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables),
+    ...options
+  }
+    )};
+
+useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryVariables) => ['ListProductsByIdentity', variables];
+
+
+useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
+
+export const ListRepliesToCommentDocument = `
+    query ListRepliesToComment(
+      $parentCommentId: JSON!
+      $limit: Int = 100
+    ) {
+      Comments(
+        where: { replyComment: { equals: $parentCommentId } }
+        sort: "createdAt"
+        limit: $limit
+      ) {
+        docs {
+          id
+          content
+          createdBy {
+            id
+            name
+            email
+          }
+          anonymousHash
+          createdAt
+          updatedAt
+          replyComment {
+            id
+          }
+          replyPost {
+            relationTo
+          }
+        }
+        totalDocs
+      }
+    }
+    `;
+
+export const useListRepliesToCommentQuery = <
+      TData = ListRepliesToCommentQuery,
+      TError = unknown
+    >(
+      variables: ListRepliesToCommentQueryVariables,
+      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListRepliesToCommentQuery, TError, TData>(
+      {
+    queryKey: ['ListRepliesToComment', variables],
+    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
+    ...options
+  }
+    )};
+
+useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
+
+
+useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+
+export const CreateOrderDocument = `
+    mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
+      createOrder(data: $data, draft: $draft) {
+        id
+        status
+        payerAddress
+        customer {
+          id
+        }
+        transactions {
+          id
+        }
+        cryptoPrices {
+          id
+          chain
+          stablePerNative
+          nativePerStable
+          expectedNativeAmount
+          fetchedAt
+        }
+        transactionHashes {
+          id
+          chain
+          transactionHash
+          product {
+            id
+          }
+        }
+        currency
+        amount
+        customerEmail
+        createdAt
+        updatedAt
+        items {
+          id
+          quantity
+          product {
+            id
+            serverURL
+            name
+            priceInETH
+            priceInSOL
+            priceInTRX
+            cryptoAddresses {
+              chain
+              address
+            }
+            company {
+              id
+              cryptoAddresses {
+                chain
+                address
+              }
+            }
+          }
+          variant {
+            id
+            title
+          }
+        }
+        shippingAddress {
+          title
+          firstName
+          lastName
+          company
+          addressLine1
+          addressLine2
+          city
+          postalCode
+          state
+          country
+          phone
+        }
+      }
+    }
+    `;
+
+export const useCreateOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>) => {
+    
+    return useMutation<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateOrder'],
+    mutationFn: (variables?: CreateOrderMutationVariables) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateOrderMutation.fetcher = (variables: CreateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables, options);
+
+export const UpdateOrderDocument = `
+    mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
+      updateOrder(id: $orderId, data: $data, draft: $draft) {
+        id
+        status
+        payerAddress
+        customer {
+          id
+        }
+        transactions {
+          id
+        }
+        cryptoPrices {
+          id
+          chain
+          stablePerNative
+          nativePerStable
+          expectedNativeAmount
+          fetchedAt
+        }
+        transactionHashes {
+          id
+          chain
+          transactionHash
+          product {
+            id
+          }
+        }
+        currency
+        amount
+        customerEmail
+        createdAt
+        updatedAt
+        items {
+          id
+          quantity
+          product {
+            id
+            serverURL
+            name
+            priceInETH
+            priceInSOL
+            priceInTRX
+            cryptoAddresses {
+              chain
+              address
+            }
+            company {
+              id
+              cryptoAddresses {
+                chain
+                address
+              }
+            }
+          }
+          variant {
+            id
+            title
+          }
+        }
+        shippingAddress {
+          title
+          firstName
+          lastName
+          company
+          addressLine1
+          addressLine2
+          city
+          postalCode
+          state
+          country
+          phone
+        }
+      }
+    }
+    `;
+
+export const useUpdateOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateOrder'],
+    mutationFn: (variables?: UpdateOrderMutationVariables) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables, options);
+
+export const ListProductsByCompanyDocument = `
+    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+      Products(
+        draft: false
+        where: { company: { equals: $companyId } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          inventory
+          description
+          cryptoAddresses {
+              chain
+              address
+            }
+          url
+          orderable
+          priceInUSDEnabled
+          priceInUSD
+          priceInETH
+          priceInSOL
+          priceInTRX
+          properties {
+            id
+            key
+            value
+          }
           image {
             id
             url
@@ -52533,2728 +55360,16 @@ export const CartBySecretDocument = `
             }
           }
         }
-        variant {
-          id
-          title
-          inventory
-          priceInUSD
-          priceInUSDEnabled
-          options {
-            id
-            label
-            value
-            variantType {
-              id
-              name
-            }
-          }
-        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-  }
-}
-    `;
-
-export const useCartBySecretQuery = <
-      TData = CartBySecretQuery,
-      TError = unknown
-    >(
-      variables: CartBySecretQueryVariables,
-      options?: Omit<UseQueryOptions<CartBySecretQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CartBySecretQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<CartBySecretQuery, TError, TData>(
-      {
-    queryKey: ['CartBySecret', variables],
-    queryFn: gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables),
-    ...options
-  }
-    )};
-
-useCartBySecretQuery.getKey = (variables: CartBySecretQueryVariables) => ['CartBySecret', variables];
-
-
-useCartBySecretQuery.fetcher = (variables: CartBySecretQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, variables, options);
-
-export const CreateCartDocument = `
-    mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
-  createCart(data: $data, draft: $draft) {
-    id
-    secret
-    status
-    currency
-    subtotal
-    createdAt
-    updatedAt
-    purchasedAt
-    customer {
-      id
-      name
-      email
-    }
-    items {
-      id
-      quantity
-      product {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-      }
-      variant {
-        id
-        title
-      }
-    }
-  }
-}
-    `;
-
-export const useCreateCartMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateCartMutation, TError, CreateCartMutationVariables, TContext>) => {
-    
-    return useMutation<CreateCartMutation, TError, CreateCartMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateCart'],
-    mutationFn: (variables?: CreateCartMutationVariables) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateCartMutation.fetcher = (variables: CreateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables, options);
-
-export const DeleteCartDocument = `
-    mutation DeleteCart($id: String!, $trash: Boolean) {
-  deleteCart(id: $id, trash: $trash) {
-    id
-    secret
-    status
-    currency
-    subtotal
-    createdAt
-    updatedAt
-    purchasedAt
-    customer {
-      id
-      name
-      email
-    }
-    items {
-      id
-      quantity
-      product {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-      }
-      variant {
-        id
-        title
-      }
-    }
-  }
-}
-    `;
-
-export const useDeleteCartMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>) => {
-    
-    return useMutation<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteCart'],
-    mutationFn: (variables?: DeleteCartMutationVariables) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteCartMutation.fetcher = (variables: DeleteCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables, options);
-
-export const UpdateCartDocument = `
-    mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
-  updateCart(id: $id, data: $data, draft: $draft) {
-    id
-    secret
-    status
-    currency
-    subtotal
-    createdAt
-    updatedAt
-    purchasedAt
-    customer {
-      id
-      name
-      email
-    }
-    items {
-      id
-      quantity
-      product {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-      }
-      variant {
-        id
-        title
-      }
-    }
-  }
-}
-    `;
-
-export const useUpdateCartMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>) => {
-    
-    return useMutation<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateCart'],
-    mutationFn: (variables?: UpdateCartMutationVariables) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
-
-export const ListCompaniesByCreatorDocument = `
-    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-  Companies(
-    draft: true
-    page: $page
-    limit: $limit
-    where: {createdBy: {equals: $userId}}
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-        chain
-        address
-      }
-      _status
-    }
-    totalDocs
-  }
-}
-    `;
-
-export const useListCompaniesByCreatorQuery = <
-      TData = ListCompaniesByCreatorQuery,
-      TError = unknown
-    >(
-      variables?: ListCompaniesByCreatorQueryVariables,
-      options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCompaniesByCreatorQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables],
-    queryFn: gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables),
-    ...options
-  }
-    )};
-
-useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQueryVariables) => variables === undefined ? ['ListCompaniesByCreator'] : ['ListCompaniesByCreator', variables];
-
-
-useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables, options);
-
-export const CompanyByIdDocument = `
-    query CompanyById($id: String!) {
-  Company(id: $id) {
-    id
-    serverURL
-    name
-    _status
-    description
-    cryptoAddresses {
-      chain
-      address
-    }
-    website
-    phone
-    email
-    allowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    disallowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    createdBy {
-      id
-    }
-    identity {
-      id
-      serverURL
-      name
-      description
-      website
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-  }
-}
-    `;
-
-export const useCompanyByIdQuery = <
-      TData = CompanyByIdQuery,
-      TError = unknown
-    >(
-      variables: CompanyByIdQueryVariables,
-      options?: Omit<UseQueryOptions<CompanyByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CompanyByIdQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<CompanyByIdQuery, TError, TData>(
-      {
-    queryKey: ['CompanyById', variables],
-    queryFn: gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables),
-    ...options
-  }
-    )};
-
-useCompanyByIdQuery.getKey = (variables: CompanyByIdQueryVariables) => ['CompanyById', variables];
-
-
-useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables, options);
-
-export const ListCompaniesByIdentityDocument = `
-    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(
-    draft: false
-    where: {identity: {equals: $identityId}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCompaniesByIdentityQuery = <
-      TData = ListCompaniesByIdentityQuery,
-      TError = unknown
-    >(
-      variables: ListCompaniesByIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCompaniesByIdentityQuery, TError, TData>(
-      {
-    queryKey: ['ListCompaniesByIdentity', variables],
-    queryFn: gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useListCompaniesByIdentityQuery.getKey = (variables: ListCompaniesByIdentityQueryVariables) => ['ListCompaniesByIdentity', variables];
-
-
-useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables, options);
-
-export const SearchCompaniesByIdentityDocument = `
-    query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Company {
-            __typename
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            website
-            phone
-            email
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-              image {
-                id
-                url
-                alt
-                filename
-                width
-                height
-                mimeType
-              }
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchCompaniesByIdentityQuery = <
-      TData = SearchCompaniesByIdentityQuery,
-      TError = unknown
-    >(
-      variables: SearchCompaniesByIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchCompaniesByIdentityQuery, TError, TData>(
-      {
-    queryKey: ['SearchCompaniesByIdentity', variables],
-    queryFn: gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentityQueryVariables) => ['SearchCompaniesByIdentity', variables];
-
-
-useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
-
-export const ListCompaniesBySecondaryIdentityDocument = `
-    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(
-    draft: false
-    where: {allowedIdentities: {in: [$identityId]}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCompaniesBySecondaryIdentityQuery = <
-      TData = ListCompaniesBySecondaryIdentityQuery,
-      TError = unknown
-    >(
-      variables: ListCompaniesBySecondaryIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCompaniesBySecondaryIdentityQuery, TError, TData>(
-      {
-    queryKey: ['ListCompaniesBySecondaryIdentity', variables],
-    queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => ['ListCompaniesBySecondaryIdentity', variables];
-
-
-useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
-
-export const SearchCompaniesBySecondaryIdentityDocument = `
-    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(
-    draft: false
-    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchCompaniesBySecondaryIdentityQuery = <
-      TData = SearchCompaniesBySecondaryIdentityQuery,
-      TError = unknown
-    >(
-      variables: SearchCompaniesBySecondaryIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchCompaniesBySecondaryIdentityQuery, TError, TData>(
-      {
-    queryKey: ['SearchCompaniesBySecondaryIdentity', variables],
-    queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => ['SearchCompaniesBySecondaryIdentity', variables];
-
-
-useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
-
-export const CreateCompanyDocument = `
-    mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
-  createCompany(data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-      chain
-      address
-    }
-    _status
-    image {
-      id
-      url
-    }
-  }
-}
-    `;
-
-export const useCreateCompanyMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>) => {
-    
-    return useMutation<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateCompany'],
-    mutationFn: (variables?: CreateCompanyMutationVariables) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateCompanyMutation.fetcher = (variables: CreateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables, options);
-
-export const DeleteCompanyDocument = `
-    mutation DeleteCompany($id: String!) {
-  deleteCompany(id: $id) {
-    id
-  }
-}
-    `;
-
-export const useDeleteCompanyMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>) => {
-    
-    return useMutation<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteCompany'],
-    mutationFn: (variables?: DeleteCompanyMutationVariables) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables, options);
-
-export const ListCompaniesDocument = `
-    query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCompaniesQuery = <
-      TData = ListCompaniesQuery,
-      TError = unknown
-    >(
-      variables?: ListCompaniesQueryVariables,
-      options?: Omit<UseQueryOptions<ListCompaniesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCompaniesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCompaniesQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['ListCompanies'] : ['ListCompanies', variables],
-    queryFn: gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables),
-    ...options
-  }
-    )};
-
-useListCompaniesQuery.getKey = (variables?: ListCompaniesQueryVariables) => variables === undefined ? ['ListCompanies'] : ['ListCompanies', variables];
-
-
-useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables, options);
-
-export const SearchCompaniesDocument = `
-    query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Company {
-            __typename
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            website
-            phone
-            email
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-          }
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchCompaniesQuery = <
-      TData = SearchCompaniesQuery,
-      TError = unknown
-    >(
-      variables: SearchCompaniesQueryVariables,
-      options?: Omit<UseQueryOptions<SearchCompaniesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchCompaniesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchCompaniesQuery, TError, TData>(
-      {
-    queryKey: ['SearchCompanies', variables],
-    queryFn: gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchCompaniesQuery.getKey = (variables: SearchCompaniesQueryVariables) => ['SearchCompanies', variables];
-
-
-useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesQuery, SearchCompaniesQueryVariables>(SearchCompaniesDocument, variables, options);
-
-export const UpdateCompanyDocument = `
-    mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
-  updateCompany(id: $id, data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-      chain
-      address
-    }
-    _status
-    image {
-      id
-      url
-    }
-  }
-}
-    `;
-
-export const useUpdateCompanyMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>) => {
-    
-    return useMutation<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateCompany'],
-    mutationFn: (variables?: UpdateCompanyMutationVariables) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateCompanyMutation.fetcher = (variables: UpdateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables, options);
-
-export const CreateCommentDocument = `
-    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
-  createComment(data: {content: $content, replyPost: $replyToPost}) {
-    id
-    content
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
-    
-    return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateComment'],
-    mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
-
-export const CreateReplyToCommentDocument = `
-    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
-  createComment(
-    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
-  ) {
-    id
-    content
-    replyComment {
-      id
-    }
-    createdBy {
-      id
-      name
-      email
-    }
-    anonymousHash
-    createdAt
-  }
-}
-    `;
-
-export const useCreateReplyToCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>) => {
-    
-    return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateReplyToComment'],
-    mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
-
-export const DeleteCommentDocument = `
-    mutation DeleteComment($id: String!) {
-  deleteComment(id: $id) {
-    id
-  }
-}
-    `;
-
-export const useDeleteCommentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
-    
-    return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteComment'],
-    mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables, options);
-
-export const EntityImageUrlsDocument = `
-    query EntityImageUrls {
-  companies: Companies(draft: false, page: 1, limit: 3) {
-    docs {
-      image {
-        url
-      }
-    }
-  }
-  jobs: Jobs(draft: false, page: 1, limit: 3) {
-    docs {
-      image {
-        url
-      }
-    }
-  }
-  startups: Startups(draft: false, page: 1, limit: 3) {
-    docs {
-      image {
-        url
-      }
-    }
-  }
-  identities: Identities(draft: false, page: 1, limit: 3) {
-    docs {
-      image {
-        url
-      }
-    }
-  }
-}
-    `;
-
-export const useEntityImageUrlsQuery = <
-      TData = EntityImageUrlsQuery,
-      TError = unknown
-    >(
-      variables?: EntityImageUrlsQueryVariables,
-      options?: Omit<UseQueryOptions<EntityImageUrlsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<EntityImageUrlsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<EntityImageUrlsQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables],
-    queryFn: gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables),
-    ...options
-  }
-    )};
-
-useEntityImageUrlsQuery.getKey = (variables?: EntityImageUrlsQueryVariables) => variables === undefined ? ['EntityImageUrls'] : ['EntityImageUrls', variables];
-
-
-useEntityImageUrlsQuery.fetcher = (variables?: EntityImageUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables, options);
-
-export const IdentityByIdDocument = `
-    query IdentityById($id: String!) {
-  Identity(id: $id, draft: false) {
-    id
-    serverURL
-    name
-    description
-    website
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-  }
-}
-    `;
-
-export const useIdentityByIdQuery = <
-      TData = IdentityByIdQuery,
-      TError = unknown
-    >(
-      variables: IdentityByIdQueryVariables,
-      options?: Omit<UseQueryOptions<IdentityByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<IdentityByIdQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<IdentityByIdQuery, TError, TData>(
-      {
-    queryKey: ['IdentityById', variables],
-    queryFn: gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables),
-    ...options
-  }
-    )};
-
-useIdentityByIdQuery.getKey = (variables: IdentityByIdQueryVariables) => ['IdentityById', variables];
-
-
-useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables, options);
-
-export const ListIdentitiesDocument = `
-    query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      website
-      itemCount
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListIdentitiesQuery = <
-      TData = ListIdentitiesQuery,
-      TError = unknown
-    >(
-      variables?: ListIdentitiesQueryVariables,
-      options?: Omit<UseQueryOptions<ListIdentitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListIdentitiesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListIdentitiesQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['ListIdentities'] : ['ListIdentities', variables],
-    queryFn: gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables),
-    ...options
-  }
-    )};
-
-useListIdentitiesQuery.getKey = (variables?: ListIdentitiesQueryVariables) => variables === undefined ? ['ListIdentities'] : ['ListIdentities', variables];
-
-
-useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables, options);
-
-export const SearchIdentitiesDocument = `
-    query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: identities}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Identity {
-            __typename
-            id
-            serverURL
-            name
-            description
-            website
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchIdentitiesQuery = <
-      TData = SearchIdentitiesQuery,
-      TError = unknown
-    >(
-      variables: SearchIdentitiesQueryVariables,
-      options?: Omit<UseQueryOptions<SearchIdentitiesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchIdentitiesQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchIdentitiesQuery, TError, TData>(
-      {
-    queryKey: ['SearchIdentities', variables],
-    queryFn: gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchIdentitiesQuery.getKey = (variables: SearchIdentitiesQueryVariables) => ['SearchIdentities', variables];
-
-
-useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables, options);
-
-export const ListJobsByCompanyDocument = `
-    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(
-    draft: false
-    where: {company: {equals: $companyId}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      positions
-      isActive
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListJobsByCompanyQuery = <
-      TData = ListJobsByCompanyQuery,
-      TError = unknown
-    >(
-      variables: ListJobsByCompanyQueryVariables,
-      options?: Omit<UseQueryOptions<ListJobsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCompanyQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListJobsByCompanyQuery, TError, TData>(
-      {
-    queryKey: ['ListJobsByCompany', variables],
-    queryFn: gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables),
-    ...options
-  }
-    )};
-
-useListJobsByCompanyQuery.getKey = (variables: ListJobsByCompanyQueryVariables) => ['ListJobsByCompany', variables];
-
-
-useListJobsByCompanyQuery.fetcher = (variables: ListJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables, options);
-
-export const SearchJobsByCompanyDocument = `
-    query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Job {
-            __typename
-            id
-            serverURL
-            title
-            description
-            positions
-            isActive
-            bounty {
-              amount
-              currency
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-                chain
-                address
-              }
-              allowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              disallowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              identity {
-                id
-                serverURL
-                name
-                description
-              }
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchJobsByCompanyQuery = <
-      TData = SearchJobsByCompanyQuery,
-      TError = unknown
-    >(
-      variables: SearchJobsByCompanyQueryVariables,
-      options?: Omit<UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchJobsByCompanyQuery, TError, TData>(
-      {
-    queryKey: ['SearchJobsByCompany', variables],
-    queryFn: gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariables) => ['SearchJobsByCompany', variables];
-
-
-useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
-
-export const ListJobsByCreatorDocument = `
-    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-  Jobs(
-    draft: true
-    page: $page
-    limit: $limit
-    where: {createdBy: {equals: $userId}}
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      employmentType
-      postedAt
-      _status
-    }
-    totalDocs
-  }
-}
-    `;
-
-export const useListJobsByCreatorQuery = <
-      TData = ListJobsByCreatorQuery,
-      TError = unknown
-    >(
-      variables?: ListJobsByCreatorQueryVariables,
-      options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListJobsByCreatorQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables],
-    queryFn: gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables),
-    ...options
-  }
-    )};
-
-useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables) => variables === undefined ? ['ListJobsByCreator'] : ['ListJobsByCreator', variables];
-
-
-useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables, options);
-
-export const JobByIdDocument = `
-    query JobById($id: String!) {
-  Job(id: $id) {
-    id
-    serverURL
-    title
-    _status
-    description
-    location
-    employmentType
-    positions
-    postedAt
-    isActive
-    applyUrl
-    bounty {
-      amount
-      currency
-    }
-    allowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    disallowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    salaryRange {
-      min
-      max
-      currency
-    }
-    createdBy {
-      id
-    }
-    company {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-  }
-}
-    `;
-
-export const useJobByIdQuery = <
-      TData = JobByIdQuery,
-      TError = unknown
-    >(
-      variables: JobByIdQueryVariables,
-      options?: Omit<UseQueryOptions<JobByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<JobByIdQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<JobByIdQuery, TError, TData>(
-      {
-    queryKey: ['JobById', variables],
-    queryFn: gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables),
-    ...options
-  }
-    )};
-
-useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', variables];
-
-
-useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
-
-export const ListJobsBySecondaryIdentityDocument = `
-    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(
-    draft: false
-    where: {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      location
-      employmentType
-      positions
-      postedAt
-      isActive
-      applyUrl
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListJobsBySecondaryIdentityQuery = <
-      TData = ListJobsBySecondaryIdentityQuery,
-      TError = unknown
-    >(
-      variables: ListJobsBySecondaryIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListJobsBySecondaryIdentityQuery, TError, TData>(
-      {
-    queryKey: ['ListJobsBySecondaryIdentity', variables],
-    queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => ['ListJobsBySecondaryIdentity', variables];
-
-
-useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
-
-export const SearchJobsBySecondaryIdentityDocument = `
-    query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      location
-      employmentType
-      positions
-      postedAt
-      isActive
-      applyUrl
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchJobsBySecondaryIdentityQuery = <
-      TData = SearchJobsBySecondaryIdentityQuery,
-      TError = unknown
-    >(
-      variables: SearchJobsBySecondaryIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchJobsBySecondaryIdentityQuery, TError, TData>(
-      {
-    queryKey: ['SearchJobsBySecondaryIdentity', variables],
-    queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => ['SearchJobsBySecondaryIdentity', variables];
-
-
-useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
-
-export const CreateJobDocument = `
-    mutation CreateJob($data: mutationJobInput!, $draft: Boolean!) {
-  createJob(data: $data, draft: $draft) {
-    id
-    title
-    employmentType
-    positions
-    postedAt
-    _status
-    image {
-      id
-      url
-    }
-  }
-}
-    `;
-
-export const useCreateJobMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>) => {
-    
-    return useMutation<CreateJobMutation, TError, CreateJobMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateJob'],
-    mutationFn: (variables?: CreateJobMutationVariables) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateJobMutation.fetcher = (variables: CreateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables, options);
-
-export const DeleteJobDocument = `
-    mutation DeleteJob($id: String!) {
-  deleteJob(id: $id) {
-    id
-  }
-}
-    `;
-
-export const useDeleteJobMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>) => {
-    
-    return useMutation<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>(
-      {
-    mutationKey: ['DeleteJob'],
-    mutationFn: (variables?: DeleteJobMutationVariables) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables, options);
-
-export const ListJobsDocument = `
-    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      location
-      employmentType
-      positions
-      postedAt
-      isActive
-      applyUrl
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useListJobsQuery = <
-      TData = ListJobsQuery,
-      TError = unknown
-    >(
-      variables?: ListJobsQueryVariables,
-      options?: Omit<UseQueryOptions<ListJobsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListJobsQuery, TError, TData>(
-      {
-    queryKey: variables === undefined ? ['ListJobs'] : ['ListJobs', variables],
-    queryFn: gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables),
-    ...options
-  }
-    )};
-
-useListJobsQuery.getKey = (variables?: ListJobsQueryVariables) => variables === undefined ? ['ListJobs'] : ['ListJobs', variables];
-
-
-useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables, options);
-
-export const SearchJobsDocument = `
-    query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Job {
-            __typename
-            id
-            serverURL
-            title
-            description
-            positions
-            isActive
-            bounty {
-              amount
-              currency
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-                chain
-                address
-              }
-              allowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              disallowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              identity {
-                id
-                serverURL
-                name
-                description
-              }
-              image {
-                id
-                url
-                alt
-                filename
-                width
-                height
-                mimeType
-              }
-            }
-          }
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
-    `;
-
-export const useSearchJobsQuery = <
-      TData = SearchJobsQuery,
-      TError = unknown
-    >(
-      variables: SearchJobsQueryVariables,
-      options?: Omit<UseQueryOptions<SearchJobsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchJobsQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<SearchJobsQuery, TError, TData>(
-      {
-    queryKey: ['SearchJobs', variables],
-    queryFn: gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables),
-    ...options
-  }
-    )};
-
-useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ['SearchJobs', variables];
-
-
-useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
-
-export const UpdateJobDocument = `
-    mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
-  updateJob(id: $id, data: $data, draft: $draft) {
-    id
-    title
-    employmentType
-    positions
-    postedAt
-    _status
-    image {
-      id
-      url
-    }
-  }
-}
-    `;
-
-export const useUpdateJobMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>) => {
-    
-    return useMutation<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateJob'],
-    mutationFn: (variables?: UpdateJobMutationVariables) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
-
-export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
-  Comments(
-    where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}]}
-    sort: "createdAt"
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      replyPostRelationTo
-      replyPostValue
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
-    `;
-
-export const useListCommentsByTargetQuery = <
-      TData = ListCommentsByTargetQuery,
-      TError = unknown
-    >(
-      variables: ListCommentsByTargetQueryVariables,
-      options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListCommentsByTargetQuery, TError, TData>(
-      {
-    queryKey: ['ListCommentsByTarget', variables],
-    queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
-    ...options
-  }
-    )};
-
-useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ['ListCommentsByTarget', variables];
-
-
-useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
-
-export const ListJobsByIdentityDocument = `
-    query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-  Jobs(
-    draft: false
-    where: {companyIdentityId: {equals: $identityId}}
-    sort: "-postedAt"
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      companyIdentityId
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-        image {
-          id
-          url
-        }
-      }
-      location
-      employmentType
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-      }
-      postedAt
-      _status
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
-    `;
-
-export const useListJobsByIdentityQuery = <
-      TData = ListJobsByIdentityQuery,
-      TError = unknown
-    >(
-      variables: ListJobsByIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<ListJobsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListJobsByIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListJobsByIdentityQuery, TError, TData>(
-      {
-    queryKey: ['ListJobsByIdentity', variables],
-    queryFn: gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useListJobsByIdentityQuery.getKey = (variables: ListJobsByIdentityQueryVariables) => ['ListJobsByIdentity', variables];
-
-
-useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables, options);
-
-export const ListProductsByIdentityDocument = `
-    query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-  Products(
-    where: {companyIdentityId: {equals: $identityId}}
-    sort: "-createdAt"
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-        chain
-        address
-      }
-      orderable
-      url
-      companyIdentityId
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-        image {
-          id
-          url
-        }
-      }
-      image {
-        id
-        url
-      }
-      _status
-      createdAt
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
-    `;
-
-export const useListProductsByIdentityQuery = <
-      TData = ListProductsByIdentityQuery,
-      TError = unknown
-    >(
-      variables: ListProductsByIdentityQueryVariables,
-      options?: Omit<UseQueryOptions<ListProductsByIdentityQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListProductsByIdentityQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListProductsByIdentityQuery, TError, TData>(
-      {
-    queryKey: ['ListProductsByIdentity', variables],
-    queryFn: gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables),
-    ...options
-  }
-    )};
-
-useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryVariables) => ['ListProductsByIdentity', variables];
-
-
-useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
-
-export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
-  Comments(
-    where: {replyComment: {equals: $parentCommentId}}
-    sort: "createdAt"
-    limit: $limit
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-  }
-}
-    `;
-
-export const useListRepliesToCommentQuery = <
-      TData = ListRepliesToCommentQuery,
-      TError = unknown
-    >(
-      variables: ListRepliesToCommentQueryVariables,
-      options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<ListRepliesToCommentQuery, TError, TData>(
-      {
-    queryKey: ['ListRepliesToComment', variables],
-    queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
-    ...options
-  }
-    )};
-
-useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ['ListRepliesToComment', variables];
-
-
-useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
-
-export const CreateOrderDocument = `
-    mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
-  createOrder(data: $data, draft: $draft) {
-    id
-    status
-    payerAddress
-    customer {
-      id
-    }
-    transactions {
-      id
-    }
-    cryptoPrices {
-      id
-      chain
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    transactionHashes {
-      id
-      chain
-      transactionHash
-      product {
-        id
-      }
-    }
-    currency
-    amount
-    customerEmail
-    createdAt
-    updatedAt
-    items {
-      id
-      quantity
-      product {
-        id
-        serverURL
-        name
-        priceInETH
-        priceInSOL
-        priceInTRX
-        cryptoAddresses {
-          chain
-          address
-        }
-        company {
-          id
-          cryptoAddresses {
-            chain
-            address
-          }
-        }
-      }
-      variant {
-        id
-        title
-      }
-    }
-    shippingAddress {
-      title
-      firstName
-      lastName
-      company
-      addressLine1
-      addressLine2
-      city
-      postalCode
-      state
-      country
-      phone
-    }
-  }
-}
-    `;
-
-export const useCreateOrderMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>) => {
-    
-    return useMutation<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>(
-      {
-    mutationKey: ['CreateOrder'],
-    mutationFn: (variables?: CreateOrderMutationVariables) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useCreateOrderMutation.fetcher = (variables: CreateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables, options);
-
-export const UpdateOrderDocument = `
-    mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
-  updateOrder(id: $orderId, data: $data, draft: $draft) {
-    id
-    status
-    payerAddress
-    customer {
-      id
-    }
-    transactions {
-      id
-    }
-    cryptoPrices {
-      id
-      chain
-      stablePerNative
-      nativePerStable
-      expectedNativeAmount
-      fetchedAt
-    }
-    transactionHashes {
-      id
-      chain
-      transactionHash
-      product {
-        id
-      }
-    }
-    currency
-    amount
-    customerEmail
-    createdAt
-    updatedAt
-    items {
-      id
-      quantity
-      product {
-        id
-        serverURL
-        name
-        priceInETH
-        priceInSOL
-        priceInTRX
-        cryptoAddresses {
-          chain
-          address
-        }
-        company {
-          id
-          cryptoAddresses {
-            chain
-            address
-          }
-        }
-      }
-      variant {
-        id
-        title
-      }
-    }
-    shippingAddress {
-      title
-      firstName
-      lastName
-      company
-      addressLine1
-      addressLine2
-      city
-      postalCode
-      state
-      country
-      phone
-    }
-  }
-}
-    `;
-
-export const useUpdateOrderMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>) => {
-    
-    return useMutation<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>(
-      {
-    mutationKey: ['UpdateOrder'],
-    mutationFn: (variables?: UpdateOrderMutationVariables) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables)(),
-    ...options
-  }
-    )};
-
-
-useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables, options);
-
-export const ListProductsByCompanyDocument = `
-    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Products(
-    draft: false
-    where: {company: {equals: $companyId}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      inventory
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      url
-      orderable
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      properties {
-        id
-        key
-        value
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useListProductsByCompanyQuery = <
@@ -55280,76 +55395,82 @@ useListProductsByCompanyQuery.fetcher = (variables: ListProductsByCompanyQueryVa
 
 export const SearchProductsByCompanyDocument = `
     query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Product {
-            __typename
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            url
-            orderable
-            properties {
-              id
-              key
-              value
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-                chain
-                address
-              }
-              identity {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: products } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Product {
+                __typename
                 id
+                isSubscribed
                 serverURL
                 name
                 description
+                cryptoAddresses {
+              chain
+              address
+            }
+                url
+                orderable
+                properties {
+                  id
+                  key
+                  value
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+                company {
+                  id
+                  serverURL
+                  name
+                  description
+                  cryptoAddresses {
+              chain
+              address
+            }
+                  identity {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                }
               }
             }
           }
         }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useSearchProductsByCompanyQuery = <
@@ -55375,32 +55496,28 @@ useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQue
 
 export const ListProductsByCreatorDocument = `
     query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
-  Products(
-    draft: true
-    page: $page
-    limit: $limit
-    where: {company: {in: $companyIds}}
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-        chain
-        address
-      }
-      orderable
-      url
-      _status
-      properties {
-        id
-        key
-        value
+      Products(draft: true, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          name
+          cryptoAddresses {
+              chain
+              address
+            }
+          orderable
+          url
+          _status
+          properties {
+            id
+            key
+            value
+          }
+        }
+        totalDocs
       }
     }
-    totalDocs
-  }
-}
     `;
 
 export const useListProductsByCreatorQuery = <
@@ -55426,92 +55543,93 @@ useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryV
 
 export const ProductByIdDocument = `
     query ProductById($id: String!, $draft: Boolean) {
-  Product(id: $id, draft: $draft) {
-    id
-    inventory
-    enableVariants
-    variantTypes {
-      id
-      label
-      name
-    }
-    variants {
-      docs {
+      Product(id: $id, draft: $draft) {
         id
-        title
+        isSubscribed
         inventory
-        priceInUSDEnabled
-        priceInUSD
-        options {
+        enableVariants
+        variantTypes {
           id
           label
-          value
+          name
         }
-      }
-      hasNextPage
-      totalDocs
-    }
-    priceInUSDEnabled
-    priceInUSD
-    priceInETH
-    priceInSOL
-    priceInTRX
-    serverURL
-    name
-    companyIdentityId
-    _status
-    description
-    cryptoAddresses {
-      chain
-      address
-    }
-    url
-    orderable
-    properties {
-      id
-      key
-      value
-    }
-    updatedAt
-    createdAt
-    deletedAt
-    company {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      createdBy {
-        id
-      }
-      identity {
-        id
+        variants {
+          docs {
+            id
+            title
+            inventory
+            priceInUSDEnabled
+            priceInUSD
+            options {
+              id
+              label
+              value
+            }
+          }
+          hasNextPage
+          totalDocs
+        }
+        priceInUSDEnabled
+        priceInUSD
+        priceInETH
+        priceInSOL
+        priceInTRX
         serverURL
         name
+        companyIdentityId
+        _status
         description
-      }
-      image {
-        id
+        cryptoAddresses {
+          chain
+          address
+        }
         url
-        filename
-        mimeType
-        width
-        height
+        orderable
+        properties {
+          id
+          key
+          value
+        }
+        updatedAt
+        createdAt
+        deletedAt
+        company {
+          id
+          serverURL
+          name
+          description
+          cryptoAddresses {
+            chain
+            address
+          }
+          createdBy {
+            id
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+          }
+          image {
+            id
+            url
+            filename
+            mimeType
+            width
+            height
+          }
+        }
+        image {
+          id
+          url
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
-    image {
-      id
-      url
-      filename
-      width
-      height
-      mimeType
-    }
-  }
-}
     `;
 
 export const useProductByIdQuery = <
@@ -55537,25 +55655,25 @@ useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: R
 
 export const CreateProductDocument = `
     mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
-  createProduct(data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-      chain
-      address
+      createProduct(data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+              chain
+              address
+            }
+        _status
+        properties {
+          id
+          key
+          value
+        }
+        image {
+          id
+          url
+        }
+      }
     }
-    _status
-    properties {
-      id
-      key
-      value
-    }
-    image {
-      id
-      url
-    }
-  }
-}
     `;
 
 export const useCreateProductMutation = <
@@ -55576,10 +55694,10 @@ useCreateProductMutation.fetcher = (variables: CreateProductMutationVariables, o
 
 export const DeleteProductDocument = `
     mutation DeleteProduct($id: String!) {
-  deleteProduct(id: $id) {
-    id
-  }
-}
+      deleteProduct(id: $id) {
+        id
+      }
+    }
     `;
 
 export const useDeleteProductMutation = <
@@ -55600,74 +55718,75 @@ useDeleteProductMutation.fetcher = (variables: DeleteProductMutationVariables, o
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Products(draft: false, page: $page, limit: $limit, sort: $sort) {
-    docs {
-      id
-      serverURL
-      name
-      inventory
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      url
-      orderable
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      properties {
-        id
-        key
-        value
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        identity {
+      Products(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
           id
+          isSubscribed
           serverURL
           name
+          inventory
           description
-        }
-        image {
-          id
+          cryptoAddresses {
+              chain
+              address
+            }
           url
-          alt
-          filename
-          width
-          height
-          mimeType
+          orderable
+          priceInUSDEnabled
+          priceInUSD
+          priceInETH
+          priceInSOL
+          priceInTRX
+          properties {
+            id
+            key
+            value
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
         }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useListProductsQuery = <
@@ -55693,85 +55812,91 @@ useListProductsQuery.fetcher = (variables?: ListProductsQueryVariables, options?
 
 export const SearchProductsDocument = `
     query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Product {
-            __typename
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            url
-            orderable
-            properties {
-              id
-              key
-              value
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-                chain
-                address
-              }
-              identity {
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: products } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Product {
+                __typename
                 id
+                isSubscribed
                 serverURL
                 name
                 description
-              }
-              image {
-                id
+                cryptoAddresses {
+              chain
+              address
+            }
                 url
-                alt
-                filename
-                width
-                height
-                mimeType
+                orderable
+                properties {
+                  id
+                  key
+                  value
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+                company {
+                  id
+                  serverURL
+                  name
+                  description
+                  cryptoAddresses {
+              chain
+              address
+            }
+                  identity {
+                    id
+                    serverURL
+                    name
+                    description
+                  }
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                }
               }
             }
           }
         }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useSearchProductsQuery = <
@@ -55797,25 +55922,25 @@ useSearchProductsQuery.fetcher = (variables: SearchProductsQueryVariables, optio
 
 export const UpdateProductDocument = `
     mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft: Boolean!) {
-  updateProduct(id: $id, data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-      chain
-      address
+      updateProduct(id: $id, data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+              chain
+              address
+            }
+        _status
+        properties {
+          id
+          key
+          value
+        }
+        image {
+          id
+          url
+        }
+      }
     }
-    _status
-    properties {
-      id
-      key
-      value
-    }
-    image {
-      id
-      url
-    }
-  }
-}
     `;
 
 export const useUpdateProductMutation = <
@@ -55836,72 +55961,73 @@ useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, o
 
 export const ListStartupsByCompanyDocument = `
     query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Startups(
-    draft: false
-    where: {company: {equals: $companyId}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      description
-      stage
-      lookingFor
-      alreadyHave
-      fundsNeeded {
-        amount
-        currency
-      }
-      company {
-        id
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-        email
-      }
-      identity {
-        id
-        name
-        description
-        image {
+      Startups(
+        draft: false
+        where: { company: { equals: $companyId } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
           id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
+          isSubscribed
+          title
+          description
+          stage
+          lookingFor
+          alreadyHave
+          fundsNeeded {
+            amount
+            currency
+          }
+          company {
+            id
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+            email
+          }
+          identity {
+            id
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          involvedUsers {
+            id
+            name
+            email
+          }
         }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      involvedUsers {
-        id
-        name
-        email
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useListStartupsByCompanyQuery = <
@@ -55927,21 +56053,17 @@ useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVa
 
 export const ListStartupsByCreatorDocument = `
     query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-  Startups(
-    draft: true
-    page: $page
-    limit: $limit
-    where: {createdBy: {equals: $userId}}
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      _status
+      Startups(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+        docs {
+          id
+          isSubscribed
+          serverURL
+          title
+          _status
+        }
+        totalDocs
+      }
     }
-    totalDocs
-  }
-}
     `;
 
 export const useListStartupsByCreatorQuery = <
@@ -55967,66 +56089,67 @@ useListStartupsByCreatorQuery.fetcher = (variables?: ListStartupsByCreatorQueryV
 
 export const StartupByIdDocument = `
     query StartupById($id: String!) {
-  Startup(id: $id) {
-    id
-    serverURL
-    title
-    _status
-    description
-    stage
-    lookingFor
-    alreadyHave
-    fundsNeeded {
-      amount
-      currency
-    }
-    company {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-        chain
-        address
-      }
-      email
-    }
-    createdBy {
-      id
-    }
-    identity {
-      id
-      serverURL
-      name
-      description
-      website
-      image {
+      Startup(id: $id) {
         id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
+        isSubscribed
+        serverURL
+        title
+        _status
+        description
+        stage
+        lookingFor
+        alreadyHave
+        fundsNeeded {
+          amount
+          currency
+        }
+        company {
+          id
+          serverURL
+          name
+          cryptoAddresses {
+              chain
+              address
+            }
+          email
+        }
+        createdBy {
+          id
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+          website
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+        involvedUsers {
+          id
+          name
+          email
+        }
+        createdAt
+        updatedAt
       }
     }
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-    involvedUsers {
-      id
-      name
-      email
-    }
-    createdAt
-    updatedAt
-  }
-}
     `;
 
 export const useStartupByIdQuery = <
@@ -56052,32 +56175,33 @@ useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: R
 
 export const ListStartupsByIdentityDocument = `
     query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-  Startups(
-    draft: false
-    where: {identity: {equals: $identityId}}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      description
-      stage
-      identity {
-        id
-        name
-      }
-      image {
-        id
-        url
+      Startups(
+        draft: false
+        where: { identity: { equals: $identityId } }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          isSubscribed
+          title
+          description
+          stage
+          identity {
+            id
+            name
+          }
+          image {
+            id
+            url
+          }
+        }
+        totalDocs
+        hasNextPage
+        nextPage
       }
     }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
-}
     `;
 
 export const useListStartupsByIdentityQuery = <
@@ -56103,16 +56227,16 @@ useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQuery
 
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
-  createStartup(data: $data, draft: $draft) {
-    id
-    title
-    _status
-    image {
-      id
-      url
+      createStartup(data: $data, draft: $draft) {
+        id
+        title
+        _status
+        image {
+          id
+          url
+        }
+      }
     }
-  }
-}
     `;
 
 export const useCreateStartupMutation = <
@@ -56133,10 +56257,10 @@ useCreateStartupMutation.fetcher = (variables: CreateStartupMutationVariables, o
 
 export const DeleteStartupDocument = `
     mutation DeleteStartup($id: String!) {
-  deleteStartup(id: $id) {
-    id
-  }
-}
+      deleteStartup(id: $id) {
+        id
+      }
+    }
     `;
 
 export const useDeleteStartupMutation = <
@@ -56157,69 +56281,70 @@ useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, o
 
 export const ListStartupsDocument = `
     query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      stage
-      lookingFor
-      alreadyHave
-      fundsNeeded {
-        amount
-        currency
-      }
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-        email
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
+      Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
           id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
+          isSubscribed
+          serverURL
+          title
+          description
+          stage
+          lookingFor
+          alreadyHave
+          fundsNeeded {
+            amount
+            currency
+          }
+          company {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+              chain
+              address
+            }
+            email
+          }
+          identity {
+            id
+            serverURL
+            name
+            description
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          involvedUsers {
+            id
+            name
+            email
+          }
         }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      involvedUsers {
-        id
-        name
-        email
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useListStartupsQuery = <
@@ -56245,71 +56370,77 @@ useListStartupsQuery.fetcher = (variables?: ListStartupsQueryVariables, options?
 
 export const SearchStartupsDocument = `
     query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: startups}}]}
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Startup {
-            __typename
-            id
-            serverURL
-            title
-            description
-            stage
-            lookingFor
-            alreadyHave
-            fundsNeeded {
-              amount
-              currency
+      Searches(
+        draft: false
+        where: {
+          AND: [
+            { title: { contains: $searchTerm } }
+            { doc: { relationTo: startups } }
+          ]
+        }
+        page: $page
+        limit: $limit
+        sort: $sort
+      ) {
+        docs {
+          id
+          title
+          priority
+          doc(draft: false) {
+            relationTo
+            value {
+              ... on Startup {
+                __typename
+                id
+                isSubscribed
+                serverURL
+                title
+                description
+                stage
+                lookingFor
+                alreadyHave
+                fundsNeeded {
+                  amount
+                  currency
+                }
+                company {
+                  id
+                  serverURL
+                  name
+                  cryptoAddresses {
+              chain
+              address
             }
-            company {
-              id
-              serverURL
-              name
-              cryptoAddresses {
-                chain
-                address
+                }
+                image {
+                  id
+                  url
+                  alt
+                  filename
+                  width
+                  height
+                  mimeType
+                }
+                identity {
+                  id
+                  serverURL
+                  name
+                  description
+                }
               }
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
             }
           }
         }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
       }
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
-}
     `;
 
 export const useSearchStartupsQuery = <
@@ -56335,16 +56466,16 @@ useSearchStartupsQuery.fetcher = (variables: SearchStartupsQueryVariables, optio
 
 export const UpdateStartupDocument = `
     mutation UpdateStartup($id: String!, $data: mutationStartupUpdateInput!, $draft: Boolean!) {
-  updateStartup(id: $id, data: $data, draft: $draft) {
-    id
-    title
-    _status
-    image {
-      id
-      url
+      updateStartup(id: $id, data: $data, draft: $draft) {
+        id
+        title
+        _status
+        image {
+          id
+          url
+        }
+      }
     }
-  }
-}
     `;
 
 export const useUpdateStartupMutation = <
@@ -56365,14 +56496,17 @@ useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, o
 
 export const ListPublishedSyndicationUrlsDocument = `
     query ListPublishedSyndicationUrls {
-  Syndications(draft: false, limit: 0) {
-    docs {
-      url
-      name
-      description
+      Syndications(
+        draft: false
+        limit: 0
+      ) {
+        docs {
+          url
+          name
+          description
+        }
+      }
     }
-  }
-}
     `;
 
 export const useListPublishedSyndicationUrlsQuery = <
@@ -56397,13 +56531,21 @@ useListPublishedSyndicationUrlsQuery.getKey = (variables?: ListPublishedSyndicat
 useListPublishedSyndicationUrlsQuery.fetcher = (variables?: ListPublishedSyndicationUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables, options);
 
 export const UpdateCommentContentDocument = `
-    mutation UpdateCommentContent($id: String!, $content: String!) {
-  updateComment(id: $id, data: {content: $content}) {
-    id
-    content
-    updatedAt
-  }
-}
+    mutation UpdateCommentContent(
+      $id: String!
+      $content: String!
+    ) {
+      updateComment(
+        id: $id
+        data: {
+          content: $content
+        }
+      ) {
+        id
+        content
+        updatedAt
+      }
+    }
     `;
 
 export const useUpdateCommentContentMutation = <
