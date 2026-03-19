@@ -118,8 +118,8 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
         title,
         text,
         url: shareUrl,
-        onCopyLink: () => {
-            void copyLink(shareUrl);
+        onCopyLink: async () => {
+            await copyLink(shareUrl);
         },
         subscriptionTarget,
     };

@@ -97,9 +97,7 @@ export const SubscribeAnonButton: React.FunctionComponent<SubscribeButtonProps> 
                 <Form
                     form={form}
                     layout="vertical"
-                    onFinish={(values) => {
-                        void handleFinish(values);
-                    }}
+                    onFinish={handleFinish}
                 >
                     <Typography.Paragraph className="SubscribeButton__modalCopy">
                         Enter your email and we&apos;ll notify you when this {entityLabel} changes.

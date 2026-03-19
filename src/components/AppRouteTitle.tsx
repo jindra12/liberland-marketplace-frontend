@@ -29,6 +29,7 @@ const routeTitles: RouteTitle[] = [
     { path: "/publish", title: "Publish" },
     { path: "/cart", title: "Cart" },
     { path: "/order", title: "Order" },
+    { path: "/unsubscribe", title: "Unsubscribe" },
     { path: "/ventures", title: "Ventures" },
     { path: "/auth/callback", title: "Signing In" },
     { path: "/", title: APP_NAME },

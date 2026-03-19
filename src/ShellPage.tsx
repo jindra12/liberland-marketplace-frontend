@@ -309,6 +309,11 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         description: "Submit order details and complete chain-specific payment steps.",
         noIndex: true,
     },
+    "/unsubscribe": {
+        title: "Unsubscribe | NSwap",
+        description: "Manage email notification preferences for marketplace subscription updates.",
+        noIndex: true,
+    },
     "/auth/callback": {
         title: "Authentication callback | NSwap",
         description: "Authentication callback endpoint.",
