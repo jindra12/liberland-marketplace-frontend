@@ -114,6 +114,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
     const shareUrl = url ?? window.location.href;
+    const mobileShareActionSize = "middle";
     const payload = {
         title,
         text,
@@ -139,12 +140,12 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                                 title={title}
                                 text={text}
                                 label="Share"
-                                size="large"
+                                size={mobileShareActionSize}
                                 className="NativeShareButton ShareSection__mobileButton"
                             />
                             <SubscribeButton
                                 {...subscriptionTarget}
-                                size="large"
+                                size={mobileShareActionSize}
                                 className="ShareSection__mobileButton"
                             />
                         </Space.Compact>
@@ -154,7 +155,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                             title={title}
                             text={text}
                             label="Share"
-                            size="large"
+                            size={mobileShareActionSize}
                             className="NativeShareButton ShareSection__mobileButton"
                         />
                     )}

@@ -37,6 +37,8 @@ export type Access = {
   identities?: Maybe<IdentitiesAccess>;
   jobs?: Maybe<JobsAccess>;
   media?: Maybe<MediaAccess>;
+  newsletter_settings?: Maybe<Newsletter_SettingsAccess>;
+  notification_subscriptions?: Maybe<Notification_SubscriptionsAccess>;
   oauthAccessTokens?: Maybe<OauthAccessTokensAccess>;
   oauthApplications?: Maybe<OauthApplicationsAccess>;
   oauthConsents?: Maybe<OauthConsentsAccess>;
@@ -53,6 +55,7 @@ export type Access = {
   search?: Maybe<SearchAccess>;
   sessions?: Maybe<SessionsAccess>;
   startups?: Maybe<StartupsAccess>;
+  subscribers?: Maybe<SubscribersAccess>;
   syndications?: Maybe<SyndicationsAccess>;
   transactions?: Maybe<TransactionsAccess>;
   users?: Maybe<UsersAccess>;
@@ -5914,6 +5917,7 @@ export type CompaniesDocAccessFields = {
   email?: Maybe<CompaniesDocAccessFields_Email>;
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
   image?: Maybe<CompaniesDocAccessFields_Image>;
+  isSubscribed?: Maybe<CompaniesDocAccessFields_IsSubscribed>;
   name?: Maybe<CompaniesDocAccessFields_Name>;
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   serverURL?: Maybe<CompaniesDocAccessFields_ServerUrl>;
@@ -6292,6 +6296,34 @@ export type CompaniesDocAccessFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_IsSubscribed = {
+  __typename?: 'CompaniesDocAccessFields_isSubscribed';
+  create?: Maybe<CompaniesDocAccessFields_IsSubscribed_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_IsSubscribed_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_IsSubscribed_Read>;
+  update?: Maybe<CompaniesDocAccessFields_IsSubscribed_Update>;
+};
+
+export type CompaniesDocAccessFields_IsSubscribed_Create = {
+  __typename?: 'CompaniesDocAccessFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsSubscribed_Delete = {
+  __typename?: 'CompaniesDocAccessFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsSubscribed_Read = {
+  __typename?: 'CompaniesDocAccessFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsSubscribed_Update = {
+  __typename?: 'CompaniesDocAccessFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_Name = {
   __typename?: 'CompaniesDocAccessFields_name';
   create?: Maybe<CompaniesDocAccessFields_Name_Create>;
@@ -6445,6 +6477,7 @@ export type CompaniesFields = {
   email?: Maybe<CompaniesFields_Email>;
   identity?: Maybe<CompaniesFields_Identity>;
   image?: Maybe<CompaniesFields_Image>;
+  isSubscribed?: Maybe<CompaniesFields_IsSubscribed>;
   name?: Maybe<CompaniesFields_Name>;
   phone?: Maybe<CompaniesFields_Phone>;
   serverURL?: Maybe<CompaniesFields_ServerUrl>;
@@ -6823,6 +6856,34 @@ export type CompaniesFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_IsSubscribed = {
+  __typename?: 'CompaniesFields_isSubscribed';
+  create?: Maybe<CompaniesFields_IsSubscribed_Create>;
+  delete?: Maybe<CompaniesFields_IsSubscribed_Delete>;
+  read?: Maybe<CompaniesFields_IsSubscribed_Read>;
+  update?: Maybe<CompaniesFields_IsSubscribed_Update>;
+};
+
+export type CompaniesFields_IsSubscribed_Create = {
+  __typename?: 'CompaniesFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsSubscribed_Delete = {
+  __typename?: 'CompaniesFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsSubscribed_Read = {
+  __typename?: 'CompaniesFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsSubscribed_Update = {
+  __typename?: 'CompaniesFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_Name = {
   __typename?: 'CompaniesFields_name';
   create?: Maybe<CompaniesFields_Name_Create>;
@@ -7011,9 +7072,9 @@ export type Company = {
   disallowedIdentities?: Maybe<Array<Identity>>;
   email?: Maybe<Scalars['EmailAddress']['output']>;
   id: Scalars['String']['output'];
-  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
@@ -7060,6 +7121,7 @@ export type CompanyVersion_Version = {
   email?: Maybe<Scalars['EmailAddress']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
@@ -7246,6 +7308,12 @@ export type Company_Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Company_IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Company_Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -7316,6 +7384,7 @@ export type Company_Where = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
@@ -7339,6 +7408,7 @@ export type Company_Where_And = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
@@ -7362,6 +7432,7 @@ export type Company_Where_Or = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
@@ -10914,6 +10985,7 @@ export type IdentitiesDocAccessFields = {
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
   description?: Maybe<IdentitiesDocAccessFields_Description>;
   image?: Maybe<IdentitiesDocAccessFields_Image>;
+  isSubscribed?: Maybe<IdentitiesDocAccessFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesDocAccessFields_ItemCount>;
   name?: Maybe<IdentitiesDocAccessFields_Name>;
   serverURL?: Maybe<IdentitiesDocAccessFields_ServerUrl>;
@@ -11030,6 +11102,34 @@ export type IdentitiesDocAccessFields_Image_Read = {
 
 export type IdentitiesDocAccessFields_Image_Update = {
   __typename?: 'IdentitiesDocAccessFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_IsSubscribed = {
+  __typename?: 'IdentitiesDocAccessFields_isSubscribed';
+  create?: Maybe<IdentitiesDocAccessFields_IsSubscribed_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_IsSubscribed_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_IsSubscribed_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_IsSubscribed_Update>;
+};
+
+export type IdentitiesDocAccessFields_IsSubscribed_Create = {
+  __typename?: 'IdentitiesDocAccessFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_IsSubscribed_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_IsSubscribed_Read = {
+  __typename?: 'IdentitiesDocAccessFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_IsSubscribed_Update = {
+  __typename?: 'IdentitiesDocAccessFields_isSubscribed_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -11179,6 +11279,7 @@ export type IdentitiesFields = {
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
   description?: Maybe<IdentitiesFields_Description>;
   image?: Maybe<IdentitiesFields_Image>;
+  isSubscribed?: Maybe<IdentitiesFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesFields_ItemCount>;
   name?: Maybe<IdentitiesFields_Name>;
   serverURL?: Maybe<IdentitiesFields_ServerUrl>;
@@ -11295,6 +11396,34 @@ export type IdentitiesFields_Image_Read = {
 
 export type IdentitiesFields_Image_Update = {
   __typename?: 'IdentitiesFields_image_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_IsSubscribed = {
+  __typename?: 'IdentitiesFields_isSubscribed';
+  create?: Maybe<IdentitiesFields_IsSubscribed_Create>;
+  delete?: Maybe<IdentitiesFields_IsSubscribed_Delete>;
+  read?: Maybe<IdentitiesFields_IsSubscribed_Read>;
+  update?: Maybe<IdentitiesFields_IsSubscribed_Update>;
+};
+
+export type IdentitiesFields_IsSubscribed_Create = {
+  __typename?: 'IdentitiesFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_IsSubscribed_Delete = {
+  __typename?: 'IdentitiesFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_IsSubscribed_Read = {
+  __typename?: 'IdentitiesFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_IsSubscribed_Update = {
+  __typename?: 'IdentitiesFields_isSubscribed_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -11468,8 +11597,8 @@ export type Identity = {
   createdBy: User;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   itemCount?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
   serverURL?: Maybe<Scalars['String']['output']>;
@@ -11522,6 +11651,12 @@ export type Identity_Image_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Identity_IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Identity_ItemCount_Operator = {
@@ -11585,6 +11720,7 @@ export type Identity_Where = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
@@ -11600,6 +11736,7 @@ export type Identity_Where_And = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
@@ -11615,6 +11752,7 @@ export type Identity_Where_Or = {
   description?: InputMaybe<Identity_Description_Operator>;
   id?: InputMaybe<Identity_Id_Operator>;
   image?: InputMaybe<Identity_Image_Operator>;
+  isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
@@ -11637,9 +11775,9 @@ export type Job = {
   disallowedIdentities?: Maybe<Array<Identity>>;
   employmentType?: Maybe<Job_EmploymentType>;
   id: Scalars['String']['output'];
-  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -11726,6 +11864,7 @@ export type JobVersion_Version = {
   employmentType?: Maybe<JobVersion_Version_EmploymentType>;
   image?: Maybe<Media>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -12063,6 +12202,12 @@ export type Job_IsActive_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Job_IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Job_Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -12187,6 +12332,7 @@ export type Job_Where = {
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
+  isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
@@ -12217,6 +12363,7 @@ export type Job_Where_And = {
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
+  isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
@@ -12247,6 +12394,7 @@ export type Job_Where_Or = {
   id?: InputMaybe<Job_Id_Operator>;
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
+  isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
   postedAt?: InputMaybe<Job_PostedAt_Operator>;
@@ -12313,6 +12461,7 @@ export type JobsDocAccessFields = {
   employmentType?: Maybe<JobsDocAccessFields_EmploymentType>;
   image?: Maybe<JobsDocAccessFields_Image>;
   isActive?: Maybe<JobsDocAccessFields_IsActive>;
+  isSubscribed?: Maybe<JobsDocAccessFields_IsSubscribed>;
   location?: Maybe<JobsDocAccessFields_Location>;
   positions?: Maybe<JobsDocAccessFields_Positions>;
   postedAt?: Maybe<JobsDocAccessFields_PostedAt>;
@@ -12777,6 +12926,34 @@ export type JobsDocAccessFields_IsActive_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_IsSubscribed = {
+  __typename?: 'JobsDocAccessFields_isSubscribed';
+  create?: Maybe<JobsDocAccessFields_IsSubscribed_Create>;
+  delete?: Maybe<JobsDocAccessFields_IsSubscribed_Delete>;
+  read?: Maybe<JobsDocAccessFields_IsSubscribed_Read>;
+  update?: Maybe<JobsDocAccessFields_IsSubscribed_Update>;
+};
+
+export type JobsDocAccessFields_IsSubscribed_Create = {
+  __typename?: 'JobsDocAccessFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsSubscribed_Delete = {
+  __typename?: 'JobsDocAccessFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsSubscribed_Read = {
+  __typename?: 'JobsDocAccessFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_IsSubscribed_Update = {
+  __typename?: 'JobsDocAccessFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_Location = {
   __typename?: 'JobsDocAccessFields_location';
   create?: Maybe<JobsDocAccessFields_Location_Create>;
@@ -13081,6 +13258,7 @@ export type JobsFields = {
   employmentType?: Maybe<JobsFields_EmploymentType>;
   image?: Maybe<JobsFields_Image>;
   isActive?: Maybe<JobsFields_IsActive>;
+  isSubscribed?: Maybe<JobsFields_IsSubscribed>;
   location?: Maybe<JobsFields_Location>;
   positions?: Maybe<JobsFields_Positions>;
   postedAt?: Maybe<JobsFields_PostedAt>;
@@ -13542,6 +13720,34 @@ export type JobsFields_IsActive_Read = {
 
 export type JobsFields_IsActive_Update = {
   __typename?: 'JobsFields_isActive_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsSubscribed = {
+  __typename?: 'JobsFields_isSubscribed';
+  create?: Maybe<JobsFields_IsSubscribed_Create>;
+  delete?: Maybe<JobsFields_IsSubscribed_Delete>;
+  read?: Maybe<JobsFields_IsSubscribed_Read>;
+  update?: Maybe<JobsFields_IsSubscribed_Update>;
+};
+
+export type JobsFields_IsSubscribed_Create = {
+  __typename?: 'JobsFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsSubscribed_Delete = {
+  __typename?: 'JobsFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsSubscribed_Read = {
+  __typename?: 'JobsFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_IsSubscribed_Update = {
+  __typename?: 'JobsFields_isSubscribed_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -18710,6 +18916,7 @@ export type Mutation = {
   createIdentity?: Maybe<Identity>;
   createJob?: Maybe<Job>;
   createMedia?: Maybe<Media>;
+  createNotificationSubscription?: Maybe<NotificationSubscription>;
   createOauthAccessToken?: Maybe<OauthAccessToken>;
   createOauthApplication?: Maybe<OauthApplication>;
   createOauthConsent?: Maybe<OauthConsent>;
@@ -18726,6 +18933,7 @@ export type Mutation = {
   createSearch?: Maybe<Search>;
   createSession?: Maybe<Session>;
   createStartup?: Maybe<Startup>;
+  createSubscriber?: Maybe<Subscriber>;
   createSyndication?: Maybe<Syndication>;
   createTransaction?: Maybe<Transaction>;
   createUser?: Maybe<User>;
@@ -18745,6 +18953,7 @@ export type Mutation = {
   deleteIdentity?: Maybe<Identity>;
   deleteJob?: Maybe<Job>;
   deleteMedia?: Maybe<Media>;
+  deleteNotificationSubscription?: Maybe<NotificationSubscription>;
   deleteOauthAccessToken?: Maybe<OauthAccessToken>;
   deleteOauthApplication?: Maybe<OauthApplication>;
   deleteOauthConsent?: Maybe<OauthConsent>;
@@ -18761,6 +18970,7 @@ export type Mutation = {
   deleteSearch?: Maybe<Search>;
   deleteSession?: Maybe<Session>;
   deleteStartup?: Maybe<Startup>;
+  deleteSubscriber?: Maybe<Subscriber>;
   deleteSyndication?: Maybe<Syndication>;
   deleteTransaction?: Maybe<Transaction>;
   deleteUser?: Maybe<User>;
@@ -18780,6 +18990,7 @@ export type Mutation = {
   duplicateIdentity?: Maybe<Identity>;
   duplicateJob?: Maybe<Job>;
   duplicateMedia?: Maybe<Media>;
+  duplicateNotificationSubscription?: Maybe<NotificationSubscription>;
   duplicateOauthAccessToken?: Maybe<OauthAccessToken>;
   duplicateOauthApplication?: Maybe<OauthApplication>;
   duplicateOauthConsent?: Maybe<OauthConsent>;
@@ -18796,6 +19007,7 @@ export type Mutation = {
   duplicateSearch?: Maybe<Search>;
   duplicateSession?: Maybe<Session>;
   duplicateStartup?: Maybe<Startup>;
+  duplicateSubscriber?: Maybe<Subscriber>;
   duplicateSyndication?: Maybe<Syndication>;
   duplicateTransaction?: Maybe<Transaction>;
   duplicateVariant?: Maybe<Variant>;
@@ -18826,6 +19038,8 @@ export type Mutation = {
   updateIdentity?: Maybe<Identity>;
   updateJob?: Maybe<Job>;
   updateMedia?: Maybe<Media>;
+  updateNewsletterSetting?: Maybe<NewsletterSetting>;
+  updateNotificationSubscription?: Maybe<NotificationSubscription>;
   updateOauthAccessToken?: Maybe<OauthAccessToken>;
   updateOauthApplication?: Maybe<OauthApplication>;
   updateOauthConsent?: Maybe<OauthConsent>;
@@ -18842,6 +19056,7 @@ export type Mutation = {
   updateSearch?: Maybe<Search>;
   updateSession?: Maybe<Session>;
   updateStartup?: Maybe<Startup>;
+  updateSubscriber?: Maybe<Subscriber>;
   updateSyndication?: Maybe<Syndication>;
   updateTransaction?: Maybe<Transaction>;
   updateUser?: Maybe<User>;
@@ -18920,6 +19135,12 @@ export type MutationCreateJobArgs = {
 
 export type MutationCreateMediaArgs = {
   data: MutationMediaInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateNotificationSubscriptionArgs = {
+  data: MutationNotificationSubscriptionInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -19016,6 +19237,12 @@ export type MutationCreateSessionArgs = {
 
 export type MutationCreateStartupArgs = {
   data: MutationStartupInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateSubscriberArgs = {
+  data: MutationSubscriberInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -19134,6 +19361,12 @@ export type MutationDeleteMediaArgs = {
 };
 
 
+export type MutationDeleteNotificationSubscriptionArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteOauthAccessTokenArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -19225,6 +19458,12 @@ export type MutationDeleteSessionArgs = {
 
 
 export type MutationDeleteStartupArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationDeleteSubscriberArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -19344,6 +19583,12 @@ export type MutationDuplicateMediaArgs = {
 };
 
 
+export type MutationDuplicateNotificationSubscriptionArgs = {
+  data: MutationNotificationSubscriptionInput;
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDuplicateOauthAccessTokenArgs = {
   data: MutationOauthAccessTokenInput;
   id: Scalars['String']['input'];
@@ -19436,6 +19681,12 @@ export type MutationDuplicateSessionArgs = {
 
 export type MutationDuplicateStartupArgs = {
   data: MutationStartupInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateSubscriberArgs = {
+  data: MutationSubscriberInput;
   id: Scalars['String']['input'];
 };
 
@@ -19649,6 +19900,21 @@ export type MutationUpdateMediaArgs = {
 };
 
 
+export type MutationUpdateNewsletterSettingArgs = {
+  data: MutationNewsletterSettingInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateNotificationSubscriptionArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationNotificationSubscriptionUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationUpdateOauthAccessTokenArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationOauthAccessTokenUpdateInput;
@@ -19793,6 +20059,15 @@ export type MutationUpdateStartupArgs = {
 };
 
 
+export type MutationUpdateSubscriberArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationSubscriberUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationUpdateSyndicationArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationSyndicationUpdateInput;
@@ -19853,6 +20128,3212 @@ export type MutationUpdateVerificationArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NewsletterSetting = {
+  __typename?: 'NewsletterSetting';
+  brandSettings?: Maybe<NewsletterSetting_BrandSettings>;
+  broadcastSettings?: Maybe<NewsletterSetting_BroadcastSettings>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  emailTemplates?: Maybe<NewsletterSetting_EmailTemplates>;
+  fromAddress: Scalars['EmailAddress']['output'];
+  fromName: Scalars['String']['output'];
+  provider: NewsletterSetting_Provider;
+  replyTo?: Maybe<Scalars['EmailAddress']['output']>;
+  resendSettings?: Maybe<NewsletterSetting_ResendSettings>;
+  subscriptionSettings?: Maybe<NewsletterSetting_SubscriptionSettings>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NewsletterSetting_BrandSettings = {
+  __typename?: 'NewsletterSetting_BrandSettings';
+  logoUrl?: Maybe<Scalars['String']['output']>;
+  siteName?: Maybe<Scalars['String']['output']>;
+  siteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type NewsletterSetting_BroadcastSettings = {
+  __typename?: 'NewsletterSetting_BroadcastSettings';
+  apiUrl?: Maybe<Scalars['String']['output']>;
+  lastWebhookReceived?: Maybe<Scalars['DateTime']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+  webhookSecret?: Maybe<Scalars['String']['output']>;
+  webhookStatus?: Maybe<NewsletterSetting_BroadcastSettings_WebhookStatus>;
+  webhookUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export enum NewsletterSetting_BroadcastSettings_WebhookStatus {
+  Configured = 'configured',
+  Error = 'error',
+  NotConfigured = 'not_configured',
+  Verified = 'verified'
+}
+
+export enum NewsletterSetting_BroadcastSettings_WebhookStatus_MutationInput {
+  Configured = 'configured',
+  Error = 'error',
+  NotConfigured = 'not_configured',
+  Verified = 'verified'
+}
+
+export type NewsletterSetting_EmailTemplates = {
+  __typename?: 'NewsletterSetting_EmailTemplates';
+  magicLink?: Maybe<NewsletterSetting_EmailTemplates_MagicLink>;
+  welcome?: Maybe<NewsletterSetting_EmailTemplates_Welcome>;
+};
+
+export type NewsletterSetting_EmailTemplates_MagicLink = {
+  __typename?: 'NewsletterSetting_EmailTemplates_MagicLink';
+  expirationTime?: Maybe<NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime>;
+  preheader?: Maybe<Scalars['String']['output']>;
+  subject?: Maybe<Scalars['String']['output']>;
+};
+
+export enum NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime {
+  '1h' = '_1h',
+  '7d' = '_7d',
+  '24h' = '_24h',
+  '30d' = '_30d'
+}
+
+export enum NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime_MutationInput {
+  '1h' = '_1h',
+  '7d' = '_7d',
+  '24h' = '_24h',
+  '30d' = '_30d'
+}
+
+export type NewsletterSetting_EmailTemplates_Welcome = {
+  __typename?: 'NewsletterSetting_EmailTemplates_Welcome';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  preheader?: Maybe<Scalars['String']['output']>;
+  subject?: Maybe<Scalars['String']['output']>;
+};
+
+export type NewsletterSetting_ResendSettings = {
+  __typename?: 'NewsletterSetting_ResendSettings';
+  apiKey?: Maybe<Scalars['String']['output']>;
+  audienceIds?: Maybe<Array<NewsletterSetting_ResendSettings_AudienceIds>>;
+};
+
+export type NewsletterSetting_ResendSettings_AudienceIds = {
+  __typename?: 'NewsletterSetting_ResendSettings_AudienceIds';
+  development?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  locale?: Maybe<NewsletterSetting_ResendSettings_AudienceIds_Locale>;
+  production?: Maybe<Scalars['String']['output']>;
+};
+
+export enum NewsletterSetting_ResendSettings_AudienceIds_Locale {
+  En = 'en'
+}
+
+export enum NewsletterSetting_ResendSettings_AudienceIds_Locale_MutationInput {
+  En = 'en'
+}
+
+export type NewsletterSetting_SubscriptionSettings = {
+  __typename?: 'NewsletterSetting_SubscriptionSettings';
+  allowedDomains?: Maybe<Array<NewsletterSetting_SubscriptionSettings_AllowedDomains>>;
+  maxSubscribersPerIP?: Maybe<Scalars['Float']['output']>;
+  requireDoubleOptIn?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type NewsletterSetting_SubscriptionSettings_AllowedDomains = {
+  __typename?: 'NewsletterSetting_SubscriptionSettings_AllowedDomains';
+  domain?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export enum NewsletterSetting_Provider {
+  Broadcast = 'broadcast',
+  Resend = 'resend'
+}
+
+export enum NewsletterSetting_Provider_MutationInput {
+  Broadcast = 'broadcast',
+  Resend = 'resend'
+}
+
+export type NewsletterSettingsDocAccessFields = {
+  __typename?: 'NewsletterSettingsDocAccessFields';
+  brandSettings?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings>;
+  broadcastSettings?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings>;
+  createdAt?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt>;
+  emailTemplates?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates>;
+  fromAddress?: Maybe<NewsletterSettingsDocAccessFields_FromAddress>;
+  fromName?: Maybe<NewsletterSettingsDocAccessFields_FromName>;
+  provider?: Maybe<NewsletterSettingsDocAccessFields_Provider>;
+  replyTo?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo>;
+  resendSettings?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings>;
+  subscriptionSettings?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings>;
+  updatedAt?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Fields';
+  logoUrl?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl>;
+  siteName?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName>;
+  siteUrl?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Fields';
+  apiUrl?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl>;
+  lastWebhookReceived?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived>;
+  token?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token>;
+  webhookSecret?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret>;
+  webhookStatus?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus>;
+  webhookUrl?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl';
+  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_CreatedAt = {
+  __typename?: 'NewsletterSettingsDocAccessFields_createdAt';
+  create?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Fields';
+  magicLink?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink>;
+  welcome?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Fields';
+  expirationTime?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime>;
+  preheader?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader>;
+  subject?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Fields';
+  enabled?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled>;
+  preheader?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader>;
+  subject?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject';
+  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromAddress = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress';
+  create?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_FromAddress_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromAddress_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromAddress_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromAddress_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromName = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromName';
+  create?: Maybe<NewsletterSettingsDocAccessFields_FromName_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_FromName_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_FromName_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_FromName_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_FromName_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromName_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromName_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_FromName_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_Provider = {
+  __typename?: 'NewsletterSettingsDocAccessFields_provider';
+  create?: Maybe<NewsletterSettingsDocAccessFields_Provider_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_Provider_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_Provider_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_Provider_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_Provider_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_provider_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_Provider_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_provider_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_Provider_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_provider_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_Provider_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_provider_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ReplyTo = {
+  __typename?: 'NewsletterSettingsDocAccessFields_replyTo';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ReplyTo_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ReplyTo_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ReplyTo_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ReplyTo_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Fields';
+  apiKey?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey>;
+  audienceIds?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Fields';
+  development?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development>;
+  id?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id>;
+  locale?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale>;
+  production?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production';
+  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Fields';
+  allowedDomains?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains>;
+  maxSubscribersPerIP?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp>;
+  requireDoubleOptIn?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Delete>;
+  fields?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Fields>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Fields = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Fields';
+  domain?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain>;
+  id?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn';
+  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_UpdatedAt = {
+  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt';
+  create?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type NewsletterSettingsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields = {
+  __typename?: 'NewsletterSettingsFields';
+  brandSettings?: Maybe<NewsletterSettingsFields_BrandSettings>;
+  broadcastSettings?: Maybe<NewsletterSettingsFields_BroadcastSettings>;
+  createdAt?: Maybe<NewsletterSettingsFields_CreatedAt>;
+  emailTemplates?: Maybe<NewsletterSettingsFields_EmailTemplates>;
+  fromAddress?: Maybe<NewsletterSettingsFields_FromAddress>;
+  fromName?: Maybe<NewsletterSettingsFields_FromName>;
+  provider?: Maybe<NewsletterSettingsFields_Provider>;
+  replyTo?: Maybe<NewsletterSettingsFields_ReplyTo>;
+  resendSettings?: Maybe<NewsletterSettingsFields_ResendSettings>;
+  subscriptionSettings?: Maybe<NewsletterSettingsFields_SubscriptionSettings>;
+  updatedAt?: Maybe<NewsletterSettingsFields_UpdatedAt>;
+};
+
+export type NewsletterSettingsFields_BrandSettings = {
+  __typename?: 'NewsletterSettingsFields_brandSettings';
+  create?: Maybe<NewsletterSettingsFields_BrandSettings_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BrandSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_BrandSettings_Fields>;
+  read?: Maybe<NewsletterSettingsFields_BrandSettings_Read>;
+  update?: Maybe<NewsletterSettingsFields_BrandSettings_Update>;
+};
+
+export type NewsletterSettingsFields_BrandSettings_Create = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_Delete = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_Fields = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_Fields';
+  logoUrl?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl>;
+  siteName?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName>;
+  siteUrl?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl>;
+};
+
+export type NewsletterSettingsFields_BrandSettings_Read = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_Update = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_LogoUrl = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl';
+  create?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Read>;
+  update?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Update>;
+};
+
+export type NewsletterSettingsFields_BrandSettings_LogoUrl_Create = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_LogoUrl_Delete = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_LogoUrl_Read = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_LogoUrl_Update = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteName = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteName';
+  create?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Read>;
+  update?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Update>;
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteName_Create = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteName_Delete = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteName_Read = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteName_Update = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteUrl = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl';
+  create?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Read>;
+  update?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Update>;
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteUrl_Create = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteUrl_Delete = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteUrl_Read = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BrandSettings_SiteUrl_Update = {
+  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_BroadcastSettings_Fields>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Fields = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_Fields';
+  apiUrl?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl>;
+  lastWebhookReceived?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived>;
+  token?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token>;
+  webhookSecret?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret>;
+  webhookStatus?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus>;
+  webhookUrl?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_ApiUrl = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Token = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_token';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Token_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Token_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Token_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_Token_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl';
+  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Create>;
+  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Delete>;
+  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Read>;
+  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Update>;
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Create = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Delete = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Read = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Update = {
+  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_CreatedAt = {
+  __typename?: 'NewsletterSettingsFields_createdAt';
+  create?: Maybe<NewsletterSettingsFields_CreatedAt_Create>;
+  delete?: Maybe<NewsletterSettingsFields_CreatedAt_Delete>;
+  read?: Maybe<NewsletterSettingsFields_CreatedAt_Read>;
+  update?: Maybe<NewsletterSettingsFields_CreatedAt_Update>;
+};
+
+export type NewsletterSettingsFields_CreatedAt_Create = {
+  __typename?: 'NewsletterSettingsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_CreatedAt_Delete = {
+  __typename?: 'NewsletterSettingsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_CreatedAt_Read = {
+  __typename?: 'NewsletterSettingsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_CreatedAt_Update = {
+  __typename?: 'NewsletterSettingsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_Fields>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Fields = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_Fields';
+  magicLink?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink>;
+  welcome?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Fields>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Fields = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Fields';
+  expirationTime?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime>;
+  preheader?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader>;
+  subject?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Fields>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Fields = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Fields';
+  enabled?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled>;
+  preheader?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader>;
+  subject?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject';
+  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Create>;
+  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Delete>;
+  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Read>;
+  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Update>;
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Create = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Delete = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Read = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Update = {
+  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromAddress = {
+  __typename?: 'NewsletterSettingsFields_fromAddress';
+  create?: Maybe<NewsletterSettingsFields_FromAddress_Create>;
+  delete?: Maybe<NewsletterSettingsFields_FromAddress_Delete>;
+  read?: Maybe<NewsletterSettingsFields_FromAddress_Read>;
+  update?: Maybe<NewsletterSettingsFields_FromAddress_Update>;
+};
+
+export type NewsletterSettingsFields_FromAddress_Create = {
+  __typename?: 'NewsletterSettingsFields_fromAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromAddress_Delete = {
+  __typename?: 'NewsletterSettingsFields_fromAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromAddress_Read = {
+  __typename?: 'NewsletterSettingsFields_fromAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromAddress_Update = {
+  __typename?: 'NewsletterSettingsFields_fromAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromName = {
+  __typename?: 'NewsletterSettingsFields_fromName';
+  create?: Maybe<NewsletterSettingsFields_FromName_Create>;
+  delete?: Maybe<NewsletterSettingsFields_FromName_Delete>;
+  read?: Maybe<NewsletterSettingsFields_FromName_Read>;
+  update?: Maybe<NewsletterSettingsFields_FromName_Update>;
+};
+
+export type NewsletterSettingsFields_FromName_Create = {
+  __typename?: 'NewsletterSettingsFields_fromName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromName_Delete = {
+  __typename?: 'NewsletterSettingsFields_fromName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromName_Read = {
+  __typename?: 'NewsletterSettingsFields_fromName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_FromName_Update = {
+  __typename?: 'NewsletterSettingsFields_fromName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_Provider = {
+  __typename?: 'NewsletterSettingsFields_provider';
+  create?: Maybe<NewsletterSettingsFields_Provider_Create>;
+  delete?: Maybe<NewsletterSettingsFields_Provider_Delete>;
+  read?: Maybe<NewsletterSettingsFields_Provider_Read>;
+  update?: Maybe<NewsletterSettingsFields_Provider_Update>;
+};
+
+export type NewsletterSettingsFields_Provider_Create = {
+  __typename?: 'NewsletterSettingsFields_provider_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_Provider_Delete = {
+  __typename?: 'NewsletterSettingsFields_provider_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_Provider_Read = {
+  __typename?: 'NewsletterSettingsFields_provider_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_Provider_Update = {
+  __typename?: 'NewsletterSettingsFields_provider_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ReplyTo = {
+  __typename?: 'NewsletterSettingsFields_replyTo';
+  create?: Maybe<NewsletterSettingsFields_ReplyTo_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ReplyTo_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ReplyTo_Read>;
+  update?: Maybe<NewsletterSettingsFields_ReplyTo_Update>;
+};
+
+export type NewsletterSettingsFields_ReplyTo_Create = {
+  __typename?: 'NewsletterSettingsFields_replyTo_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ReplyTo_Delete = {
+  __typename?: 'NewsletterSettingsFields_replyTo_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ReplyTo_Read = {
+  __typename?: 'NewsletterSettingsFields_replyTo_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ReplyTo_Update = {
+  __typename?: 'NewsletterSettingsFields_replyTo_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings = {
+  __typename?: 'NewsletterSettingsFields_resendSettings';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_ResendSettings_Fields>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_Fields = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_Fields';
+  apiKey?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey>;
+  audienceIds?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_ApiKey = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_ApiKey_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_ApiKey_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_ApiKey_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_ApiKey_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Fields>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Fields = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Fields';
+  development?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development>;
+  id?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id>;
+  locale?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale>;
+  production?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production';
+  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Create>;
+  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Delete>;
+  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Read>;
+  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Update>;
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Create = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Delete = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Read = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Update = {
+  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Fields>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_Fields = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Fields';
+  allowedDomains?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains>;
+  maxSubscribersPerIP?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp>;
+  requireDoubleOptIn?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Delete>;
+  fields?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Fields>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Fields = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Fields';
+  domain?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain>;
+  id?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Delete>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Delete>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Delete>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn';
+  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Create>;
+  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Delete>;
+  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Read>;
+  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Update>;
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Create = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Delete = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Read = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Update = {
+  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_UpdatedAt = {
+  __typename?: 'NewsletterSettingsFields_updatedAt';
+  create?: Maybe<NewsletterSettingsFields_UpdatedAt_Create>;
+  delete?: Maybe<NewsletterSettingsFields_UpdatedAt_Delete>;
+  read?: Maybe<NewsletterSettingsFields_UpdatedAt_Read>;
+  update?: Maybe<NewsletterSettingsFields_UpdatedAt_Update>;
+};
+
+export type NewsletterSettingsFields_UpdatedAt_Create = {
+  __typename?: 'NewsletterSettingsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_UpdatedAt_Delete = {
+  __typename?: 'NewsletterSettingsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_UpdatedAt_Read = {
+  __typename?: 'NewsletterSettingsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsFields_UpdatedAt_Update = {
+  __typename?: 'NewsletterSettingsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NewsletterSettingsReadAccess = {
+  __typename?: 'NewsletterSettingsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NewsletterSettingsReadDocAccess = {
+  __typename?: 'NewsletterSettingsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NewsletterSettingsUpdateAccess = {
+  __typename?: 'NewsletterSettingsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NewsletterSettingsUpdateDocAccess = {
+  __typename?: 'NewsletterSettingsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscription = {
+  __typename?: 'NotificationSubscription';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  email: Scalars['EmailAddress']['output'];
+  id?: Maybe<Scalars['String']['output']>;
+  subscriber?: Maybe<Subscriber>;
+  targetCollection: NotificationSubscription_TargetCollection;
+  targetID: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export enum NotificationSubscriptionUpdate_TargetCollection_MutationInput {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export type NotificationSubscription_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NotificationSubscription_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type NotificationSubscription_Email_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
+  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  like?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+};
+
+export type NotificationSubscription_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NotificationSubscription_Subscriber_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export enum NotificationSubscription_TargetCollection {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export enum NotificationSubscription_TargetCollection_Input {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export enum NotificationSubscription_TargetCollection_MutationInput {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export type NotificationSubscription_TargetCollection_Operator = {
+  all?: InputMaybe<Array<InputMaybe<NotificationSubscription_TargetCollection_Input>>>;
+  equals?: InputMaybe<NotificationSubscription_TargetCollection_Input>;
+  in?: InputMaybe<Array<InputMaybe<NotificationSubscription_TargetCollection_Input>>>;
+  not_equals?: InputMaybe<NotificationSubscription_TargetCollection_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<NotificationSubscription_TargetCollection_Input>>>;
+};
+
+export type NotificationSubscription_TargetId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NotificationSubscription_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NotificationSubscription_Where = {
+  AND?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_Or>>>;
+  createdAt?: InputMaybe<NotificationSubscription_CreatedAt_Operator>;
+  createdBy?: InputMaybe<NotificationSubscription_CreatedBy_Operator>;
+  email?: InputMaybe<NotificationSubscription_Email_Operator>;
+  id?: InputMaybe<NotificationSubscription_Id_Operator>;
+  subscriber?: InputMaybe<NotificationSubscription_Subscriber_Operator>;
+  targetCollection?: InputMaybe<NotificationSubscription_TargetCollection_Operator>;
+  targetID?: InputMaybe<NotificationSubscription_TargetId_Operator>;
+  updatedAt?: InputMaybe<NotificationSubscription_UpdatedAt_Operator>;
+};
+
+export type NotificationSubscription_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_Or>>>;
+  createdAt?: InputMaybe<NotificationSubscription_CreatedAt_Operator>;
+  createdBy?: InputMaybe<NotificationSubscription_CreatedBy_Operator>;
+  email?: InputMaybe<NotificationSubscription_Email_Operator>;
+  id?: InputMaybe<NotificationSubscription_Id_Operator>;
+  subscriber?: InputMaybe<NotificationSubscription_Subscriber_Operator>;
+  targetCollection?: InputMaybe<NotificationSubscription_TargetCollection_Operator>;
+  targetID?: InputMaybe<NotificationSubscription_TargetId_Operator>;
+  updatedAt?: InputMaybe<NotificationSubscription_UpdatedAt_Operator>;
+};
+
+export type NotificationSubscription_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<NotificationSubscription_Where_Or>>>;
+  createdAt?: InputMaybe<NotificationSubscription_CreatedAt_Operator>;
+  createdBy?: InputMaybe<NotificationSubscription_CreatedBy_Operator>;
+  email?: InputMaybe<NotificationSubscription_Email_Operator>;
+  id?: InputMaybe<NotificationSubscription_Id_Operator>;
+  subscriber?: InputMaybe<NotificationSubscription_Subscriber_Operator>;
+  targetCollection?: InputMaybe<NotificationSubscription_TargetCollection_Operator>;
+  targetID?: InputMaybe<NotificationSubscription_TargetId_Operator>;
+  updatedAt?: InputMaybe<NotificationSubscription_UpdatedAt_Operator>;
+};
+
+export type NotificationSubscriptions = {
+  __typename?: 'NotificationSubscriptions';
+  docs: Array<NotificationSubscription>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type NotificationSubscriptionsCreateAccess = {
+  __typename?: 'NotificationSubscriptionsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsCreateDocAccess = {
+  __typename?: 'NotificationSubscriptionsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsDeleteAccess = {
+  __typename?: 'NotificationSubscriptionsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsDeleteDocAccess = {
+  __typename?: 'NotificationSubscriptionsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsDocAccessFields = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields';
+  createdAt?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedBy>;
+  email?: Maybe<NotificationSubscriptionsDocAccessFields_Email>;
+  id?: Maybe<NotificationSubscriptionsDocAccessFields_Id>;
+  subscriber?: Maybe<NotificationSubscriptionsDocAccessFields_Subscriber>;
+  targetCollection?: Maybe<NotificationSubscriptionsDocAccessFields_TargetCollection>;
+  targetID?: Maybe<NotificationSubscriptionsDocAccessFields_TargetId>;
+  updatedAt?: Maybe<NotificationSubscriptionsDocAccessFields_UpdatedAt>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedAt = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdAt';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedAt_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedBy = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdBy';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_CreatedBy_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Email = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_email';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_Email_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_Email_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_Email_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_Email_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_Email_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Email_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Email_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Email_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Id = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_id';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_Id_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_Id_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_Id_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_Id_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_Id_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Id_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Id_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Id_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Subscriber = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_subscriber';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_Subscriber_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_Subscriber_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_Subscriber_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_Subscriber_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_Subscriber_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_subscriber_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Subscriber_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_subscriber_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Subscriber_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_subscriber_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_Subscriber_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_subscriber_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetCollection = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetCollection';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_TargetCollection_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_TargetCollection_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_TargetCollection_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_TargetCollection_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetCollection_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetCollection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetCollection_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetCollection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetCollection_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetCollection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetCollection_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetCollection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetId = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetID';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_TargetId_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_TargetId_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_TargetId_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_TargetId_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetId_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetId_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetId_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_TargetId_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_targetID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_UpdatedAt = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_updatedAt';
+  create?: Maybe<NotificationSubscriptionsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<NotificationSubscriptionsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<NotificationSubscriptionsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<NotificationSubscriptionsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type NotificationSubscriptionsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'NotificationSubscriptionsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields = {
+  __typename?: 'NotificationSubscriptionsFields';
+  createdAt?: Maybe<NotificationSubscriptionsFields_CreatedAt>;
+  createdBy?: Maybe<NotificationSubscriptionsFields_CreatedBy>;
+  email?: Maybe<NotificationSubscriptionsFields_Email>;
+  id?: Maybe<NotificationSubscriptionsFields_Id>;
+  subscriber?: Maybe<NotificationSubscriptionsFields_Subscriber>;
+  targetCollection?: Maybe<NotificationSubscriptionsFields_TargetCollection>;
+  targetID?: Maybe<NotificationSubscriptionsFields_TargetId>;
+  updatedAt?: Maybe<NotificationSubscriptionsFields_UpdatedAt>;
+};
+
+export type NotificationSubscriptionsFields_CreatedAt = {
+  __typename?: 'NotificationSubscriptionsFields_createdAt';
+  create?: Maybe<NotificationSubscriptionsFields_CreatedAt_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_CreatedAt_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_CreatedAt_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_CreatedAt_Update>;
+};
+
+export type NotificationSubscriptionsFields_CreatedAt_Create = {
+  __typename?: 'NotificationSubscriptionsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedAt_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedAt_Read = {
+  __typename?: 'NotificationSubscriptionsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedAt_Update = {
+  __typename?: 'NotificationSubscriptionsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedBy = {
+  __typename?: 'NotificationSubscriptionsFields_createdBy';
+  create?: Maybe<NotificationSubscriptionsFields_CreatedBy_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_CreatedBy_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_CreatedBy_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_CreatedBy_Update>;
+};
+
+export type NotificationSubscriptionsFields_CreatedBy_Create = {
+  __typename?: 'NotificationSubscriptionsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedBy_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedBy_Read = {
+  __typename?: 'NotificationSubscriptionsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_CreatedBy_Update = {
+  __typename?: 'NotificationSubscriptionsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Email = {
+  __typename?: 'NotificationSubscriptionsFields_email';
+  create?: Maybe<NotificationSubscriptionsFields_Email_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_Email_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_Email_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_Email_Update>;
+};
+
+export type NotificationSubscriptionsFields_Email_Create = {
+  __typename?: 'NotificationSubscriptionsFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Email_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Email_Read = {
+  __typename?: 'NotificationSubscriptionsFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Email_Update = {
+  __typename?: 'NotificationSubscriptionsFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Id = {
+  __typename?: 'NotificationSubscriptionsFields_id';
+  create?: Maybe<NotificationSubscriptionsFields_Id_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_Id_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_Id_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_Id_Update>;
+};
+
+export type NotificationSubscriptionsFields_Id_Create = {
+  __typename?: 'NotificationSubscriptionsFields_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Id_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Id_Read = {
+  __typename?: 'NotificationSubscriptionsFields_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Id_Update = {
+  __typename?: 'NotificationSubscriptionsFields_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Subscriber = {
+  __typename?: 'NotificationSubscriptionsFields_subscriber';
+  create?: Maybe<NotificationSubscriptionsFields_Subscriber_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_Subscriber_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_Subscriber_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_Subscriber_Update>;
+};
+
+export type NotificationSubscriptionsFields_Subscriber_Create = {
+  __typename?: 'NotificationSubscriptionsFields_subscriber_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Subscriber_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_subscriber_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Subscriber_Read = {
+  __typename?: 'NotificationSubscriptionsFields_subscriber_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_Subscriber_Update = {
+  __typename?: 'NotificationSubscriptionsFields_subscriber_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetCollection = {
+  __typename?: 'NotificationSubscriptionsFields_targetCollection';
+  create?: Maybe<NotificationSubscriptionsFields_TargetCollection_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_TargetCollection_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_TargetCollection_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_TargetCollection_Update>;
+};
+
+export type NotificationSubscriptionsFields_TargetCollection_Create = {
+  __typename?: 'NotificationSubscriptionsFields_targetCollection_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetCollection_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_targetCollection_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetCollection_Read = {
+  __typename?: 'NotificationSubscriptionsFields_targetCollection_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetCollection_Update = {
+  __typename?: 'NotificationSubscriptionsFields_targetCollection_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetId = {
+  __typename?: 'NotificationSubscriptionsFields_targetID';
+  create?: Maybe<NotificationSubscriptionsFields_TargetId_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_TargetId_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_TargetId_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_TargetId_Update>;
+};
+
+export type NotificationSubscriptionsFields_TargetId_Create = {
+  __typename?: 'NotificationSubscriptionsFields_targetID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetId_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_targetID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetId_Read = {
+  __typename?: 'NotificationSubscriptionsFields_targetID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_TargetId_Update = {
+  __typename?: 'NotificationSubscriptionsFields_targetID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_UpdatedAt = {
+  __typename?: 'NotificationSubscriptionsFields_updatedAt';
+  create?: Maybe<NotificationSubscriptionsFields_UpdatedAt_Create>;
+  delete?: Maybe<NotificationSubscriptionsFields_UpdatedAt_Delete>;
+  read?: Maybe<NotificationSubscriptionsFields_UpdatedAt_Read>;
+  update?: Maybe<NotificationSubscriptionsFields_UpdatedAt_Update>;
+};
+
+export type NotificationSubscriptionsFields_UpdatedAt_Create = {
+  __typename?: 'NotificationSubscriptionsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_UpdatedAt_Delete = {
+  __typename?: 'NotificationSubscriptionsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_UpdatedAt_Read = {
+  __typename?: 'NotificationSubscriptionsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsFields_UpdatedAt_Update = {
+  __typename?: 'NotificationSubscriptionsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type NotificationSubscriptionsReadAccess = {
+  __typename?: 'NotificationSubscriptionsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsReadDocAccess = {
+  __typename?: 'NotificationSubscriptionsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsUpdateAccess = {
+  __typename?: 'NotificationSubscriptionsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type NotificationSubscriptionsUpdateDocAccess = {
+  __typename?: 'NotificationSubscriptionsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type Number = {
@@ -29721,6 +33202,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  NotificationSubscriptions = 'notification_subscriptions',
   OauthAccessTokens = 'oauthAccessTokens',
   OauthApplications = 'oauthApplications',
   OauthConsents = 'oauthConsents',
@@ -29733,6 +33215,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Subscribers = 'subscribers',
   Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
@@ -29751,7 +33234,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Startup | Syndication | Transaction | User | Variant | VariantOption | VariantType | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | Form | FormSubmission | Identity | Job | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | Product | Redirect | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -29771,6 +33254,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  NotificationSubscriptions = 'notification_subscriptions',
   OauthAccessTokens = 'oauthAccessTokens',
   OauthApplications = 'oauthApplications',
   OauthConsents = 'oauthConsents',
@@ -29783,6 +33267,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Subscribers = 'subscribers',
   Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
@@ -29805,6 +33290,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  NotificationSubscriptions = 'notification_subscriptions',
   OauthAccessTokens = 'oauthAccessTokens',
   OauthApplications = 'oauthApplications',
   OauthConsents = 'oauthConsents',
@@ -29817,6 +33303,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Subscribers = 'subscribers',
   Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
@@ -29882,6 +33369,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Identities = 'identities',
   Jobs = 'jobs',
   Media = 'media',
+  NotificationSubscriptions = 'notification_subscriptions',
   OauthAccessTokens = 'oauthAccessTokens',
   OauthApplications = 'oauthApplications',
   OauthConsents = 'oauthConsents',
@@ -29894,6 +33382,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
+  Subscribers = 'subscribers',
   Syndications = 'syndications',
   Transactions = 'transactions',
   Users = 'users',
@@ -32431,9 +35920,9 @@ export type Product = {
   description?: Maybe<Scalars['String']['output']>;
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
-  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
   priceInETH?: Maybe<Scalars['String']['output']>;
@@ -32503,6 +35992,7 @@ export type ProductVersion_Version = {
   enableVariants?: Maybe<Scalars['Boolean']['output']>;
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
   priceInETH?: Maybe<Scalars['String']['output']>;
@@ -32740,6 +36230,12 @@ export type Product_Inventory_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Product_IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Product_Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -32895,6 +36391,7 @@ export type Product_Where = {
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
+  isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
@@ -32927,6 +36424,7 @@ export type Product_Where_And = {
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
+  isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
@@ -32959,6 +36457,7 @@ export type Product_Where_Or = {
   id?: InputMaybe<Product_Id_Operator>;
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
+  isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
@@ -33027,6 +36526,7 @@ export type ProductsDocAccessFields = {
   enableVariants?: Maybe<ProductsDocAccessFields_EnableVariants>;
   image?: Maybe<ProductsDocAccessFields_Image>;
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
+  isSubscribed?: Maybe<ProductsDocAccessFields_IsSubscribed>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   orderable?: Maybe<ProductsDocAccessFields_Orderable>;
   priceInETH?: Maybe<ProductsDocAccessFields_PriceInEth>;
@@ -33410,6 +36910,34 @@ export type ProductsDocAccessFields_Inventory_Read = {
 
 export type ProductsDocAccessFields_Inventory_Update = {
   __typename?: 'ProductsDocAccessFields_inventory_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_IsSubscribed = {
+  __typename?: 'ProductsDocAccessFields_isSubscribed';
+  create?: Maybe<ProductsDocAccessFields_IsSubscribed_Create>;
+  delete?: Maybe<ProductsDocAccessFields_IsSubscribed_Delete>;
+  read?: Maybe<ProductsDocAccessFields_IsSubscribed_Read>;
+  update?: Maybe<ProductsDocAccessFields_IsSubscribed_Update>;
+};
+
+export type ProductsDocAccessFields_IsSubscribed_Create = {
+  __typename?: 'ProductsDocAccessFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_IsSubscribed_Delete = {
+  __typename?: 'ProductsDocAccessFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_IsSubscribed_Read = {
+  __typename?: 'ProductsDocAccessFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_IsSubscribed_Update = {
+  __typename?: 'ProductsDocAccessFields_isSubscribed_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -33882,6 +37410,7 @@ export type ProductsFields = {
   enableVariants?: Maybe<ProductsFields_EnableVariants>;
   image?: Maybe<ProductsFields_Image>;
   inventory?: Maybe<ProductsFields_Inventory>;
+  isSubscribed?: Maybe<ProductsFields_IsSubscribed>;
   name?: Maybe<ProductsFields_Name>;
   orderable?: Maybe<ProductsFields_Orderable>;
   priceInETH?: Maybe<ProductsFields_PriceInEth>;
@@ -34265,6 +37794,34 @@ export type ProductsFields_Inventory_Read = {
 
 export type ProductsFields_Inventory_Update = {
   __typename?: 'ProductsFields_inventory_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_IsSubscribed = {
+  __typename?: 'ProductsFields_isSubscribed';
+  create?: Maybe<ProductsFields_IsSubscribed_Create>;
+  delete?: Maybe<ProductsFields_IsSubscribed_Delete>;
+  read?: Maybe<ProductsFields_IsSubscribed_Read>;
+  update?: Maybe<ProductsFields_IsSubscribed_Update>;
+};
+
+export type ProductsFields_IsSubscribed_Create = {
+  __typename?: 'ProductsFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_IsSubscribed_Delete = {
+  __typename?: 'ProductsFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_IsSubscribed_Read = {
+  __typename?: 'ProductsFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_IsSubscribed_Update = {
+  __typename?: 'ProductsFields_isSubscribed_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -34788,6 +38345,9 @@ export type Query = {
   Job?: Maybe<Job>;
   Jobs?: Maybe<Jobs>;
   Media?: Maybe<Media>;
+  NewsletterSetting?: Maybe<NewsletterSetting>;
+  NotificationSubscription?: Maybe<NotificationSubscription>;
+  NotificationSubscriptions?: Maybe<NotificationSubscriptions>;
   OauthAccessToken?: Maybe<OauthAccessToken>;
   OauthAccessTokens?: Maybe<OauthAccessTokens>;
   OauthApplication?: Maybe<OauthApplication>;
@@ -34820,6 +38380,8 @@ export type Query = {
   Sessions?: Maybe<Sessions>;
   Startup?: Maybe<Startup>;
   Startups?: Maybe<Startups>;
+  Subscriber?: Maybe<Subscriber>;
+  Subscribers?: Maybe<Subscribers>;
   Syndication?: Maybe<Syndication>;
   Syndications?: Maybe<Syndications>;
   Transaction?: Maybe<Transaction>;
@@ -34846,6 +38408,7 @@ export type Query = {
   countForms?: Maybe<CountForms>;
   countIdentities?: Maybe<CountIdentities>;
   countJobs?: Maybe<CountJobs>;
+  countNotificationSubscriptions?: Maybe<CountNotificationSubscriptions>;
   countOauthAccessTokens?: Maybe<CountOauthAccessTokens>;
   countOauthApplications?: Maybe<CountOauthApplications>;
   countOauthConsents?: Maybe<CountOauthConsents>;
@@ -34862,6 +38425,7 @@ export type Query = {
   countSearches?: Maybe<CountSearches>;
   countSessions?: Maybe<CountSessions>;
   countStartups?: Maybe<CountStartups>;
+  countSubscribers?: Maybe<CountSubscribers>;
   countSyndications?: Maybe<CountSyndications>;
   countTransactions?: Maybe<CountTransactions>;
   countUsers?: Maybe<CountUsers>;
@@ -34884,6 +38448,8 @@ export type Query = {
   docAccessIdentity?: Maybe<IdentitiesDocAccess>;
   docAccessJob?: Maybe<JobsDocAccess>;
   docAccessMedia?: Maybe<MediaDocAccess>;
+  docAccessNewsletterSetting?: Maybe<Newsletter_SettingsDocAccess>;
+  docAccessNotificationSubscription?: Maybe<Notification_SubscriptionsDocAccess>;
   docAccessOauthAccessToken?: Maybe<OauthAccessTokensDocAccess>;
   docAccessOauthApplication?: Maybe<OauthApplicationsDocAccess>;
   docAccessOauthConsent?: Maybe<OauthConsentsDocAccess>;
@@ -34900,6 +38466,7 @@ export type Query = {
   docAccessSearch?: Maybe<SearchDocAccess>;
   docAccessSession?: Maybe<SessionsDocAccess>;
   docAccessStartup?: Maybe<StartupsDocAccess>;
+  docAccessSubscriber?: Maybe<SubscribersDocAccess>;
   docAccessSyndication?: Maybe<SyndicationsDocAccess>;
   docAccessTransaction?: Maybe<TransactionsDocAccess>;
   docAccessUser?: Maybe<UsersDocAccess>;
@@ -35165,6 +38732,32 @@ export type QueryMediaArgs = {
   id: Scalars['String']['input'];
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryNewsletterSettingArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryNotificationSubscriptionArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryNotificationSubscriptionsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<NotificationSubscription_Where>;
 };
 
 
@@ -35488,6 +39081,26 @@ export type QueryStartupsArgs = {
 };
 
 
+export type QuerySubscriberArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QuerySubscribersArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Subscriber_Where>;
+};
+
+
 export type QuerySyndicationArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -35717,6 +39330,13 @@ export type QueryCountJobsArgs = {
 };
 
 
+export type QueryCountNotificationSubscriptionsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<NotificationSubscription_Where>;
+};
+
+
 export type QueryCountOauthAccessTokensArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -35826,6 +39446,13 @@ export type QueryCountStartupsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<Startup_Where>;
+};
+
+
+export type QueryCountSubscribersArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Subscriber_Where>;
 };
 
 
@@ -35945,6 +39572,11 @@ export type QueryDocAccessMediaArgs = {
 };
 
 
+export type QueryDocAccessNotificationSubscriptionArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryDocAccessOauthAccessTokenArgs = {
   id: Scalars['String']['input'];
 };
@@ -36021,6 +39653,11 @@ export type QueryDocAccessSessionArgs = {
 
 
 export type QueryDocAccessStartupArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessSubscriberArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -38740,10 +42377,10 @@ export type Startup = {
   description?: Maybe<Scalars['String']['output']>;
   fundsNeeded?: Maybe<Startup_FundsNeeded>;
   id: Scalars['String']['output'];
-  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   involvedUsers?: Maybe<Array<User>>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   lookingFor?: Maybe<Array<Startup_LookingFor>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   stage?: Maybe<Startup_Stage>;
@@ -38833,6 +42470,7 @@ export type StartupVersion_Version = {
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   involvedUsers?: Maybe<Array<User>>;
+  isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   lookingFor?: Maybe<Array<StartupVersion_Version_LookingFor>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   stage?: Maybe<StartupVersion_Version_Stage>;
@@ -39115,6 +42753,12 @@ export type Startup_InvolvedUsers_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Startup_IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export enum Startup_LookingFor {
   Distribution = 'distribution',
   Founders = 'founders',
@@ -39237,6 +42881,7 @@ export type Startup_Where = {
   identity?: InputMaybe<Startup_Identity_Operator>;
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
@@ -39260,6 +42905,7 @@ export type Startup_Where_And = {
   identity?: InputMaybe<Startup_Identity_Operator>;
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
@@ -39283,6 +42929,7 @@ export type Startup_Where_Or = {
   identity?: InputMaybe<Startup_Identity_Operator>;
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
+  isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
@@ -39342,6 +42989,7 @@ export type StartupsDocAccessFields = {
   identity?: Maybe<StartupsDocAccessFields_Identity>;
   image?: Maybe<StartupsDocAccessFields_Image>;
   involvedUsers?: Maybe<StartupsDocAccessFields_InvolvedUsers>;
+  isSubscribed?: Maybe<StartupsDocAccessFields_IsSubscribed>;
   lookingFor?: Maybe<StartupsDocAccessFields_LookingFor>;
   serverURL?: Maybe<StartupsDocAccessFields_ServerUrl>;
   stage?: Maybe<StartupsDocAccessFields_Stage>;
@@ -39720,6 +43368,34 @@ export type StartupsDocAccessFields_InvolvedUsers_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type StartupsDocAccessFields_IsSubscribed = {
+  __typename?: 'StartupsDocAccessFields_isSubscribed';
+  create?: Maybe<StartupsDocAccessFields_IsSubscribed_Create>;
+  delete?: Maybe<StartupsDocAccessFields_IsSubscribed_Delete>;
+  read?: Maybe<StartupsDocAccessFields_IsSubscribed_Read>;
+  update?: Maybe<StartupsDocAccessFields_IsSubscribed_Update>;
+};
+
+export type StartupsDocAccessFields_IsSubscribed_Create = {
+  __typename?: 'StartupsDocAccessFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_IsSubscribed_Delete = {
+  __typename?: 'StartupsDocAccessFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_IsSubscribed_Read = {
+  __typename?: 'StartupsDocAccessFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_IsSubscribed_Update = {
+  __typename?: 'StartupsDocAccessFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type StartupsDocAccessFields_LookingFor = {
   __typename?: 'StartupsDocAccessFields_lookingFor';
   create?: Maybe<StartupsDocAccessFields_LookingFor_Create>;
@@ -39873,6 +43549,7 @@ export type StartupsFields = {
   identity?: Maybe<StartupsFields_Identity>;
   image?: Maybe<StartupsFields_Image>;
   involvedUsers?: Maybe<StartupsFields_InvolvedUsers>;
+  isSubscribed?: Maybe<StartupsFields_IsSubscribed>;
   lookingFor?: Maybe<StartupsFields_LookingFor>;
   serverURL?: Maybe<StartupsFields_ServerUrl>;
   stage?: Maybe<StartupsFields_Stage>;
@@ -40251,6 +43928,34 @@ export type StartupsFields_InvolvedUsers_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type StartupsFields_IsSubscribed = {
+  __typename?: 'StartupsFields_isSubscribed';
+  create?: Maybe<StartupsFields_IsSubscribed_Create>;
+  delete?: Maybe<StartupsFields_IsSubscribed_Delete>;
+  read?: Maybe<StartupsFields_IsSubscribed_Read>;
+  update?: Maybe<StartupsFields_IsSubscribed_Update>;
+};
+
+export type StartupsFields_IsSubscribed_Create = {
+  __typename?: 'StartupsFields_isSubscribed_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_IsSubscribed_Delete = {
+  __typename?: 'StartupsFields_isSubscribed_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_IsSubscribed_Read = {
+  __typename?: 'StartupsFields_isSubscribed_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_IsSubscribed_Update = {
+  __typename?: 'StartupsFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type StartupsFields_LookingFor = {
   __typename?: 'StartupsFields_lookingFor';
   create?: Maybe<StartupsFields_LookingFor_Create>;
@@ -40436,6 +44141,1592 @@ export type State = {
   name: Scalars['String']['output'];
   required?: Maybe<Scalars['Boolean']['output']>;
   width?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Subscriber = {
+  __typename?: 'Subscriber';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  email: Scalars['EmailAddress']['output'];
+  emailPreferences?: Maybe<Subscriber_EmailPreferences>;
+  externalId?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  importedFromProvider?: Maybe<Scalars['Boolean']['output']>;
+  locale?: Maybe<Subscriber_Locale>;
+  magicLinkToken?: Maybe<Scalars['String']['output']>;
+  magicLinkTokenExpiry?: Maybe<Scalars['DateTime']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  signupMetadata?: Maybe<Subscriber_SignupMetadata>;
+  source?: Maybe<Scalars['String']['output']>;
+  subscribedAt?: Maybe<Scalars['DateTime']['output']>;
+  subscriptionStatus: Subscriber_SubscriptionStatus;
+  unsubscribeReason?: Maybe<Scalars['String']['output']>;
+  unsubscribedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export enum SubscriberUpdate_Locale_MutationInput {
+  En = 'en'
+}
+
+export enum SubscriberUpdate_SubscriptionStatus_MutationInput {
+  Active = 'active',
+  Pending = 'pending',
+  Unsubscribed = 'unsubscribed'
+}
+
+export type Subscriber_EmailPreferences = {
+  __typename?: 'Subscriber_EmailPreferences';
+  announcements?: Maybe<Scalars['Boolean']['output']>;
+  newsletter?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Subscriber_SignupMetadata = {
+  __typename?: 'Subscriber_SignupMetadata';
+  ipAddress?: Maybe<Scalars['String']['output']>;
+  referrer?: Maybe<Scalars['String']['output']>;
+  signupPage?: Maybe<Scalars['String']['output']>;
+  userAgent?: Maybe<Scalars['String']['output']>;
+};
+
+export type Subscriber_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Subscriber_EmailPreferences__Announcements_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Subscriber_EmailPreferences__Newsletter_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Subscriber_Email_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  contains?: InputMaybe<Scalars['EmailAddress']['input']>;
+  equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  like?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
+};
+
+export type Subscriber_ExternalId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_ImportedFromProvider_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum Subscriber_Locale {
+  En = 'en'
+}
+
+export enum Subscriber_Locale_Input {
+  En = 'en'
+}
+
+export enum Subscriber_Locale_MutationInput {
+  En = 'en'
+}
+
+export type Subscriber_Locale_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
+  equals?: InputMaybe<Subscriber_Locale_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
+  not_equals?: InputMaybe<Subscriber_Locale_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
+};
+
+export type Subscriber_Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_SignupMetadata__IpAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_SignupMetadata__Referrer_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_SignupMetadata__SignupPage_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_SignupMetadata__UserAgent_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_Source_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_SubscribedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export enum Subscriber_SubscriptionStatus {
+  Active = 'active',
+  Pending = 'pending',
+  Unsubscribed = 'unsubscribed'
+}
+
+export enum Subscriber_SubscriptionStatus_Input {
+  Active = 'active',
+  Pending = 'pending',
+  Unsubscribed = 'unsubscribed'
+}
+
+export enum Subscriber_SubscriptionStatus_MutationInput {
+  Active = 'active',
+  Pending = 'pending',
+  Unsubscribed = 'unsubscribed'
+}
+
+export type Subscriber_SubscriptionStatus_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
+  equals?: InputMaybe<Subscriber_SubscriptionStatus_Input>;
+  in?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
+  not_equals?: InputMaybe<Subscriber_SubscriptionStatus_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
+};
+
+export type Subscriber_UnsubscribeReason_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Subscriber_UnsubscribedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Subscriber_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Subscriber_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
+  createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  email?: InputMaybe<Subscriber_Email_Operator>;
+  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
+  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
+  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
+  id?: InputMaybe<Subscriber_Id_Operator>;
+  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
+  locale?: InputMaybe<Subscriber_Locale_Operator>;
+  name?: InputMaybe<Subscriber_Name_Operator>;
+  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
+  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
+  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
+  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
+  source?: InputMaybe<Subscriber_Source_Operator>;
+  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
+  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
+  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
+  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
+};
+
+export type Subscriber_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
+  createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  email?: InputMaybe<Subscriber_Email_Operator>;
+  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
+  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
+  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
+  id?: InputMaybe<Subscriber_Id_Operator>;
+  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
+  locale?: InputMaybe<Subscriber_Locale_Operator>;
+  name?: InputMaybe<Subscriber_Name_Operator>;
+  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
+  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
+  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
+  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
+  source?: InputMaybe<Subscriber_Source_Operator>;
+  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
+  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
+  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
+  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
+};
+
+export type Subscriber_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
+  createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  email?: InputMaybe<Subscriber_Email_Operator>;
+  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
+  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
+  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
+  id?: InputMaybe<Subscriber_Id_Operator>;
+  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
+  locale?: InputMaybe<Subscriber_Locale_Operator>;
+  name?: InputMaybe<Subscriber_Name_Operator>;
+  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
+  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
+  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
+  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
+  source?: InputMaybe<Subscriber_Source_Operator>;
+  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
+  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
+  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
+  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
+};
+
+export type Subscribers = {
+  __typename?: 'Subscribers';
+  docs: Array<Subscriber>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type SubscribersCreateAccess = {
+  __typename?: 'SubscribersCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersCreateDocAccess = {
+  __typename?: 'SubscribersCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersDeleteAccess = {
+  __typename?: 'SubscribersDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersDeleteDocAccess = {
+  __typename?: 'SubscribersDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersDocAccessFields = {
+  __typename?: 'SubscribersDocAccessFields';
+  createdAt?: Maybe<SubscribersDocAccessFields_CreatedAt>;
+  email?: Maybe<SubscribersDocAccessFields_Email>;
+  emailPreferences?: Maybe<SubscribersDocAccessFields_EmailPreferences>;
+  externalId?: Maybe<SubscribersDocAccessFields_ExternalId>;
+  importedFromProvider?: Maybe<SubscribersDocAccessFields_ImportedFromProvider>;
+  locale?: Maybe<SubscribersDocAccessFields_Locale>;
+  name?: Maybe<SubscribersDocAccessFields_Name>;
+  signupMetadata?: Maybe<SubscribersDocAccessFields_SignupMetadata>;
+  source?: Maybe<SubscribersDocAccessFields_Source>;
+  subscribedAt?: Maybe<SubscribersDocAccessFields_SubscribedAt>;
+  subscriptionStatus?: Maybe<SubscribersDocAccessFields_SubscriptionStatus>;
+  unsubscribeReason?: Maybe<SubscribersDocAccessFields_UnsubscribeReason>;
+  unsubscribedAt?: Maybe<SubscribersDocAccessFields_UnsubscribedAt>;
+  updatedAt?: Maybe<SubscribersDocAccessFields_UpdatedAt>;
+};
+
+export type SubscribersDocAccessFields_CreatedAt = {
+  __typename?: 'SubscribersDocAccessFields_createdAt';
+  create?: Maybe<SubscribersDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<SubscribersDocAccessFields_CreatedAt_Update>;
+};
+
+export type SubscribersDocAccessFields_CreatedAt_Create = {
+  __typename?: 'SubscribersDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'SubscribersDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedAt_Read = {
+  __typename?: 'SubscribersDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedAt_Update = {
+  __typename?: 'SubscribersDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Email = {
+  __typename?: 'SubscribersDocAccessFields_email';
+  create?: Maybe<SubscribersDocAccessFields_Email_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_Email_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_Email_Read>;
+  update?: Maybe<SubscribersDocAccessFields_Email_Update>;
+};
+
+export type SubscribersDocAccessFields_EmailPreferences = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences';
+  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Delete>;
+  fields?: Maybe<SubscribersDocAccessFields_EmailPreferences_Fields>;
+  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Read>;
+  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Update>;
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Create = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Delete = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Fields = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_Fields';
+  announcements?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements>;
+  newsletter?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter>;
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Read = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Update = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Announcements = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements';
+  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Read>;
+  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Update>;
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Announcements_Create = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Announcements_Delete = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Announcements_Read = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Announcements_Update = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Newsletter = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter';
+  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Read>;
+  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Update>;
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Create = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Delete = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Read = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Update = {
+  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Email_Create = {
+  __typename?: 'SubscribersDocAccessFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Email_Delete = {
+  __typename?: 'SubscribersDocAccessFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Email_Read = {
+  __typename?: 'SubscribersDocAccessFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Email_Update = {
+  __typename?: 'SubscribersDocAccessFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ExternalId = {
+  __typename?: 'SubscribersDocAccessFields_externalId';
+  create?: Maybe<SubscribersDocAccessFields_ExternalId_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_ExternalId_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_ExternalId_Read>;
+  update?: Maybe<SubscribersDocAccessFields_ExternalId_Update>;
+};
+
+export type SubscribersDocAccessFields_ExternalId_Create = {
+  __typename?: 'SubscribersDocAccessFields_externalId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ExternalId_Delete = {
+  __typename?: 'SubscribersDocAccessFields_externalId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ExternalId_Read = {
+  __typename?: 'SubscribersDocAccessFields_externalId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ExternalId_Update = {
+  __typename?: 'SubscribersDocAccessFields_externalId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ImportedFromProvider = {
+  __typename?: 'SubscribersDocAccessFields_importedFromProvider';
+  create?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Read>;
+  update?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Update>;
+};
+
+export type SubscribersDocAccessFields_ImportedFromProvider_Create = {
+  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ImportedFromProvider_Delete = {
+  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ImportedFromProvider_Read = {
+  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_ImportedFromProvider_Update = {
+  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Locale = {
+  __typename?: 'SubscribersDocAccessFields_locale';
+  create?: Maybe<SubscribersDocAccessFields_Locale_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_Locale_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_Locale_Read>;
+  update?: Maybe<SubscribersDocAccessFields_Locale_Update>;
+};
+
+export type SubscribersDocAccessFields_Locale_Create = {
+  __typename?: 'SubscribersDocAccessFields_locale_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Locale_Delete = {
+  __typename?: 'SubscribersDocAccessFields_locale_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Locale_Read = {
+  __typename?: 'SubscribersDocAccessFields_locale_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Locale_Update = {
+  __typename?: 'SubscribersDocAccessFields_locale_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Name = {
+  __typename?: 'SubscribersDocAccessFields_name';
+  create?: Maybe<SubscribersDocAccessFields_Name_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_Name_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_Name_Read>;
+  update?: Maybe<SubscribersDocAccessFields_Name_Update>;
+};
+
+export type SubscribersDocAccessFields_Name_Create = {
+  __typename?: 'SubscribersDocAccessFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Name_Delete = {
+  __typename?: 'SubscribersDocAccessFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Name_Read = {
+  __typename?: 'SubscribersDocAccessFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Name_Update = {
+  __typename?: 'SubscribersDocAccessFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata';
+  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_Delete>;
+  fields?: Maybe<SubscribersDocAccessFields_SignupMetadata_Fields>;
+  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_Update>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Create = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Delete = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Fields = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_Fields';
+  ipAddress?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress>;
+  referrer?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer>;
+  signupPage?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage>;
+  userAgent?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Read = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Update = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_IpAddress = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress';
+  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Update>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Create = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Delete = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Read = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Update = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Referrer = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer';
+  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Update>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Referrer_Create = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Referrer_Delete = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Referrer_Read = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_Referrer_Update = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_SignupPage = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage';
+  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Update>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Create = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Delete = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Read = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Update = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_UserAgent = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent';
+  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Update>;
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Create = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Delete = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Read = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Update = {
+  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Source = {
+  __typename?: 'SubscribersDocAccessFields_source';
+  create?: Maybe<SubscribersDocAccessFields_Source_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_Source_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_Source_Read>;
+  update?: Maybe<SubscribersDocAccessFields_Source_Update>;
+};
+
+export type SubscribersDocAccessFields_Source_Create = {
+  __typename?: 'SubscribersDocAccessFields_source_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Source_Delete = {
+  __typename?: 'SubscribersDocAccessFields_source_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Source_Read = {
+  __typename?: 'SubscribersDocAccessFields_source_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_Source_Update = {
+  __typename?: 'SubscribersDocAccessFields_source_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscribedAt = {
+  __typename?: 'SubscribersDocAccessFields_subscribedAt';
+  create?: Maybe<SubscribersDocAccessFields_SubscribedAt_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SubscribedAt_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SubscribedAt_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SubscribedAt_Update>;
+};
+
+export type SubscribersDocAccessFields_SubscribedAt_Create = {
+  __typename?: 'SubscribersDocAccessFields_subscribedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscribedAt_Delete = {
+  __typename?: 'SubscribersDocAccessFields_subscribedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscribedAt_Read = {
+  __typename?: 'SubscribersDocAccessFields_subscribedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscribedAt_Update = {
+  __typename?: 'SubscribersDocAccessFields_subscribedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscriptionStatus = {
+  __typename?: 'SubscribersDocAccessFields_subscriptionStatus';
+  create?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Read>;
+  update?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Update>;
+};
+
+export type SubscribersDocAccessFields_SubscriptionStatus_Create = {
+  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscriptionStatus_Delete = {
+  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscriptionStatus_Read = {
+  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_SubscriptionStatus_Update = {
+  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribeReason = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribeReason';
+  create?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Read>;
+  update?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Update>;
+};
+
+export type SubscribersDocAccessFields_UnsubscribeReason_Create = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribeReason_Delete = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribeReason_Read = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribeReason_Update = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribedAt = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribedAt';
+  create?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Read>;
+  update?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Update>;
+};
+
+export type SubscribersDocAccessFields_UnsubscribedAt_Create = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribedAt_Delete = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribedAt_Read = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UnsubscribedAt_Update = {
+  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UpdatedAt = {
+  __typename?: 'SubscribersDocAccessFields_updatedAt';
+  create?: Maybe<SubscribersDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<SubscribersDocAccessFields_UpdatedAt_Update>;
+};
+
+export type SubscribersDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'SubscribersDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'SubscribersDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'SubscribersDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'SubscribersDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields = {
+  __typename?: 'SubscribersFields';
+  createdAt?: Maybe<SubscribersFields_CreatedAt>;
+  email?: Maybe<SubscribersFields_Email>;
+  emailPreferences?: Maybe<SubscribersFields_EmailPreferences>;
+  externalId?: Maybe<SubscribersFields_ExternalId>;
+  importedFromProvider?: Maybe<SubscribersFields_ImportedFromProvider>;
+  locale?: Maybe<SubscribersFields_Locale>;
+  name?: Maybe<SubscribersFields_Name>;
+  signupMetadata?: Maybe<SubscribersFields_SignupMetadata>;
+  source?: Maybe<SubscribersFields_Source>;
+  subscribedAt?: Maybe<SubscribersFields_SubscribedAt>;
+  subscriptionStatus?: Maybe<SubscribersFields_SubscriptionStatus>;
+  unsubscribeReason?: Maybe<SubscribersFields_UnsubscribeReason>;
+  unsubscribedAt?: Maybe<SubscribersFields_UnsubscribedAt>;
+  updatedAt?: Maybe<SubscribersFields_UpdatedAt>;
+};
+
+export type SubscribersFields_CreatedAt = {
+  __typename?: 'SubscribersFields_createdAt';
+  create?: Maybe<SubscribersFields_CreatedAt_Create>;
+  delete?: Maybe<SubscribersFields_CreatedAt_Delete>;
+  read?: Maybe<SubscribersFields_CreatedAt_Read>;
+  update?: Maybe<SubscribersFields_CreatedAt_Update>;
+};
+
+export type SubscribersFields_CreatedAt_Create = {
+  __typename?: 'SubscribersFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedAt_Delete = {
+  __typename?: 'SubscribersFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedAt_Read = {
+  __typename?: 'SubscribersFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedAt_Update = {
+  __typename?: 'SubscribersFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Email = {
+  __typename?: 'SubscribersFields_email';
+  create?: Maybe<SubscribersFields_Email_Create>;
+  delete?: Maybe<SubscribersFields_Email_Delete>;
+  read?: Maybe<SubscribersFields_Email_Read>;
+  update?: Maybe<SubscribersFields_Email_Update>;
+};
+
+export type SubscribersFields_EmailPreferences = {
+  __typename?: 'SubscribersFields_emailPreferences';
+  create?: Maybe<SubscribersFields_EmailPreferences_Create>;
+  delete?: Maybe<SubscribersFields_EmailPreferences_Delete>;
+  fields?: Maybe<SubscribersFields_EmailPreferences_Fields>;
+  read?: Maybe<SubscribersFields_EmailPreferences_Read>;
+  update?: Maybe<SubscribersFields_EmailPreferences_Update>;
+};
+
+export type SubscribersFields_EmailPreferences_Create = {
+  __typename?: 'SubscribersFields_emailPreferences_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Delete = {
+  __typename?: 'SubscribersFields_emailPreferences_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Fields = {
+  __typename?: 'SubscribersFields_emailPreferences_Fields';
+  announcements?: Maybe<SubscribersFields_EmailPreferences_Announcements>;
+  newsletter?: Maybe<SubscribersFields_EmailPreferences_Newsletter>;
+};
+
+export type SubscribersFields_EmailPreferences_Read = {
+  __typename?: 'SubscribersFields_emailPreferences_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Update = {
+  __typename?: 'SubscribersFields_emailPreferences_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Announcements = {
+  __typename?: 'SubscribersFields_emailPreferences_announcements';
+  create?: Maybe<SubscribersFields_EmailPreferences_Announcements_Create>;
+  delete?: Maybe<SubscribersFields_EmailPreferences_Announcements_Delete>;
+  read?: Maybe<SubscribersFields_EmailPreferences_Announcements_Read>;
+  update?: Maybe<SubscribersFields_EmailPreferences_Announcements_Update>;
+};
+
+export type SubscribersFields_EmailPreferences_Announcements_Create = {
+  __typename?: 'SubscribersFields_emailPreferences_announcements_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Announcements_Delete = {
+  __typename?: 'SubscribersFields_emailPreferences_announcements_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Announcements_Read = {
+  __typename?: 'SubscribersFields_emailPreferences_announcements_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Announcements_Update = {
+  __typename?: 'SubscribersFields_emailPreferences_announcements_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Newsletter = {
+  __typename?: 'SubscribersFields_emailPreferences_newsletter';
+  create?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Create>;
+  delete?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Delete>;
+  read?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Read>;
+  update?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Update>;
+};
+
+export type SubscribersFields_EmailPreferences_Newsletter_Create = {
+  __typename?: 'SubscribersFields_emailPreferences_newsletter_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Newsletter_Delete = {
+  __typename?: 'SubscribersFields_emailPreferences_newsletter_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Newsletter_Read = {
+  __typename?: 'SubscribersFields_emailPreferences_newsletter_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_EmailPreferences_Newsletter_Update = {
+  __typename?: 'SubscribersFields_emailPreferences_newsletter_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Email_Create = {
+  __typename?: 'SubscribersFields_email_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Email_Delete = {
+  __typename?: 'SubscribersFields_email_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Email_Read = {
+  __typename?: 'SubscribersFields_email_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Email_Update = {
+  __typename?: 'SubscribersFields_email_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ExternalId = {
+  __typename?: 'SubscribersFields_externalId';
+  create?: Maybe<SubscribersFields_ExternalId_Create>;
+  delete?: Maybe<SubscribersFields_ExternalId_Delete>;
+  read?: Maybe<SubscribersFields_ExternalId_Read>;
+  update?: Maybe<SubscribersFields_ExternalId_Update>;
+};
+
+export type SubscribersFields_ExternalId_Create = {
+  __typename?: 'SubscribersFields_externalId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ExternalId_Delete = {
+  __typename?: 'SubscribersFields_externalId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ExternalId_Read = {
+  __typename?: 'SubscribersFields_externalId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ExternalId_Update = {
+  __typename?: 'SubscribersFields_externalId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ImportedFromProvider = {
+  __typename?: 'SubscribersFields_importedFromProvider';
+  create?: Maybe<SubscribersFields_ImportedFromProvider_Create>;
+  delete?: Maybe<SubscribersFields_ImportedFromProvider_Delete>;
+  read?: Maybe<SubscribersFields_ImportedFromProvider_Read>;
+  update?: Maybe<SubscribersFields_ImportedFromProvider_Update>;
+};
+
+export type SubscribersFields_ImportedFromProvider_Create = {
+  __typename?: 'SubscribersFields_importedFromProvider_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ImportedFromProvider_Delete = {
+  __typename?: 'SubscribersFields_importedFromProvider_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ImportedFromProvider_Read = {
+  __typename?: 'SubscribersFields_importedFromProvider_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_ImportedFromProvider_Update = {
+  __typename?: 'SubscribersFields_importedFromProvider_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Locale = {
+  __typename?: 'SubscribersFields_locale';
+  create?: Maybe<SubscribersFields_Locale_Create>;
+  delete?: Maybe<SubscribersFields_Locale_Delete>;
+  read?: Maybe<SubscribersFields_Locale_Read>;
+  update?: Maybe<SubscribersFields_Locale_Update>;
+};
+
+export type SubscribersFields_Locale_Create = {
+  __typename?: 'SubscribersFields_locale_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Locale_Delete = {
+  __typename?: 'SubscribersFields_locale_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Locale_Read = {
+  __typename?: 'SubscribersFields_locale_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Locale_Update = {
+  __typename?: 'SubscribersFields_locale_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Name = {
+  __typename?: 'SubscribersFields_name';
+  create?: Maybe<SubscribersFields_Name_Create>;
+  delete?: Maybe<SubscribersFields_Name_Delete>;
+  read?: Maybe<SubscribersFields_Name_Read>;
+  update?: Maybe<SubscribersFields_Name_Update>;
+};
+
+export type SubscribersFields_Name_Create = {
+  __typename?: 'SubscribersFields_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Name_Delete = {
+  __typename?: 'SubscribersFields_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Name_Read = {
+  __typename?: 'SubscribersFields_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Name_Update = {
+  __typename?: 'SubscribersFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata = {
+  __typename?: 'SubscribersFields_signupMetadata';
+  create?: Maybe<SubscribersFields_SignupMetadata_Create>;
+  delete?: Maybe<SubscribersFields_SignupMetadata_Delete>;
+  fields?: Maybe<SubscribersFields_SignupMetadata_Fields>;
+  read?: Maybe<SubscribersFields_SignupMetadata_Read>;
+  update?: Maybe<SubscribersFields_SignupMetadata_Update>;
+};
+
+export type SubscribersFields_SignupMetadata_Create = {
+  __typename?: 'SubscribersFields_signupMetadata_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Delete = {
+  __typename?: 'SubscribersFields_signupMetadata_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Fields = {
+  __typename?: 'SubscribersFields_signupMetadata_Fields';
+  ipAddress?: Maybe<SubscribersFields_SignupMetadata_IpAddress>;
+  referrer?: Maybe<SubscribersFields_SignupMetadata_Referrer>;
+  signupPage?: Maybe<SubscribersFields_SignupMetadata_SignupPage>;
+  userAgent?: Maybe<SubscribersFields_SignupMetadata_UserAgent>;
+};
+
+export type SubscribersFields_SignupMetadata_Read = {
+  __typename?: 'SubscribersFields_signupMetadata_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Update = {
+  __typename?: 'SubscribersFields_signupMetadata_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_IpAddress = {
+  __typename?: 'SubscribersFields_signupMetadata_ipAddress';
+  create?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Create>;
+  delete?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Delete>;
+  read?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Read>;
+  update?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Update>;
+};
+
+export type SubscribersFields_SignupMetadata_IpAddress_Create = {
+  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_IpAddress_Delete = {
+  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_IpAddress_Read = {
+  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_IpAddress_Update = {
+  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Referrer = {
+  __typename?: 'SubscribersFields_signupMetadata_referrer';
+  create?: Maybe<SubscribersFields_SignupMetadata_Referrer_Create>;
+  delete?: Maybe<SubscribersFields_SignupMetadata_Referrer_Delete>;
+  read?: Maybe<SubscribersFields_SignupMetadata_Referrer_Read>;
+  update?: Maybe<SubscribersFields_SignupMetadata_Referrer_Update>;
+};
+
+export type SubscribersFields_SignupMetadata_Referrer_Create = {
+  __typename?: 'SubscribersFields_signupMetadata_referrer_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Referrer_Delete = {
+  __typename?: 'SubscribersFields_signupMetadata_referrer_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Referrer_Read = {
+  __typename?: 'SubscribersFields_signupMetadata_referrer_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_Referrer_Update = {
+  __typename?: 'SubscribersFields_signupMetadata_referrer_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_SignupPage = {
+  __typename?: 'SubscribersFields_signupMetadata_signupPage';
+  create?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Create>;
+  delete?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Delete>;
+  read?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Read>;
+  update?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Update>;
+};
+
+export type SubscribersFields_SignupMetadata_SignupPage_Create = {
+  __typename?: 'SubscribersFields_signupMetadata_signupPage_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_SignupPage_Delete = {
+  __typename?: 'SubscribersFields_signupMetadata_signupPage_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_SignupPage_Read = {
+  __typename?: 'SubscribersFields_signupMetadata_signupPage_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_SignupPage_Update = {
+  __typename?: 'SubscribersFields_signupMetadata_signupPage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_UserAgent = {
+  __typename?: 'SubscribersFields_signupMetadata_userAgent';
+  create?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Create>;
+  delete?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Delete>;
+  read?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Read>;
+  update?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Update>;
+};
+
+export type SubscribersFields_SignupMetadata_UserAgent_Create = {
+  __typename?: 'SubscribersFields_signupMetadata_userAgent_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_UserAgent_Delete = {
+  __typename?: 'SubscribersFields_signupMetadata_userAgent_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_UserAgent_Read = {
+  __typename?: 'SubscribersFields_signupMetadata_userAgent_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SignupMetadata_UserAgent_Update = {
+  __typename?: 'SubscribersFields_signupMetadata_userAgent_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Source = {
+  __typename?: 'SubscribersFields_source';
+  create?: Maybe<SubscribersFields_Source_Create>;
+  delete?: Maybe<SubscribersFields_Source_Delete>;
+  read?: Maybe<SubscribersFields_Source_Read>;
+  update?: Maybe<SubscribersFields_Source_Update>;
+};
+
+export type SubscribersFields_Source_Create = {
+  __typename?: 'SubscribersFields_source_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Source_Delete = {
+  __typename?: 'SubscribersFields_source_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Source_Read = {
+  __typename?: 'SubscribersFields_source_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_Source_Update = {
+  __typename?: 'SubscribersFields_source_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscribedAt = {
+  __typename?: 'SubscribersFields_subscribedAt';
+  create?: Maybe<SubscribersFields_SubscribedAt_Create>;
+  delete?: Maybe<SubscribersFields_SubscribedAt_Delete>;
+  read?: Maybe<SubscribersFields_SubscribedAt_Read>;
+  update?: Maybe<SubscribersFields_SubscribedAt_Update>;
+};
+
+export type SubscribersFields_SubscribedAt_Create = {
+  __typename?: 'SubscribersFields_subscribedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscribedAt_Delete = {
+  __typename?: 'SubscribersFields_subscribedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscribedAt_Read = {
+  __typename?: 'SubscribersFields_subscribedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscribedAt_Update = {
+  __typename?: 'SubscribersFields_subscribedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscriptionStatus = {
+  __typename?: 'SubscribersFields_subscriptionStatus';
+  create?: Maybe<SubscribersFields_SubscriptionStatus_Create>;
+  delete?: Maybe<SubscribersFields_SubscriptionStatus_Delete>;
+  read?: Maybe<SubscribersFields_SubscriptionStatus_Read>;
+  update?: Maybe<SubscribersFields_SubscriptionStatus_Update>;
+};
+
+export type SubscribersFields_SubscriptionStatus_Create = {
+  __typename?: 'SubscribersFields_subscriptionStatus_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscriptionStatus_Delete = {
+  __typename?: 'SubscribersFields_subscriptionStatus_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscriptionStatus_Read = {
+  __typename?: 'SubscribersFields_subscriptionStatus_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_SubscriptionStatus_Update = {
+  __typename?: 'SubscribersFields_subscriptionStatus_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribeReason = {
+  __typename?: 'SubscribersFields_unsubscribeReason';
+  create?: Maybe<SubscribersFields_UnsubscribeReason_Create>;
+  delete?: Maybe<SubscribersFields_UnsubscribeReason_Delete>;
+  read?: Maybe<SubscribersFields_UnsubscribeReason_Read>;
+  update?: Maybe<SubscribersFields_UnsubscribeReason_Update>;
+};
+
+export type SubscribersFields_UnsubscribeReason_Create = {
+  __typename?: 'SubscribersFields_unsubscribeReason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribeReason_Delete = {
+  __typename?: 'SubscribersFields_unsubscribeReason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribeReason_Read = {
+  __typename?: 'SubscribersFields_unsubscribeReason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribeReason_Update = {
+  __typename?: 'SubscribersFields_unsubscribeReason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribedAt = {
+  __typename?: 'SubscribersFields_unsubscribedAt';
+  create?: Maybe<SubscribersFields_UnsubscribedAt_Create>;
+  delete?: Maybe<SubscribersFields_UnsubscribedAt_Delete>;
+  read?: Maybe<SubscribersFields_UnsubscribedAt_Read>;
+  update?: Maybe<SubscribersFields_UnsubscribedAt_Update>;
+};
+
+export type SubscribersFields_UnsubscribedAt_Create = {
+  __typename?: 'SubscribersFields_unsubscribedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribedAt_Delete = {
+  __typename?: 'SubscribersFields_unsubscribedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribedAt_Read = {
+  __typename?: 'SubscribersFields_unsubscribedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UnsubscribedAt_Update = {
+  __typename?: 'SubscribersFields_unsubscribedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UpdatedAt = {
+  __typename?: 'SubscribersFields_updatedAt';
+  create?: Maybe<SubscribersFields_UpdatedAt_Create>;
+  delete?: Maybe<SubscribersFields_UpdatedAt_Delete>;
+  read?: Maybe<SubscribersFields_UpdatedAt_Read>;
+  update?: Maybe<SubscribersFields_UpdatedAt_Update>;
+};
+
+export type SubscribersFields_UpdatedAt_Create = {
+  __typename?: 'SubscribersFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UpdatedAt_Delete = {
+  __typename?: 'SubscribersFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UpdatedAt_Read = {
+  __typename?: 'SubscribersFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_UpdatedAt_Update = {
+  __typename?: 'SubscribersFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersReadAccess = {
+  __typename?: 'SubscribersReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersReadDocAccess = {
+  __typename?: 'SubscribersReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersUpdateAccess = {
+  __typename?: 'SubscribersUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type SubscribersUpdateDocAccess = {
+  __typename?: 'SubscribersUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type Syndication = {
@@ -47057,6 +52348,11 @@ export type CountJobs = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountNotificationSubscriptions = {
+  __typename?: 'countNotificationSubscriptions';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountOauthAccessTokens = {
   __typename?: 'countOauthAccessTokens';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -47134,6 +52430,11 @@ export type CountSessions = {
 
 export type CountStartups = {
   __typename?: 'countStartups';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountSubscribers = {
+  __typename?: 'countSubscribers';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -47489,6 +52790,7 @@ export type MutationCompanyInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
@@ -47508,6 +52810,7 @@ export type MutationCompanyUpdateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
@@ -47648,6 +52951,7 @@ export type MutationIdentityInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   itemCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   serverURL?: InputMaybe<Scalars['String']['input']>;
@@ -47660,6 +52964,7 @@ export type MutationIdentityUpdateInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   itemCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
@@ -47682,6 +52987,7 @@ export type MutationJobInput = {
   employmentType: Job_EmploymentType_MutationInput;
   image?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   positions: Scalars['Float']['input'];
   postedAt: Scalars['String']['input'];
@@ -47706,6 +53012,7 @@ export type MutationJobUpdateInput = {
   employmentType?: InputMaybe<JobUpdate_EmploymentType_MutationInput>;
   image?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   positions?: InputMaybe<Scalars['Float']['input']>;
   postedAt?: InputMaybe<Scalars['String']['input']>;
@@ -47919,6 +53226,96 @@ export type MutationMedia_Sizes_XlargeInput = {
   mimeType?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   width?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationNewsletterSettingInput = {
+  brandSettings: MutationNewsletterSetting_BrandSettingsInput;
+  broadcastSettings: MutationNewsletterSetting_BroadcastSettingsInput;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  emailTemplates?: InputMaybe<MutationNewsletterSetting_EmailTemplatesInput>;
+  fromAddress: Scalars['String']['input'];
+  fromName: Scalars['String']['input'];
+  provider: NewsletterSetting_Provider_MutationInput;
+  replyTo?: InputMaybe<Scalars['String']['input']>;
+  resendSettings: MutationNewsletterSetting_ResendSettingsInput;
+  subscriptionSettings?: InputMaybe<MutationNewsletterSetting_SubscriptionSettingsInput>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_BrandSettingsInput = {
+  logoUrl?: InputMaybe<Scalars['String']['input']>;
+  siteName: Scalars['String']['input'];
+  siteUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_BroadcastSettingsInput = {
+  apiUrl: Scalars['String']['input'];
+  lastWebhookReceived?: InputMaybe<Scalars['String']['input']>;
+  token: Scalars['String']['input'];
+  webhookSecret?: InputMaybe<Scalars['String']['input']>;
+  webhookStatus?: InputMaybe<NewsletterSetting_BroadcastSettings_WebhookStatus_MutationInput>;
+  webhookUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_EmailTemplatesInput = {
+  magicLink?: InputMaybe<MutationNewsletterSetting_EmailTemplates_MagicLinkInput>;
+  welcome?: InputMaybe<MutationNewsletterSetting_EmailTemplates_WelcomeInput>;
+};
+
+export type MutationNewsletterSetting_EmailTemplates_MagicLinkInput = {
+  expirationTime?: InputMaybe<NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime_MutationInput>;
+  preheader?: InputMaybe<Scalars['String']['input']>;
+  subject?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_EmailTemplates_WelcomeInput = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  preheader?: InputMaybe<Scalars['String']['input']>;
+  subject?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_ResendSettingsInput = {
+  apiKey: Scalars['String']['input'];
+  audienceIds?: InputMaybe<Array<InputMaybe<MutationNewsletterSetting_ResendSettings_AudienceIdsInput>>>;
+};
+
+export type MutationNewsletterSetting_ResendSettings_AudienceIdsInput = {
+  development?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  locale: NewsletterSetting_ResendSettings_AudienceIds_Locale_MutationInput;
+  production?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNewsletterSetting_SubscriptionSettingsInput = {
+  allowedDomains?: InputMaybe<Array<InputMaybe<MutationNewsletterSetting_SubscriptionSettings_AllowedDomainsInput>>>;
+  maxSubscribersPerIP?: InputMaybe<Scalars['Float']['input']>;
+  requireDoubleOptIn?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationNewsletterSetting_SubscriptionSettings_AllowedDomainsInput = {
+  domain: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNotificationSubscriptionInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  subscriber?: InputMaybe<Scalars['String']['input']>;
+  targetCollection: NotificationSubscription_TargetCollection_MutationInput;
+  targetID: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationNotificationSubscriptionUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  subscriber?: InputMaybe<Scalars['String']['input']>;
+  targetCollection?: InputMaybe<NotificationSubscriptionUpdate_TargetCollection_MutationInput>;
+  targetID?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationOauthAccessTokenInput = {
@@ -48363,6 +53760,7 @@ export type MutationProductInput = {
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
   priceInETH?: InputMaybe<Scalars['String']['input']>;
@@ -48389,6 +53787,7 @@ export type MutationProductUpdateInput = {
   enableVariants?: InputMaybe<Scalars['Boolean']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
   priceInETH?: InputMaybe<Scalars['String']['input']>;
@@ -48531,6 +53930,7 @@ export type MutationStartupInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   lookingFor?: InputMaybe<Array<InputMaybe<Startup_LookingFor_MutationInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   stage: Startup_Stage_MutationInput;
@@ -48550,6 +53950,7 @@ export type MutationStartupUpdateInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   lookingFor?: InputMaybe<Array<InputMaybe<StartupUpdate_LookingFor_MutationInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   stage?: InputMaybe<StartupUpdate_Stage_MutationInput>;
@@ -48565,6 +53966,68 @@ export type MutationStartupUpdate_FundsNeededInput = {
 export type MutationStartup_FundsNeededInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
   currency?: InputMaybe<Startup_FundsNeeded_Currency_MutationInput>;
+};
+
+export type MutationSubscriberInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  emailPreferences?: InputMaybe<MutationSubscriber_EmailPreferencesInput>;
+  externalId?: InputMaybe<Scalars['String']['input']>;
+  importedFromProvider?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Subscriber_Locale_MutationInput>;
+  magicLinkToken?: InputMaybe<Scalars['String']['input']>;
+  magicLinkTokenExpiry?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  signupMetadata?: InputMaybe<MutationSubscriber_SignupMetadataInput>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  subscribedAt?: InputMaybe<Scalars['String']['input']>;
+  subscriptionStatus: Subscriber_SubscriptionStatus_MutationInput;
+  unsubscribeReason?: InputMaybe<Scalars['String']['input']>;
+  unsubscribedAt?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSubscriberUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  emailPreferences?: InputMaybe<MutationSubscriberUpdate_EmailPreferencesInput>;
+  externalId?: InputMaybe<Scalars['String']['input']>;
+  importedFromProvider?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<SubscriberUpdate_Locale_MutationInput>;
+  magicLinkToken?: InputMaybe<Scalars['String']['input']>;
+  magicLinkTokenExpiry?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  signupMetadata?: InputMaybe<MutationSubscriberUpdate_SignupMetadataInput>;
+  source?: InputMaybe<Scalars['String']['input']>;
+  subscribedAt?: InputMaybe<Scalars['String']['input']>;
+  subscriptionStatus?: InputMaybe<SubscriberUpdate_SubscriptionStatus_MutationInput>;
+  unsubscribeReason?: InputMaybe<Scalars['String']['input']>;
+  unsubscribedAt?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSubscriberUpdate_EmailPreferencesInput = {
+  announcements?: InputMaybe<Scalars['Boolean']['input']>;
+  newsletter?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationSubscriberUpdate_SignupMetadataInput = {
+  ipAddress?: InputMaybe<Scalars['String']['input']>;
+  referrer?: InputMaybe<Scalars['String']['input']>;
+  signupPage?: InputMaybe<Scalars['String']['input']>;
+  userAgent?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationSubscriber_EmailPreferencesInput = {
+  announcements?: InputMaybe<Scalars['Boolean']['input']>;
+  newsletter?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationSubscriber_SignupMetadataInput = {
+  ipAddress?: InputMaybe<Scalars['String']['input']>;
+  referrer?: InputMaybe<Scalars['String']['input']>;
+  signupPage?: InputMaybe<Scalars['String']['input']>;
+  userAgent?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationSyndicationInput = {
@@ -48769,6 +54232,38 @@ export type MutationVerificationUpdateInput = {
   identifier?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Newsletter_SettingsAccess = {
+  __typename?: 'newsletter_settingsAccess';
+  fields?: Maybe<NewsletterSettingsFields>;
+  read?: Maybe<NewsletterSettingsReadAccess>;
+  update?: Maybe<NewsletterSettingsUpdateAccess>;
+};
+
+export type Newsletter_SettingsDocAccess = {
+  __typename?: 'newsletter_settingsDocAccess';
+  fields?: Maybe<NewsletterSettingsDocAccessFields>;
+  read?: Maybe<NewsletterSettingsReadDocAccess>;
+  update?: Maybe<NewsletterSettingsUpdateDocAccess>;
+};
+
+export type Notification_SubscriptionsAccess = {
+  __typename?: 'notification_subscriptionsAccess';
+  create?: Maybe<NotificationSubscriptionsCreateAccess>;
+  delete?: Maybe<NotificationSubscriptionsDeleteAccess>;
+  fields?: Maybe<NotificationSubscriptionsFields>;
+  read?: Maybe<NotificationSubscriptionsReadAccess>;
+  update?: Maybe<NotificationSubscriptionsUpdateAccess>;
+};
+
+export type Notification_SubscriptionsDocAccess = {
+  __typename?: 'notification_subscriptionsDocAccess';
+  create?: Maybe<NotificationSubscriptionsCreateDocAccess>;
+  delete?: Maybe<NotificationSubscriptionsDeleteDocAccess>;
+  fields?: Maybe<NotificationSubscriptionsDocAccessFields>;
+  read?: Maybe<NotificationSubscriptionsReadDocAccess>;
+  update?: Maybe<NotificationSubscriptionsUpdateDocAccess>;
 };
 
 export type OauthAccessTokensAccess = {
@@ -49065,6 +54560,24 @@ export type StartupsDocAccess = {
   read?: Maybe<StartupsReadDocAccess>;
   readVersions?: Maybe<StartupsReadVersionsDocAccess>;
   update?: Maybe<StartupsUpdateDocAccess>;
+};
+
+export type SubscribersAccess = {
+  __typename?: 'subscribersAccess';
+  create?: Maybe<SubscribersCreateAccess>;
+  delete?: Maybe<SubscribersDeleteAccess>;
+  fields?: Maybe<SubscribersFields>;
+  read?: Maybe<SubscribersReadAccess>;
+  update?: Maybe<SubscribersUpdateAccess>;
+};
+
+export type SubscribersDocAccess = {
+  __typename?: 'subscribersDocAccess';
+  create?: Maybe<SubscribersCreateDocAccess>;
+  delete?: Maybe<SubscribersDeleteDocAccess>;
+  fields?: Maybe<SubscribersDocAccessFields>;
+  read?: Maybe<SubscribersReadDocAccess>;
+  update?: Maybe<SubscribersUpdateDocAccess>;
 };
 
 export type SyndicationsAccess = {
@@ -49415,6 +54928,12 @@ export type VersionsCompany_Version__Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsCompany_Version__IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsCompany_Version__Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -49489,6 +55008,7 @@ export type VersionsCompany_Where = {
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
@@ -49516,6 +55036,7 @@ export type VersionsCompany_Where_And = {
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
@@ -49543,6 +55064,7 @@ export type VersionsCompany_Where_Or = {
   version__email?: InputMaybe<VersionsCompany_Version__Email_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
@@ -49761,6 +55283,12 @@ export type VersionsJob_Version__IsActive_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsJob_Version__IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsJob_Version__Location_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -49889,6 +55417,7 @@ export type VersionsJob_Where = {
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
@@ -49923,6 +55452,7 @@ export type VersionsJob_Where_And = {
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
@@ -49957,6 +55487,7 @@ export type VersionsJob_Where_Or = {
   version__employmentType?: InputMaybe<VersionsJob_Version__EmploymentType_Operator>;
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
   version__postedAt?: InputMaybe<VersionsJob_Version__PostedAt_Operator>;
@@ -50870,6 +56401,12 @@ export type VersionsProduct_Version__Inventory_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsProduct_Version__IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsProduct_Version__Name_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -51030,6 +56567,7 @@ export type VersionsProduct_Where = {
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
@@ -51067,6 +56605,7 @@ export type VersionsProduct_Where_And = {
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
@@ -51104,6 +56643,7 @@ export type VersionsProduct_Where_Or = {
   version__enableVariants?: InputMaybe<VersionsProduct_Version__EnableVariants_Operator>;
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
@@ -51321,6 +56861,12 @@ export type VersionsStartup_Version__InvolvedUsers_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsStartup_Version__IsSubscribed_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export enum VersionsStartup_Version__LookingFor_Input {
   Distribution = 'distribution',
   Founders = 'founders',
@@ -51409,6 +56955,7 @@ export type VersionsStartup_Where = {
   version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
@@ -51436,6 +56983,7 @@ export type VersionsStartup_Where_And = {
   version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
@@ -51463,6 +57011,7 @@ export type VersionsStartup_Where_Or = {
   version__identity?: InputMaybe<VersionsStartup_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
+  version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
@@ -51908,7 +57457,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -51916,7 +57465,7 @@ export type CreateCartMutationVariables = Exact<{
 }>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type DeleteCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51924,7 +57473,7 @@ export type DeleteCartMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCartMutation = { __typename?: 'Mutation', deleteCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type DeleteCartMutation = { __typename?: 'Mutation', deleteCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type UpdateCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -51933,7 +57482,7 @@ export type UpdateCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -51949,7 +57498,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51959,7 +57508,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -51971,7 +57520,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -51986,7 +57535,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -51997,7 +57546,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
@@ -52005,7 +57554,7 @@ export type CreateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52021,7 +57570,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52032,7 +57581,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
@@ -52046,7 +57595,7 @@ export type UpdateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -52075,7 +57624,7 @@ export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment?: {
 export type EntityImageUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EntityImageUrlsQuery = { __typename?: 'Query', companies?: { __typename?: 'Companies', docs: Array<{ __typename?: 'Company', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, jobs?: { __typename?: 'Jobs', docs: Array<{ __typename?: 'Job', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, startups?: { __typename?: 'Startups', docs: Array<{ __typename?: 'Startup', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null, identities?: { __typename?: 'Identities', docs: Array<{ __typename?: 'Identity', isSubscribed?: boolean | null, image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
+export type EntityImageUrlsQuery = { __typename?: 'Query', companies?: { __typename?: 'Companies', docs: Array<{ __typename?: 'Company', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, jobs?: { __typename?: 'Jobs', docs: Array<{ __typename?: 'Job', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, startups?: { __typename?: 'Startups', docs: Array<{ __typename?: 'Startup', image?: { __typename?: 'Media', url?: string | null } | null }> } | null, identities?: { __typename?: 'Identities', docs: Array<{ __typename?: 'Identity', image?: { __typename?: 'Media', url?: string | null } | null }> } | null };
 
 export type IdentityByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52117,7 +57666,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52131,7 +57680,7 @@ export type SearchJobsByCompanyQueryVariables = Exact<{
 export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -52150,7 +57699,7 @@ export type JobByIdQueryVariables = Exact<{
 }>;
 
 
-export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type JobByIdQuery = { __typename?: 'Query', Job?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Job__Status | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, createdBy?: { __typename?: 'User', id: string } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52161,7 +57710,7 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52173,7 +57722,7 @@ export type SearchJobsBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type SearchJobsBySecondaryIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type CreateJobMutationVariables = Exact<{
   data: MutationJobInput;
@@ -52181,7 +57730,7 @@ export type CreateJobMutationVariables = Exact<{
 }>;
 
 
-export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateJobMutation = { __typename?: 'Mutation', createJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteJobMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52197,7 +57746,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52210,7 +57759,7 @@ export type SearchJobsQueryVariables = Exact<{
 export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
-          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -52222,7 +57771,7 @@ export type UpdateJobMutationVariables = Exact<{
 }>;
 
 
-export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, isSubscribed?: boolean | null, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateJobMutation = { __typename?: 'Mutation', updateJob?: { __typename?: 'Job', id: string, title?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, _status?: Job__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListCommentsByTargetQueryVariables = Exact<{
   targetId: Scalars['String']['input'];
@@ -52241,7 +57790,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -52250,7 +57799,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -52266,7 +57815,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -52275,7 +57824,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52285,7 +57834,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52300,7 +57849,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -52319,7 +57868,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -52327,7 +57876,7 @@ export type CreateProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52343,7 +57892,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52357,7 +57906,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -52368,7 +57917,7 @@ export type UpdateProductMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -52378,7 +57927,7 @@ export type ListStartupsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsByCompanyQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -52394,7 +57943,7 @@ export type StartupByIdQueryVariables = Exact<{
 }>;
 
 
-export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
 export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -52404,7 +57953,7 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
@@ -52412,7 +57961,7 @@ export type CreateStartupMutationVariables = Exact<{
 }>;
 
 
-export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateStartupMutation = { __typename?: 'Mutation', createStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteStartupMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52428,7 +57977,7 @@ export type ListStartupsQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
+export type ListStartupsQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null }> } | null };
 
 export type SearchStartupsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -52443,7 +57992,7 @@ export type SearchStartupsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Product' }
-          | { __typename: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
          | null } }> } | null };
 
 export type UpdateStartupMutationVariables = Exact<{
@@ -52453,12 +58002,87 @@ export type UpdateStartupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+
+export type SubscribeToCompanyUpdatesMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  targetID: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToCompanyUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+
+export type SubscribeToJobUpdatesMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  targetID: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToJobUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+
+export type SubscribeToProductUpdatesMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  targetID: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToProductUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+
+export type SubscribeToTribeUpdatesMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  targetID: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToTribeUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+
+export type SubscribeToVentureUpdatesMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  targetID: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToVentureUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null, name?: string | null, description?: string | null }> } | null };
+
+export type UnsubscribeFromCompanyUpdatesMutationVariables = Exact<{
+  subscriptionID: Scalars['String']['input'];
+}>;
+
+
+export type UnsubscribeFromCompanyUpdatesMutation = { __typename?: 'Mutation', deleteNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null } | null };
+
+export type UnsubscribeFromJobUpdatesMutationVariables = Exact<{
+  subscriptionID: Scalars['String']['input'];
+}>;
+
+
+export type UnsubscribeFromJobUpdatesMutation = { __typename?: 'Mutation', deleteNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null } | null };
+
+export type UnsubscribeFromProductUpdatesMutationVariables = Exact<{
+  subscriptionID: Scalars['String']['input'];
+}>;
+
+
+export type UnsubscribeFromProductUpdatesMutation = { __typename?: 'Mutation', deleteNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null } | null };
+
+export type UnsubscribeFromTribeUpdatesMutationVariables = Exact<{
+  subscriptionID: Scalars['String']['input'];
+}>;
+
+
+export type UnsubscribeFromTribeUpdatesMutation = { __typename?: 'Mutation', deleteNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null } | null };
+
+export type UnsubscribeFromVentureUpdatesMutationVariables = Exact<{
+  subscriptionID: Scalars['String']['input'];
+}>;
+
+
+export type UnsubscribeFromVentureUpdatesMutation = { __typename?: 'Mutation', deleteNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null } | null };
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -52472,93 +58096,93 @@ export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComm
 
 export const CartBySecretDocument = `
     query CartBySecret($secret: String!) {
-      Carts(
-        draft: false
-        limit: 1
-        sort: "-updatedAt"
-        where: { secret: { equals: $secret } }
-      ) {
-        docs {
+  Carts(
+    draft: false
+    limit: 1
+    sort: "-updatedAt"
+    where: {secret: {equals: $secret}}
+  ) {
+    docs {
+      id
+      secret
+      status
+      currency
+      subtotal
+      createdAt
+      updatedAt
+      purchasedAt
+      customer {
+        id
+        name
+        email
+      }
+      items {
+        id
+        quantity
+        product {
           id
-          secret
-          status
-          currency
-          subtotal
-          createdAt
-          updatedAt
-          purchasedAt
-          customer {
-            id
-            name
-            email
+          serverURL
+          name
+          description
+          orderable
+          cryptoAddresses {
+            chain
+            address
           }
-          items {
+          inventory
+          url
+          priceInUSD
+          priceInUSDEnabled
+          priceInETH
+          priceInSOL
+          priceInTRX
+          image {
             id
-            quantity
-            product {
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            identity {
               id
               serverURL
               name
               description
-              orderable
-              cryptoAddresses {
-              chain
-              address
-            }
-              inventory
-              url
-              priceInUSD
-              priceInUSDEnabled
-              priceInETH
-              priceInSOL
-              priceInTRX
-              image {
-                id
-                url
-                alt
-                filename
-                width
-                height
-                mimeType
-              }
-              company {
-                id
-                serverURL
-                name
-                description
-                cryptoAddresses {
-              chain
-              address
-            }
-                identity {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-              }
-            }
-            variant {
-              id
-              title
-              inventory
-              priceInUSD
-              priceInUSDEnabled
-              options {
-                id
-                label
-                value
-                variantType {
-                  id
-                  name
-                }
-              }
             }
           }
         }
-        totalDocs
+        variant {
+          id
+          title
+          inventory
+          priceInUSD
+          priceInUSDEnabled
+          options {
+            id
+            label
+            value
+            variantType {
+              id
+              name
+            }
+          }
+        }
       }
     }
+    totalDocs
+  }
+}
     `;
 
 export const useCartBySecretQuery = <
@@ -52584,39 +58208,39 @@ useCartBySecretQuery.fetcher = (variables: CartBySecretQueryVariables, options?:
 
 export const CreateCartDocument = `
     mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
-      createCart(data: $data, draft: $draft) {
+  createCart(data: $data, draft: $draft) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
         id
-        secret
-        status
-        currency
-        subtotal
-        createdAt
-        updatedAt
-        purchasedAt
-        customer {
-          id
-          name
-          email
-        }
-        items {
-          id
-          quantity
-          product {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-          }
-          variant {
-            id
-            title
-          }
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
         }
       }
+      variant {
+        id
+        title
+      }
     }
+  }
+}
     `;
 
 export const useCreateCartMutation = <
@@ -52637,39 +58261,39 @@ useCreateCartMutation.fetcher = (variables: CreateCartMutationVariables, options
 
 export const DeleteCartDocument = `
     mutation DeleteCart($id: String!, $trash: Boolean) {
-      deleteCart(id: $id, trash: $trash) {
+  deleteCart(id: $id, trash: $trash) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
         id
-        secret
-        status
-        currency
-        subtotal
-        createdAt
-        updatedAt
-        purchasedAt
-        customer {
-          id
-          name
-          email
-        }
-        items {
-          id
-          quantity
-          product {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-          }
-          variant {
-            id
-            title
-          }
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
         }
       }
+      variant {
+        id
+        title
+      }
     }
+  }
+}
     `;
 
 export const useDeleteCartMutation = <
@@ -52690,39 +58314,39 @@ useDeleteCartMutation.fetcher = (variables: DeleteCartMutationVariables, options
 
 export const UpdateCartDocument = `
     mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boolean!) {
-      updateCart(id: $id, data: $data, draft: $draft) {
+  updateCart(id: $id, data: $data, draft: $draft) {
+    id
+    secret
+    status
+    currency
+    subtotal
+    createdAt
+    updatedAt
+    purchasedAt
+    customer {
+      id
+      name
+      email
+    }
+    items {
+      id
+      quantity
+      product {
         id
-        secret
-        status
-        currency
-        subtotal
-        createdAt
-        updatedAt
-        purchasedAt
-        customer {
-          id
-          name
-          email
-        }
-        items {
-          id
-          quantity
-          product {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-          }
-          variant {
-            id
-            title
-          }
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
         }
       }
+      variant {
+        id
+        title
+      }
     }
+  }
+}
     `;
 
 export const useUpdateCartMutation = <
@@ -52743,21 +58367,26 @@ useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options
 
 export const ListCompaniesByCreatorDocument = `
     query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-      Companies(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          name
-          cryptoAddresses {
-              chain
-              address
-            }
-          _status
-        }
-        totalDocs
+  Companies(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      cryptoAddresses {
+        chain
+        address
       }
+      _status
     }
+    totalDocs
+  }
+}
     `;
 
 export const useListCompaniesByCreatorQuery = <
@@ -52783,62 +58412,62 @@ useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQuer
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!) {
-      Company(id: $id) {
+  Company(id: $id) {
+    id
+    isSubscribed
+    serverURL
+    name
+    _status
+    description
+    cryptoAddresses {
+      chain
+      address
+    }
+    website
+    phone
+    email
+    allowedIdentities {
+      id
+      serverURL
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      serverURL
+      name
+      description
+    }
+    createdBy {
+      id
+    }
+    identity {
+      id
+      serverURL
+      name
+      description
+      website
+      image {
         id
-        isSubscribed
-        serverURL
-        name
-        _status
-        description
-        cryptoAddresses {
-              chain
-              address
-            }
-        website
-        phone
-        email
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        createdBy {
-          id
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-          website
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
     `;
 
 export const useCompanyByIdQuery = <
@@ -52864,73 +58493,73 @@ useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: R
 
 export const ListCompaniesByIdentityDocument = `
     query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-      Companies(
-        draft: false
-        where: { identity: { equals: $identityId } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+  Companies(
+    draft: false
+    where: {identity: {equals: $identityId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+        image {
           id
-          isSubscribed
-          serverURL
-          name
-          description
-          cryptoAddresses {
-              chain
-              address
-            }
-          website
-          phone
-          email
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListCompaniesByIdentityQuery = <
@@ -52956,89 +58585,84 @@ useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQue
 
 export const SearchCompaniesByIdentityDocument = `
     query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: companies } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Company {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                name
-                description
-                cryptoAddresses {
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Company {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            cryptoAddresses {
               chain
               address
             }
-                website
-                phone
-                email
-                allowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                disallowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                identity {
-                  id
-                  serverURL
-                  name
-                  description
-                  image {
-                    id
-                    url
-                    alt
-                    filename
-                    width
-                    height
-                    mimeType
-                  }
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
+            website
+            phone
+            email
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
               }
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchCompaniesByIdentityQuery = <
@@ -53063,79 +58687,74 @@ useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentity
 useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
 
 export const ListCompaniesBySecondaryIdentityDocument = `
-    query ListCompaniesBySecondaryIdentity(
-      $identityId: JSON!
-      $page: Int = 1
-      $limit: Int = 20
-      $sort: String
-    ) {
-      Companies(
-        draft: false
-        where: { allowedIdentities: { in: [$identityId] } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {allowedIdentities: {in: [$identityId]}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+        image {
           id
-          isSubscribed
-          serverURL
-          name
-          description
-          cryptoAddresses {
-              chain
-              address
-            }
-          website
-          phone
-          email
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListCompaniesBySecondaryIdentityQuery = <
@@ -53160,85 +58779,74 @@ useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySec
 useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
 
 export const SearchCompaniesBySecondaryIdentityDocument = `
-    query SearchCompaniesBySecondaryIdentity(
-      $identityId: JSON!
-      $searchTerm: String!
-      $page: Int = 1
-      $limit: Int = 20
-      $sort: String
-    ) {
-      Companies(
-        draft: false
-        where: {
-          AND: [
-            { name: { contains: $searchTerm } }
-            { allowedIdentities: { in: [$identityId] } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Companies(
+    draft: false
+    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+        image {
           id
-          isSubscribed
-          serverURL
-          name
-          description
-          cryptoAddresses {
-              chain
-              address
-            }
-          website
-          phone
-          email
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchCompaniesBySecondaryIdentityQuery = <
@@ -53264,20 +58872,20 @@ useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompanies
 
 export const CreateCompanyDocument = `
     mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
-      createCompany(data: $data, draft: $draft) {
-        id
-        name
-        cryptoAddresses {
-              chain
-              address
-            }
-        _status
-        image {
-          id
-          url
-        }
-      }
+  createCompany(data: $data, draft: $draft) {
+    id
+    name
+    cryptoAddresses {
+      chain
+      address
     }
+    _status
+    image {
+      id
+      url
+    }
+  }
+}
     `;
 
 export const useCreateCompanyMutation = <
@@ -53298,10 +58906,10 @@ useCreateCompanyMutation.fetcher = (variables: CreateCompanyMutationVariables, o
 
 export const DeleteCompanyDocument = `
     mutation DeleteCompany($id: String!) {
-      deleteCompany(id: $id) {
-        id
-      }
-    }
+  deleteCompany(id: $id) {
+    id
+  }
+}
     `;
 
 export const useDeleteCompanyMutation = <
@@ -53322,67 +58930,67 @@ useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, o
 
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-      Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
-        docs {
+  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      website
+      phone
+      email
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+        image {
           id
-          isSubscribed
-          serverURL
-          name
-          description
-          cryptoAddresses {
-              chain
-              address
-            }
-          website
-          phone
-          email
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListCompaniesQuery = <
@@ -53408,80 +59016,75 @@ useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, option
 
 export const SearchCompaniesDocument = `
     query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: companies } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Company {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                name
-                description
-                cryptoAddresses {
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Company {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            cryptoAddresses {
               chain
               address
             }
-                website
-                phone
-                email
-                allowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                disallowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-                identity {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-              }
+            website
+            phone
+            email
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchCompaniesQuery = <
@@ -53507,20 +59110,20 @@ useSearchCompaniesQuery.fetcher = (variables: SearchCompaniesQueryVariables, opt
 
 export const UpdateCompanyDocument = `
     mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
-      updateCompany(id: $id, data: $data, draft: $draft) {
-        id
-        name
-        cryptoAddresses {
-              chain
-              address
-            }
-        _status
-        image {
-          id
-          url
-        }
-      }
+  updateCompany(id: $id, data: $data, draft: $draft) {
+    id
+    name
+    cryptoAddresses {
+      chain
+      address
     }
+    _status
+    image {
+      id
+      url
+    }
+  }
+}
     `;
 
 export const useUpdateCompanyMutation = <
@@ -53540,27 +59143,19 @@ export const useUpdateCompanyMutation = <
 useUpdateCompanyMutation.fetcher = (variables: UpdateCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables, options);
 
 export const CreateCommentDocument = `
-    mutation CreateComment(
-      $replyToPost: Comment_ReplyPostRelationshipInput!
-      $content: String!
-    ) {
-      createComment(
-        data: {
-          content: $content
-          replyPost: $replyToPost
-        }
-      ) {
-        id
-        content
-        createdBy {
-          id
-          name
-          email
-        }
-        anonymousHash
-        createdAt
-      }
+    mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
+  createComment(data: {content: $content, replyPost: $replyToPost}) {
+    id
+    content
+    createdBy {
+      id
+      name
+      email
     }
+    anonymousHash
+    createdAt
+  }
+}
     `;
 
 export const useCreateCommentMutation = <
@@ -53580,32 +59175,24 @@ export const useCreateCommentMutation = <
 useCreateCommentMutation.fetcher = (variables: CreateCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables, options);
 
 export const CreateReplyToCommentDocument = `
-    mutation CreateReplyToComment(
-      $replyToPost: Comment_ReplyPostRelationshipInput!
-      $parentCommentId: String!
-      $content: String!
-    ) {
-      createComment(
-        data: {
-          content: $content
-          replyPost: $replyToPost
-          replyComment: $parentCommentId
-        }
-      ) {
-        id
-        content
-        replyComment {
-          id
-        }
-        createdBy {
-          id
-          name
-          email
-        }
-        anonymousHash
-        createdAt
-      }
+    mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
+  createComment(
+    data: {content: $content, replyPost: $replyToPost, replyComment: $parentCommentId}
+  ) {
+    id
+    content
+    replyComment {
+      id
     }
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}
     `;
 
 export const useCreateReplyToCommentMutation = <
@@ -53626,10 +59213,10 @@ useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutati
 
 export const DeleteCommentDocument = `
     mutation DeleteComment($id: String!) {
-      deleteComment(id: $id) {
-        id
-      }
-    }
+  deleteComment(id: $id) {
+    id
+  }
+}
     `;
 
 export const useDeleteCommentMutation = <
@@ -53650,35 +59237,35 @@ useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, o
 
 export const EntityImageUrlsDocument = `
     query EntityImageUrls {
-      companies: Companies(draft: false, page: 1, limit: 3) {
-        docs {
-          image {
-            url
-          }
-        }
-      }
-      jobs: Jobs(draft: false, page: 1, limit: 3) {
-        docs {
-          image {
-            url
-          }
-        }
-      }
-      startups: Startups(draft: false, page: 1, limit: 3) {
-        docs {
-          image {
-            url
-          }
-        }
-      }
-      identities: Identities(draft: false, page: 1, limit: 3) {
-        docs {
-          image {
-            url
-          }
-        }
+  companies: Companies(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
       }
     }
+  }
+  jobs: Jobs(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  startups: Startups(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+  identities: Identities(draft: false, page: 1, limit: 3) {
+    docs {
+      image {
+        url
+      }
+    }
+  }
+}
     `;
 
 export const useEntityImageUrlsQuery = <
@@ -53704,24 +59291,24 @@ useEntityImageUrlsQuery.fetcher = (variables?: EntityImageUrlsQueryVariables, op
 
 export const IdentityByIdDocument = `
     query IdentityById($id: String!) {
-      Identity(id: $id, draft: false) {
-        id
-        isSubscribed
-        serverURL
-        name
-        description
-        website
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
+  Identity(id: $id, draft: false) {
+    id
+    isSubscribed
+    serverURL
+    name
+    description
+    website
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
     }
+  }
+}
     `;
 
 export const useIdentityByIdQuery = <
@@ -53747,35 +59334,35 @@ useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?:
 
 export const ListIdentitiesDocument = `
     query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
-      Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          name
-          description
-          website
-          itemCount
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-        }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      description
+      website
+      itemCount
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListIdentitiesQuery = <
@@ -53801,56 +59388,51 @@ useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, opti
 
 export const SearchIdentitiesDocument = `
     query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: identities } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Identity {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                name
-                description
-                website
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-              }
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: identities}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Identity {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            website
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchIdentitiesQuery = <
@@ -53876,85 +59458,85 @@ useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, o
 
 export const ListJobsByCompanyDocument = `
     query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-      Jobs(
-        draft: false
-        where: { company: { equals: $companyId } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          description
-          positions
-          isActive
-          bounty {
-            amount
-            currency
-          }
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
+  Jobs(
+    draft: false
+    where: {company: {equals: $companyId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      description
+      positions
+      isActive
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        allowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListJobsByCompanyQuery = <
@@ -53980,101 +59562,96 @@ useListJobsByCompanyQuery.fetcher = (variables: ListJobsByCompanyQueryVariables,
 
 export const SearchJobsByCompanyDocument = `
     query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: jobs } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Job {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                title
-                description
-                positions
-                isActive
-                bounty {
-                  amount
-                  currency
-                }
-                allowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                disallowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                company {
-                  id
-                  serverURL
-                  name
-                  description
-                  cryptoAddresses {
-              chain
-              address
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Job {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
             }
-                  allowedIdentities {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  disallowedIdentities {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  identity {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            company {
+              id
+              serverURL
+              name
+              description
+              cryptoAddresses {
+                chain
+                address
               }
+              allowedIdentities {
+                id
+                serverURL
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+              }
+              identity {
+                id
+                serverURL
+                name
+                description
+              }
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchJobsByCompanyQuery = <
@@ -54100,19 +59677,24 @@ useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariab
 
 export const ListJobsByCreatorDocument = `
     query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-      Jobs(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          employmentType
-          postedAt
-          _status
-        }
-        totalDocs
-      }
+  Jobs(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      employmentType
+      postedAt
+      _status
     }
+    totalDocs
+  }
+}
     `;
 
 export const useListJobsByCreatorQuery = <
@@ -54138,91 +59720,91 @@ useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables
 
 export const JobByIdDocument = `
     query JobById($id: String!) {
-      Job(id: $id) {
+  Job(id: $id) {
+    id
+    isSubscribed
+    serverURL
+    title
+    _status
+    description
+    location
+    employmentType
+    positions
+    postedAt
+    isActive
+    applyUrl
+    bounty {
+      amount
+      currency
+    }
+    allowedIdentities {
+      id
+      serverURL
+      name
+      description
+    }
+    disallowedIdentities {
+      id
+      serverURL
+      name
+      description
+    }
+    salaryRange {
+      min
+      max
+      currency
+    }
+    createdBy {
+      id
+    }
+    company {
+      id
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      allowedIdentities {
         id
-        isSubscribed
         serverURL
-        title
-        _status
+        name
         description
-        location
-        employmentType
-        positions
-        postedAt
-        isActive
-        applyUrl
-        bounty {
-          amount
-          currency
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        salaryRange {
-          min
-          max
-          currency
-        }
-        createdBy {
-          id
-        }
-        company {
-          id
-          serverURL
-          name
-          description
-          cryptoAddresses {
-              chain
-              address
-            }
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
     `;
 
 export const useJobByIdQuery = <
@@ -54247,115 +59829,104 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsBySecondaryIdentityDocument = `
-    query ListJobsBySecondaryIdentity(
-      $identityId: JSON!
-      $companyIds: [JSON!] = []
-      $page: Int = 1
-      $limit: Int = 20
-      $sort: String
-    ) {
-      Jobs(
-        draft: false
-        where: {
-          OR: [
-            { allowedIdentities: { in: [$identityId] } }
-            { company: { in: $companyIds } }
-          ]
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
         }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+        allowedIdentities {
           id
-          isSubscribed
           serverURL
-          title
+          name
           description
-          location
-          employmentType
-          positions
-          postedAt
-          isActive
-          applyUrl
-          bounty {
-            amount
-            currency
-          }
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          salaryRange {
-            min
-            max
-            currency
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListJobsBySecondaryIdentityQuery = <
@@ -54380,121 +59951,104 @@ useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIden
 useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
 
 export const SearchJobsBySecondaryIdentityDocument = `
-    query SearchJobsBySecondaryIdentity(
-      $identityId: JSON!
-      $companyIds: [JSON!] = []
-      $searchTerm: String!
-      $page: Int = 1
-      $limit: Int = 20
-      $sort: String
-    ) {
-      Jobs(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            {
-              OR: [
-                { allowedIdentities: { in: [$identityId] } }
-                { company: { in: $companyIds } }
-              ]
-            }
-          ]
+    query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+  Jobs(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
         }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+        allowedIdentities {
           id
-          isSubscribed
           serverURL
-          title
+          name
           description
-          location
-          employmentType
-          positions
-          postedAt
-          isActive
-          applyUrl
-          bounty {
-            amount
-            currency
-          }
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          salaryRange {
-            min
-            max
-            currency
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchJobsBySecondaryIdentityQuery = <
@@ -54520,19 +60074,19 @@ useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondar
 
 export const CreateJobDocument = `
     mutation CreateJob($data: mutationJobInput!, $draft: Boolean!) {
-      createJob(data: $data, draft: $draft) {
-        id
-        title
-        employmentType
-        positions
-        postedAt
-        _status
-        image {
-          id
-          url
-        }
-      }
+  createJob(data: $data, draft: $draft) {
+    id
+    title
+    employmentType
+    positions
+    postedAt
+    _status
+    image {
+      id
+      url
     }
+  }
+}
     `;
 
 export const useCreateJobMutation = <
@@ -54553,10 +60107,10 @@ useCreateJobMutation.fetcher = (variables: CreateJobMutationVariables, options?:
 
 export const DeleteJobDocument = `
     mutation DeleteJob($id: String!) {
-      deleteJob(id: $id) {
-        id
-      }
-    }
+  deleteJob(id: $id) {
+    id
+  }
+}
     `;
 
 export const useDeleteJobMutation = <
@@ -54577,97 +60131,97 @@ useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?:
 
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-      Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          description
-          location
-          employmentType
-          positions
-          postedAt
-          isActive
-          applyUrl
-          bounty {
-            amount
-            currency
-          }
-          allowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          disallowedIdentities {
-            id
-            serverURL
-            name
-            description
-          }
-          salaryRange {
-            min
-            max
-            currency
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
+  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      description
+      location
+      employmentType
+      positions
+      postedAt
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        allowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListJobsQuery = <
@@ -54693,110 +60247,105 @@ useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: Reques
 
 export const SearchJobsDocument = `
     query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: jobs } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Job {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                title
-                description
-                positions
-                isActive
-                bounty {
-                  amount
-                  currency
-                }
-                allowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                disallowedIdentities {
-                  id
-                  serverURL
-                  name
-                  description
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-                company {
-                  id
-                  serverURL
-                  name
-                  description
-                  cryptoAddresses {
-              chain
-              address
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Job {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            positions
+            isActive
+            bounty {
+              amount
+              currency
             }
-                  allowedIdentities {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  disallowedIdentities {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  identity {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  image {
-                    id
-                    url
-                    alt
-                    filename
-                    width
-                    height
-                    mimeType
-                  }
-                }
+            allowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            disallowedIdentities {
+              id
+              serverURL
+              name
+              description
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              serverURL
+              name
+              description
+              cryptoAddresses {
+                chain
+                address
+              }
+              allowedIdentities {
+                id
+                serverURL
+                name
+                description
+              }
+              disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+              }
+              identity {
+                id
+                serverURL
+                name
+                description
+              }
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
               }
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchJobsQuery = <
@@ -54822,19 +60371,19 @@ useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: Req
 
 export const UpdateJobDocument = `
     mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
-      updateJob(id: $id, data: $data, draft: $draft) {
-        id
-        title
-        employmentType
-        positions
-        postedAt
-        _status
-        image {
-          id
-          url
-        }
-      }
+  updateJob(id: $id, data: $data, draft: $draft) {
+    id
+    title
+    employmentType
+    positions
+    postedAt
+    _status
+    image {
+      id
+      url
     }
+  }
+}
     `;
 
 export const useUpdateJobMutation = <
@@ -54854,48 +60403,38 @@ export const useUpdateJobMutation = <
 useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
 
 export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget(
-      $targetId: String!
-      $relationTo: String!
-      $limit: Int = 50
-      $page: Int = 1
-    ) {
-      Comments(
-        where: {
-          AND: [
-            { replyPostRelationTo: { equals: $relationTo } }
-            { replyPostValue: { equals: $targetId } }
-          ]
-        }
-        sort: "createdAt"
-        limit: $limit
-        page: $page
-      ) {
-        docs {
-          id
-          content
-          createdBy {
-            id
-            name
-            email
-          }
-          anonymousHash
-          replyPostRelationTo
-          replyPostValue
-          createdAt
-          updatedAt
-          replyComment {
-            id
-          }
-          replyPost {
-            relationTo
-          }
-        }
-        totalDocs
-        hasNextPage
-        nextPage
+    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
+  Comments(
+    where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}]}
+    sort: "createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      replyPostRelationTo
+      replyPostValue
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
       }
     }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
     `;
 
 export const useListCommentsByTargetQuery = <
@@ -54921,51 +60460,51 @@ useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVari
 
 export const ListJobsByIdentityDocument = `
     query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-      Jobs(
-        draft: false
-        where: { companyIdentityId: { equals: $identityId } }
-        sort: "-postedAt"
-        limit: $limit
-        page: $page
-      ) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          companyIdentityId
-          company {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-            image {
-              id
-              url
-            }
-          }
-          location
-          employmentType
-          salaryRange {
-            min
-            max
-            currency
-          }
-          image {
-            id
-            url
-          }
-          postedAt
-          _status
+  Jobs(
+    draft: false
+    where: {companyIdentityId: {equals: $identityId}}
+    sort: "-postedAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      companyIdentityId
+      company {
+        id
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
         }
-        totalDocs
-        hasNextPage
-        nextPage
+        image {
+          id
+          url
+        }
       }
+      location
+      employmentType
+      salaryRange {
+        min
+        max
+        currency
+      }
+      image {
+        id
+        url
+      }
+      postedAt
+      _status
     }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
     `;
 
 export const useListJobsByIdentityQuery = <
@@ -54991,54 +60530,54 @@ useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariable
 
 export const ListProductsByIdentityDocument = `
     query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-      Products(
-        where: { companyIdentityId: { equals: $identityId } }
-        sort: "-createdAt"
-        limit: $limit
-        page: $page
-      ) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          name
-          cryptoAddresses {
-              chain
-              address
-            }
-          orderable
-          url
-          companyIdentityId
-          priceInUSDEnabled
-          priceInUSD
-          priceInETH
-          priceInSOL
-          priceInTRX
-          company {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-            image {
-              id
-              url
-            }
-          }
-          image {
-            id
-            url
-          }
-          _status
-          createdAt
-        }
-        totalDocs
-        hasNextPage
-        nextPage
+  Products(
+    where: {companyIdentityId: {equals: $identityId}}
+    sort: "-createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      cryptoAddresses {
+        chain
+        address
       }
+      orderable
+      url
+      companyIdentityId
+      priceInUSDEnabled
+      priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
+      company {
+        id
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
+        }
+        image {
+          id
+          url
+        }
+      }
+      image {
+        id
+        url
+      }
+      _status
+      createdAt
     }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
     `;
 
 export const useListProductsByIdentityQuery = <
@@ -55063,36 +60602,33 @@ useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryV
 useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
 
 export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment(
-      $parentCommentId: JSON!
-      $limit: Int = 100
-    ) {
-      Comments(
-        where: { replyComment: { equals: $parentCommentId } }
-        sort: "createdAt"
-        limit: $limit
-      ) {
-        docs {
-          id
-          content
-          createdBy {
-            id
-            name
-            email
-          }
-          anonymousHash
-          createdAt
-          updatedAt
-          replyComment {
-            id
-          }
-          replyPost {
-            relationTo
-          }
-        }
-        totalDocs
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
+  Comments(
+    where: {replyComment: {equals: $parentCommentId}}
+    sort: "createdAt"
+    limit: $limit
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
       }
     }
+    totalDocs
+  }
+}
     `;
 
 export const useListRepliesToCommentQuery = <
@@ -55118,79 +60654,79 @@ useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVari
 
 export const CreateOrderDocument = `
     mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
-      createOrder(data: $data, draft: $draft) {
+  createOrder(data: $data, draft: $draft) {
+    id
+    status
+    payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    transactionHashes {
+      id
+      chain
+      transactionHash
+      product {
         id
-        status
-        payerAddress
-        customer {
-          id
-        }
-        transactions {
-          id
-        }
-        cryptoPrices {
-          id
-          chain
-          stablePerNative
-          nativePerStable
-          expectedNativeAmount
-          fetchedAt
-        }
-        transactionHashes {
-          id
-          chain
-          transactionHash
-          product {
-            id
-          }
-        }
-        currency
-        amount
-        customerEmail
-        createdAt
-        updatedAt
-        items {
-          id
-          quantity
-          product {
-            id
-            serverURL
-            name
-            priceInETH
-            priceInSOL
-            priceInTRX
-            cryptoAddresses {
-              chain
-              address
-            }
-            company {
-              id
-              cryptoAddresses {
-                chain
-                address
-              }
-            }
-          }
-          variant {
-            id
-            title
-          }
-        }
-        shippingAddress {
-          title
-          firstName
-          lastName
-          company
-          addressLine1
-          addressLine2
-          city
-          postalCode
-          state
-          country
-          phone
-        }
       }
     }
+    currency
+    amount
+    customerEmail
+    createdAt
+    updatedAt
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+        priceInETH
+        priceInSOL
+        priceInTRX
+        cryptoAddresses {
+          chain
+          address
+        }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
+        }
+      }
+      variant {
+        id
+        title
+      }
+    }
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      state
+      country
+      phone
+    }
+  }
+}
     `;
 
 export const useCreateOrderMutation = <
@@ -55211,79 +60747,79 @@ useCreateOrderMutation.fetcher = (variables: CreateOrderMutationVariables, optio
 
 export const UpdateOrderDocument = `
     mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft: Boolean!) {
-      updateOrder(id: $orderId, data: $data, draft: $draft) {
+  updateOrder(id: $orderId, data: $data, draft: $draft) {
+    id
+    status
+    payerAddress
+    customer {
+      id
+    }
+    transactions {
+      id
+    }
+    cryptoPrices {
+      id
+      chain
+      stablePerNative
+      nativePerStable
+      expectedNativeAmount
+      fetchedAt
+    }
+    transactionHashes {
+      id
+      chain
+      transactionHash
+      product {
         id
-        status
-        payerAddress
-        customer {
-          id
-        }
-        transactions {
-          id
-        }
-        cryptoPrices {
-          id
-          chain
-          stablePerNative
-          nativePerStable
-          expectedNativeAmount
-          fetchedAt
-        }
-        transactionHashes {
-          id
-          chain
-          transactionHash
-          product {
-            id
-          }
-        }
-        currency
-        amount
-        customerEmail
-        createdAt
-        updatedAt
-        items {
-          id
-          quantity
-          product {
-            id
-            serverURL
-            name
-            priceInETH
-            priceInSOL
-            priceInTRX
-            cryptoAddresses {
-              chain
-              address
-            }
-            company {
-              id
-              cryptoAddresses {
-                chain
-                address
-              }
-            }
-          }
-          variant {
-            id
-            title
-          }
-        }
-        shippingAddress {
-          title
-          firstName
-          lastName
-          company
-          addressLine1
-          addressLine2
-          city
-          postalCode
-          state
-          country
-          phone
-        }
       }
     }
+    currency
+    amount
+    customerEmail
+    createdAt
+    updatedAt
+    items {
+      id
+      quantity
+      product {
+        id
+        serverURL
+        name
+        priceInETH
+        priceInSOL
+        priceInTRX
+        cryptoAddresses {
+          chain
+          address
+        }
+        company {
+          id
+          cryptoAddresses {
+            chain
+            address
+          }
+        }
+      }
+      variant {
+        id
+        title
+      }
+    }
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      state
+      country
+      phone
+    }
+  }
+}
     `;
 
 export const useUpdateOrderMutation = <
@@ -55304,72 +60840,72 @@ useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, optio
 
 export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-      Products(
-        draft: false
-        where: { company: { equals: $companyId } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
+  Products(
+    draft: false
+    where: {company: {equals: $companyId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      inventory
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      url
+      orderable
+      priceInUSDEnabled
+      priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
+      properties {
+        id
+        key
+        value
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
+        }
+        identity {
           id
-          isSubscribed
           serverURL
           name
-          inventory
           description
-          cryptoAddresses {
-              chain
-              address
-            }
-          url
-          orderable
-          priceInUSDEnabled
-          priceInUSD
-          priceInETH
-          priceInSOL
-          priceInTRX
-          properties {
-            id
-            key
-            value
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-          }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListProductsByCompanyQuery = <
@@ -55395,82 +60931,77 @@ useListProductsByCompanyQuery.fetcher = (variables: ListProductsByCompanyQueryVa
 
 export const SearchProductsByCompanyDocument = `
     query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: products } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Product {
-                __typename
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Product {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            url
+            orderable
+            properties {
+              id
+              key
+              value
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              serverURL
+              name
+              description
+              cryptoAddresses {
+                chain
+                address
+              }
+              identity {
                 id
-                isSubscribed
                 serverURL
                 name
                 description
-                cryptoAddresses {
-              chain
-              address
-            }
-                url
-                orderable
-                properties {
-                  id
-                  key
-                  value
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-                company {
-                  id
-                  serverURL
-                  name
-                  description
-                  cryptoAddresses {
-              chain
-              address
-            }
-                  identity {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                }
               }
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchProductsByCompanyQuery = <
@@ -55496,28 +61027,33 @@ useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQue
 
 export const ListProductsByCreatorDocument = `
     query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
-      Products(draft: true, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          name
-          cryptoAddresses {
-              chain
-              address
-            }
-          orderable
-          url
-          _status
-          properties {
-            id
-            key
-            value
-          }
-        }
-        totalDocs
+  Products(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {company: {in: $companyIds}}
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      cryptoAddresses {
+        chain
+        address
+      }
+      orderable
+      url
+      _status
+      properties {
+        id
+        key
+        value
       }
     }
+    totalDocs
+  }
+}
     `;
 
 export const useListProductsByCreatorQuery = <
@@ -55543,93 +61079,93 @@ useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryV
 
 export const ProductByIdDocument = `
     query ProductById($id: String!, $draft: Boolean) {
-      Product(id: $id, draft: $draft) {
+  Product(id: $id, draft: $draft) {
+    id
+    isSubscribed
+    inventory
+    enableVariants
+    variantTypes {
+      id
+      label
+      name
+    }
+    variants {
+      docs {
         id
-        isSubscribed
+        title
         inventory
-        enableVariants
-        variantTypes {
-          id
-          label
-          name
-        }
-        variants {
-          docs {
-            id
-            title
-            inventory
-            priceInUSDEnabled
-            priceInUSD
-            options {
-              id
-              label
-              value
-            }
-          }
-          hasNextPage
-          totalDocs
-        }
         priceInUSDEnabled
         priceInUSD
-        priceInETH
-        priceInSOL
-        priceInTRX
-        serverURL
-        name
-        companyIdentityId
-        _status
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        url
-        orderable
-        properties {
+        options {
           id
-          key
+          label
           value
         }
-        updatedAt
-        createdAt
-        deletedAt
-        company {
-          id
-          serverURL
-          name
-          description
-          cryptoAddresses {
-            chain
-            address
-          }
-          createdBy {
-            id
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-          }
-          image {
-            id
-            url
-            filename
-            mimeType
-            width
-            height
-          }
-        }
-        image {
-          id
-          url
-          filename
-          width
-          height
-          mimeType
-        }
+      }
+      hasNextPage
+      totalDocs
+    }
+    priceInUSDEnabled
+    priceInUSD
+    priceInETH
+    priceInSOL
+    priceInTRX
+    serverURL
+    name
+    companyIdentityId
+    _status
+    description
+    cryptoAddresses {
+      chain
+      address
+    }
+    url
+    orderable
+    properties {
+      id
+      key
+      value
+    }
+    updatedAt
+    createdAt
+    deletedAt
+    company {
+      id
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      createdBy {
+        id
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+      }
+      image {
+        id
+        url
+        filename
+        mimeType
+        width
+        height
       }
     }
+    image {
+      id
+      url
+      filename
+      width
+      height
+      mimeType
+    }
+  }
+}
     `;
 
 export const useProductByIdQuery = <
@@ -55655,25 +61191,25 @@ useProductByIdQuery.fetcher = (variables: ProductByIdQueryVariables, options?: R
 
 export const CreateProductDocument = `
     mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
-      createProduct(data: $data, draft: $draft) {
-        id
-        name
-        cryptoAddresses {
-              chain
-              address
-            }
-        _status
-        properties {
-          id
-          key
-          value
-        }
-        image {
-          id
-          url
-        }
-      }
+  createProduct(data: $data, draft: $draft) {
+    id
+    name
+    cryptoAddresses {
+      chain
+      address
     }
+    _status
+    properties {
+      id
+      key
+      value
+    }
+    image {
+      id
+      url
+    }
+  }
+}
     `;
 
 export const useCreateProductMutation = <
@@ -55694,10 +61230,10 @@ useCreateProductMutation.fetcher = (variables: CreateProductMutationVariables, o
 
 export const DeleteProductDocument = `
     mutation DeleteProduct($id: String!) {
-      deleteProduct(id: $id) {
-        id
-      }
-    }
+  deleteProduct(id: $id) {
+    id
+  }
+}
     `;
 
 export const useDeleteProductMutation = <
@@ -55718,75 +61254,75 @@ useDeleteProductMutation.fetcher = (variables: DeleteProductMutationVariables, o
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
-      Products(draft: false, page: $page, limit: $limit, sort: $sort) {
-        docs {
+  Products(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      name
+      inventory
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      url
+      orderable
+      priceInUSDEnabled
+      priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
+      properties {
+        id
+        key
+        value
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
+        }
+        identity {
           id
-          isSubscribed
           serverURL
           name
-          inventory
           description
-          cryptoAddresses {
-              chain
-              address
-            }
-          url
-          orderable
-          priceInUSDEnabled
-          priceInUSD
-          priceInETH
-          priceInSOL
-          priceInTRX
-          properties {
-            id
-            key
-            value
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          company {
-            id
-            serverURL
-            name
-            description
-            cryptoAddresses {
-              chain
-              address
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListProductsQuery = <
@@ -55812,91 +61348,86 @@ useListProductsQuery.fetcher = (variables?: ListProductsQueryVariables, options?
 
 export const SearchProductsDocument = `
     query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: products } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Product {
-                __typename
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Product {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            cryptoAddresses {
+              chain
+              address
+            }
+            url
+            orderable
+            properties {
+              id
+              key
+              value
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              serverURL
+              name
+              description
+              cryptoAddresses {
+                chain
+                address
+              }
+              identity {
                 id
-                isSubscribed
                 serverURL
                 name
                 description
-                cryptoAddresses {
-              chain
-              address
-            }
+              }
+              image {
+                id
                 url
-                orderable
-                properties {
-                  id
-                  key
-                  value
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-                company {
-                  id
-                  serverURL
-                  name
-                  description
-                  cryptoAddresses {
-              chain
-              address
-            }
-                  identity {
-                    id
-                    serverURL
-                    name
-                    description
-                  }
-                  image {
-                    id
-                    url
-                    alt
-                    filename
-                    width
-                    height
-                    mimeType
-                  }
-                }
+                alt
+                filename
+                width
+                height
+                mimeType
               }
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchProductsQuery = <
@@ -55922,25 +61453,25 @@ useSearchProductsQuery.fetcher = (variables: SearchProductsQueryVariables, optio
 
 export const UpdateProductDocument = `
     mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft: Boolean!) {
-      updateProduct(id: $id, data: $data, draft: $draft) {
-        id
-        name
-        cryptoAddresses {
-              chain
-              address
-            }
-        _status
-        properties {
-          id
-          key
-          value
-        }
-        image {
-          id
-          url
-        }
-      }
+  updateProduct(id: $id, data: $data, draft: $draft) {
+    id
+    name
+    cryptoAddresses {
+      chain
+      address
     }
+    _status
+    properties {
+      id
+      key
+      value
+    }
+    image {
+      id
+      url
+    }
+  }
+}
     `;
 
 export const useUpdateProductMutation = <
@@ -55961,73 +61492,73 @@ useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, o
 
 export const ListStartupsByCompanyDocument = `
     query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-      Startups(
-        draft: false
-        where: { company: { equals: $companyId } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          isSubscribed
-          title
-          description
-          stage
-          lookingFor
-          alreadyHave
-          fundsNeeded {
-            amount
-            currency
-          }
-          company {
-            id
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-            email
-          }
-          identity {
-            id
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          involvedUsers {
-            id
-            name
-            email
-          }
+  Startups(
+    draft: false
+    where: {company: {equals: $companyId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      title
+      description
+      stage
+      lookingFor
+      alreadyHave
+      fundsNeeded {
+        amount
+        currency
+      }
+      company {
+        id
+        name
+        cryptoAddresses {
+          chain
+          address
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        email
+      }
+      identity {
+        id
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      involvedUsers {
+        id
+        name
+        email
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListStartupsByCompanyQuery = <
@@ -56053,17 +61584,22 @@ useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVa
 
 export const ListStartupsByCreatorDocument = `
     query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-      Startups(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          _status
-        }
-        totalDocs
-      }
+  Startups(
+    draft: true
+    page: $page
+    limit: $limit
+    where: {createdBy: {equals: $userId}}
+  ) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      _status
     }
+    totalDocs
+  }
+}
     `;
 
 export const useListStartupsByCreatorQuery = <
@@ -56089,67 +61625,67 @@ useListStartupsByCreatorQuery.fetcher = (variables?: ListStartupsByCreatorQueryV
 
 export const StartupByIdDocument = `
     query StartupById($id: String!) {
-      Startup(id: $id) {
+  Startup(id: $id) {
+    id
+    isSubscribed
+    serverURL
+    title
+    _status
+    description
+    stage
+    lookingFor
+    alreadyHave
+    fundsNeeded {
+      amount
+      currency
+    }
+    company {
+      id
+      serverURL
+      name
+      cryptoAddresses {
+        chain
+        address
+      }
+      email
+    }
+    createdBy {
+      id
+    }
+    identity {
+      id
+      serverURL
+      name
+      description
+      website
+      image {
         id
-        isSubscribed
-        serverURL
-        title
-        _status
-        description
-        stage
-        lookingFor
-        alreadyHave
-        fundsNeeded {
-          amount
-          currency
-        }
-        company {
-          id
-          serverURL
-          name
-          cryptoAddresses {
-              chain
-              address
-            }
-          email
-        }
-        createdBy {
-          id
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-          website
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-        involvedUsers {
-          id
-          name
-          email
-        }
-        createdAt
-        updatedAt
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
     }
+    image {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    involvedUsers {
+      id
+      name
+      email
+    }
+    createdAt
+    updatedAt
+  }
+}
     `;
 
 export const useStartupByIdQuery = <
@@ -56175,33 +61711,33 @@ useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: R
 
 export const ListStartupsByIdentityDocument = `
     query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
-      Startups(
-        draft: false
-        where: { identity: { equals: $identityId } }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          isSubscribed
-          title
-          description
-          stage
-          identity {
-            id
-            name
-          }
-          image {
-            id
-            url
-          }
-        }
-        totalDocs
-        hasNextPage
-        nextPage
+  Startups(
+    draft: false
+    where: {identity: {equals: $identityId}}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      isSubscribed
+      title
+      description
+      stage
+      identity {
+        id
+        name
+      }
+      image {
+        id
+        url
       }
     }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
     `;
 
 export const useListStartupsByIdentityQuery = <
@@ -56227,16 +61763,16 @@ useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQuery
 
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
-      createStartup(data: $data, draft: $draft) {
-        id
-        title
-        _status
-        image {
-          id
-          url
-        }
-      }
+  createStartup(data: $data, draft: $draft) {
+    id
+    title
+    _status
+    image {
+      id
+      url
     }
+  }
+}
     `;
 
 export const useCreateStartupMutation = <
@@ -56257,10 +61793,10 @@ useCreateStartupMutation.fetcher = (variables: CreateStartupMutationVariables, o
 
 export const DeleteStartupDocument = `
     mutation DeleteStartup($id: String!) {
-      deleteStartup(id: $id) {
-        id
-      }
-    }
+  deleteStartup(id: $id) {
+    id
+  }
+}
     `;
 
 export const useDeleteStartupMutation = <
@@ -56281,70 +61817,70 @@ useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, o
 
 export const ListStartupsDocument = `
     query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
-      Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
-        docs {
-          id
-          isSubscribed
-          serverURL
-          title
-          description
-          stage
-          lookingFor
-          alreadyHave
-          fundsNeeded {
-            amount
-            currency
-          }
-          company {
-            id
-            serverURL
-            name
-            cryptoAddresses {
-              chain
-              address
-            }
-            email
-          }
-          identity {
-            id
-            serverURL
-            name
-            description
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-          }
-          image {
-            id
-            url
-            alt
-            filename
-            width
-            height
-            mimeType
-          }
-          involvedUsers {
-            id
-            name
-            email
-          }
+  Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
+    docs {
+      id
+      isSubscribed
+      serverURL
+      title
+      description
+      stage
+      lookingFor
+      alreadyHave
+      fundsNeeded {
+        amount
+        currency
+      }
+      company {
+        id
+        serverURL
+        name
+        cryptoAddresses {
+          chain
+          address
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
+        email
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      involvedUsers {
+        id
+        name
+        email
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useListStartupsQuery = <
@@ -56370,77 +61906,72 @@ useListStartupsQuery.fetcher = (variables?: ListStartupsQueryVariables, options?
 
 export const SearchStartupsDocument = `
     query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-      Searches(
-        draft: false
-        where: {
-          AND: [
-            { title: { contains: $searchTerm } }
-            { doc: { relationTo: startups } }
-          ]
-        }
-        page: $page
-        limit: $limit
-        sort: $sort
-      ) {
-        docs {
-          id
-          title
-          priority
-          doc(draft: false) {
-            relationTo
-            value {
-              ... on Startup {
-                __typename
-                id
-                isSubscribed
-                serverURL
-                title
-                description
-                stage
-                lookingFor
-                alreadyHave
-                fundsNeeded {
-                  amount
-                  currency
-                }
-                company {
-                  id
-                  serverURL
-                  name
-                  cryptoAddresses {
-              chain
-              address
+  Searches(
+    draft: false
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: startups}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Startup {
+            __typename
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            stage
+            lookingFor
+            alreadyHave
+            fundsNeeded {
+              amount
+              currency
             }
-                }
-                image {
-                  id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
-                }
-                identity {
-                  id
-                  serverURL
-                  name
-                  description
-                }
+            company {
+              id
+              serverURL
+              name
+              cryptoAddresses {
+                chain
+                address
               }
+            }
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            identity {
+              id
+              serverURL
+              name
+              description
             }
           }
         }
-        totalDocs
-        limit
-        totalPages
-        page
-        hasPrevPage
-        hasNextPage
-        prevPage
-        nextPage
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
     `;
 
 export const useSearchStartupsQuery = <
@@ -56466,16 +61997,16 @@ useSearchStartupsQuery.fetcher = (variables: SearchStartupsQueryVariables, optio
 
 export const UpdateStartupDocument = `
     mutation UpdateStartup($id: String!, $data: mutationStartupUpdateInput!, $draft: Boolean!) {
-      updateStartup(id: $id, data: $data, draft: $draft) {
-        id
-        title
-        _status
-        image {
-          id
-          url
-        }
-      }
+  updateStartup(id: $id, data: $data, draft: $draft) {
+    id
+    title
+    _status
+    image {
+      id
+      url
     }
+  }
+}
     `;
 
 export const useUpdateStartupMutation = <
@@ -56494,19 +62025,161 @@ export const useUpdateStartupMutation = <
 
 useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables, options);
 
+export const SubscribeToCompanyUpdatesDocument = `
+    mutation SubscribeToCompanyUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {email: $email, targetCollection: companies, targetID: $targetID}
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}
+    `;
+
+export const useSubscribeToCompanyUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SubscribeToCompanyUpdatesMutation, TError, SubscribeToCompanyUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<SubscribeToCompanyUpdatesMutation, TError, SubscribeToCompanyUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['SubscribeToCompanyUpdates'],
+    mutationFn: (variables?: SubscribeToCompanyUpdatesMutationVariables) => gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSubscribeToCompanyUpdatesMutation.fetcher = (variables: SubscribeToCompanyUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument, variables, options);
+
+export const SubscribeToJobUpdatesDocument = `
+    mutation SubscribeToJobUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {email: $email, targetCollection: jobs, targetID: $targetID}
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}
+    `;
+
+export const useSubscribeToJobUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SubscribeToJobUpdatesMutation, TError, SubscribeToJobUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<SubscribeToJobUpdatesMutation, TError, SubscribeToJobUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['SubscribeToJobUpdates'],
+    mutationFn: (variables?: SubscribeToJobUpdatesMutationVariables) => gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSubscribeToJobUpdatesMutation.fetcher = (variables: SubscribeToJobUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument, variables, options);
+
+export const SubscribeToProductUpdatesDocument = `
+    mutation SubscribeToProductUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {email: $email, targetCollection: products, targetID: $targetID}
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}
+    `;
+
+export const useSubscribeToProductUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SubscribeToProductUpdatesMutation, TError, SubscribeToProductUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<SubscribeToProductUpdatesMutation, TError, SubscribeToProductUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['SubscribeToProductUpdates'],
+    mutationFn: (variables?: SubscribeToProductUpdatesMutationVariables) => gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSubscribeToProductUpdatesMutation.fetcher = (variables: SubscribeToProductUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument, variables, options);
+
+export const SubscribeToTribeUpdatesDocument = `
+    mutation SubscribeToTribeUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {email: $email, targetCollection: identities, targetID: $targetID}
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}
+    `;
+
+export const useSubscribeToTribeUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SubscribeToTribeUpdatesMutation, TError, SubscribeToTribeUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<SubscribeToTribeUpdatesMutation, TError, SubscribeToTribeUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['SubscribeToTribeUpdates'],
+    mutationFn: (variables?: SubscribeToTribeUpdatesMutationVariables) => gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSubscribeToTribeUpdatesMutation.fetcher = (variables: SubscribeToTribeUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument, variables, options);
+
+export const SubscribeToVentureUpdatesDocument = `
+    mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {email: $email, targetCollection: startups, targetID: $targetID}
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}
+    `;
+
+export const useSubscribeToVentureUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SubscribeToVentureUpdatesMutation, TError, SubscribeToVentureUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<SubscribeToVentureUpdatesMutation, TError, SubscribeToVentureUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['SubscribeToVentureUpdates'],
+    mutationFn: (variables?: SubscribeToVentureUpdatesMutationVariables) => gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(SubscribeToVentureUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSubscribeToVentureUpdatesMutation.fetcher = (variables: SubscribeToVentureUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(SubscribeToVentureUpdatesDocument, variables, options);
+
 export const ListPublishedSyndicationUrlsDocument = `
     query ListPublishedSyndicationUrls {
-      Syndications(
-        draft: false
-        limit: 0
-      ) {
-        docs {
-          url
-          name
-          description
-        }
-      }
+  Syndications(draft: false, limit: 0) {
+    docs {
+      url
+      name
+      description
     }
+  }
+}
     `;
 
 export const useListPublishedSyndicationUrlsQuery = <
@@ -56530,22 +62203,134 @@ useListPublishedSyndicationUrlsQuery.getKey = (variables?: ListPublishedSyndicat
 
 useListPublishedSyndicationUrlsQuery.fetcher = (variables?: ListPublishedSyndicationUrlsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables, options);
 
+export const UnsubscribeFromCompanyUpdatesDocument = `
+    mutation UnsubscribeFromCompanyUpdates($subscriptionID: String!) {
+  deleteNotificationSubscription(id: $subscriptionID) {
+    id
+  }
+}
+    `;
+
+export const useUnsubscribeFromCompanyUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnsubscribeFromCompanyUpdatesMutation, TError, UnsubscribeFromCompanyUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<UnsubscribeFromCompanyUpdatesMutation, TError, UnsubscribeFromCompanyUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['UnsubscribeFromCompanyUpdates'],
+    mutationFn: (variables?: UnsubscribeFromCompanyUpdatesMutationVariables) => gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(UnsubscribeFromCompanyUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUnsubscribeFromCompanyUpdatesMutation.fetcher = (variables: UnsubscribeFromCompanyUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(UnsubscribeFromCompanyUpdatesDocument, variables, options);
+
+export const UnsubscribeFromJobUpdatesDocument = `
+    mutation UnsubscribeFromJobUpdates($subscriptionID: String!) {
+  deleteNotificationSubscription(id: $subscriptionID) {
+    id
+  }
+}
+    `;
+
+export const useUnsubscribeFromJobUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnsubscribeFromJobUpdatesMutation, TError, UnsubscribeFromJobUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<UnsubscribeFromJobUpdatesMutation, TError, UnsubscribeFromJobUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['UnsubscribeFromJobUpdates'],
+    mutationFn: (variables?: UnsubscribeFromJobUpdatesMutationVariables) => gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(UnsubscribeFromJobUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUnsubscribeFromJobUpdatesMutation.fetcher = (variables: UnsubscribeFromJobUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(UnsubscribeFromJobUpdatesDocument, variables, options);
+
+export const UnsubscribeFromProductUpdatesDocument = `
+    mutation UnsubscribeFromProductUpdates($subscriptionID: String!) {
+  deleteNotificationSubscription(id: $subscriptionID) {
+    id
+  }
+}
+    `;
+
+export const useUnsubscribeFromProductUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnsubscribeFromProductUpdatesMutation, TError, UnsubscribeFromProductUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<UnsubscribeFromProductUpdatesMutation, TError, UnsubscribeFromProductUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['UnsubscribeFromProductUpdates'],
+    mutationFn: (variables?: UnsubscribeFromProductUpdatesMutationVariables) => gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(UnsubscribeFromProductUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUnsubscribeFromProductUpdatesMutation.fetcher = (variables: UnsubscribeFromProductUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(UnsubscribeFromProductUpdatesDocument, variables, options);
+
+export const UnsubscribeFromTribeUpdatesDocument = `
+    mutation UnsubscribeFromTribeUpdates($subscriptionID: String!) {
+  deleteNotificationSubscription(id: $subscriptionID) {
+    id
+  }
+}
+    `;
+
+export const useUnsubscribeFromTribeUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnsubscribeFromTribeUpdatesMutation, TError, UnsubscribeFromTribeUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<UnsubscribeFromTribeUpdatesMutation, TError, UnsubscribeFromTribeUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['UnsubscribeFromTribeUpdates'],
+    mutationFn: (variables?: UnsubscribeFromTribeUpdatesMutationVariables) => gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(UnsubscribeFromTribeUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUnsubscribeFromTribeUpdatesMutation.fetcher = (variables: UnsubscribeFromTribeUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(UnsubscribeFromTribeUpdatesDocument, variables, options);
+
+export const UnsubscribeFromVentureUpdatesDocument = `
+    mutation UnsubscribeFromVentureUpdates($subscriptionID: String!) {
+  deleteNotificationSubscription(id: $subscriptionID) {
+    id
+  }
+}
+    `;
+
+export const useUnsubscribeFromVentureUpdatesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UnsubscribeFromVentureUpdatesMutation, TError, UnsubscribeFromVentureUpdatesMutationVariables, TContext>) => {
+    
+    return useMutation<UnsubscribeFromVentureUpdatesMutation, TError, UnsubscribeFromVentureUpdatesMutationVariables, TContext>(
+      {
+    mutationKey: ['UnsubscribeFromVentureUpdates'],
+    mutationFn: (variables?: UnsubscribeFromVentureUpdatesMutationVariables) => gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUnsubscribeFromVentureUpdatesMutation.fetcher = (variables: UnsubscribeFromVentureUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument, variables, options);
+
 export const UpdateCommentContentDocument = `
-    mutation UpdateCommentContent(
-      $id: String!
-      $content: String!
-    ) {
-      updateComment(
-        id: $id
-        data: {
-          content: $content
-        }
-      ) {
-        id
-        content
-        updatedAt
-      }
-    }
+    mutation UpdateCommentContent($id: String!, $content: String!) {
+  updateComment(id: $id, data: {content: $content}) {
+    id
+    content
+    updatedAt
+  }
+}
     `;
 
 export const useUpdateCommentContentMutation = <

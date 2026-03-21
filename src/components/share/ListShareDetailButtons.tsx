@@ -26,6 +26,7 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     subscriptionTarget,
 }) => {
     const navigate = useNavigate();
+    const compactShareActionSize = compact && size === "large" ? "middle" : size;
 
     return compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
@@ -33,13 +34,13 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 path={detailPath}
                 title={title}
                 text={text}
-                size={size}
+                size={compactShareActionSize}
                 className="NativeShareButton"
             />
             {subscriptionTarget ? (
                 <SubscribeButton
                     {...subscriptionTarget}
-                    size={size}
+                    size={compactShareActionSize}
                 />
             ) : null}
             <Button
