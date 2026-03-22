@@ -1,49 +1,11 @@
 import * as React from "react";
-import { Alert, Button, Empty, Flex, Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Alert, Empty, Flex, Typography } from "antd";
 
 import { SplashSectionsSkeleton } from "./LoadingSkeleton/SplashSectionsSkeleton";
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
 import { SyndicationSection } from "./splash/SyndicationSection";
 import { useListIdentitiesQuery } from "./hooks";
-
-const routeCards = [
-    {
-        key: "companies",
-        eyebrow: "Companies",
-        title: "Profiles and related activity",
-        description: "Review company pages, contact links, and the offers connected to each profile.",
-        to: "/companies",
-    },
-    {
-        key: "market",
-        eyebrow: "Market",
-        title: "Products and services",
-        description: "Browse orderable listings published by participating companies.",
-        to: "/products-services",
-    },
-    {
-        key: "jobs",
-        eyebrow: "Jobs",
-        title: "Open roles and hiring pages",
-        description: "Find published jobs with company context and direct detail pages.",
-        to: "/jobs",
-    },
-    {
-        key: "ventures",
-        eyebrow: "Ventures",
-        title: "Startup and venture listings",
-        description: "Explore emerging projects shared by tribes, founders, and companies.",
-        to: "/ventures",
-    },
-    {
-        key: "tribes",
-        eyebrow: "Tribes",
-        title: "Identity groups and ecosystems",
-        description: "See how companies, jobs, products, and ventures cluster around communities.",
-        to: "/tribes",
-    },
-];
+import { RouteButton } from "./RouteButton";
 
 const Splash: React.FunctionComponent = () => {
     const identitiesQuery = useListIdentitiesQuery({
@@ -73,32 +35,12 @@ const Splash: React.FunctionComponent = () => {
                         venture pages, and active tribes across syndicated endpoints.
                     </Typography.Paragraph>
                     <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
-                        <Link to="/products-services">
-                            <Button type="primary" size="large">Explore market</Button>
-                        </Link>
-                        <Link to="/tribes">
-                            <Button size="large">Browse tribes</Button>
-                        </Link>
-                    </Flex>
-                    <Flex wrap justify="center" gap={10} className="SplashPage__routePills">
-                        <Link to="/companies" className="SplashPage__routePill">Companies <span>profiles</span></Link>
-                        <Link to="/products-services" className="SplashPage__routePill">Market <span>orderable</span></Link>
-                        <Link to="/jobs" className="SplashPage__routePill">Jobs <span>published</span></Link>
-                        <Link to="/ventures" className="SplashPage__routePill">Ventures <span>startup</span></Link>
-                        <Link to="/tribes" className="SplashPage__routePill">Tribes <span>identity</span></Link>
-                    </Flex>
-                    <Flex wrap gap={16} justify="center" className="SplashPage__summaryGrid">
-                        {routeCards.map((card) => (
-                            <Link key={card.key} to={card.to} className="SplashPage__summaryCard">
-                                <span className="SplashPage__summaryEyebrow">{card.eyebrow}</span>
-                                <Typography.Title level={4} className="SplashPage__summaryTitle">
-                                    {card.title}
-                                </Typography.Title>
-                                <Typography.Paragraph className="SplashPage__summaryDescription">
-                                    {card.description}
-                                </Typography.Paragraph>
-                            </Link>
-                        ))}
+                        <RouteButton to="/products-services" type="primary" size="large">
+                            Explore market
+                        </RouteButton>
+                        <RouteButton to="/tribes" size="large">
+                            Browse tribes
+                        </RouteButton>
                     </Flex>
                 </Flex>
             </section>

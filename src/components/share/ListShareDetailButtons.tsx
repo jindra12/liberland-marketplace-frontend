@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Button, Flex, Space } from "antd";
+import { Flex, Space } from "antd";
 import type { ButtonProps } from "antd";
-import { useNavigate } from "react-router-dom";
 import { NativeShareButton } from "./NativeShareButton";
+import { RouteButton } from "../RouteButton";
 
 type ListShareDetailButtonsProps = {
     detailPath: string;
@@ -21,8 +21,6 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     compact = false,
     desktopDetailButtonType,
 }) => {
-    const navigate = useNavigate();
-
     return compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
             <NativeShareButton
@@ -32,13 +30,13 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 size={size}
                 className="NativeShareButton"
             />
-            <Button
+            <RouteButton
+                to={detailPath}
                 size={size}
                 className="ActionBtn"
-                onClick={() => navigate(detailPath)}
             >
                 Details
-            </Button>
+            </RouteButton>
         </Space.Compact>
     ) : (
         <Flex wrap gap="12px" className="ListShareDetailButtons">
@@ -49,14 +47,14 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 size={size}
                 className="NativeShareButton"
             />
-            <Button
+            <RouteButton
+                to={detailPath}
                 type={desktopDetailButtonType}
                 size={size}
                 className="ActionBtn"
-                onClick={() => navigate(detailPath)}
             >
                 Details
-            </Button>
+            </RouteButton>
         </Flex>
     );
 };

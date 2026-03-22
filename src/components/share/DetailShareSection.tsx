@@ -104,7 +104,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
         text,
         url: shareUrl,
         onCopyLink: () => {
-            void copyLink(shareUrl);
+            copyLink(shareUrl);
         },
     };
 

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListStartupsByIdentityQuery } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
+import { RouteButton } from "../RouteButton";
 
 type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
 
@@ -22,7 +23,6 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
     identityId,
 }) => {
     const { md } = Grid.useBreakpoint();
-    const navigate = useNavigate();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -48,7 +48,6 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                                     detailPath={`/ventures/${startup.id}`}
                                     title={startup.title || "Venture"}
                                     text={`Check out ${startup.title} on NSwap.`}
-                                    onDetailsClick={() => navigate(`/ventures/${startup.id}`)}
                                 />
                             )] : undefined}
                         >
@@ -78,7 +77,6 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                                         detailPath={`/ventures/${startup.id}`}
                                         title={startup.title || "Venture"}
                                         text={`Check out ${startup.title} on NSwap.`}
-                                        onDetailsClick={() => navigate(`/ventures/${startup.id}`)}
                                     />
                                 )}
                             </div>
@@ -87,11 +85,15 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                 }}
             />
             {remaining > 0 && identityId && (
-                <Link to={`/ventures?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                    <Button type="link" icon={<RightOutlined />} iconPosition="end">
-                        And +{remaining} more
-                    </Button>
-                </Link>
+                <RouteButton
+                    to={`/ventures?tribe=${identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
+                    And +{remaining} more
+                </RouteButton>
             )}
         </Card>
     );

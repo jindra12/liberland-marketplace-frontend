@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useIsFetching } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { useEndpointContext } from "../EndpointContext";
@@ -9,6 +9,8 @@ import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../../utils";
 import { Markdown } from "../Markdown";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { DetailBackButton } from "./DetailBackButton";
+import { RouteButton } from "../RouteButton";
 
 const SyndicationDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -42,11 +44,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 status="404"
                 title="Syndicated URL not found"
                 subTitle="This syndicated URL is not available in your current marketplace context."
-                extra={(
-                    <Link to="/syndication">
-                        <Button type="primary">Back to syndication</Button>
-                    </Link>
-                )}
+                extra={<RouteButton to="/syndication" type="primary">Back to syndication</RouteButton>}
             />
         );
     }
@@ -56,7 +54,8 @@ const SyndicationDetail: React.FunctionComponent = () => {
     const shareText = `Check out ${title} on NSwap.`;
 
     return (
-        <Flex flex={1} vertical gap={12}>
+        <Flex flex={1} vertical gap={12} className="EntityDetail SyndicationDetail">
+            <DetailBackButton to="/syndication" label="Back to syndication" />
             <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                 <Avatar
                     shape="circle"
@@ -93,9 +92,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 <Button type="primary" size="large" href={entry.value} target="_blank" rel="noreferrer">
                     Visit URL
                 </Button>
-                <Link to="/syndication">
-                    <Button size="large">Back to list</Button>
-                </Link>
+                <RouteButton to="/syndication" size="large">Back to list</RouteButton>
             </Flex>
             <Divider />
             {entry.description && (

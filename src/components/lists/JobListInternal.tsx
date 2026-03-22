@@ -71,7 +71,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                         </Link>
                     ) : undefined;
                 },
-                description: (job) => {
+                body: (job) => {
                     const salary = formatSalary(
                         job.salaryRange?.min,
                         job.salaryRange?.max,
@@ -81,27 +81,26 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     const isInactive = job.isActive === false;
                     const employmentType = formatEmploymentType(job.employmentType);
                     const postedAt = typeof job.postedAt === "string" ? job.postedAt : undefined;
+
                     return (
-                        <JobDetailsSummary
-                            companyName={job.company?.name}
-                            companyId={job.company?.id}
-                            location={job.location}
-                            employmentType={employmentType}
-                            salary={salary}
-                            bounty={bounty}
-                            positions={positions}
-                            postedAt={postedAt}
-                            isInactive={isInactive}
-                            showCompanyIcon
-                            metaSize={[8, 4]}
-                        />
+                        <div className="EntityList__body JobList__body">
+                            <JobDetailsSummary
+                                companyName={job.company?.name}
+                                companyId={job.company?.id}
+                                location={job.location}
+                                employmentType={employmentType}
+                                salary={salary}
+                                bounty={bounty}
+                                positions={positions}
+                                postedAt={postedAt}
+                                isInactive={isInactive}
+                                showCompanyIcon
+                                metaSize={[8, 4]}
+                            />
+                            <Markdown className="Markdown--clamp3 EntityList__description">{job.description}</Markdown>
+                        </div>
                     );
                 },
-                body: (job) => (
-                    <div className="JobList__description">
-                        <Markdown className="Markdown--clamp3">{job.description}</Markdown>
-                    </div>
-                ),
                 actions: (job) => (
                     md ? (
                         <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">

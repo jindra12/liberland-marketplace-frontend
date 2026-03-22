@@ -20,12 +20,19 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
     children,
 }) => {
     const [scope, setScope] = React.useState<SearchScope>();
-    const items: { key: SearchScope, label: string }[] = [
+    const scopeItems: { key: SearchScope, label: string }[] = [
         { key: "jobs", label: "Jobs" },
         { key: "companies", label: "Companies" },
         { key: "startups", label: "Ventures" },
         { key: "identities", label: "Tribes" },
         { key: "products", label: "Products / Services" },
+    ];
+    const items: MenuProps["items"] = [
+        {
+            type: "group",
+            label: "Looking for",
+            children: scopeItems,
+        },
     ];
 
     const onClick: MenuProps["onClick"] = (info) => {

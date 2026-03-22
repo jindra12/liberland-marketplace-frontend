@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GlobalOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { Flex, List, Typography } from "antd";
+import { List, Typography } from "antd";
 import { IdentityTagItem } from "./IdentityTagLink";
 
 type CompanyContactLinksProps = {
@@ -98,22 +98,30 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
         <List
             itemLayout="vertical"
             size="small"
-            header="Contacts"
+            header={(
+                <Typography.Text className="CompanyContactLinks__heading">
+                    Contacts
+                </Typography.Text>
+            )}
             bordered
             dataSource={items}
             className={resolvedClassName}
             renderItem={(item) => (
                 <List.Item key={item.key}>
-                    <Flex wrap gap="16px" align="center" justify="space-between">
-                        <strong>{item.title}:</strong>
+                    <div className="CompanyContactLinks__detailRow">
+                        <Typography.Text className="CompanyContactLinks__label">
+                            {item.title}
+                        </Typography.Text>
                         <Typography.Link
+                            className="CompanyContactLinks__value CompanyContactLinks__value--detail"
                             href={item.href}
                             target={item.external ? "_blank" : undefined}
                             rel={item.external ? "noreferrer" : undefined}
                         >
-                            {item.icon} {item.text}
+                            {item.icon}
+                            <span>{item.text}</span>
                         </Typography.Link>
-                    </Flex>
+                    </div>
                 </List.Item>
             )}
         />

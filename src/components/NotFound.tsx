@@ -1,16 +1,13 @@
 import * as React from "react";
-import { Button, Result } from "antd";
+import { Result } from "antd";
+import { RouteButton } from "./RouteButton";
 
 const NotFound: React.FunctionComponent = () => (
     <Result
         status="404"
         title="Page not found"
         subTitle="The page you requested does not exist."
-        extra={(
-            <Button type="primary" href="/">
-                Back to homepage
-            </Button>
-        )}
+        extra={<RouteButton to="/" type="primary">Back to homepage</RouteButton>}
     />
 );
 

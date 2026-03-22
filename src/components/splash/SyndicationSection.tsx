@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Flex, Space, Tag, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Card, Flex, Space, Tag, Typography } from "antd";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName } from "../../utils";
 import { NativeShareButton } from "../share/NativeShareButton";
+import { RouteButton } from "../RouteButton";
 
 export const SyndicationSection: React.FunctionComponent = () => {
-    const navigate = useNavigate();
     const { urls, enabled } = useEndpointContext();
     const items = React.useMemo(() => (
         [...urls].sort((left, right) => {
@@ -24,6 +24,10 @@ export const SyndicationSection: React.FunctionComponent = () => {
         })
     ), [urls]);
 
+    if (items.length <= 1) {
+        return null;
+    }
+
     return (
         <section className="SplashPage__syndicationSection">
             <Flex justify="space-between" align="flex-end" wrap gap={16} className="SplashPage__syndicationHeader">
@@ -37,11 +41,9 @@ export const SyndicationSection: React.FunctionComponent = () => {
                         Open the list to add new URLs, and use any card to review or toggle a specific syndicated source.
                     </Typography.Paragraph>
                 </Flex>
-                <Link to="/syndication">
-                    <Button type="primary" className="SplashPage__syndicationManageBtn">
-                        Manage endpoints
-                    </Button>
-                </Link>
+                <RouteButton to="/syndication" type="primary" className="SplashPage__syndicationManageBtn">
+                    Manage endpoints
+                </RouteButton>
             </Flex>
 
             <div className="SplashPage__syndicationGrid">
@@ -50,7 +52,7 @@ export const SyndicationSection: React.FunctionComponent = () => {
                     const isDefault = endpoint.value === BACKEND_URL;
                     const eyebrow = endpoint.enabled ? "Enabled" : "Available";
                     const detailHref = `/syndication/${encodeURIComponent(endpoint.value)}`;
-                    const description = endpoint.description?.trim() || "Configured marketplace endpoint.";
+                    const description = endpoint.description || "Configured marketplace endpoint.";
 
                     return (
                         <Card
@@ -96,12 +98,12 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                             text={`Check out ${getSyndicationName(endpoint)} on NSwap.`}
                                             className="NativeShareButton"
                                         />
-                                        <Button
+                                        <RouteButton
+                                            to={detailHref}
                                             type="primary"
-                                            onClick={() => navigate(detailHref)}
                                         >
                                             Details
-                                        </Button>
+                                        </RouteButton>
                                     </Space.Compact>
                                 </Flex>
                             </Flex>
