@@ -9,6 +9,7 @@ type LoginButtonProps = {
     type?: React.ComponentProps<typeof Button>["type"];
     block?: boolean;
     danger?: boolean;
+    className?: string;
     onAfterClick?: () => void;
     onAfterAction?: () => void | Promise<void>;
 };
@@ -18,6 +19,7 @@ export const LoginButton: React.FunctionComponent<LoginButtonProps> = ({
     type,
     block,
     danger,
+    className,
     onAfterClick,
     onAfterAction,
 }) => {
@@ -31,6 +33,7 @@ export const LoginButton: React.FunctionComponent<LoginButtonProps> = ({
                     icon={action === "login" ? <LoginOutlined /> : <LogoutOutlined />}
                     block={block}
                     danger={danger}
+                    className={className}
                     onClick={(event) => {
                         event.preventDefault();
                         runWithEndpointSelection(async () => {

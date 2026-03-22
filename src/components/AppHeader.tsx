@@ -11,6 +11,7 @@ import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { DesktopDrawer } from "./DesktopDrawer";
 import { useCartItems } from "./cart/useCartItems";
 import { RouteButton } from "./RouteButton";
+import { useEndpointContext } from "./EndpointContext";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -33,9 +34,15 @@ export const AppHeader: React.FunctionComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+    const { urls } = useEndpointContext();
     const { totalQuantity } = useCartItems();
+    const authAction = auth.isAuthenticated ? "logout" : "login";
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        setDrawerOpen(false);
+    }, [location.pathname]);
 
     const desktopItems = React.useMemo(() => {
         if (totalQuantity > 0) {
@@ -98,7 +105,6 @@ export const AppHeader: React.FunctionComponent = () => {
                             />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
-                            <DesktopDrawer />
                             <EndpointAuthAction>
                                 {({ runWithAuthOrLogin }) => (
                                     <Button
@@ -110,21 +116,26 @@ export const AppHeader: React.FunctionComponent = () => {
                                             runWithAuthOrLogin(() => navigate("/publish"));
                                         }}
                                     >
-                                        Publish your ad
+                                        Publish ad
                                     </Button>
                                 )}
                             </EndpointAuthAction>
+                            <LoginButton
+                                action={authAction}
+                                type="default"
+                                className="AppHeader__authBtn"
+                                onAfterAction={() => navigate("/")}
+                            />
+                            <DesktopDrawer />
                         </Flex>
                     </>
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
-                        <SearchButton className="AppHeader__iconButton" />
-                        <RouteButton
-                            to="/syndication"
-                            className="AppHeader__iconButton"
+                        <LoginButton
+                            action={authAction}
                             type="text"
-                            icon={<GlobalOutlined />}
-                            aria-label="Open syndication"
+                            className="AppHeader__mobileAuthBtn"
+                            onAfterAction={() => navigate("/")}
                         />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
                         <Button
@@ -154,6 +165,23 @@ export const AppHeader: React.FunctionComponent = () => {
                                     selectedKeys={selectedDrawerKeys}
                                 />
                                 <div className="AppHeader__drawerNav">
+                                    <SearchButton
+                                        type="default"
+                                        block
+                                        onScopeSelect={() => setDrawerOpen(false)}
+                                    >
+                                        Search
+                                    </SearchButton>
+                                    {urls.length > 1 ? (
+                                        <RouteButton
+                                            to="/syndication"
+                                            block
+                                            type="default"
+                                            icon={<GlobalOutlined />}
+                                        >
+                                            Syndication
+                                        </RouteButton>
+                                    ) : null}
                                     <EndpointAuthAction>
                                         {({ runWithAuthOrLogin }) => (
                                             <Button
@@ -169,7 +197,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                                 }}
                                                 className="AppHeader__drawerPublish"
                                             >
-                                                Publish your ad
+                                                Publish ad
                                             </Button>
                                         )}
                                     </EndpointAuthAction>
@@ -181,9 +209,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                         >
                                             Profile
                                         </Button>
-                                    ) : (
-                                        <LoginButton block onAfterClick={() => setDrawerOpen(false)} />
-                                    )}
+                                    ) : null}
                                 </div>
                             </div>
                         </Drawer>
