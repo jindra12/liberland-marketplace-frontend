@@ -4,10 +4,9 @@ import { Avatar,
     Flex,
     Grid,
     Space,
-    Typography,
-    Button
+    Typography
 } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import {
@@ -24,6 +23,8 @@ import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { DetailBackButton } from "./DetailBackButton";
+import { RouteButton } from "../RouteButton";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -51,7 +52,8 @@ const JobDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
-                    <Flex flex={1} vertical gap={12}>
+                    <Flex flex={1} vertical gap={12} className="EntityDetail JobDetail">
+                        <DetailBackButton to="/jobs" label="Back to jobs" />
                         <Space size={16} align="start" className="JobDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <div className="EntityDetail__headerBody JobDetail__headerBody">
@@ -83,9 +85,7 @@ const JobDetail: React.FunctionComponent = () => {
                             </div>
                         </Space>
                         {isOwner && (
-                            <Link to={`/jobs/edit/${id}`}>
-                                <Button icon={<EditOutlined />}>Edit</Button>
-                            </Link>
+                            <RouteButton to={`/jobs/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
                         )}
                         <Divider />
                         <Flex gap="32px" vertical>

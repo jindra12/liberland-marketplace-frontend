@@ -11,6 +11,7 @@ type SearchButtonProps = {
     block?: boolean;
     className?: string;
     children?: React.ReactNode;
+    onScopeSelect?: () => void;
 };
 
 export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
@@ -18,18 +19,27 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = ({
     block,
     className,
     children,
+    onScopeSelect,
 }) => {
     const [scope, setScope] = React.useState<SearchScope>();
-    const items: { key: SearchScope, label: string }[] = [
+    const scopeItems: { key: SearchScope, label: string }[] = [
         { key: "jobs", label: "Jobs" },
         { key: "companies", label: "Companies" },
         { key: "startups", label: "Ventures" },
         { key: "identities", label: "Tribes" },
         { key: "products", label: "Products / Services" },
     ];
+    const items: MenuProps["items"] = [
+        {
+            type: "group",
+            label: "Looking for",
+            children: scopeItems,
+        },
+    ];
 
     const onClick: MenuProps["onClick"] = (info) => {
         const key = info.key as SearchScope;
+        onScopeSelect?.();
         setScope(key);
     };
 

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Button, Flex, Space } from "antd";
+import { Flex, Space } from "antd";
 import type { ButtonProps } from "antd";
-import { useNavigate } from "react-router-dom";
 import { NativeShareButton } from "./NativeShareButton";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
+import { RouteButton } from "../RouteButton";
 
 type ListShareDetailButtonsProps = {
     detailPath: string;
@@ -25,7 +25,6 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     desktopDetailButtonType,
     subscriptionTarget,
 }) => {
-    const navigate = useNavigate();
     const compactShareActionSize = compact && size === "large" ? "middle" : size;
 
     return compact ? (
@@ -43,13 +42,13 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                     size={compactShareActionSize}
                 />
             ) : null}
-            <Button
+            <RouteButton
+                to={detailPath}
                 size={size}
                 className="ActionBtn"
-                onClick={() => navigate(detailPath)}
             >
                 Details
-            </Button>
+            </RouteButton>
         </Space.Compact>
     ) : (
         <Flex wrap gap="12px" className="ListShareDetailButtons">
@@ -66,14 +65,14 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                     size={size}
                 />
             ) : null}
-            <Button
+            <RouteButton
+                to={detailPath}
                 type={desktopDetailButtonType}
                 size={size}
                 className="ActionBtn"
-                onClick={() => navigate(detailPath)}
             >
                 Details
-            </Button>
+            </RouteButton>
         </Flex>
     );
 };

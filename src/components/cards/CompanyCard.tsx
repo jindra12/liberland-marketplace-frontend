@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Button, Card, Grid, List, Space, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Avatar, Card, Grid, List, Space, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListCompaniesQuery } from "../../generated/graphql";
 import { getImage } from "../../utils";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
+import { RouteButton } from "../RouteButton";
 
 type CompanyItem = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["docs"]>[number];
 
@@ -22,7 +23,6 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
     identityId,
 }) => {
     const { md } = Grid.useBreakpoint();
-    const navigate = useNavigate();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
 
     return (
@@ -50,7 +50,6 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                                     detailPath={`/companies/${company.id}`}
                                     title={company.name || "Company"}
                                     text={`Check out ${company.name} on NSwap.`}
-                                    onDetailsClick={() => navigate(`/companies/${company.id}`)}
                                 />
                             )] : undefined}
                         >
@@ -84,7 +83,6 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                                         detailPath={`/companies/${company.id}`}
                                         title={company.name || "Company"}
                                         text={`Check out ${company.name} on NSwap.`}
-                                        onDetailsClick={() => navigate(`/companies/${company.id}`)}
                                     />
                                 )}
                             </div>
@@ -93,11 +91,15 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                 }}
             />
             {remaining > 0 && identityId && (
-                <Link to={`/companies?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                    <Button type="link" icon={<RightOutlined />} iconPosition="end">
-                        And +{remaining} more
-                    </Button>
-                </Link>
+                <RouteButton
+                    to={`/companies?tribe=${identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
+                    And +{remaining} more
+                </RouteButton>
             )}
         </Card>
     );

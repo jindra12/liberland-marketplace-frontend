@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Avatar,
     Button,
     Descriptions,
@@ -25,6 +25,8 @@ import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } f
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { DetailBackButton } from "./DetailBackButton";
+import { RouteButton } from "../RouteButton";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -88,7 +90,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 ) : null;
 
                 return (
-                    <Flex flex={1} vertical gap={12}>
+                    <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
+                        <DetailBackButton to="/products-services" label="Back to products / services" />
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageSrc && (
                                 <Avatar
@@ -145,9 +148,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Flex>
                         {isOwner && (
-                            <Link to={`/products-services/edit/${id}`}>
-                                <Button icon={<EditOutlined />}>Edit</Button>
-                            </Link>
+                            <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
                         )}
                         <Divider />
                         <Flex gap="32px" vertical>
@@ -186,9 +187,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                         </Button>
                                     )}
                                     {product?.company?.id && (
-                                        <Link to={`/companies/${product.company.id}`}>
-                                            <Button>View company</Button>
-                                        </Link>
+                                        <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
                                     )}
                                 </Flex>
                             </>

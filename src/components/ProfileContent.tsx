@@ -22,6 +22,7 @@ import {
     useListStartupsByCreatorQuery,
 } from "./hooks";
 import { LoginButton } from "./LoginButton";
+import { RouteButton } from "./RouteButton";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
@@ -182,9 +183,7 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <div className="Profile__listingsHeader">
                 <Typography.Title level={3} className="Profile__listingsTitle">My Listings</Typography.Title>
-                <Link to="/publish">
-                    <Button type="primary" icon={<PlusOutlined />}>Create Listing</Button>
-                </Link>
+                <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>Create Listing</RouteButton>
             </div>
             <Tabs
                 items={[
@@ -199,12 +198,8 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(job) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/jobs/edit/${job.id}`}>
-                                                <Button size="small" icon={<EditOutlined />}>Edit</Button>
-                                            </Link>,
-                                            <Link key="view" to={`/jobs/${job.id}`}>
-                                                <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
-                                            </Link>,
+                                            <RouteButton key="edit" to={`/jobs/edit/${job.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
+                                            <RouteButton key="view" to={`/jobs/${job.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
                                             <Popconfirm
                                                 key="delete"
                                                 title="Delete this job?"
@@ -236,12 +231,8 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(company) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/companies/edit/${company.id}`}>
-                                                <Button size="small" icon={<EditOutlined />}>Edit</Button>
-                                            </Link>,
-                                            <Link key="view" to={`/companies/${company.id}`}>
-                                                <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
-                                            </Link>,
+                                            <RouteButton key="edit" to={`/companies/edit/${company.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
+                                            <RouteButton key="view" to={`/companies/${company.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
                                             <Popconfirm
                                                 key="delete"
                                                 title="Delete this company?"
@@ -270,12 +261,8 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(startup) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/ventures/edit/${startup.id}`}>
-                                                <Button size="small" icon={<EditOutlined />}>Edit</Button>
-                                            </Link>,
-                                            <Link key="view" to={`/ventures/${startup.id}`}>
-                                                <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
-                                            </Link>,
+                                            <RouteButton key="edit" to={`/ventures/edit/${startup.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
+                                            <RouteButton key="view" to={`/ventures/${startup.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
                                             <Popconfirm
                                                 key="delete"
                                                 title="Delete this venture?"
@@ -304,12 +291,8 @@ export const ProfileContent: React.FunctionComponent = () => {
                                 renderItem={(product) => (
                                     <List.Item
                                         actions={[
-                                            <Link key="edit" to={`/products-services/edit/${product.id}`}>
-                                                <Button size="small" icon={<EditOutlined />}>Edit</Button>
-                                            </Link>,
-                                            <Link key="view" to={`/products-services/${product.id}`}>
-                                                <Button size="small" type="link" icon={<EyeOutlined />}>View</Button>
-                                            </Link>,
+                                            <RouteButton key="edit" to={`/products-services/edit/${product.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
+                                            <RouteButton key="view" to={`/products-services/${product.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
                                             <Popconfirm
                                                 key="delete"
                                                 title="Delete this product?"

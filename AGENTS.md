@@ -13,9 +13,9 @@
 - Read CLAUDE.md in the same folder for further instructions
 
 ## Code Hygiene
-- Do not use `.trim()` unless it adds clear, necessary value to the behavior.
-- If a `trim()` call is not materially required, do not add it.
+- Do not use `.trim()` unless it adds clear, necessary value to the behavior
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Use `Skeleton` for page-level loading states and `Spin` for localized/action loading states.
+- Do not add `.catch()` blocks to promises unless the user explicitly asks for that handling style or the behavior clearly requires local error handling.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly.

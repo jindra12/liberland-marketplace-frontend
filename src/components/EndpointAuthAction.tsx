@@ -49,7 +49,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
         await nextAction.action();
     }, []);
 
-    const runWithEndpointSelection = React.useCallback((action: EndpointAction) => {
+    const runWithEndpointSelection = React.useCallback(async (action: EndpointAction) => {
         if (urls.length === 1) {
             const [onlyEndpoint] = urls;
 
@@ -59,7 +59,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                 return;
             }
 
-            void runPendingAction({ action, targetAuthUrl: onlyEndpoint.value });
+            await runPendingAction({ action, targetAuthUrl: onlyEndpoint.value });
             return;
         }
 

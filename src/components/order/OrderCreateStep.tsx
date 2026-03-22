@@ -11,13 +11,13 @@ import {
     Typography,
 } from "antd";
 import type { FormInstance } from "antd";
-import { Link } from "react-router-dom";
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
 import { CRYPTO_CHAIN_LABELS } from "../../utils";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
 import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem";
 import type { OrderFormValues } from "./types";
+import { RouteButton } from "../RouteButton";
 
 type OrderCreateStepProps = {
     form: FormInstance<OrderFormValues>;
@@ -132,9 +132,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             />
 
             <Flex justify="space-between" wrap gap={12}>
-                <Link to="/cart">
-                    <Button>Back to cart</Button>
-                </Link>
+                <RouteButton to="/cart">Back to cart</RouteButton>
                 <Button
                     type="primary"
                     htmlType="submit"

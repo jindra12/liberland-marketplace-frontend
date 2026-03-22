@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Avatar,
-    Button,
     Divider,
     Flex,
     Grid,
@@ -27,6 +26,8 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { DetailBackButton } from "./DetailBackButton";
+import { RouteButton } from "../RouteButton";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -53,7 +54,8 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
-                    <Flex flex={1} vertical gap={md ? 18 : 16} className="CompanyDetail">
+                    <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
+                        <DetailBackButton to="/companies" label="Back to companies" />
                         <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
                             {imageSrc && (
                                 <Avatar
@@ -85,9 +87,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Space>
                         {isOwner && (
-                            <Link to={`/companies/edit/${id}`}>
-                                <Button icon={<EditOutlined />}>Edit</Button>
-                            </Link>
+                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
                         )}
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
@@ -118,6 +118,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                         />
                         <Divider />
                         <Tabs
+                            className="EntityDetail__tabs"
                             defaultActiveKey="jobs"
                             items={[
                                 {
