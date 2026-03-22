@@ -1,16 +1,23 @@
 import * as React from "react";
 import { Button, Drawer } from "antd";
-import { MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import { SearchButton } from "./SearchButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
-import { LoginButton } from "./LoginButton";
+import { RouteButton } from "./RouteButton";
+import { useEndpointContext } from "./EndpointContext";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+    const { urls } = useEndpointContext();
     const [desktopActionsOpen, setDesktopActionsOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        setDesktopActionsOpen(false);
+    }, [location.pathname]);
 
     return (
         <>
@@ -18,10 +25,10 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                 className="AppHeader__quickActionsBtn"
                 type="default"
                 icon={<MenuOutlined />}
-                aria-label="Open quick actions"
+                aria-label="Open menu"
                 onClick={() => setDesktopActionsOpen(true)}
             >
-                Quick actions
+                Menu
             </Button>
             <Drawer
                 className="AppHeader__desktopDrawer"
@@ -29,10 +36,22 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                 width={360}
                 open={desktopActionsOpen}
                 onClose={() => setDesktopActionsOpen(false)}
-                title="Quick actions"
+                title="Menu"
             >
                 <div className="AppHeader__desktopDrawerNav">
-                    <SearchButton type="default" block>Search</SearchButton>
+                    <SearchButton type="default" block onScopeSelect={() => setDesktopActionsOpen(false)}>
+                        Search
+                    </SearchButton>
+                    {urls.length > 1 ? (
+                        <RouteButton
+                            to="/syndication"
+                            block
+                            type="default"
+                            icon={<GlobalOutlined />}
+                        >
+                            Syndication
+                        </RouteButton>
+                    ) : null}
                     <EndpointAuthAction>
                         {({ runWithAuthOrLogin }) => (
                             <Button
@@ -48,7 +67,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                                 }}
                                 className="AppHeader__drawerPublish"
                             >
-                                Publish your ad
+                                Publish ad
                             </Button>
                         )}
                     </EndpointAuthAction>
@@ -60,9 +79,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                         >
                             Profile
                         </Button>
-                    ) : (
-                        <LoginButton block onAfterClick={() => setDesktopActionsOpen(false)} />
-                    )}
+                    ) : null}
                 </div>
             </Drawer>
         </>
