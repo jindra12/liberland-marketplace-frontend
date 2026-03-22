@@ -8,6 +8,7 @@ query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
   ) {
     docs {
       id
+      isSubscribed
       title
       description
       stage

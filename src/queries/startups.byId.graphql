@@ -1,6 +1,7 @@
 query StartupById($id: String!) {
   Startup(id: $id) {
     id
+    isSubscribed
     serverURL
     title
     _status

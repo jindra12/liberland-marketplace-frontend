@@ -13,6 +13,7 @@ query ListCompaniesBySecondaryIdentity(
   ) {
     docs {
       id
+      isSubscribed
       serverURL
       name
       description

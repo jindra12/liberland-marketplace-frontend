@@ -18,6 +18,11 @@
     justify-content: flex-end;
 }
 
+.ShareSection__actions {
+    width: 100%;
+    justify-content: flex-end;
+}
+
 .ShareSection__iconButton {
     display: inline-flex;
     border-radius: 999px;
@@ -33,9 +38,30 @@
     font-weight: 700;
 }
 
+.SubscribeButton.ant-btn {
+    font-weight: 700;
+}
+
+.SubscribeButton__modalCopy {
+    margin-bottom: 16px;
+}
+
 .ShareSection__nativeButton.ant-btn {
     min-width: 124px;
     font-weight: 700;
+}
+
+.ShareSection__mobileActions.ant-space-compact {
+    width: 100%;
+}
+
+.ShareSection__mobileActions.ant-space-compact > * {
+    flex: 1 1 0;
+}
+
+.ShareSection__mobileActions .ant-btn {
+    width: 100%;
+    justify-content: center;
 }
 
 .ShareSection__mobileButton.ant-btn {
@@ -116,6 +142,10 @@
     }
 
     .ShareSection__buttons {
+        justify-content: flex-start;
+    }
+
+    .ShareSection__actions {
         justify-content: flex-start;
     }
 

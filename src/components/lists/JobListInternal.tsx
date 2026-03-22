@@ -108,6 +108,12 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                                 detailPath={`/jobs/${job.id}`}
                                 title={job.title}
                                 text={`Check out ${job.title} on NSwap.`}
+                                subscriptionTarget={{
+                                    collection: "jobs",
+                                    targetID: job.id,
+                                    serverURL: job.serverURL,
+                                    isSubscribed: job.isSubscribed,
+                                }}
                             />
                             <ApplyButton url={job.applyUrl} />
                         </Flex>
@@ -118,6 +124,12 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                                 detailPath={`/jobs/${job.id}`}
                                 title={job.title}
                                 text={`Check out ${job.title} on NSwap.`}
+                                subscriptionTarget={{
+                                    collection: "jobs",
+                                    targetID: job.id,
+                                    serverURL: job.serverURL,
+                                    isSubscribed: job.isSubscribed,
+                                }}
                             />
                             <ApplyButton url={job.applyUrl} block />
                         </Flex>

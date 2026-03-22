@@ -54,6 +54,12 @@ export const IdentityList: React.FunctionComponent = () => {
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
                                 desktopDetailButtonType="primary"
+                                subscriptionTarget={{
+                                    collection: "identities",
+                                    targetID: identity.id,
+                                    serverURL: identity.serverURL,
+                                    isSubscribed: identity.isSubscribed,
+                                }}
                             />
                         </Flex>
                     ) : (
@@ -64,6 +70,12 @@ export const IdentityList: React.FunctionComponent = () => {
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
                                 desktopDetailButtonType="primary"
+                                subscriptionTarget={{
+                                    collection: "identities",
+                                    targetID: identity.id,
+                                    serverURL: identity.serverURL,
+                                    isSubscribed: identity.isSubscribed,
+                                }}
                             />
                         </Flex>
                     )

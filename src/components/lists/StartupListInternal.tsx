@@ -151,6 +151,12 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                                     title={startup.title}
                                     text={`Check out ${startup.title} on NSwap.`}
                                     desktopDetailButtonType="primary"
+                                    subscriptionTarget={{
+                                        collection: "startups",
+                                        targetID: startup.id,
+                                        serverURL: startup.serverURL,
+                                        isSubscribed: startup.isSubscribed,
+                                    }}
                                 />
                                 <InvolvementButton startup={startup} refetch={props.query.refetch} />
                             </Flex>
@@ -163,6 +169,12 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                                 title={startup.title}
                                 text={`Check out ${startup.title} on NSwap.`}
                                 desktopDetailButtonType="primary"
+                                subscriptionTarget={{
+                                    collection: "startups",
+                                    targetID: startup.id,
+                                    serverURL: startup.serverURL,
+                                    isSubscribed: startup.isSubscribed,
+                                }}
                             />
                             <InvolvementButton startup={startup} refetch={props.query.refetch} block />
                         </Flex>

@@ -105,7 +105,17 @@ const CompanyDetail: React.FunctionComponent = () => {
                             className="EntityDetail__identityGroups"
                         />
                         <Divider />
-                        <DetailShareSection label="Share this company" title={shareTitle} text={shareText} />
+                        <DetailShareSection
+                            label="Share this company"
+                            title={shareTitle}
+                            text={shareText}
+                            subscriptionTarget={companyData ? {
+                                collection: "companies",
+                                targetID: companyData.id,
+                                serverURL: companyData.serverURL,
+                                isSubscribed: companyData.isSubscribed,
+                            } : undefined}
+                        />
                         <Divider />
                         <Tabs
                             className="EntityDetail__tabs"

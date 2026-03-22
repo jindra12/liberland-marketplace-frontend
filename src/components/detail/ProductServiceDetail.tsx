@@ -193,7 +193,17 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             </>
                         )}
                         <Divider />
-                        <DetailShareSection label="Share this product" title={shareTitle} text={shareText} />
+                        <DetailShareSection
+                            label="Share this product"
+                            title={shareTitle}
+                            text={shareText}
+                            subscriptionTarget={product ? {
+                                collection: "products",
+                                targetID: product.id,
+                                serverURL: product.serverURL,
+                                isSubscribed: product.isSubscribed,
+                            } : undefined}
+                        />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}

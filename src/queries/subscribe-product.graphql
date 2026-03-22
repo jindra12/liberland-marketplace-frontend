@@ -1,0 +1,14 @@
+mutation SubscribeToProductUpdates($email: String!, $targetID: String!) {
+  createNotificationSubscription(
+    data: {
+      email: $email
+      targetCollection: products
+      targetID: $targetID
+    }
+  ) {
+    id
+    email
+    targetCollection
+    targetID
+  }
+}

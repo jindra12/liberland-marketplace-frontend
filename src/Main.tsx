@@ -40,6 +40,7 @@ const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 const Cart = React.lazy(() => import("./components/Cart"));
 const Order = React.lazy(() => import("./components/Order"));
+const Unsubscribe = React.lazy(() => import("./components/Unsubscribe/Unsubscribe"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 
 const suspense = (Component: React.FunctionComponent) => () => (
@@ -99,6 +100,7 @@ const Main: React.FunctionComponent = () => (
                                                             <Route Component={suspense(Startups)} path="/ventures" />
                                                             <Route Component={suspense(Startup)} path="/ventures/:id" />
                                                             <Route Component={suspense(EditStartup)} path="/ventures/edit/:id" />
+                                                            <Route Component={suspense(Unsubscribe)} path="/unsubscribe" />
                                                             <Route Component={suspense(AuthCallback)} path="/auth/callback" />
                                                             <Route Component={suspense(NotFound)} path="*" />
                                                         </Routes>

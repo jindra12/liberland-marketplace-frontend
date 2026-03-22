@@ -8,6 +8,7 @@ query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 2
   ) {
     docs {
       id
+      isSubscribed
       title
       description
       stage

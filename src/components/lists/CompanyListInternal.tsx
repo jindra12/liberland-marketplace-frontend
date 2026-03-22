@@ -67,6 +67,12 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
                                 desktopDetailButtonType="primary"
+                                subscriptionTarget={{
+                                    collection: "companies",
+                                    targetID: company.id,
+                                    serverURL: company.serverURL,
+                                    isSubscribed: company.isSubscribed,
+                                }}
                             />
                         </Flex>
                     ) : (
@@ -77,6 +83,12 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
                                 desktopDetailButtonType="primary"
+                                subscriptionTarget={{
+                                    collection: "companies",
+                                    targetID: company.id,
+                                    serverURL: company.serverURL,
+                                    isSubscribed: company.isSubscribed,
+                                }}
                             />
                         </Flex>
                     )

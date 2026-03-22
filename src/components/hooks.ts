@@ -178,6 +178,62 @@ export type EnhancedUseMutationHook<TData, TVariables extends object | undefined
     ) => () => Promise<TData>;
 };
 
+type NotificationSubscriptionPayload = {
+    __typename?: "NotificationSubscription";
+    id: string;
+    email: string;
+    targetCollection?: string | null;
+    targetID?: string | null;
+};
+
+type NotificationSubscriptionDeletePayload = {
+    __typename?: "NotificationSubscription";
+    id: string;
+};
+
+type SubscribeToEntityUpdatesMutationVariables = {
+    email: string;
+    targetID: string;
+};
+
+type UnsubscribeFromEntityUpdatesMutationVariables = {
+    subscriptionID: string;
+};
+
+type SubscribeToEntityUpdatesMutation = {
+    __typename?: "Mutation";
+    createNotificationSubscription?: NotificationSubscriptionPayload | null;
+};
+
+type UnsubscribeFromEntityUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: NotificationSubscriptionDeletePayload | null;
+};
+
+export type SubscribeToCompanyUpdatesMutationVariables = SubscribeToEntityUpdatesMutationVariables;
+export type SubscribeToJobUpdatesMutationVariables = SubscribeToEntityUpdatesMutationVariables;
+export type SubscribeToProductUpdatesMutationVariables = SubscribeToEntityUpdatesMutationVariables;
+export type SubscribeToTribeUpdatesMutationVariables = SubscribeToEntityUpdatesMutationVariables;
+export type SubscribeToVentureUpdatesMutationVariables = SubscribeToEntityUpdatesMutationVariables;
+
+export type UnsubscribeFromCompanyUpdatesMutationVariables = UnsubscribeFromEntityUpdatesMutationVariables;
+export type UnsubscribeFromJobUpdatesMutationVariables = UnsubscribeFromEntityUpdatesMutationVariables;
+export type UnsubscribeFromProductUpdatesMutationVariables = UnsubscribeFromEntityUpdatesMutationVariables;
+export type UnsubscribeFromTribeUpdatesMutationVariables = UnsubscribeFromEntityUpdatesMutationVariables;
+export type UnsubscribeFromVentureUpdatesMutationVariables = UnsubscribeFromEntityUpdatesMutationVariables;
+
+export type SubscribeToCompanyUpdatesMutation = SubscribeToEntityUpdatesMutation;
+export type SubscribeToJobUpdatesMutation = SubscribeToEntityUpdatesMutation;
+export type SubscribeToProductUpdatesMutation = SubscribeToEntityUpdatesMutation;
+export type SubscribeToTribeUpdatesMutation = SubscribeToEntityUpdatesMutation;
+export type SubscribeToVentureUpdatesMutation = SubscribeToEntityUpdatesMutation;
+
+export type UnsubscribeFromCompanyUpdatesMutation = UnsubscribeFromEntityUpdatesMutation;
+export type UnsubscribeFromJobUpdatesMutation = UnsubscribeFromEntityUpdatesMutation;
+export type UnsubscribeFromProductUpdatesMutation = UnsubscribeFromEntityUpdatesMutation;
+export type UnsubscribeFromTribeUpdatesMutation = UnsubscribeFromEntityUpdatesMutation;
+export type UnsubscribeFromVentureUpdatesMutation = UnsubscribeFromEntityUpdatesMutation;
+
 export const enhancedMutationFactory = <TData, TVariables extends object | undefined>(
     _useHook: GeneratedUseMutationHook<TData, TVariables>,
     mutation: string,
@@ -211,6 +267,138 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
 
     return useEnhancedMutation;
 };
+
+const createStandaloneMutationHook = <TData, TVariables extends object | undefined>(
+    mutation: string,
+) => enhancedMutationFactory(
+    null as unknown as GeneratedUseMutationHook<TData, TVariables>,
+    mutation,
+);
+
+const SubscribeToCompanyUpdatesDocument = `
+    mutation SubscribeToCompanyUpdates($email: String!, $targetID: String!) {
+      createNotificationSubscription(
+        data: {
+          email: $email
+          targetCollection: companies
+          targetID: $targetID
+        }
+      ) {
+        id
+        email
+        targetCollection
+        targetID
+      }
+    }
+`;
+
+const SubscribeToJobUpdatesDocument = `
+    mutation SubscribeToJobUpdates($email: String!, $targetID: String!) {
+      createNotificationSubscription(
+        data: {
+          email: $email
+          targetCollection: jobs
+          targetID: $targetID
+        }
+      ) {
+        id
+        email
+        targetCollection
+        targetID
+      }
+    }
+`;
+
+const SubscribeToProductUpdatesDocument = `
+    mutation SubscribeToProductUpdates($email: String!, $targetID: String!) {
+      createNotificationSubscription(
+        data: {
+          email: $email
+          targetCollection: products
+          targetID: $targetID
+        }
+      ) {
+        id
+        email
+        targetCollection
+        targetID
+      }
+    }
+`;
+
+const SubscribeToTribeUpdatesDocument = `
+    mutation SubscribeToTribeUpdates($email: String!, $targetID: String!) {
+      createNotificationSubscription(
+        data: {
+          email: $email
+          targetCollection: identities
+          targetID: $targetID
+        }
+      ) {
+        id
+        email
+        targetCollection
+        targetID
+      }
+    }
+`;
+
+const SubscribeToVentureUpdatesDocument = `
+    mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
+      createNotificationSubscription(
+        data: {
+          email: $email
+          targetCollection: startups
+          targetID: $targetID
+        }
+      ) {
+        id
+        email
+        targetCollection
+        targetID
+      }
+    }
+`;
+
+const UnsubscribeFromCompanyUpdatesDocument = `
+    mutation UnsubscribeFromCompanyUpdates($subscriptionID: String!) {
+      deleteNotificationSubscription(id: $subscriptionID) {
+        id
+      }
+    }
+`;
+
+const UnsubscribeFromJobUpdatesDocument = `
+    mutation UnsubscribeFromJobUpdates($subscriptionID: String!) {
+      deleteNotificationSubscription(id: $subscriptionID) {
+        id
+      }
+    }
+`;
+
+const UnsubscribeFromProductUpdatesDocument = `
+    mutation UnsubscribeFromProductUpdates($subscriptionID: String!) {
+      deleteNotificationSubscription(id: $subscriptionID) {
+        id
+      }
+    }
+`;
+
+const UnsubscribeFromTribeUpdatesDocument = `
+    mutation UnsubscribeFromTribeUpdates($subscriptionID: String!) {
+      deleteNotificationSubscription(id: $subscriptionID) {
+        id
+      }
+    }
+`;
+
+const UnsubscribeFromVentureUpdatesDocument = `
+    mutation UnsubscribeFromVentureUpdates($subscriptionID: String!) {
+      deleteNotificationSubscription(id: $subscriptionID) {
+        id
+      }
+    }
+`;
 
 export const enhancedQueryFactory = <TQueryFnData, TVariables>(
     useHook:
@@ -296,3 +484,13 @@ export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartup
 export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
 export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
 export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);
+export const useSubscribeToCompanyUpdatesMutation = createStandaloneMutationHook<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument);
+export const useSubscribeToJobUpdatesMutation = createStandaloneMutationHook<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument);
+export const useSubscribeToProductUpdatesMutation = createStandaloneMutationHook<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument);
+export const useSubscribeToTribeUpdatesMutation = createStandaloneMutationHook<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument);
+export const useSubscribeToVentureUpdatesMutation = createStandaloneMutationHook<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(SubscribeToVentureUpdatesDocument);
+export const useUnsubscribeFromCompanyUpdatesMutation = createStandaloneMutationHook<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(UnsubscribeFromCompanyUpdatesDocument);
+export const useUnsubscribeFromJobUpdatesMutation = createStandaloneMutationHook<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(UnsubscribeFromJobUpdatesDocument);
+export const useUnsubscribeFromProductUpdatesMutation = createStandaloneMutationHook<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(UnsubscribeFromProductUpdatesDocument);
+export const useUnsubscribeFromTribeUpdatesMutation = createStandaloneMutationHook<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(UnsubscribeFromTribeUpdatesDocument);
+export const useUnsubscribeFromVentureUpdatesMutation = createStandaloneMutationHook<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument);

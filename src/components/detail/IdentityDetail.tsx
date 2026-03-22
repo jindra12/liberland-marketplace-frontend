@@ -107,7 +107,17 @@ const IdentityDetail: React.FunctionComponent = () => {
                             </Col>
                         </Row>
                         <Divider />
-                        <DetailShareSection label="Share this tribe" title={shareTitle} text={shareText} />
+                        <DetailShareSection
+                            label="Share this tribe"
+                            title={shareTitle}
+                            text={shareText}
+                            subscriptionTarget={data.Identity ? {
+                                collection: "identities",
+                                targetID: data.Identity.id,
+                                serverURL: data.Identity.serverURL,
+                                isSubscribed: data.Identity.isSubscribed,
+                            } : undefined}
+                        />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}

@@ -2,6 +2,8 @@ import * as React from "react";
 import { Flex, Space } from "antd";
 import type { ButtonProps } from "antd";
 import { NativeShareButton } from "./NativeShareButton";
+import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
+import type { SubscriptionTarget } from "./SubscribeButton/types";
 import { RouteButton } from "../RouteButton";
 
 type ListShareDetailButtonsProps = {
@@ -11,6 +13,7 @@ type ListShareDetailButtonsProps = {
     size?: ButtonProps["size"];
     compact?: boolean;
     desktopDetailButtonType?: ButtonProps["type"];
+    subscriptionTarget?: SubscriptionTarget | null;
 };
 
 export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = ({
@@ -20,16 +23,25 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     size = "large",
     compact = false,
     desktopDetailButtonType,
+    subscriptionTarget,
 }) => {
+    const compactShareActionSize = compact && size === "large" ? "middle" : size;
+
     return compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
             <NativeShareButton
                 path={detailPath}
                 title={title}
                 text={text}
-                size={size}
+                size={compactShareActionSize}
                 className="NativeShareButton"
             />
+            {subscriptionTarget ? (
+                <SubscribeButton
+                    {...subscriptionTarget}
+                    size={compactShareActionSize}
+                />
+            ) : null}
             <RouteButton
                 to={detailPath}
                 size={size}
@@ -47,6 +59,12 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 size={size}
                 className="NativeShareButton"
             />
+            {subscriptionTarget ? (
+                <SubscribeButton
+                    {...subscriptionTarget}
+                    size={size}
+                />
+            ) : null}
             <RouteButton
                 to={detailPath}
                 type={desktopDetailButtonType}

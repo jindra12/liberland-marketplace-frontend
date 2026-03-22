@@ -128,6 +128,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                 title={product.name}
                                 text={`Check out ${product.name} on NSwap.`}
                                 size={addToCartSize}
+                                subscriptionTarget={{
+                                    collection: "products",
+                                    targetID: product.id,
+                                    serverURL: product.serverURL,
+                                    isSubscribed: product.isSubscribed,
+                                }}
                             />
                             {purchaseControl ? (
                                 <div className="ProductList__purchaseControl">
@@ -155,6 +161,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     title={product.name}
                                     text={`Check out ${product.name} on NSwap.`}
                                     size={addToCartSize}
+                                    subscriptionTarget={{
+                                        collection: "products",
+                                        targetID: product.id,
+                                        serverURL: product.serverURL,
+                                        isSubscribed: product.isSubscribed,
+                                    }}
                                 />
                                 {purchaseControl ? (
                                     <div className="ProductList__purchaseControl">

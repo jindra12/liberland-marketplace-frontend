@@ -214,7 +214,17 @@ const StartupDetail: React.FunctionComponent = () => {
                         )}
 
                         <Divider className="StartupDetail__divider" />
-                        <DetailShareSection label="Share this venture" title={shareTitle} text={shareText} />
+                        <DetailShareSection
+                            label="Share this venture"
+                            title={shareTitle}
+                            text={shareText}
+                            subscriptionTarget={s ? {
+                                collection: "startups",
+                                targetID: s.id,
+                                serverURL: s.serverURL,
+                                isSubscribed: s.isSubscribed,
+                            } : undefined}
+                        />
                         <Divider className="StartupDetail__divider" />
                         <Tabs
                             className="EntityDetail__tabs StartupDetail__section StartupDetail__tabs"

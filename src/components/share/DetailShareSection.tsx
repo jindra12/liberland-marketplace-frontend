@@ -15,12 +15,20 @@ import {
 } from "react-share";
 import { NativeShareButton } from "./NativeShareButton";
 import { useCopyLink } from "./useCopyLink";
+import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
+import type { SubscriptionTarget } from "./SubscribeButton/types";
 
 type SharePayload = {
     title: string;
     text: string;
     url: string;
     onCopyLink: () => void;
+    subscriptionTarget?: SubscriptionTarget | null;
+};
+
+type ShareButtonConfig = {
+    key: string;
+    render: (payload: SharePayload) => React.ReactNode;
 };
 
 type DetailShareSectionProps = {
@@ -28,9 +36,10 @@ type DetailShareSectionProps = {
     title: string;
     text: string;
     url?: string;
+    subscriptionTarget?: SubscriptionTarget | null;
 };
 
-const SHARE_BUTTONS = [
+const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
         key: "copy",
         render: ({ onCopyLink }: SharePayload) => (
@@ -42,6 +51,11 @@ const SHARE_BUTTONS = [
                 Copy Link
             </Button>
         ),
+    },
+    {
+        key: "subscribe",
+        render: ({ subscriptionTarget }: SharePayload) =>
+            subscriptionTarget ? <SubscribeButton {...subscriptionTarget} /> : null,
     },
     {
         key: "x",
@@ -95,17 +109,20 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
     title,
     text,
     url,
+    subscriptionTarget,
 }) => {
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
     const shareUrl = url ?? window.location.href;
+    const mobileShareActionSize = "middle";
     const payload = {
         title,
         text,
         url: shareUrl,
-        onCopyLink: () => {
-            copyLink(shareUrl);
+        onCopyLink: async () => {
+            await copyLink(shareUrl);
         },
+        subscriptionTarget,
     };
 
     if (!md) {
@@ -116,14 +133,32 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                     <Typography.Text className="ShareSection__label">
                         {label}
                     </Typography.Text>
-                    <NativeShareButton
-                        url={shareUrl}
-                        title={title}
-                        text={text}
-                        label="Share"
-                        size="large"
-                        className="NativeShareButton ShareSection__mobileButton"
-                    />
+                    {subscriptionTarget ? (
+                        <Space.Compact block className="ShareSection__mobileActions">
+                            <NativeShareButton
+                                url={shareUrl}
+                                title={title}
+                                text={text}
+                                label="Share"
+                                size={mobileShareActionSize}
+                                className="NativeShareButton ShareSection__mobileButton"
+                            />
+                            <SubscribeButton
+                                {...subscriptionTarget}
+                                size={mobileShareActionSize}
+                                className="ShareSection__mobileButton"
+                            />
+                        </Space.Compact>
+                    ) : (
+                        <NativeShareButton
+                            url={shareUrl}
+                            title={title}
+                            text={text}
+                            label="Share"
+                            size={mobileShareActionSize}
+                            className="NativeShareButton ShareSection__mobileButton"
+                        />
+                    )}
                 </Flex>
             </>
         );
@@ -136,13 +171,15 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                 <Typography.Text className="ShareSection__label">
                     {label}
                 </Typography.Text>
-                <Space size={[12, 12]} wrap className="ShareSection__buttons">
-                    {SHARE_BUTTONS.map(({ key, render }) => (
-                        <React.Fragment key={key}>
-                            {render(payload)}
-                        </React.Fragment>
-                    ))}
-                </Space>
+                <Flex wrap gap="12px" align="center" className="ShareSection__actions">
+                    <Space size={[12, 12]} wrap className="ShareSection__buttons">
+                        {SHARE_BUTTONS.map(({ key, render }) => (
+                            <React.Fragment key={key}>
+                                {render(payload)}
+                            </React.Fragment>
+                        ))}
+                    </Space>
+                </Flex>
             </Flex>
         </>
     );

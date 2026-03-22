@@ -99,7 +99,17 @@ const JobDetail: React.FunctionComponent = () => {
                             </div>
                         </Flex>
                         <Divider />
-                        <DetailShareSection label="Share this job" title={shareTitle} text={shareText} />
+                        <DetailShareSection
+                            label="Share this job"
+                            title={shareTitle}
+                            text={shareText}
+                            subscriptionTarget={job ? {
+                                collection: "jobs",
+                                targetID: job.id,
+                                serverURL: job.serverURL,
+                                isSubscribed: job.isSubscribed,
+                            } : undefined}
+                        />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}
