@@ -10,7 +10,7 @@ import { Avatar,
     Tag,
     Typography
 } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
     MailOutlined,
     TeamOutlined,
@@ -33,6 +33,8 @@ import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 import { useStartupByIdQuery } from "../hooks";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { DetailBackButton } from "./DetailBackButton";
+import { RouteButton } from "../RouteButton";
 
 const StartupDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -90,7 +92,8 @@ const StartupDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
-                    <Flex flex={1} vertical gap={md ? 18 : 16} className="StartupDetail">
+                    <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail StartupDetail">
+                        <DetailBackButton to="/ventures" label="Back to ventures" />
                         <Space size={md ? 24 : 16} align="start" className="StartupDetail__header">
                             {imageSrc && (
                                 <Avatar
@@ -170,9 +173,7 @@ const StartupDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Space>
                         {isOwner && (
-                            <Link to={`/ventures/edit/${id}`}>
-                                <Button icon={<EditOutlined />}>Edit</Button>
-                            </Link>
+                            <RouteButton to={`/ventures/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
                         )}
 
                         <Divider className="StartupDetail__divider" />
@@ -216,7 +217,7 @@ const StartupDetail: React.FunctionComponent = () => {
                         <DetailShareSection label="Share this venture" title={shareTitle} text={shareText} />
                         <Divider className="StartupDetail__divider" />
                         <Tabs
-                            className="StartupDetail__section StartupDetail__tabs"
+                            className="EntityDetail__tabs StartupDetail__section StartupDetail__tabs"
                             defaultActiveKey="team"
                             items={[
                                 {

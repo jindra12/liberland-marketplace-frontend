@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, Button, Flex, Form, Result, Spin, Typography, message } from "antd";
+import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
 import type { Order as OrderType } from "../generated/graphql";
@@ -11,6 +11,7 @@ import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import type { OrderFormValues, SubmittedOrder } from "./order/types";
+import { RouteButton } from "./RouteButton";
 import {
     collectRequiredChainsForCarts,
     inferNameParts,
@@ -193,9 +194,9 @@ const Order: React.FunctionComponent = () => {
                     title="All payments completed"
                     subTitle="Thank you for shopping with us. You will be redirected to the homepage shortly."
                     extra={[
-                        <Button key="go-home" type="primary" onClick={() => navigate("/")}>
+                        <RouteButton key="go-home" to="/" type="primary">
                             Go to homepage
-                        </Button>,
+                        </RouteButton>,
                     ]}
                 />
             </Flex>

@@ -10,6 +10,7 @@ import { LoginButton } from "./LoginButton";
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { DesktopDrawer } from "./DesktopDrawer";
 import { useCartItems } from "./cart/useCartItems";
+import { RouteButton } from "./RouteButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -29,8 +30,8 @@ const getSelectedKeys = (pathname: string, items: { key: string; label: string }
 
 export const AppHeader: React.FunctionComponent = () => {
     const { xl } = useBreakpoint();
-    const navigate = useNavigate();
     const location = useLocation();
+    const navigate = useNavigate();
     const auth = useAuth();
     const { totalQuantity } = useCartItems();
 
@@ -52,11 +53,30 @@ export const AppHeader: React.FunctionComponent = () => {
 
     const selectedDesktopKeys = getSelectedKeys(location.pathname, desktopItems);
     const selectedDrawerKeys = getSelectedKeys(location.pathname, drawerItems);
-
-    const onMenuClick: MenuProps["onClick"] = (info) => {
-        navigate(info.key);
-        setDrawerOpen(false);
-    };
+    const desktopMenuItems: MenuProps["items"] = React.useMemo(() => (
+        desktopItems.map((item) => ({
+            key: item.key,
+            label: (
+                <Link to={item.key} className="AppHeader__menuLink">
+                    {item.label}
+                </Link>
+            ),
+        }))
+    ), [desktopItems]);
+    const drawerMenuItems: MenuProps["items"] = React.useMemo(() => (
+        drawerItems.map((item) => ({
+            key: item.key,
+            label: (
+                <Link
+                    to={item.key}
+                    className="AppHeader__drawerMenuLink"
+                    onClick={() => setDrawerOpen(false)}
+                >
+                    {item.label}
+                </Link>
+            ),
+        }))
+    ), [drawerItems]);
 
     return (
         <Header className="AppHeader">
@@ -73,9 +93,8 @@ export const AppHeader: React.FunctionComponent = () => {
                                 className="AppHeader__menu"
                                 mode="horizontal"
                                 disabledOverflow
-                                items={desktopItems}
+                                items={desktopMenuItems}
                                 selectedKeys={selectedDesktopKeys}
-                                onClick={onMenuClick}
                             />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
@@ -100,12 +119,12 @@ export const AppHeader: React.FunctionComponent = () => {
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
                         <SearchButton className="AppHeader__iconButton" />
-                        <Button
+                        <RouteButton
+                            to="/syndication"
                             className="AppHeader__iconButton"
                             type="text"
                             icon={<GlobalOutlined />}
                             aria-label="Open syndication"
-                            onClick={() => navigate("/syndication")}
                         />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
                         <Button
@@ -131,9 +150,8 @@ export const AppHeader: React.FunctionComponent = () => {
                                 <Menu
                                     className="AppHeader__drawerMenu"
                                     mode="inline"
-                                    items={drawerItems}
+                                    items={drawerMenuItems}
                                     selectedKeys={selectedDrawerKeys}
-                                    onClick={onMenuClick}
                                 />
                                 <div className="AppHeader__drawerNav">
                                     <EndpointAuthAction>

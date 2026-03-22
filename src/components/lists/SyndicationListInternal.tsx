@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { AppList } from "../AppList";
@@ -14,6 +14,7 @@ import {
 } from "../../utils";
 import { Markdown } from "../Markdown";
 import { NativeShareButton } from "../share/NativeShareButton";
+import { RouteButton } from "../RouteButton";
 
 const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
@@ -26,7 +27,6 @@ const byPriority = (entry: URL) => {
 
 export const SyndicationListInternal: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
-    const navigate = useNavigate();
     const { urls, setUrls } = useEndpointContext();
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
@@ -150,11 +150,15 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
-                                <Link to={buildSyndicationHref(entry.value)}>
-                                    <Button type="primary" variant="filled" className="ActionBtn" size="large">
-                                        Details
-                                    </Button>
-                                </Link>
+                                <RouteButton
+                                    to={buildSyndicationHref(entry.value)}
+                                    type="primary"
+                                    variant="filled"
+                                    className="ActionBtn"
+                                    size="large"
+                                >
+                                    Details
+                                </RouteButton>
                             </Flex>
                         ) : (
                             <Flex vertical gap="12px" className="EntityList__actionsRow SyndicationList__actionsRow">
@@ -166,13 +170,13 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                         size="large"
                                         className="NativeShareButton"
                                     />
-                                    <Button
+                                    <RouteButton
+                                        to={buildSyndicationHref(entry.value)}
                                         size="large"
                                         className="ActionBtn"
-                                        onClick={() => navigate(buildSyndicationHref(entry.value))}
                                     >
                                         Details
-                                    </Button>
+                                    </RouteButton>
                                 </Space.Compact>
                                 <Button
                                     size="large"

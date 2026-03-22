@@ -68,6 +68,68 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             return "Syndicated marketplace";
         }
     }, [identityUrl]);
+    const cardSections = [
+        {
+            key: "companies",
+            hasContent: (companiesQuery.data?.Companies?.totalDocs ?? 0) > 0 || (companiesQuery.data?.Companies?.docs?.length ?? 0) > 0,
+            loading: companiesQuery.isLoading,
+            card: (
+                <CompanyCard
+                    items={companiesQuery.data?.Companies?.docs || []}
+                    loading={companiesQuery.isLoading}
+                    totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
+                    identityId={identityId}
+                />
+            ),
+        },
+        {
+            key: "products",
+            hasContent: (productsQuery.data?.Products?.totalDocs ?? 0) > 0 || (productsQuery.data?.Products?.docs?.length ?? 0) > 0,
+            loading: productsQuery.isLoading,
+            card: (
+                <ProductServiceCard
+                    items={productsQuery.data?.Products?.docs || []}
+                    loading={productsQuery.isLoading}
+                    totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
+                    identityId={identityId}
+                    desktopActionLayout="stacked"
+                />
+            ),
+        },
+        {
+            key: "jobs",
+            hasContent: (jobsQuery.data?.Jobs?.totalDocs ?? 0) > 0 || (jobsQuery.data?.Jobs?.docs?.length ?? 0) > 0,
+            loading: jobsQuery.isLoading,
+            card: (
+                <JobCard
+                    items={jobsQuery.data?.Jobs?.docs || []}
+                    loading={jobsQuery.isLoading}
+                    totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
+                    identityId={identityId}
+                />
+            ),
+        },
+        {
+            key: "startups",
+            hasContent: (startupsQuery.data?.Startups?.totalDocs ?? 0) > 0 || (startupsQuery.data?.Startups?.docs?.length ?? 0) > 0,
+            loading: startupsQuery.isLoading,
+            card: (
+                <StartupCard
+                    items={startupsQuery.data?.Startups?.docs || []}
+                    loading={startupsQuery.isLoading}
+                    totalDocs={startupsQuery.data?.Startups?.totalDocs ?? undefined}
+                    identityId={identityId}
+                />
+            ),
+        },
+    ];
+    const visibleCardSections = cardSections.filter((section) => section.loading || section.hasContent);
+
+    if (visibleCardSections.length === 0) {
+        return null;
+    }
+
+    const desktopSpan = visibleCardSections.length === 1 ? 24 : 12;
 
     return (
         <div className="SplashPage__identitySection">
@@ -90,39 +152,11 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                 </Flex>
             </Link>
             <Row gutter={[20, 20]} className="SplashPage__cardsGrid">
-                <Col xs={24} lg={12}>
-                    <CompanyCard
-                        items={companiesQuery.data?.Companies?.docs || []}
-                        loading={companiesQuery.isLoading}
-                        totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
-                        identityId={identityId}
-                    />
-                </Col>
-                <Col xs={24} lg={12}>
-                    <ProductServiceCard
-                        items={productsQuery.data?.Products?.docs || []}
-                        loading={productsQuery.isLoading}
-                        totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
-                        identityId={identityId}
-                        desktopActionLayout="stacked"
-                    />
-                </Col>
-                <Col xs={24} lg={12}>
-                    <JobCard
-                        items={jobsQuery.data?.Jobs?.docs || []}
-                        loading={jobsQuery.isLoading}
-                        totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
-                        identityId={identityId}
-                    />
-                </Col>
-                <Col xs={24} lg={12}>
-                    <StartupCard
-                        items={startupsQuery.data?.Startups?.docs || []}
-                        loading={startupsQuery.isLoading}
-                        totalDocs={startupsQuery.data?.Startups?.totalDocs ?? undefined}
-                        identityId={identityId}
-                    />
-                </Col>
+                {visibleCardSections.map((section) => (
+                    <Col key={section.key} xs={24} lg={desktopSpan}>
+                        {section.card}
+                    </Col>
+                ))}
             </Row>
         </div>
     );

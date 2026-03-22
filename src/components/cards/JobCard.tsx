@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListJobsQuery } from "../../generated/graphql";
 import { formatEmploymentType, formatSalary, getImage } from "../../utils";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
+import { RouteButton } from "../RouteButton";
 
 type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 
@@ -22,7 +23,6 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
     totalDocs,
 }) => {
     const { md } = Grid.useBreakpoint();
-    const navigate = useNavigate();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -54,7 +54,6 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                                     detailPath={`/jobs/${job.id}`}
                                     title={job.title || "Job"}
                                     text={`Check out ${job.title} on NSwap.`}
-                                    onDetailsClick={() => navigate(`/jobs/${job.id}`)}
                                 />
                             )] : undefined}
                         >
@@ -85,7 +84,6 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                                         detailPath={`/jobs/${job.id}`}
                                         title={job.title || "Job"}
                                         text={`Check out ${job.title} on NSwap.`}
-                                        onDetailsClick={() => navigate(`/jobs/${job.id}`)}
                                     />
                                 )}
                             </div>
@@ -94,11 +92,15 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                 }}
             />
             {remaining > 0 && identityId && (
-                <Link to={`/jobs?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                    <Button type="link" icon={<RightOutlined />} iconPosition="end">
-                        And +{remaining} more
-                    </Button>
-                </Link>
+                <RouteButton
+                    to={`/jobs?tribe=${identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
+                    And +{remaining} more
+                </RouteButton>
             )}
         </Card>
     );

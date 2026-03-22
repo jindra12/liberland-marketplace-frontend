@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Button, Flex } from "antd";
-import { Link } from "react-router-dom";
+import { Flex } from "antd";
 import { ProductServiceListInternal } from "./lists/ProductServiceListInternal";
 import { useCartItems } from "./cart/useCartItems";
+import { RouteButton } from "./RouteButton";
 
 const Cart: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(0);
@@ -22,11 +22,15 @@ const Cart: React.FunctionComponent = () => {
                 showOrderNowFallback={false}
             />
             {totalQuantity > 0 && (
-                <Link to="/order" className="CartPage__orderLink">
-                    <Button type="primary" size="large" block className="CartPage__orderButton">
-                        Proceed to order
-                    </Button>
-                </Link>
+                <RouteButton
+                    to="/order"
+                    type="primary"
+                    size="large"
+                    block
+                    className="CartPage__orderLink CartPage__orderButton"
+                >
+                    Proceed to order
+                </RouteButton>
             )}
         </Flex>
     );

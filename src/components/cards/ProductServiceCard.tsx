@@ -8,6 +8,7 @@ import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } f
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 import { SplashProductActionControls } from "./SplashProductActionControls";
+import { RouteButton } from "../RouteButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 
@@ -120,11 +121,15 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 }}
             />
             {remaining > 0 && identityId && (
-                <Link to={`/products-services?tribe=${identityId}`} className="SplashEntityCard__moreLink">
-                    <Button type="link" icon={<RightOutlined />} iconPosition="end">
-                        And +{remaining} more
-                    </Button>
-                </Link>
+                <RouteButton
+                    to={`/products-services?tribe=${identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
+                    And +{remaining} more
+                </RouteButton>
             )}
         </Card>
     );

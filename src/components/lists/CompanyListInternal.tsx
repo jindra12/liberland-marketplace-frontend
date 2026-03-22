@@ -91,15 +91,18 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         />
                     </Link>
                 ) : undefined,
-                description: (company) => (
-                    <CompanyContactLinks
-                        website={company.website}
-                        email={company.email}
-                        phone={company.phone}
-                        variant="compact"
-                    />
+                body: (company) => (
+                    <div className="EntityList__body CompanyList__body">
+                        <CompanyContactLinks
+                            website={company.website}
+                            email={company.email}
+                            phone={company.phone}
+                            variant="compact"
+                            className="CompanyList__contacts"
+                        />
+                        <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
+                    </div>
                 ),
-                body: (company) => <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>,
             }}
         />
     );

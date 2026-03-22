@@ -1,19 +1,18 @@
 import * as React from "react";
-import { Button, Space } from "antd";
+import { Space } from "antd";
 import { NativeShareButton } from "../share/NativeShareButton";
+import { RouteButton } from "../RouteButton";
 
 type SplashShareDetailActionRowProps = {
     detailPath: string;
     title: string;
     text: string;
-    onDetailsClick: () => void;
 };
 
 export const SplashShareDetailActionRow: React.FunctionComponent<SplashShareDetailActionRowProps> = ({
     detailPath,
     title,
     text,
-    onDetailsClick,
 }) => (
     <div className="SplashEntityCard__inlineActions">
         <Space.Compact
@@ -27,13 +26,13 @@ export const SplashShareDetailActionRow: React.FunctionComponent<SplashShareDeta
                 size="small"
                 className="NativeShareButton"
             />
-            <Button
+            <RouteButton
+                to={detailPath}
                 type="primary"
                 size="small"
-                onClick={onDetailsClick}
             >
                 Details
-            </Button>
+            </RouteButton>
         </Space.Compact>
     </div>
 );
