@@ -51950,7 +51950,6 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -51977,7 +51976,6 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52012,7 +52010,6 @@ export type DeleteCompanyMutation = { __typename?: 'Mutation', deleteCompany?: {
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52082,7 +52079,6 @@ export type IdentityByIdQuery = { __typename?: 'Query', Identity?: { __typename?
 export type ListIdentitiesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52108,7 +52104,6 @@ export type ListJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52152,7 +52147,6 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   companyIds?: InputMaybe<Array<Scalars['JSON']['input']> | Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52188,7 +52182,6 @@ export type DeleteJobMutation = { __typename?: 'Mutation', deleteJob?: { __typen
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52276,7 +52269,6 @@ export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52334,7 +52326,6 @@ export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct?: {
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52369,7 +52360,6 @@ export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52395,7 +52385,6 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52419,7 +52408,6 @@ export type DeleteStartupMutation = { __typename?: 'Mutation', deleteStartup?: {
 export type ListStartupsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -52467,12 +52455,7 @@ export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComm
 
 export const CartBySecretDocument = `
     query CartBySecret($secret: String!) {
-  Carts(
-    draft: false
-    limit: 1
-    sort: "-updatedAt"
-    where: {secret: {equals: $secret}}
-  ) {
+  Carts(draft: false, limit: 1, where: {secret: {equals: $secret}}) {
     docs {
       id
       secret
@@ -52861,13 +52844,12 @@ useCompanyByIdQuery.getKey = (variables: CompanyByIdQueryVariables) => ['Company
 useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables, options);
 
 export const ListCompaniesByIdentityDocument = `
-    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Companies(
     draft: false
     where: {identity: {equals: $identityId}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -53054,13 +53036,12 @@ useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentity
 useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
 
 export const ListCompaniesBySecondaryIdentityDocument = `
-    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Companies(
     draft: false
     where: {allowedIdentities: {in: [$identityId]}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -53294,8 +53275,8 @@ export const useDeleteCompanyMutation = <
 useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables, options);
 
 export const ListCompaniesDocument = `
-    query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
+    query ListCompanies($page: Int = 1, $limit: Int = 20) {
+  Companies(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL
@@ -53695,8 +53676,8 @@ useIdentityByIdQuery.getKey = (variables: IdentityByIdQueryVariables) => ['Ident
 useIdentityByIdQuery.fetcher = (variables: IdentityByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(IdentityByIdDocument, variables, options);
 
 export const ListIdentitiesDocument = `
-    query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
+    query ListIdentities($page: Int = 1, $limit: Int = 20) {
+  Identities(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL
@@ -53817,13 +53798,12 @@ useSearchIdentitiesQuery.getKey = (variables: SearchIdentitiesQueryVariables) =>
 useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables, options);
 
 export const ListJobsByCompanyDocument = `
-    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
     where: {company: {equals: $companyId}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -54185,13 +54165,12 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsBySecondaryIdentityDocument = `
-    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
     where: {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -54484,8 +54463,8 @@ export const useDeleteJobMutation = <
 useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables, options);
 
 export const ListJobsDocument = `
-    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Jobs(draft: false, page: $page, limit: $limit, sort: $sort) {
+    query ListJobs($page: Int = 1, $limit: Int = 20) {
+  Jobs(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL
@@ -54815,7 +54794,6 @@ export const ListJobsByIdentityDocument = `
   Jobs(
     draft: false
     where: {companyIdentityId: {equals: $identityId}}
-    sort: "-postedAt"
     limit: $limit
     page: $page
   ) {
@@ -54883,7 +54861,6 @@ export const ListProductsByIdentityDocument = `
     query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Products(
     where: {companyIdentityId: {equals: $identityId}}
-    sort: "-createdAt"
     limit: $limit
     page: $page
   ) {
@@ -55189,13 +55166,12 @@ export const useUpdateOrderMutation = <
 useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables, options);
 
 export const ListProductsByCompanyDocument = `
-    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Products(
     draft: false
     where: {company: {equals: $companyId}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -55599,8 +55575,8 @@ export const useDeleteProductMutation = <
 useDeleteProductMutation.fetcher = (variables: DeleteProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, variables, options);
 
 export const ListProductsDocument = `
-    query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Products(draft: false, page: $page, limit: $limit, sort: $sort) {
+    query ListProducts($page: Int = 1, $limit: Int = 20) {
+  Products(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL
@@ -55835,13 +55811,12 @@ export const useUpdateProductMutation = <
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
 
 export const ListStartupsByCompanyDocument = `
-    query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
     draft: false
     where: {company: {equals: $companyId}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -56051,13 +56026,12 @@ useStartupByIdQuery.getKey = (variables: StartupByIdQueryVariables) => ['Startup
 useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables, options);
 
 export const ListStartupsByIdentityDocument = `
-    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
     draft: false
     where: {identity: {equals: $identityId}}
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id
@@ -56156,8 +56130,8 @@ export const useDeleteStartupMutation = <
 useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables, options);
 
 export const ListStartupsDocument = `
-    query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
+    query ListStartups($page: Int = 1, $limit: Int = 20) {
+  Startups(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL

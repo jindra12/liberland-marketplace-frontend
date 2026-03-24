@@ -1,13 +1,12 @@
 import * as React from "react";
 import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { Avatar, Button, Card, Grid, List, Space, Tag, Typography } from "antd";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListProductsQuery } from "../../generated/graphql";
-import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
+import { formatUsdFromCents, getImage } from "../../utils";
 import { CartItemCount } from "../cart/CartItemCount";
-import { SplashProductActionControls } from "./SplashProductActionControls";
+import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 import { RouteButton } from "../RouteButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
@@ -17,7 +16,6 @@ type ProductServiceCardProps = {
     loading?: boolean;
     totalDocs?: number;
     identityId?: string;
-    desktopActionLayout?: "inline" | "stacked";
 };
 
 export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
@@ -25,7 +23,6 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
     loading,
     identityId,
     totalDocs,
-    desktopActionLayout = "inline",
 }) => {
     const { md } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
@@ -46,34 +43,17 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                 renderItem={(product) => {
                     const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                     const imageSrc = getImage(product) || getImage(product.company);
-                    const orderNowLink = parseActionLink(product.url);
-                    const canPurchase = isProductPurchasable(product);
                     const detailPath = `/products-services/${product.id}`;
                     const shareTitle = product.name || "Product";
                     const shareText = `Check out ${product.name} on NSwap.`;
-                    const purchaseAction = canPurchase ? (
-                        <AddToCartButton
-                            productId={product.id}
-                            serverURL={product.serverURL!}
-                            block
-                            size="small"
-                            maxAvailable={product.inventory}
-                        />
-                    ) : orderNowLink ? (
-                        <Button type="primary" size="small" href={orderNowLink}>
-                            Order Now!
-                        </Button>
-                    ) : undefined;
                     return (
                         <List.Item
                             actions={md ? [(
-                                <SplashProductActionControls
+                                <SplashShareDetailActionRow
                                     key={`product-actions-${product.id}`}
                                     detailPath={detailPath}
                                     title={shareTitle}
                                     text={shareText}
-                                    purchaseAction={purchaseAction}
-                                    desktopLayout={desktopActionLayout}
                                 />
                             )] : undefined}
                         >
@@ -107,12 +87,10 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                     />
                                 </Space>
                                 {!md && (
-                                    <SplashProductActionControls
+                                    <SplashShareDetailActionRow
                                         detailPath={detailPath}
                                         title={shareTitle}
                                         text={shareText}
-                                        purchaseAction={purchaseAction}
-                                        inline
                                     />
                                 )}
                             </div>
