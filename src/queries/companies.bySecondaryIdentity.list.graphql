@@ -2,14 +2,12 @@ query ListCompaniesBySecondaryIdentity(
   $identityId: JSON!
   $page: Int = 1
   $limit: Int = 20
-  $sort: String
 ) {
   Companies(
     draft: false
     where: { allowedIdentities: { in: [$identityId] } }
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id

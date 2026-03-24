@@ -1,10 +1,9 @@
-query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
     where: { company: { equals: $companyId } }
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id

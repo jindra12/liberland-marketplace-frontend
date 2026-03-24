@@ -1,5 +1,5 @@
-query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Products(draft: false, page: $page, limit: $limit, sort: $sort) {
+query ListProducts($page: Int = 1, $limit: Int = 20) {
+  Products(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL

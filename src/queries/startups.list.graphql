@@ -1,5 +1,5 @@
-query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Startups(draft: false, page: $page, limit: $limit, sort: $sort) {
+query ListStartups($page: Int = 1, $limit: Int = 20) {
+  Startups(draft: false, page: $page, limit: $limit) {
     docs {
       id
       serverURL
