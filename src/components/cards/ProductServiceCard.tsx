@@ -24,7 +24,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
     identityId,
     totalDocs,
 }) => {
-    const { md } = Grid.useBreakpoint();
+    const { xl } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -48,7 +48,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                     const shareText = `Check out ${product.name} on NSwap.`;
                     return (
                         <List.Item
-                            actions={md ? [(
+                            actions={xl ? [(
                                 <SplashShareDetailActionRow
                                     key={`product-actions-${product.id}`}
                                     detailPath={detailPath}
@@ -86,7 +86,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                         serverURL={product.serverURL!}
                                     />
                                 </Space>
-                                {!md && (
+                                {!xl && (
                                     <SplashShareDetailActionRow
                                         detailPath={detailPath}
                                         title={shareTitle}

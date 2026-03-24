@@ -22,7 +22,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
     totalDocs,
     identityId,
 }) => {
-    const { md } = Grid.useBreakpoint();
+    const { xl } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
 
     return (
@@ -44,7 +44,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
 
                     return (
                         <List.Item
-                            actions={md ? [(
+                            actions={xl ? [(
                                 <SplashShareDetailActionRow
                                     key={`company-actions-${company.id}`}
                                     detailPath={`/companies/${company.id}`}
@@ -78,7 +78,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = ({
                                         </Typography.Link>
                                     )}
                                 </Space>
-                                {!md && (
+                                {!xl && (
                                     <SplashShareDetailActionRow
                                         detailPath={`/companies/${company.id}`}
                                         title={company.name || "Company"}

@@ -22,7 +22,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
     identityId,
     totalDocs,
 }) => {
-    const { md } = Grid.useBreakpoint();
+    const { xl } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -48,7 +48,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                     const imageSrc = getImage(job) || getImage(job.company);
                     return (
                         <List.Item
-                            actions={md ? [(
+                            actions={xl ? [(
                                 <SplashShareDetailActionRow
                                     key={`job-actions-${job.id}`}
                                     detailPath={`/jobs/${job.id}`}
@@ -79,7 +79,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = ({
                                     {employmentType && <Tag>{employmentType}</Tag>}
                                     {salary && <Tag color="gold">{salary}</Tag>}
                                 </Space>
-                                {!md && (
+                                {!xl && (
                                     <SplashShareDetailActionRow
                                         detailPath={`/jobs/${job.id}`}
                                         title={job.title || "Job"}
