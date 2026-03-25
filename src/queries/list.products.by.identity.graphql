@@ -1,5 +1,6 @@
 query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Products(
+    draft: false
     where: { companyIdentityId: { equals: $identityId } }
     limit: $limit
     page: $page

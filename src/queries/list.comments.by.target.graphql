@@ -5,6 +5,7 @@ query ListCommentsByTarget(
   $page: Int = 1
 ) {
   Comments(
+    draft: false
     where: {
       AND: [
         { replyPostRelationTo: { equals: $relationTo } }

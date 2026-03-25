@@ -30,8 +30,7 @@ const Splash: React.FunctionComponent = () => {
                         Discover <span className="SplashPage__heroAccent">companies, jobs, products</span> and ventures.
                     </Typography.Title>
                     <Typography.Paragraph className="SplashPage__heroDescription">
-                        Tribe-first marketplace. Browse companies, products, services, jobs, and venture,
-                        organized into tribes across decentralized servers
+                        Tribe-first marketplace across decentralized servers. Browse companies, products, services, jobs, and ventures
                     </Typography.Paragraph>
                     <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
                         <RouteButton to="/products-services" type="primary" size="large">

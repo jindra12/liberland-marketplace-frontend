@@ -51934,6 +51934,7 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -51941,6 +51942,7 @@ export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { 
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52130,6 +52132,7 @@ export type ListJobsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52137,6 +52140,7 @@ export type ListJobsByCreatorQuery = { __typename?: 'Query', Jobs?: { __typename
 
 export type JobByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52295,6 +52299,7 @@ export type ListProductsByCreatorQueryVariables = Exact<{
   companyIds?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>> | InputMaybe<Scalars['JSON']['input']>>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52369,6 +52374,7 @@ export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52376,6 +52382,7 @@ export type ListStartupsByCreatorQuery = { __typename?: 'Query', Startups?: { __
 
 export type StartupByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -52720,9 +52727,9 @@ export const useUpdateCartMutation = <
 useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
 
 export const ListCompaniesByCreatorDocument = `
-    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
   Companies(
-    draft: true
+    draft: $draft
     page: $page
     limit: $limit
     where: {createdBy: {equals: $userId}}
@@ -52764,8 +52771,8 @@ useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQuery
 useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables, options);
 
 export const CompanyByIdDocument = `
-    query CompanyById($id: String!) {
-  Company(id: $id) {
+    query CompanyById($id: String!, $draft: Boolean = false) {
+  Company(id: $id, draft: $draft) {
     id
     serverURL
     name
@@ -54014,9 +54021,9 @@ useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariabl
 useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
 
 export const ListJobsByCreatorDocument = `
-    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
   Jobs(
-    draft: true
+    draft: $draft
     page: $page
     limit: $limit
     where: {createdBy: {equals: $userId}}
@@ -54056,8 +54063,8 @@ useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables)
 useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables, options);
 
 export const JobByIdDocument = `
-    query JobById($id: String!) {
-  Job(id: $id) {
+    query JobById($id: String!, $draft: Boolean = false) {
+  Job(id: $id, draft: $draft) {
     id
     serverURL
     title
@@ -54736,6 +54743,7 @@ useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?:
 export const ListCommentsByTargetDocument = `
     query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
+    draft: false
     where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}]}
     sort: "createdAt"
     limit: $limit
@@ -54860,6 +54868,7 @@ useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariable
 export const ListProductsByIdentityDocument = `
     query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Products(
+    draft: false
     where: {companyIdentityId: {equals: $identityId}}
     limit: $limit
     page: $page
@@ -54931,6 +54940,7 @@ useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQuery
 export const ListRepliesToCommentDocument = `
     query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
   Comments(
+    draft: false
     where: {replyComment: {equals: $parentCommentId}}
     sort: "createdAt"
     limit: $limit
@@ -55350,9 +55360,9 @@ useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQuer
 useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables, options);
 
 export const ListProductsByCreatorDocument = `
-    query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
+    query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
   Products(
-    draft: true
+    draft: $draft
     page: $page
     limit: $limit
     where: {company: {in: $companyIds}}
@@ -55401,7 +55411,7 @@ useListProductsByCreatorQuery.getKey = (variables?: ListProductsByCreatorQueryVa
 useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables, options);
 
 export const ProductByIdDocument = `
-    query ProductById($id: String!, $draft: Boolean) {
+    query ProductById($id: String!, $draft: Boolean = false) {
   Product(id: $id, draft: $draft) {
     id
     inventory
@@ -55901,9 +55911,9 @@ useListStartupsByCompanyQuery.getKey = (variables: ListStartupsByCompanyQueryVar
 useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables, options);
 
 export const ListStartupsByCreatorDocument = `
-    query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
+    query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
   Startups(
-    draft: true
+    draft: $draft
     page: $page
     limit: $limit
     where: {createdBy: {equals: $userId}}
@@ -55941,8 +55951,8 @@ useListStartupsByCreatorQuery.getKey = (variables?: ListStartupsByCreatorQueryVa
 useListStartupsByCreatorQuery.fetcher = (variables?: ListStartupsByCreatorQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(ListStartupsByCreatorDocument, variables, options);
 
 export const StartupByIdDocument = `
-    query StartupById($id: String!) {
-  Startup(id: $id) {
+    query StartupById($id: String!, $draft: Boolean = false) {
+  Startup(id: $id, draft: $draft) {
     id
     serverURL
     title

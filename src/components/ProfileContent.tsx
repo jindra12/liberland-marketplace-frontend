@@ -1,9 +1,9 @@
 import React from "react";
 import {
-    Avatar, Button, Card, Descriptions, Divider, Form, Input, List, message, Popconfirm, Space, Tabs, Tag, Typography,
+    Avatar, Button, Card, Descriptions, Divider, Form, Input, message, Space, Tabs, Tag, Typography,
 } from "antd";
 import {
-    DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined, UserOutlined,
+    PlusOutlined, UserOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
@@ -22,6 +22,7 @@ import {
     useListStartupsByCreatorQuery,
 } from "./hooks";
 import { LoginButton } from "./LoginButton";
+import { ProfileListingList } from "./ProfileListingList";
 import { RouteButton } from "./RouteButton";
 
 export const ProfileContent: React.FunctionComponent = () => {
@@ -30,14 +31,6 @@ export const ProfileContent: React.FunctionComponent = () => {
     const profile = auth.user?.profile;
     const userId = profile?.sub;
     const emailVerified = profile?.email_verified;
-    const isAuthenticated = auth.isAuthenticated;
-    const signinSilent = auth.signinSilent;
-
-    React.useEffect(() => {
-        if (isAuthenticated && !emailVerified) {
-            signinSilent();
-        }
-    }, [isAuthenticated, signinSilent, emailVerified]);
 
     const [nicknameForm] = Form.useForm();
     const [passwordForm] = Form.useForm();
@@ -49,38 +42,23 @@ export const ProfileContent: React.FunctionComponent = () => {
     const deleteProductMutation = useDeleteProductMutation();
     const deleteStartupMutation = useDeleteStartupMutation();
 
-    const handleDelete = async (
-        mutation: { mutateAsync: (vars: { id: string }) => Promise<unknown> },
-        id: string,
-        label: string,
-        refetch: () => void,
-    ) => {
-        try {
-            await mutation.mutateAsync({ id });
-            message.success(`${label} deleted`);
-            refetch();
-        } catch {
-            message.error(`Failed to delete ${label.toLowerCase()}`);
-        }
-    };
-
     const jobsQuery = useListJobsByCreatorQuery(
-        { userId },
+        { userId, draft: true },
         { enabled: !!userId, refetchOnMount: "always" },
     );
     const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId },
+        { userId, draft: true },
         { enabled: !!userId, refetchOnMount: "always" },
     );
 
     const startupsQuery = useListStartupsByCreatorQuery(
-        { userId },
+        { userId, draft: true },
         { enabled: !!userId, refetchOnMount: "always" },
     );
 
     const companyIds = (companiesQuery.data?.Companies?.docs ?? []).map((c) => c.id);
     const productsQuery = useListProductsByCreatorQuery(
-        { companyIds },
+        { companyIds, draft: true },
         { enabled: companyIds.length > 0, refetchOnMount: "always" },
     );
 
@@ -90,7 +68,8 @@ export const ProfileContent: React.FunctionComponent = () => {
             await auth.signinSilent();
             message.success("Nickname updated");
             nicknameForm.resetFields();
-        } catch {
+        } catch (error) {
+            console.error("Failed to update nickname", error);
             message.error("Failed to update nickname");
         }
     };
@@ -104,7 +83,8 @@ export const ProfileContent: React.FunctionComponent = () => {
             await passwordMutation.mutateAsync(values);
             message.success("Password changed");
             passwordForm.resetFields();
-        } catch {
+        } catch (error) {
+            console.error("Failed to change password", error);
             message.error("Failed to change password");
         }
     };
@@ -113,6 +93,81 @@ export const ProfileContent: React.FunctionComponent = () => {
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const products = productsQuery.data?.Products?.docs ?? [];
     const startups = startupsQuery.data?.Startups?.docs ?? [];
+    const listingTabs = [
+        {
+            key: "jobs",
+            label: `Jobs (${jobsQuery.data?.Jobs?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteJobMutation}
+                    label="Job"
+                    emptyText="No jobs created yet"
+                    items={jobs}
+                    loading={jobsQuery.isLoading}
+                    refetch={jobsQuery.refetch}
+                    urlPrefix="/jobs"
+                    renderMeta={(job) => ({
+                        title: job.title,
+                        description: formatEmploymentType(job.employmentType),
+                    })}
+                />
+            ),
+        },
+        {
+            key: "companies",
+            label: `Companies (${companiesQuery.data?.Companies?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteCompanyMutation}
+                    label="Company"
+                    emptyText="No companies created yet"
+                    items={companies}
+                    loading={companiesQuery.isLoading}
+                    refetch={companiesQuery.refetch}
+                    urlPrefix="/companies"
+                    renderMeta={(company) => ({
+                        title: company.name,
+                    })}
+                />
+            ),
+        },
+        {
+            key: "startups",
+            label: `Ventures (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteStartupMutation}
+                    label="Venture"
+                    emptyText="No ventures created yet"
+                    items={startups}
+                    loading={startupsQuery.isLoading}
+                    refetch={startupsQuery.refetch}
+                    urlPrefix="/ventures"
+                    renderMeta={(startup) => ({
+                        title: startup.title,
+                    })}
+                />
+            ),
+        },
+        {
+            key: "products",
+            label: `Products (${productsQuery.data?.Products?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteProductMutation}
+                    label="Product / service"
+                    emptyText="No products or services created yet"
+                    items={products}
+                    loading={productsQuery.isLoading}
+                    refetch={productsQuery.refetch}
+                    urlPrefix="/products-services"
+                    renderMeta={(product) => ({
+                        title: product.name,
+                    })}
+                />
+            ),
+        },
+    ];
 
     return (
         <div className="Profile">
@@ -185,133 +240,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                 <Typography.Title level={3} className="Profile__listingsTitle">My Listings</Typography.Title>
                 <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>Create Listing</RouteButton>
             </div>
-            <Tabs
-                items={[
-                    {
-                        key: "jobs",
-                        label: `Jobs (${jobsQuery.data?.Jobs?.totalDocs ?? 0})`,
-                        children: (
-                            <List
-                                loading={jobsQuery.isLoading}
-                                dataSource={jobs}
-                                locale={{ emptyText: "No jobs created yet" }}
-                                renderItem={(job) => (
-                                    <List.Item
-                                        actions={[
-                                            <RouteButton key="edit" to={`/jobs/edit/${job.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
-                                            <RouteButton key="view" to={`/jobs/${job.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
-                                            <Popconfirm
-                                                key="delete"
-                                                title="Delete this job?"
-                                                onConfirm={() => handleDelete(deleteJobMutation, job.id, "Job", jobsQuery.refetch)}
-                                                okText="Delete"
-                                                okButtonProps={{ danger: true }}
-                                            >
-                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
-                                            </Popconfirm>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta
-                                            title={<Space>{job.title}{job._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>}
-                                            description={formatEmploymentType(job.employmentType)}
-                                        />
-                                    </List.Item>
-                                )}
-                            />
-                        ),
-                    },
-                    {
-                        key: "companies",
-                        label: `Companies (${companiesQuery.data?.Companies?.totalDocs ?? 0})`,
-                        children: (
-                            <List
-                                loading={companiesQuery.isLoading}
-                                dataSource={companies}
-                                locale={{ emptyText: "No companies created yet" }}
-                                renderItem={(company) => (
-                                    <List.Item
-                                        actions={[
-                                            <RouteButton key="edit" to={`/companies/edit/${company.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
-                                            <RouteButton key="view" to={`/companies/${company.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
-                                            <Popconfirm
-                                                key="delete"
-                                                title="Delete this company?"
-                                                onConfirm={() => handleDelete(deleteCompanyMutation, company.id, "Company", companiesQuery.refetch)}
-                                                okText="Delete"
-                                                okButtonProps={{ danger: true }}
-                                            >
-                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
-                                            </Popconfirm>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta title={<Space>{company.name}{company._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
-                                    </List.Item>
-                                )}
-                            />
-                        ),
-                    },
-                    {
-                        key: "startups",
-                        label: `Ventures (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
-                        children: (
-                            <List
-                                loading={startupsQuery.isLoading}
-                                dataSource={startups}
-                                locale={{ emptyText: "No ventures created yet" }}
-                                renderItem={(startup) => (
-                                    <List.Item
-                                        actions={[
-                                            <RouteButton key="edit" to={`/ventures/edit/${startup.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
-                                            <RouteButton key="view" to={`/ventures/${startup.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
-                                            <Popconfirm
-                                                key="delete"
-                                                title="Delete this venture?"
-                                                onConfirm={() => handleDelete(deleteStartupMutation, startup.id, "Venture", startupsQuery.refetch)}
-                                                okText="Delete"
-                                                okButtonProps={{ danger: true }}
-                                            >
-                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
-                                            </Popconfirm>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta title={<Space>{startup.title}{startup._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
-                                    </List.Item>
-                                )}
-                            />
-                        ),
-                    },
-                    {
-                        key: "products",
-                        label: `Products (${productsQuery.data?.Products?.totalDocs ?? 0})`,
-                        children: (
-                            <List
-                                loading={productsQuery.isLoading}
-                                dataSource={products}
-                                locale={{ emptyText: "No products created yet" }}
-                                renderItem={(product) => (
-                                    <List.Item
-                                        actions={[
-                                            <RouteButton key="edit" to={`/products-services/edit/${product.id}`} size="small" icon={<EditOutlined />}>Edit</RouteButton>,
-                                            <RouteButton key="view" to={`/products-services/${product.id}`} size="small" type="link" icon={<EyeOutlined />}>View</RouteButton>,
-                                            <Popconfirm
-                                                key="delete"
-                                                title="Delete this product?"
-                                                onConfirm={() => handleDelete(deleteProductMutation, product.id, "Product", productsQuery.refetch)}
-                                                okText="Delete"
-                                                okButtonProps={{ danger: true }}
-                                            >
-                                                <Button size="small" danger icon={<DeleteOutlined />}>Delete</Button>
-                                            </Popconfirm>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta title={<Space>{product.name}{product._status === "draft" && <Tag color="orange">Draft</Tag>}</Space>} />
-                                    </List.Item>
-                                )}
-                            />
-                        ),
-                    },
-                ]}
-            />
+            <Tabs items={listingTabs} />
         </div>
     );
 };

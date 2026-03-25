@@ -1,4 +1,4 @@
-query ProductById($id: String!, $draft: Boolean) {
+query ProductById($id: String!, $draft: Boolean = false) {
   Product(id: $id, draft: $draft) {
     id
     inventory

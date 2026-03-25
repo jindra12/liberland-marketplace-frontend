@@ -11,7 +11,7 @@ import { useJobByIdQuery } from "../hooks";
 
 const EditJob: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const query = useJobByIdQuery({ id: id! });
+    const query = useJobByIdQuery({ id: id!, draft: true });
 
     return (
         <AuthGuard>

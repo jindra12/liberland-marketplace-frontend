@@ -3,6 +3,7 @@ query ListRepliesToComment(
   $limit: Int = 100
 ) {
   Comments(
+    draft: false
     where: { replyComment: { equals: $parentCommentId } }
     sort: "createdAt"
     limit: $limit

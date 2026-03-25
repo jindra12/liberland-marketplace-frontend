@@ -11,7 +11,7 @@ import { fromCents } from "../../utils";
 
 const EditProduct: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const query = useProductByIdQuery({ id: id! });
+    const query = useProductByIdQuery({ id: id!, draft: true });
 
     return (
         <AuthGuard>
