@@ -83,7 +83,7 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = ({ mode, i
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId },
+        { userId, draft: true },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 

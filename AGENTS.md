@@ -17,5 +17,7 @@
 - If a `trim()` call is not materially required, do not add it.
 - Do not use the `void` operator to silence promises. Prefer explicit promise handling or plain calls.
 - Do not add `.catch()` blocks to promises unless the user explicitly asks for that handling style or the behavior clearly requires local error handling.
+- Do not swallow exceptions in `catch` blocks unless there is a clear reason. If you handle an error locally, log it with `console.error` unless that would be redundant for a justified reason.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
+- Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly.

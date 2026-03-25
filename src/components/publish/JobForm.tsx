@@ -64,7 +64,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = ({ mode, initialVa
 
     const userId = auth.user?.profile?.sub;
     const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId },
+        { userId, draft: true },
     );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 

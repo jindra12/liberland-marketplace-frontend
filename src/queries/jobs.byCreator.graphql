@@ -1,5 +1,5 @@
-query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-  Jobs(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+  Jobs(draft: $draft, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
     docs {
       id
       serverURL

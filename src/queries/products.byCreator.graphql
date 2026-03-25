@@ -1,5 +1,5 @@
-query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100) {
-  Products(draft: true, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
+query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+  Products(draft: $draft, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
     docs {
       id
       serverURL
