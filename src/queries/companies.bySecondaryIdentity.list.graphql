@@ -5,7 +5,12 @@ query ListCompaniesBySecondaryIdentity(
 ) {
   Companies(
     draft: false
-    where: { allowedIdentities: { in: [$identityId] } }
+    where: {
+      AND: [
+        { allowedIdentities: { in: [$identityId] } }
+        { _status: { equals: published } }
+      ]
+    }
     page: $page
     limit: $limit
   ) {

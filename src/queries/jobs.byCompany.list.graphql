@@ -1,7 +1,12 @@
 query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
-    where: { company: { equals: $companyId } }
+    where: {
+      AND: [
+        { company: { equals: $companyId } }
+        { _status: { equals: published } }
+      ]
+    }
     page: $page
     limit: $limit
   ) {

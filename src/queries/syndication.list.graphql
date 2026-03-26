@@ -1,6 +1,7 @@
 query ListPublishedSyndicationUrls {
   Syndications(
     draft: false
+    where: { _status: { equals: published } }
     limit: 0
   ) {
     docs {

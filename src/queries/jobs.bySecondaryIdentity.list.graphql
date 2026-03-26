@@ -7,9 +7,14 @@ query ListJobsBySecondaryIdentity(
   Jobs(
     draft: false
     where: {
-      OR: [
-        { allowedIdentities: { in: [$identityId] } }
-        { company: { in: $companyIds } }
+      AND: [
+        {
+          OR: [
+            { allowedIdentities: { in: [$identityId] } }
+            { company: { in: $companyIds } }
+          ]
+        }
+        { _status: { equals: published } }
       ]
     }
     page: $page

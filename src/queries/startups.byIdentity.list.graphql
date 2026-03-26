@@ -1,7 +1,12 @@
 query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
     draft: false
-    where: { identity: { equals: $identityId } }
+    where: {
+      AND: [
+        { identity: { equals: $identityId } }
+        { _status: { equals: published } }
+      ]
+    }
     page: $page
     limit: $limit
   ) {

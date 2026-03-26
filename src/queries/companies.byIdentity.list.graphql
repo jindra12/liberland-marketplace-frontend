@@ -1,7 +1,12 @@
 query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Companies(
     draft: false
-    where: { identity: { equals: $identityId } }
+    where: {
+      AND: [
+        { identity: { equals: $identityId } }
+        { _status: { equals: published } }
+      ]
+    }
     page: $page
     limit: $limit
   ) {

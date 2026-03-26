@@ -52854,7 +52854,7 @@ export const ListCompaniesByIdentityDocument = `
     query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Companies(
     draft: false
-    where: {identity: {equals: $identityId}}
+    where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -53046,7 +53046,7 @@ export const ListCompaniesBySecondaryIdentityDocument = `
     query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Companies(
     draft: false
-    where: {allowedIdentities: {in: [$identityId]}}
+    where: {AND: [{allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -53136,7 +53136,7 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
     query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Companies(
     draft: false
-    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}]}
+    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -53283,7 +53283,12 @@ useDeleteCompanyMutation.fetcher = (variables: DeleteCompanyMutationVariables, o
 
 export const ListCompaniesDocument = `
     query ListCompanies($page: Int = 1, $limit: Int = 20) {
-  Companies(draft: false, page: $page, limit: $limit) {
+  Companies(
+    draft: false
+    where: {_status: {equals: published}}
+    page: $page
+    limit: $limit
+  ) {
     docs {
       id
       serverURL
@@ -53588,21 +53593,36 @@ useDeleteCommentMutation.fetcher = (variables: DeleteCommentMutationVariables, o
 
 export const EntityImageUrlsDocument = `
     query EntityImageUrls {
-  companies: Companies(draft: false, page: 1, limit: 3) {
+  companies: Companies(
+    draft: false
+    where: {_status: {equals: published}}
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url
       }
     }
   }
-  jobs: Jobs(draft: false, page: 1, limit: 3) {
+  jobs: Jobs(
+    draft: false
+    where: {_status: {equals: published}}
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url
       }
     }
   }
-  startups: Startups(draft: false, page: 1, limit: 3) {
+  startups: Startups(
+    draft: false
+    where: {_status: {equals: published}}
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url
@@ -53808,7 +53828,7 @@ export const ListJobsByCompanyDocument = `
     query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
-    where: {company: {equals: $companyId}}
+    where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -54175,7 +54195,7 @@ export const ListJobsBySecondaryIdentityDocument = `
     query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
   Jobs(
     draft: false
-    where: {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}
+    where: {AND: [{OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -54295,7 +54315,7 @@ export const SearchJobsBySecondaryIdentityDocument = `
     query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
   Jobs(
     draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}]}
+    where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -54471,7 +54491,12 @@ useDeleteJobMutation.fetcher = (variables: DeleteJobMutationVariables, options?:
 
 export const ListJobsDocument = `
     query ListJobs($page: Int = 1, $limit: Int = 20) {
-  Jobs(draft: false, page: $page, limit: $limit) {
+  Jobs(
+    draft: false
+    where: {_status: {equals: published}}
+    page: $page
+    limit: $limit
+  ) {
     docs {
       id
       serverURL
@@ -54801,7 +54826,7 @@ export const ListJobsByIdentityDocument = `
     query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Jobs(
     draft: false
-    where: {companyIdentityId: {equals: $identityId}}
+    where: {AND: [{companyIdentityId: {equals: $identityId}}, {_status: {equals: published}}]}
     limit: $limit
     page: $page
   ) {
@@ -54869,7 +54894,7 @@ export const ListProductsByIdentityDocument = `
     query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Products(
     draft: false
-    where: {companyIdentityId: {equals: $identityId}}
+    where: {AND: [{companyIdentityId: {equals: $identityId}}, {_status: {equals: published}}]}
     limit: $limit
     page: $page
   ) {
@@ -55179,7 +55204,7 @@ export const ListProductsByCompanyDocument = `
     query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Products(
     draft: false
-    where: {company: {equals: $companyId}}
+    where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -55586,7 +55611,12 @@ useDeleteProductMutation.fetcher = (variables: DeleteProductMutationVariables, o
 
 export const ListProductsDocument = `
     query ListProducts($page: Int = 1, $limit: Int = 20) {
-  Products(draft: false, page: $page, limit: $limit) {
+  Products(
+    draft: false
+    where: {_status: {equals: published}}
+    page: $page
+    limit: $limit
+  ) {
     docs {
       id
       serverURL
@@ -55824,7 +55854,7 @@ export const ListStartupsByCompanyDocument = `
     query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
     draft: false
-    where: {company: {equals: $companyId}}
+    where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -56039,7 +56069,7 @@ export const ListStartupsByIdentityDocument = `
     query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
     draft: false
-    where: {identity: {equals: $identityId}}
+    where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
   ) {
@@ -56141,7 +56171,12 @@ useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, o
 
 export const ListStartupsDocument = `
     query ListStartups($page: Int = 1, $limit: Int = 20) {
-  Startups(draft: false, page: $page, limit: $limit) {
+  Startups(
+    draft: false
+    where: {_status: {equals: published}}
+    page: $page
+    limit: $limit
+  ) {
     docs {
       id
       serverURL
@@ -56349,7 +56384,7 @@ useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, o
 
 export const ListPublishedSyndicationUrlsDocument = `
     query ListPublishedSyndicationUrls {
-  Syndications(draft: false, limit: 0) {
+  Syndications(draft: false, where: {_status: {equals: published}}, limit: 0) {
     docs {
       url
       name

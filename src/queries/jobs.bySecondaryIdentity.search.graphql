@@ -17,6 +17,7 @@ query SearchJobsBySecondaryIdentity(
             { company: { in: $companyIds } }
           ]
         }
+        { _status: { equals: published } }
       ]
     }
     page: $page

@@ -11,6 +11,7 @@ query SearchCompaniesBySecondaryIdentity(
       AND: [
         { name: { contains: $searchTerm } }
         { allowedIdentities: { in: [$identityId] } }
+        { _status: { equals: published } }
       ]
     }
     page: $page
