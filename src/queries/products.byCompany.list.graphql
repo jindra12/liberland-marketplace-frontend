@@ -1,10 +1,14 @@
-query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Products(
     draft: false
-    where: { company: { equals: $companyId } }
+    where: {
+      AND: [
+        { company: { equals: $companyId } }
+        { _status: { equals: published } }
+      ]
+    }
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id

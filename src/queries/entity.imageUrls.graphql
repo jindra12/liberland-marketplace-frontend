@@ -1,19 +1,34 @@
 query EntityImageUrls {
-  companies: Companies(draft: false, page: 1, limit: 3) {
+  companies: Companies(
+    draft: false
+    where: { _status: { equals: published } }
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url
       }
     }
   }
-  jobs: Jobs(draft: false, page: 1, limit: 3) {
+  jobs: Jobs(
+    draft: false
+    where: { _status: { equals: published } }
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url
       }
     }
   }
-  startups: Startups(draft: false, page: 1, limit: 3) {
+  startups: Startups(
+    draft: false
+    where: { _status: { equals: published } }
+    page: 1
+    limit: 3
+  ) {
     docs {
       image {
         url

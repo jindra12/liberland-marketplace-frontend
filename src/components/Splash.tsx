@@ -11,7 +11,6 @@ const Splash: React.FunctionComponent = () => {
     const identitiesQuery = useListIdentitiesQuery({
         page: 1,
         limit: 100,
-        sort: "name",
     });
     const identities = identitiesQuery.data?.Identities?.docs;
     const isLoading = identitiesQuery.isLoading;
@@ -31,8 +30,7 @@ const Splash: React.FunctionComponent = () => {
                         Discover <span className="SplashPage__heroAccent">companies, jobs, products</span> and ventures.
                     </Typography.Title>
                     <Typography.Paragraph className="SplashPage__heroDescription">
-                        Tribe-first marketplace. Browse company profiles, orderable market listings, published jobs,
-                        venture pages, and active tribes across syndicated endpoints.
+                        Tribe-first marketplace across decentralized servers. Browse companies, products, services, jobs, and ventures
                     </Typography.Paragraph>
                     <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
                         <RouteButton to="/products-services" type="primary" size="large">

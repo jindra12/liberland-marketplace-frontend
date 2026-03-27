@@ -1,5 +1,5 @@
-query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100) {
-  Startups(draft: true, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+  Startups(draft: $draft, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
     docs {
       id
       isSubscribed

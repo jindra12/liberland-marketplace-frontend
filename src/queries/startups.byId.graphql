@@ -1,5 +1,5 @@
-query StartupById($id: String!) {
-  Startup(id: $id) {
+query StartupById($id: String!, $draft: Boolean = false) {
+  Startup(id: $id, draft: $draft) {
     id
     isSubscribed
     serverURL

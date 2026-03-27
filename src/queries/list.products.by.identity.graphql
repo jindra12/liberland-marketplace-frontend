@@ -1,7 +1,12 @@
 query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Products(
-    where: { companyIdentityId: { equals: $identityId } }
-    sort: "-createdAt"
+    draft: false
+    where: {
+      AND: [
+        { companyIdentityId: { equals: $identityId } }
+        { _status: { equals: published } }
+      ]
+    }
     limit: $limit
     page: $page
   ) {

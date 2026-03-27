@@ -1,5 +1,5 @@
-query CompanyById($id: String!) {
-  Company(id: $id) {
+query CompanyById($id: String!, $draft: Boolean = false) {
+  Company(id: $id, draft: $draft) {
     id
     isSubscribed
     serverURL

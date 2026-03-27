@@ -10,7 +10,7 @@ import { useStartupByIdQuery } from "../hooks";
 
 const EditStartup: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const query = useStartupByIdQuery({ id: id! });
+    const query = useStartupByIdQuery({ id: id!, draft: true });
 
     return (
         <AuthGuard>

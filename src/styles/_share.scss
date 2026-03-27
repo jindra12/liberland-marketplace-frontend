@@ -78,23 +78,6 @@
     margin-top: 12px;
 }
 
-.SplashEntityCard__actionGroup--productsDesktop {
-    align-items: flex-end;
-}
-
-.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction {
-    width: min(100%, 250px);
-}
-
-.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction > * {
-    width: 100%;
-}
-
-.SplashEntityCard__actionGroup--productsDesktop .SplashEntityCard__purchaseAction .ant-btn {
-    width: 100%;
-    justify-content: center;
-}
-
 .ProductList__controls {
     align-items: center;
 }
@@ -197,11 +180,6 @@
 
     .SplashEntityCard--products .SplashEntityCard__actionGroup.ant-space .ant-space-item {
         min-width: 0;
-        max-width: 100%;
-    }
-
-    .SplashEntityCard--products .AddToCartButton__compact.ant-space-compact {
-        width: 100%;
         max-width: 100%;
     }
 

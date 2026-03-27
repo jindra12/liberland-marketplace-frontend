@@ -1,5 +1,10 @@
-query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String) {
-  Companies(draft: false, page: $page, limit: $limit, sort: $sort) {
+query ListCompanies($page: Int = 1, $limit: Int = 20) {
+  Companies(
+    draft: false
+    where: { _status: { equals: published } }
+    page: $page
+    limit: $limit
+  ) {
     docs {
       id
       isSubscribed

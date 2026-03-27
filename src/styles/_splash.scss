@@ -484,6 +484,55 @@
     }
 }
 
+@include xl-min {
+    .SplashEntityCard {
+        border-radius: 20px;
+
+        .ant-card-head {
+            padding-inline: 16px;
+        }
+
+        .ant-card-body {
+            padding: 16px;
+        }
+
+        .ant-list-item {
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .ant-list-item-action {
+            width: 100%;
+            margin-top: 0;
+            margin-inline-start: 0;
+        }
+
+        .ant-list-item-action > li {
+            width: 100%;
+            padding: 0;
+        }
+    }
+
+    .SplashEntityCard__title {
+        font-size: 28px !important;
+    }
+
+    .SplashEntityCard__itemLink {
+        font-size: 17px;
+    }
+
+    .SplashEntityCard__itemBody {
+        width: 100%;
+    }
+
+    .SplashEntityCard__moreLink.ant-btn {
+        width: calc(100% + 32px);
+        margin: auto -16px -16px;
+        padding: 16px 18px;
+        border-radius: 0 0 20px 20px;
+    }
+}
+
 @include md-min {
     .SplashPage {
         &__heroInner {
@@ -533,54 +582,7 @@
         }
     }
 
-    .SplashEntityCard {
-        border-radius: 20px;
-
-        .ant-card-head {
-            padding-inline: 16px;
-        }
-
-        .ant-card-body {
-            padding: 16px;
-        }
-
-        .ant-list-item {
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .ant-list-item-action {
-            width: 100%;
-            margin-top: 0;
-            margin-inline-start: 0;
-        }
-
-        .ant-list-item-action > li {
-            width: 100%;
-            padding: 0;
-        }
-    }
-
-    .SplashEntityCard__title {
-        font-size: 28px !important;
-    }
-
-    .SplashEntityCard__itemLink {
-        font-size: 17px;
-    }
-
-    .SplashEntityCard__itemBody {
-        width: 100%;
-    }
-
     .SplashPage__syndicationCardTitle {
         font-size: 20px !important;
-    }
-
-    .SplashEntityCard__moreLink.ant-btn {
-        width: calc(100% + 32px);
-        margin: auto -16px -16px;
-        padding: 16px 18px;
-        border-radius: 0 0 20px 20px;
     }
 }

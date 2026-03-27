@@ -1,8 +1,12 @@
 query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
   Jobs(
     draft: false
-    where: { companyIdentityId: { equals: $identityId } }
-    sort: "-postedAt"
+    where: {
+      AND: [
+        { companyIdentityId: { equals: $identityId } }
+        { _status: { equals: published } }
+      ]
+    }
     limit: $limit
     page: $page
   ) {

@@ -22,7 +22,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
     totalDocs,
     identityId,
 }) => {
-    const { md } = Grid.useBreakpoint();
+    const { xl } = Grid.useBreakpoint();
     const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
     return (
         <Card
@@ -42,7 +42,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                     const imageUrl = startup.image?.url;
                     return (
                         <List.Item
-                            actions={md ? [(
+                            actions={xl ? [(
                                 <SplashShareDetailActionRow
                                     key={`startup-actions-${startup.id}`}
                                     detailPath={`/ventures/${startup.id}`}
@@ -72,7 +72,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
                                 <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                                     {startup.stage && <Tag>{startup.stage}</Tag>}
                                 </Space>
-                                {!md && (
+                                {!xl && (
                                     <SplashShareDetailActionRow
                                         detailPath={`/ventures/${startup.id}`}
                                         title={startup.title || "Venture"}

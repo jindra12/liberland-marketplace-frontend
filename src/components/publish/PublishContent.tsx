@@ -7,16 +7,8 @@ import { PublishForms } from "./PublishForms";
 
 export const PublishContent: React.FunctionComponent = () => {
     const auth = useAuth();
-    const isAuthenticated = auth.isAuthenticated;
-    const signinSilent = auth.signinSilent;
     const emailVerified = auth.user?.profile?.email_verified;
     const { authUrl } = useEndpointContext();
-
-    React.useEffect(() => {
-        if (isAuthenticated && !emailVerified) {
-            signinSilent();
-        }
-    }, [isAuthenticated, signinSilent, emailVerified]);
 
     return (
         <AuthGuard redirect>

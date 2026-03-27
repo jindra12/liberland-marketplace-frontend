@@ -10,7 +10,7 @@ import { useCompanyByIdQuery } from "../hooks";
 
 const EditCompany: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const query = useCompanyByIdQuery({ id: id! });
+    const query = useCompanyByIdQuery({ id: id!, draft: true });
 
     return (
         <AuthGuard>

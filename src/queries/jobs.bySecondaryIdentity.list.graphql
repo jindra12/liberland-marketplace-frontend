@@ -3,19 +3,22 @@ query ListJobsBySecondaryIdentity(
   $companyIds: [JSON!] = []
   $page: Int = 1
   $limit: Int = 20
-  $sort: String
 ) {
   Jobs(
     draft: false
     where: {
-      OR: [
-        { allowedIdentities: { in: [$identityId] } }
-        { company: { in: $companyIds } }
+      AND: [
+        {
+          OR: [
+            { allowedIdentities: { in: [$identityId] } }
+            { company: { in: $companyIds } }
+          ]
+        }
+        { _status: { equals: published } }
       ]
     }
     page: $page
     limit: $limit
-    sort: $sort
   ) {
     docs {
       id

@@ -1,5 +1,5 @@
-query JobById($id: String!) {
-  Job(id: $id) {
+query JobById($id: String!, $draft: Boolean = false) {
+  Job(id: $id, draft: $draft) {
     id
     isSubscribed
     serverURL

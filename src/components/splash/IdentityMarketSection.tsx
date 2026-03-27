@@ -27,7 +27,6 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             identityId,
             page: 1,
             limit: 3,
-            sort: "-createdAt",
             url: identityUrl,
         },
         { enabled: Boolean(identityId) }
@@ -92,7 +91,6 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     loading={productsQuery.isLoading}
                     totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
                     identityId={identityId}
-                    desktopActionLayout="stacked"
                 />
             ),
         },
@@ -153,7 +151,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             </Link>
             <Row gutter={[20, 20]} className="SplashPage__cardsGrid">
                 {visibleCardSections.map((section) => (
-                    <Col key={section.key} xs={24} lg={desktopSpan}>
+                    <Col key={section.key} xs={24} xl={desktopSpan}>
                         {section.card}
                     </Col>
                 ))}
