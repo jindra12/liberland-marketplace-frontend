@@ -426,6 +426,10 @@
     > .ant-space-compact {
         width: 100%;
     }
+
+    @include xl {
+        justify-content: start;
+    }
 }
 
 @media (max-width: 991px) {
