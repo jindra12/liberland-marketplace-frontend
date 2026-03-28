@@ -32,6 +32,23 @@ type AnalyticsGraphqlTrackPayload = {
     };
 };
 
+type AnalyticsRuntimeErrorTrackPayload = {
+    event: "runtime.error";
+    options?: AnalyticsEventOptions;
+    properties: {
+        boundary: "app" | "route";
+        componentStack: string;
+        message: string;
+        name: string;
+        route: string;
+        stack?: string;
+    };
+};
+
+type AnalyticsTrackPayload =
+    | AnalyticsGraphqlTrackPayload
+    | AnalyticsRuntimeErrorTrackPayload;
+
 type AnalyticsMutationEvent = {
     metadata?: Record<string, unknown>;
     route?: string;
@@ -86,7 +103,7 @@ export const AnalyticsMutationBridge: React.FunctionComponent = () => {
             });
         });
 
-        const unsubscribeTrack = analytics.on("track", ({ payload }: { payload: AnalyticsGraphqlTrackPayload }) => {
+        const unsubscribeTrack = analytics.on("track", ({ payload }: { payload: AnalyticsTrackPayload }) => {
             const { route, ...metadata } = payload.properties;
             trackEvent({
                 type: payload.event,
