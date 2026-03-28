@@ -118,6 +118,8 @@ import {
     useCreateStartupMutation as useCreateStartupMutationSingle,
     DeleteStartupDocument,
     useDeleteStartupMutation as useDeleteStartupMutationSingle,
+    TrackAnalyticsEventDocument,
+    useTrackAnalyticsEventMutation as useTrackAnalyticsEventMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
@@ -400,7 +402,7 @@ const UnsubscribeFromVentureUpdatesDocument = `
     }
 `;
 
-export const enhancedQueryFactory = <TQueryFnData, TVariables>(
+export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined>(
     useHook:
         | GeneratedUseQueryHook<TQueryFnData, TVariables>
         | GeneratedUseQueryHookOptional<TQueryFnData, TVariables>,
@@ -484,6 +486,7 @@ export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartup
 export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
 export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
 export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);
+export const useTrackAnalyticsEventMutation = enhancedMutationFactory(useTrackAnalyticsEventMutationSingle, TrackAnalyticsEventDocument);
 export const useSubscribeToCompanyUpdatesMutation = createStandaloneMutationHook<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument);
 export const useSubscribeToJobUpdatesMutation = createStandaloneMutationHook<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument);
 export const useSubscribeToProductUpdatesMutation = createStandaloneMutationHook<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument);

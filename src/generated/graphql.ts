@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  AnalyticsMetadata: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   EmailAddress: { input: any; output: any; }
   JSON: { input: any; output: any; }
@@ -37,7 +38,6 @@ export type Access = {
   identities?: Maybe<IdentitiesAccess>;
   jobs?: Maybe<JobsAccess>;
   media?: Maybe<MediaAccess>;
-  newsletter_settings?: Maybe<Newsletter_SettingsAccess>;
   notification_subscriptions?: Maybe<Notification_SubscriptionsAccess>;
   oauthAccessTokens?: Maybe<OauthAccessTokensAccess>;
   oauthApplications?: Maybe<OauthApplicationsAccess>;
@@ -2817,6 +2817,27 @@ export type AdminInvitationsUpdateDocAccess = {
   __typename?: 'AdminInvitationsUpdateDocAccess';
   permission: Scalars['Boolean']['output'];
   where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AnalyticsTrackIdentifiers = {
+  __typename?: 'AnalyticsTrackIdentifiers';
+  distinctId: Scalars['String']['output'];
+  eventId?: Maybe<Scalars['String']['output']>;
+  sessionId: Scalars['String']['output'];
+};
+
+export type AnalyticsTrackInput = {
+  distinctId?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<Scalars['AnalyticsMetadata']['input']>;
+  route?: InputMaybe<Scalars['String']['input']>;
+  sessionId?: InputMaybe<Scalars['String']['input']>;
+  type: Scalars['String']['input'];
+};
+
+export type AnalyticsTrackResult = {
+  __typename?: 'AnalyticsTrackResult';
+  analytics: AnalyticsTrackIdentifiers;
+  success: Scalars['Boolean']['output'];
 };
 
 export type ArchiveBlock = {
@@ -19024,6 +19045,7 @@ export type Mutation = {
   restoreVersionStartup?: Maybe<Startup>;
   restoreVersionSyndication?: Maybe<Syndication>;
   restoreVersionVariant?: Maybe<Variant>;
+  trackAnalyticsEvent: AnalyticsTrackResult;
   updateAccount?: Maybe<Account>;
   updateAddress?: Maybe<Address>;
   updateAdminInvitation?: Maybe<AdminInvitation>;
@@ -19038,7 +19060,6 @@ export type Mutation = {
   updateIdentity?: Maybe<Identity>;
   updateJob?: Maybe<Job>;
   updateMedia?: Maybe<Media>;
-  updateNewsletterSetting?: Maybe<NewsletterSetting>;
   updateNotificationSubscription?: Maybe<NotificationSubscription>;
   updateOauthAccessToken?: Maybe<OauthAccessToken>;
   updateOauthApplication?: Maybe<OauthApplication>;
@@ -19780,6 +19801,11 @@ export type MutationRestoreVersionVariantArgs = {
 };
 
 
+export type MutationTrackAnalyticsEventArgs = {
+  input: AnalyticsTrackInput;
+};
+
+
 export type MutationUpdateAccountArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationAccountUpdateInput;
@@ -19897,12 +19923,6 @@ export type MutationUpdateMediaArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type MutationUpdateNewsletterSettingArgs = {
-  data: MutationNewsletterSettingInput;
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -20128,2515 +20148,6 @@ export type MutationUpdateVerificationArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type NewsletterSetting = {
-  __typename?: 'NewsletterSetting';
-  brandSettings?: Maybe<NewsletterSetting_BrandSettings>;
-  broadcastSettings?: Maybe<NewsletterSetting_BroadcastSettings>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  emailTemplates?: Maybe<NewsletterSetting_EmailTemplates>;
-  fromAddress: Scalars['EmailAddress']['output'];
-  fromName: Scalars['String']['output'];
-  provider: NewsletterSetting_Provider;
-  replyTo?: Maybe<Scalars['EmailAddress']['output']>;
-  resendSettings?: Maybe<NewsletterSetting_ResendSettings>;
-  subscriptionSettings?: Maybe<NewsletterSetting_SubscriptionSettings>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type NewsletterSetting_BrandSettings = {
-  __typename?: 'NewsletterSetting_BrandSettings';
-  logoUrl?: Maybe<Scalars['String']['output']>;
-  siteName?: Maybe<Scalars['String']['output']>;
-  siteUrl?: Maybe<Scalars['String']['output']>;
-};
-
-export type NewsletterSetting_BroadcastSettings = {
-  __typename?: 'NewsletterSetting_BroadcastSettings';
-  apiUrl?: Maybe<Scalars['String']['output']>;
-  lastWebhookReceived?: Maybe<Scalars['DateTime']['output']>;
-  token?: Maybe<Scalars['String']['output']>;
-  webhookSecret?: Maybe<Scalars['String']['output']>;
-  webhookStatus?: Maybe<NewsletterSetting_BroadcastSettings_WebhookStatus>;
-  webhookUrl?: Maybe<Scalars['String']['output']>;
-};
-
-export enum NewsletterSetting_BroadcastSettings_WebhookStatus {
-  Configured = 'configured',
-  Error = 'error',
-  NotConfigured = 'not_configured',
-  Verified = 'verified'
-}
-
-export enum NewsletterSetting_BroadcastSettings_WebhookStatus_MutationInput {
-  Configured = 'configured',
-  Error = 'error',
-  NotConfigured = 'not_configured',
-  Verified = 'verified'
-}
-
-export type NewsletterSetting_EmailTemplates = {
-  __typename?: 'NewsletterSetting_EmailTemplates';
-  magicLink?: Maybe<NewsletterSetting_EmailTemplates_MagicLink>;
-  welcome?: Maybe<NewsletterSetting_EmailTemplates_Welcome>;
-};
-
-export type NewsletterSetting_EmailTemplates_MagicLink = {
-  __typename?: 'NewsletterSetting_EmailTemplates_MagicLink';
-  expirationTime?: Maybe<NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime>;
-  preheader?: Maybe<Scalars['String']['output']>;
-  subject?: Maybe<Scalars['String']['output']>;
-};
-
-export enum NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime {
-  '1h' = '_1h',
-  '7d' = '_7d',
-  '24h' = '_24h',
-  '30d' = '_30d'
-}
-
-export enum NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime_MutationInput {
-  '1h' = '_1h',
-  '7d' = '_7d',
-  '24h' = '_24h',
-  '30d' = '_30d'
-}
-
-export type NewsletterSetting_EmailTemplates_Welcome = {
-  __typename?: 'NewsletterSetting_EmailTemplates_Welcome';
-  enabled?: Maybe<Scalars['Boolean']['output']>;
-  preheader?: Maybe<Scalars['String']['output']>;
-  subject?: Maybe<Scalars['String']['output']>;
-};
-
-export type NewsletterSetting_ResendSettings = {
-  __typename?: 'NewsletterSetting_ResendSettings';
-  apiKey?: Maybe<Scalars['String']['output']>;
-  audienceIds?: Maybe<Array<NewsletterSetting_ResendSettings_AudienceIds>>;
-};
-
-export type NewsletterSetting_ResendSettings_AudienceIds = {
-  __typename?: 'NewsletterSetting_ResendSettings_AudienceIds';
-  development?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  locale?: Maybe<NewsletterSetting_ResendSettings_AudienceIds_Locale>;
-  production?: Maybe<Scalars['String']['output']>;
-};
-
-export enum NewsletterSetting_ResendSettings_AudienceIds_Locale {
-  En = 'en'
-}
-
-export enum NewsletterSetting_ResendSettings_AudienceIds_Locale_MutationInput {
-  En = 'en'
-}
-
-export type NewsletterSetting_SubscriptionSettings = {
-  __typename?: 'NewsletterSetting_SubscriptionSettings';
-  allowedDomains?: Maybe<Array<NewsletterSetting_SubscriptionSettings_AllowedDomains>>;
-  maxSubscribersPerIP?: Maybe<Scalars['Float']['output']>;
-  requireDoubleOptIn?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type NewsletterSetting_SubscriptionSettings_AllowedDomains = {
-  __typename?: 'NewsletterSetting_SubscriptionSettings_AllowedDomains';
-  domain?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-};
-
-export enum NewsletterSetting_Provider {
-  Broadcast = 'broadcast',
-  Resend = 'resend'
-}
-
-export enum NewsletterSetting_Provider_MutationInput {
-  Broadcast = 'broadcast',
-  Resend = 'resend'
-}
-
-export type NewsletterSettingsDocAccessFields = {
-  __typename?: 'NewsletterSettingsDocAccessFields';
-  brandSettings?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings>;
-  broadcastSettings?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings>;
-  createdAt?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt>;
-  emailTemplates?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates>;
-  fromAddress?: Maybe<NewsletterSettingsDocAccessFields_FromAddress>;
-  fromName?: Maybe<NewsletterSettingsDocAccessFields_FromName>;
-  provider?: Maybe<NewsletterSettingsDocAccessFields_Provider>;
-  replyTo?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo>;
-  resendSettings?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings>;
-  subscriptionSettings?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings>;
-  updatedAt?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Fields';
-  logoUrl?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl>;
-  siteName?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName>;
-  siteUrl?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_LogoUrl_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_logoUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteName_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteName_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BrandSettings_SiteUrl_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_brandSettings_siteUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Fields';
-  apiUrl?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl>;
-  lastWebhookReceived?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived>;
-  token?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token>;
-  webhookSecret?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret>;
-  webhookStatus?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus>;
-  webhookUrl?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_ApiUrl_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_apiUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_LastWebhookReceived_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_lastWebhookReceived_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_Token_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_token_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookSecret_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookSecret_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookStatus_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookStatus_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl';
-  create?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_BroadcastSettings_WebhookUrl_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_broadcastSettings_webhookUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_CreatedAt = {
-  __typename?: 'NewsletterSettingsDocAccessFields_createdAt';
-  create?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_CreatedAt_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_CreatedAt_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_CreatedAt_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_CreatedAt_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_CreatedAt_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_createdAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Fields';
-  magicLink?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink>;
-  welcome?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Fields';
-  expirationTime?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime>;
-  preheader?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader>;
-  subject?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_ExpirationTime_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_expirationTime_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Preheader_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_preheader_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_MagicLink_Subject_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_magicLink_subject_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Fields';
-  enabled?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled>;
-  preheader?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader>;
-  subject?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Enabled_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_enabled_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Preheader_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_preheader_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject';
-  create?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_EmailTemplates_Welcome_Subject_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_emailTemplates_welcome_subject_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromAddress = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress';
-  create?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_FromAddress_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_FromAddress_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromAddress_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromAddress_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromAddress_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromAddress_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromName = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromName';
-  create?: Maybe<NewsletterSettingsDocAccessFields_FromName_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_FromName_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_FromName_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_FromName_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_FromName_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromName_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromName_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_FromName_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_fromName_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_Provider = {
-  __typename?: 'NewsletterSettingsDocAccessFields_provider';
-  create?: Maybe<NewsletterSettingsDocAccessFields_Provider_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_Provider_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_Provider_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_Provider_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_Provider_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_provider_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_Provider_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_provider_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_Provider_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_provider_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_Provider_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_provider_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ReplyTo = {
-  __typename?: 'NewsletterSettingsDocAccessFields_replyTo';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ReplyTo_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ReplyTo_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ReplyTo_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ReplyTo_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ReplyTo_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_replyTo_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Fields';
-  apiKey?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey>;
-  audienceIds?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_ApiKey_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_apiKey_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Fields';
-  development?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development>;
-  id?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id>;
-  locale?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale>;
-  production?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Development_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_development_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Id_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Locale_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_locale_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production';
-  create?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_ResendSettings_AudienceIds_Production_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_resendSettings_audienceIds_production_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Fields';
-  allowedDomains?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains>;
-  maxSubscribersPerIP?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp>;
-  requireDoubleOptIn?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Delete>;
-  fields?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Fields>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Fields = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Fields';
-  domain?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain>;
-  id?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Domain_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_domain_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_AllowedDomains_Id_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_allowedDomains_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_MaxSubscribersPerIp_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_maxSubscribersPerIP_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn';
-  create?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_SubscriptionSettings_RequireDoubleOptIn_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_subscriptionSettings_requireDoubleOptIn_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_UpdatedAt = {
-  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt';
-  create?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Create>;
-  delete?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Delete>;
-  read?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Read>;
-  update?: Maybe<NewsletterSettingsDocAccessFields_UpdatedAt_Update>;
-};
-
-export type NewsletterSettingsDocAccessFields_UpdatedAt_Create = {
-  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_UpdatedAt_Delete = {
-  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_UpdatedAt_Read = {
-  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsDocAccessFields_UpdatedAt_Update = {
-  __typename?: 'NewsletterSettingsDocAccessFields_updatedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields = {
-  __typename?: 'NewsletterSettingsFields';
-  brandSettings?: Maybe<NewsletterSettingsFields_BrandSettings>;
-  broadcastSettings?: Maybe<NewsletterSettingsFields_BroadcastSettings>;
-  createdAt?: Maybe<NewsletterSettingsFields_CreatedAt>;
-  emailTemplates?: Maybe<NewsletterSettingsFields_EmailTemplates>;
-  fromAddress?: Maybe<NewsletterSettingsFields_FromAddress>;
-  fromName?: Maybe<NewsletterSettingsFields_FromName>;
-  provider?: Maybe<NewsletterSettingsFields_Provider>;
-  replyTo?: Maybe<NewsletterSettingsFields_ReplyTo>;
-  resendSettings?: Maybe<NewsletterSettingsFields_ResendSettings>;
-  subscriptionSettings?: Maybe<NewsletterSettingsFields_SubscriptionSettings>;
-  updatedAt?: Maybe<NewsletterSettingsFields_UpdatedAt>;
-};
-
-export type NewsletterSettingsFields_BrandSettings = {
-  __typename?: 'NewsletterSettingsFields_brandSettings';
-  create?: Maybe<NewsletterSettingsFields_BrandSettings_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BrandSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_BrandSettings_Fields>;
-  read?: Maybe<NewsletterSettingsFields_BrandSettings_Read>;
-  update?: Maybe<NewsletterSettingsFields_BrandSettings_Update>;
-};
-
-export type NewsletterSettingsFields_BrandSettings_Create = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_Delete = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_Fields = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_Fields';
-  logoUrl?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl>;
-  siteName?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName>;
-  siteUrl?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl>;
-};
-
-export type NewsletterSettingsFields_BrandSettings_Read = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_Update = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_LogoUrl = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl';
-  create?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Read>;
-  update?: Maybe<NewsletterSettingsFields_BrandSettings_LogoUrl_Update>;
-};
-
-export type NewsletterSettingsFields_BrandSettings_LogoUrl_Create = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_LogoUrl_Delete = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_LogoUrl_Read = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_LogoUrl_Update = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_logoUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteName = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteName';
-  create?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Read>;
-  update?: Maybe<NewsletterSettingsFields_BrandSettings_SiteName_Update>;
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteName_Create = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteName_Delete = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteName_Read = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteName_Update = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteName_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteUrl = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl';
-  create?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Read>;
-  update?: Maybe<NewsletterSettingsFields_BrandSettings_SiteUrl_Update>;
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteUrl_Create = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteUrl_Delete = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteUrl_Read = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BrandSettings_SiteUrl_Update = {
-  __typename?: 'NewsletterSettingsFields_brandSettings_siteUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_BroadcastSettings_Fields>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Fields = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_Fields';
-  apiUrl?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl>;
-  lastWebhookReceived?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived>;
-  token?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token>;
-  webhookSecret?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret>;
-  webhookStatus?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus>;
-  webhookUrl?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_ApiUrl = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_ApiUrl_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_ApiUrl_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_apiUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_LastWebhookReceived_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_lastWebhookReceived_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Token = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_token';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_Token_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Token_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Token_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Token_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_Token_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_token_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookSecret_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookSecret_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookStatus_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookStatus_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl';
-  create?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Create>;
-  delete?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Delete>;
-  read?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Read>;
-  update?: Maybe<NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Update>;
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Create = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Delete = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Read = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_BroadcastSettings_WebhookUrl_Update = {
-  __typename?: 'NewsletterSettingsFields_broadcastSettings_webhookUrl_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_CreatedAt = {
-  __typename?: 'NewsletterSettingsFields_createdAt';
-  create?: Maybe<NewsletterSettingsFields_CreatedAt_Create>;
-  delete?: Maybe<NewsletterSettingsFields_CreatedAt_Delete>;
-  read?: Maybe<NewsletterSettingsFields_CreatedAt_Read>;
-  update?: Maybe<NewsletterSettingsFields_CreatedAt_Update>;
-};
-
-export type NewsletterSettingsFields_CreatedAt_Create = {
-  __typename?: 'NewsletterSettingsFields_createdAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_CreatedAt_Delete = {
-  __typename?: 'NewsletterSettingsFields_createdAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_CreatedAt_Read = {
-  __typename?: 'NewsletterSettingsFields_createdAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_CreatedAt_Update = {
-  __typename?: 'NewsletterSettingsFields_createdAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_Fields>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Fields = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_Fields';
-  magicLink?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink>;
-  welcome?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Fields>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Fields = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Fields';
-  expirationTime?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime>;
-  preheader?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader>;
-  subject?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_ExpirationTime_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_expirationTime_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Preheader_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_preheader_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_MagicLink_Subject_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_magicLink_subject_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Fields>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Fields = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Fields';
-  enabled?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled>;
-  preheader?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader>;
-  subject?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Enabled_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_enabled_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Preheader_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_preheader_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject';
-  create?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Create>;
-  delete?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Delete>;
-  read?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Read>;
-  update?: Maybe<NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Update>;
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Create = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Delete = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Read = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_EmailTemplates_Welcome_Subject_Update = {
-  __typename?: 'NewsletterSettingsFields_emailTemplates_welcome_subject_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromAddress = {
-  __typename?: 'NewsletterSettingsFields_fromAddress';
-  create?: Maybe<NewsletterSettingsFields_FromAddress_Create>;
-  delete?: Maybe<NewsletterSettingsFields_FromAddress_Delete>;
-  read?: Maybe<NewsletterSettingsFields_FromAddress_Read>;
-  update?: Maybe<NewsletterSettingsFields_FromAddress_Update>;
-};
-
-export type NewsletterSettingsFields_FromAddress_Create = {
-  __typename?: 'NewsletterSettingsFields_fromAddress_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromAddress_Delete = {
-  __typename?: 'NewsletterSettingsFields_fromAddress_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromAddress_Read = {
-  __typename?: 'NewsletterSettingsFields_fromAddress_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromAddress_Update = {
-  __typename?: 'NewsletterSettingsFields_fromAddress_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromName = {
-  __typename?: 'NewsletterSettingsFields_fromName';
-  create?: Maybe<NewsletterSettingsFields_FromName_Create>;
-  delete?: Maybe<NewsletterSettingsFields_FromName_Delete>;
-  read?: Maybe<NewsletterSettingsFields_FromName_Read>;
-  update?: Maybe<NewsletterSettingsFields_FromName_Update>;
-};
-
-export type NewsletterSettingsFields_FromName_Create = {
-  __typename?: 'NewsletterSettingsFields_fromName_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromName_Delete = {
-  __typename?: 'NewsletterSettingsFields_fromName_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromName_Read = {
-  __typename?: 'NewsletterSettingsFields_fromName_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_FromName_Update = {
-  __typename?: 'NewsletterSettingsFields_fromName_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_Provider = {
-  __typename?: 'NewsletterSettingsFields_provider';
-  create?: Maybe<NewsletterSettingsFields_Provider_Create>;
-  delete?: Maybe<NewsletterSettingsFields_Provider_Delete>;
-  read?: Maybe<NewsletterSettingsFields_Provider_Read>;
-  update?: Maybe<NewsletterSettingsFields_Provider_Update>;
-};
-
-export type NewsletterSettingsFields_Provider_Create = {
-  __typename?: 'NewsletterSettingsFields_provider_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_Provider_Delete = {
-  __typename?: 'NewsletterSettingsFields_provider_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_Provider_Read = {
-  __typename?: 'NewsletterSettingsFields_provider_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_Provider_Update = {
-  __typename?: 'NewsletterSettingsFields_provider_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ReplyTo = {
-  __typename?: 'NewsletterSettingsFields_replyTo';
-  create?: Maybe<NewsletterSettingsFields_ReplyTo_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ReplyTo_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ReplyTo_Read>;
-  update?: Maybe<NewsletterSettingsFields_ReplyTo_Update>;
-};
-
-export type NewsletterSettingsFields_ReplyTo_Create = {
-  __typename?: 'NewsletterSettingsFields_replyTo_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ReplyTo_Delete = {
-  __typename?: 'NewsletterSettingsFields_replyTo_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ReplyTo_Read = {
-  __typename?: 'NewsletterSettingsFields_replyTo_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ReplyTo_Update = {
-  __typename?: 'NewsletterSettingsFields_replyTo_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings = {
-  __typename?: 'NewsletterSettingsFields_resendSettings';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_ResendSettings_Fields>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_Fields = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_Fields';
-  apiKey?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey>;
-  audienceIds?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_ApiKey = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_ApiKey_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_ApiKey_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_ApiKey_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_ApiKey_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_ApiKey_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_apiKey_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Fields>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Fields = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Fields';
-  development?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development>;
-  id?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id>;
-  locale?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale>;
-  production?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Development_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_development_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Id_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Locale_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_locale_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production';
-  create?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Create>;
-  delete?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Delete>;
-  read?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Read>;
-  update?: Maybe<NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Update>;
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Create = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Delete = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Read = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_ResendSettings_AudienceIds_Production_Update = {
-  __typename?: 'NewsletterSettingsFields_resendSettings_audienceIds_production_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Fields>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_Fields = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Fields';
-  allowedDomains?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains>;
-  maxSubscribersPerIP?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp>;
-  requireDoubleOptIn?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Delete>;
-  fields?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Fields>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Fields = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Fields';
-  domain?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain>;
-  id?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Delete>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Domain_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_domain_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Delete>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_AllowedDomains_Id_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_allowedDomains_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Delete>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_MaxSubscribersPerIp_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_maxSubscribersPerIP_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn';
-  create?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Create>;
-  delete?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Delete>;
-  read?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Read>;
-  update?: Maybe<NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Update>;
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Create = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Delete = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Read = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_SubscriptionSettings_RequireDoubleOptIn_Update = {
-  __typename?: 'NewsletterSettingsFields_subscriptionSettings_requireDoubleOptIn_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_UpdatedAt = {
-  __typename?: 'NewsletterSettingsFields_updatedAt';
-  create?: Maybe<NewsletterSettingsFields_UpdatedAt_Create>;
-  delete?: Maybe<NewsletterSettingsFields_UpdatedAt_Delete>;
-  read?: Maybe<NewsletterSettingsFields_UpdatedAt_Read>;
-  update?: Maybe<NewsletterSettingsFields_UpdatedAt_Update>;
-};
-
-export type NewsletterSettingsFields_UpdatedAt_Create = {
-  __typename?: 'NewsletterSettingsFields_updatedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_UpdatedAt_Delete = {
-  __typename?: 'NewsletterSettingsFields_updatedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_UpdatedAt_Read = {
-  __typename?: 'NewsletterSettingsFields_updatedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsFields_UpdatedAt_Update = {
-  __typename?: 'NewsletterSettingsFields_updatedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type NewsletterSettingsReadAccess = {
-  __typename?: 'NewsletterSettingsReadAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type NewsletterSettingsReadDocAccess = {
-  __typename?: 'NewsletterSettingsReadDocAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type NewsletterSettingsUpdateAccess = {
-  __typename?: 'NewsletterSettingsUpdateAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type NewsletterSettingsUpdateDocAccess = {
-  __typename?: 'NewsletterSettingsUpdateDocAccess';
-  permission: Scalars['Boolean']['output'];
-  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type NotificationSubscription = {
@@ -28543,7 +26054,6 @@ export enum PageUpdate__Status_MutationInput {
 
 export type PageVersion = {
   __typename?: 'PageVersion';
-  autosave?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   latest?: Maybe<Scalars['Boolean']['output']>;
@@ -34362,7 +31872,6 @@ export enum PostUpdate__Status_MutationInput {
 
 export type PostVersion = {
   __typename?: 'PostVersion';
-  autosave?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   latest?: Maybe<Scalars['Boolean']['output']>;
@@ -38345,7 +35854,6 @@ export type Query = {
   Job?: Maybe<Job>;
   Jobs?: Maybe<Jobs>;
   Media?: Maybe<Media>;
-  NewsletterSetting?: Maybe<NewsletterSetting>;
   NotificationSubscription?: Maybe<NotificationSubscription>;
   NotificationSubscriptions?: Maybe<NotificationSubscriptions>;
   OauthAccessToken?: Maybe<OauthAccessToken>;
@@ -38448,7 +35956,6 @@ export type Query = {
   docAccessIdentity?: Maybe<IdentitiesDocAccess>;
   docAccessJob?: Maybe<JobsDocAccess>;
   docAccessMedia?: Maybe<MediaDocAccess>;
-  docAccessNewsletterSetting?: Maybe<Newsletter_SettingsDocAccess>;
   docAccessNotificationSubscription?: Maybe<Notification_SubscriptionsDocAccess>;
   docAccessOauthAccessToken?: Maybe<OauthAccessTokensDocAccess>;
   docAccessOauthApplication?: Maybe<OauthApplicationsDocAccess>;
@@ -38732,12 +36239,6 @@ export type QueryMediaArgs = {
   id: Scalars['String']['input'];
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-export type QueryNewsletterSettingArgs = {
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-  select?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -44146,46 +41647,11 @@ export type State = {
 export type Subscriber = {
   __typename?: 'Subscriber';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   email: Scalars['EmailAddress']['output'];
-  emailPreferences?: Maybe<Subscriber_EmailPreferences>;
-  externalId?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  importedFromProvider?: Maybe<Scalars['Boolean']['output']>;
-  locale?: Maybe<Subscriber_Locale>;
-  magicLinkToken?: Maybe<Scalars['String']['output']>;
-  magicLinkTokenExpiry?: Maybe<Scalars['DateTime']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  signupMetadata?: Maybe<Subscriber_SignupMetadata>;
-  source?: Maybe<Scalars['String']['output']>;
-  subscribedAt?: Maybe<Scalars['DateTime']['output']>;
-  subscriptionStatus: Subscriber_SubscriptionStatus;
-  unsubscribeReason?: Maybe<Scalars['String']['output']>;
-  unsubscribedAt?: Maybe<Scalars['DateTime']['output']>;
+  isActive: Scalars['Boolean']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export enum SubscriberUpdate_Locale_MutationInput {
-  En = 'en'
-}
-
-export enum SubscriberUpdate_SubscriptionStatus_MutationInput {
-  Active = 'active',
-  Pending = 'pending',
-  Unsubscribed = 'unsubscribed'
-}
-
-export type Subscriber_EmailPreferences = {
-  __typename?: 'Subscriber_EmailPreferences';
-  announcements?: Maybe<Scalars['Boolean']['output']>;
-  newsletter?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type Subscriber_SignupMetadata = {
-  __typename?: 'Subscriber_SignupMetadata';
-  ipAddress?: Maybe<Scalars['String']['output']>;
-  referrer?: Maybe<Scalars['String']['output']>;
-  signupPage?: Maybe<Scalars['String']['output']>;
-  userAgent?: Maybe<Scalars['String']['output']>;
 };
 
 export type Subscriber_CreatedAt_Operator = {
@@ -44199,16 +41665,13 @@ export type Subscriber_CreatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type Subscriber_EmailPreferences__Announcements_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']['input']>;
+export type Subscriber_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
-  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type Subscriber_EmailPreferences__Newsletter_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Subscriber_Email_Operator = {
@@ -44219,17 +41682,6 @@ export type Subscriber_Email_Operator = {
   like?: InputMaybe<Scalars['EmailAddress']['input']>;
   not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
-};
-
-export type Subscriber_ExternalId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Subscriber_Id_Operator = {
@@ -44243,156 +41695,9 @@ export type Subscriber_Id_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type Subscriber_ImportedFromProvider_Operator = {
+export type Subscriber_IsActive_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export enum Subscriber_Locale {
-  En = 'en'
-}
-
-export enum Subscriber_Locale_Input {
-  En = 'en'
-}
-
-export enum Subscriber_Locale_MutationInput {
-  En = 'en'
-}
-
-export type Subscriber_Locale_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
-  equals?: InputMaybe<Subscriber_Locale_Input>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
-  not_equals?: InputMaybe<Subscriber_Locale_Input>;
-  not_in?: InputMaybe<Array<InputMaybe<Subscriber_Locale_Input>>>;
-};
-
-export type Subscriber_Name_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_SignupMetadata__IpAddress_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_SignupMetadata__Referrer_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_SignupMetadata__SignupPage_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_SignupMetadata__UserAgent_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_Source_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_SubscribedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export enum Subscriber_SubscriptionStatus {
-  Active = 'active',
-  Pending = 'pending',
-  Unsubscribed = 'unsubscribed'
-}
-
-export enum Subscriber_SubscriptionStatus_Input {
-  Active = 'active',
-  Pending = 'pending',
-  Unsubscribed = 'unsubscribed'
-}
-
-export enum Subscriber_SubscriptionStatus_MutationInput {
-  Active = 'active',
-  Pending = 'pending',
-  Unsubscribed = 'unsubscribed'
-}
-
-export type Subscriber_SubscriptionStatus_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
-  equals?: InputMaybe<Subscriber_SubscriptionStatus_Input>;
-  in?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
-  not_equals?: InputMaybe<Subscriber_SubscriptionStatus_Input>;
-  not_in?: InputMaybe<Array<InputMaybe<Subscriber_SubscriptionStatus_Input>>>;
-};
-
-export type Subscriber_UnsubscribeReason_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Subscriber_UnsubscribedAt_Operator = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
-  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than?: InputMaybe<Scalars['DateTime']['input']>;
-  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
-  like?: InputMaybe<Scalars['DateTime']['input']>;
-  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type Subscriber_UpdatedAt_Operator = {
@@ -44410,23 +41715,10 @@ export type Subscriber_Where = {
   AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
   createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Subscriber_CreatedBy_Operator>;
   email?: InputMaybe<Subscriber_Email_Operator>;
-  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
-  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
-  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
   id?: InputMaybe<Subscriber_Id_Operator>;
-  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
-  locale?: InputMaybe<Subscriber_Locale_Operator>;
-  name?: InputMaybe<Subscriber_Name_Operator>;
-  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
-  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
-  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
-  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
-  source?: InputMaybe<Subscriber_Source_Operator>;
-  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
-  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
-  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
-  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  isActive?: InputMaybe<Subscriber_IsActive_Operator>;
   updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
 };
 
@@ -44434,23 +41726,10 @@ export type Subscriber_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
   createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Subscriber_CreatedBy_Operator>;
   email?: InputMaybe<Subscriber_Email_Operator>;
-  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
-  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
-  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
   id?: InputMaybe<Subscriber_Id_Operator>;
-  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
-  locale?: InputMaybe<Subscriber_Locale_Operator>;
-  name?: InputMaybe<Subscriber_Name_Operator>;
-  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
-  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
-  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
-  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
-  source?: InputMaybe<Subscriber_Source_Operator>;
-  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
-  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
-  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
-  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  isActive?: InputMaybe<Subscriber_IsActive_Operator>;
   updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
 };
 
@@ -44458,23 +41737,10 @@ export type Subscriber_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Subscriber_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Subscriber_Where_Or>>>;
   createdAt?: InputMaybe<Subscriber_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Subscriber_CreatedBy_Operator>;
   email?: InputMaybe<Subscriber_Email_Operator>;
-  emailPreferences__announcements?: InputMaybe<Subscriber_EmailPreferences__Announcements_Operator>;
-  emailPreferences__newsletter?: InputMaybe<Subscriber_EmailPreferences__Newsletter_Operator>;
-  externalId?: InputMaybe<Subscriber_ExternalId_Operator>;
   id?: InputMaybe<Subscriber_Id_Operator>;
-  importedFromProvider?: InputMaybe<Subscriber_ImportedFromProvider_Operator>;
-  locale?: InputMaybe<Subscriber_Locale_Operator>;
-  name?: InputMaybe<Subscriber_Name_Operator>;
-  signupMetadata__ipAddress?: InputMaybe<Subscriber_SignupMetadata__IpAddress_Operator>;
-  signupMetadata__referrer?: InputMaybe<Subscriber_SignupMetadata__Referrer_Operator>;
-  signupMetadata__signupPage?: InputMaybe<Subscriber_SignupMetadata__SignupPage_Operator>;
-  signupMetadata__userAgent?: InputMaybe<Subscriber_SignupMetadata__UserAgent_Operator>;
-  source?: InputMaybe<Subscriber_Source_Operator>;
-  subscribedAt?: InputMaybe<Subscriber_SubscribedAt_Operator>;
-  subscriptionStatus?: InputMaybe<Subscriber_SubscriptionStatus_Operator>;
-  unsubscribeReason?: InputMaybe<Subscriber_UnsubscribeReason_Operator>;
-  unsubscribedAt?: InputMaybe<Subscriber_UnsubscribedAt_Operator>;
+  isActive?: InputMaybe<Subscriber_IsActive_Operator>;
   updatedAt?: InputMaybe<Subscriber_UpdatedAt_Operator>;
 };
 
@@ -44520,18 +41786,9 @@ export type SubscribersDeleteDocAccess = {
 export type SubscribersDocAccessFields = {
   __typename?: 'SubscribersDocAccessFields';
   createdAt?: Maybe<SubscribersDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<SubscribersDocAccessFields_CreatedBy>;
   email?: Maybe<SubscribersDocAccessFields_Email>;
-  emailPreferences?: Maybe<SubscribersDocAccessFields_EmailPreferences>;
-  externalId?: Maybe<SubscribersDocAccessFields_ExternalId>;
-  importedFromProvider?: Maybe<SubscribersDocAccessFields_ImportedFromProvider>;
-  locale?: Maybe<SubscribersDocAccessFields_Locale>;
-  name?: Maybe<SubscribersDocAccessFields_Name>;
-  signupMetadata?: Maybe<SubscribersDocAccessFields_SignupMetadata>;
-  source?: Maybe<SubscribersDocAccessFields_Source>;
-  subscribedAt?: Maybe<SubscribersDocAccessFields_SubscribedAt>;
-  subscriptionStatus?: Maybe<SubscribersDocAccessFields_SubscriptionStatus>;
-  unsubscribeReason?: Maybe<SubscribersDocAccessFields_UnsubscribeReason>;
-  unsubscribedAt?: Maybe<SubscribersDocAccessFields_UnsubscribedAt>;
+  isActive?: Maybe<SubscribersDocAccessFields_IsActive>;
   updatedAt?: Maybe<SubscribersDocAccessFields_UpdatedAt>;
 };
 
@@ -44563,103 +41820,40 @@ export type SubscribersDocAccessFields_CreatedAt_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type SubscribersDocAccessFields_CreatedBy = {
+  __typename?: 'SubscribersDocAccessFields_createdBy';
+  create?: Maybe<SubscribersDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<SubscribersDocAccessFields_CreatedBy_Update>;
+};
+
+export type SubscribersDocAccessFields_CreatedBy_Create = {
+  __typename?: 'SubscribersDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'SubscribersDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedBy_Read = {
+  __typename?: 'SubscribersDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersDocAccessFields_CreatedBy_Update = {
+  __typename?: 'SubscribersDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type SubscribersDocAccessFields_Email = {
   __typename?: 'SubscribersDocAccessFields_email';
   create?: Maybe<SubscribersDocAccessFields_Email_Create>;
   delete?: Maybe<SubscribersDocAccessFields_Email_Delete>;
   read?: Maybe<SubscribersDocAccessFields_Email_Read>;
   update?: Maybe<SubscribersDocAccessFields_Email_Update>;
-};
-
-export type SubscribersDocAccessFields_EmailPreferences = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences';
-  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Delete>;
-  fields?: Maybe<SubscribersDocAccessFields_EmailPreferences_Fields>;
-  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Read>;
-  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Update>;
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Create = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Delete = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Fields = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_Fields';
-  announcements?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements>;
-  newsletter?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter>;
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Read = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Update = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Announcements = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements';
-  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Read>;
-  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Announcements_Update>;
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Announcements_Create = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Announcements_Delete = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Announcements_Read = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Announcements_Update = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_announcements_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Newsletter = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter';
-  create?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Read>;
-  update?: Maybe<SubscribersDocAccessFields_EmailPreferences_Newsletter_Update>;
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Create = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Delete = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Read = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_EmailPreferences_Newsletter_Update = {
-  __typename?: 'SubscribersDocAccessFields_emailPreferences_newsletter_Update';
-  permission: Scalars['Boolean']['output'];
 };
 
 export type SubscribersDocAccessFields_Email_Create = {
@@ -44682,404 +41876,31 @@ export type SubscribersDocAccessFields_Email_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersDocAccessFields_ExternalId = {
-  __typename?: 'SubscribersDocAccessFields_externalId';
-  create?: Maybe<SubscribersDocAccessFields_ExternalId_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_ExternalId_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_ExternalId_Read>;
-  update?: Maybe<SubscribersDocAccessFields_ExternalId_Update>;
+export type SubscribersDocAccessFields_IsActive = {
+  __typename?: 'SubscribersDocAccessFields_isActive';
+  create?: Maybe<SubscribersDocAccessFields_IsActive_Create>;
+  delete?: Maybe<SubscribersDocAccessFields_IsActive_Delete>;
+  read?: Maybe<SubscribersDocAccessFields_IsActive_Read>;
+  update?: Maybe<SubscribersDocAccessFields_IsActive_Update>;
 };
 
-export type SubscribersDocAccessFields_ExternalId_Create = {
-  __typename?: 'SubscribersDocAccessFields_externalId_Create';
+export type SubscribersDocAccessFields_IsActive_Create = {
+  __typename?: 'SubscribersDocAccessFields_isActive_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersDocAccessFields_ExternalId_Delete = {
-  __typename?: 'SubscribersDocAccessFields_externalId_Delete';
+export type SubscribersDocAccessFields_IsActive_Delete = {
+  __typename?: 'SubscribersDocAccessFields_isActive_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersDocAccessFields_ExternalId_Read = {
-  __typename?: 'SubscribersDocAccessFields_externalId_Read';
+export type SubscribersDocAccessFields_IsActive_Read = {
+  __typename?: 'SubscribersDocAccessFields_isActive_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersDocAccessFields_ExternalId_Update = {
-  __typename?: 'SubscribersDocAccessFields_externalId_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_ImportedFromProvider = {
-  __typename?: 'SubscribersDocAccessFields_importedFromProvider';
-  create?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Read>;
-  update?: Maybe<SubscribersDocAccessFields_ImportedFromProvider_Update>;
-};
-
-export type SubscribersDocAccessFields_ImportedFromProvider_Create = {
-  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_ImportedFromProvider_Delete = {
-  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_ImportedFromProvider_Read = {
-  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_ImportedFromProvider_Update = {
-  __typename?: 'SubscribersDocAccessFields_importedFromProvider_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Locale = {
-  __typename?: 'SubscribersDocAccessFields_locale';
-  create?: Maybe<SubscribersDocAccessFields_Locale_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_Locale_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_Locale_Read>;
-  update?: Maybe<SubscribersDocAccessFields_Locale_Update>;
-};
-
-export type SubscribersDocAccessFields_Locale_Create = {
-  __typename?: 'SubscribersDocAccessFields_locale_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Locale_Delete = {
-  __typename?: 'SubscribersDocAccessFields_locale_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Locale_Read = {
-  __typename?: 'SubscribersDocAccessFields_locale_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Locale_Update = {
-  __typename?: 'SubscribersDocAccessFields_locale_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Name = {
-  __typename?: 'SubscribersDocAccessFields_name';
-  create?: Maybe<SubscribersDocAccessFields_Name_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_Name_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_Name_Read>;
-  update?: Maybe<SubscribersDocAccessFields_Name_Update>;
-};
-
-export type SubscribersDocAccessFields_Name_Create = {
-  __typename?: 'SubscribersDocAccessFields_name_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Name_Delete = {
-  __typename?: 'SubscribersDocAccessFields_name_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Name_Read = {
-  __typename?: 'SubscribersDocAccessFields_name_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Name_Update = {
-  __typename?: 'SubscribersDocAccessFields_name_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata';
-  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_Delete>;
-  fields?: Maybe<SubscribersDocAccessFields_SignupMetadata_Fields>;
-  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_Update>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Create = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Delete = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Fields = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_Fields';
-  ipAddress?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress>;
-  referrer?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer>;
-  signupPage?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage>;
-  userAgent?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Read = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Update = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_IpAddress = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress';
-  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_IpAddress_Update>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Create = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Delete = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Read = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_IpAddress_Update = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_ipAddress_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Referrer = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer';
-  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_Referrer_Update>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Referrer_Create = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Referrer_Delete = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Referrer_Read = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_Referrer_Update = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_referrer_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_SignupPage = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage';
-  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_SignupPage_Update>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Create = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Delete = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Read = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_SignupPage_Update = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_signupPage_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_UserAgent = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent';
-  create?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SignupMetadata_UserAgent_Update>;
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Create = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Delete = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Read = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SignupMetadata_UserAgent_Update = {
-  __typename?: 'SubscribersDocAccessFields_signupMetadata_userAgent_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Source = {
-  __typename?: 'SubscribersDocAccessFields_source';
-  create?: Maybe<SubscribersDocAccessFields_Source_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_Source_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_Source_Read>;
-  update?: Maybe<SubscribersDocAccessFields_Source_Update>;
-};
-
-export type SubscribersDocAccessFields_Source_Create = {
-  __typename?: 'SubscribersDocAccessFields_source_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Source_Delete = {
-  __typename?: 'SubscribersDocAccessFields_source_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Source_Read = {
-  __typename?: 'SubscribersDocAccessFields_source_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_Source_Update = {
-  __typename?: 'SubscribersDocAccessFields_source_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscribedAt = {
-  __typename?: 'SubscribersDocAccessFields_subscribedAt';
-  create?: Maybe<SubscribersDocAccessFields_SubscribedAt_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SubscribedAt_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SubscribedAt_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SubscribedAt_Update>;
-};
-
-export type SubscribersDocAccessFields_SubscribedAt_Create = {
-  __typename?: 'SubscribersDocAccessFields_subscribedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscribedAt_Delete = {
-  __typename?: 'SubscribersDocAccessFields_subscribedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscribedAt_Read = {
-  __typename?: 'SubscribersDocAccessFields_subscribedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscribedAt_Update = {
-  __typename?: 'SubscribersDocAccessFields_subscribedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscriptionStatus = {
-  __typename?: 'SubscribersDocAccessFields_subscriptionStatus';
-  create?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Read>;
-  update?: Maybe<SubscribersDocAccessFields_SubscriptionStatus_Update>;
-};
-
-export type SubscribersDocAccessFields_SubscriptionStatus_Create = {
-  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscriptionStatus_Delete = {
-  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscriptionStatus_Read = {
-  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_SubscriptionStatus_Update = {
-  __typename?: 'SubscribersDocAccessFields_subscriptionStatus_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribeReason = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribeReason';
-  create?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Read>;
-  update?: Maybe<SubscribersDocAccessFields_UnsubscribeReason_Update>;
-};
-
-export type SubscribersDocAccessFields_UnsubscribeReason_Create = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribeReason_Delete = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribeReason_Read = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribeReason_Update = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribeReason_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribedAt = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribedAt';
-  create?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Create>;
-  delete?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Delete>;
-  read?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Read>;
-  update?: Maybe<SubscribersDocAccessFields_UnsubscribedAt_Update>;
-};
-
-export type SubscribersDocAccessFields_UnsubscribedAt_Create = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribedAt_Delete = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribedAt_Read = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersDocAccessFields_UnsubscribedAt_Update = {
-  __typename?: 'SubscribersDocAccessFields_unsubscribedAt_Update';
+export type SubscribersDocAccessFields_IsActive_Update = {
+  __typename?: 'SubscribersDocAccessFields_isActive_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -45114,18 +41935,9 @@ export type SubscribersDocAccessFields_UpdatedAt_Update = {
 export type SubscribersFields = {
   __typename?: 'SubscribersFields';
   createdAt?: Maybe<SubscribersFields_CreatedAt>;
+  createdBy?: Maybe<SubscribersFields_CreatedBy>;
   email?: Maybe<SubscribersFields_Email>;
-  emailPreferences?: Maybe<SubscribersFields_EmailPreferences>;
-  externalId?: Maybe<SubscribersFields_ExternalId>;
-  importedFromProvider?: Maybe<SubscribersFields_ImportedFromProvider>;
-  locale?: Maybe<SubscribersFields_Locale>;
-  name?: Maybe<SubscribersFields_Name>;
-  signupMetadata?: Maybe<SubscribersFields_SignupMetadata>;
-  source?: Maybe<SubscribersFields_Source>;
-  subscribedAt?: Maybe<SubscribersFields_SubscribedAt>;
-  subscriptionStatus?: Maybe<SubscribersFields_SubscriptionStatus>;
-  unsubscribeReason?: Maybe<SubscribersFields_UnsubscribeReason>;
-  unsubscribedAt?: Maybe<SubscribersFields_UnsubscribedAt>;
+  isActive?: Maybe<SubscribersFields_IsActive>;
   updatedAt?: Maybe<SubscribersFields_UpdatedAt>;
 };
 
@@ -45157,103 +41969,40 @@ export type SubscribersFields_CreatedAt_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type SubscribersFields_CreatedBy = {
+  __typename?: 'SubscribersFields_createdBy';
+  create?: Maybe<SubscribersFields_CreatedBy_Create>;
+  delete?: Maybe<SubscribersFields_CreatedBy_Delete>;
+  read?: Maybe<SubscribersFields_CreatedBy_Read>;
+  update?: Maybe<SubscribersFields_CreatedBy_Update>;
+};
+
+export type SubscribersFields_CreatedBy_Create = {
+  __typename?: 'SubscribersFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedBy_Delete = {
+  __typename?: 'SubscribersFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedBy_Read = {
+  __typename?: 'SubscribersFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SubscribersFields_CreatedBy_Update = {
+  __typename?: 'SubscribersFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type SubscribersFields_Email = {
   __typename?: 'SubscribersFields_email';
   create?: Maybe<SubscribersFields_Email_Create>;
   delete?: Maybe<SubscribersFields_Email_Delete>;
   read?: Maybe<SubscribersFields_Email_Read>;
   update?: Maybe<SubscribersFields_Email_Update>;
-};
-
-export type SubscribersFields_EmailPreferences = {
-  __typename?: 'SubscribersFields_emailPreferences';
-  create?: Maybe<SubscribersFields_EmailPreferences_Create>;
-  delete?: Maybe<SubscribersFields_EmailPreferences_Delete>;
-  fields?: Maybe<SubscribersFields_EmailPreferences_Fields>;
-  read?: Maybe<SubscribersFields_EmailPreferences_Read>;
-  update?: Maybe<SubscribersFields_EmailPreferences_Update>;
-};
-
-export type SubscribersFields_EmailPreferences_Create = {
-  __typename?: 'SubscribersFields_emailPreferences_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Delete = {
-  __typename?: 'SubscribersFields_emailPreferences_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Fields = {
-  __typename?: 'SubscribersFields_emailPreferences_Fields';
-  announcements?: Maybe<SubscribersFields_EmailPreferences_Announcements>;
-  newsletter?: Maybe<SubscribersFields_EmailPreferences_Newsletter>;
-};
-
-export type SubscribersFields_EmailPreferences_Read = {
-  __typename?: 'SubscribersFields_emailPreferences_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Update = {
-  __typename?: 'SubscribersFields_emailPreferences_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Announcements = {
-  __typename?: 'SubscribersFields_emailPreferences_announcements';
-  create?: Maybe<SubscribersFields_EmailPreferences_Announcements_Create>;
-  delete?: Maybe<SubscribersFields_EmailPreferences_Announcements_Delete>;
-  read?: Maybe<SubscribersFields_EmailPreferences_Announcements_Read>;
-  update?: Maybe<SubscribersFields_EmailPreferences_Announcements_Update>;
-};
-
-export type SubscribersFields_EmailPreferences_Announcements_Create = {
-  __typename?: 'SubscribersFields_emailPreferences_announcements_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Announcements_Delete = {
-  __typename?: 'SubscribersFields_emailPreferences_announcements_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Announcements_Read = {
-  __typename?: 'SubscribersFields_emailPreferences_announcements_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Announcements_Update = {
-  __typename?: 'SubscribersFields_emailPreferences_announcements_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Newsletter = {
-  __typename?: 'SubscribersFields_emailPreferences_newsletter';
-  create?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Create>;
-  delete?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Delete>;
-  read?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Read>;
-  update?: Maybe<SubscribersFields_EmailPreferences_Newsletter_Update>;
-};
-
-export type SubscribersFields_EmailPreferences_Newsletter_Create = {
-  __typename?: 'SubscribersFields_emailPreferences_newsletter_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Newsletter_Delete = {
-  __typename?: 'SubscribersFields_emailPreferences_newsletter_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Newsletter_Read = {
-  __typename?: 'SubscribersFields_emailPreferences_newsletter_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_EmailPreferences_Newsletter_Update = {
-  __typename?: 'SubscribersFields_emailPreferences_newsletter_Update';
-  permission: Scalars['Boolean']['output'];
 };
 
 export type SubscribersFields_Email_Create = {
@@ -45276,404 +42025,31 @@ export type SubscribersFields_Email_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersFields_ExternalId = {
-  __typename?: 'SubscribersFields_externalId';
-  create?: Maybe<SubscribersFields_ExternalId_Create>;
-  delete?: Maybe<SubscribersFields_ExternalId_Delete>;
-  read?: Maybe<SubscribersFields_ExternalId_Read>;
-  update?: Maybe<SubscribersFields_ExternalId_Update>;
+export type SubscribersFields_IsActive = {
+  __typename?: 'SubscribersFields_isActive';
+  create?: Maybe<SubscribersFields_IsActive_Create>;
+  delete?: Maybe<SubscribersFields_IsActive_Delete>;
+  read?: Maybe<SubscribersFields_IsActive_Read>;
+  update?: Maybe<SubscribersFields_IsActive_Update>;
 };
 
-export type SubscribersFields_ExternalId_Create = {
-  __typename?: 'SubscribersFields_externalId_Create';
+export type SubscribersFields_IsActive_Create = {
+  __typename?: 'SubscribersFields_isActive_Create';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersFields_ExternalId_Delete = {
-  __typename?: 'SubscribersFields_externalId_Delete';
+export type SubscribersFields_IsActive_Delete = {
+  __typename?: 'SubscribersFields_isActive_Delete';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersFields_ExternalId_Read = {
-  __typename?: 'SubscribersFields_externalId_Read';
+export type SubscribersFields_IsActive_Read = {
+  __typename?: 'SubscribersFields_isActive_Read';
   permission: Scalars['Boolean']['output'];
 };
 
-export type SubscribersFields_ExternalId_Update = {
-  __typename?: 'SubscribersFields_externalId_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_ImportedFromProvider = {
-  __typename?: 'SubscribersFields_importedFromProvider';
-  create?: Maybe<SubscribersFields_ImportedFromProvider_Create>;
-  delete?: Maybe<SubscribersFields_ImportedFromProvider_Delete>;
-  read?: Maybe<SubscribersFields_ImportedFromProvider_Read>;
-  update?: Maybe<SubscribersFields_ImportedFromProvider_Update>;
-};
-
-export type SubscribersFields_ImportedFromProvider_Create = {
-  __typename?: 'SubscribersFields_importedFromProvider_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_ImportedFromProvider_Delete = {
-  __typename?: 'SubscribersFields_importedFromProvider_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_ImportedFromProvider_Read = {
-  __typename?: 'SubscribersFields_importedFromProvider_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_ImportedFromProvider_Update = {
-  __typename?: 'SubscribersFields_importedFromProvider_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Locale = {
-  __typename?: 'SubscribersFields_locale';
-  create?: Maybe<SubscribersFields_Locale_Create>;
-  delete?: Maybe<SubscribersFields_Locale_Delete>;
-  read?: Maybe<SubscribersFields_Locale_Read>;
-  update?: Maybe<SubscribersFields_Locale_Update>;
-};
-
-export type SubscribersFields_Locale_Create = {
-  __typename?: 'SubscribersFields_locale_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Locale_Delete = {
-  __typename?: 'SubscribersFields_locale_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Locale_Read = {
-  __typename?: 'SubscribersFields_locale_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Locale_Update = {
-  __typename?: 'SubscribersFields_locale_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Name = {
-  __typename?: 'SubscribersFields_name';
-  create?: Maybe<SubscribersFields_Name_Create>;
-  delete?: Maybe<SubscribersFields_Name_Delete>;
-  read?: Maybe<SubscribersFields_Name_Read>;
-  update?: Maybe<SubscribersFields_Name_Update>;
-};
-
-export type SubscribersFields_Name_Create = {
-  __typename?: 'SubscribersFields_name_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Name_Delete = {
-  __typename?: 'SubscribersFields_name_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Name_Read = {
-  __typename?: 'SubscribersFields_name_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Name_Update = {
-  __typename?: 'SubscribersFields_name_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata = {
-  __typename?: 'SubscribersFields_signupMetadata';
-  create?: Maybe<SubscribersFields_SignupMetadata_Create>;
-  delete?: Maybe<SubscribersFields_SignupMetadata_Delete>;
-  fields?: Maybe<SubscribersFields_SignupMetadata_Fields>;
-  read?: Maybe<SubscribersFields_SignupMetadata_Read>;
-  update?: Maybe<SubscribersFields_SignupMetadata_Update>;
-};
-
-export type SubscribersFields_SignupMetadata_Create = {
-  __typename?: 'SubscribersFields_signupMetadata_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Delete = {
-  __typename?: 'SubscribersFields_signupMetadata_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Fields = {
-  __typename?: 'SubscribersFields_signupMetadata_Fields';
-  ipAddress?: Maybe<SubscribersFields_SignupMetadata_IpAddress>;
-  referrer?: Maybe<SubscribersFields_SignupMetadata_Referrer>;
-  signupPage?: Maybe<SubscribersFields_SignupMetadata_SignupPage>;
-  userAgent?: Maybe<SubscribersFields_SignupMetadata_UserAgent>;
-};
-
-export type SubscribersFields_SignupMetadata_Read = {
-  __typename?: 'SubscribersFields_signupMetadata_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Update = {
-  __typename?: 'SubscribersFields_signupMetadata_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_IpAddress = {
-  __typename?: 'SubscribersFields_signupMetadata_ipAddress';
-  create?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Create>;
-  delete?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Delete>;
-  read?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Read>;
-  update?: Maybe<SubscribersFields_SignupMetadata_IpAddress_Update>;
-};
-
-export type SubscribersFields_SignupMetadata_IpAddress_Create = {
-  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_IpAddress_Delete = {
-  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_IpAddress_Read = {
-  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_IpAddress_Update = {
-  __typename?: 'SubscribersFields_signupMetadata_ipAddress_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Referrer = {
-  __typename?: 'SubscribersFields_signupMetadata_referrer';
-  create?: Maybe<SubscribersFields_SignupMetadata_Referrer_Create>;
-  delete?: Maybe<SubscribersFields_SignupMetadata_Referrer_Delete>;
-  read?: Maybe<SubscribersFields_SignupMetadata_Referrer_Read>;
-  update?: Maybe<SubscribersFields_SignupMetadata_Referrer_Update>;
-};
-
-export type SubscribersFields_SignupMetadata_Referrer_Create = {
-  __typename?: 'SubscribersFields_signupMetadata_referrer_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Referrer_Delete = {
-  __typename?: 'SubscribersFields_signupMetadata_referrer_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Referrer_Read = {
-  __typename?: 'SubscribersFields_signupMetadata_referrer_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_Referrer_Update = {
-  __typename?: 'SubscribersFields_signupMetadata_referrer_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_SignupPage = {
-  __typename?: 'SubscribersFields_signupMetadata_signupPage';
-  create?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Create>;
-  delete?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Delete>;
-  read?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Read>;
-  update?: Maybe<SubscribersFields_SignupMetadata_SignupPage_Update>;
-};
-
-export type SubscribersFields_SignupMetadata_SignupPage_Create = {
-  __typename?: 'SubscribersFields_signupMetadata_signupPage_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_SignupPage_Delete = {
-  __typename?: 'SubscribersFields_signupMetadata_signupPage_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_SignupPage_Read = {
-  __typename?: 'SubscribersFields_signupMetadata_signupPage_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_SignupPage_Update = {
-  __typename?: 'SubscribersFields_signupMetadata_signupPage_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_UserAgent = {
-  __typename?: 'SubscribersFields_signupMetadata_userAgent';
-  create?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Create>;
-  delete?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Delete>;
-  read?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Read>;
-  update?: Maybe<SubscribersFields_SignupMetadata_UserAgent_Update>;
-};
-
-export type SubscribersFields_SignupMetadata_UserAgent_Create = {
-  __typename?: 'SubscribersFields_signupMetadata_userAgent_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_UserAgent_Delete = {
-  __typename?: 'SubscribersFields_signupMetadata_userAgent_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_UserAgent_Read = {
-  __typename?: 'SubscribersFields_signupMetadata_userAgent_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SignupMetadata_UserAgent_Update = {
-  __typename?: 'SubscribersFields_signupMetadata_userAgent_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Source = {
-  __typename?: 'SubscribersFields_source';
-  create?: Maybe<SubscribersFields_Source_Create>;
-  delete?: Maybe<SubscribersFields_Source_Delete>;
-  read?: Maybe<SubscribersFields_Source_Read>;
-  update?: Maybe<SubscribersFields_Source_Update>;
-};
-
-export type SubscribersFields_Source_Create = {
-  __typename?: 'SubscribersFields_source_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Source_Delete = {
-  __typename?: 'SubscribersFields_source_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Source_Read = {
-  __typename?: 'SubscribersFields_source_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_Source_Update = {
-  __typename?: 'SubscribersFields_source_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscribedAt = {
-  __typename?: 'SubscribersFields_subscribedAt';
-  create?: Maybe<SubscribersFields_SubscribedAt_Create>;
-  delete?: Maybe<SubscribersFields_SubscribedAt_Delete>;
-  read?: Maybe<SubscribersFields_SubscribedAt_Read>;
-  update?: Maybe<SubscribersFields_SubscribedAt_Update>;
-};
-
-export type SubscribersFields_SubscribedAt_Create = {
-  __typename?: 'SubscribersFields_subscribedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscribedAt_Delete = {
-  __typename?: 'SubscribersFields_subscribedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscribedAt_Read = {
-  __typename?: 'SubscribersFields_subscribedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscribedAt_Update = {
-  __typename?: 'SubscribersFields_subscribedAt_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscriptionStatus = {
-  __typename?: 'SubscribersFields_subscriptionStatus';
-  create?: Maybe<SubscribersFields_SubscriptionStatus_Create>;
-  delete?: Maybe<SubscribersFields_SubscriptionStatus_Delete>;
-  read?: Maybe<SubscribersFields_SubscriptionStatus_Read>;
-  update?: Maybe<SubscribersFields_SubscriptionStatus_Update>;
-};
-
-export type SubscribersFields_SubscriptionStatus_Create = {
-  __typename?: 'SubscribersFields_subscriptionStatus_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscriptionStatus_Delete = {
-  __typename?: 'SubscribersFields_subscriptionStatus_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscriptionStatus_Read = {
-  __typename?: 'SubscribersFields_subscriptionStatus_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_SubscriptionStatus_Update = {
-  __typename?: 'SubscribersFields_subscriptionStatus_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribeReason = {
-  __typename?: 'SubscribersFields_unsubscribeReason';
-  create?: Maybe<SubscribersFields_UnsubscribeReason_Create>;
-  delete?: Maybe<SubscribersFields_UnsubscribeReason_Delete>;
-  read?: Maybe<SubscribersFields_UnsubscribeReason_Read>;
-  update?: Maybe<SubscribersFields_UnsubscribeReason_Update>;
-};
-
-export type SubscribersFields_UnsubscribeReason_Create = {
-  __typename?: 'SubscribersFields_unsubscribeReason_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribeReason_Delete = {
-  __typename?: 'SubscribersFields_unsubscribeReason_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribeReason_Read = {
-  __typename?: 'SubscribersFields_unsubscribeReason_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribeReason_Update = {
-  __typename?: 'SubscribersFields_unsubscribeReason_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribedAt = {
-  __typename?: 'SubscribersFields_unsubscribedAt';
-  create?: Maybe<SubscribersFields_UnsubscribedAt_Create>;
-  delete?: Maybe<SubscribersFields_UnsubscribedAt_Delete>;
-  read?: Maybe<SubscribersFields_UnsubscribedAt_Read>;
-  update?: Maybe<SubscribersFields_UnsubscribedAt_Update>;
-};
-
-export type SubscribersFields_UnsubscribedAt_Create = {
-  __typename?: 'SubscribersFields_unsubscribedAt_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribedAt_Delete = {
-  __typename?: 'SubscribersFields_unsubscribedAt_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribedAt_Read = {
-  __typename?: 'SubscribersFields_unsubscribedAt_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type SubscribersFields_UnsubscribedAt_Update = {
-  __typename?: 'SubscribersFields_unsubscribedAt_Update';
+export type SubscribersFields_IsActive_Update = {
+  __typename?: 'SubscribersFields_isActive_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -53228,75 +49604,6 @@ export type MutationMedia_Sizes_XlargeInput = {
   width?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type MutationNewsletterSettingInput = {
-  brandSettings: MutationNewsletterSetting_BrandSettingsInput;
-  broadcastSettings: MutationNewsletterSetting_BroadcastSettingsInput;
-  createdAt?: InputMaybe<Scalars['String']['input']>;
-  emailTemplates?: InputMaybe<MutationNewsletterSetting_EmailTemplatesInput>;
-  fromAddress: Scalars['String']['input'];
-  fromName: Scalars['String']['input'];
-  provider: NewsletterSetting_Provider_MutationInput;
-  replyTo?: InputMaybe<Scalars['String']['input']>;
-  resendSettings: MutationNewsletterSetting_ResendSettingsInput;
-  subscriptionSettings?: InputMaybe<MutationNewsletterSetting_SubscriptionSettingsInput>;
-  updatedAt?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_BrandSettingsInput = {
-  logoUrl?: InputMaybe<Scalars['String']['input']>;
-  siteName: Scalars['String']['input'];
-  siteUrl?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_BroadcastSettingsInput = {
-  apiUrl: Scalars['String']['input'];
-  lastWebhookReceived?: InputMaybe<Scalars['String']['input']>;
-  token: Scalars['String']['input'];
-  webhookSecret?: InputMaybe<Scalars['String']['input']>;
-  webhookStatus?: InputMaybe<NewsletterSetting_BroadcastSettings_WebhookStatus_MutationInput>;
-  webhookUrl?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_EmailTemplatesInput = {
-  magicLink?: InputMaybe<MutationNewsletterSetting_EmailTemplates_MagicLinkInput>;
-  welcome?: InputMaybe<MutationNewsletterSetting_EmailTemplates_WelcomeInput>;
-};
-
-export type MutationNewsletterSetting_EmailTemplates_MagicLinkInput = {
-  expirationTime?: InputMaybe<NewsletterSetting_EmailTemplates_MagicLink_ExpirationTime_MutationInput>;
-  preheader?: InputMaybe<Scalars['String']['input']>;
-  subject?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_EmailTemplates_WelcomeInput = {
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  preheader?: InputMaybe<Scalars['String']['input']>;
-  subject?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_ResendSettingsInput = {
-  apiKey: Scalars['String']['input'];
-  audienceIds?: InputMaybe<Array<InputMaybe<MutationNewsletterSetting_ResendSettings_AudienceIdsInput>>>;
-};
-
-export type MutationNewsletterSetting_ResendSettings_AudienceIdsInput = {
-  development?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  locale: NewsletterSetting_ResendSettings_AudienceIds_Locale_MutationInput;
-  production?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationNewsletterSetting_SubscriptionSettingsInput = {
-  allowedDomains?: InputMaybe<Array<InputMaybe<MutationNewsletterSetting_SubscriptionSettings_AllowedDomainsInput>>>;
-  maxSubscribersPerIP?: InputMaybe<Scalars['Float']['input']>;
-  requireDoubleOptIn?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type MutationNewsletterSetting_SubscriptionSettings_AllowedDomainsInput = {
-  domain: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['String']['input']>;
-};
-
 export type MutationNotificationSubscriptionInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
@@ -53970,64 +50277,18 @@ export type MutationStartup_FundsNeededInput = {
 
 export type MutationSubscriberInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
-  emailPreferences?: InputMaybe<MutationSubscriber_EmailPreferencesInput>;
-  externalId?: InputMaybe<Scalars['String']['input']>;
-  importedFromProvider?: InputMaybe<Scalars['Boolean']['input']>;
-  locale?: InputMaybe<Subscriber_Locale_MutationInput>;
-  magicLinkToken?: InputMaybe<Scalars['String']['input']>;
-  magicLinkTokenExpiry?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  signupMetadata?: InputMaybe<MutationSubscriber_SignupMetadataInput>;
-  source?: InputMaybe<Scalars['String']['input']>;
-  subscribedAt?: InputMaybe<Scalars['String']['input']>;
-  subscriptionStatus: Subscriber_SubscriptionStatus_MutationInput;
-  unsubscribeReason?: InputMaybe<Scalars['String']['input']>;
-  unsubscribedAt?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationSubscriberUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  emailPreferences?: InputMaybe<MutationSubscriberUpdate_EmailPreferencesInput>;
-  externalId?: InputMaybe<Scalars['String']['input']>;
-  importedFromProvider?: InputMaybe<Scalars['Boolean']['input']>;
-  locale?: InputMaybe<SubscriberUpdate_Locale_MutationInput>;
-  magicLinkToken?: InputMaybe<Scalars['String']['input']>;
-  magicLinkTokenExpiry?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  signupMetadata?: InputMaybe<MutationSubscriberUpdate_SignupMetadataInput>;
-  source?: InputMaybe<Scalars['String']['input']>;
-  subscribedAt?: InputMaybe<Scalars['String']['input']>;
-  subscriptionStatus?: InputMaybe<SubscriberUpdate_SubscriptionStatus_MutationInput>;
-  unsubscribeReason?: InputMaybe<Scalars['String']['input']>;
-  unsubscribedAt?: InputMaybe<Scalars['String']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationSubscriberUpdate_EmailPreferencesInput = {
-  announcements?: InputMaybe<Scalars['Boolean']['input']>;
-  newsletter?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type MutationSubscriberUpdate_SignupMetadataInput = {
-  ipAddress?: InputMaybe<Scalars['String']['input']>;
-  referrer?: InputMaybe<Scalars['String']['input']>;
-  signupPage?: InputMaybe<Scalars['String']['input']>;
-  userAgent?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationSubscriber_EmailPreferencesInput = {
-  announcements?: InputMaybe<Scalars['Boolean']['input']>;
-  newsletter?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type MutationSubscriber_SignupMetadataInput = {
-  ipAddress?: InputMaybe<Scalars['String']['input']>;
-  referrer?: InputMaybe<Scalars['String']['input']>;
-  signupPage?: InputMaybe<Scalars['String']['input']>;
-  userAgent?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationSyndicationInput = {
@@ -54232,20 +50493,6 @@ export type MutationVerificationUpdateInput = {
   identifier?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Newsletter_SettingsAccess = {
-  __typename?: 'newsletter_settingsAccess';
-  fields?: Maybe<NewsletterSettingsFields>;
-  read?: Maybe<NewsletterSettingsReadAccess>;
-  update?: Maybe<NewsletterSettingsUpdateAccess>;
-};
-
-export type Newsletter_SettingsDocAccess = {
-  __typename?: 'newsletter_settingsDocAccess';
-  fields?: Maybe<NewsletterSettingsDocAccessFields>;
-  read?: Maybe<NewsletterSettingsReadDocAccess>;
-  update?: Maybe<NewsletterSettingsUpdateDocAccess>;
 };
 
 export type Notification_SubscriptionsAccess = {
@@ -55514,12 +51761,6 @@ export type VersionsJobs = {
   totalPages: Scalars['Int']['output'];
 };
 
-export type VersionsPage_Autosave_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type VersionsPage_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -55785,7 +52026,6 @@ export type VersionsPage_Version__UpdatedAt_Operator = {
 export type VersionsPage_Where = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -55817,7 +52057,6 @@ export type VersionsPage_Where = {
 export type VersionsPage_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -55849,7 +52088,6 @@ export type VersionsPage_Where_And = {
 export type VersionsPage_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -55891,12 +52129,6 @@ export type VersionsPages = {
   prevPage?: Maybe<Scalars['Int']['output']>;
   totalDocs: Scalars['Int']['output'];
   totalPages: Scalars['Int']['output'];
-};
-
-export type VersionsPost_Autosave_Operator = {
-  equals?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type VersionsPost_CreatedAt_Operator = {
@@ -56124,7 +52356,6 @@ export type VersionsPost_Version__UpdatedAt_Operator = {
 export type VersionsPost_Where = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -56153,7 +52384,6 @@ export type VersionsPost_Where = {
 export type VersionsPost_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -56182,7 +52412,6 @@ export type VersionsPost_Where_And = {
 export type VersionsPost_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
-  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -57805,6 +54034,13 @@ export type ListRepliesToCommentQueryVariables = Exact<{
 
 
 export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+
+export type TrackAnalyticsEventMutationVariables = Exact<{
+  input: AnalyticsTrackInput;
+}>;
+
+
+export type TrackAnalyticsEventMutation = { __typename?: 'Mutation', trackAnalyticsEvent: { __typename?: 'AnalyticsTrackResult', success: boolean, analytics: { __typename?: 'AnalyticsTrackIdentifiers', distinctId: string, eventId?: string | null, sessionId: string } } };
 
 export type CreateOrderMutationVariables = Exact<{
   data: MutationOrderInput;
@@ -60663,6 +56899,35 @@ useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVaria
 
 
 useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+
+export const TrackAnalyticsEventDocument = `
+    mutation TrackAnalyticsEvent($input: AnalyticsTrackInput!) {
+  trackAnalyticsEvent(input: $input) {
+    success
+    analytics {
+      distinctId
+      eventId
+      sessionId
+    }
+  }
+}
+    `;
+
+export const useTrackAnalyticsEventMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<TrackAnalyticsEventMutation, TError, TrackAnalyticsEventMutationVariables, TContext>) => {
+    
+    return useMutation<TrackAnalyticsEventMutation, TError, TrackAnalyticsEventMutationVariables, TContext>(
+      {
+    mutationKey: ['TrackAnalyticsEvent'],
+    mutationFn: (variables?: TrackAnalyticsEventMutationVariables) => gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(TrackAnalyticsEventDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useTrackAnalyticsEventMutation.fetcher = (variables: TrackAnalyticsEventMutationVariables, options?: RequestInit['headers']) => gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(TrackAnalyticsEventDocument, variables, options);
 
 export const CreateOrderDocument = `
     mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
