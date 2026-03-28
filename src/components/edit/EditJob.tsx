@@ -8,6 +8,7 @@ import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { JobForm } from "../publish/JobForm";
 import { useJobByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 
 const EditJob: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -23,6 +24,7 @@ const EditJob: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
+                                <DetailPageTracker serverUrl={job?.serverURL ?? undefined} />
                                 <Typography.Title level={3}>Edit Job</Typography.Title>
                                 <JobForm
                                     mode="edit"

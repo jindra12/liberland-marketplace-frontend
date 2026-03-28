@@ -7,6 +7,7 @@ import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { StartupForm } from "../publish/StartupForm";
 import { useStartupByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 
 const EditStartup: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -22,6 +23,7 @@ const EditStartup: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
+                                <DetailPageTracker serverUrl={startup?.serverURL ?? undefined} />
                                 <Typography.Title level={3}>Edit Venture</Typography.Title>
                                 <StartupForm
                                     mode="edit"

@@ -8,6 +8,7 @@ import { Loader } from "../Loader";
 import { ProductForm } from "../publish/ProductForm";
 import { useProductByIdQuery } from "../hooks";
 import { fromCents } from "../../utils";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 
 const EditProduct: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -23,6 +24,7 @@ const EditProduct: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={companyCreatedById}>
+                                <DetailPageTracker serverUrl={product?.serverURL ?? undefined} />
                                 <Typography.Title level={3}>Edit Product</Typography.Title>
                                 <ProductForm
                                     mode="edit"

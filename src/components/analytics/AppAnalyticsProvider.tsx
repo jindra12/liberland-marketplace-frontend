@@ -1,6 +1,5 @@
 import * as React from "react";
 import { AnalyticsProvider } from "use-analytics";
-import { AnalyticsAppEffects } from "./AnalyticsAppEffects";
 import { AnalyticsMutationBridge } from "./AnalyticsMutationBridge";
 import { appAnalytics } from "./analytics";
 
@@ -12,7 +11,6 @@ export const AppAnalyticsProvider: React.FunctionComponent<React.PropsWithChildr
     return (
         <TypedAnalyticsProvider instance={appAnalytics}>
             <AnalyticsMutationBridge />
-            <AnalyticsAppEffects />
             {props.children}
         </TypedAnalyticsProvider>
     );

@@ -13,6 +13,7 @@ import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { CompanyCard } from "../cards/CompanyCard";
 import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { useIdentityByIdQuery, useListCompaniesByIdentityQuery, useListJobsByIdentityQuery, useListProductsByIdentityQuery, useListStartupsByIdentityQuery } from "../hooks";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
@@ -46,6 +47,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail IdentityDetail">
+                        <DetailPageTracker serverUrl={data.Identity?.serverURL ?? undefined} />
                         <DetailBackButton to="/tribes" label="Back to tribes" />
                         <Space size={16} align="start" className="EntityDetail__header">
                             {imageSrc && (

@@ -7,6 +7,7 @@ import { useEndpointContext } from "../EndpointContext";
 import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../../utils";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { Markdown } from "../Markdown";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
@@ -55,6 +56,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
 
     return (
         <Flex flex={1} vertical gap={12} className="EntityDetail SyndicationDetail">
+            <DetailPageTracker serverUrl={entry.value} />
             <DetailBackButton to="/syndication" label="Back to syndication" />
             <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                 <Avatar

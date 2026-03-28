@@ -32,6 +32,7 @@ import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
 import { useStartupByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
@@ -93,6 +94,7 @@ const StartupDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail StartupDetail">
+                        <DetailPageTracker serverUrl={s?.serverURL ?? undefined} />
                         <DetailBackButton to="/ventures" label="Back to ventures" />
                         <Space size={md ? 24 : 16} align="start" className="StartupDetail__header">
                             {imageSrc && (

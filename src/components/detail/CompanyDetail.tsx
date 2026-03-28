@@ -25,6 +25,7 @@ import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
@@ -55,6 +56,7 @@ const CompanyDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
+                        <DetailPageTracker serverUrl={companyData?.serverURL ?? undefined} />
                         <DetailBackButton to="/companies" label="Back to companies" />
                         <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
                             {imageSrc && (
