@@ -71,6 +71,11 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     const remainingQuantity = typeof maxAvailable === "number"
         ? Math.max(0, maxAvailable - currentItemQuantity)
         : undefined;
+    const shouldHideButton = remainingQuantity !== undefined && remainingQuantity <= 0;
+
+    if (shouldHideButton) {
+        return null;
+    }
 
     const addItemToNewCart = async (quantity: number) => {
         const result = await createCart.mutateAsync({
@@ -246,7 +251,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                             precision={0}
                             size={size}
                             className={quantityInputClassName}
-                            disabled={isMutating || (remainingQuantity !== undefined && remainingQuantity <= 0)}
+                            disabled={isMutating}
                         />
                     </Form.Item>
                     <Button
@@ -255,7 +260,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                         icon={<ShoppingCartOutlined />}
                         htmlType="submit"
                         loading={isMutating}
-                        disabled={isMutating || (remainingQuantity !== undefined && remainingQuantity <= 0)}
+                        disabled={isMutating}
                     >
                         Buy
                     </Button>

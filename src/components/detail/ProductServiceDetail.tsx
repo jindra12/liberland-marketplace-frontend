@@ -21,6 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
 import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
@@ -91,6 +92,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
+                        <DetailPageTracker serverUrl={product?.serverURL ?? undefined} />
                         <DetailBackButton to="/products-services" label="Back to products / services" />
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageSrc && (

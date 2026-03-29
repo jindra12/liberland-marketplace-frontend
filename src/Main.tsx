@@ -2,13 +2,11 @@ import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
 import { ThirdwebProvider } from "thirdweb/react";
 
 import { AntProvider } from "./components/AntProvider";
 import { AppRouteTitle } from "./components/AppRouteTitle";
 import { EndpointContextProvider } from "./components/EndpointContext";
-import { RouteErrorFallback } from "./components/RouteErrorFallback";
 import { RouteScrollToTop } from "./components/RouteScrollToTop";
 import { AuthContextProvider } from "./components/AuthContext";
 import { TronContext } from "./components/crypto/TronContext";
@@ -16,6 +14,10 @@ import { SolanaContext } from "./components/crypto/SolanaContext";
 import { CartMutationProvider } from "./components/cart/CartMutationContext";
 import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
+import { AppAnalyticsProvider } from "./components/analytics/AppAnalyticsProvider";
+import { AnalyticsPageTracker } from "./components/analytics/AnalyticsPageTracker";
+import { AppErrorBoundary } from "./components/ErrorBoundary/AppErrorBoundary";
+import { RouteErrorBoundary } from "./components/ErrorBoundary/RouteErrorBoundary";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
@@ -43,14 +45,20 @@ const Order = React.lazy(() => import("./components/Order"));
 const Unsubscribe = React.lazy(() => import("./components/Unsubscribe/Unsubscribe"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 
-const suspense = (Component: React.FunctionComponent) => () => (
-    <ErrorBoundary fallbackRender={({ error }) => (
-        <RouteErrorFallback error={error instanceof Error ? error : undefined} />
-    )}>
+type SuspenseRouteOptions = {
+    trackPage?: boolean;
+};
+
+const suspense = (
+    Component: React.FunctionComponent,
+    options: SuspenseRouteOptions = {},
+) => () => (
+    <RouteErrorBoundary>
         <React.Suspense fallback={<RouteSurfaceSkeleton />}>
+            {options.trackPage !== false && <AnalyticsPageTracker />}
             <Component />
         </React.Suspense>
-    </ErrorBoundary>
+    </RouteErrorBoundary>
 );
 
 const config = new QueryClient({
@@ -72,43 +80,47 @@ const Main: React.FunctionComponent = () => (
                         <ThirdwebProvider>
                             <AuthContextProvider>
                                 <BrowserRouter>
-                                    <AppRouteTitle />
-                                    <RouteScrollToTop>
-                                        <CartMutationProvider>
-                                            <AntProvider>
-                                                <React.Suspense fallback={<AppBootSkeleton />}>
-                                                    <AppLayout>
-                                                        <Routes>
-                                                            <Route Component={suspense(Splash)} path="/" />
-                                                            <Route Component={suspense(Jobs)} path="/jobs" />
-                                                            <Route Component={suspense(Companies)} path="/companies" />
-                                                            <Route Component={suspense(Identities)} path="/tribes" />
-                                                            <Route Component={suspense(ProductsServices)} path="/products-services" />
-                                                            <Route Component={suspense(Syndication)} path="/syndication" />
-                                                            <Route Component={suspense(Job)} path="/jobs/:id" />
-                                                            <Route Component={suspense(Company)} path="/companies/:id" />
-                                                            <Route Component={suspense(Identity)} path="/tribes/:id" />
-                                                            <Route Component={suspense(ProductService)} path="/products-services/:id" />
-                                                            <Route Component={suspense(SyndicationDetail)} path="/syndication/:id" />
-                                                            <Route Component={suspense(Profile)} path="/profile" />
-                                                            <Route Component={suspense(Publish)} path="/publish" />
-                                                            <Route Component={suspense(EditJob)} path="/jobs/edit/:id" />
-                                                            <Route Component={suspense(EditCompany)} path="/companies/edit/:id" />
-                                                            <Route Component={suspense(EditProduct)} path="/products-services/edit/:id" />
-                                                            <Route Component={suspense(Cart)} path="/cart" />
-                                                            <Route Component={suspense(Order)} path="/order" />
-                                                            <Route Component={suspense(Startups)} path="/ventures" />
-                                                            <Route Component={suspense(Startup)} path="/ventures/:id" />
-                                                            <Route Component={suspense(EditStartup)} path="/ventures/edit/:id" />
-                                                            <Route Component={suspense(Unsubscribe)} path="/unsubscribe" />
-                                                            <Route Component={suspense(AuthCallback)} path="/auth/callback" />
-                                                            <Route Component={suspense(NotFound)} path="*" />
-                                                        </Routes>
-                                                    </AppLayout>
-                                                </React.Suspense>
-                                            </AntProvider>
-                                        </CartMutationProvider>
-                                    </RouteScrollToTop>
+                                    <AppAnalyticsProvider>
+                                        <AntProvider>
+                                            <AppErrorBoundary>
+                                                <AppRouteTitle />
+                                                <RouteScrollToTop>
+                                                    <CartMutationProvider>
+                                                        <React.Suspense fallback={<AppBootSkeleton />}>
+                                                            <AppLayout>
+                                                                <Routes>
+                                                                    <Route Component={suspense(Splash)} path="/" />
+                                                                    <Route Component={suspense(Jobs)} path="/jobs" />
+                                                                    <Route Component={suspense(Companies)} path="/companies" />
+                                                                    <Route Component={suspense(Identities)} path="/tribes" />
+                                                                    <Route Component={suspense(ProductsServices)} path="/products-services" />
+                                                                    <Route Component={suspense(Syndication)} path="/syndication" />
+                                                                    <Route Component={suspense(Job, { trackPage: false })} path="/jobs/:id" />
+                                                                    <Route Component={suspense(Company, { trackPage: false })} path="/companies/:id" />
+                                                                    <Route Component={suspense(Identity, { trackPage: false })} path="/tribes/:id" />
+                                                                    <Route Component={suspense(ProductService, { trackPage: false })} path="/products-services/:id" />
+                                                                    <Route Component={suspense(SyndicationDetail, { trackPage: false })} path="/syndication/:id" />
+                                                                    <Route Component={suspense(Profile)} path="/profile" />
+                                                                    <Route Component={suspense(Publish)} path="/publish" />
+                                                                    <Route Component={suspense(EditJob, { trackPage: false })} path="/jobs/edit/:id" />
+                                                                    <Route Component={suspense(EditCompany, { trackPage: false })} path="/companies/edit/:id" />
+                                                                    <Route Component={suspense(EditProduct, { trackPage: false })} path="/products-services/edit/:id" />
+                                                                    <Route Component={suspense(Cart)} path="/cart" />
+                                                                    <Route Component={suspense(Order)} path="/order" />
+                                                                    <Route Component={suspense(Startups)} path="/ventures" />
+                                                                    <Route Component={suspense(Startup, { trackPage: false })} path="/ventures/:id" />
+                                                                    <Route Component={suspense(EditStartup, { trackPage: false })} path="/ventures/edit/:id" />
+                                                                    <Route Component={suspense(Unsubscribe)} path="/unsubscribe" />
+                                                                    <Route Component={suspense(AuthCallback)} path="/auth/callback" />
+                                                                    <Route Component={suspense(NotFound)} path="*" />
+                                                                </Routes>
+                                                            </AppLayout>
+                                                        </React.Suspense>
+                                                    </CartMutationProvider>
+                                                </RouteScrollToTop>
+                                            </AppErrorBoundary>
+                                        </AntProvider>
+                                    </AppAnalyticsProvider>
                                 </BrowserRouter>
                             </AuthContextProvider>
                         </ThirdwebProvider>

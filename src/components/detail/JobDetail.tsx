@@ -22,6 +22,7 @@ import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
@@ -53,6 +54,7 @@ const JobDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail JobDetail">
+                        <DetailPageTracker serverUrl={job?.serverURL ?? undefined} />
                         <DetailBackButton to="/jobs" label="Back to jobs" />
                         <Space size={16} align="start" className="JobDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}

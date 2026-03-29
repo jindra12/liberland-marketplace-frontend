@@ -40,6 +40,59 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
+"@analytics/cookie-utils@^0.2.14":
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/@analytics/cookie-utils/-/cookie-utils-0.2.14.tgz#92c58e007676a86aa586ba3f945820fa3c4df463"
+  integrity sha512-x51x2cLqvP5Fb1ydgNvTCX+SVv0ALK/yTNwp/53++yk4kLhxb850krWtQ4aASN0612oXrIGotwfmdJIttnLiPQ==
+  dependencies:
+    "@analytics/global-storage-utils" "^0.1.9"
+
+"@analytics/core@^0.13.2":
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/@analytics/core/-/core-0.13.2.tgz#a0bf3db76e11b573953db0e9dd3c13a13b128fd2"
+  integrity sha512-ejvfoPP8TEh2hA2szMEq9c4TdeX8FAeY1j/7MxJVZjzDaq8BDHOyaAAQzTFiLMHvV0WcU2YC0smJ5Ids5Ll5ng==
+  dependencies:
+    "@analytics/global-storage-utils" "^0.1.9"
+    "@analytics/type-utils" "^0.6.4"
+    analytics-utils "^1.1.1"
+
+"@analytics/global-storage-utils@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@analytics/global-storage-utils/-/global-storage-utils-0.1.9.tgz#101a70a68e16afe2ef1d704d1bd183c6fa52b6f3"
+  integrity sha512-+xm6CDnWsVOQIKkqbPRPRdYDXKk3PNgr/bCZWSI+7tEDT5PCDgI0QSBZe+FqCVkCRtTkgOrjFOY7wOM8Gq+ndA==
+  dependencies:
+    "@analytics/type-utils" "^0.6.4"
+
+"@analytics/localstorage-utils@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@analytics/localstorage-utils/-/localstorage-utils-0.1.12.tgz#6942b9f90abbe4b46a39e9b11faff148543684eb"
+  integrity sha512-BL3vuZUwWgMqdkQsE0GKsED5SPLC6daI4K4LE0a/BkKv+4Cae5JLLqpO5gju2HUGOjJxIvw8U/G5EcglNY5+1w==
+  dependencies:
+    "@analytics/global-storage-utils" "^0.1.9"
+
+"@analytics/session-storage-utils@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@analytics/session-storage-utils/-/session-storage-utils-0.0.9.tgz#1ab8c8bbef37f2f6752dc24949b130d3c7038988"
+  integrity sha512-fhP9QCpyq45rZKsXaAxyz+VTmOUWljIW08CWSkFzpwOHkDM4Xy5tymc1YcWqSBBaLjHldo3HlY4qfqEIS4Aj1A==
+  dependencies:
+    "@analytics/global-storage-utils" "^0.1.9"
+
+"@analytics/storage-utils@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@analytics/storage-utils/-/storage-utils-0.4.4.tgz#d473cf6e62e789227f5083fdc54ceaf89569ac2d"
+  integrity sha512-873P4wDIunbOnBqADc2AhTVsLbluUv1dP6k9UrK8FIeV8WXv5+fG12HdwwaniUIxq6QLgZJfKEaCwtWSKrrV0g==
+  dependencies:
+    "@analytics/cookie-utils" "^0.2.14"
+    "@analytics/global-storage-utils" "^0.1.9"
+    "@analytics/localstorage-utils" "^0.1.12"
+    "@analytics/session-storage-utils" "^0.0.9"
+    "@analytics/type-utils" "^0.6.4"
+
+"@analytics/type-utils@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@analytics/type-utils/-/type-utils-0.6.4.tgz#b309211ace40691c25e8640c911fcd31ce082c1e"
+  integrity sha512-Ou1gQxFakOWLcPnbFVsrPb8g1wLLUZYYJXDPjHkG07+5mustGs5yqACx42UAu4A6NszNN6Z5gGxhyH45zPWRxw==
+
 "@ant-design/colors@^7.0.0", "@ant-design/colors@^7.2.0":
   version "7.2.0"
   resolved "https://registry.npmjs.org/@ant-design/colors/-/colors-7.2.0.tgz"
@@ -7798,16 +7851,9 @@
     "@types/react" "*"
     scroll-into-view-if-needed "*"
 
-"@types/react@*":
-  version "19.1.8"
-  resolved "https://registry.npmjs.org/@types/react/-/react-19.1.8.tgz"
-  integrity sha512-AwAfQ2Wa5bCx9WP8nZL2uMZWod7J7/JSplxbTmBQ5ms6QpqNYm672H0Vu9ZVKVngQ+ii4R/byguVEUZQyeg44g==
-  dependencies:
-    csstype "^3.0.2"
-
-"@types/react@^19.0.0":
+"@types/react@*", "@types/react@19.1.4", "@types/react@^19.0.0":
   version "19.1.4"
-  resolved "https://registry.npmjs.org/@types/react/-/react-19.1.4.tgz"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.1.4.tgz#4d125f014d6ac26b4759775698db118701e314fe"
   integrity sha512-EB1yiiYdvySuIITtD5lhW4yPyJ31RkJkkDw794LaQYrxCSaQV/47y5o1FMC4zF9ZyjUjzJMZwbovEnT5yHTW6g==
   dependencies:
     csstype "^3.0.2"
@@ -7879,6 +7925,14 @@
   version "2.0.11"
   resolved "https://registry.npmjs.org/@types/unist/-/unist-2.0.11.tgz"
   integrity sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==
+
+"@types/use-analytics@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@types/use-analytics/-/use-analytics-0.0.3.tgz#da6770155a58d121cf816030c136ed8184004dab"
+  integrity sha512-s/b/R8q/pKj1INYyRWw46aI4rZFr6p0yW80EdD47FBytTGXPNJFOaPlvw2Atsrf+k6S4idl1nN5kXiLBl1MrJQ==
+  dependencies:
+    "@types/react" "*"
+    analytics "^0.8.1"
 
 "@types/uuid@8.3.4", "@types/uuid@^8.3.4":
   version "8.3.4"
@@ -9684,6 +9738,22 @@ ajv@^8.0.0, ajv@^8.6.0, ajv@^8.9.0:
     fast-uri "^3.0.1"
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
+
+analytics-utils@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/analytics-utils/-/analytics-utils-1.1.1.tgz#e1438a5454ea87cb0bdbcb33a59b976b865dd192"
+  integrity sha512-nRybjTpRAcHVhWb1cvYaOLJaI3R79r8XjMbu5c0wd2jKmANNqSrYwybiU0X3mp+CQQdm4YiAggTXb2cIA8XhUg==
+  dependencies:
+    "@analytics/type-utils" "^0.6.4"
+    dlv "^1.1.3"
+
+analytics@^0.8.1, analytics@^0.8.19:
+  version "0.8.19"
+  resolved "https://registry.yarnpkg.com/analytics/-/analytics-0.8.19.tgz#4b8eaa38868f0bce580cc075204a47ceab8db006"
+  integrity sha512-JFgasxpWFiAoqm5UHaGQv9j9OGz+f1KAeQkABYr3Z7YGhiqhQrBpPhIVAIEyttBRJZmew1QwMhN9/bOGGBnpJA==
+  dependencies:
+    "@analytics/core" "^0.13.2"
+    "@analytics/storage-utils" "^0.4.4"
 
 ansi-escapes@^4.2.1, ansi-escapes@^4.3.1:
   version "4.3.2"
@@ -14937,7 +15007,7 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.3.1:
+hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -22497,6 +22567,11 @@ timeout-signal@^2.0.0:
   resolved "https://registry.npmjs.org/timeout-signal/-/timeout-signal-2.0.0.tgz"
   integrity sha512-YBGpG4bWsHoPvofT6y/5iqulfXIiIErl5B0LdtHT1mGXDFTAhhRrbUpTvBgYbovr+3cKblya2WAOcpoy90XguA==
 
+tiny-invariant@^1.1.0:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
+  integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
+
 tiny-secp256k1@^1.1.6:
   version "1.1.7"
   resolved "https://registry.npmjs.org/tiny-secp256k1/-/tiny-secp256k1-1.1.7.tgz"
@@ -23171,6 +23246,14 @@ usb@^2.15.0:
     "@types/w3c-web-usb" "^1.0.6"
     node-addon-api "^8.0.0"
     node-gyp-build "^4.5.0"
+
+use-analytics@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/use-analytics/-/use-analytics-1.1.0.tgz#ac08904989a3ecb6eff3ead95ebdb3e02e42f48c"
+  integrity sha512-1PMT5doiCoTm6ng9PscCHuFgl8vYNSFgGizXuFlmEBqnaRJ+KnygKnETUbBJ1W7MJPWQeHwA5Mys9t7b4P8ijw==
+  dependencies:
+    hoist-non-react-statics "^3.3.2"
+    tiny-invariant "^1.1.0"
 
 use-callback-ref@^1.3.3:
   version "1.3.3"
