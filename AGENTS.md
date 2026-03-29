@@ -24,6 +24,9 @@
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
+- Stateless utilities belong to `utils.ts/x`.
+- Constants belong to `constants.ts/x`.
+- Types belong to `types.ts`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly.

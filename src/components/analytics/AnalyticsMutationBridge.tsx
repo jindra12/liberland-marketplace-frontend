@@ -2,59 +2,16 @@ import * as React from "react";
 import useLocalStorage from "use-local-storage";
 import { useAnalytics } from "use-analytics";
 import { BACKEND_URL } from "../../gqlFetcher";
+import {
+    ANALYTICS_DISTINCT_ID_KEY,
+    ANALYTICS_SESSION_ID_KEY,
+} from "./constants";
+import type {
+    AnalyticsMutationEvent,
+    AnalyticsPagePayload,
+    AnalyticsTrackPayload,
+} from "./types";
 import { useTrackAnalyticsEventMutation } from "../hooks";
-
-const ANALYTICS_DISTINCT_ID_KEY = "analytics.distinctId";
-const ANALYTICS_SESSION_ID_KEY = "analytics.sessionId";
-
-type AnalyticsEventOptions = {
-    targetUrl?: string;
-};
-
-type AnalyticsPagePayload = {
-    options?: AnalyticsEventOptions;
-    properties: {
-        route: string;
-    };
-};
-
-type AnalyticsGraphqlTrackPayload = {
-    event: string;
-    options?: AnalyticsEventOptions;
-    properties: {
-        durationMs: number;
-        errorMessage?: string;
-        operationName: string;
-        operationType: string;
-        route: string;
-        success: boolean;
-        variables?: object;
-    };
-};
-
-type AnalyticsRuntimeErrorTrackPayload = {
-    event: "runtime.error";
-    options?: AnalyticsEventOptions;
-    properties: {
-        boundary: "app" | "route";
-        componentStack: string;
-        message: string;
-        name: string;
-        route: string;
-        stack?: string;
-    };
-};
-
-type AnalyticsTrackPayload =
-    | AnalyticsGraphqlTrackPayload
-    | AnalyticsRuntimeErrorTrackPayload;
-
-type AnalyticsMutationEvent = {
-    metadata?: Record<string, unknown>;
-    route?: string;
-    targetUrl?: string;
-    type: string;
-};
 
 export const AnalyticsMutationBridge: React.FunctionComponent = () => {
     const analytics = useAnalytics();

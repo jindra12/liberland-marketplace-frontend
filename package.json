@@ -91,6 +91,9 @@
       "last 1 safari version"
     ]
   },
+  "resolutions": {
+    "@types/react": "19.1.4"
+  },
   "devDependencies": {
     "@graphql-codegen/cli": "^6.1.1",
     "@graphql-codegen/typescript": "^5.0.7",
