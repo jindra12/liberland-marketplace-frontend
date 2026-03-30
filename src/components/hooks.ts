@@ -104,6 +104,12 @@ import {
     useListProductsQuery as useListProductsQuerySingle,
     SearchProductsDocument,
     useSearchProductsQuery as useSearchProductsQuerySingle,
+    JoinStartupDocument,
+    useJoinStartupMutation as useJoinStartupMutationSingle,
+    LeaveStartupDocument,
+    useLeaveStartupMutation as useLeaveStartupMutationSingle,
+    ListStartupsByCompanyDocument,
+    useListStartupsByCompanyQuery as useListStartupsByCompanyQuerySingle,
     ListStartupsByCreatorDocument,
     useListStartupsByCreatorQuery as useListStartupsByCreatorQuerySingle,
     ListStartupsByIdentityDocument,
@@ -124,6 +130,10 @@ import {
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
     useUpdateOrderMutation as useUpdateOrderMutationSingle,
+    MeUserDocument,
+    useMeUserQuery as useMeUserQuerySingle,
+    UpdateUserByIdDocument,
+    useUpdateUserByIdMutation as useUpdateUserByIdMutationSingle,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
@@ -156,6 +166,24 @@ export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
             options?: RequestInit["headers"],
         ) => () => Promise<TQueryFnData>;
     };
+
+type QueryVariablesWithUrl<TVariables extends object | undefined> =
+    TVariables extends undefined
+        ? { url?: string }
+        : TVariables extends Record<string, never>
+            ? { url?: string }
+            : TVariables & { url?: string };
+
+const stripQueryUrl = <TVariables extends object | undefined>(
+    variables?: QueryVariablesWithUrl<TVariables>,
+): TVariables => {
+    if (!variables) {
+        return undefined as TVariables;
+    }
+
+    const { url, ...rest } = variables as { url?: string };
+    return rest as TVariables;
+};
 
 type MutationVariablesWithUrl<TVariables extends object | undefined> =
     (TVariables extends undefined ? {} : TVariables) & { url?: string };
@@ -409,15 +437,16 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
     query: string,
     mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
 ) => {
-    return (variables?: TVariables & { url?: string }, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
+    return (variables?: QueryVariablesWithUrl<TVariables>, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
         const { enabled } = useEndpointContext();
         const urls = (variables?.url ? [variables.url] : enabled);
+        const queryVariables = stripQueryUrl(variables);
         return useQueries({
             queries: urls.map((url) => ({
-                queryKey: [...useHook.getKey(variables as TVariables), url],
+                queryKey: [...useHook.getKey(queryVariables), url],
                 queryFn: gqlFetcher<TQueryFnData, TVariables>(
                     query,
-                    variables,
+                    queryVariables,
                     options,
                     url,
                 ),
@@ -460,11 +489,13 @@ export const useListProductsByCreatorQuery = enhancedQueryFactory(useListProduct
 export const useProductByIdQuery = enhancedQueryFactory(useProductByIdQuerySingle, ProductByIdDocument);
 export const useListProductsQuery = enhancedQueryFactory(useListProductsQuerySingle, ListProductsDocument);
 export const useSearchProductsQuery = enhancedQueryFactory(useSearchProductsQuerySingle, SearchProductsDocument);
+export const useListStartupsByCompanyQuery = enhancedQueryFactory(useListStartupsByCompanyQuerySingle, ListStartupsByCompanyDocument);
 export const useListStartupsByCreatorQuery = enhancedQueryFactory(useListStartupsByCreatorQuerySingle, ListStartupsByCreatorDocument);
 export const useListStartupsByIdentityQuery = enhancedQueryFactory(useListStartupsByIdentityQuerySingle, ListStartupsByIdentityDocument);
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
+export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument);
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);
@@ -482,11 +513,14 @@ export const useUpdateJobMutation = enhancedMutationFactory(useUpdateJobMutation
 export const useCreateProductMutation = enhancedMutationFactory(useCreateProductMutationSingle, CreateProductDocument);
 export const useDeleteProductMutation = enhancedMutationFactory(useDeleteProductMutationSingle, DeleteProductDocument);
 export const useUpdateProductMutation = enhancedMutationFactory(useUpdateProductMutationSingle, UpdateProductDocument);
+export const useJoinStartupMutation = enhancedMutationFactory(useJoinStartupMutationSingle, JoinStartupDocument);
+export const useLeaveStartupMutation = enhancedMutationFactory(useLeaveStartupMutationSingle, LeaveStartupDocument);
 export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
 export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
 export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
 export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);
 export const useTrackAnalyticsEventMutation = enhancedMutationFactory(useTrackAnalyticsEventMutationSingle, TrackAnalyticsEventDocument);
+export const useUpdateUserByIdMutation = enhancedMutationFactory(useUpdateUserByIdMutationSingle, UpdateUserByIdDocument);
 export const useSubscribeToCompanyUpdatesMutation = createStandaloneMutationHook<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument);
 export const useSubscribeToJobUpdatesMutation = createStandaloneMutationHook<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument);
 export const useSubscribeToProductUpdatesMutation = createStandaloneMutationHook<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument);

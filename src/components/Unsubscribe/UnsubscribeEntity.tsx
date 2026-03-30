@@ -245,7 +245,7 @@ export const UnsubscribeEntity = <TData,>({
                         <Avatar
                             size={72}
                             shape="square"
-                            src={entity.imageURL || undefined}
+                            src={!entity.imageURL ? undefined : entity.imageURL}
                             className="UnsubscribePage__entityAvatar"
                         >
                             {entity.title.charAt(0).toUpperCase()}

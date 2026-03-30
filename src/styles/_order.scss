@@ -11,6 +11,24 @@
     }
 }
 
+.Order__geoapifySearchActions {
+    align-items: center;
+}
+
+.Order__geoapifySearchSummary {
+    flex: 1 1 260px;
+}
+
+.Order__geoapifyModal {
+    .ant-modal-body {
+        overflow: visible;
+    }
+}
+
+.Order__geoapifyModalCopy {
+    margin-bottom: 12px;
+}
+
 .Order__geoapifyInput {
     margin: 2px 0 4px;
 
@@ -48,7 +66,7 @@
         background: var(--geoapify-bg-elevated, #ffffff);
         color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
         overflow: hidden;
-        z-index: 1050;
+        z-index: 1060;
     }
 
     .geoapify-autocomplete-items div {

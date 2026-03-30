@@ -29,9 +29,13 @@ import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { formatStageLabel, formatResourceLabel, formatFundsNeeded } from "../../startupUtils";
-import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
-import { useStartupByIdQuery } from "../hooks";
+import {
+    formatStageLabel,
+    formatResourceLabel,
+    formatFundsNeeded,
+    invalidateStartupQueries,
+} from "../../startupUtils";
+import { useJoinStartupMutation, useLeaveStartupMutation, useStartupByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
@@ -51,12 +55,13 @@ const StartupDetail: React.FunctionComponent = () => {
     const handleJoin = async () => {
         try {
             await joinMutation.mutateAsync({
-                startupId: id!,
-                url: startup.data!.Startup?.serverURL!
+                id: id!,
+                url: startup.data?.Startup?.serverURL!,
             });
-            await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
+            await invalidateStartupQueries(queryClient);
             message.success("You joined this venture!");
-        } catch {
+        } catch (error) {
+            console.error(error);
             message.error("Failed to join venture");
         }
     };
@@ -64,12 +69,13 @@ const StartupDetail: React.FunctionComponent = () => {
     const handleLeave = async () => {
         try {
             await leaveMutation.mutateAsync({
-                startupId: id!,
-                url: startup.data!.Startup?.serverURL!
+                id: id!,
+                url: startup.data?.Startup?.serverURL!,
             });
-            await queryClient.invalidateQueries({ queryKey: ["StartupById"] });
+            await invalidateStartupQueries(queryClient);
             message.success("You left this venture");
-        } catch {
+        } catch (error) {
+            console.error(error);
             message.error("Failed to leave venture");
         }
     };

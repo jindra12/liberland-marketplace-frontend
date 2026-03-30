@@ -19035,6 +19035,8 @@ export type Mutation = {
   duplicateVariantOption?: Maybe<VariantOption>;
   duplicateVariantType?: Maybe<VariantType>;
   duplicateVerification?: Maybe<Verification>;
+  joinStartup: StartupMembershipResult;
+  leaveStartup: StartupMembershipResult;
   logoutUser?: Maybe<Scalars['String']['output']>;
   refreshTokenUser?: Maybe<UsersRefreshedUser>;
   restoreVersionCompany?: Maybe<Company>;
@@ -19081,6 +19083,7 @@ export type Mutation = {
   updateSyndication?: Maybe<Syndication>;
   updateTransaction?: Maybe<Transaction>;
   updateUser?: Maybe<User>;
+  updateUserByEmail?: Maybe<User>;
   updateVariant?: Maybe<Variant>;
   updateVariantOption?: Maybe<VariantOption>;
   updateVariantType?: Maybe<VariantType>;
@@ -19748,6 +19751,16 @@ export type MutationDuplicateVerificationArgs = {
 };
 
 
+export type MutationJoinStartupArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationLeaveStartupArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationLogoutUserArgs = {
   allSessions?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -20112,6 +20125,12 @@ export type MutationUpdateUserArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateUserByEmailArgs = {
+  data: MutationUserUpdateInput;
+  email: Scalars['String']['input'];
 };
 
 
@@ -26054,6 +26073,7 @@ export enum PageUpdate__Status_MutationInput {
 
 export type PageVersion = {
   __typename?: 'PageVersion';
+  autosave?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   latest?: Maybe<Scalars['Boolean']['output']>;
@@ -31872,6 +31892,7 @@ export enum PostUpdate__Status_MutationInput {
 
 export type PostVersion = {
   __typename?: 'PostVersion';
+  autosave?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   latest?: Maybe<Scalars['Boolean']['output']>;
@@ -33441,6 +33462,7 @@ export type Product = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   variantTypes?: Maybe<Array<VariantType>>;
@@ -33511,6 +33533,7 @@ export type ProductVersion_Version = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   variantTypes?: Maybe<Array<VariantType>>;
@@ -33853,6 +33876,12 @@ export type Product_ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Product_UnlimitedInventory_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Product_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -33912,6 +33941,7 @@ export type Product_Where = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
   variantTypes?: InputMaybe<Product_VariantTypes_Operator>;
@@ -33945,6 +33975,7 @@ export type Product_Where_And = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
   variantTypes?: InputMaybe<Product_VariantTypes_Operator>;
@@ -33978,6 +34009,7 @@ export type Product_Where_Or = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
   variantTypes?: InputMaybe<Product_VariantTypes_Operator>;
@@ -34045,6 +34077,7 @@ export type ProductsDocAccessFields = {
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
   serverURL?: Maybe<ProductsDocAccessFields_ServerUrl>;
+  unlimitedInventory?: Maybe<ProductsDocAccessFields_UnlimitedInventory>;
   updatedAt?: Maybe<ProductsDocAccessFields_UpdatedAt>;
   url?: Maybe<ProductsDocAccessFields_Url>;
   variantTypes?: Maybe<ProductsDocAccessFields_VariantTypes>;
@@ -34794,6 +34827,34 @@ export type ProductsDocAccessFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_UnlimitedInventory = {
+  __typename?: 'ProductsDocAccessFields_unlimitedInventory';
+  create?: Maybe<ProductsDocAccessFields_UnlimitedInventory_Create>;
+  delete?: Maybe<ProductsDocAccessFields_UnlimitedInventory_Delete>;
+  read?: Maybe<ProductsDocAccessFields_UnlimitedInventory_Read>;
+  update?: Maybe<ProductsDocAccessFields_UnlimitedInventory_Update>;
+};
+
+export type ProductsDocAccessFields_UnlimitedInventory_Create = {
+  __typename?: 'ProductsDocAccessFields_unlimitedInventory_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_UnlimitedInventory_Delete = {
+  __typename?: 'ProductsDocAccessFields_unlimitedInventory_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_UnlimitedInventory_Read = {
+  __typename?: 'ProductsDocAccessFields_unlimitedInventory_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_UnlimitedInventory_Update = {
+  __typename?: 'ProductsDocAccessFields_unlimitedInventory_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_UpdatedAt = {
   __typename?: 'ProductsDocAccessFields_updatedAt';
   create?: Maybe<ProductsDocAccessFields_UpdatedAt_Create>;
@@ -34929,6 +34990,7 @@ export type ProductsFields = {
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
   serverURL?: Maybe<ProductsFields_ServerUrl>;
+  unlimitedInventory?: Maybe<ProductsFields_UnlimitedInventory>;
   updatedAt?: Maybe<ProductsFields_UpdatedAt>;
   url?: Maybe<ProductsFields_Url>;
   variantTypes?: Maybe<ProductsFields_VariantTypes>;
@@ -35678,6 +35740,34 @@ export type ProductsFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsFields_UnlimitedInventory = {
+  __typename?: 'ProductsFields_unlimitedInventory';
+  create?: Maybe<ProductsFields_UnlimitedInventory_Create>;
+  delete?: Maybe<ProductsFields_UnlimitedInventory_Delete>;
+  read?: Maybe<ProductsFields_UnlimitedInventory_Read>;
+  update?: Maybe<ProductsFields_UnlimitedInventory_Update>;
+};
+
+export type ProductsFields_UnlimitedInventory_Create = {
+  __typename?: 'ProductsFields_unlimitedInventory_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_UnlimitedInventory_Delete = {
+  __typename?: 'ProductsFields_unlimitedInventory_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_UnlimitedInventory_Read = {
+  __typename?: 'ProductsFields_unlimitedInventory_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_UnlimitedInventory_Update = {
+  __typename?: 'ProductsFields_unlimitedInventory_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsFields_UpdatedAt = {
   __typename?: 'ProductsFields_updatedAt';
   create?: Maybe<ProductsFields_UpdatedAt_Create>;
@@ -35983,6 +36073,7 @@ export type Query = {
   docAccessVerification?: Maybe<VerificationsDocAccess>;
   initializedUser?: Maybe<Scalars['Boolean']['output']>;
   meUser?: Maybe<UsersMe>;
+  userByEmail?: Maybe<User>;
   versionCompany?: Maybe<CompanyVersion>;
   versionJob?: Maybe<JobVersion>;
   versionPage?: Maybe<PageVersion>;
@@ -37195,6 +37286,11 @@ export type QueryDocAccessVariantTypeArgs = {
 
 export type QueryDocAccessVerificationArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryUserByEmailArgs = {
+  email: Scalars['String']['input'];
 };
 
 
@@ -39892,6 +39988,12 @@ export type Startup = {
 
 export type StartupCompanyArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type StartupMembershipResult = {
+  __typename?: 'StartupMembershipResult';
+  message: Scalars['String']['output'];
+  startup?: Maybe<Startup>;
 };
 
 export enum StartupUpdate_FundsNeeded_Currency_MutationInput {
@@ -45161,8 +45263,10 @@ export type User = {
   identity?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
   role?: Maybe<Array<User_Role>>;
   session?: Maybe<User_Session>;
+  shippingAddress?: Maybe<User_ShippingAddress>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -45201,6 +45305,21 @@ export type User_Session = {
   docs: Array<Session>;
   hasNextPage: Scalars['Boolean']['output'];
   totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type User_ShippingAddress = {
+  __typename?: 'User_ShippingAddress';
+  addressLine1?: Maybe<Scalars['String']['output']>;
+  addressLine2?: Maybe<Scalars['String']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
+  company?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  postalCode?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type User_CreatedAt_Operator = {
@@ -45271,6 +45390,17 @@ export type User_Name_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type User_Phone_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export enum User_Role {
   Admin = 'admin',
   User = 'user'
@@ -45295,6 +45425,127 @@ export type User_Role_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<User_Role_Input>>>;
 };
 
+export type User_ShippingAddress__AddressLine1_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__AddressLine2_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__City_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__Company_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__Country_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__FirstName_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__LastName_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__Phone_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__PostalCode_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__State_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ShippingAddress__Title_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type User_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   greater_than?: InputMaybe<Scalars['DateTime']['input']>;
@@ -45315,7 +45566,19 @@ export type User_Where = {
   identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
+  phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
+  shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
+  shippingAddress__city?: InputMaybe<User_ShippingAddress__City_Operator>;
+  shippingAddress__company?: InputMaybe<User_ShippingAddress__Company_Operator>;
+  shippingAddress__country?: InputMaybe<User_ShippingAddress__Country_Operator>;
+  shippingAddress__firstName?: InputMaybe<User_ShippingAddress__FirstName_Operator>;
+  shippingAddress__lastName?: InputMaybe<User_ShippingAddress__LastName_Operator>;
+  shippingAddress__phone?: InputMaybe<User_ShippingAddress__Phone_Operator>;
+  shippingAddress__postalCode?: InputMaybe<User_ShippingAddress__PostalCode_Operator>;
+  shippingAddress__state?: InputMaybe<User_ShippingAddress__State_Operator>;
+  shippingAddress__title?: InputMaybe<User_ShippingAddress__Title_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -45329,7 +45592,19 @@ export type User_Where_And = {
   identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
+  phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
+  shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
+  shippingAddress__city?: InputMaybe<User_ShippingAddress__City_Operator>;
+  shippingAddress__company?: InputMaybe<User_ShippingAddress__Company_Operator>;
+  shippingAddress__country?: InputMaybe<User_ShippingAddress__Country_Operator>;
+  shippingAddress__firstName?: InputMaybe<User_ShippingAddress__FirstName_Operator>;
+  shippingAddress__lastName?: InputMaybe<User_ShippingAddress__LastName_Operator>;
+  shippingAddress__phone?: InputMaybe<User_ShippingAddress__Phone_Operator>;
+  shippingAddress__postalCode?: InputMaybe<User_ShippingAddress__PostalCode_Operator>;
+  shippingAddress__state?: InputMaybe<User_ShippingAddress__State_Operator>;
+  shippingAddress__title?: InputMaybe<User_ShippingAddress__Title_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -45343,7 +45618,19 @@ export type User_Where_Or = {
   identity?: InputMaybe<User_Identity_Operator>;
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
+  phone?: InputMaybe<User_Phone_Operator>;
   role?: InputMaybe<User_Role_Operator>;
+  shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
+  shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
+  shippingAddress__city?: InputMaybe<User_ShippingAddress__City_Operator>;
+  shippingAddress__company?: InputMaybe<User_ShippingAddress__Company_Operator>;
+  shippingAddress__country?: InputMaybe<User_ShippingAddress__Country_Operator>;
+  shippingAddress__firstName?: InputMaybe<User_ShippingAddress__FirstName_Operator>;
+  shippingAddress__lastName?: InputMaybe<User_ShippingAddress__LastName_Operator>;
+  shippingAddress__phone?: InputMaybe<User_ShippingAddress__Phone_Operator>;
+  shippingAddress__postalCode?: InputMaybe<User_ShippingAddress__PostalCode_Operator>;
+  shippingAddress__state?: InputMaybe<User_ShippingAddress__State_Operator>;
+  shippingAddress__title?: InputMaybe<User_ShippingAddress__Title_Operator>;
   updatedAt?: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -45395,8 +45682,10 @@ export type UsersDocAccessFields = {
   identity?: Maybe<UsersDocAccessFields_Identity>;
   image?: Maybe<UsersDocAccessFields_Image>;
   name?: Maybe<UsersDocAccessFields_Name>;
+  phone?: Maybe<UsersDocAccessFields_Phone>;
   role?: Maybe<UsersDocAccessFields_Role>;
   session?: Maybe<UsersDocAccessFields_Session>;
+  shippingAddress?: Maybe<UsersDocAccessFields_ShippingAddress>;
   updatedAt?: Maybe<UsersDocAccessFields_UpdatedAt>;
 };
 
@@ -45596,6 +45885,34 @@ export type UsersDocAccessFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type UsersDocAccessFields_Phone = {
+  __typename?: 'UsersDocAccessFields_phone';
+  create?: Maybe<UsersDocAccessFields_Phone_Create>;
+  delete?: Maybe<UsersDocAccessFields_Phone_Delete>;
+  read?: Maybe<UsersDocAccessFields_Phone_Read>;
+  update?: Maybe<UsersDocAccessFields_Phone_Update>;
+};
+
+export type UsersDocAccessFields_Phone_Create = {
+  __typename?: 'UsersDocAccessFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Phone_Delete = {
+  __typename?: 'UsersDocAccessFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Phone_Read = {
+  __typename?: 'UsersDocAccessFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Phone_Update = {
+  __typename?: 'UsersDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type UsersDocAccessFields_Role = {
   __typename?: 'UsersDocAccessFields_role';
   create?: Maybe<UsersDocAccessFields_Role_Create>;
@@ -45652,6 +45969,358 @@ export type UsersDocAccessFields_Session_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type UsersDocAccessFields_ShippingAddress = {
+  __typename?: 'UsersDocAccessFields_shippingAddress';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_Delete>;
+  fields?: Maybe<UsersDocAccessFields_ShippingAddress_Fields>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Fields = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_Fields';
+  addressLine1?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine1>;
+  addressLine2?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine2>;
+  city?: Maybe<UsersDocAccessFields_ShippingAddress_City>;
+  company?: Maybe<UsersDocAccessFields_ShippingAddress_Company>;
+  country?: Maybe<UsersDocAccessFields_ShippingAddress_Country>;
+  firstName?: Maybe<UsersDocAccessFields_ShippingAddress_FirstName>;
+  lastName?: Maybe<UsersDocAccessFields_ShippingAddress_LastName>;
+  phone?: Maybe<UsersDocAccessFields_ShippingAddress_Phone>;
+  postalCode?: Maybe<UsersDocAccessFields_ShippingAddress_PostalCode>;
+  state?: Maybe<UsersDocAccessFields_ShippingAddress_State>;
+  title?: Maybe<UsersDocAccessFields_ShippingAddress_Title>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine1 = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine1';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine1_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine1_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine1_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine1_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine1_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine1_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine1_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine1_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine1_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine1_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine1_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine1_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine2 = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine2';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine2_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine2_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine2_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_AddressLine2_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine2_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine2_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine2_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine2_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine2_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine2_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_AddressLine2_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_addressLine2_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_City = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_city';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_City_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_City_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_City_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_City_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_City_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_City_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_City_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_City_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Company = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_company';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_Company_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_Company_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_Company_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_Company_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Company_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_company_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Company_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_company_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Company_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_company_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Company_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_company_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Country = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_country';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_Country_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_Country_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_Country_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_Country_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Country_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_country_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Country_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_country_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Country_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_country_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Country_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_country_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_FirstName = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_firstName';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_FirstName_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_FirstName_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_FirstName_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_FirstName_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_FirstName_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_firstName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_FirstName_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_firstName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_FirstName_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_firstName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_FirstName_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_firstName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_LastName = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_lastName';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_LastName_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_LastName_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_LastName_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_LastName_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_LastName_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_lastName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_LastName_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_lastName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_LastName_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_lastName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_LastName_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_lastName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Phone = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_phone';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_Phone_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_Phone_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_Phone_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_Phone_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Phone_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Phone_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Phone_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Phone_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_PostalCode = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_postalCode';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_PostalCode_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_PostalCode_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_PostalCode_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_PostalCode_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_PostalCode_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_postalCode_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_PostalCode_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_postalCode_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_PostalCode_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_postalCode_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_PostalCode_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_postalCode_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_State = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_state';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_State_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_State_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_State_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_State_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_State_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_state_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_State_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_state_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_State_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_state_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_State_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_state_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Title = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_title';
+  create?: Maybe<UsersDocAccessFields_ShippingAddress_Title_Create>;
+  delete?: Maybe<UsersDocAccessFields_ShippingAddress_Title_Delete>;
+  read?: Maybe<UsersDocAccessFields_ShippingAddress_Title_Read>;
+  update?: Maybe<UsersDocAccessFields_ShippingAddress_Title_Update>;
+};
+
+export type UsersDocAccessFields_ShippingAddress_Title_Create = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Title_Delete = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Title_Read = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ShippingAddress_Title_Update = {
+  __typename?: 'UsersDocAccessFields_shippingAddress_title_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type UsersDocAccessFields_UpdatedAt = {
   __typename?: 'UsersDocAccessFields_updatedAt';
   create?: Maybe<UsersDocAccessFields_UpdatedAt_Create>;
@@ -45689,8 +46358,10 @@ export type UsersFields = {
   identity?: Maybe<UsersFields_Identity>;
   image?: Maybe<UsersFields_Image>;
   name?: Maybe<UsersFields_Name>;
+  phone?: Maybe<UsersFields_Phone>;
   role?: Maybe<UsersFields_Role>;
   session?: Maybe<UsersFields_Session>;
+  shippingAddress?: Maybe<UsersFields_ShippingAddress>;
   updatedAt?: Maybe<UsersFields_UpdatedAt>;
 };
 
@@ -45890,6 +46561,34 @@ export type UsersFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type UsersFields_Phone = {
+  __typename?: 'UsersFields_phone';
+  create?: Maybe<UsersFields_Phone_Create>;
+  delete?: Maybe<UsersFields_Phone_Delete>;
+  read?: Maybe<UsersFields_Phone_Read>;
+  update?: Maybe<UsersFields_Phone_Update>;
+};
+
+export type UsersFields_Phone_Create = {
+  __typename?: 'UsersFields_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Phone_Delete = {
+  __typename?: 'UsersFields_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Phone_Read = {
+  __typename?: 'UsersFields_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Phone_Update = {
+  __typename?: 'UsersFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type UsersFields_Role = {
   __typename?: 'UsersFields_role';
   create?: Maybe<UsersFields_Role_Create>;
@@ -45943,6 +46642,358 @@ export type UsersFields_Session_Read = {
 
 export type UsersFields_Session_Update = {
   __typename?: 'UsersFields_session_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress = {
+  __typename?: 'UsersFields_shippingAddress';
+  create?: Maybe<UsersFields_ShippingAddress_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_Delete>;
+  fields?: Maybe<UsersFields_ShippingAddress_Fields>;
+  read?: Maybe<UsersFields_ShippingAddress_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_Update>;
+};
+
+export type UsersFields_ShippingAddress_Create = {
+  __typename?: 'UsersFields_shippingAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Delete = {
+  __typename?: 'UsersFields_shippingAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Fields = {
+  __typename?: 'UsersFields_shippingAddress_Fields';
+  addressLine1?: Maybe<UsersFields_ShippingAddress_AddressLine1>;
+  addressLine2?: Maybe<UsersFields_ShippingAddress_AddressLine2>;
+  city?: Maybe<UsersFields_ShippingAddress_City>;
+  company?: Maybe<UsersFields_ShippingAddress_Company>;
+  country?: Maybe<UsersFields_ShippingAddress_Country>;
+  firstName?: Maybe<UsersFields_ShippingAddress_FirstName>;
+  lastName?: Maybe<UsersFields_ShippingAddress_LastName>;
+  phone?: Maybe<UsersFields_ShippingAddress_Phone>;
+  postalCode?: Maybe<UsersFields_ShippingAddress_PostalCode>;
+  state?: Maybe<UsersFields_ShippingAddress_State>;
+  title?: Maybe<UsersFields_ShippingAddress_Title>;
+};
+
+export type UsersFields_ShippingAddress_Read = {
+  __typename?: 'UsersFields_shippingAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Update = {
+  __typename?: 'UsersFields_shippingAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine1 = {
+  __typename?: 'UsersFields_shippingAddress_addressLine1';
+  create?: Maybe<UsersFields_ShippingAddress_AddressLine1_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_AddressLine1_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_AddressLine1_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_AddressLine1_Update>;
+};
+
+export type UsersFields_ShippingAddress_AddressLine1_Create = {
+  __typename?: 'UsersFields_shippingAddress_addressLine1_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine1_Delete = {
+  __typename?: 'UsersFields_shippingAddress_addressLine1_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine1_Read = {
+  __typename?: 'UsersFields_shippingAddress_addressLine1_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine1_Update = {
+  __typename?: 'UsersFields_shippingAddress_addressLine1_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine2 = {
+  __typename?: 'UsersFields_shippingAddress_addressLine2';
+  create?: Maybe<UsersFields_ShippingAddress_AddressLine2_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_AddressLine2_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_AddressLine2_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_AddressLine2_Update>;
+};
+
+export type UsersFields_ShippingAddress_AddressLine2_Create = {
+  __typename?: 'UsersFields_shippingAddress_addressLine2_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine2_Delete = {
+  __typename?: 'UsersFields_shippingAddress_addressLine2_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine2_Read = {
+  __typename?: 'UsersFields_shippingAddress_addressLine2_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_AddressLine2_Update = {
+  __typename?: 'UsersFields_shippingAddress_addressLine2_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_City = {
+  __typename?: 'UsersFields_shippingAddress_city';
+  create?: Maybe<UsersFields_ShippingAddress_City_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_City_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_City_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_City_Update>;
+};
+
+export type UsersFields_ShippingAddress_City_Create = {
+  __typename?: 'UsersFields_shippingAddress_city_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_City_Delete = {
+  __typename?: 'UsersFields_shippingAddress_city_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_City_Read = {
+  __typename?: 'UsersFields_shippingAddress_city_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_City_Update = {
+  __typename?: 'UsersFields_shippingAddress_city_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Company = {
+  __typename?: 'UsersFields_shippingAddress_company';
+  create?: Maybe<UsersFields_ShippingAddress_Company_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_Company_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_Company_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_Company_Update>;
+};
+
+export type UsersFields_ShippingAddress_Company_Create = {
+  __typename?: 'UsersFields_shippingAddress_company_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Company_Delete = {
+  __typename?: 'UsersFields_shippingAddress_company_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Company_Read = {
+  __typename?: 'UsersFields_shippingAddress_company_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Company_Update = {
+  __typename?: 'UsersFields_shippingAddress_company_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Country = {
+  __typename?: 'UsersFields_shippingAddress_country';
+  create?: Maybe<UsersFields_ShippingAddress_Country_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_Country_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_Country_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_Country_Update>;
+};
+
+export type UsersFields_ShippingAddress_Country_Create = {
+  __typename?: 'UsersFields_shippingAddress_country_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Country_Delete = {
+  __typename?: 'UsersFields_shippingAddress_country_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Country_Read = {
+  __typename?: 'UsersFields_shippingAddress_country_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Country_Update = {
+  __typename?: 'UsersFields_shippingAddress_country_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_FirstName = {
+  __typename?: 'UsersFields_shippingAddress_firstName';
+  create?: Maybe<UsersFields_ShippingAddress_FirstName_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_FirstName_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_FirstName_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_FirstName_Update>;
+};
+
+export type UsersFields_ShippingAddress_FirstName_Create = {
+  __typename?: 'UsersFields_shippingAddress_firstName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_FirstName_Delete = {
+  __typename?: 'UsersFields_shippingAddress_firstName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_FirstName_Read = {
+  __typename?: 'UsersFields_shippingAddress_firstName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_FirstName_Update = {
+  __typename?: 'UsersFields_shippingAddress_firstName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_LastName = {
+  __typename?: 'UsersFields_shippingAddress_lastName';
+  create?: Maybe<UsersFields_ShippingAddress_LastName_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_LastName_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_LastName_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_LastName_Update>;
+};
+
+export type UsersFields_ShippingAddress_LastName_Create = {
+  __typename?: 'UsersFields_shippingAddress_lastName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_LastName_Delete = {
+  __typename?: 'UsersFields_shippingAddress_lastName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_LastName_Read = {
+  __typename?: 'UsersFields_shippingAddress_lastName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_LastName_Update = {
+  __typename?: 'UsersFields_shippingAddress_lastName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Phone = {
+  __typename?: 'UsersFields_shippingAddress_phone';
+  create?: Maybe<UsersFields_ShippingAddress_Phone_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_Phone_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_Phone_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_Phone_Update>;
+};
+
+export type UsersFields_ShippingAddress_Phone_Create = {
+  __typename?: 'UsersFields_shippingAddress_phone_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Phone_Delete = {
+  __typename?: 'UsersFields_shippingAddress_phone_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Phone_Read = {
+  __typename?: 'UsersFields_shippingAddress_phone_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Phone_Update = {
+  __typename?: 'UsersFields_shippingAddress_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_PostalCode = {
+  __typename?: 'UsersFields_shippingAddress_postalCode';
+  create?: Maybe<UsersFields_ShippingAddress_PostalCode_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_PostalCode_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_PostalCode_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_PostalCode_Update>;
+};
+
+export type UsersFields_ShippingAddress_PostalCode_Create = {
+  __typename?: 'UsersFields_shippingAddress_postalCode_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_PostalCode_Delete = {
+  __typename?: 'UsersFields_shippingAddress_postalCode_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_PostalCode_Read = {
+  __typename?: 'UsersFields_shippingAddress_postalCode_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_PostalCode_Update = {
+  __typename?: 'UsersFields_shippingAddress_postalCode_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_State = {
+  __typename?: 'UsersFields_shippingAddress_state';
+  create?: Maybe<UsersFields_ShippingAddress_State_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_State_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_State_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_State_Update>;
+};
+
+export type UsersFields_ShippingAddress_State_Create = {
+  __typename?: 'UsersFields_shippingAddress_state_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_State_Delete = {
+  __typename?: 'UsersFields_shippingAddress_state_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_State_Read = {
+  __typename?: 'UsersFields_shippingAddress_state_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_State_Update = {
+  __typename?: 'UsersFields_shippingAddress_state_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Title = {
+  __typename?: 'UsersFields_shippingAddress_title';
+  create?: Maybe<UsersFields_ShippingAddress_Title_Create>;
+  delete?: Maybe<UsersFields_ShippingAddress_Title_Delete>;
+  read?: Maybe<UsersFields_ShippingAddress_Title_Read>;
+  update?: Maybe<UsersFields_ShippingAddress_Title_Update>;
+};
+
+export type UsersFields_ShippingAddress_Title_Create = {
+  __typename?: 'UsersFields_shippingAddress_title_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Title_Delete = {
+  __typename?: 'UsersFields_shippingAddress_title_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Title_Read = {
+  __typename?: 'UsersFields_shippingAddress_title_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ShippingAddress_Title_Update = {
+  __typename?: 'UsersFields_shippingAddress_title_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -50077,6 +51128,7 @@ export type MutationProductInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   variantTypes?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -50104,6 +51156,7 @@ export type MutationProductUpdateInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   variantTypes?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -50402,7 +51455,9 @@ export type MutationUserInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Array<InputMaybe<User_Role_MutationInput>>>;
+  shippingAddress?: InputMaybe<MutationUser_ShippingAddressInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -50413,8 +51468,38 @@ export type MutationUserUpdateInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Array<InputMaybe<UserUpdate_Role_MutationInput>>>;
+  shippingAddress?: InputMaybe<MutationUserUpdate_ShippingAddressInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationUserUpdate_ShippingAddressInput = {
+  addressLine1?: InputMaybe<Scalars['String']['input']>;
+  addressLine2?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  postalCode?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationUser_ShippingAddressInput = {
+  addressLine1?: InputMaybe<Scalars['String']['input']>;
+  addressLine2?: InputMaybe<Scalars['String']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  company?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  postalCode?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationVariantInput = {
@@ -51761,6 +52846,12 @@ export type VersionsJobs = {
   totalPages: Scalars['Int']['output'];
 };
 
+export type VersionsPage_Autosave_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsPage_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -52026,6 +53117,7 @@ export type VersionsPage_Version__UpdatedAt_Operator = {
 export type VersionsPage_Where = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -52057,6 +53149,7 @@ export type VersionsPage_Where = {
 export type VersionsPage_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -52088,6 +53181,7 @@ export type VersionsPage_Where_And = {
 export type VersionsPage_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPage_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPage_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPage_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPage_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPage_Id_Operator>;
   latest?: InputMaybe<VersionsPage_Latest_Operator>;
@@ -52129,6 +53223,12 @@ export type VersionsPages = {
   prevPage?: Maybe<Scalars['Int']['output']>;
   totalDocs: Scalars['Int']['output'];
   totalPages: Scalars['Int']['output'];
+};
+
+export type VersionsPost_Autosave_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type VersionsPost_CreatedAt_Operator = {
@@ -52356,6 +53456,7 @@ export type VersionsPost_Version__UpdatedAt_Operator = {
 export type VersionsPost_Where = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -52384,6 +53485,7 @@ export type VersionsPost_Where = {
 export type VersionsPost_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -52412,6 +53514,7 @@ export type VersionsPost_Where_And = {
 export type VersionsPost_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<VersionsPost_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VersionsPost_Where_Or>>>;
+  autosave?: InputMaybe<VersionsPost_Autosave_Operator>;
   createdAt?: InputMaybe<VersionsPost_CreatedAt_Operator>;
   id?: InputMaybe<VersionsPost_Id_Operator>;
   latest?: InputMaybe<VersionsPost_Latest_Operator>;
@@ -52744,6 +53847,12 @@ export type VersionsProduct_Version__ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsProduct_Version__UnlimitedInventory_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsProduct_Version__UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -52808,6 +53917,7 @@ export type VersionsProduct_Where = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
   version__variantTypes?: InputMaybe<VersionsProduct_Version__VariantTypes_Operator>;
@@ -52846,6 +53956,7 @@ export type VersionsProduct_Where_And = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
   version__variantTypes?: InputMaybe<VersionsProduct_Version__VariantTypes_Operator>;
@@ -52884,6 +53995,7 @@ export type VersionsProduct_Where_Or = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
   version__variantTypes?: InputMaybe<VersionsProduct_Version__VariantTypes_Operator>;
@@ -54151,6 +55263,20 @@ export type UpdateProductMutationVariables = Exact<{
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type JoinStartupMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type JoinStartupMutation = { __typename?: 'Mutation', joinStartup: { __typename?: 'StartupMembershipResult', message: string, startup?: { __typename?: 'Startup', id: string, title?: string | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null } };
+
+export type LeaveStartupMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type LeaveStartupMutation = { __typename?: 'Mutation', leaveStartup: { __typename?: 'StartupMembershipResult', message: string, startup?: { __typename?: 'Startup', id: string, title?: string | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null } };
+
 export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -54322,6 +55448,19 @@ export type UpdateCommentContentMutationVariables = Exact<{
 
 
 export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
+
+export type MeUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeUserQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: string, name: string, email: string, phone?: string | null, shippingAddress?: { __typename?: 'User_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, phone?: string | null } | null } | null } | null };
+
+export type UpdateUserByIdMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationUserUpdateInput;
+}>;
+
+
+export type UpdateUserByIdMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', id: string, name: string, email: string, phone?: string | null, shippingAddress?: { __typename?: 'User_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 
 
@@ -57771,6 +58910,72 @@ export const useUpdateProductMutation = <
 
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
 
+export const JoinStartupDocument = `
+    mutation JoinStartup($id: String!) {
+  joinStartup(id: $id) {
+    message
+    startup {
+      id
+      title
+      involvedUsers {
+        id
+        name
+        email
+      }
+    }
+  }
+}
+    `;
+
+export const useJoinStartupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<JoinStartupMutation, TError, JoinStartupMutationVariables, TContext>) => {
+    
+    return useMutation<JoinStartupMutation, TError, JoinStartupMutationVariables, TContext>(
+      {
+    mutationKey: ['JoinStartup'],
+    mutationFn: (variables?: JoinStartupMutationVariables) => gqlFetcher<JoinStartupMutation, JoinStartupMutationVariables>(JoinStartupDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useJoinStartupMutation.fetcher = (variables: JoinStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<JoinStartupMutation, JoinStartupMutationVariables>(JoinStartupDocument, variables, options);
+
+export const LeaveStartupDocument = `
+    mutation LeaveStartup($id: String!) {
+  leaveStartup(id: $id) {
+    message
+    startup {
+      id
+      title
+      involvedUsers {
+        id
+        name
+        email
+      }
+    }
+  }
+}
+    `;
+
+export const useLeaveStartupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LeaveStartupMutation, TError, LeaveStartupMutationVariables, TContext>) => {
+    
+    return useMutation<LeaveStartupMutation, TError, LeaveStartupMutationVariables, TContext>(
+      {
+    mutationKey: ['LeaveStartup'],
+    mutationFn: (variables?: LeaveStartupMutationVariables) => gqlFetcher<LeaveStartupMutation, LeaveStartupMutationVariables>(LeaveStartupDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useLeaveStartupMutation.fetcher = (variables: LeaveStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LeaveStartupMutation, LeaveStartupMutationVariables>(LeaveStartupDocument, variables, options);
+
 export const ListStartupsByCompanyDocument = `
     query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
   Startups(
@@ -58632,3 +59837,90 @@ export const useUpdateCommentContentMutation = <
 
 
 useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
+
+export const MeUserDocument = `
+    query MeUser {
+  meUser {
+    user {
+      id
+      name
+      email
+      phone
+      shippingAddress {
+        title
+        firstName
+        lastName
+        company
+        addressLine1
+        addressLine2
+        city
+        state
+        postalCode
+        country
+        phone
+      }
+    }
+  }
+}
+    `;
+
+export const useMeUserQuery = <
+      TData = MeUserQuery,
+      TError = unknown
+    >(
+      variables?: MeUserQueryVariables,
+      options?: Omit<UseQueryOptions<MeUserQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<MeUserQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<MeUserQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['MeUser'] : ['MeUser', variables],
+    queryFn: gqlFetcher<MeUserQuery, MeUserQueryVariables>(MeUserDocument, variables),
+    ...options
+  }
+    )};
+
+useMeUserQuery.getKey = (variables?: MeUserQueryVariables) => variables === undefined ? ['MeUser'] : ['MeUser', variables];
+
+
+useMeUserQuery.fetcher = (variables?: MeUserQueryVariables, options?: RequestInit['headers']) => gqlFetcher<MeUserQuery, MeUserQueryVariables>(MeUserDocument, variables, options);
+
+export const UpdateUserByIdDocument = `
+    mutation UpdateUserById($id: String!, $data: mutationUserUpdateInput!) {
+  updateUser(id: $id, data: $data) {
+    id
+    name
+    email
+    phone
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      state
+      postalCode
+      country
+      phone
+    }
+  }
+}
+    `;
+
+export const useUpdateUserByIdMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateUserByIdMutation, TError, UpdateUserByIdMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateUserByIdMutation, TError, UpdateUserByIdMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateUserById'],
+    mutationFn: (variables?: UpdateUserByIdMutationVariables) => gqlFetcher<UpdateUserByIdMutation, UpdateUserByIdMutationVariables>(UpdateUserByIdDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateUserByIdMutation.fetcher = (variables: UpdateUserByIdMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateUserByIdMutation, UpdateUserByIdMutationVariables>(UpdateUserByIdDocument, variables, options);

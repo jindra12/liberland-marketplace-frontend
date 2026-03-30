@@ -1,3 +1,4 @@
+import type { QueryClient } from "@tanstack/react-query";
 import { Startup_Stage } from "./generated/graphql";
 
 const stageLabels: Record<string, string> = {
@@ -33,4 +34,15 @@ export const formatFundsNeeded = (
     const cur = currency || "USD";
     const fmt = amount.toLocaleString("en-US", { maximumFractionDigits: 2 });
     return `${cur} ${fmt}`;
+};
+
+export const invalidateStartupQueries = async (queryClient: QueryClient) => {
+    await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["StartupById"] }),
+        queryClient.invalidateQueries({ queryKey: ["ListStartups"] }),
+        queryClient.invalidateQueries({ queryKey: ["ListStartupsByCompany"] }),
+        queryClient.invalidateQueries({ queryKey: ["ListStartupsByCreator"] }),
+        queryClient.invalidateQueries({ queryKey: ["ListStartupsByIdentity"] }),
+        queryClient.invalidateQueries({ queryKey: ["SearchStartups"] }),
+    ]);
 };

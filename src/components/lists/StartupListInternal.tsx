@@ -9,8 +9,8 @@ import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { ListStartupsQuery } from "../../generated/graphql";
-import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
-import { useJoinStartupMutation, useLeaveStartupMutation } from "../../startupApi";
+import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
+import { useJoinStartupMutation, useLeaveStartupMutation } from "../hooks";
 import { getImage } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
@@ -38,13 +38,14 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
         e.preventDefault();
         try {
             await joinMutation.mutateAsync({
-                startupId: startup.id,
+                id: startup.id,
                 url: startup.serverURL!,
             });
-            await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
-            refetch();
+            await invalidateStartupQueries(queryClient);
+            await refetch();
             message.success("You joined this venture!");
-        } catch {
+        } catch (error) {
+            console.error(error);
             message.error("Failed to join venture");
         }
     };
@@ -53,13 +54,14 @@ const InvolvementButton: React.FunctionComponent<{ startup: StartupDoc; refetch:
         e.preventDefault();
         try {
             await leaveMutation.mutateAsync({
-                startupId: startup.id,
+                id: startup.id,
                 url: startup.serverURL!,
             });
-            await queryClient.invalidateQueries({ queryKey: ["ListStartups"] });
-            refetch();
+            await invalidateStartupQueries(queryClient);
+            await refetch();
             message.success("You left this venture");
-        } catch {
+        } catch (error) {
+            console.error(error);
             message.error("Failed to leave venture");
         }
     };

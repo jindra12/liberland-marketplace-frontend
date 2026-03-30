@@ -54,14 +54,14 @@ const resolveItemPaymentChain = (item: OrderItem): CryptoChain | undefined => {
     return undefined;
 };
 
-const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | undefined => {
+const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | null | undefined => {
     switch (chain) {
         case "ethereum":
-            return item.product?.priceInETH || undefined;
+            return item.product?.priceInETH;
         case "solana":
-            return item.product?.priceInSOL || undefined;
+            return item.product?.priceInSOL;
         case "tron":
-            return item.product?.priceInTRX || undefined;
+            return item.product?.priceInTRX;
     }
 };
 
@@ -171,7 +171,7 @@ export const toExistingTransactionHashRows = (
         }
 
         acc.push({
-            id: entry.id || undefined,
+            id: entry.id,
             product: productId,
             chain,
             transactionHash: hash,

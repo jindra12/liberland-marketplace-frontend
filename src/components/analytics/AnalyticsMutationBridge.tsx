@@ -23,10 +23,10 @@ export const AnalyticsMutationBridge: React.FunctionComponent = () => {
         try {
             const result = await mutation.mutateAsync({
                 input: {
-                    distinctId: distinctId || undefined,
+                    distinctId,
                     metadata: event.metadata,
                     route: event.route,
-                    sessionId: sessionId || undefined,
+                    sessionId,
                     type: event.type,
                 },
                 url: event.targetUrl || BACKEND_URL,

@@ -15,7 +15,7 @@ import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
 import { CRYPTO_CHAIN_LABELS } from "../../utils";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
-import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem";
+import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import type { OrderFormValues } from "./types";
 import { RouteButton } from "../RouteButton";
 
