@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, ConfigProvider, Form, InputNumber, Space, message } from "antd";
-import { CloseOutlined, MinusOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import type { ButtonProps } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
@@ -257,13 +257,12 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                     <Button
                         type="primary"
                         size={size}
-                        icon={<ShoppingCartOutlined />}
+                        icon={<PlusOutlined />}
                         htmlType="submit"
                         loading={isMutating}
                         disabled={isMutating}
-                    >
-                        Buy
-                    </Button>
+                        aria-label="Add to cart"
+                    />
                     {hasItemInCart && (
                         <Button
                             size={size}
@@ -274,6 +273,9 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                             disabled={isMutating}
                         />
                     )}
+                    <Button size={size} type="primary">
+                        Buy now
+                    </Button>
                 </Space.Compact>
             </Form>
         </ConfigProvider>

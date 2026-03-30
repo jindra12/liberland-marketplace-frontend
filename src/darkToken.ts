@@ -98,7 +98,6 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
         defaultHoverBorderColor: "rgba(37, 77, 110, 0.46)",
         defaultHoverColor: "#EEF8F3",
         primaryColor: "#03121D",
-        primaryShadow: "0 18px 36px rgba(47, 140, 255, 0.22)",
     },
     Drawer: {
         colorBgElevated: "#05131F",

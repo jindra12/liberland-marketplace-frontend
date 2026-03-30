@@ -215,19 +215,6 @@
     letter-spacing: 0.01em;
 }
 
-.UnsubscribePage__primaryAction.ant-btn {
-    border: 0;
-    background: linear-gradient(135deg, rgba(23, 121, 89, 0.94), rgba(10, 63, 120, 0.96));
-    box-shadow: 0 16px 30px rgba(9, 63, 120, 0.26);
-    color: #eef8f3;
-}
-
-.UnsubscribePage__primaryAction.ant-btn:hover,
-.UnsubscribePage__primaryAction.ant-btn:focus {
-    background: linear-gradient(135deg, rgba(28, 136, 100, 0.96), rgba(16, 77, 143, 0.98)) !important;
-    color: #eef8f3 !important;
-}
-
 .UnsubscribePage__secondaryAction.ant-btn {
     border-color: rgba(147, 214, 255, 0.14);
     background: rgba(7, 20, 35, 0.58);
