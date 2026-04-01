@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Button, Empty, Flex, Modal, Radio, Typography } from "antd";
-import { AddressWithEmail } from "./types";
-import objectHash from "object-hash";
-import { buildBuyNowShippingAddressHeadline, buildBuyNowShippingAddressSummary } from "./utils";
+import type { AddressWithEmail } from "./types";
+import { buildShippingAddressHeadline, buildShippingAddressSummary } from "./utils";
 
-type BuyNowAddressModalProps = {
+type ShippingAddressSelectModalProps = {
     loading: boolean;
     onCancel: () => void;
     onSelect: (key: string) => void;
@@ -13,7 +12,7 @@ type BuyNowAddressModalProps = {
     selectedKey?: string;
 };
 
-export const BuyNowAddressModal: React.FunctionComponent<BuyNowAddressModalProps> = ({
+export const ShippingAddressSelectModal: React.FunctionComponent<ShippingAddressSelectModalProps> = ({
     loading,
     onCancel,
     onSelect,
@@ -25,43 +24,42 @@ export const BuyNowAddressModal: React.FunctionComponent<BuyNowAddressModalProps
         <Modal
             open={open}
             destroyOnHidden
-            title="Choose a shipping address"
+            title="Choose a default shipping address"
             onCancel={onCancel}
             footer={[
                 <Button key="cancel" danger onClick={onCancel} disabled={loading}>
                     Cancel
                 </Button>,
             ]}
-            className="BuyNowAddressModal"
+            className="ShippingAddressSelectModal"
         >
             {options.length === 0 ? (
-                <Empty description="No saved shipping addresses found" />
+                <Empty description="No default shipping addresses found" />
             ) : (
                 <Radio.Group
                     value={selectedKey}
                     onChange={(event) => {
                         onSelect(event.target.value);
                     }}
-                    className="BuyNowAddressModal__group"
+                    className="ShippingAddressSelectModal__group"
                 >
                     <Flex vertical gap={12}>
                         {options.map((option) => {
-                            const key = objectHash(option);
                             return (
                                 <label
-                                    key={key}
+                                    key={option.id}
                                     className={[
-                                        "BuyNowAddressModal__option",
-                                        selectedKey === key ? "BuyNowAddressModal__option--selected" : "",
+                                        "ShippingAddressSelectModal__option",
+                                        selectedKey === option.id ? "ShippingAddressSelectModal__option--selected" : "",
                                     ].filter(Boolean).join(" ")}
                                 >
-                                    <Radio value={key} className="BuyNowAddressModal__radio" />
-                                    <div className="BuyNowAddressModal__content">
+                                    <Radio value={option.id} className="ShippingAddressSelectModal__radio" />
+                                    <div className="ShippingAddressSelectModal__content">
                                         <Flex align="center" gap={8} wrap>
-                                            <Typography.Text strong>{buildBuyNowShippingAddressHeadline(option)}</Typography.Text>
+                                            <Typography.Text strong>{buildShippingAddressHeadline(option)}</Typography.Text>
                                         </Flex>
-                                        <Typography.Paragraph type="secondary" className="BuyNowAddressModal__summary">
-                                            {buildBuyNowShippingAddressSummary(option)}
+                                        <Typography.Paragraph type="secondary" className="ShippingAddressSelectModal__summary">
+                                            {buildShippingAddressSummary(option)}
                                         </Typography.Paragraph>
                                     </div>
                                 </label>

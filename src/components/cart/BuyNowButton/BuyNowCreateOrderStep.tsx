@@ -1,13 +1,14 @@
 import * as React from "react";
-import { useCreateOrderMutation } from "../../hooks";
-import type { SubmittedOrder } from "../../order/types";
-import { BuyNowAddressModal } from "./BuyNowAddressModal";
-import type { AddressWithEmail, BuyNowPreparedPurchase } from "./types";
 import useLocalStorage from "use-local-storage";
-import { BUY_NOW_SAVED_ADDRESSES_KEY_PREFIX } from "./constants";
+import { message } from "antd";
+import { useCreateOrderMutation } from "../../hooks";
+import { ShippingAddressSelectModal } from "../../order/ShippingAddressSelectModal";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../order/constants";
+import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
+import { toShippingAddressInput } from "../../order/utils";
+import type { BuyNowPreparedPurchase } from "./types";
 
 type BuyNowCreateOrderStepProps = {
-    accountStorageKey: string;
     onCancel: () => void;
     onOrderCreated: (submittedOrder: SubmittedOrder) => void;
     productId: string;
@@ -19,19 +20,59 @@ type BuyNowCreateOrderStepProps = {
 
 export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderStepProps> = (props) => {
     const createOrderMutation = useCreateOrderMutation();
+    const [messageApi, contextHolder] = message.useMessage();
     const [shippingAddress, setShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
-        BUY_NOW_SAVED_ADDRESSES_KEY_PREFIX,
-        undefined,
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        props.purchase.candidateProfileAddresses.length === 1 ? props.purchase.candidateProfileAddresses[0] : undefined,
     );
 
+    React.useEffect(() => {
+        if (shippingAddress) {
+            createOrderMutation.mutate({
+                url: props.serverURL,
+                draft: false,
+                data: {
+                    customerEmail: shippingAddress.email,
+                    items: [{
+                        quantity: props.quantity,
+                        product: props.productId,
+                        variant: props.variantId,
+                    }],
+                    shippingAddress: toShippingAddressInput(shippingAddress),
+                },
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [shippingAddress]);
+
+    React.useEffect(() => {
+        if (createOrderMutation.isError) {
+            messageApi.error("Could not create your order, try adding item to cart instead");
+            props.onCancel();
+        }
+        if (createOrderMutation.data) {
+            message.success("Order created successfully!");
+            props.onOrderCreated({
+                order: createOrderMutation.data.createOrder!,
+                url: props.serverURL,
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [createOrderMutation]);
+
     return (
-        <BuyNowAddressModal
-            open={!shippingAddress || props.purchase.candidateProfileAddresses.length > 1}
-            loading={createOrderMutation.isPending}
-            options={props.purchase.candidateProfileAddresses}
-            selectedKey={selectedAddressKey}
-            onCancel={handleCancelAddressSelection}
-            onSelect={handleSelectAddress}
-        />
+        <>
+            {contextHolder}
+            <ShippingAddressSelectModal
+                open={!shippingAddress}
+                loading={createOrderMutation.isPending}
+                options={props.purchase.candidateProfileAddresses}
+                selectedKey={shippingAddress?.id}
+                onCancel={props.onCancel}
+                onSelect={(id) => {
+                    setShippingAddress(props.purchase.candidateProfileAddresses.find((address) => address.id === id));
+                }}
+            />
+        </>
     );
 };

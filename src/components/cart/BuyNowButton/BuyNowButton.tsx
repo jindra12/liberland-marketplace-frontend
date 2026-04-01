@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Button } from "antd";
-import { useAuth } from "react-oidc-context";
-import type { SubmittedOrder } from "../../order/types";
+import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
 import { BuyNowPaymentStep } from "./BuyNowPaymentStep";
-import type { AddressWithEmail, BuyNowPreparedPurchase } from "./types";
+import type { BuyNowPreparedPurchase } from "./types";
 
 type BuyNowButtonProps = {
     block?: boolean;
@@ -27,10 +26,8 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = ({
     size = "large",
     variantId,
 }) => {
-    const auth = useAuth();
     const [preparedPurchase, setPreparedPurchase] = React.useState<BuyNowPreparedPurchase>();
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
-    const accountStorageKey = auth.user?.profile.sub ?? auth.user?.profile.email ?? "current-user";
     const isBusy = disabled || Boolean(preparedPurchase) || submittedOrders.length > 0;
 
     const handleBuyNow = () => {
@@ -53,7 +50,6 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = ({
             </Button>
             {preparedPurchase && (
                 <BuyNowCreateOrderStep
-                    accountStorageKey={accountStorageKey}
                     purchase={preparedPurchase}
                     productId={productId}
                     quantity={quantity}

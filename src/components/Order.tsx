@@ -2,20 +2,20 @@ import * as React from "react";
 import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
+import { useTimeout } from "usehooks-ts";
 import type { Order as OrderType } from "../generated/graphql";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
-import { useCreateOrderMutation, useDeleteCartMutation, useUpdateOrderMutation } from "./hooks";
+import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
-import type { OrderFormValues, SubmittedOrder } from "./order/types";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
+import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
+import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
 import { RouteButton } from "./RouteButton";
-import {
-    collectRequiredChainsForCarts,
-    inferNameParts,
-} from "../utils";
+import { collectRequiredChainsForCarts } from "../utils";
 
 const Order: React.FunctionComponent = () => {
     const [form] = Form.useForm<OrderFormValues>();
@@ -28,38 +28,31 @@ const Order: React.FunctionComponent = () => {
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
     const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        undefined,
+    );
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
+    const meUsersQuery = useMeUserQuery(undefined, { enabled: Boolean(auth.user) });
     const createOrderMutation = useCreateOrderMutation();
     const deleteCartMutation = useDeleteCartMutation();
     const updateOrderMutation = useUpdateOrderMutation();
 
     const cartsWithItems = React.useMemo(() => carts.filter((cart) => cart.items.length > 0), [carts]);
     const requiredChains = React.useMemo(() => collectRequiredChainsForCarts(cartsWithItems), [cartsWithItems]);
+    const candidateProfileAddresses = React.useMemo(
+        () => buildProfileShippingAddresses(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
+    const { profileEmail, prefillFirstName, prefillLastName } = React.useMemo(
+        () => buildOrderPrefill(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
 
-    const profile = auth.user?.profile;
-    const profileEmail = profile?.email;
-    const profileGivenName = profile?.given_name;
-    const profileFamilyName = profile?.family_name;
-    const profileName = profile?.name;
-    const inferredNames = inferNameParts(profileName);
-
-    const prefillFirstName = profileGivenName || inferredNames.firstName;
-    const prefillLastName = profileFamilyName || inferredNames.lastName;
-
-    React.useEffect(() => {
-        if (!showPaymentSuccess) {
-            return;
-        }
-
-        const timeout = window.setTimeout(() => {
-            navigate("/");
-        }, 4000);
-
-        return () => {
-            window.clearTimeout(timeout);
-        };
-    }, [navigate, showPaymentSuccess]);
+    useTimeout(() => {
+        navigate("/");
+    }, showPaymentSuccess ? 4000 : null);
 
     const updatePayerAddress = async (entry: SubmittedOrder, walletAddress: string) => {
         if (!entry.order.id) {
@@ -83,11 +76,6 @@ const Order: React.FunctionComponent = () => {
     };
 
     const onSubmit = async (values: OrderFormValues) => {
-        if (cartsWithItems.length === 0) {
-            message.info("Your cart is empty");
-            return;
-        }
-
         setShowPaymentSuccess(false);
         setIsSubmitting(true);
 
@@ -168,11 +156,6 @@ const Order: React.FunctionComponent = () => {
                 return;
             }
 
-            if (summary.submittedCarts === 0) {
-                message.error("No products submitted");
-                return;
-            }
-
             message.warning("Order was partially created");
         } catch (error) {
             console.error("Order creation failed", error);
@@ -248,6 +231,12 @@ const Order: React.FunctionComponent = () => {
                     setPage={setPage}
                     isSubmitting={isSubmitting}
                     cartsWithItemsCount={cartsWithItems.length}
+                    candidateProfileAddresses={candidateProfileAddresses}
+                    isLoadingProfileAddresses={meUsersQuery.isLoading}
+                    savedShippingAddress={savedShippingAddress}
+                    onSelectSavedShippingAddress={(id) => {
+                        setSavedShippingAddress(candidateProfileAddresses.find((address) => address.id === id));
+                    }}
                     profileEmail={profileEmail}
                     prefillFirstName={prefillFirstName}
                     prefillLastName={prefillLastName}

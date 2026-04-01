@@ -1,11 +1,10 @@
 import * as React from "react";
-import uniqBy from "lodash-es/uniqBy";
-import objectHash from "object-hash";
 import { ConfigProvider, Form, Space } from "antd";
 import type { ButtonProps } from "antd";
 import useLocalStorage from "use-local-storage";
 import type { Cart, MeUserQuery } from "../../generated/graphql";
 import { useCartBySecretQuery } from "../hooks";
+import { buildProfileShippingAddresses } from "../order/utils";
 import {
     CART_SECRETS_INDEX_KEY,
     CartSecretEntry,
@@ -52,6 +51,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
     ));
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
+    const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(me), [me]);
     const usesSplitLayout = !hasItemInCart;
     const compactClassName = [
         "AddToCartButton__compact",
@@ -60,14 +60,11 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
         hasItemInCart ? "AddToCartButton__compact--hasRemove" : "",
     ].filter(Boolean).join(" ");
     const watchedQuantity = Form.useWatch("quantity", form);
-    const inputQuantity = typeof watchedQuantity === "number" && watchedQuantity > 0 ? watchedQuantity : 1;
+    const inputQuantity = watchedQuantity || 0;
     const remainingQuantity = typeof maxAvailable === "number"
         ? Math.max(0, maxAvailable - currentItemQuantity)
         : undefined;
     const shouldHideButton = remainingQuantity !== undefined && remainingQuantity <= 0;
-    const buyNowQuantity = remainingQuantity !== undefined
-        ? Math.min(inputQuantity, remainingQuantity)
-        : inputQuantity;
 
     if (shouldHideButton) {
         return null;
@@ -95,15 +92,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = ({
                 />
                 <BuyNowButton
                     block={block}
-                    candidateProfileAddresses={uniqBy(me.filter(
-                        (me) => me.meUser?.user?.shippingAddress && me.meUser.user.email
-                    ).map(me => ({
-                        ...me.meUser?.user?.shippingAddress!,
-                        email: me.meUser?.user?.email!
-                    })), objectHash)}
+                    candidateProfileAddresses={candidateProfileAddresses}
                     disabled={isMutating}
                     productId={productId}
-                    quantity={buyNowQuantity}
+                    quantity={inputQuantity}
                     serverURL={serverURL}
                     size={size}
                     variantId={variantId}

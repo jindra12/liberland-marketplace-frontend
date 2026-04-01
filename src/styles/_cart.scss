@@ -127,17 +127,17 @@
     font-weight: 600;
 }
 
-.BuyNowAddressModal {
+.ShippingAddressSelectModal {
     .ant-modal-body {
         padding-top: 12px;
     }
 }
 
-.BuyNowAddressModal__group {
+.ShippingAddressSelectModal__group {
     display: block;
 }
 
-.BuyNowAddressModal__option {
+.ShippingAddressSelectModal__option {
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -150,30 +150,30 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.BuyNowAddressModal__option:hover {
+.ShippingAddressSelectModal__option:hover {
     border-color: rgba(91, 156, 255, 0.42);
     transform: translateY(-1px);
 }
 
-.BuyNowAddressModal__option--selected {
+.ShippingAddressSelectModal__option--selected {
     border-color: rgba(91, 156, 255, 0.72);
     box-shadow: 0 0 0 2px rgba(91, 156, 255, 0.14);
 }
 
-.BuyNowAddressModal__radio {
+.ShippingAddressSelectModal__radio {
     margin-top: 2px;
 }
 
-.BuyNowAddressModal__radio .ant-radio {
+.ShippingAddressSelectModal__radio .ant-radio {
     top: 0;
 }
 
-.BuyNowAddressModal__content {
+.ShippingAddressSelectModal__content {
     flex: 1 1 auto;
     min-width: 0;
 }
 
-.BuyNowAddressModal__summary.ant-typography {
+.ShippingAddressSelectModal__summary.ant-typography {
     margin: 6px 0 0;
 }
 

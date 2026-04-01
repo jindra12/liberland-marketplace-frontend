@@ -1,7 +1,10 @@
+import objectHash from "object-hash";
+import uniqBy from "lodash-es/uniqBy";
 import { OrderUpdate_TransactionHashes_Chain_MutationInput } from "../../generated/graphql";
+import type { MeUserQuery, MutationOrder_ShippingAddressInput } from "../../generated/graphql";
 import type { CryptoChain, OrderForPayments } from "../../types";
-import { toCryptoChain } from "../../utils";
-import type { SubmittedOrder, TransactionHashUpdateRow } from "./types";
+import { inferNameParts, toCryptoChain } from "../../utils";
+import type { AddressWithEmail, OrderFormValues, SubmittedOrder, TransactionHashUpdateRow } from "./types";
 
 type OrderItem = NonNullable<NonNullable<Pick<OrderForPayments, "items">["items"]>[number]>;
 
@@ -95,6 +98,107 @@ const toTransactionHashChainInputFromUnknown = (
 
 export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain): string => {
     return `${entry.url}::${entry.order.id}::${chain}`;
+};
+
+export const buildShippingAddressHeadline = (shippingAddress: AddressWithEmail) => {
+    const name = [shippingAddress.firstName, shippingAddress.lastName]
+        .filter(Boolean)
+        .join(" ");
+
+    if (name) {
+        return name;
+    }
+
+    if (shippingAddress.company) {
+        return shippingAddress.company;
+    }
+
+    return shippingAddress.email;
+};
+
+export const buildShippingAddressSummary = (shippingAddress: AddressWithEmail) => {
+    return [
+        shippingAddress.addressLine1,
+        shippingAddress.addressLine2,
+        shippingAddress.city,
+        shippingAddress.state,
+        shippingAddress.postalCode,
+        shippingAddress.country,
+    ]
+        .filter(Boolean)
+        .join(", ");
+};
+
+export const buildProfileShippingAddresses = (meUsers?: MeUserQuery | MeUserQuery[]) => {
+    const allUsers = Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [];
+
+    return uniqBy(
+        allUsers.flatMap((entry) => {
+            const user = entry.meUser?.user;
+
+            if (!user?.shippingAddress || !user.email) {
+                return [];
+            }
+
+            const shippingAddress = {
+                ...user.shippingAddress,
+                email: user.email,
+            };
+
+            return [{
+                ...shippingAddress,
+                id: objectHash(shippingAddress),
+            }];
+        }),
+        ({ id }) => id,
+    );
+};
+
+export const buildOrderPrefill = (meUsers?: MeUserQuery | MeUserQuery[]) => {
+    const users = (Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [])
+        .flatMap((entry) => entry.meUser?.user ? [entry.meUser.user] : []);
+    const firstUser = users[0];
+    const firstShippingAddress = users.find((user) => user.shippingAddress)?.shippingAddress;
+    const inferredNames = inferNameParts(firstUser?.name);
+
+    return {
+        profileEmail: firstUser?.email,
+        prefillFirstName: firstShippingAddress?.firstName || inferredNames.firstName,
+        prefillLastName: firstShippingAddress?.lastName || inferredNames.lastName,
+    };
+};
+
+export const toShippingAddressInput = (shippingAddress: AddressWithEmail): MutationOrder_ShippingAddressInput => {
+    const { email: _email, id: _id, ...input } = shippingAddress;
+    return input;
+};
+
+export const buildOrderFormValues = ({
+    prefillFirstName,
+    prefillLastName,
+    profileEmail,
+    savedShippingAddress,
+}: {
+    prefillFirstName?: string;
+    prefillLastName?: string;
+    profileEmail?: string;
+    savedShippingAddress?: AddressWithEmail;
+}): OrderFormValues => {
+    if (savedShippingAddress) {
+        return {
+            customerEmail: savedShippingAddress.email,
+            shippingAddress: toShippingAddressInput(savedShippingAddress),
+        };
+    }
+
+    return {
+        customerEmail: profileEmail || "",
+        shippingAddress: {
+            country: "United States",
+            firstName: prefillFirstName,
+            lastName: prefillLastName,
+        },
+    };
 };
 
 export const collectProductIdsForChain = (

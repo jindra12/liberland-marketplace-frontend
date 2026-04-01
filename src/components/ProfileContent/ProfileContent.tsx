@@ -36,7 +36,7 @@ export const ProfileContent: React.FunctionComponent = () => {
             refetchOnMount: "always",
         },
     );
-    const selectedServerUser = selectedServerUserQuery.data?.meUser?.user;
+    const selectedServerUser = selectedServerUserQuery.data?.[0]?.meUser?.user;
 
     React.useEffect(() => {
         if (!profileServerOptions.some(({ value }) => value === selectedServerUrl)) {
@@ -44,9 +44,9 @@ export const ProfileContent: React.FunctionComponent = () => {
         }
     }, [authUrl, profileServerOptions, selectedServerUrl]);
 
-    const refreshSelectedServerUser = React.useCallback(async () => {
+    const refreshSelectedServerUser = async () => {
         await selectedServerUserQuery.refetch();
-    }, [selectedServerUserQuery]);
+    };
 
     return (
         <div className="Profile">

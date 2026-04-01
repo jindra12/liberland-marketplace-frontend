@@ -7,6 +7,11 @@ import type { CryptoChain } from "../../types";
 
 export type CreatedOrder = NonNullable<CreateOrderMutation["createOrder"]>;
 
+export type AddressWithEmail = MutationOrder_ShippingAddressInput & {
+    email: string;
+    id: string;
+};
+
 export type SubmittedOrder = {
     url: string;
     order: CreatedOrder;

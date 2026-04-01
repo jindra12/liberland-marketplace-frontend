@@ -1,7 +1,10 @@
 import * as React from "react";
-import { Button, Card, Form, Input, message } from "antd";
+import { Button, Card, Form, Input, Space, message } from "antd";
+import useLocalStorage from "use-local-storage";
 import { useUpdateUserByIdMutation } from "../hooks";
 import { GeoapifyAddressFormItem } from "../order/GeoapifyAddressFormItem/GeoapifyAddressFormItem";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../order/constants";
+import type { AddressWithEmail } from "../order/types";
 import type { ProfileContactFormValues, ProfileSelectedUser } from "./types";
 import {
     buildProfileContactFormValues,
@@ -24,6 +27,10 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
 }) => {
     const [form] = Form.useForm<ProfileContactFormValues>();
     const mutation = useUpdateUserByIdMutation();
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        undefined,
+    );
 
     React.useEffect(() => {
         form.resetFields();
@@ -46,6 +53,11 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
             console.error("Failed to update contact information", error);
             message.error("Failed to update contact information");
         }
+    };
+
+    const handleResetSavedShippingAddress = () => {
+        setSavedShippingAddress(undefined);
+        message.success("Saved shipping address was reset");
     };
 
     return (
@@ -71,9 +83,14 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                 <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required={false} />
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={selectedServerUserLoading}>
-                        Save Contact Information
-                    </Button>
+                    <Space wrap>
+                        <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={selectedServerUserLoading}>
+                            Save Contact Information
+                        </Button>
+                        <Button danger onClick={handleResetSavedShippingAddress} disabled={!savedShippingAddress}>
+                            Reset Saved Shipping Address
+                        </Button>
+                    </Space>
                 </Form.Item>
             </Form>
         </Card>
