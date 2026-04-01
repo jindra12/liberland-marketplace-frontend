@@ -154,6 +154,7 @@ import {
     useUnsubscribeFromVentureUpdatesMutation as useUnsubscribeFromVentureUpdatesMutationSingle,
     UpdateUserByIdDocument,
     useUpdateUserByIdMutation as useUpdateUserByIdMutationSingle,
+    MeUserQuery,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
@@ -173,37 +174,12 @@ export type GeneratedUseQueryHook<TQueryFnData, TVariables> =
         ) => () => Promise<TQueryFnData>;
     };
 
-export type GeneratedUseQueryHookOptional<TQueryFnData, TVariables> =
-    (<TData = TQueryFnData, TError = unknown>(
-        variables?: TVariables,
-        options?: Omit<UseQueryOptions<TQueryFnData, TError, TData>, "queryKey"> & {
-            queryKey?: UseQueryOptions<TQueryFnData, TError, TData>["queryKey"];
-        },
-    ) => UseQueryResult<TData, TError>) & {
-        getKey: (variables?: TVariables) => QueryKey;
-        fetcher: (
-            variables?: TVariables,
-            options?: RequestInit["headers"],
-        ) => () => Promise<TQueryFnData>;
-    };
-
 type QueryVariablesWithUrl<TVariables extends object | undefined> =
     TVariables extends undefined
         ? { url?: string }
         : TVariables extends Record<string, never>
             ? { url?: string }
             : TVariables & { url?: string };
-
-const stripQueryUrl = <TVariables extends object | undefined>(
-    variables?: QueryVariablesWithUrl<TVariables>,
-): TVariables => {
-    if (!variables) {
-        return undefined as TVariables;
-    }
-
-    const { url, ...rest } = variables as { url?: string };
-    return rest as TVariables;
-};
 
 type MutationVariablesWithUrl<TVariables extends object | undefined> =
     (TVariables extends undefined ? {} : TVariables) & { url?: string };
@@ -262,23 +238,20 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
     return useEnhancedMutation;
 };
 
-export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined>(
-    useHook:
-        | GeneratedUseQueryHook<TQueryFnData, TVariables>
-        | GeneratedUseQueryHookOptional<TQueryFnData, TVariables>,
+export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined, TResult = TQueryFnData>(
+    useHook: GeneratedUseQueryHook<TQueryFnData, TVariables>,
     query: string,
-    mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
+    mergeAction: (a: TQueryFnData | TResult, b: TQueryFnData | TResult) => TResult = deepMergeConcatArrays,
 ) => {
     return (variables?: QueryVariablesWithUrl<TVariables>, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
         const { enabled } = useEndpointContext();
         const urls = (variables?.url ? [variables.url] : enabled);
-        const queryVariables = stripQueryUrl(variables);
         return useQueries({
             queries: urls.map((url) => ({
-                queryKey: [...useHook.getKey(queryVariables), url],
+                queryKey: [...useHook.getKey(variables as TVariables), url],
                 queryFn: gqlFetcher<TQueryFnData, TVariables>(
                     query,
-                    queryVariables,
+                    variables as TVariables,
                     options,
                     url,
                 ),
@@ -327,7 +300,11 @@ export const useListStartupsByIdentityQuery = enhancedQueryFactory(useListStartu
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
-export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument);
+export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, (a: MeUserQuery | MeUserQuery[], b: MeUserQuery | MeUserQuery[]) => {
+    const normA = Array.isArray(a) ? a : [a];
+    const normB = Array.isArray(b) ? b : [b];
+    return [...normA, ...normB];
+});
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);

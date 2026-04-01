@@ -2,6 +2,18 @@
     max-width: 15rem;
 }
 
+.AddToCartButton .AddToCartButton__buyNow {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.AddToCartButton__buyNowLoading {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
 .AddToCartButton__quantity {
     width: 88px;
 }
@@ -113,4 +125,61 @@
 .CartPage__orderButton {
     min-height: 48px;
     font-weight: 600;
+}
+
+.BuyNowAddressModal {
+    .ant-modal-body {
+        padding-top: 12px;
+    }
+}
+
+.BuyNowAddressModal__group {
+    display: block;
+}
+
+.BuyNowAddressModal__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(120, 140, 160, 0.24);
+    border-radius: 18px;
+    background: rgba(11, 22, 34, 0.48);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.BuyNowAddressModal__option:hover {
+    border-color: rgba(91, 156, 255, 0.42);
+    transform: translateY(-1px);
+}
+
+.BuyNowAddressModal__option--selected {
+    border-color: rgba(91, 156, 255, 0.72);
+    box-shadow: 0 0 0 2px rgba(91, 156, 255, 0.14);
+}
+
+.BuyNowAddressModal__radio {
+    margin-top: 2px;
+}
+
+.BuyNowAddressModal__radio .ant-radio {
+    top: 0;
+}
+
+.BuyNowAddressModal__content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.BuyNowAddressModal__summary.ant-typography {
+    margin: 6px 0 0;
+}
+
+.BuyNowPaymentModal {
+    .ant-modal-body {
+        max-height: min(80vh, 860px);
+        overflow: auto;
+    }
 }

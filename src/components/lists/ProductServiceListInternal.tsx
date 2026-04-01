@@ -6,7 +6,7 @@ import { DollarOutlined } from "@ant-design/icons";
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
 import { AppList } from "../AppList";
 import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -96,7 +96,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
-                        <AddToCartButton
+                        <AddToCartButtonGuard
                             productId={product.id}
                             serverURL={product.serverURL!}
                             block={isMobile}

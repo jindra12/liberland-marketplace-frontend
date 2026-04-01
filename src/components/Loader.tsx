@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AxiosError } from "axios";
 import { UseQueryResult } from "@tanstack/react-query";
-import { Button, Result } from "antd";
+import { Button, Result, Spin } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
 import { convertStatusCode, getErrorMessage } from "../utils";
@@ -10,6 +10,7 @@ import { DetailPageSkeleton } from "./LoadingSkeleton/DetailPageSkeleton";
 export interface LoaderProps<TData> {
     query: UseQueryResult<TData, unknown>;
     children: (data: TData, refresh: React.ReactNode) => React.ReactNode;
+    isSmall?: boolean;
 }
 
 export const Loader = <TData,>(props: LoaderProps<TData>) => {
@@ -21,7 +22,7 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
     } = props.query;
 
     if (isLoading) {
-        return <DetailPageSkeleton />;
+        return props.isSmall ? <Spin size="small" /> : <DetailPageSkeleton />;
     }
 
     if (error) {

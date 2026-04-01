@@ -23,11 +23,11 @@ import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
 import { CartItemCount } from "../cart/CartItemCount";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -71,7 +71,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 const purchaseControl = product?.id ? (
                     canPurchase ? (
-                        <AddToCartButton
+                        <AddToCartButtonGuard
                             block
                             productId={product.id}
                             serverURL={product.serverURL!}

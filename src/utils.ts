@@ -568,23 +568,23 @@ export const getCommentSectionStyles = (token: EntityCommentsThemeToken): Commen
     },
 });
 
-export const deepMergeConcatArrays = <T>(a: T, b: T): T =>
+export const deepMergeConcatArrays = <T, E = T>(a: T, b: T): E =>
     mergeWith({}, a, b, (left: any, right: any) => {
         if (Array.isArray(left) && Array.isArray(right)) {
             return [...left, ...right];
         }
         return undefined;
-    });
+    }) as E;
 
 type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
 
-const merger = <TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TQuery) => data.slice(1).reduce((acc, item) => {
-    return action(acc, item);
-}, data[0]);
+const merger = <TQuery, TResult = TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TResult) => data.slice(1).reduce((acc, item) => {
+    return action(acc, item) as any as TQuery;
+}, data[0]) as any as TResult;
 
-export const combineResult = <TQuery>(
+export const combineResult = <TQuery, TResult = TQuery>(
     results: readonly QueryResult<TQuery>[],
-    mergeAction: (a: TQuery, b: TQuery) => TQuery,
+    mergeAction: (a: TQuery, b: TQuery) => TResult,
 ) => {
     const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
     const error = results.every(query => query.isError) ? results.find((query) => query.error)?.error : undefined;
@@ -610,7 +610,7 @@ export const combineResult = <TQuery>(
 
     const refetch = async (
         options?: RefetchOptions,
-    ): Promise<QueryObserverResult<TQuery, Error>> => {
+    ): Promise<QueryObserverResult<TResult, Error>> => {
         const refetched = await Promise.all(results.map((query) => query.refetch(options)));
         return combineResult(refetched, mergeAction);
     };
@@ -640,5 +640,5 @@ export const combineResult = <TQuery>(
         isSuccess,
         refetch,
         status,
-    } as QueryResult<TQuery>;
+    } as any as QueryResult<TResult>;
 };
