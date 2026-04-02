@@ -4,7 +4,7 @@ import { Alert, Button, Flex, Form, Typography } from "antd";
 
 type GeoapifyAddressSearchControlProps = {
     label: string;
-    required: boolean;
+    required?: boolean;
     geoapifyApiKey: string;
     selectedAddressSummary: string;
     onOpenSearch: () => void;

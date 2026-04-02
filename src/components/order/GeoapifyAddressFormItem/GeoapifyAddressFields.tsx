@@ -4,8 +4,9 @@ import { Col, Form, Input, Row } from "antd";
 
 type GeoapifyAddressFieldsProps = {
     basePath: Array<string | number>;
-    required: boolean;
+    required?: boolean;
 };
+
 export const GeoapifyAddressFields: React.FunctionComponent<GeoapifyAddressFieldsProps> = (props) => {
     const requiredRule = props.required
         ? [

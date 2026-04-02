@@ -53,78 +53,66 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         const docs = comments.data?.Comments?.docs || [];
         return buildCommentData(docs);
     }, [comments.data]);
-    const refetchComments = React.useCallback(async () => {
+    const refetchComments = async () => {
         await comments.refetch();
-    }, [comments]);
+    };
     const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
-    const onSubmitAction = React.useCallback(
-        async (payload: CommentSubmitPayload) => {
-            const content = payload.text.trim();
-            if (!content) {
-                return;
-            }
-            await createComment.mutateAsync({
-                replyToPost: {
-                    relationTo: props.relationTo,
-                    value: props.targetId,
-                },
-                content,
-            });
-            await refetchComments();
-        },
-        [createComment, refetchComments, props.relationTo, props.targetId],
-    );
-    const onReplyAction = React.useCallback(
-        async (payload: CommentReplyPayload) => {
-            const content = payload.text.trim();
-            const parentCommentId = payload.repliedToCommentId;
-            if (!content || !parentCommentId) {
-                return;
-            }
-            await createReply.mutateAsync({
-                replyToPost: {
-                    relationTo: props.relationTo,
-                    value: props.targetId,
-                },
-                parentCommentId,
-                content,
-            });
-            await refetchComments();
-        },
-        [createReply, refetchComments, props.relationTo, props.targetId],
-    );
-    const onEditAction = React.useCallback(
-        async (payload: CommentEditPayload) => {
-            if (!auth.isAuthenticated) {
-                return;
-            }
-            const content = payload.text.trim();
-            const commentId = payload.comId;
-            if (!content || !commentId) {
-                return;
-            }
-            await updateComment.mutateAsync({
-                id: commentId,
-                content,
-            });
-            await refetchComments();
-        },
-        [auth.isAuthenticated, refetchComments, updateComment],
-    );
-    const onDeleteAction = React.useCallback(
-        async (payload: CommentDeletePayload) => {
-            const commentId = payload.comIdToDelete;
-            if (!auth.isAuthenticated || !commentId) {
-                return;
-            }
-            await deleteComment.mutateAsync({
-                id: commentId,
-            });
-            await refetchComments();
-        },
-        [auth.isAuthenticated, deleteComment, refetchComments],
-    );
+    const onSubmitAction = async (payload: CommentSubmitPayload) => {
+        const content = payload.text.trim();
+        if (!content) {
+            return;
+        }
+        await createComment.mutateAsync({
+            replyToPost: {
+                relationTo: props.relationTo,
+                value: props.targetId,
+            },
+            content,
+        });
+        await refetchComments();
+    };
+    const onReplyAction = async (payload: CommentReplyPayload) => {
+        const content = payload.text.trim();
+        const parentCommentId = payload.repliedToCommentId;
+        if (!content || !parentCommentId) {
+            return;
+        }
+        await createReply.mutateAsync({
+            replyToPost: {
+                relationTo: props.relationTo,
+                value: props.targetId,
+            },
+            parentCommentId,
+            content,
+        });
+        await refetchComments();
+    };
+    const onEditAction = async (payload: CommentEditPayload) => {
+        if (!auth.isAuthenticated) {
+            return;
+        }
+        const content = payload.text.trim();
+        const commentId = payload.comId;
+        if (!content || !commentId) {
+            return;
+        }
+        await updateComment.mutateAsync({
+            id: commentId,
+            content,
+        });
+        await refetchComments();
+    };
+    const onDeleteAction = async (payload: CommentDeletePayload) => {
+        const commentId = payload.comIdToDelete;
+        if (!auth.isAuthenticated || !commentId) {
+            return;
+        }
+        await deleteComment.mutateAsync({
+            id: commentId,
+        });
+        await refetchComments();
+    };
     if (comments.isLoading) {
         return (
             <Flex justify="center" align="center" className="EntityCommentsSection">

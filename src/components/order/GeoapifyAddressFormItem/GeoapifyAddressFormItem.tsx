@@ -9,15 +9,11 @@ import type { AddressFieldKey, AddressFields, GeoapifyAddressFormItemProps, Geoa
 import { buildAddressSummary, createGeoapifyStyles, getAddressSelection, toPath } from "./utils";
 
 export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFormItemProps> = (props) => {
-    const name = props.name === undefined ? ["shippingAddress"] : props.name;
-    const label = props.label === undefined ? "Shipping address" : props.label;
-    const required = props.required === undefined ? true : props.required;
-
     const { token } = theme.useToken();
     const form = Form.useFormInstance();
     const [searchValue, setSearchValue] = React.useState("");
     const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
-    const basePath = React.useMemo(() => toPath(name), [name]);
+    const basePath = React.useMemo(() => toPath(props.name), [props.name]);
     const watchedAddress = Form.useWatch(basePath, form) as AddressFields | undefined;
     const geoapifyApiKey = process.env.REACT_APP_GEOAPIFY_API_KEY || "";
     const geoapifyStyles = React.useMemo(() => createGeoapifyStyles(token), [token]);
@@ -64,8 +60,8 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
     return (
         <>
             <GeoapifyAddressSearchControl
-                label={label}
-                required={required}
+                label={props.label}
+                required={props.required}
                 geoapifyApiKey={geoapifyApiKey}
                 selectedAddressSummary={selectedAddressSummary}
                 onOpenSearch={openSearchModal}
@@ -79,7 +75,7 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
                 onSearchValueChange={setSearchValue}
                 onPlaceSelect={handlePlaceSelect}
             />
-            <GeoapifyAddressFields basePath={basePath} required={required} />
+            <GeoapifyAddressFields basePath={basePath} required={props.required} />
         </>
     );
 };

@@ -1,8 +1,8 @@
 import type { NamePath } from "antd/es/form/interface";
 
 export type GeoapifyAddressFormItemProps = {
-    name?: NamePath;
-    label?: string;
+    name: NamePath;
+    label: string;
     required?: boolean;
 };
 
