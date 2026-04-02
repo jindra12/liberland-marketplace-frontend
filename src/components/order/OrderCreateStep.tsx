@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "antd";
-import type { FormInstance } from "antd";
 
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
@@ -15,7 +14,6 @@ import type { AddressWithEmail, OrderFormValues } from "./types";
 import { buildOrderFormValues } from "./utils";
 
 type OrderCreateStepProps = {
-    form: FormInstance<OrderFormValues>;
     products: NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>;
     isProductsLoading: boolean;
     refetchProducts: () => Promise<void>;
@@ -35,11 +33,12 @@ type OrderCreateStepProps = {
 };
 
 export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (props) => {
+    const [form] = Form.useForm<OrderFormValues>();
     const [isShippingAddressSelectOpen, setIsShippingAddressSelectOpen] = React.useState(false);
     const requiredChainText = props.requiredChains.map((chain) => CRYPTO_CHAIN_LABELS[chain]).join(", ");
 
     React.useEffect(() => {
-        props.form.setFieldsValue(
+        form.setFieldsValue(
             buildOrderFormValues({
                 prefillFirstName: props.prefillFirstName,
                 prefillLastName: props.prefillLastName,
@@ -47,7 +46,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                 savedShippingAddress: props.savedShippingAddress,
             }),
         );
-    }, [props.form, props.prefillFirstName, props.prefillLastName, props.profileEmail, props.savedShippingAddress]);
+    }, [form, props.prefillFirstName, props.prefillLastName, props.profileEmail, props.savedShippingAddress]);
 
     return (
         <>
@@ -67,7 +66,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             <Form
                 id="order-form"
                 layout="vertical"
-                form={props.form}
+                form={form}
                 onFinish={props.onSubmit}
                 initialValues={buildOrderFormValues({
                     prefillFirstName: props.prefillFirstName,
@@ -175,7 +174,19 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                     setIsShippingAddressSelectOpen(false);
                 }}
                 onSelect={(id) => {
+                    const selectedAddress = props.candidateProfileAddresses.find(
+                        (address) => address.id === id,
+                    );
+
                     props.onSelectSavedShippingAddress(id);
+                    form.setFieldsValue(
+                        buildOrderFormValues({
+                            prefillFirstName: props.prefillFirstName,
+                            prefillLastName: props.prefillLastName,
+                            profileEmail: props.profileEmail,
+                            savedShippingAddress: selectedAddress,
+                        }),
+                    );
                     setIsShippingAddressSelectOpen(false);
                 }}
             />

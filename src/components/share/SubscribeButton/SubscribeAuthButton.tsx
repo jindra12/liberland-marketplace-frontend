@@ -10,39 +10,35 @@ import { getSubscribeButtonClassName, getSubscriptionErrorMessage } from "./util
 export const SubscribeAuthButton: React.FunctionComponent<SubscribeAuthButtonProps> = (props) => {
     const size = props.size === undefined ? "middle" : props.size;
     const type = props.type === undefined ? "default" : props.type;
-    const [isSubscribedState, setIsSubscribedState] = React.useState(Boolean(props.isSubscribed));
+    const isSubscribed = Boolean(props.isSubscribed);
     const { entityLabel, isPending, subscribe, unsubscribe } = useSubscriptionActions({
         collection: props.collection,
         targetID: props.targetID,
         serverURL: props.serverURL,
         subscriptionID: props.subscriptionID,
     });
-    React.useEffect(() => {
-        setIsSubscribedState(Boolean(props.isSubscribed));
-    }, [props.collection, props.isSubscribed, props.serverURL, props.subscriptionID, props.targetID]);
+
     const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         event.stopPropagation();
         try {
-            if (isSubscribedState) {
+            if (isSubscribed) {
                 await unsubscribe(props.email);
-                setIsSubscribedState(false);
                 props.onSubscriptionChange?.(false);
                 message.success(`Unsubscribed from ${entityLabel} updates.`);
                 return;
             }
             await subscribe(props.email);
-            setIsSubscribedState(true);
             props.onSubscriptionChange?.(true);
             message.success(`Subscribed to ${entityLabel} updates.`);
         } catch (error) {
-            const action = isSubscribedState ? "unsubscribe" : "subscribe";
+            const action = isSubscribed ? "unsubscribe" : "subscribe";
             message.error(getSubscriptionErrorMessage(error, action, entityLabel));
         }
     };
     return (
         <Button
-            icon={isSubscribedState ? <BellFilled /> : <BellOutlined />}
+            icon={isSubscribed ? <BellFilled /> : <BellOutlined />}
             size={size}
             type={type}
             block={props.block}
@@ -51,7 +47,7 @@ export const SubscribeAuthButton: React.FunctionComponent<SubscribeAuthButtonPro
             onClick={handleClick}
             loading={isPending}
         >
-            {isSubscribedState ? "Unsubscribe" : "Subscribe"}
+            {isSubscribed ? "Unsubscribe" : "Subscribe"}
         </Button>
     );
 };

@@ -26,7 +26,12 @@ export const ProfileContent: React.FunctionComponent = () => {
     const emailVerified = profile?.email_verified;
 
     const profileServerOptions = React.useMemo(() => buildProfileServerOptions(urls, authUrl), [authUrl, urls]);
-    const [selectedServerUrl, setSelectedServerUrl] = React.useState(profileServerOptions[0]?.value || authUrl);
+    const [selectedServerUrlState, setSelectedServerUrlState] = React.useState(
+        profileServerOptions[0]?.value || authUrl,
+    );
+    const selectedServerUrl = profileServerOptions.some(({ value }) => value === selectedServerUrlState)
+        ? selectedServerUrlState
+        : profileServerOptions[0]?.value || authUrl;
     const selectedServerLabel = React.useMemo(() => {
         return findSelectedServerLabel(profileServerOptions, selectedServerUrl);
     }, [profileServerOptions, selectedServerUrl]);
@@ -38,12 +43,6 @@ export const ProfileContent: React.FunctionComponent = () => {
         },
     );
     const selectedServerUser = selectedServerUserQuery.data?.[0]?.meUser?.user;
-
-    React.useEffect(() => {
-        if (!profileServerOptions.some(({ value }) => value === selectedServerUrl)) {
-            setSelectedServerUrl(profileServerOptions[0]?.value || authUrl);
-        }
-    }, [authUrl, profileServerOptions, selectedServerUrl]);
 
     const refreshSelectedServerUser = async () => {
         await selectedServerUserQuery.refetch();
@@ -67,7 +66,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                     profileServerOptions={profileServerOptions}
                     selectedServerLabel={selectedServerLabel}
                     selectedServerUrl={selectedServerUrl}
-                    onChangeServer={setSelectedServerUrl}
+                    onChangeServer={setSelectedServerUrlState}
                 />
                 <ProfileNicknameCard
                     currentName={selectedServerUser?.name}

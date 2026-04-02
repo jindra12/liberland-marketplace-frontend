@@ -31,13 +31,17 @@ type OrderPaymentChainControllerProps = {
 };
 
 type OrderPaymentChainControllerState = {
+    addedWallets: PaymentWalletSelection[];
     isPaymentCompleted: boolean;
-    profileUser?: PaymentProfileUser;
     rememberWallet: boolean;
     selectedWallet?: PaymentWalletSelection;
 };
 
 type OrderPaymentChainControllerAction =
+    | {
+          type: "addWallet";
+          selection: PaymentWalletSelection;
+      }
     | {
           type: "completePayment";
       }
@@ -48,16 +52,19 @@ type OrderPaymentChainControllerAction =
     | {
           type: "selectWallet";
           selection: PaymentWalletSelection;
-      }
-    | {
-          type: "syncProfileUser";
-          profileUser?: PaymentProfileUser;
       };
 
 const orderPaymentChainControllerReducer = (
     state: OrderPaymentChainControllerState,
     action: OrderPaymentChainControllerAction,
 ): OrderPaymentChainControllerState => {
+    if (action.type === "addWallet") {
+        return {
+            ...state,
+            addedWallets: appendPaymentWalletSelection(state.addedWallets, action.selection),
+        };
+    }
+
     if (action.type === "completePayment") {
         return {
             ...state,
@@ -89,28 +96,24 @@ const orderPaymentChainControllerReducer = (
         };
     }
 
-    return {
-        ...state,
-        profileUser: action.profileUser,
-    };
+    return state;
 };
 
 export const useOrderPaymentChainController = (props: OrderPaymentChainControllerProps) => {
     const updateOrderMutation = useUpdateOrderMutation();
     const updateUserMutation = useUpdateUserByIdMutation();
     const [state, dispatch] = React.useReducer(orderPaymentChainControllerReducer, {
+        addedWallets: [],
         isPaymentCompleted: false,
-        profileUser: props.profileUser,
         rememberWallet: false,
         selectedWallet: undefined,
     });
-
-    React.useEffect(() => {
-        dispatch({
-            type: "syncProfileUser",
-            profileUser: props.profileUser,
-        });
-    }, [props.profileUser]);
+    const availableWallets = (props.profileUser?.wallets ?? []).reduce<PaymentWalletSelection[]>(
+        (wallets, wallet) => {
+            return appendPaymentWalletSelection(wallets, wallet);
+        },
+        state.addedWallets,
+    );
 
     const saveTransactionHash = async (txHash: string): Promise<boolean> => {
         const productIds = collectProductIdsForChain(props.entry.order, props.chainPayment.chain);
@@ -150,34 +153,28 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
     };
 
     const rememberSelectedWallet = async () => {
-        if (!state.rememberWallet || !state.selectedWallet || !state.profileUser) {
+        if (!state.rememberWallet || !state.selectedWallet || !props.profileUser) {
             return;
         }
 
-        if (hasPaymentWalletSelection(state.profileUser.wallets, state.selectedWallet)) {
+        if (hasPaymentWalletSelection(availableWallets, state.selectedWallet)) {
             return;
         }
 
-        const nextWallets = appendPaymentWalletSelection(
-            state.profileUser.wallets,
-            state.selectedWallet,
-        );
+        const nextWallets = appendPaymentWalletSelection(availableWallets, state.selectedWallet);
 
         try {
             await updateUserMutation.mutateAsync({
                 url: props.entry.url,
-                id: state.profileUser.id,
+                id: props.profileUser.id,
                 data: {
                     wallets: toUserUpdateWalletInputs(nextWallets),
                 },
             });
 
             dispatch({
-                type: "syncProfileUser",
-                profileUser: {
-                    ...state.profileUser,
-                    wallets: nextWallets,
-                },
+                type: "addWallet",
+                selection: state.selectedWallet,
             });
             dispatch({
                 type: "setRememberWallet",
@@ -227,8 +224,8 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
         },
         showRememberWallet: Boolean(
             state.selectedWallet &&
-                state.profileUser &&
-                !hasPaymentWalletSelection(state.profileUser.wallets, state.selectedWallet),
+                props.profileUser &&
+                !hasPaymentWalletSelection(availableWallets, state.selectedWallet),
         ),
     };
 };

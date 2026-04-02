@@ -29,12 +29,15 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
         SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
         undefined,
     );
+
     React.useEffect(() => {
         form.resetFields();
     }, [form, props.selectedServerUrl]);
+
     React.useEffect(() => {
         form.setFieldsValue(buildProfileContactFormValues(props.selectedServerUser));
     }, [form, props.selectedServerUser]);
+
     const handleFinish = async (values: ProfileContactFormValues) => {
         try {
             await mutation.mutateAsync({
@@ -55,7 +58,12 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
     };
     return (
         <Card title="Contact & Payment" size="small" className="Profile__card Profile__contactCard">
-            <Form form={form} layout="vertical" onFinish={handleFinish} disabled={props.selectedServerUserLoading}>
+            <Form
+                form={form}
+                layout="vertical"
+                onFinish={handleFinish}
+                disabled={props.selectedServerUserLoading}
+            >
                 <Form.Item
                     name="phone"
                     label="Phone number"

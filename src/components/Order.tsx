@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useQueryClient } from "@tanstack/react-query";
 
-import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
+import { Alert, Flex, Result, Spin, Typography, message } from "antd";
 import useLocalStorage from "use-local-storage";
 import { useTimeout } from "usehooks-ts";
 
@@ -24,7 +24,6 @@ import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils"
 import { RouteButton } from "./RouteButton";
 
 const Order: React.FunctionComponent = () => {
-    const [form] = Form.useForm<OrderFormValues>();
     const queryClient = useQueryClient();
     const auth = useAuth();
     const navigate = useNavigate();
@@ -247,7 +246,6 @@ const Order: React.FunctionComponent = () => {
                 />
             ) : (
                 <OrderCreateStep
-                    form={form}
                     products={products}
                     isProductsLoading={isLoading}
                     refetchProducts={refetch}

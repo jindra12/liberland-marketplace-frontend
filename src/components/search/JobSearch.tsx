@@ -13,7 +13,6 @@ export interface JobSearchProps {
 
 export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
     const navigate = useNavigate();
-    const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState("");
     const jobs = useSearchJobsQuery(
         {
@@ -25,29 +24,23 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
             enabled: term.length > 0,
         },
     );
+    const options: SearchOption[] =
+        !term || !jobs.isFetched || !jobs.data
+            ? []
+            : (jobs.data.Searches?.docs ?? [])
+                  .filter((searchDoc) => searchDoc.doc?.relationTo === "jobs")
+                  .map((searchDoc, index) => {
+                      const doc = searchDoc.doc!.value as DocType;
+                      const value = `${doc.serverURL || ""}|${doc.id!}`;
 
-    React.useEffect(() => {
-        if (!jobs.isFetched) {
-            setOptions([]);
-        } else if (jobs.data) {
-            setOptions(
-                (jobs.data.Searches?.docs ?? [])
-                    .filter((searchDoc) => searchDoc.doc?.relationTo === "jobs")
-                    .map((searchDoc, index) => {
-                        const doc = searchDoc.doc!.value as DocType;
-                        const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                        return {
-                            key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                            value,
-                            id: doc.id!,
-                            label: searchDoc.title,
-                            image: getImage(doc),
-                        };
-                    }),
-            );
-        }
-    }, [jobs.isFetched, jobs.data]);
+                      return {
+                          key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                          value,
+                          id: doc.id!,
+                          label: searchDoc.title,
+                          image: getImage(doc),
+                      };
+                  });
 
     return (
         <AutoSuggest
@@ -59,7 +52,9 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
             options={options}
             title="Job search"
             runSearch={setTerm}
-            setOptions={setOptions}
+            setOptions={() => {
+                setTerm("");
+            }}
             isLoading={jobs.isLoading}
         />
     );

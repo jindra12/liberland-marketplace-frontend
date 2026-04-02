@@ -13,7 +13,6 @@ export interface ProductsServicesSearchProps {
 
 export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSearchProps> = (props) => {
     const navigate = useNavigate();
-    const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState("");
     const products = useSearchProductsQuery(
         {
@@ -25,29 +24,23 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             enabled: term.length > 0,
         },
     );
+    const options: SearchOption[] =
+        !term || !products.isFetched || !products.data
+            ? []
+            : (products.data.Searches?.docs ?? [])
+                  .filter((searchDoc) => searchDoc.doc?.relationTo === "products")
+                  .map((searchDoc, index) => {
+                      const doc = searchDoc.doc!.value as DocType;
+                      const value = `${doc.serverURL || ""}|${doc.id!}`;
 
-    React.useEffect(() => {
-        if (!products.isFetched) {
-            setOptions([]);
-        } else if (products.data) {
-            setOptions(
-                (products.data.Searches?.docs ?? [])
-                    .filter((searchDoc) => searchDoc.doc?.relationTo === "products")
-                    .map((searchDoc, index) => {
-                        const doc = searchDoc.doc!.value as DocType;
-                        const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                        return {
-                            key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                            value,
-                            id: doc.id!,
-                            label: searchDoc.title,
-                            image: getImage(doc),
-                        };
-                    }),
-            );
-        }
-    }, [products.isFetched, products.data]);
+                      return {
+                          key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                          value,
+                          id: doc.id!,
+                          label: searchDoc.title,
+                          image: getImage(doc),
+                      };
+                  });
 
     return (
         <AutoSuggest
@@ -59,7 +52,9 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             options={options}
             title="Product / Service search"
             runSearch={setTerm}
-            setOptions={setOptions}
+            setOptions={() => {
+                setTerm("");
+            }}
             isLoading={products.isLoading}
         />
     );

@@ -21,10 +21,6 @@ type OrderPaymentOrderCardProps = {
 export const OrderPaymentOrderCard: React.FunctionComponent<OrderPaymentOrderCardProps> = (props) => {
     const [entryState, setEntryState] = React.useState(props.entry);
 
-    React.useEffect(() => {
-        setEntryState(props.entry);
-    }, [props.entry]);
-
     const chainPayments = collectOrderChainPaymentAmounts(entryState.order);
     const orderTotal =
         formatUsdFromCents(entryState.order.amount) ||

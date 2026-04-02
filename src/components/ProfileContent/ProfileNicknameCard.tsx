@@ -23,9 +23,11 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
     const { authUrl } = useEndpointContext();
     const [form] = Form.useForm<NicknameFormValues>();
     const mutation = useUpdateUserByIdMutation();
+
     React.useEffect(() => {
         form.resetFields();
     }, [form, props.selectedServerUrl]);
+
     const handleFinish = async (values: NicknameFormValues) => {
         try {
             await mutation.mutateAsync({

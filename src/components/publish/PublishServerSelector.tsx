@@ -29,16 +29,10 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
             }),
         [props.urls],
     );
-    const [selectedUrl, setSelectedUrl] = React.useState<string>();
-    React.useEffect(() => {
-        if (!items.length) {
-            setSelectedUrl(undefined);
-            return;
-        }
-        if (!selectedUrl || !items.some((entry) => entry.value === selectedUrl)) {
-            setSelectedUrl(items[0].value);
-        }
-    }, [items, selectedUrl]);
+    const [selectedUrlState, setSelectedUrlState] = React.useState<string>();
+    const selectedUrl = items.some((entry) => entry.value === selectedUrlState)
+        ? selectedUrlState
+        : items[0]?.value;
     const selectedServer = items.find((entry) => entry.value === selectedUrl);
     return (
         <div className="PublishServer">
@@ -61,13 +55,13 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                     role="button"
                                     tabIndex={0}
                                     className={`PublishServer__card${isSelected ? " PublishServer__card--selected" : ""}`}
-                                    onClick={() => setSelectedUrl(endpoint.value)}
+                                    onClick={() => setSelectedUrlState(endpoint.value)}
                                     onKeyDown={(event) => {
                                         if (event.key !== "Enter" && event.key !== " ") {
                                             return;
                                         }
                                         event.preventDefault();
-                                        setSelectedUrl(endpoint.value);
+                                        setSelectedUrlState(endpoint.value);
                                     }}
                                 >
                                     <Flex

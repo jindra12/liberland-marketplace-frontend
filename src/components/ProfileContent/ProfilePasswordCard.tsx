@@ -13,9 +13,11 @@ type ProfilePasswordCardProps = {
 export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardProps> = (props) => {
     const [form] = Form.useForm<PasswordFormValues>();
     const mutation = useChangePasswordMutation();
+
     React.useEffect(() => {
         form.resetFields();
     }, [form, props.selectedServerUrl]);
+
     const handleFinish = async (values: PasswordFormValues) => {
         try {
             await mutation.mutateAsync({
