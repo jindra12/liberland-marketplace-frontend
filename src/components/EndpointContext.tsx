@@ -4,7 +4,8 @@ import useLocalStorage from "use-local-storage";
 import { useListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables, ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsDocument } from "../generated/graphql";
 import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
-import { combineResult, deepMergeConcatArrays, mergeSyndicationUrls } from "../utils";
+import { mergeSyndicationUrls } from "./endpoints/utils";
+import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
 export interface EndpointContextType {
     urls: URL[];

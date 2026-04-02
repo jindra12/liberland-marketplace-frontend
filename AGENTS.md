@@ -17,6 +17,8 @@
 ## Code Hygiene
 
 - Do not use `.trim()` unless it adds clear, necessary value to the behavior
+- Never use `==` or `!=`. Use `===`, `!==`, `??`, or explicit `value === null || value === undefined` checks.
+- Do not use `for...of`. Use array methods like `map`, `reduce`, `find`, `some`, and `every` instead.
 - Do not use `|| undefined` to coerce values. If a value can really be `null`, reflect that in the type. If a prop specifically needs `undefined`, use an explicit `!value ? undefined : value` check instead.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Use `Skeleton` for page-level loading states and `Spin` for localized/action loading states.

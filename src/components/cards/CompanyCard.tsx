@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Avatar, Card, Grid, List, Space, Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 import { RouteButton } from "../RouteButton";
 type CompanyItem = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["docs"]>[number];

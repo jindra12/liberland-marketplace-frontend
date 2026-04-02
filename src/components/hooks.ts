@@ -150,7 +150,7 @@ import {
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
-import { combineResult, deepMergeConcatArrays } from "../utils";
+import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
 export type GeneratedUseQueryHook<TQueryFnData, TVariables> = (<TData = TQueryFnData, TError = unknown>(
     variables: TVariables,
@@ -204,14 +204,15 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
     return useEnhancedMutation;
 };
 
-export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined, TResult = TQueryFnData>(
+export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined>(
     useHook: GeneratedUseQueryHook<TQueryFnData, TVariables>,
     query: string,
-    mergeAction: (a: TQueryFnData | TResult, b: TQueryFnData | TResult) => TResult = deepMergeConcatArrays,
+    mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
 ) => {
     return (variables?: QueryVariablesWithUrl<TVariables>, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
         const { enabled } = useEndpointContext();
         const urls = variables?.url ? [variables.url] : enabled;
+
         return useQueries({
             queries: urls.map((url) => ({
                 queryKey: [...useHook.getKey(variables as TVariables), url],
@@ -260,11 +261,24 @@ export const useListStartupsByIdentityQuery = enhancedQueryFactory(useListStartu
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
-export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, (a: MeUserQuery | MeUserQuery[], b: MeUserQuery | MeUserQuery[]) => {
-    const normA = Array.isArray(a) ? a : [a];
-    const normB = Array.isArray(b) ? b : [b];
-    return [...normA, ...normB];
-});
+export const useMeUserQuery = (variables?: { url?: string }, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
+    const { enabled } = useEndpointContext();
+    const urls = variables?.url ? [variables.url] : enabled;
+
+    return useQueries({
+        queries: urls.map((url) => ({
+            queryKey: [...useMeUserQuerySingle.getKey(undefined), url],
+            queryFn: gqlFetcher<MeUserQuery, undefined>(MeUserDocument, undefined, options, url),
+            ...params,
+        })),
+        combine: (result) =>
+            combineResult(result, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
+                const leftEntries = Array.isArray(left) ? left : [left];
+                const rightEntries = Array.isArray(right) ? right : [right];
+                return [...leftEntries, ...rightEntries];
+            }),
+    });
+};
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);

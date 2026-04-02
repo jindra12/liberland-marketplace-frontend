@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, Flex, Space, Tag, Typography } from "antd";
 import { BACKEND_URL } from "../../gqlFetcher";
 import { useEndpointContext } from "../EndpointContext";
-import { getSyndicationHost, getSyndicationName } from "../../utils";
+import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";
 

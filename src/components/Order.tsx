@@ -14,9 +14,9 @@ import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
 import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
-import { buildOrderPrefill, buildPaymentProfileUsersByUrl, buildProfileShippingAddresses } from "./order/utils";
+import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
+import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
 import { RouteButton } from "./RouteButton";
-import { collectRequiredChainsForCarts } from "../utils";
 
 const Order: React.FunctionComponent = () => {
     const [form] = Form.useForm<OrderFormValues>();

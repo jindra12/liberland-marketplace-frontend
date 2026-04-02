@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Modal, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { UploadFile } from "antd/es/upload/interface";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 const normFile = (
     e:
         | {

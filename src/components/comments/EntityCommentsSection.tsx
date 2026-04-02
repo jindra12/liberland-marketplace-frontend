@@ -5,7 +5,7 @@ import { CommentSection } from "react-comments-section";
 import "react-comments-section/dist/index.css";
 import { COMMENT_RELATION_TO_QUERY_RELATION, ENTITY_COMMENTS_DEFAULT_LIMIT, ENTITY_COMMENTS_DEFAULT_PLACEHOLDER } from "../../constants";
 import { AuthProfile, CommentDeletePayload, CommentEditPayload, CommentReplyPayload, CommentSubmitPayload, EntityCommentsSectionProps } from "../../types";
-import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "../../utils";
+import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
 import { useCreateCommentMutation, useCreateReplyToCommentMutation, useDeleteCommentMutation, useListCommentsByTargetQuery, useUpdateCommentContentMutation } from "../hooks";
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = (props) => {
     const limit = props.limit === undefined ? ENTITY_COMMENTS_DEFAULT_LIMIT : props.limit;

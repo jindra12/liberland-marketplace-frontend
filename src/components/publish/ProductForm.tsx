@@ -8,7 +8,7 @@ import { MarkdownEditor } from "./MarkdownEditor";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
 import { useCreateProductMutation, useListCompaniesByCreatorQuery, useUpdateProductMutation } from "../hooks";
-import { toCents } from "../../utils";
+import { toCents } from "../shared/product/utils";
 interface ProductFormValues {
     name: string | null;
     description?: string | null;

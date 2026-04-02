@@ -3,7 +3,7 @@ import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "an
 import type { FormInstance } from "antd";
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
-import { CRYPTO_CHAIN_LABELS } from "../../utils";
+import { CRYPTO_CHAIN_LABELS } from "./constants";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
 import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import { ShippingAddressSelectModal } from "./ShippingAddressSelectModal";

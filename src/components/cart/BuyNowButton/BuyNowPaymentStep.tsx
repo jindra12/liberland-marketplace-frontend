@@ -4,7 +4,7 @@ import { useAuth } from "react-oidc-context";
 import { useEndpointContext } from "../../EndpointContext";
 import { useMeUserQuery, useUpdateOrderMutation } from "../../hooks";
 import type { SubmittedOrder } from "../../order/types";
-import { buildPaymentProfileUsersByUrl } from "../../order/utils";
+import { buildPaymentProfileUsersByUrl } from "../../order/payment/utils";
 import { BuyNowPaymentModal } from "./BuyNowPaymentModal";
 type BuyNowPaymentStepProps = {
     onClose: () => void;

@@ -6,7 +6,7 @@ import { useAuth } from "react-oidc-context";
 import { useQueryClient } from "@tanstack/react-query";
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";

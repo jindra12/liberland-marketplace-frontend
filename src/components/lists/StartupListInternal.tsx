@@ -11,7 +11,7 @@ import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { ListStartupsQuery } from "../../generated/graphql";
 import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../hooks";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];

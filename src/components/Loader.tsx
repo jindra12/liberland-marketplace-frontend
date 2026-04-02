@@ -4,7 +4,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { Button, Result, Spin } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
-import { convertStatusCode, getErrorMessage } from "../utils";
+import { convertStatusCode, getErrorMessage } from "./loader/utils";
 import { DetailPageSkeleton } from "./LoadingSkeleton/DetailPageSkeleton";
 
 export interface LoaderProps<TData> {

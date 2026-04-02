@@ -4,7 +4,7 @@ import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd
 import { GlobalOutlined } from "@ant-design/icons";
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { Loader } from "../Loader";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { Markdown } from "../Markdown";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { ProductByIdQuery } from "../../generated/graphql";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { useProductByIdQuery } from "../hooks";
 import { NOTIFICATION_TARGET_LABELS } from "./constants";
 import { UnsubscribeEntity } from "./UnsubscribeEntity";

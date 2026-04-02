@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AutoSuggest } from "../AutoSuggest";
 import { DocType, SearchOption } from "../../types";
 
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { useSearchCompaniesQuery } from "../hooks";
 
 export interface CompaniesSearchProps {

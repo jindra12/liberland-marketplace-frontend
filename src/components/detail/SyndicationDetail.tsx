@@ -6,7 +6,7 @@ import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { useEndpointContext } from "../EndpointContext";
 import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
-import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../../utils";
+import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { Markdown } from "../Markdown";
 import { DetailShareSection } from "../share/DetailShareSection";

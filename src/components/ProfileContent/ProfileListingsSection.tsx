@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Tabs, Typography } from "antd";
-import { formatEmploymentType } from "../../utils";
+import { formatEmploymentType } from "../shared/job/utils";
 import { ProfileListingList } from "../ProfileListingList";
 import { RouteButton } from "../RouteButton";
 import {

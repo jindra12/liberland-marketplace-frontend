@@ -9,7 +9,7 @@ import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
 import { ArrowRightOutlined, CheckCircleFilled, CloudServerOutlined } from "@ant-design/icons";
 import { URL } from "../../types";
-import { getSyndicationHost, getSyndicationName } from "../../utils";
+import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 export interface PublishServerSelectorProps {
     urls: URL[];
     onConfirm: (url: string) => void;

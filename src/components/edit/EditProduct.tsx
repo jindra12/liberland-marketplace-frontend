@@ -7,7 +7,7 @@ import { OwnerGuard } from "../OwnerGuard";
 import { Loader } from "../Loader";
 import { ProductForm } from "../publish/ProductForm";
 import { useProductByIdQuery } from "../hooks";
-import { fromCents } from "../../utils";
+import { fromCents } from "../shared/product/utils";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 
 const EditProduct: React.FunctionComponent = () => {

@@ -6,7 +6,7 @@ import { AppList } from "../AppList";
 import { TextSearchFilter } from "../TextSearchFilter";
 import { Markdown } from "../Markdown";
 import { useListIdentitiesQuery } from "../hooks";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 
 export const IdentityList: React.FunctionComponent = () => {

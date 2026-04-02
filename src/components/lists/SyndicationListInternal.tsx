@@ -5,7 +5,7 @@ import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icon
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
 import { URL } from "../../types";
-import { createEndpointEntry, getSyndicationHost, getSyndicationName, insertUniqueEndpoint, setEndpointEnabled } from "../../utils";
+import { createEndpointEntry, getSyndicationHost, getSyndicationName, insertUniqueEndpoint, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
 import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";

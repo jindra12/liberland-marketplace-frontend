@@ -1,5 +1,5 @@
 import uniqBy from "lodash-es/uniqBy";
-import { formatBounty, formatPositions } from "../../utils";
+import { formatBounty, formatPositions } from "./job/utils";
 import { IdentityTagItem, JobDerivedInput, JobIdentityDedupeBy } from "../../types";
 
 export const getJobMeta = (job?: JobDerivedInput | null) => {

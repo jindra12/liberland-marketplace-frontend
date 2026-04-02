@@ -1,27 +1,30 @@
 import * as React from "react";
 import { DollarOutlined } from "@ant-design/icons";
 import { Alert, Card, Divider, Flex, Grid, List, Result, Tag, Typography, message } from "antd";
-import { CRYPTO_CHAIN_LABELS, CRYPTO_CHAIN_TICKERS, buildOrderEntryKey, formatPriceFromCents, formatUsdFromCents, resolveOrderRecipientAddress } from "../../utils";
+import { CRYPTO_CHAIN_LABELS, CRYPTO_CHAIN_TICKERS } from "./constants";
 import type { CryptoChain } from "../../types";
 import { SolanaPay } from "../crypto/SolanaPay";
 import { ThirdwebPayButton } from "../crypto/ThirdwebPayButton";
 import { TronPaymentButton } from "../crypto/TronPaymentButton";
 import { useUpdateOrderMutation, useUpdateUserByIdMutation } from "../hooks";
+import { formatPriceFromCents, formatUsdFromCents } from "../shared/product/utils";
 import { OrderPaymentLockProvider } from "./OrderPaymentLockContext";
 import { RememberWalletCheckbox } from "./RememberWalletCheckbox";
 import type { PaymentProfileUsersByUrl, PaymentWalletSelection, SaveTransactionHashParams, SubmittedOrder } from "./types";
 import {
     appendPaymentWalletSelection,
     appendTransactionHashRows,
+    buildOrderEntryKey,
     buildPaymentKey,
     collectOrderChainPaymentAmounts,
     collectProductIdsForChain,
     hasPaymentWalletSelection,
     type ChainPaymentAmount,
+    resolveOrderRecipientAddress,
     replaceSubmittedOrderInList,
     toExistingTransactionHashRows,
     toUserUpdateWalletInputs,
-} from "./utils";
+} from "./payment/utils";
 
 type OrderPaymentStepProps = {
     onAllPaymentsComplete: () => void;

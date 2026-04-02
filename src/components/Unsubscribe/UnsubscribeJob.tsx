@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { JobByIdQuery } from "../../generated/graphql";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { useJobByIdQuery } from "../hooks";
 import { NOTIFICATION_TARGET_LABELS } from "./constants";
 import { UnsubscribeEntity } from "./UnsubscribeEntity";

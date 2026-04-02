@@ -6,7 +6,7 @@ import { useAuth } from "react-oidc-context";
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { Loader } from "../Loader";
-import { getImage } from "../../utils";
+import { getImage } from "../shared/image/utils";
 import { Markdown } from "../Markdown";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
