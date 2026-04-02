@@ -1,14 +1,14 @@
 mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
-  updateJob(id: $id, data: $data, draft: $draft) {
-    id
-    title
-    employmentType
-    positions
-    postedAt
-    _status
-    image {
-      id
-      url
+    updateJob(id: $id, data: $data, draft: $draft) {
+        id
+        title
+        employmentType
+        positions
+        postedAt
+        _status
+        image {
+            id
+            url
+        }
     }
-  }
 }

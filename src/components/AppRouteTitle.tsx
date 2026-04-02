@@ -36,9 +36,7 @@ const routeTitles: RouteTitle[] = [
 ];
 
 const getRouteTitle = (pathname: string): string => {
-    const match = routeTitles.find((route) =>
-        Boolean(matchPath({ path: route.path, end: true }, pathname))
-    );
+    const match = routeTitles.find((route) => Boolean(matchPath({ path: route.path, end: true }, pathname)));
 
     if (!match) {
         return `Not Found | ${APP_NAME}`;

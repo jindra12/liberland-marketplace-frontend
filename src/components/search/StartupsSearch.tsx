@@ -14,13 +14,16 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState("");
-    const startups = useSearchStartupsQuery({
-        searchTerm: term,
-        limit: 5,
-        page: 0,
-    }, {
-        enabled: term.length > 0,
-    });
+    const startups = useSearchStartupsQuery(
+        {
+            searchTerm: term,
+            limit: 5,
+            page: 0,
+        },
+        {
+            enabled: term.length > 0,
+        },
+    );
 
     React.useEffect(() => {
         if (!startups.isFetched) {
@@ -28,19 +31,19 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
         } else if (startups.data) {
             setOptions(
                 (startups.data.Searches?.docs ?? [])
-                .filter((searchDoc) => searchDoc.doc?.relationTo === "startups")
-                .map((searchDoc, index) => {
-                    const doc = searchDoc.doc!.value as DocType;
-                    const value = `${doc.serverURL || ""}|${doc.id!}`;
+                    .filter((searchDoc) => searchDoc.doc?.relationTo === "startups")
+                    .map((searchDoc, index) => {
+                        const doc = searchDoc.doc!.value as DocType;
+                        const value = `${doc.serverURL || ""}|${doc.id!}`;
 
-                    return {
-                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                        value,
-                        id: doc.id!,
-                        label: searchDoc.title,
-                        image: getImage(doc),
-                    };
-                })
+                        return {
+                            key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                            value,
+                            id: doc.id!,
+                            label: searchDoc.title,
+                            image: getImage(doc),
+                        };
+                    }),
             );
         }
     }, [startups.isFetched, startups.data]);
@@ -48,7 +51,10 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, { id }) => { navigate(`/ventures/${id}`); props.onClose(); }}
+            onSelect={(_, { id }) => {
+                navigate(`/ventures/${id}`);
+                props.onClose();
+            }}
             options={options}
             title="Startup search"
             runSearch={setTerm}

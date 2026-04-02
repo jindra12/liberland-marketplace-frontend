@@ -1,40 +1,40 @@
 .Markdown {
-  word-break: break-word;
+    word-break: break-word;
 }
 
 .Markdown p {
-  margin-top: 0;
-  margin-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 12px;
 }
 
 .Markdown > :last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .Markdown--clamp2,
 .Markdown--clamp3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 .Markdown--clamp2 {
-  -webkit-line-clamp: 2;
-  min-height: 2lh;
+    -webkit-line-clamp: 2;
+    min-height: 2lh;
 }
 
 .Markdown--clamp3 {
-  -webkit-line-clamp: 3;
-  min-height: 3lh;
+    -webkit-line-clamp: 3;
+    min-height: 3lh;
 }
 
 .Markdown--clamp2 p,
 .Markdown--clamp3 p {
-  margin: 0;
-  display: inline;
+    margin: 0;
+    display: inline;
 }
 
 .Markdown--clamp2 p + p::before,
 .Markdown--clamp3 p + p::before {
-  content: " ";
+    content: " ";
 }

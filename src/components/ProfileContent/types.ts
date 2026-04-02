@@ -1,8 +1,4 @@
-import type {
-    MeUserQuery,
-    MutationUserUpdateInput,
-    MutationUserUpdate_ShippingAddressInput,
-} from "../../generated/graphql";
+import type { MeUserQuery, MutationUserUpdateInput, MutationUserUpdate_ShippingAddressInput, UserUpdate_Wallets_Chain_MutationInput } from "../../generated/graphql";
 
 export type ProfileServerOption = {
     label: string;
@@ -22,8 +18,24 @@ export type PasswordFormValues = {
 export type ProfileContactFormValues = {
     phone?: string | null;
     shippingAddress?: MutationUserUpdate_ShippingAddressInput;
+    wallets?: ProfileWalletFormValue[];
 };
 
 export type ProfileSelectedUser = NonNullable<NonNullable<MeUserQuery["meUser"]>["user"]>;
 
 export type ProfileContactUpdateInput = MutationUserUpdateInput;
+
+export type ProfileWalletFormValue = {
+    address?: string | null;
+    chain?: UserUpdate_Wallets_Chain_MutationInput | null;
+    provider?: string | null;
+};
+
+export type ProfileWalletSelection = {
+    address: string;
+    provider: string;
+};
+
+export type ProfileWalletSelectionTarget = {
+    name: number;
+} | null;

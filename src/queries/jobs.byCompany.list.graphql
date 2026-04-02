@@ -1,84 +1,74 @@
 query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
-  Jobs(
-    draft: false
-    where: {
-      AND: [
-        { company: { equals: $companyId } }
-        { _status: { equals: published } }
-      ]
+    Jobs(draft: false, where: { AND: [{ company: { equals: $companyId } }, { _status: { equals: published } }] }, page: $page, limit: $limit) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            positions
+            isActive
+            bounty {
+                amount
+                currency
+            }
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                allowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                disallowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      title
-      description
-      positions
-      isActive
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

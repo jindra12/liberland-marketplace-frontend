@@ -4,7 +4,6 @@ import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
 import { BuyNowPaymentStep } from "./BuyNowPaymentStep";
 import type { BuyNowPreparedPurchase } from "./types";
-
 type BuyNowButtonProps = {
     block?: boolean;
     candidateProfileAddresses: AddressWithEmail[];
@@ -15,46 +14,28 @@ type BuyNowButtonProps = {
     size?: React.ComponentProps<typeof Button>["size"];
     variantId?: string;
 };
-
-export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = ({
-    block,
-    candidateProfileAddresses,
-    disabled,
-    productId,
-    quantity,
-    serverURL,
-    size = "large",
-    variantId,
-}) => {
+export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) => {
+    const size = props.size === undefined ? "large" : props.size;
     const [preparedPurchase, setPreparedPurchase] = React.useState<BuyNowPreparedPurchase>();
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
-    const isBusy = disabled || Boolean(preparedPurchase) || submittedOrders.length > 0;
-
+    const isBusy = props.disabled || Boolean(preparedPurchase) || submittedOrders.length > 0;
     const handleBuyNow = () => {
         setPreparedPurchase({
-            candidateProfileAddresses
+            candidateProfileAddresses: props.candidateProfileAddresses,
         });
     };
-
     return (
         <>
-            <Button
-                block={block}
-                type="primary"
-                size={size}
-                disabled={isBusy}
-                onClick={handleBuyNow}
-                className="AddToCartButton__buyNow"
-            >
+            <Button block={props.block} type="primary" size={size} disabled={isBusy} onClick={handleBuyNow} className="AddToCartButton__buyNow">
                 Buy now
             </Button>
             {preparedPurchase && (
                 <BuyNowCreateOrderStep
                     purchase={preparedPurchase}
-                    productId={productId}
-                    quantity={quantity}
-                    serverURL={serverURL}
-                    variantId={variantId}
+                    productId={props.productId}
+                    quantity={props.quantity}
+                    serverURL={props.serverURL}
+                    variantId={props.variantId}
                     onCancel={() => {
                         setPreparedPurchase(undefined);
                     }}

@@ -1,20 +1,20 @@
 mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft: Boolean!) {
-  updateProduct(id: $id, data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-          chain
-          address
+    updateProduct(id: $id, data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+            chain
+            address
         }
-    _status
-    properties {
-      id
-      key
-      value
+        _status
+        properties {
+            id
+            key
+            value
+        }
+        image {
+            id
+            url
+        }
     }
-    image {
-      id
-      url
-    }
-  }
 }

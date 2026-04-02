@@ -14,13 +14,16 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState("");
-    const identities = useSearchIdentitiesQuery({
-        searchTerm: term,
-        limit: 5,
-        page: 0,
-    }, {
-        enabled: term.length > 0,
-    });
+    const identities = useSearchIdentitiesQuery(
+        {
+            searchTerm: term,
+            limit: 5,
+            page: 0,
+        },
+        {
+            enabled: term.length > 0,
+        },
+    );
 
     React.useEffect(() => {
         if (!identities.isFetched) {
@@ -28,19 +31,19 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
         } else if (identities.data) {
             setOptions(
                 (identities.data.Searches?.docs ?? [])
-                .filter((searchDoc) => searchDoc.doc?.relationTo === "identities")
-                .map((searchDoc, index) => {
-                    const doc = searchDoc.doc!.value as DocType;
-                    const value = `${doc.serverURL || ""}|${doc.id!}`;
+                    .filter((searchDoc) => searchDoc.doc?.relationTo === "identities")
+                    .map((searchDoc, index) => {
+                        const doc = searchDoc.doc!.value as DocType;
+                        const value = `${doc.serverURL || ""}|${doc.id!}`;
 
-                    return {
-                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                        value,
-                        id: doc.id!,
-                        label: searchDoc.title,
-                        image: getImage(doc),
-                    };
-                })
+                        return {
+                            key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                            value,
+                            id: doc.id!,
+                            label: searchDoc.title,
+                            image: getImage(doc),
+                        };
+                    }),
             );
         }
     }, [identities.isFetched, identities.data]);
@@ -48,7 +51,10 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, option) => { navigate(`/tribes/${option.id}`); props.onClose(); }}
+            onSelect={(_, option) => {
+                navigate(`/tribes/${option.id}`);
+                props.onClose();
+            }}
             options={options}
             title="Tribe search"
             runSearch={setTerm}

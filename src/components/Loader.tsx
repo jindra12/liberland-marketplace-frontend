@@ -14,12 +14,7 @@ export interface LoaderProps<TData> {
 }
 
 export const Loader = <TData,>(props: LoaderProps<TData>) => {
-    const {
-        error,
-        refetch,
-        data,
-        isLoading,
-    } = props.query;
+    const { error, refetch, data, isLoading } = props.query;
 
     if (isLoading) {
         return props.isSmall ? <Spin size="small" /> : <DetailPageSkeleton />;
@@ -31,7 +26,11 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
             <Result
                 status={convertStatusCode(status)}
                 title={getErrorMessage(status)}
-                subTitle={<Button type="primary" onClick={() => refetch()}>Retry</Button>}
+                subTitle={
+                    <Button type="primary" onClick={() => refetch()}>
+                        Retry
+                    </Button>
+                }
             />
         );
     }
@@ -39,12 +38,9 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
     if (data) {
         return props.children(
             data,
-            <Button
-                onClick={() => refetch()}
-                icon={<ReloadOutlined />}
-            >
+            <Button onClick={() => refetch()} icon={<ReloadOutlined />}>
                 Refresh
-            </Button>
+            </Button>,
         );
     }
 

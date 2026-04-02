@@ -3,7 +3,6 @@ import { Button } from "antd";
 import type { ButtonProps } from "antd";
 import { useHref, useNavigate } from "react-router-dom";
 import type { To } from "react-router-dom";
-
 type RouteButtonProps = React.PropsWithChildren<{
     to: To;
     block?: ButtonProps["block"];
@@ -15,32 +14,30 @@ type RouteButtonProps = React.PropsWithChildren<{
     variant?: ButtonProps["variant"];
     "aria-label"?: string;
 }>;
-
-const isModifiedEvent = (event: React.MouseEvent<HTMLElement>) => (
-    event.metaKey
-    || event.ctrlKey
-    || event.button !== 0
-);
-
-export const RouteButton: React.FunctionComponent<RouteButtonProps> = ({
-    to,
-    ...buttonProps
-}) => {
+const isModifiedEvent = (event: React.MouseEvent<HTMLElement>) => event.metaKey || event.ctrlKey || event.button !== 0;
+export const RouteButton: React.FunctionComponent<RouteButtonProps> = (props) => {
     const navigate = useNavigate();
-    const href = useHref(to);
-
+    const href = useHref(props.to);
     return (
         <Button
-            {...buttonProps}
+            aria-label={props["aria-label"]}
+            block={props.block}
+            className={props.className}
             href={href}
+            icon={props.icon}
+            iconPosition={props.iconPosition}
             onClick={(event) => {
                 if (isModifiedEvent(event)) {
                     return;
                 }
-
                 event.preventDefault();
-                navigate(to);
+                navigate(props.to);
             }}
-        />
+            size={props.size}
+            type={props.type}
+            variant={props.variant}
+        >
+            {props.children}
+        </Button>
     );
 };

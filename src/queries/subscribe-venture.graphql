@@ -1,14 +1,8 @@
 mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
-  createNotificationSubscription(
-    data: {
-      email: $email
-      targetCollection: startups
-      targetID: $targetID
+    createNotificationSubscription(data: { email: $email, targetCollection: startups, targetID: $targetID }) {
+        id
+        email
+        targetCollection
+        targetID
     }
-  ) {
-    id
-    email
-    targetCollection
-    targetID
-  }
 }

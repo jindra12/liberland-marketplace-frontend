@@ -22,13 +22,7 @@ const Cart: React.FunctionComponent = () => {
                 showOrderNowFallback={false}
             />
             {totalQuantity > 0 && (
-                <RouteButton
-                    to="/order"
-                    type="primary"
-                    size="large"
-                    block
-                    className="CartPage__orderLink CartPage__orderButton"
-                >
+                <RouteButton to="/order" type="primary" size="large" block className="CartPage__orderLink CartPage__orderButton">
                     Proceed to order
                 </RouteButton>
             )}

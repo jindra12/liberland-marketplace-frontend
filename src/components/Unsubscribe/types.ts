@@ -10,13 +10,13 @@ export type ParsedUnsubscribeParams = {
 
 export type UnsubscribeParseResult =
     | {
-        isValid: true;
-        params: ParsedUnsubscribeParams;
-    }
+          isValid: true;
+          params: ParsedUnsubscribeParams;
+      }
     | {
-        isValid: false;
-        reason: string;
-    };
+          isValid: false;
+          reason: string;
+      };
 
 export type ResolvedNotificationEntity = {
     collection: NotificationTargetCollection;

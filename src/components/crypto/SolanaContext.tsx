@@ -6,15 +6,13 @@ import * as Wallets from "./solanaWallets";
 
 const network = "mainnet-beta";
 const endpoint = clusterApiUrl(network);
-const wallets = Object.values(Wallets).map(Wallet => new Wallet());
+const wallets = Object.values(Wallets).map((Wallet) => new Wallet());
 
 export const SolanaContext: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect={false}>
-                <WalletModalProvider>
-                    {props.children}
-                </WalletModalProvider>
+                <WalletModalProvider>{props.children}</WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
     );

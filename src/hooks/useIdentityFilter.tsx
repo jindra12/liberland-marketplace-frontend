@@ -18,17 +18,15 @@ export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) 
 
     const [searchParams] = useSearchParams();
     const tribeParam = searchParams.get("tribe");
-    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>(
-        tribeParam ? [tribeParam] : []
-    );
+    const [selectedIdentityIds, setSelectedIdentityIds] = React.useState<string[]>(tribeParam ? [tribeParam] : []);
 
     const isTribeFiltered = selectedIdentityIds.length > 0;
 
     const items = isTribeFiltered
         ? allItems.filter((item) => {
-            const ids = getIdentityIds(item);
-            return selectedIdentityIds.some((id) => ids.includes(id));
-        })
+              const ids = getIdentityIds(item);
+              return selectedIdentityIds.some((id) => ids.includes(id));
+          })
         : allItems;
 
     // Auto-fetch next page when tribe filter yields 0 visible items but more pages exist
@@ -38,25 +36,20 @@ export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) 
         }
     }, [isTribeFiltered, items.length, hasNextPage, isLoading, isFetching, page, setPage]);
 
-    const endMessage = isTribeFiltered && !hasNextPage ? (
-        <div className="AppList__tribeEnd">
-            <Divider />
-            <Typography.Title level={4} className="AppList__tribeEndHeading">
-                No more results for this Tribe
-            </Typography.Title>
-            <Button
-                type="primary"
-                size="large"
-                href={window.location.pathname}
-            >
-                View items from all tribes
-            </Button>
-        </div>
-    ) : undefined;
+    const endMessage =
+        isTribeFiltered && !hasNextPage ? (
+            <div className="AppList__tribeEnd">
+                <Divider />
+                <Typography.Title level={4} className="AppList__tribeEndHeading">
+                    No more results for this Tribe
+                </Typography.Title>
+                <Button type="primary" size="large" href={window.location.pathname}>
+                    View items from all tribes
+                </Button>
+            </div>
+        ) : undefined;
 
-    const filterNode = (
-        <IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />
-    );
+    const filterNode = <IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />;
 
     return { items, hasMore: hasNextPage, endMessage, filterNode };
 }

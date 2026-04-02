@@ -5,7 +5,6 @@ import { NativeShareButton } from "./NativeShareButton";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
 import { RouteButton } from "../RouteButton";
-
 type ListShareDetailButtonsProps = {
     detailPath: string;
     title?: string | null;
@@ -15,62 +14,23 @@ type ListShareDetailButtonsProps = {
     desktopDetailButtonType?: ButtonProps["type"];
     subscriptionTarget?: SubscriptionTarget | null;
 };
-
-export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = ({
-    detailPath,
-    title,
-    text,
-    size = "large",
-    compact = false,
-    desktopDetailButtonType,
-    subscriptionTarget,
-}) => {
+export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = (props) => {
+    const size = props.size === undefined ? "large" : props.size;
+    const compact = props.compact === undefined ? false : props.compact;
     const compactShareActionSize = compact && size === "large" ? "middle" : size;
-
     return compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
-            <NativeShareButton
-                path={detailPath}
-                title={title}
-                text={text}
-                size={compactShareActionSize}
-                className="NativeShareButton"
-            />
-            {subscriptionTarget ? (
-                <SubscribeButton
-                    {...subscriptionTarget}
-                    size={compactShareActionSize}
-                />
-            ) : null}
-            <RouteButton
-                to={detailPath}
-                size={size}
-                className="ActionBtn"
-            >
+            <NativeShareButton path={props.detailPath} title={props.title} text={props.text} size={compactShareActionSize} className="NativeShareButton" />
+            {props.subscriptionTarget ? <SubscribeButton {...props.subscriptionTarget} size={compactShareActionSize} /> : null}
+            <RouteButton to={props.detailPath} size={size} className="ActionBtn">
                 Details
             </RouteButton>
         </Space.Compact>
     ) : (
         <Flex wrap gap="12px" className="ListShareDetailButtons">
-            <NativeShareButton
-                path={detailPath}
-                title={title}
-                text={text}
-                size={size}
-                className="NativeShareButton"
-            />
-            {subscriptionTarget ? (
-                <SubscribeButton
-                    {...subscriptionTarget}
-                    size={size}
-                />
-            ) : null}
-            <RouteButton
-                to={detailPath}
-                type={desktopDetailButtonType}
-                size={size}
-                className="ActionBtn"
-            >
+            <NativeShareButton path={props.detailPath} title={props.title} text={props.text} size={size} className="NativeShareButton" />
+            {props.subscriptionTarget ? <SubscribeButton {...props.subscriptionTarget} size={size} /> : null}
+            <RouteButton to={props.detailPath} type={props.desktopDetailButtonType} size={size} className="ActionBtn">
                 Details
             </RouteButton>
         </Flex>

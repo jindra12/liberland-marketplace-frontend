@@ -11,10 +11,7 @@ import { ProfileListingsSection } from "./ProfileListingsSection";
 import { ProfileNicknameCard } from "./ProfileNicknameCard";
 import { ProfilePasswordCard } from "./ProfilePasswordCard";
 import { ProfileSummaryCard } from "./ProfileSummaryCard";
-import {
-    buildProfileServerOptions,
-    findSelectedServerLabel,
-} from "./utils";
+import { buildProfileServerOptions, findSelectedServerLabel } from "./utils";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
@@ -52,12 +49,7 @@ export const ProfileContent: React.FunctionComponent = () => {
         <div className="Profile">
             <Typography.Title level={2}>My Profile</Typography.Title>
 
-            <ProfileSummaryCard
-                email={profile?.email}
-                emailVerified={emailVerified}
-                name={profile?.name}
-                picture={profile?.picture}
-            />
+            <ProfileSummaryCard email={profile?.email} emailVerified={emailVerified} name={profile?.name} picture={profile?.picture} />
 
             <Divider />
 

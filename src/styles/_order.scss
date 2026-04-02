@@ -46,7 +46,9 @@
         padding: 0 11px;
         height: 40px;
         line-height: 38px;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
     }
 
     .geoapify-autocomplete-input::placeholder {

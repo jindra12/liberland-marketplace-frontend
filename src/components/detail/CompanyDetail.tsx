@@ -1,18 +1,9 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Avatar,
-    Divider,
-    Flex,
-    Grid,
-    Space,
-    Tabs,
-    Typography
-} from "antd";
+import { Avatar, Divider, Flex, Grid, Space, Tabs, Typography } from "antd";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { Loader } from "../Loader";
 import { getImage } from "../../utils";
@@ -43,10 +34,12 @@ const CompanyDetail: React.FunctionComponent = () => {
             {(data) => {
                 const companyData = data.Company;
                 const imageSrc = getImage(companyData);
-                const companyIdentity = companyData?.identity?.name ? {
-                    id: companyData.identity.id,
-                    name: companyData.identity.name,
-                } : undefined;
+                const companyIdentity = companyData?.identity?.name
+                    ? {
+                          id: companyData.identity.id,
+                          name: companyData.identity.name,
+                      }
+                    : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 72;
@@ -59,18 +52,10 @@ const CompanyDetail: React.FunctionComponent = () => {
                         <DetailPageTracker serverUrl={companyData?.serverURL ?? undefined} />
                         <DetailBackButton to="/companies" label="Back to companies" />
                         <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
-                            {imageSrc && (
-                                <Avatar
-                                    shape="circle"
-                                    size={avatarSize}
-                                    src={imageSrc}
-                                />
-                            )}
+                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
                                 <div className="EntityDetail__titleBlock">
-                                    <Typography.Text className="EntityDetail__eyebrow">
-                                        Company
-                                    </Typography.Text>
+                                    <Typography.Text className="EntityDetail__eyebrow">Company</Typography.Text>
                                     <div className="EntityDetail__titleRow">
                                         <Typography.Title level={1} className="EntityDetail__title">
                                             {companyData?.name}
@@ -78,45 +63,37 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     </div>
                                     {companyIdentity && (
                                         <div className="CompanyDetail__identityRow">
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
+                                            <IdentityTagLink identity={companyIdentity} color="success" icon={<UsergroupAddOutlined />} />
                                         </div>
                                     )}
                                 </div>
                             </Flex>
                         </Space>
                         {isOwner && (
-                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
+                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>
+                                Edit
+                            </RouteButton>
                         )}
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
                         <Divider />
-                        <CompanyContactLinks
-                            identity={companyIdentity}
-                            website={companyData?.website}
-                            email={companyData?.email}
-                            phone={companyData?.phone}
-                            className="EntityDetail__meta"
-                        />
-                        <IdentityGroups
-                            allowedIdentities={allowedIdentities}
-                            disallowedIdentities={disallowedIdentities}
-                            className="EntityDetail__identityGroups"
-                        />
+                        <CompanyContactLinks identity={companyIdentity} website={companyData?.website} email={companyData?.email} phone={companyData?.phone} className="EntityDetail__meta" />
+                        <IdentityGroups allowedIdentities={allowedIdentities} disallowedIdentities={disallowedIdentities} className="EntityDetail__identityGroups" />
                         <Divider />
                         <DetailShareSection
                             label="Share this company"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={companyData ? {
-                                collection: "companies",
-                                targetID: companyData.id,
-                                serverURL: companyData.serverURL,
-                                isSubscribed: companyData.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                companyData
+                                    ? {
+                                          collection: "companies",
+                                          targetID: companyData.id,
+                                          serverURL: companyData.serverURL,
+                                          isSubscribed: companyData.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider />
                         <Tabs
@@ -141,12 +118,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 {
                                     key: "comments",
                                     label: "Discussion",
-                                    children: (
-                                        <EntityCommentsSection
-                                            targetId={id!}
-                                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                                        />
-                                    ),
+                                    children: <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies} />,
                                 },
                             ]}
                         />

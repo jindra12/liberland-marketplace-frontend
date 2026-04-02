@@ -5,75 +5,52 @@ import { useUpdateUserByIdMutation } from "../hooks";
 import { GeoapifyAddressFormItem } from "../order/GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../order/constants";
 import type { AddressWithEmail } from "../order/types";
+import { ProfileWalletsField } from "./ProfileWalletsField/ProfileWalletsField";
 import type { ProfileContactFormValues, ProfileSelectedUser } from "./types";
-import {
-    buildProfileContactFormValues,
-    buildProfileContactUpdateInput,
-    validateSelectedProfileServerUser,
-} from "./utils";
-
+import { buildProfileContactFormValues, buildProfileContactUpdateInput, validateSelectedProfileServerUser } from "./utils";
 type ProfileContactCardProps = {
     selectedServerUrl: string;
     selectedServerUser?: ProfileSelectedUser | null;
     selectedServerUserLoading: boolean;
     onUserUpdated: () => Promise<void>;
 };
-
-export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps> = ({
-    selectedServerUrl,
-    selectedServerUser,
-    selectedServerUserLoading,
-    onUserUpdated,
-}) => {
+export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps> = (props) => {
     const [form] = Form.useForm<ProfileContactFormValues>();
     const mutation = useUpdateUserByIdMutation();
-    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
-        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
-        undefined,
-    );
-
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, undefined);
     React.useEffect(() => {
         form.resetFields();
-    }, [form, selectedServerUrl]);
-
+    }, [form, props.selectedServerUrl]);
     React.useEffect(() => {
-        form.setFieldsValue(buildProfileContactFormValues(selectedServerUser));
-    }, [form, selectedServerUser]);
-
+        form.setFieldsValue(buildProfileContactFormValues(props.selectedServerUser));
+    }, [form, props.selectedServerUser]);
     const handleFinish = async (values: ProfileContactFormValues) => {
         try {
             await mutation.mutateAsync({
-                id: selectedServerUser!.id,
-                data: buildProfileContactUpdateInput(values, selectedServerUser),
-                url: selectedServerUrl,
+                id: props.selectedServerUser!.id,
+                data: buildProfileContactUpdateInput(values, props.selectedServerUser),
+                url: props.selectedServerUrl,
             });
-            await onUserUpdated();
+            await props.onUserUpdated();
             message.success("Contact information updated");
         } catch (error) {
             console.error("Failed to update contact information", error);
             message.error("Failed to update contact information");
         }
     };
-
     const handleResetSavedShippingAddress = () => {
         setSavedShippingAddress(undefined);
         message.success("Saved shipping address was reset");
     };
-
     return (
-        <Card title="Contact Form" size="small" className="Profile__card Profile__contactCard">
-            <Form
-                form={form}
-                layout="vertical"
-                onFinish={handleFinish}
-                disabled={selectedServerUserLoading}
-            >
+        <Card title="Contact & Payment" size="small" className="Profile__card Profile__contactCard">
+            <Form form={form} layout="vertical" onFinish={handleFinish} disabled={props.selectedServerUserLoading}>
                 <Form.Item
                     name="phone"
                     label="Phone number"
                     rules={[
                         {
-                            validator: async () => validateSelectedProfileServerUser(selectedServerUrl, selectedServerUser?.id),
+                            validator: async () => validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUser?.id),
                         },
                     ]}
                 >
@@ -82,9 +59,11 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
 
                 <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required={false} />
 
+                <ProfileWalletsField form={form} disabled={props.selectedServerUserLoading} />
+
                 <Form.Item>
                     <Space wrap>
-                        <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={selectedServerUserLoading}>
+                        <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={props.selectedServerUserLoading}>
                             Save Contact Information
                         </Button>
                         <Button danger onClick={handleResetSavedShippingAddress} disabled={!savedShippingAddress}>

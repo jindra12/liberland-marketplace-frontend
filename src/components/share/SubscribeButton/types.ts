@@ -1,11 +1,6 @@
 import type { ButtonProps } from "antd";
 
-export type NotificationTargetCollection =
-    | "companies"
-    | "identities"
-    | "jobs"
-    | "products"
-    | "startups";
+export type NotificationTargetCollection = "companies" | "identities" | "jobs" | "products" | "startups";
 
 export type SubscriptionTarget = {
     collection: NotificationTargetCollection;

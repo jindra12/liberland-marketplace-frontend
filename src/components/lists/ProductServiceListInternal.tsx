@@ -15,9 +15,7 @@ import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
-type ProductListItem =
-    | NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number]
-    | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
+type ProductListItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number] | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
 
 type ProductListSourceQuery = {
     source: "query";
@@ -44,21 +42,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     const addToCartSize = screens.lg ? "large" : "middle";
     const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
-    const isLoading = props.source === "query"
-        ? props.query.isLoading
-        : props.isLoading;
-    const refetch = props.source === "query"
-        ? props.query.refetch
-        : props.refetch;
+    const isLoading = props.source === "query" ? props.query.isLoading : props.isLoading;
+    const refetch = props.source === "query" ? props.query.refetch : props.refetch;
     const handleRefetch = () => {
         refetch();
     };
-    const allItems = useAccumulatedDocs(
-        props.source === "query"
-            ? (props.query.data?.Products?.docs || [])
-            : props.products,
-        props.page
-    );
+    const allItems = useAccumulatedDocs(props.source === "query" ? props.query.data?.Products?.docs || [] : props.products, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.source === "query" ? props.query.data?.Products?.hasNextPage : props.hasNextPage),
@@ -86,9 +75,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/products-services/${product.id}`}>{product.name}</Link>
-                        {product.company?.identity?.name && (
-                            <IdentityTagLink identity={product.company.identity} color="success" />
-                        )}
+                        {product.company?.identity?.name && <IdentityTagLink identity={product.company.identity} color="success" />}
                     </Flex>
                 ),
                 actions: (product) => {
@@ -96,13 +83,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
-                        <AddToCartButtonGuard
-                            productId={product.id}
-                            serverURL={product.serverURL!}
-                            block={isMobile}
-                            size={addToCartSize}
-                            maxAvailable={product.inventory}
-                        />
+                        <AddToCartButtonGuard productId={product.id} serverURL={product.serverURL!} block={isMobile} size={addToCartSize} maxAvailable={product.inventory} />
                     ) : showOrderNowFallback && orderNowLink ? (
                         <Button type="primary" size={addToCartSize} href={orderNowLink} block={isMobile}>
                             Order Now!
@@ -117,10 +98,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                     </Tag>
                                 )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             <ListShareDetailButtons
                                 compact
@@ -135,11 +113,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     isSubscribed: product.isSubscribed,
                                 }}
                             />
-                            {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">
-                                    {purchaseControl}
-                                </div>
-                            ) : null}
+                            {purchaseControl ? <div className="ProductList__purchaseControl">{purchaseControl}</div> : null}
                         </Flex>
                     ) : (
                         <Flex align="center" justify="space-between" gap="16px" wrap className="ProductList__actionsRow">
@@ -149,10 +123,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                     </Tag>
                                 )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
                             <Flex gap="12px" wrap justify="flex-end" className="ProductList__controls">
@@ -168,30 +139,18 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         isSubscribed: product.isSubscribed,
                                     }}
                                 />
-                                {purchaseControl ? (
-                                    <div className="ProductList__purchaseControl">
-                                        {purchaseControl}
-                                    </div>
-                                ) : null}
+                                {purchaseControl ? <div className="ProductList__purchaseControl">{purchaseControl}</div> : null}
                             </Flex>
                         </Flex>
                     );
                 },
-                avatar: (product) => product.image?.url ? (
-                    <Link to={`/products-services/${product.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={getImage(product) || getImage(product.company)}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
-                description: (product) => (
-                    <Markdown className="Markdown--clamp3 EntityList__description">
-                        {product.description}
-                    </Markdown>
-                ),
+                avatar: (product) =>
+                    product.image?.url ? (
+                        <Link to={`/products-services/${product.id}`}>
+                            <Avatar shape="square" size={80} src={getImage(product) || getImage(product.company)} className="EntityList__avatar" />
+                        </Link>
+                    ) : undefined,
+                description: (product) => <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>,
                 body: () => null,
             }}
         />

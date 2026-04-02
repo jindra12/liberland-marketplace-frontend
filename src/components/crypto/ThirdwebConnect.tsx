@@ -25,7 +25,7 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
         if (account?.address) {
             props.selectWallet(account.address);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account?.address]);
 
     const btnStyle: React.CSSProperties = {
@@ -54,7 +54,7 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
                     style: btnStyle,
                 }}
                 autoConnect={false}
-                wallets={thirdwebWallets.map(w => createWallet(w))}
+                wallets={thirdwebWallets.map((w) => createWallet(w))}
                 connectButton={{
                     label: (
                         <Flex wrap gap="10px" justify="center" align="center">

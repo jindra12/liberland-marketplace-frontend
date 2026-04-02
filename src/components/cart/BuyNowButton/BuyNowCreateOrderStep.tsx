@@ -33,16 +33,18 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
                 draft: false,
                 data: {
                     customerEmail: shippingAddress.email,
-                    items: [{
-                        quantity: props.quantity,
-                        product: props.productId,
-                        variant: props.variantId,
-                    }],
+                    items: [
+                        {
+                            quantity: props.quantity,
+                            product: props.productId,
+                            variant: props.variantId,
+                        },
+                    ],
                     shippingAddress: toShippingAddressInput(shippingAddress),
                 },
             });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shippingAddress]);
 
     React.useEffect(() => {
@@ -57,7 +59,7 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
                 url: props.serverURL,
             });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [createOrderMutation]);
 
     return (

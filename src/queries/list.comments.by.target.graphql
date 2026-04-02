@@ -1,43 +1,27 @@
-query ListCommentsByTarget(
-  $targetId: String!
-  $relationTo: String!
-  $limit: Int = 50
-  $page: Int = 1
-) {
-  Comments(
-    draft: false
-    where: {
-      AND: [
-        { replyPostRelationTo: { equals: $relationTo } }
-        { replyPostValue: { equals: $targetId } }
-      ]
+query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
+    Comments(draft: false, where: { AND: [{ replyPostRelationTo: { equals: $relationTo } }, { replyPostValue: { equals: $targetId } }] }, sort: "createdAt", limit: $limit, page: $page) {
+        docs {
+            id
+            content
+            createdBy {
+                id
+                name
+                email
+            }
+            anonymousHash
+            replyPostRelationTo
+            replyPostValue
+            createdAt
+            updatedAt
+            replyComment {
+                id
+            }
+            replyPost {
+                relationTo
+            }
+        }
+        totalDocs
+        hasNextPage
+        nextPage
     }
-    sort: "createdAt"
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      content
-      createdBy {
-        id
-        name
-        email
-      }
-      anonymousHash
-      replyPostRelationTo
-      replyPostValue
-      createdAt
-      updatedAt
-      replyComment {
-        id
-      }
-      replyPost {
-        relationTo
-      }
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
 }

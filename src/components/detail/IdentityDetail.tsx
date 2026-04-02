@@ -2,9 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
@@ -22,22 +20,10 @@ const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const identity = useIdentityByIdQuery({ id: id! });
 
-    const jobsQuery = useListJobsByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) }
-    );
-    const productsQuery = useListProductsByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) }
-    );
-    const companiesQuery = useListCompaniesByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) }
-    );
-    const startupsQuery = useListStartupsByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) }
-    );
+    const jobsQuery = useListJobsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
+    const productsQuery = useListProductsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
+    const companiesQuery = useListCompaniesByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
+    const startupsQuery = useListStartupsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
 
     return (
         <Loader query={identity}>
@@ -50,13 +36,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                         <DetailPageTracker serverUrl={data.Identity?.serverURL ?? undefined} />
                         <DetailBackButton to="/tribes" label="Back to tribes" />
                         <Space size={16} align="start" className="EntityDetail__header">
-                            {imageSrc && (
-                                <Avatar
-                                    shape="circle"
-                                    size={96}
-                                    src={imageSrc}
-                                />
-                            )}
+                            {imageSrc && <Avatar shape="circle" size={96} src={imageSrc} />}
                             <div className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
                                     {data.Identity?.name}
@@ -92,20 +72,10 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 />
                             </Col>
                             <Col xs={24} xl={12}>
-                                <JobCard
-                                    items={jobsQuery.data?.Jobs?.docs || []}
-                                    loading={jobsQuery.isLoading}
-                                    totalDocs={jobsQuery.data?.Jobs?.totalDocs}
-                                    identityId={id}
-                                />
+                                <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} totalDocs={jobsQuery.data?.Jobs?.totalDocs} identityId={id} />
                             </Col>
                             <Col xs={24} xl={12}>
-                                <StartupCard
-                                    items={startupsQuery.data?.Startups?.docs || []}
-                                    loading={startupsQuery.isLoading}
-                                    totalDocs={startupsQuery.data?.Startups?.totalDocs}
-                                    identityId={id}
-                                />
+                                <StartupCard items={startupsQuery.data?.Startups?.docs || []} loading={startupsQuery.isLoading} totalDocs={startupsQuery.data?.Startups?.totalDocs} identityId={id} />
                             </Col>
                         </Row>
                         <Divider />
@@ -113,18 +83,19 @@ const IdentityDetail: React.FunctionComponent = () => {
                             label="Share this tribe"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={data.Identity ? {
-                                collection: "identities",
-                                targetID: data.Identity.id,
-                                serverURL: data.Identity.serverURL,
-                                isSubscribed: data.Identity.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                data.Identity
+                                    ? {
+                                          collection: "identities",
+                                          targetID: data.Identity.id,
+                                          serverURL: data.Identity.serverURL,
+                                          isSubscribed: data.Identity.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider />
-                        <EntityCommentsSection
-                            targetId={id!}
-                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
-                        />
+                        <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities} />
                     </Flex>
                 );
             }}

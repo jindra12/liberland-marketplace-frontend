@@ -10,11 +10,5 @@ export const StartupList: React.FunctionComponent = () => {
         page,
     });
 
-    return (
-        <StartupListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <StartupListInternal page={page} query={query} setPage={setPage} />;
 };

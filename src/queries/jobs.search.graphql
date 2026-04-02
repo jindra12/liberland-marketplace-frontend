@@ -1,105 +1,94 @@
 query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {
-      AND: [
-        { title: { contains: $searchTerm } }
-        { doc: { relationTo: jobs } }
-      ]
-    }
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Job {
-            __typename
+    Searches(draft: false, where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: jobs } }] }, page: $page, limit: $limit, sort: $sort) {
+        docs {
             id
-            isSubscribed
-            serverURL
             title
-            description
-            positions
-            isActive
-            bounty {
-              amount
-              currency
+            priority
+            doc(draft: false) {
+                relationTo
+                value {
+                    ... on Job {
+                        __typename
+                        id
+                        isSubscribed
+                        serverURL
+                        title
+                        description
+                        positions
+                        isActive
+                        bounty {
+                            amount
+                            currency
+                        }
+                        allowedIdentities {
+                            id
+                            serverURL
+                            name
+                            description
+                        }
+                        disallowedIdentities {
+                            id
+                            serverURL
+                            name
+                            description
+                        }
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            serverURL
+                            name
+                            description
+                            cryptoAddresses {
+                                chain
+                                address
+                            }
+                            allowedIdentities {
+                                id
+                                serverURL
+                                name
+                                description
+                            }
+                            disallowedIdentities {
+                                id
+                                serverURL
+                                name
+                                description
+                            }
+                            identity {
+                                id
+                                serverURL
+                                name
+                                description
+                            }
+                            image {
+                                id
+                                url
+                                alt
+                                filename
+                                width
+                                height
+                                mimeType
+                            }
+                        }
+                    }
+                }
             }
-            allowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            disallowedIdentities {
-              id
-              serverURL
-              name
-              description
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-          chain
-          address
         }
-              allowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              disallowedIdentities {
-                id
-                serverURL
-                name
-                description
-              }
-              identity {
-                id
-                serverURL
-                name
-                description
-              }
-              image {
-                id
-                url
-                alt
-                filename
-                width
-                height
-                mimeType
-              }
-            }
-          }
-        }
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

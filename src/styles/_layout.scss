@@ -4,19 +4,15 @@
     flex-direction: column;
     position: relative;
     background:
-        radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.12), transparent 22%),
-        radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.12), transparent 24%),
-        radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.05), transparent 20%),
-        linear-gradient(180deg, #01050a 0%, #010911 44%, #01070d 100%);
+        radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.12), transparent 22%), radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.12), transparent 24%),
+        radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.05), transparent 20%), linear-gradient(180deg, #01050a 0%, #010911 44%, #01070d 100%);
 
     &::before {
         content: "";
         position: fixed;
         inset: 0;
         pointer-events: none;
-        background:
-            linear-gradient(rgba(76, 143, 255, 0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(76, 143, 255, 0.035) 1px, transparent 1px);
+        background: linear-gradient(rgba(76, 143, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(76, 143, 255, 0.035) 1px, transparent 1px);
         background-size: 56px 56px;
         mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 100%);
     }

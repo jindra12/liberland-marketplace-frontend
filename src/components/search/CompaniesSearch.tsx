@@ -14,13 +14,16 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
     const navigate = useNavigate();
     const [options, setOptions] = React.useState<SearchOption[]>([]);
     const [term, setTerm] = React.useState("");
-    const companies = useSearchCompaniesQuery({
-        searchTerm: term,
-        limit: 5,
-        page: 0,
-    }, {
-        enabled: term.length > 0,
-    });
+    const companies = useSearchCompaniesQuery(
+        {
+            searchTerm: term,
+            limit: 5,
+            page: 0,
+        },
+        {
+            enabled: term.length > 0,
+        },
+    );
 
     React.useEffect(() => {
         if (!companies.isFetched) {
@@ -28,19 +31,19 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
         } else if (companies.data) {
             setOptions(
                 (companies.data.Searches?.docs ?? [])
-                .filter((searchDoc) => searchDoc.doc?.relationTo === "companies")
-                .map((searchDoc, index) => {
-                    const doc = searchDoc.doc!.value as DocType;
-                    const value = `${doc.serverURL || ""}|${doc.id!}`;
+                    .filter((searchDoc) => searchDoc.doc?.relationTo === "companies")
+                    .map((searchDoc, index) => {
+                        const doc = searchDoc.doc!.value as DocType;
+                        const value = `${doc.serverURL || ""}|${doc.id!}`;
 
-                    return {
-                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                        value,
-                        id: doc.id!,
-                        label: searchDoc.title,
-                        image: getImage(doc),
-                    };
-                })
+                        return {
+                            key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
+                            value,
+                            id: doc.id!,
+                            label: searchDoc.title,
+                            image: getImage(doc),
+                        };
+                    }),
             );
         }
     }, [companies.isFetched, companies.data]);
@@ -48,7 +51,10 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
     return (
         <AutoSuggest
             onClose={props.onClose}
-            onSelect={(_, option) => { navigate(`/companies/${option.id}`); props.onClose(); }}
+            onSelect={(_, option) => {
+                navigate(`/companies/${option.id}`);
+                props.onClose();
+            }}
             options={options}
             title="Company search"
             runSearch={setTerm}

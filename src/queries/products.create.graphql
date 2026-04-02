@@ -1,20 +1,20 @@
 mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
-  createProduct(data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-          chain
-          address
+    createProduct(data: $data, draft: $draft) {
+        id
+        name
+        cryptoAddresses {
+            chain
+            address
         }
-    _status
-    properties {
-      id
-      key
-      value
+        _status
+        properties {
+            id
+            key
+            value
+        }
+        image {
+            id
+            url
+        }
     }
-    image {
-      id
-      url
-    }
-  }
 }

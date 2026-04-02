@@ -14,10 +14,7 @@ export const Markdown: React.FunctionComponent<MarkdownProps> = (props) => {
 
     return (
         <div className={classes}>
-            <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw, rehypeSanitize]}
-            >
+            <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeSanitize]}>
                 {props.children || ""}
             </ReactMarkdown>
         </div>

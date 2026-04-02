@@ -18,10 +18,9 @@ import type {
     Startup,
 } from "./generated/graphql";
 
-
 export type URL = {
-    enabled: boolean,
-    value: string,
+    enabled: boolean;
+    value: string;
     name: string;
     description?: string | null;
 };
@@ -33,7 +32,7 @@ export type SyndicationDoc = {
 };
 
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
-export type SearchOption = { key: string; value: string; id: string; label?: ReactNode, image?: string | null };
+export type SearchOption = { key: string; value: string; id: string; label?: ReactNode; image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 export type ImageDoc = {
     __typename?: "Company" | "Identity" | "Job" | "Product" | "Startup";
@@ -47,11 +46,7 @@ type ListProductsByIdentityDoc = NonNullable<NonNullable<ListProductsByIdentityQ
 type ProductByIdDoc = NonNullable<ProductByIdQuery["Product"]>;
 type CartBySecretDoc = NonNullable<NonNullable<CartBySecretQuery["Carts"]>["docs"]>[number];
 
-export type PurchasableProduct =
-    | ListProductsDoc
-    | ListProductsByCompanyDoc
-    | ListProductsByIdentityDoc
-    | ProductByIdDoc;
+export type PurchasableProduct = ListProductsDoc | ListProductsByCompanyDoc | ListProductsByIdentityDoc | ProductByIdDoc;
 
 export type CartForRequiredChains = Pick<CartBySecretDoc, "items">;
 export type OrderForPayments = NonNullable<CreateOrderMutation["createOrder"]>;
@@ -66,9 +61,7 @@ export type ChainPrice = {
     fetchedAt?: unknown;
 };
 
-export type CryptoWalletOwner =
-    | Pick<PurchasableProduct, "cryptoAddresses">
-    | NonNullable<PurchasableProduct["company"]>;
+export type CryptoWalletOwner = Pick<PurchasableProduct, "cryptoAddresses"> | NonNullable<PurchasableProduct["company"]>;
 
 export type IdentityTagItem = {
     id: string;

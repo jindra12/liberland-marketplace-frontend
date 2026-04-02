@@ -49,17 +49,16 @@ type SuspenseRouteOptions = {
     trackPage?: boolean;
 };
 
-const suspense = (
-    Component: React.FunctionComponent,
-    options: SuspenseRouteOptions = {},
-) => () => (
-    <RouteErrorBoundary>
-        <React.Suspense fallback={<RouteSurfaceSkeleton />}>
-            {options.trackPage !== false && <AnalyticsPageTracker />}
-            <Component />
-        </React.Suspense>
-    </RouteErrorBoundary>
-);
+const suspense =
+    (Component: React.FunctionComponent, options: SuspenseRouteOptions = {}) =>
+    () => (
+        <RouteErrorBoundary>
+            <React.Suspense fallback={<RouteSurfaceSkeleton />}>
+                {options.trackPage !== false && <AnalyticsPageTracker />}
+                <Component />
+            </React.Suspense>
+        </RouteErrorBoundary>
+    );
 
 const config = new QueryClient({
     defaultOptions: {

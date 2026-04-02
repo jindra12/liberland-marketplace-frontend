@@ -1,14 +1,14 @@
 query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
-  Jobs(draft: $draft, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      title
-      employmentType
-      postedAt
-      _status
+    Jobs(draft: $draft, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            title
+            employmentType
+            postedAt
+            _status
+        }
+        totalDocs
     }
-    totalDocs
-  }
 }

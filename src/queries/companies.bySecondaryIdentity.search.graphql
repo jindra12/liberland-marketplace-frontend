@@ -1,80 +1,68 @@
-query SearchCompaniesBySecondaryIdentity(
-  $identityId: JSON!
-  $searchTerm: String!
-  $page: Int = 1
-  $limit: Int = 20
-  $sort: String
-) {
-  Companies(
-    draft: false
-    where: {
-      AND: [
-        { name: { contains: $searchTerm } }
-        { allowedIdentities: { in: [$identityId] } }
-        { _status: { equals: published } }
-      ]
-    }
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      name
-      description
-      cryptoAddresses {
-          chain
-          address
+query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    Companies(
+        draft: false
+        where: { AND: [{ name: { contains: $searchTerm } }, { allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            description
+            cryptoAddresses {
+                chain
+                address
+            }
+            website
+            phone
+            email
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            identity {
+                id
+                serverURL
+                name
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
         }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

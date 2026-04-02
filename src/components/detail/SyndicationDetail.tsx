@@ -30,10 +30,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
         }
     }, [id]);
 
-    const entry = React.useMemo(
-        () => urls.find((current) => current.value === decodedUrl),
-        [decodedUrl, urls],
-    );
+    const entry = React.useMemo(() => urls.find((current) => current.value === decodedUrl), [decodedUrl, urls]);
 
     if (syndicationLoading && !entry) {
         return <DetailPageSkeleton />;
@@ -45,7 +42,11 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 status="404"
                 title="Syndicated URL not found"
                 subTitle="This syndicated URL is not available in your current marketplace context."
-                extra={<RouteButton to="/syndication" type="primary">Back to syndication</RouteButton>}
+                extra={
+                    <RouteButton to="/syndication" type="primary">
+                        Back to syndication
+                    </RouteButton>
+                }
             />
         );
     }
@@ -59,25 +60,16 @@ const SyndicationDetail: React.FunctionComponent = () => {
             <DetailPageTracker serverUrl={entry.value} />
             <DetailBackButton to="/syndication" label="Back to syndication" />
             <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                <Avatar
-                    shape="circle"
-                    size={96}
-                    icon={<GlobalOutlined />}
-                    className="SyndicationDetail__avatar"
-                />
+                <Avatar shape="circle" size={96} icon={<GlobalOutlined />} className="SyndicationDetail__avatar" />
                 <Flex vertical gap={12} className="EntityDetail__headerBody SyndicationDetail__headerCopy">
                     <div className="EntityDetail__titleBlock">
-                        <Typography.Text className="EntityDetail__eyebrow">
-                            Syndication
-                        </Typography.Text>
+                        <Typography.Text className="EntityDetail__eyebrow">Syndication</Typography.Text>
                         <Typography.Title level={1} className="EntityDetail__title">
                             {title}
                         </Typography.Title>
                     </div>
                     <Flex wrap gap={8} className="SyndicationDetail__tagRow">
-                        <Tag color={entry.enabled ? "success" : "default"}>
-                            {entry.enabled ? "Enabled" : "Disabled"}
-                        </Tag>
+                        <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Enabled" : "Disabled"}</Tag>
                         <Tag>{entry.name === "Main" ? "Primary endpoint" : "Syndicated endpoint"}</Tag>
                     </Flex>
                 </Flex>
@@ -94,34 +86,28 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 <Button type="primary" size="large" href={entry.value} target="_blank" rel="noreferrer">
                     Visit URL
                 </Button>
-                <RouteButton to="/syndication" size="large">Back to list</RouteButton>
+                <RouteButton to="/syndication" size="large">
+                    Back to list
+                </RouteButton>
             </Flex>
             <Divider />
             {entry.description && (
                 <>
-                    <Markdown className="SyndicationDetail__description">
-                        {entry.description}
-                    </Markdown>
+                    <Markdown className="SyndicationDetail__description">{entry.description}</Markdown>
                     <Divider />
                 </>
             )}
             <DetailShareSection label="Share this endpoint" title={title} text={shareText} />
             <Divider />
             <Descriptions bordered column={1} size="small" className="SyndicationDetail__meta">
-                <Descriptions.Item label="Name">
-                    {title}
-                </Descriptions.Item>
-                <Descriptions.Item label="Host">
-                    {host}
-                </Descriptions.Item>
+                <Descriptions.Item label="Name">{title}</Descriptions.Item>
+                <Descriptions.Item label="Host">{host}</Descriptions.Item>
                 <Descriptions.Item label="URL">
                     <Typography.Link href={entry.value} target="_blank" rel="noreferrer">
                         {entry.value}
                     </Typography.Link>
                 </Descriptions.Item>
-                <Descriptions.Item label="Status">
-                    {entry.enabled ? "Enabled in search and lists" : "Disabled locally"}
-                </Descriptions.Item>
+                <Descriptions.Item label="Status">{entry.enabled ? "Enabled in search and lists" : "Disabled locally"}</Descriptions.Item>
             </Descriptions>
         </Flex>
     );

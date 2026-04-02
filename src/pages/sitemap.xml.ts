@@ -2,14 +2,7 @@ import type { GetServerSideProps } from "next";
 
 const SITE_URL = "https://nswap.io";
 
-const INDEXABLE_PATHS = [
-    "/",
-    "/jobs",
-    "/companies",
-    "/products-services",
-    "/tribes",
-    "/ventures",
-];
+const INDEXABLE_PATHS = ["/", "/jobs", "/companies", "/products-services", "/tribes", "/ventures"];
 
 const buildSitemapXml = (generatedAtIso: string): string => {
     const entries = INDEXABLE_PATHS.map((path) => {

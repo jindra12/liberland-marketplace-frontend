@@ -9,11 +9,7 @@ import { uploadMedia } from "../../mediaApi";
  * - undefined if the existing image is unchanged
  * - null if the image was removed
  */
-export const resolveImageId = async (
-    url: string,
-    fileList: UploadFile[] | undefined,
-    existingImageId?: string | null,
-): Promise<string | undefined | null> => {
+export const resolveImageId = async (url: string, fileList: UploadFile[] | undefined, existingImageId?: string | null): Promise<string | undefined | null> => {
     if (!fileList || fileList.length === 0) {
         return existingImageId ? null : undefined;
     }

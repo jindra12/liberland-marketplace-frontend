@@ -1,5 +1,5 @@
 mutation UnsubscribeFromVentureUpdates($subscriptionID: String!) {
-  deleteNotificationSubscription(id: $subscriptionID) {
-    id
-  }
+    deleteNotificationSubscription(id: $subscriptionID) {
+        id
+    }
 }

@@ -1,112 +1,92 @@
-query ListJobsBySecondaryIdentity(
-  $identityId: JSON!
-  $companyIds: [JSON!] = []
-  $page: Int = 1
-  $limit: Int = 20
-) {
-  Jobs(
-    draft: false
-    where: {
-      AND: [
-        {
-          OR: [
-            { allowedIdentities: { in: [$identityId] } }
-            { company: { in: $companyIds } }
-          ]
+query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
+    Jobs(draft: false, where: { AND: [{ OR: [{ allowedIdentities: { in: [$identityId] } }, { company: { in: $companyIds } }] }, { _status: { equals: published } }] }, page: $page, limit: $limit) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            location
+            employmentType
+            positions
+            postedAt
+            isActive
+            applyUrl
+            bounty {
+                amount
+                currency
+            }
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            salaryRange {
+                min
+                max
+                currency
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                allowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                disallowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
         }
-        { _status: { equals: published } }
-      ]
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      title
-      description
-      location
-      employmentType
-      positions
-      postedAt
-      isActive
-      applyUrl
-      bounty {
-        amount
-        currency
-      }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        allowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        disallowedIdentities {
-          id
-          serverURL
-          name
-          description
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

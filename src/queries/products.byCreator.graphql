@@ -1,23 +1,23 @@
 query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
-  Products(draft: $draft, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      name
-      cryptoAddresses {
-          chain
-          address
+    Products(draft: $draft, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            cryptoAddresses {
+                chain
+                address
+            }
+            orderable
+            url
+            _status
+            properties {
+                id
+                key
+                value
+            }
         }
-      orderable
-      url
-      _status
-      properties {
-        id
-        key
-        value
-      }
+        totalDocs
     }
-    totalDocs
-  }
 }

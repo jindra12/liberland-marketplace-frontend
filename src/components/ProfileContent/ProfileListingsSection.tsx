@@ -14,41 +14,59 @@ import {
     useListProductsByCreatorQuery,
     useListStartupsByCreatorQuery,
 } from "../hooks";
-
 type ProfileListingsSectionProps = {
     userId?: string;
 };
-
-export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSectionProps> = ({ userId }) => {
+export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSectionProps> = (props) => {
     const deleteJobMutation = useDeleteJobMutation();
     const deleteCompanyMutation = useDeleteCompanyMutation();
     const deleteProductMutation = useDeleteProductMutation();
     const deleteStartupMutation = useDeleteStartupMutation();
-
     const jobsQuery = useListJobsByCreatorQuery(
-        { userId, draft: true },
-        { enabled: !!userId, refetchOnMount: "always" },
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
     );
     const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId, draft: true },
-        { enabled: !!userId, refetchOnMount: "always" },
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
     );
     const startupsQuery = useListStartupsByCreatorQuery(
-        { userId, draft: true },
-        { enabled: !!userId, refetchOnMount: "always" },
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
     );
-
     const companyIds = (companiesQuery.data?.Companies?.docs ?? []).map((company) => company.id);
     const productsQuery = useListProductsByCreatorQuery(
-        { companyIds, draft: true },
-        { enabled: companyIds.length > 0, refetchOnMount: "always" },
+        {
+            companyIds,
+            draft: true,
+        },
+        {
+            enabled: companyIds.length > 0,
+            refetchOnMount: "always",
+        },
     );
-
     const jobs = jobsQuery.data?.Jobs?.docs ?? [];
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const startups = startupsQuery.data?.Startups?.docs ?? [];
     const products = productsQuery.data?.Products?.docs ?? [];
-
     const listingTabs = [
         {
             key: "jobs",
@@ -124,12 +142,15 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
             ),
         },
     ];
-
     return (
         <>
             <div className="Profile__listingsHeader">
-                <Typography.Title level={3} className="Profile__listingsTitle">My Listings</Typography.Title>
-                <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>Create Listing</RouteButton>
+                <Typography.Title level={3} className="Profile__listingsTitle">
+                    My Listings
+                </Typography.Title>
+                <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>
+                    Create Listing
+                </RouteButton>
             </div>
             <Tabs items={listingTabs} />
         </>

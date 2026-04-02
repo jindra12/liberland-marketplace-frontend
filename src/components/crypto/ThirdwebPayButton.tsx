@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createThirdwebClient, prepareTransaction } from "thirdweb";
-import { ConnectButton, useActiveAccount, useSendAndConfirmTransaction } from "thirdweb/react";
+import { ConnectButton, useActiveAccount, useActiveWallet, useSendAndConfirmTransaction } from "thirdweb/react";
 import { mainnet } from "thirdweb/chains";
 import Flex from "antd/es/flex";
 import { createWallet } from "thirdweb/wallets";
@@ -12,6 +12,7 @@ import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
 import { FormModel } from "../../types";
 import { thirdwebWallets } from "../../constants";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
+import type { PaymentWalletSelection } from "../order/types";
 
 const client = createThirdwebClient({
     clientId: process.env.REACT_APP_THIRDWEB!,
@@ -20,21 +21,25 @@ const client = createThirdwebClient({
 export interface ThirdwebPayButtonProps {
     formModel: FormModel;
     setTransactionId: (txId: string) => Promise<void>;
-    onPayerAddressSelected?: (address: string) => void;
+    onWalletSelected?: (wallet: PaymentWalletSelection) => void;
 }
 
 export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> = (props) => {
     const account = useActiveAccount();
+    const wallet = useActiveWallet();
     const { mutateAsync, isPending, isError, isSuccess } = useSendAndConfirmTransaction();
-    const { onPayerAddressSelected } = props;
     const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
 
     React.useEffect(() => {
-        if (account?.address) {
-            onPayerAddressSelected?.(account.address);
+        if (account?.address && wallet?.id) {
+            props.onWalletSelected?.({
+                address: account.address,
+                chain: "ethereum",
+                provider: wallet.id,
+            });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [account?.address]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [account?.address, wallet?.id]);
 
     const onPay = async () => {
         if (isPaymentPending) {
@@ -49,9 +54,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                 to: props.formModel.recipient,
                 value: props.formModel.amount,
             });
-            const {
-                transactionHash
-            } = await mutateAsync(tx);
+            const { transactionHash } = await mutateAsync(tx);
             await props.setTransactionId(transactionHash);
         } catch (e) {
             console.error(e);
@@ -63,12 +66,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
 
     return (
         <Flex wrap gap="15px" justify="center" align="center" flex={1} className="CryptoPaymentGroup">
-            <ConnectButton
-                client={client}
-                chain={mainnet}
-                autoConnect={false}
-                wallets={thirdwebWallets.map(w => createWallet(w))}
-            />
+            <ConnectButton client={client} chain={mainnet} autoConnect={false} wallets={thirdwebWallets.map((w) => createWallet(w))} />
             {account && (
                 <Button
                     type="primary"
@@ -81,9 +79,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                     Pay with Ethereum
                 </Button>
             )}
-            {isError && (
-                <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />
-            )}
+            {isError && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
         </Flex>
     );
 };

@@ -14,12 +14,5 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
         page,
     });
 
-    return (
-        <JobListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-            limited={props.limited}
-        />
-    )
+    return <JobListInternal page={page} query={query} setPage={setPage} limited={props.limited} />;
 };

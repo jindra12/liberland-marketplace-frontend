@@ -14,11 +14,5 @@ export const CompanyStartupsList: React.FunctionComponent<CompanyStartupsListPro
         limit: 20,
     });
 
-    return (
-        <StartupListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <StartupListInternal page={page} query={query} setPage={setPage} />;
 };

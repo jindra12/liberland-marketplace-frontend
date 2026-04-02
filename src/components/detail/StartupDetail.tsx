@@ -1,40 +1,16 @@
 import * as React from "react";
-import { Avatar,
-    Button,
-    Divider,
-    Flex,
-    Grid,
-    message,
-    Space,
-    Tabs,
-    Tag,
-    Typography
-} from "antd";
+import { Avatar, Button, Divider, Flex, Grid, message, Space, Tabs, Tag, Typography } from "antd";
 import { useParams } from "react-router-dom";
-import {
-    MailOutlined,
-    TeamOutlined,
-    UsergroupAddOutlined,
-    EditOutlined,
-    UserAddOutlined,
-    UserDeleteOutlined,
-    } from "@ant-design/icons";
+import { MailOutlined, TeamOutlined, UsergroupAddOutlined, EditOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { getImage } from "../../utils";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import {
-    formatStageLabel,
-    formatResourceLabel,
-    formatFundsNeeded,
-    invalidateStartupQueries,
-} from "../../startupUtils";
+import { formatStageLabel, formatResourceLabel, formatFundsNeeded, invalidateStartupQueries } from "../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation, useStartupByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { DetailShareSection } from "../share/DetailShareSection";
@@ -85,15 +61,15 @@ const StartupDetail: React.FunctionComponent = () => {
             {(data) => {
                 const s = data.Startup;
                 const imageSrc = getImage(s) || getImage(s?.company);
-                const startupIdentity = s?.identity?.name ? {
-                    id: s.identity.id,
-                    name: s.identity.name,
-                } : undefined;
+                const startupIdentity = s?.identity?.name
+                    ? {
+                          id: s.identity.id,
+                          name: s.identity.name,
+                      }
+                    : undefined;
                 const avatarSize = md ? 120 : 72;
                 const involvedUsers = s?.involvedUsers || [];
-                const isInvolved = userId
-                    ? involvedUsers.some((u) => u.id === userId)
-                    : false;
+                const isInvolved = userId ? involvedUsers.some((u) => u.id === userId) : false;
                 const isOwner = userId && (s?.createdBy as { id?: string } | null)?.id === userId;
                 const shareTitle = s?.title ?? "Venture";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
@@ -103,54 +79,25 @@ const StartupDetail: React.FunctionComponent = () => {
                         <DetailPageTracker serverUrl={s?.serverURL ?? undefined} />
                         <DetailBackButton to="/ventures" label="Back to ventures" />
                         <Space size={md ? 24 : 16} align="start" className="StartupDetail__header">
-                            {imageSrc && (
-                                <Avatar
-                                    shape="circle"
-                                    size={avatarSize}
-                                    src={imageSrc}
-                                />
-                            )}
+                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <Flex vertical gap={md ? 20 : 18} className="StartupDetail__headerBody">
-                                <Flex
-                                    justify="space-between"
-                                    align={md ? "center" : "flex-start"}
-                                    gap="16px"
-                                    wrap
-                                    className="StartupDetail__titleRow"
-                                >
+                                <Flex justify="space-between" align={md ? "center" : "flex-start"} gap="16px" wrap className="StartupDetail__titleRow">
                                     <div className="StartupDetail__titleBlock">
-                                        <Typography.Text className="StartupDetail__eyebrow">
-                                            Venture
-                                        </Typography.Text>
+                                        <Typography.Text className="StartupDetail__eyebrow">Venture</Typography.Text>
                                         <Typography.Title level={1} className="StartupDetail__title">
                                             {s?.title}
                                         </Typography.Title>
                                     </div>
                                     <Flex gap={10} wrap className="StartupDetail__badgeRow">
                                         <Tag color="blue">{formatStageLabel(s?.stage)}</Tag>
-                                        {startupIdentity && (
-                                            <IdentityTagLink
-                                                identity={startupIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        )}
+                                        {startupIdentity && <IdentityTagLink identity={startupIdentity} color="success" icon={<UsergroupAddOutlined />} />}
                                     </Flex>
                                 </Flex>
                                 <Flex gap={md ? 10 : 12} wrap className="StartupDetail__summary">
-                                    {s?.company?.name && (
-                                        <Tag icon={<TeamOutlined />}>{s.company.name}</Tag>
-                                    )}
-                                    {s?.fundsNeeded?.amount != null && (
-                                        <Tag color="green">
-                                            Funds needed: {formatFundsNeeded(s.fundsNeeded.amount, s.fundsNeeded.currency)}
-                                        </Tag>
-                                    )}
+                                    {s?.company?.name && <Tag icon={<TeamOutlined />}>{s.company.name}</Tag>}
+                                    {s?.fundsNeeded?.amount != null && <Tag color="green">Funds needed: {formatFundsNeeded(s.fundsNeeded.amount, s.fundsNeeded.currency)}</Tag>}
                                     {typeof s?.company?.email === "string" && s.company.email && (
-                                        <Typography.Link
-                                            href={`mailto:${s.company.email}`}
-                                            className="StartupDetail__summaryLink"
-                                        >
+                                        <Typography.Link href={`mailto:${s.company.email}`} className="StartupDetail__summaryLink">
                                             <MailOutlined />
                                             <span>{s.company.email}</span>
                                         </Typography.Link>
@@ -159,20 +106,11 @@ const StartupDetail: React.FunctionComponent = () => {
                                 {auth.isAuthenticated && (
                                     <div className="StartupDetail__joinAction">
                                         {isInvolved ? (
-                                            <Button
-                                                icon={<UserDeleteOutlined />}
-                                                onClick={handleLeave}
-                                                loading={leaveMutation.isPending}
-                                            >
+                                            <Button icon={<UserDeleteOutlined />} onClick={handleLeave} loading={leaveMutation.isPending}>
                                                 Remove Involvement
                                             </Button>
                                         ) : (
-                                            <Button
-                                                type="primary"
-                                                icon={<UserAddOutlined />}
-                                                onClick={handleJoin}
-                                                loading={joinMutation.isPending}
-                                            >
+                                            <Button type="primary" icon={<UserAddOutlined />} onClick={handleJoin} loading={joinMutation.isPending}>
                                                 Get Involved
                                             </Button>
                                         )}
@@ -181,7 +119,9 @@ const StartupDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Space>
                         {isOwner && (
-                            <RouteButton to={`/ventures/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
+                            <RouteButton to={`/ventures/edit/${id}`} icon={<EditOutlined />}>
+                                Edit
+                            </RouteButton>
                         )}
 
                         <Divider className="StartupDetail__divider" />
@@ -195,24 +135,24 @@ const StartupDetail: React.FunctionComponent = () => {
                                 <div className="StartupDetail__section StartupDetail__section--resources StartupDetail__resourceGrid">
                                     {!!s?.lookingFor?.length && (
                                         <div className="StartupDetail__resourceGroup">
-                                            <Typography.Text className="StartupDetail__resourceHeading">
-                                                Looking for
-                                            </Typography.Text>
+                                            <Typography.Text className="StartupDetail__resourceHeading">Looking for</Typography.Text>
                                             <Flex gap={6} wrap className="StartupDetail__tags">
                                                 {s.lookingFor.map((r) => (
-                                                    <Tag key={r} color="orange">{formatResourceLabel(r)}</Tag>
+                                                    <Tag key={r} color="orange">
+                                                        {formatResourceLabel(r)}
+                                                    </Tag>
                                                 ))}
                                             </Flex>
                                         </div>
                                     )}
                                     {!!s?.alreadyHave?.length && (
                                         <div className="StartupDetail__resourceGroup">
-                                            <Typography.Text className="StartupDetail__resourceHeading">
-                                                Already have
-                                            </Typography.Text>
+                                            <Typography.Text className="StartupDetail__resourceHeading">Already have</Typography.Text>
                                             <Flex gap={6} wrap className="StartupDetail__tags">
                                                 {s.alreadyHave.map((r) => (
-                                                    <Tag key={r} color="cyan">{formatResourceLabel(r)}</Tag>
+                                                    <Tag key={r} color="cyan">
+                                                        {formatResourceLabel(r)}
+                                                    </Tag>
                                                 ))}
                                             </Flex>
                                         </div>
@@ -226,12 +166,16 @@ const StartupDetail: React.FunctionComponent = () => {
                             label="Share this venture"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={s ? {
-                                collection: "startups",
-                                targetID: s.id,
-                                serverURL: s.serverURL,
-                                isSubscribed: s.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                s
+                                    ? {
+                                          collection: "startups",
+                                          targetID: s.id,
+                                          serverURL: s.serverURL,
+                                          isSubscribed: s.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider className="StartupDetail__divider" />
                         <Tabs
@@ -252,9 +196,7 @@ const StartupDetail: React.FunctionComponent = () => {
                                                     ))}
                                                 </Flex>
                                             ) : (
-                                                <Typography.Text type="secondary">
-                                                    No team members yet. Be the first to join!
-                                                </Typography.Text>
+                                                <Typography.Text type="secondary">No team members yet. Be the first to join!</Typography.Text>
                                             )}
                                         </div>
                                     ),
@@ -262,12 +204,7 @@ const StartupDetail: React.FunctionComponent = () => {
                                 {
                                     key: "comments",
                                     label: "Discussion",
-                                    children: (
-                                        <EntityCommentsSection
-                                            targetId={id!}
-                                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Startups}
-                                        />
-                                    ),
+                                    children: <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Startups} />,
                                 },
                             ]}
                         />

@@ -3,24 +3,14 @@ import { Form, theme } from "antd";
 import { GeoapifyAddressFields } from "./GeoapifyAddressFields";
 import { GeoapifyAddressSearchControl } from "./GeoapifyAddressSearchControl";
 import { GeoapifyAddressSearchModal } from "./GeoapifyAddressSearchModal";
-import type {
-    AddressFieldKey,
-    AddressFields,
-    GeoapifyAddressFormItemProps,
-    GeoapifyFeature,
-} from "./types";
-import {
-    buildAddressSummary,
-    createGeoapifyStyles,
-    getAddressSelection,
-    toPath,
-} from "./utils";
+import type { AddressFieldKey, AddressFields, GeoapifyAddressFormItemProps, GeoapifyFeature } from "./types";
+import { buildAddressSummary, createGeoapifyStyles, getAddressSelection, toPath } from "./utils";
 
-export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFormItemProps> = ({
-    name = ["shippingAddress"],
-    label = "Shipping address",
-    required = true,
-}) => {
+export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFormItemProps> = (props) => {
+    const name = props.name === undefined ? ["shippingAddress"] : props.name;
+    const label = props.label === undefined ? "Shipping address" : props.label;
+    const required = props.required === undefined ? true : props.required;
+
     const { token } = theme.useToken();
     const form = Form.useFormInstance();
     const [searchValue, setSearchValue] = React.useState("");
@@ -31,9 +21,12 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
     const geoapifyStyles = React.useMemo(() => createGeoapifyStyles(token), [token]);
     const selectedAddressSummary = React.useMemo(() => buildAddressSummary(watchedAddress), [watchedAddress]);
 
-    const setAddressField = React.useCallback((field: AddressFieldKey, value?: string | null) => {
-        form.setFieldValue([...basePath, field], value);
-    }, [basePath, form]);
+    const setAddressField = React.useCallback(
+        (field: AddressFieldKey, value?: string | null) => {
+            form.setFieldValue([...basePath, field], value);
+        },
+        [basePath, form],
+    );
 
     const closeSearchModal = React.useCallback(() => {
         setIsSearchModalOpen(false);
@@ -47,31 +40,28 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
         setIsSearchModalOpen(true);
     }, [searchValue, selectedAddressSummary]);
 
-    const handlePlaceSelect = React.useCallback((feature: GeoapifyFeature) => {
-        const selection = getAddressSelection(feature);
-        if (!selection) {
-            return;
-        }
+    const handlePlaceSelect = React.useCallback(
+        (feature: GeoapifyFeature) => {
+            const selection = getAddressSelection(feature);
+            if (!selection) {
+                return;
+            }
 
-        setSearchValue(selection.formattedAddress || "");
-        setAddressField("addressLine1", selection.addressLine1);
-        setAddressField("addressLine2", selection.addressLine2);
-        setAddressField("city", selection.city);
-        setAddressField("state", selection.state);
-        setAddressField("postalCode", selection.postalCode);
-        setAddressField("country", selection.country);
-        setIsSearchModalOpen(false);
-    }, [setAddressField]);
+            setSearchValue(selection.formattedAddress || "");
+            setAddressField("addressLine1", selection.addressLine1);
+            setAddressField("addressLine2", selection.addressLine2);
+            setAddressField("city", selection.city);
+            setAddressField("state", selection.state);
+            setAddressField("postalCode", selection.postalCode);
+            setAddressField("country", selection.country);
+            setIsSearchModalOpen(false);
+        },
+        [setAddressField],
+    );
 
     return (
         <>
-            <GeoapifyAddressSearchControl
-                label={label}
-                required={required}
-                geoapifyApiKey={geoapifyApiKey}
-                selectedAddressSummary={selectedAddressSummary}
-                onOpenSearch={openSearchModal}
-            />
+            <GeoapifyAddressSearchControl label={label} required={required} geoapifyApiKey={geoapifyApiKey} selectedAddressSummary={selectedAddressSummary} onOpenSearch={openSearchModal} />
             <GeoapifyAddressSearchModal
                 open={isSearchModalOpen}
                 geoapifyApiKey={geoapifyApiKey}

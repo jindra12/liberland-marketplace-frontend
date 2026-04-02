@@ -60,30 +60,30 @@ export const AppHeader: React.FunctionComponent = () => {
 
     const selectedDesktopKeys = getSelectedKeys(location.pathname, desktopItems);
     const selectedDrawerKeys = getSelectedKeys(location.pathname, drawerItems);
-    const desktopMenuItems: MenuProps["items"] = React.useMemo(() => (
-        desktopItems.map((item) => ({
-            key: item.key,
-            label: (
-                <Link to={item.key} className="AppHeader__menuLink">
-                    {item.label}
-                </Link>
-            ),
-        }))
-    ), [desktopItems]);
-    const drawerMenuItems: MenuProps["items"] = React.useMemo(() => (
-        drawerItems.map((item) => ({
-            key: item.key,
-            label: (
-                <Link
-                    to={item.key}
-                    className="AppHeader__drawerMenuLink"
-                    onClick={() => setDrawerOpen(false)}
-                >
-                    {item.label}
-                </Link>
-            ),
-        }))
-    ), [drawerItems]);
+    const desktopMenuItems: MenuProps["items"] = React.useMemo(
+        () =>
+            desktopItems.map((item) => ({
+                key: item.key,
+                label: (
+                    <Link to={item.key} className="AppHeader__menuLink">
+                        {item.label}
+                    </Link>
+                ),
+            })),
+        [desktopItems],
+    );
+    const drawerMenuItems: MenuProps["items"] = React.useMemo(
+        () =>
+            drawerItems.map((item) => ({
+                key: item.key,
+                label: (
+                    <Link to={item.key} className="AppHeader__drawerMenuLink" onClick={() => setDrawerOpen(false)}>
+                        {item.label}
+                    </Link>
+                ),
+            })),
+        [drawerItems],
+    );
 
     return (
         <Header className="AppHeader">
@@ -96,13 +96,7 @@ export const AppHeader: React.FunctionComponent = () => {
                 {xl ? (
                     <>
                         <div className="AppHeader__menuSlot">
-                            <Menu
-                                className="AppHeader__menu"
-                                mode="horizontal"
-                                disabledOverflow
-                                items={desktopMenuItems}
-                                selectedKeys={selectedDesktopKeys}
-                            />
+                            <Menu className="AppHeader__menu" mode="horizontal" disabledOverflow items={desktopMenuItems} selectedKeys={selectedDesktopKeys} />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
                             <EndpointAuthAction>
@@ -120,31 +114,15 @@ export const AppHeader: React.FunctionComponent = () => {
                                     </Button>
                                 )}
                             </EndpointAuthAction>
-                            <LoginButton
-                                action={authAction}
-                                type="default"
-                                className="AppHeader__authBtn"
-                                onAfterAction={() => navigate("/")}
-                            />
+                            <LoginButton action={authAction} type="default" className="AppHeader__authBtn" onAfterAction={() => navigate("/")} />
                             <DesktopDrawer />
                         </Flex>
                     </>
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
-                        <LoginButton
-                            action={authAction}
-                            type="text"
-                            className="AppHeader__mobileAuthBtn"
-                            onAfterAction={() => navigate("/")}
-                        />
+                        <LoginButton action={authAction} type="text" className="AppHeader__mobileAuthBtn" onAfterAction={() => navigate("/")} />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
-                        <Button
-                            className="AppHeader__burger AppHeader__iconButton"
-                            type="text"
-                            icon={<MenuOutlined />}
-                            aria-label="Open navigation"
-                            onClick={() => setDrawerOpen(true)}
-                        />
+                        <Button className="AppHeader__burger AppHeader__iconButton" type="text" icon={<MenuOutlined />} aria-label="Open navigation" onClick={() => setDrawerOpen(true)} />
                         <Drawer
                             className="AppHeader__drawer"
                             placement="left"
@@ -158,27 +136,13 @@ export const AppHeader: React.FunctionComponent = () => {
                             }
                         >
                             <div className="AppHeader__drawerBody">
-                                <Menu
-                                    className="AppHeader__drawerMenu"
-                                    mode="inline"
-                                    items={drawerMenuItems}
-                                    selectedKeys={selectedDrawerKeys}
-                                />
+                                <Menu className="AppHeader__drawerMenu" mode="inline" items={drawerMenuItems} selectedKeys={selectedDrawerKeys} />
                                 <div className="AppHeader__drawerNav">
-                                    <SearchButton
-                                        type="default"
-                                        block
-                                        onScopeSelect={() => setDrawerOpen(false)}
-                                    >
+                                    <SearchButton type="default" block onScopeSelect={() => setDrawerOpen(false)}>
                                         Search
                                     </SearchButton>
                                     {urls.length > 1 ? (
-                                        <RouteButton
-                                            to="/syndication"
-                                            block
-                                            type="default"
-                                            icon={<GlobalOutlined />}
-                                        >
+                                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
                                             Syndication
                                         </RouteButton>
                                     ) : null}
@@ -191,7 +155,10 @@ export const AppHeader: React.FunctionComponent = () => {
                                                 onClick={(event) => {
                                                     event.preventDefault();
                                                     runWithAuthOrLogin(
-                                                        () => { navigate("/publish"); setDrawerOpen(false); },
+                                                        () => {
+                                                            navigate("/publish");
+                                                            setDrawerOpen(false);
+                                                        },
                                                         { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
                                                     );
                                                 }}
@@ -205,7 +172,10 @@ export const AppHeader: React.FunctionComponent = () => {
                                         <Button
                                             block
                                             icon={<UserOutlined />}
-                                            onClick={() => { navigate("/profile"); setDrawerOpen(false); }}
+                                            onClick={() => {
+                                                navigate("/profile");
+                                                setDrawerOpen(false);
+                                            }}
                                         >
                                             Profile
                                         </Button>

@@ -16,10 +16,7 @@ const Splash: React.FunctionComponent = () => {
     const isLoading = identitiesQuery.isLoading;
     const hasError = Boolean(identitiesQuery.error);
 
-    const sortedIdentities = React.useMemo(
-        () => [...identities || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
-        [identities],
-    );
+    const sortedIdentities = React.useMemo(() => [...(identities || [])].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)), [identities]);
 
     return (
         <Flex vertical gap={24} className="SplashPage">
@@ -44,14 +41,7 @@ const Splash: React.FunctionComponent = () => {
             </section>
 
             <Flex vertical gap={20} className="SplashPage__sections">
-                {hasError && (
-                    <Alert
-                        type="error"
-                        showIcon
-                        message="Failed to load tribes"
-                        description="Try refreshing the page."
-                    />
-                )}
+                {hasError && <Alert type="error" showIcon message="Failed to load tribes" description="Try refreshing the page." />}
 
                 {!hasError && !identities?.length && isLoading && (
                     <div className="SplashPage__loading">
@@ -59,9 +49,7 @@ const Splash: React.FunctionComponent = () => {
                     </div>
                 )}
 
-                {!hasError && !identities?.length && !isLoading && (
-                    <Empty description="No tribes found yet." />
-                )}
+                {!hasError && !identities?.length && !isLoading && <Empty description="No tribes found yet." />}
 
                 {sortedIdentities.length > 0 && (
                     <Flex vertical gap={24} className="SplashPage__identityList">

@@ -8,7 +8,6 @@ module.exports = function override(config) {
         buffer: require.resolve("buffer/"),
         process: require.resolve("process/browser"),
         vm: require.resolve("vm-browserify"),
-        
     };
 
     config.plugins = [

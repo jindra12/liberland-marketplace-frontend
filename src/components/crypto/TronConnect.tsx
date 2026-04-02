@@ -15,7 +15,7 @@ export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) 
         if (address && connected) {
             props.selectWallet(address);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address, connected]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,9 +47,7 @@ export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) 
     return (
         <WalletModalProvider>
             <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
-                <WalletActionButton {...buttonProps}>
-                    Select
-                </WalletActionButton>
+                <WalletActionButton {...buttonProps}>Select</WalletActionButton>
             </Flex>
         </WalletModalProvider>
     );

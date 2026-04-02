@@ -18,9 +18,7 @@ interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     getUpdateId: (result: TUpdate) => string | undefined | null;
 }
 
-export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, TUpdate>(
-    config: UseEntityFormConfig<TValues, TCreate, TUpdate>,
-) => {
+export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, TUpdate>(config: UseEntityFormConfig<TValues, TCreate, TUpdate>) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [form] = Form.useForm();
@@ -29,43 +27,39 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
     const listQueryKey = `List${config.entityName === "Product" ? "Products" : `${config.entityName}s`}`;
     const byIdQueryKey = `${config.entityName}ById`;
 
-    const onFinish = useCallback(async (values: TValues) => {
-        const imageId = await resolveImageId(
-            config.url,
-            values.imageFile as Parameters<typeof resolveImageId>[1],
-            config.existingImageId,
-        );
+    const onFinish = useCallback(
+        async (values: TValues) => {
+            const imageId = await resolveImageId(config.url, values.imageFile as Parameters<typeof resolveImageId>[1], config.existingImageId);
 
-        const draft = draftRef.current;
-        const data = { ...config.buildData(values, imageId), _status: draft ? "draft" : "published" } as never;
+            const draft = draftRef.current;
+            const data = { ...config.buildData(values, imageId), _status: draft ? "draft" : "published" } as never;
 
-        try {
-            const label = draft ? "saved as draft" : "published";
-            if (config.mode === "edit" && config.editId) {
-                const result = await config.updateMutation.mutateAsync({
-                    id: config.editId,
-                    data,
-                    draft,
-                });
-                await Promise.all([
-                    queryClient.invalidateQueries({ queryKey: [listQueryKey] }),
-                    queryClient.invalidateQueries({ queryKey: [byIdQueryKey] }),
-                ]);
-                message.success(`${config.entityName} ${label}!`);
-                navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
-            } else {
-                const result = await config.createMutation.mutateAsync({
-                    data,
-                    draft,
-                });
-                await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
-                message.success(`${config.entityName} ${label}!`);
-                navigate(`${config.routePrefix}/${config.getCreateId(result)}`);
+            try {
+                const label = draft ? "saved as draft" : "published";
+                if (config.mode === "edit" && config.editId) {
+                    const result = await config.updateMutation.mutateAsync({
+                        id: config.editId,
+                        data,
+                        draft,
+                    });
+                    await Promise.all([queryClient.invalidateQueries({ queryKey: [listQueryKey] }), queryClient.invalidateQueries({ queryKey: [byIdQueryKey] })]);
+                    message.success(`${config.entityName} ${label}!`);
+                    navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
+                } else {
+                    const result = await config.createMutation.mutateAsync({
+                        data,
+                        draft,
+                    });
+                    await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
+                    message.success(`${config.entityName} ${label}!`);
+                    navigate(`${config.routePrefix}/${config.getCreateId(result)}`);
+                }
+            } catch (e: unknown) {
+                message.error(e instanceof Error ? e.message : "Something went wrong");
             }
-        } catch (e: unknown) {
-            message.error(e instanceof Error ? e.message : "Something went wrong");
-        }
-    }, [config, navigate, queryClient, listQueryKey, byIdQueryKey]);
+        },
+        [config, navigate, queryClient, listQueryKey, byIdQueryKey],
+    );
 
     return { form, draftRef, loading, onFinish };
 };

@@ -1,12 +1,4 @@
-import {
-    QueryKey,
-    useMutation,
-    useQueries,
-    UseMutationOptions,
-    UseMutationResult,
-    UseQueryOptions,
-    UseQueryResult,
-} from "@tanstack/react-query";
+import { QueryKey, useMutation, useQueries, UseMutationOptions, UseMutationResult, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import {
     CartBySecretDocument,
     useCartBySecretQuery as useCartBySecretQuerySingle,
@@ -160,77 +152,51 @@ import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
 import { combineResult, deepMergeConcatArrays } from "../utils";
 
-export type GeneratedUseQueryHook<TQueryFnData, TVariables> =
-    (<TData = TQueryFnData, TError = unknown>(
-        variables: TVariables,
-        options?: Omit<UseQueryOptions<TQueryFnData, TError, TData>, "queryKey"> & {
-            queryKey?: UseQueryOptions<TQueryFnData, TError, TData>["queryKey"];
-        },
-    ) => UseQueryResult<TData, TError>) & {
-        getKey: (variables: TVariables) => QueryKey;
-        fetcher: (
-            variables: TVariables,
-            options?: RequestInit["headers"],
-        ) => () => Promise<TQueryFnData>;
-    };
+export type GeneratedUseQueryHook<TQueryFnData, TVariables> = (<TData = TQueryFnData, TError = unknown>(
+    variables: TVariables,
+    options?: Omit<UseQueryOptions<TQueryFnData, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<TQueryFnData, TError, TData>["queryKey"];
+    },
+) => UseQueryResult<TData, TError>) & {
+    getKey: (variables: TVariables) => QueryKey;
+    fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TQueryFnData>;
+};
 
-type QueryVariablesWithUrl<TVariables extends object | undefined> =
-    TVariables extends undefined
-        ? { url?: string }
-        : TVariables extends Record<string, never>
-            ? { url?: string }
-            : TVariables & { url?: string };
+type QueryVariablesWithUrl<TVariables extends object | undefined> = TVariables extends undefined
+    ? { url?: string }
+    : TVariables extends Record<string, never>
+      ? { url?: string }
+      : TVariables & { url?: string };
 
-type MutationVariablesWithUrl<TVariables extends object | undefined> =
-    (TVariables extends undefined ? {} : TVariables) & { url?: string };
+type MutationVariablesWithUrl<TVariables extends object | undefined> = (TVariables extends undefined ? {} : TVariables) & { url?: string };
 
 export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
-    <TError = unknown, TContext = unknown>(
-        options?: UseMutationOptions<TData, TError, TVariables, TContext>,
-    ): UseMutationResult<TData, TError, TVariables, TContext>;
-    fetcher: (
-        variables: TVariables,
-        options?: RequestInit["headers"],
-    ) => () => Promise<TData>;
+    <TError = unknown, TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>): UseMutationResult<TData, TError, TVariables, TContext>;
+    fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TData>;
 };
 
 export type EnhancedUseMutationHook<TData, TVariables extends object | undefined> = {
     <TError = unknown, TContext = unknown>(
         options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
     ): UseMutationResult<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>;
-    fetcher: (
-        variables: MutationVariablesWithUrl<TVariables>,
-        options?: RequestInit["headers"],
-    ) => () => Promise<TData>;
+    fetcher: (variables: MutationVariablesWithUrl<TVariables>, options?: RequestInit["headers"]) => () => Promise<TData>;
 };
 
 export const enhancedMutationFactory = <TData, TVariables extends object | undefined>(
     _useHook: GeneratedUseMutationHook<TData, TVariables>,
     mutation: string,
 ): EnhancedUseMutationHook<TData, TVariables> => {
-    const useEnhancedMutation = <TError = unknown, TContext = unknown>(
-        options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
-    ) => {
-        return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>(
-            {
-                mutationFn: (variables) => {
-                    const { url, ...rest } = variables;
-                    return gqlFetcher<TData, TVariables>(
-                        mutation,
-                        rest as TVariables,
-                        undefined,
-                        url,
-                    )();
-                },
-                ...options,
+    const useEnhancedMutation = <TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">) => {
+        return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>({
+            mutationFn: (variables) => {
+                const { url, ...rest } = variables;
+                return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, undefined, url)();
             },
-        );
+            ...options,
+        });
     };
 
-    useEnhancedMutation.fetcher = (
-        variables: MutationVariablesWithUrl<TVariables>,
-        options?: RequestInit["headers"],
-    ) => {
+    useEnhancedMutation.fetcher = (variables: MutationVariablesWithUrl<TVariables>, options?: RequestInit["headers"]) => {
         const { url, ...rest } = variables;
         return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url);
     };
@@ -245,20 +211,14 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
 ) => {
     return (variables?: QueryVariablesWithUrl<TVariables>, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
         const { enabled } = useEndpointContext();
-        const urls = (variables?.url ? [variables.url] : enabled);
+        const urls = variables?.url ? [variables.url] : enabled;
         return useQueries({
             queries: urls.map((url) => ({
                 queryKey: [...useHook.getKey(variables as TVariables), url],
-                queryFn: gqlFetcher<TQueryFnData, TVariables>(
-                    query,
-                    variables as TVariables,
-                    options,
-                    url,
-                ),
+                queryFn: gqlFetcher<TQueryFnData, TVariables>(query, variables as TVariables, options, url),
                 ...params,
             })),
-            combine: (result) =>
-                combineResult(result, mergeAction),
+            combine: (result) => combineResult(result, mergeAction),
         });
     };
 };

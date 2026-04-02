@@ -6,7 +6,6 @@ import { useEndpointContext } from "../EndpointContext";
 import { useUpdateUserByIdMutation } from "../hooks";
 import type { NicknameFormValues } from "./types";
 import { validateSelectedProfileServerUser } from "./utils";
-
 type ProfileNicknameCardProps = {
     currentName?: string | null;
     selectedServerUrl: string;
@@ -14,38 +13,27 @@ type ProfileNicknameCardProps = {
     selectedServerUserLoading: boolean;
     onUserUpdated: () => Promise<void>;
 };
-
-export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardProps> = ({
-    currentName,
-    selectedServerUrl,
-    selectedServerUserId,
-    selectedServerUserLoading,
-    onUserUpdated,
-}) => {
+export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardProps> = (props) => {
     const auth = useAuth();
     const { authUrl } = useEndpointContext();
     const [form] = Form.useForm<NicknameFormValues>();
     const mutation = useUpdateUserByIdMutation();
-
     React.useEffect(() => {
         form.resetFields();
-    }, [form, selectedServerUrl]);
-
+    }, [form, props.selectedServerUrl]);
     const handleFinish = async (values: NicknameFormValues) => {
         try {
             await mutation.mutateAsync({
-                id: selectedServerUserId!,
+                id: props.selectedServerUserId!,
                 data: {
                     name: values.name,
                 },
-                url: selectedServerUrl,
+                url: props.selectedServerUrl,
             });
-
-            if (selectedServerUrl === authUrl && auth.isAuthenticated) {
+            if (props.selectedServerUrl === authUrl && auth.isAuthenticated) {
                 await auth.signinSilent();
             }
-
-            await onUserUpdated();
+            await props.onUserUpdated();
             message.success("Nickname updated");
             form.resetFields();
         } catch (error) {
@@ -53,31 +41,25 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
             message.error("Failed to update nickname");
         }
     };
-
     return (
         <Card title="Change Nickname" size="small" className="Profile__card">
             <Form form={form} layout="inline" onFinish={handleFinish}>
                 <Form.Item
                     name="name"
                     rules={[
-                        { required: true, message: "Enter a nickname" },
                         {
-                            validator: async () => validateSelectedProfileServerUser(selectedServerUrl, selectedServerUserId),
+                            required: true,
+                            message: "Enter a nickname",
+                        },
+                        {
+                            validator: async () => validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUserId),
                         },
                     ]}
                 >
-                    <Input
-                        prefix={<UserOutlined />}
-                        placeholder={currentName || "New nickname"}
-                    />
+                    <Input prefix={<UserOutlined />} placeholder={props.currentName || "New nickname"} />
                 </Form.Item>
                 <Form.Item>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        loading={mutation.isPending}
-                        disabled={selectedServerUserLoading}
-                    >
+                    <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={props.selectedServerUserLoading}>
                         Update
                     </Button>
                 </Form.Item>

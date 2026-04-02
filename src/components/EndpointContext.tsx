@@ -1,14 +1,7 @@
 import * as React from "react";
-import {
-    useQueries,
-} from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
-import {
-    useListPublishedSyndicationUrlsQuery,
-    ListPublishedSyndicationUrlsQueryVariables,
-    ListPublishedSyndicationUrlsQuery,
-    ListPublishedSyndicationUrlsDocument,
-} from "../generated/graphql";
+import { useListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables, ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsDocument } from "../generated/graphql";
 import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
 import { combineResult, deepMergeConcatArrays, mergeSyndicationUrls } from "../utils";
@@ -26,14 +19,9 @@ const defaultUrls: URL[] = [{ enabled: true, value: BACKEND_URL, name: "Main" }]
 
 export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[]) => URL[]) | URL[]) => void) => {
     const queries = useQueries({
-        queries: urls.map(url => ({
+        queries: urls.map((url) => ({
             queryKey: [...useListPublishedSyndicationUrlsQuery.getKey({}), url.value],
-            queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
-                ListPublishedSyndicationUrlsDocument,
-                {},
-                undefined,
-                url.value,
-            )
+            queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, {}, undefined, url.value),
         })),
         combine: (result) => {
             return combineResult(result, deepMergeConcatArrays);
@@ -58,11 +46,7 @@ export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChi
     const enabled = React.useMemo(() => urls.filter(({ enabled }) => enabled).map(({ value }) => value), [urls]);
     useSyndicationQuery(urls, setUrls);
 
-    return (
-        <EndpointContext.Provider value={{ setUrls, urls, enabled, authUrl, setAuthUrl }}>
-            {props.children}
-        </EndpointContext.Provider>
-    );
+    return <EndpointContext.Provider value={{ setUrls, urls, enabled, authUrl, setAuthUrl }}>{props.children}</EndpointContext.Provider>;
 };
 
 export const useEndpointContext = () => React.useContext(EndpointContext);

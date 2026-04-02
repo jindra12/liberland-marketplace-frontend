@@ -4,7 +4,6 @@ import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from "@geoapify/react-g
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 import type { CSSProperties } from "react";
 import type { GeoapifyFeature } from "./types";
-
 type GeoapifyAddressSearchModalProps = {
     open: boolean;
     geoapifyApiKey: string;
@@ -14,53 +13,36 @@ type GeoapifyAddressSearchModalProps = {
     onSearchValueChange: (value: string) => void;
     onPlaceSelect: (feature: GeoapifyFeature) => void;
 };
-
-export const GeoapifyAddressSearchModal: React.FunctionComponent<GeoapifyAddressSearchModalProps> = ({
-    open,
-    geoapifyApiKey,
-    searchValue,
-    geoapifyStyles,
-    onCancel,
-    onSearchValueChange,
-    onPlaceSelect,
-}) => {
-    if (!geoapifyApiKey) {
+export const GeoapifyAddressSearchModal: React.FunctionComponent<GeoapifyAddressSearchModalProps> = (props) => {
+    if (!props.geoapifyApiKey) {
         return null;
     }
-
     return (
         <Modal
-            open={open}
+            open={props.open}
             title="Search address"
             className="Order__geoapifyModal"
-            onCancel={onCancel}
+            onCancel={props.onCancel}
             maskClosable
             destroyOnHidden
             footer={[
-                <Button
-                    key="cancel"
-                    danger
-                    type="primary"
-                    onClick={onCancel}
-                >
+                <Button key="cancel" danger type="primary" onClick={props.onCancel}>
                     Cancel
                 </Button>,
             ]}
         >
-            <Typography.Paragraph className="Order__geoapifyModalCopy">
-                Start typing and select a suggestion to add the shipping address.
-            </Typography.Paragraph>
+            <Typography.Paragraph className="Order__geoapifyModalCopy">Start typing and select a suggestion to add the shipping address.</Typography.Paragraph>
 
-            <div className="Order__geoapifyInput" style={geoapifyStyles}>
-                <GeoapifyContext apiKey={geoapifyApiKey}>
+            <div className="Order__geoapifyInput" style={props.geoapifyStyles}>
+                <GeoapifyContext apiKey={props.geoapifyApiKey}>
                     <GeoapifyGeocoderAutocomplete
                         placeholder="Search shipping address"
                         lang="en"
                         limit={8}
                         addDetails
-                        value={searchValue}
-                        onUserInput={onSearchValueChange}
-                        placeSelect={onPlaceSelect}
+                        value={props.searchValue}
+                        onUserInput={props.onSearchValueChange}
+                        placeSelect={props.onPlaceSelect}
                     />
                 </GeoapifyContext>
             </div>

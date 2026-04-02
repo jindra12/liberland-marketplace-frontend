@@ -43,10 +43,7 @@ const toEncodedPathValue = (value: string | string[]): string => {
     return encodeURIComponent(value);
 };
 
-const resolvePathnameWithQuery = (
-    pathname: string,
-    query: Record<string, string | string[] | undefined>,
-): string => {
+const resolvePathnameWithQuery = (pathname: string, query: Record<string, string | string[] | undefined>): string => {
     let resolved = pathname;
 
     Object.entries(query).forEach(([key, value]) => {
@@ -112,11 +109,7 @@ const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] =>
     ];
 };
 
-const buildCollectionJsonLd = (
-    name: string,
-    path: string,
-    description: string,
-): ((canonicalPath: string) => Record<string, unknown>[]) => {
+const buildCollectionJsonLd = (name: string, path: string, description: string): ((canonicalPath: string) => Record<string, unknown>[]) => {
     return (canonicalPath: string) => [
         {
             "@context": "https://schema.org",
@@ -151,12 +144,7 @@ const buildCollectionJsonLd = (
     ];
 };
 
-const buildDetailJsonLd = (
-    sectionName: string,
-    sectionPath: string,
-    detailLabel: string,
-    description: string,
-): ((canonicalPath: string) => Record<string, unknown>[]) => {
+const buildDetailJsonLd = (sectionName: string, sectionPath: string, detailLabel: string, description: string): ((canonicalPath: string) => Record<string, unknown>[]) => {
     return (canonicalPath: string) => [
         {
             "@context": "https://schema.org",
@@ -334,12 +322,7 @@ const ShellPage: React.FunctionComponent = () => {
         setBrowserCanonicalPath(normalizePath(window.location.pathname));
     }, [router.asPath]);
 
-    const serverResolvedPath = normalizePath(
-        resolvePathnameWithQuery(
-            router.pathname || "/",
-            router.query as Record<string, string | string[] | undefined>,
-        ),
-    );
+    const serverResolvedPath = normalizePath(resolvePathnameWithQuery(router.pathname || "/", router.query as Record<string, string | string[] | undefined>));
     const asPath = normalizePath(router.asPath || "");
 
     const canonicalPath = React.useMemo(() => {

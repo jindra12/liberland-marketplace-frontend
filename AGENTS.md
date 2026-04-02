@@ -1,6 +1,7 @@
 # Codex Workspace Instructions
 
 ## Notifications
+
 - Before any command that requests elevated permissions, send a desktop notification first.
 - When a task is complete, send a desktop notification before the final user-facing response.
 - Prefer the helper script at `scripts/codex-notify.sh`.
@@ -8,11 +9,13 @@
 - If desktop notifications are temporarily unavailable, continue the task and mention that notification delivery failed.
 
 ## Notification Messages
+
 - Permission request: clearly say that Codex needs approval and summarize the action.
 - Task completion: clearly say that the requested work is done.
 - Read CLAUDE.md in the same folder for further instructions
 
 ## Code Hygiene
+
 - Do not use `.trim()` unless it adds clear, necessary value to the behavior
 - Do not use `|| undefined` to coerce values. If a value can really be `null`, reflect that in the type. If a prop specifically needs `undefined`, use an explicit `!value ? undefined : value` check instead.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
@@ -33,6 +36,10 @@
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.
 - When a component stops being small and readable, split it into a component family folder and move stateless helpers out of the component file into `utils.ts/x`.
+- A component should have exactly one purpose. If a component starts coordinating multiple concerns or multiple chain integrations, split it into smaller focused components instead of branching inside one file.
+- Avoid components with more than 2 hooks. If a component needs a third hook, stop and split the behavior into smaller components or an observer/helper component.
+- Never destructure props. Always accept a single `props` parameter and read values directly from `props.foo`.
+- Do not introduce useless local constants that only rename an existing value. If a value is just `props.foo`, use `props.foo` directly instead of mirroring it into `const foo = props.foo`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly.

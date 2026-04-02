@@ -9,9 +9,7 @@ import "../../node_modules/@uiw/react-md-editor/esm/components/Toolbar/Child.css
 import "../../node_modules/@uiw/react-md-editor/esm/components/TextArea/index.css";
 import "../../node_modules/@uiw/react-md-editor/esm/components/DragBar/index.css";
 import "../index.scss";
-
-const App = ({ Component, pageProps }: AppProps) => (
-    <Component {...pageProps} />
-);
-
+const App = (props: AppProps) => {
+    return <props.Component {...props.pageProps} />;
+};
 export default App;

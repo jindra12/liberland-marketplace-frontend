@@ -52,31 +52,19 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/jobs/${job.id}`}>{job.title}</Link>
-                        {job.company?.identity?.name && (
-                            <IdentityTagLink identity={job.company.identity} color="success" />
-                        )}
+                        {job.company?.identity?.name && <IdentityTagLink identity={job.company.identity} color="success" />}
                     </Flex>
                 ),
                 avatar: (job) => {
                     const imageSrc = getImage(job) || getImage(job.company);
                     return imageSrc ? (
                         <Link to={`/jobs/${job.id}`}>
-                            <Avatar
-                                shape="square"
-                                size={80}
-                                src={imageSrc}
-                                alt={job.title || ""}
-                                className="EntityList__avatar"
-                            />
+                            <Avatar shape="square" size={80} src={imageSrc} alt={job.title || ""} className="EntityList__avatar" />
                         </Link>
                     ) : undefined;
                 },
                 body: (job) => {
-                    const salary = formatSalary(
-                        job.salaryRange?.min,
-                        job.salaryRange?.max,
-                        job.salaryRange?.currency
-                    );
+                    const salary = formatSalary(job.salaryRange?.min, job.salaryRange?.max, job.salaryRange?.currency);
                     const { bounty, positions } = getJobMeta(job);
                     const isInactive = job.isActive === false;
                     const employmentType = formatEmploymentType(job.employmentType);
@@ -101,7 +89,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                         </div>
                     );
                 },
-                actions: (job) => (
+                actions: (job) =>
                     md ? (
                         <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
                             <ListShareDetailButtons
@@ -133,8 +121,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                             />
                             <ApplyButton url={job.applyUrl} block />
                         </Flex>
-                    )
-                ),
+                    ),
             }}
         />
     );

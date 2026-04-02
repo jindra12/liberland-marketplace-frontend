@@ -19,8 +19,7 @@ export const CURRENCIES: Record<string, CurrencyMeta> = {
     LLM: { code: "LLM", name: "Liberland Merit", symbol: "LLM", isCrypto: true },
 };
 
-export const isCryptoCurrency = (code: string): boolean =>
-    CURRENCIES[code]?.isCrypto ?? false;
+export const isCryptoCurrency = (code: string): boolean => CURRENCIES[code]?.isCrypto ?? false;
 
 export const currencyOptions = Object.values(CURRENCIES).map((c) => ({
     value: c.code,

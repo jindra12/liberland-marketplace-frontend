@@ -8,38 +8,34 @@ import { formatUsdFromCents, getImage } from "../../utils";
 import { CartItemCount } from "../cart/CartItemCount";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 import { RouteButton } from "../RouteButton";
-
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
-
 type ProductServiceCardProps = {
     items: ProductItem[];
     loading?: boolean;
     totalDocs?: number;
     identityId?: string;
 };
-
-export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
-    items,
-    loading,
-    identityId,
-    totalDocs,
-}) => {
+export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = (props) => {
     const { xl } = Grid.useBreakpoint();
-    const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
+    const remaining = props.totalDocs !== undefined ? props.totalDocs - props.items.length : 0;
     return (
         <Card
             className="SplashEntityCard SplashEntityCard--products"
-            title={(
+            title={
                 <Typography.Title level={3} className="SplashEntityCard__title">
-                    <Link to="/products-services" className="SplashEntityCard__titleLink">Products / Services</Link>
+                    <Link to="/products-services" className="SplashEntityCard__titleLink">
+                        Products / Services
+                    </Link>
                 </Typography.Title>
-            )}
+            }
         >
             <List
                 className="SplashEntityCard__list"
-                loading={loading}
-                dataSource={items}
-                locale={{ emptyText: "Coming soon!" }}
+                loading={props.loading}
+                dataSource={props.items}
+                locale={{
+                    emptyText: "Coming soon!",
+                }}
                 renderItem={(product) => {
                     const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                     const imageSrc = getImage(product) || getImage(product.company);
@@ -47,33 +43,21 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                     const shareTitle = product.name || "Product";
                     const shareText = `Check out ${product.name} on NSwap.`;
                     return (
-                        <List.Item
-                            actions={xl ? [(
-                                <SplashShareDetailActionRow
-                                    key={`product-actions-${product.id}`}
-                                    detailPath={detailPath}
-                                    title={shareTitle}
-                                    text={shareText}
-                                />
-                            )] : undefined}
-                        >
+                        <List.Item actions={xl ? [<SplashShareDetailActionRow key={`product-actions-${product.id}`} detailPath={detailPath} title={shareTitle} text={shareText} />] : undefined}>
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
-                                    avatar={imageSrc ? (
-                                        <Link to={detailPath}>
-                                            <Avatar
-                                                shape="square"
-                                                size={48}
-                                                src={imageSrc}
-                                                className="SplashEntityCard__avatar"
-                                            />
-                                        </Link>
-                                    ) : undefined}
-                                    title={(
+                                    avatar={
+                                        imageSrc ? (
+                                            <Link to={detailPath}>
+                                                <Avatar shape="square" size={48} src={imageSrc} className="SplashEntityCard__avatar" />
+                                            </Link>
+                                        ) : undefined
+                                    }
+                                    title={
                                         <Link to={detailPath} className="SplashEntityCard__itemLink">
                                             {product.name}
                                         </Link>
-                                    )}
+                                    }
                                 />
                                 <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                                     {price && (
@@ -81,31 +65,16 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                             {`Price: ${price}`}
                                         </Tag>
                                     )}
-                                    <CartItemCount
-                                        productId={product.id}
-                                        serverURL={product.serverURL!}
-                                    />
+                                    <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                                 </Space>
-                                {!xl && (
-                                    <SplashShareDetailActionRow
-                                        detailPath={detailPath}
-                                        title={shareTitle}
-                                        text={shareText}
-                                    />
-                                )}
+                                {!xl && <SplashShareDetailActionRow detailPath={detailPath} title={shareTitle} text={shareText} />}
                             </div>
                         </List.Item>
                     );
                 }}
             />
-            {remaining > 0 && identityId && (
-                <RouteButton
-                    to={`/products-services?tribe=${identityId}`}
-                    type="link"
-                    icon={<RightOutlined />}
-                    iconPosition="end"
-                    className="SplashEntityCard__moreLink"
-                >
+            {remaining > 0 && props.identityId && (
+                <RouteButton to={`/products-services?tribe=${props.identityId}`} type="link" icon={<RightOutlined />} iconPosition="end" className="SplashEntityCard__moreLink">
                     And +{remaining} more
                 </RouteButton>
             )}

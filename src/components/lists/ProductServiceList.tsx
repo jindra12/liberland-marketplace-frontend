@@ -10,12 +10,5 @@ export const ProductsServicesList: React.FunctionComponent = () => {
         page,
     });
 
-    return (
-        <ProductServiceListInternal
-            source="query"
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <ProductServiceListInternal source="query" page={page} query={query} setPage={setPage} />;
 };

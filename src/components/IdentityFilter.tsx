@@ -18,15 +18,6 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
     }));
 
     return (
-        <Select
-            mode="multiple"
-            placeholder="Filter by tribe"
-            value={props.selectedIds}
-            onChange={props.onChange}
-            options={options}
-            loading={query.isLoading}
-            allowClear
-            className="FilterControl"
-        />
+        <Select mode="multiple" placeholder="Filter by tribe" value={props.selectedIds} onChange={props.onChange} options={options} loading={query.isLoading} allowClear className="FilterControl" />
     );
 };

@@ -15,15 +15,5 @@ type AddToCartButtonContainerProps = {
 
 export const AddToCartButtonContainer: React.FunctionComponent<AddToCartButtonContainerProps> = (props) => {
     const me = useMeUserQuery();
-    return (
-        <Loader query={me}>
-            {(me) => (
-                <AddToCartButton
-                    {...props}
-                    isAuthenticated
-                    me={me}
-                />
-            )}
-        </Loader>
-    )
+    return <Loader query={me}>{(me) => <AddToCartButton {...props} isAuthenticated me={me} />}</Loader>;
 };

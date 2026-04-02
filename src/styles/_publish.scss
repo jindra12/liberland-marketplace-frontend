@@ -62,7 +62,10 @@
         cursor: pointer;
         border: 1px solid rgba(24, 56, 82, 0.4);
         background: linear-gradient(180deg, rgba(6, 18, 29, 0.92), rgba(4, 14, 24, 0.96));
-        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        transition:
+            transform 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease;
 
         .ant-card-body {
             padding: 24px;

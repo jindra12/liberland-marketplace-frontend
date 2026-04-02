@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-    Alert,
-    Button,
-    Card,
-    Col,
-    Flex,
-    Form,
-    Input,
-    Row,
-    Typography,
-} from "antd";
+import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "antd";
 import type { FormInstance } from "antd";
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
@@ -43,39 +33,24 @@ type OrderCreateStepProps = {
 
 export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (props) => {
     const [isShippingAddressSelectOpen, setIsShippingAddressSelectOpen] = React.useState(false);
-    const requiredChainText = props.requiredChains
-        .map((chain) => CRYPTO_CHAIN_LABELS[chain])
-        .join(", ");
+    const requiredChainText = props.requiredChains.map((chain) => CRYPTO_CHAIN_LABELS[chain]).join(", ");
 
     React.useEffect(() => {
-        props.form.setFieldsValue(buildOrderFormValues({
-            prefillFirstName: props.prefillFirstName,
-            prefillLastName: props.prefillLastName,
-            profileEmail: props.profileEmail,
-            savedShippingAddress: props.savedShippingAddress,
-        }));
-    }, [
-        props.form,
-        props.prefillFirstName,
-        props.prefillLastName,
-        props.profileEmail,
-        props.savedShippingAddress,
-    ]);
+        props.form.setFieldsValue(
+            buildOrderFormValues({
+                prefillFirstName: props.prefillFirstName,
+                prefillLastName: props.prefillLastName,
+                profileEmail: props.profileEmail,
+                savedShippingAddress: props.savedShippingAddress,
+            }),
+        );
+    }, [props.form, props.prefillFirstName, props.prefillLastName, props.profileEmail, props.savedShippingAddress]);
 
     return (
         <>
-            <Typography.Paragraph type="secondary">
-                One click will submit one order per server/cart using the same shipping and contact details.
-            </Typography.Paragraph>
+            <Typography.Paragraph type="secondary">One click will submit one order per server/cart using the same shipping and contact details.</Typography.Paragraph>
 
-            {props.requiredChains.length > 0 && (
-                <Alert
-                    showIcon
-                    type="info"
-                    message="Payment information"
-                    description={`You'll pay on ${requiredChainText}`}
-                />
-            )}
+            {props.requiredChains.length > 0 && <Alert showIcon type="info" message="Payment information" description={`You'll pay on ${requiredChainText}`} />}
 
             <Form
                 id="order-form"
@@ -91,17 +66,19 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             >
                 <Card
                     title="Shipping"
-                    extra={props.candidateProfileAddresses.length > 0 && (
-                        <Button
-                            size="small"
-                            onClick={() => {
-                                setIsShippingAddressSelectOpen(true);
-                            }}
-                            loading={props.isLoadingProfileAddresses}
-                        >
-                            Choose default address
-                        </Button>
-                    )}
+                    extra={
+                        props.candidateProfileAddresses.length > 0 && (
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    setIsShippingAddressSelectOpen(true);
+                                }}
+                                loading={props.isLoadingProfileAddresses}
+                            >
+                                Choose default address
+                            </Button>
+                        )
+                    }
                 >
                     <Form.Item
                         name="customerEmail"
@@ -116,20 +93,12 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
                     <Row gutter={12}>
                         <Col xs={24} md={12}>
-                            <Form.Item
-                                name={["shippingAddress", "firstName"]}
-                                label="First name"
-                                rules={[{ required: true, message: "Required" }]}
-                            >
+                            <Form.Item name={["shippingAddress", "firstName"]} label="First name" rules={[{ required: true, message: "Required" }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12}>
-                            <Form.Item
-                                name={["shippingAddress", "lastName"]}
-                                label="Last name"
-                                rules={[{ required: true, message: "Required" }]}
-                            >
+                            <Form.Item name={["shippingAddress", "lastName"]} label="Last name" rules={[{ required: true, message: "Required" }]}>
                                 <Input />
                             </Form.Item>
                         </Col>
@@ -166,13 +135,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
             <Flex justify="space-between" wrap gap={12}>
                 <RouteButton to="/cart">Back to cart</RouteButton>
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    form="order-form"
-                    loading={props.isSubmitting}
-                    disabled={props.cartsWithItemsCount === 0}
-                >
+                <Button type="primary" htmlType="submit" form="order-form" loading={props.isSubmitting} disabled={props.cartsWithItemsCount === 0}>
                     Create order
                 </Button>
             </Flex>

@@ -2,7 +2,6 @@ import * as React from "react";
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
 import { Space } from "antd";
 import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
-
 type IdentityAccessTagsProps = {
     allowedIdentities?: IdentityTagItem[] | null;
     disallowedIdentities?: IdentityTagItem[] | null;
@@ -11,41 +10,22 @@ type IdentityAccessTagsProps = {
     hideWhenEmpty?: boolean;
     keyPrefix?: string;
 };
-
-export const IdentityAccessTags: React.FunctionComponent<IdentityAccessTagsProps> = ({
-    allowedIdentities,
-    disallowedIdentities,
-    className,
-    showIcons = true,
-    hideWhenEmpty = false,
-    keyPrefix,
-}) => {
-    const allowed = allowedIdentities || [];
-    const disallowed = disallowedIdentities || [];
-
+export const IdentityAccessTags: React.FunctionComponent<IdentityAccessTagsProps> = (props) => {
+    const showIcons = props.showIcons === undefined ? true : props.showIcons;
+    const hideWhenEmpty = props.hideWhenEmpty === undefined ? false : props.hideWhenEmpty;
+    const allowed = props.allowedIdentities || [];
+    const disallowed = props.disallowedIdentities || [];
     if (hideWhenEmpty && !allowed.length && !disallowed.length) {
         return null;
     }
-
-    const keyBase = keyPrefix ? `${keyPrefix}-` : "";
-
+    const keyBase = props.keyPrefix ? `${props.keyPrefix}-` : "";
     return (
-        <Space size={[8, 8]} wrap className={className}>
+        <Space size={[8, 8]} wrap className={props.className}>
             {allowed.map((identity) => (
-                <IdentityTagLink
-                    key={`${keyBase}allowed-${identity.id}`}
-                    identity={identity}
-                    color="success"
-                    icon={showIcons ? <UsergroupAddOutlined /> : undefined}
-                />
+                <IdentityTagLink key={`${keyBase}allowed-${identity.id}`} identity={identity} color="success" icon={showIcons ? <UsergroupAddOutlined /> : undefined} />
             ))}
             {disallowed.map((identity) => (
-                <IdentityTagLink
-                    key={`${keyBase}disallowed-${identity.id}`}
-                    identity={identity}
-                    color="error"
-                    icon={showIcons ? <MinusCircleFilled /> : undefined}
-                />
+                <IdentityTagLink key={`${keyBase}disallowed-${identity.id}`} identity={identity} color="error" icon={showIcons ? <MinusCircleFilled /> : undefined} />
             ))}
         </Space>
     );

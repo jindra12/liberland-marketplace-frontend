@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Button } from "antd";
 import type { ButtonProps } from "antd";
-
 type AddToCartSubmitButtonProps = {
     ariaLabel?: string;
     disabled: boolean;
@@ -10,26 +9,10 @@ type AddToCartSubmitButtonProps = {
     size?: ButtonProps["size"];
     text?: string;
 };
-
-export const AddToCartSubmitButton: React.FunctionComponent<AddToCartSubmitButtonProps> = ({
-    ariaLabel,
-    disabled,
-    icon,
-    loading,
-    size,
-    text,
-}) => {
+export const AddToCartSubmitButton: React.FunctionComponent<AddToCartSubmitButtonProps> = (props) => {
     return (
-        <Button
-            type="primary"
-            size={size}
-            icon={icon}
-            htmlType="submit"
-            loading={loading}
-            disabled={disabled}
-            aria-label={ariaLabel}
-        >
-            {text}
+        <Button type="primary" size={props.size} icon={props.icon} htmlType="submit" loading={props.loading} disabled={props.disabled} aria-label={props.ariaLabel}>
+            {props.text}
         </Button>
     );
 };

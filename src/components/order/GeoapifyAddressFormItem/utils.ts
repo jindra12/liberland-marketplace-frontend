@@ -1,12 +1,7 @@
 import { theme } from "antd";
 import type { NamePath } from "antd/es/form/interface";
 import type { CSSProperties } from "react";
-import type {
-    AddressFields,
-    GeoapifyAddressSelection,
-    GeoapifyFeature,
-    GeoapifyFeatureProperties,
-} from "./types";
+import type { AddressFields, GeoapifyAddressSelection, GeoapifyFeature, GeoapifyFeatureProperties } from "./types";
 
 type ThemeToken = ReturnType<typeof theme.useToken>["token"];
 
@@ -15,13 +10,9 @@ export const toPath = (name: NamePath): Array<string | number> => {
 };
 
 const buildAddressLine1 = (properties: GeoapifyFeatureProperties) => {
-    const lineFromParts = [properties.housenumber, properties.street]
-        .filter(Boolean)
-        .join(" ");
+    const lineFromParts = [properties.housenumber, properties.street].filter(Boolean).join(" ");
 
-    return lineFromParts
-        || properties.address_line1
-        || properties.formatted;
+    return lineFromParts || properties.address_line1 || properties.formatted;
 };
 
 export const getAddressSelection = (feature: GeoapifyFeature): GeoapifyAddressSelection | undefined => {
@@ -42,16 +33,7 @@ export const getAddressSelection = (feature: GeoapifyFeature): GeoapifyAddressSe
 };
 
 export const buildAddressSummary = (address?: AddressFields) => {
-    return [
-        address?.addressLine1,
-        address?.addressLine2,
-        address?.city,
-        address?.state,
-        address?.postalCode,
-        address?.country,
-    ]
-        .filter(Boolean)
-        .join(", ");
+    return [address?.addressLine1, address?.addressLine2, address?.city, address?.state, address?.postalCode, address?.country].filter(Boolean).join(", ");
 };
 
 export const createGeoapifyStyles = (token: ThemeToken): CSSProperties => {

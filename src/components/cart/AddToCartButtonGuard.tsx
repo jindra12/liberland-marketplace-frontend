@@ -18,5 +18,5 @@ export const AddToCartButtonGuard: React.FunctionComponent<AddToCartButtonGuardP
         <AuthGuard fallback={<AddToCartButton {...props} me={[]} />}>
             <AddToCartButtonContainer {...props} />
         </AuthGuard>
-    )
+    );
 };

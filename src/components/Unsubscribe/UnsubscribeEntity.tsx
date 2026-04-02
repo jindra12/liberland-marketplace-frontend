@@ -1,45 +1,34 @@
 import * as React from "react";
 import { Avatar, Button, Flex, Skeleton, Space, Tag, Typography, message } from "antd";
-import {
-    CheckCircleFilled,
-    HomeOutlined,
-    MailOutlined,
-    ReloadOutlined,
-    StopFilled,
-} from "@ant-design/icons";
+import { CheckCircleFilled, HomeOutlined, MailOutlined, ReloadOutlined, StopFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTimeout } from "usehooks-ts";
 import { useSubscriptionActions } from "../share/SubscribeButton/useSubscriptionActions";
 import { getSubscriptionErrorMessage } from "../share/SubscribeButton/utils";
 import { isAlreadyUnsubscribedError } from "./utils";
 import type { UnsubscribeEntityProps } from "./types";
-
-export const UnsubscribeEntity = <TData,>({
-    params,
-    query,
-    resolveEntity,
-}: UnsubscribeEntityProps<TData>) => {
+export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) => {
     const navigate = useNavigate();
     const [messageApi, messageContextHolder] = message.useMessage();
     const [isComplete, setIsComplete] = React.useState(false);
-    const entity = query.data ? resolveEntity(query.data) : null;
+    const entity = props.query.data ? props.resolveEntity(props.query.data) : null;
     const { unsubscribe, isPending, entityLabel } = useSubscriptionActions({
-        collection: params.collection,
-        targetID: params.id,
+        collection: props.params.collection,
+        targetID: props.params.id,
         serverURL: entity?.serverURL,
     });
-
-    useTimeout(() => {
-        navigate("/");
-    }, isComplete ? 2200 : null);
-
+    useTimeout(
+        () => {
+            navigate("/");
+        },
+        isComplete ? 2200 : null,
+    );
     const handleConfirm = async () => {
         if (!entity) {
             return;
         }
-
         try {
-            await unsubscribe(params.email);
+            await unsubscribe(props.params.email);
             messageApi.success(`You will no longer receive ${entityLabel} update emails for ${entity.title}.`);
             setIsComplete(true);
         } catch (error) {
@@ -48,17 +37,15 @@ export const UnsubscribeEntity = <TData,>({
                 setIsComplete(true);
                 return;
             }
-
             messageApi.error(getSubscriptionErrorMessage(error, "unsubscribe", entityLabel));
         }
     };
-
     const handleRetryLookup = async () => {
-        await query.refetch({ throwOnError: false });
+        await props.query.refetch({
+            throwOnError: false,
+        });
     };
-
-    const isLoading = query.isLoading || (query.isFetching && !query.data);
-
+    const isLoading = props.query.isLoading || (props.query.isFetching && !props.query.data);
     if (isLoading) {
         return (
             <div className="UnsubscribePage">
@@ -73,24 +60,40 @@ export const UnsubscribeEntity = <TData,>({
                             <Skeleton.Avatar active size={72} shape="square" />
                             <Flex vertical gap={12} flex={1}>
                                 <Skeleton.Input active size="large" block />
-                                <Skeleton active paragraph={{ rows: 2, width: ["100%", "82%"] }} title={false} />
+                                <Skeleton
+                                    active
+                                    paragraph={{
+                                        rows: 2,
+                                        width: ["100%", "82%"],
+                                    }}
+                                    title={false}
+                                />
                             </Flex>
                         </Flex>
                         <Flex vertical gap={12} className="UnsubscribePage__loadingRow">
-                            <Skeleton.Input active size="small" style={{ width: 220 }} />
-                            <Skeleton active paragraph={{ rows: 2, width: ["94%", "72%"] }} title={false} />
+                            <Skeleton.Input
+                                active
+                                size="small"
+                                style={{
+                                    width: 220,
+                                }}
+                            />
+                            <Skeleton
+                                active
+                                paragraph={{
+                                    rows: 2,
+                                    width: ["94%", "72%"],
+                                }}
+                                title={false}
+                            />
                         </Flex>
                     </Flex>
                 </div>
             </div>
         );
     }
-
-    if (query.error) {
-        const errorMessage = query.error instanceof Error
-            ? query.error.message
-            : "We couldn't load the item behind this unsubscribe link.";
-
+    if (props.query.error) {
+        const errorMessage = props.query.error instanceof Error ? props.query.error.message : "We couldn't load the item behind this unsubscribe link.";
         return (
             <div className="UnsubscribePage">
                 {messageContextHolder}
@@ -108,25 +111,14 @@ export const UnsubscribeEntity = <TData,>({
                                 <Typography.Title level={1} className="UnsubscribePage__title">
                                     We couldn&apos;t verify this unsubscribe request
                                 </Typography.Title>
-                                <Typography.Paragraph className="UnsubscribePage__description">
-                                    {errorMessage}
-                                </Typography.Paragraph>
+                                <Typography.Paragraph className="UnsubscribePage__description">{errorMessage}</Typography.Paragraph>
                             </div>
                         </Flex>
                         <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                            <Button
-                                type="primary"
-                                icon={<ReloadOutlined />}
-                                className="UnsubscribePage__primaryAction"
-                                onClick={handleRetryLookup}
-                            >
+                            <Button type="primary" icon={<ReloadOutlined />} className="UnsubscribePage__primaryAction" onClick={handleRetryLookup}>
                                 Retry lookup
                             </Button>
-                            <Button
-                                icon={<HomeOutlined />}
-                                className="UnsubscribePage__secondaryAction"
-                                onClick={() => navigate("/")}
-                            >
+                            <Button icon={<HomeOutlined />} className="UnsubscribePage__secondaryAction" onClick={() => navigate("/")}>
                                 Back to homepage
                             </Button>
                         </Space>
@@ -135,7 +127,6 @@ export const UnsubscribeEntity = <TData,>({
             </div>
         );
     }
-
     if (!entity) {
         return (
             <div className="UnsubscribePage">
@@ -154,16 +145,10 @@ export const UnsubscribeEntity = <TData,>({
                                 <Typography.Title level={1} className="UnsubscribePage__title">
                                     We couldn&apos;t find this item anymore
                                 </Typography.Title>
-                                <Typography.Paragraph className="UnsubscribePage__description">
-                                    The unsubscribe link is valid, but the item behind it is no longer available.
-                                </Typography.Paragraph>
+                                <Typography.Paragraph className="UnsubscribePage__description">The unsubscribe link is valid, but the item behind it is no longer available.</Typography.Paragraph>
                             </div>
                         </Flex>
-                        <Button
-                            icon={<HomeOutlined />}
-                            className="UnsubscribePage__secondaryAction"
-                            onClick={() => navigate("/")}
-                        >
+                        <Button icon={<HomeOutlined />} className="UnsubscribePage__secondaryAction" onClick={() => navigate("/")}>
                             Back to homepage
                         </Button>
                     </Flex>
@@ -171,7 +156,6 @@ export const UnsubscribeEntity = <TData,>({
             </div>
         );
     }
-
     if (isComplete) {
         return (
             <div className="UnsubscribePage">
@@ -191,23 +175,15 @@ export const UnsubscribeEntity = <TData,>({
                                     You&apos;re all set
                                 </Typography.Title>
                                 <Typography.Paragraph className="UnsubscribePage__description">
-                                    We won&apos;t send any more emails to {params.email} about {entity.title}. Redirecting you to the homepage now.
+                                    We won&apos;t send any more emails to {props.params.email} about {entity.title}. Redirecting you to the homepage now.
                                 </Typography.Paragraph>
                             </div>
                         </Flex>
                         <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                            <Button
-                                type="primary"
-                                icon={<HomeOutlined />}
-                                className="UnsubscribePage__primaryAction"
-                                onClick={() => navigate("/")}
-                            >
+                            <Button type="primary" icon={<HomeOutlined />} className="UnsubscribePage__primaryAction" onClick={() => navigate("/")}>
                                 Go to homepage
                             </Button>
-                            <Button
-                                className="UnsubscribePage__secondaryAction"
-                                onClick={() => navigate(entity.detailPath)}
-                            >
+                            <Button className="UnsubscribePage__secondaryAction" onClick={() => navigate(entity.detailPath)}>
                                 View {entity.typeLabel.toLowerCase()}
                             </Button>
                         </Space>
@@ -216,7 +192,6 @@ export const UnsubscribeEntity = <TData,>({
             </div>
         );
     }
-
     return (
         <div className="UnsubscribePage">
             {messageContextHolder}
@@ -224,9 +199,7 @@ export const UnsubscribeEntity = <TData,>({
                 <Flex vertical gap={28}>
                     <Space size={[10, 10]} wrap className="UnsubscribePage__kickerRow">
                         <span className="UnsubscribePage__eyebrow">Email Preferences</span>
-                        <Tag className="UnsubscribePage__statusTag">
-                            {entity.typeLabel} updates
-                        </Tag>
+                        <Tag className="UnsubscribePage__statusTag">{entity.typeLabel} updates</Tag>
                     </Space>
                     <Flex gap={18} align="center" className="UnsubscribePage__hero">
                         <div className="UnsubscribePage__iconWrap">
@@ -242,47 +215,28 @@ export const UnsubscribeEntity = <TData,>({
                         </div>
                     </Flex>
                     <div className="UnsubscribePage__entity">
-                        <Avatar
-                            size={72}
-                            shape="square"
-                            src={!entity.imageURL ? undefined : entity.imageURL}
-                            className="UnsubscribePage__entityAvatar"
-                        >
+                        <Avatar size={72} shape="square" src={!entity.imageURL ? undefined : entity.imageURL} className="UnsubscribePage__entityAvatar">
                             {entity.title.charAt(0).toUpperCase()}
                         </Avatar>
                         <div className="UnsubscribePage__entityBody">
-                            <Typography.Text className="UnsubscribePage__entityType">
-                                {entity.typeLabel}
-                            </Typography.Text>
+                            <Typography.Text className="UnsubscribePage__entityType">{entity.typeLabel}</Typography.Text>
                             <Typography.Title level={3} className="UnsubscribePage__entityTitle">
                                 {entity.title}
                             </Typography.Title>
-                            {entity.summary ? (
-                                <Typography.Paragraph className="UnsubscribePage__entitySummary">
-                                    {entity.summary}
-                                </Typography.Paragraph>
-                            ) : null}
+                            {entity.summary ? <Typography.Paragraph className="UnsubscribePage__entitySummary">{entity.summary}</Typography.Paragraph> : null}
                         </div>
                     </div>
                     <div className="UnsubscribePage__meta">
                         <span className="UnsubscribePage__metaChip">
                             <MailOutlined />
-                            <span>{params.email}</span>
+                            <span>{props.params.email}</span>
                         </span>
                     </div>
                     <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                        <Button
-                            type="primary"
-                            className="UnsubscribePage__primaryAction"
-                            onClick={handleConfirm}
-                            loading={isPending}
-                        >
+                        <Button type="primary" className="UnsubscribePage__primaryAction" onClick={handleConfirm} loading={isPending}>
                             Yes, unsubscribe me
                         </Button>
-                        <Button
-                            className="UnsubscribePage__secondaryAction"
-                            onClick={() => navigate(entity.detailPath)}
-                        >
+                        <Button className="UnsubscribePage__secondaryAction" onClick={() => navigate(entity.detailPath)}>
                             No, keep me subscribed
                         </Button>
                     </Space>

@@ -50,9 +50,7 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
                             ...option,
                             label: (
                                 <Flex align="center" gap="8px">
-                                    {option.image && (
-                                        <Avatar src={option.image} size={24} />
-                                    )}
+                                    {option.image && <Avatar src={option.image} size={24} />}
                                     {option.label}
                                 </Flex>
                             ),
@@ -61,14 +59,7 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
                         onSelect={props.onSelect}
                         onChange={setValue}
                     >
-                        <Input.Search
-                            size="large"
-                            placeholder="Type to search"
-                            enterButton
-                            loading={props.isLoading}
-                            onSearch={onSearch}
-                            ref={inputRef}
-                        />
+                        <Input.Search size="large" placeholder="Type to search" enterButton loading={props.isLoading} onSearch={onSearch} ref={inputRef} />
                     </AutoComplete>
                 </Flex>
             </Flex>

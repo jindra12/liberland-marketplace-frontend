@@ -19,17 +19,13 @@ export interface CompanyListInternalProps {
     page: number;
 }
 
-
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.query.data?.Companies?.hasNextPage),
-        getIdentityIds: (company) => [
-            ...(company.allowedIdentities?.map((i) => i.id) || []),
-            ...(company.identity?.id ? [company.identity.id] : []),
-        ],
+        getIdentityIds: (company) => [...(company.allowedIdentities?.map((i) => i.id) || []), ...(company.identity?.id ? [company.identity.id] : [])],
         isLoading: props.query.isLoading,
         isFetching: props.query.isFetching,
         page: props.page,
@@ -50,16 +46,10 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/companies/${company.id}`}>{company.name}</Link>
-                        {company.identity?.name && (
-                            <IdentityTagLink
-                                identity={company.identity}
-                                color="success"
-                                icon={<UsergroupAddOutlined />}
-                            />
-                        )}
+                        {company.identity?.name && <IdentityTagLink identity={company.identity} color="success" icon={<UsergroupAddOutlined />} />}
                     </Flex>
                 ),
-                actions: (company) => (
+                actions: (company) =>
                     md ? (
                         <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
                             <ListShareDetailButtons
@@ -91,27 +81,16 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 }}
                             />
                         </Flex>
-                    )
-                ),
-                avatar: (company) => company.image?.url ? (
-                    <Link to={`/companies/${company.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={getImage(company)}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
+                    ),
+                avatar: (company) =>
+                    company.image?.url ? (
+                        <Link to={`/companies/${company.id}`}>
+                            <Avatar shape="square" size={80} src={getImage(company)} className="EntityList__avatar" />
+                        </Link>
+                    ) : undefined,
                 body: (company) => (
                     <div className="EntityList__body CompanyList__body">
-                        <CompanyContactLinks
-                            website={company.website}
-                            email={company.email}
-                            phone={company.phone}
-                            variant="compact"
-                            className="CompanyList__contacts"
-                        />
+                        <CompanyContactLinks website={company.website} email={company.email} phone={company.phone} variant="compact" className="CompanyList__contacts" />
                         <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
                     </div>
                 ),

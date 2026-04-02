@@ -8,65 +8,63 @@ import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { StartupCard } from "../cards/StartupCard";
 import { useListCompaniesByIdentityQuery, useListJobsByIdentityQuery, useListProductsByIdentityQuery, useListStartupsByIdentityQuery } from "../hooks";
-
 type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
     identityUrl: string;
     identityImageUrl?: string | null;
 };
-
-export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = ({
-    identityId,
-    identityName,
-    identityUrl,
-    identityImageUrl,
-}) => {
+export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectionProps> = (props) => {
     const companiesQuery = useListCompaniesByIdentityQuery(
         {
-            identityId,
+            identityId: props.identityId,
             page: 1,
             limit: 3,
-            url: identityUrl,
+            url: props.identityUrl,
         },
-        { enabled: Boolean(identityId) }
+        {
+            enabled: Boolean(props.identityId),
+        },
     );
-
     const jobsQuery = useListJobsByIdentityQuery(
         {
-            identityId,
+            identityId: props.identityId,
             page: 1,
             limit: 3,
-            url: identityUrl,
+            url: props.identityUrl,
         },
-        { enabled: Boolean(identityId) }
+        {
+            enabled: Boolean(props.identityId),
+        },
     );
-
     const productsQuery = useListProductsByIdentityQuery(
         {
-            identityId,
+            identityId: props.identityId,
             page: 1,
             limit: 3,
-            url: identityUrl,
+            url: props.identityUrl,
         },
-        { enabled: Boolean(identityId) }
+        {
+            enabled: Boolean(props.identityId),
+        },
     );
-
     const startupsQuery = useListStartupsByIdentityQuery(
         {
-            identityId,
+            identityId: props.identityId,
             page: 1,
             limit: 3,
         },
-        { enabled: Boolean(identityId) }
+        {
+            enabled: Boolean(props.identityId),
+        },
     );
     const identityHost = React.useMemo(() => {
         try {
-            return new URL(identityUrl).host;
+            return new URL(props.identityUrl).host;
         } catch {
             return "Syndicated marketplace";
         }
-    }, [identityUrl]);
+    }, [props.identityUrl]);
     const cardSections = [
         {
             key: "companies",
@@ -77,7 +75,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     items={companiesQuery.data?.Companies?.docs || []}
                     loading={companiesQuery.isLoading}
                     totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
-                    identityId={identityId}
+                    identityId={props.identityId}
                 />
             ),
         },
@@ -90,7 +88,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     items={productsQuery.data?.Products?.docs || []}
                     loading={productsQuery.isLoading}
                     totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
-                    identityId={identityId}
+                    identityId={props.identityId}
                 />
             ),
         },
@@ -98,14 +96,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             key: "jobs",
             hasContent: (jobsQuery.data?.Jobs?.totalDocs ?? 0) > 0 || (jobsQuery.data?.Jobs?.docs?.length ?? 0) > 0,
             loading: jobsQuery.isLoading,
-            card: (
-                <JobCard
-                    items={jobsQuery.data?.Jobs?.docs || []}
-                    loading={jobsQuery.isLoading}
-                    totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
-                    identityId={identityId}
-                />
-            ),
+            card: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined} identityId={props.identityId} />,
         },
         {
             key: "startups",
@@ -116,36 +107,31 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                     items={startupsQuery.data?.Startups?.docs || []}
                     loading={startupsQuery.isLoading}
                     totalDocs={startupsQuery.data?.Startups?.totalDocs ?? undefined}
-                    identityId={identityId}
+                    identityId={props.identityId}
                 />
             ),
         },
     ];
     const visibleCardSections = cardSections.filter((section) => section.loading || section.hasContent);
-
     if (visibleCardSections.length === 0) {
         return null;
     }
-
     const desktopSpan = visibleCardSections.length === 1 ? 24 : 12;
-
     return (
         <div className="SplashPage__identitySection">
-            <Link to={`/tribes/${identityId}`} className="SplashPage__identityHeadingLink">
+            <Link to={`/tribes/${props.identityId}`} className="SplashPage__identityHeadingLink">
                 <Flex align="center" gap={14} className="SplashPage__identityHeader">
                     <Avatar
                         size={48}
-                        src={identityImageUrl ? `${BACKEND_URL}${identityImageUrl}` : undefined}
-                        icon={!identityImageUrl ? <UsergroupAddOutlined /> : undefined}
+                        src={props.identityImageUrl ? `${BACKEND_URL}${props.identityImageUrl}` : undefined}
+                        icon={!props.identityImageUrl ? <UsergroupAddOutlined /> : undefined}
                         className="SplashPage__identityAvatar"
                     />
                     <Flex vertical gap={2}>
                         <Typography.Title level={3} className="SplashPage__identityHeading">
-                            {identityName}
+                            {props.identityName}
                         </Typography.Title>
-                        <Typography.Text className="SplashPage__identityMeta">
-                            {identityHost}
-                        </Typography.Text>
+                        <Typography.Text className="SplashPage__identityMeta">{identityHost}</Typography.Text>
                     </Flex>
                 </Flex>
             </Link>

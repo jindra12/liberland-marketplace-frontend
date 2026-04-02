@@ -1,17 +1,9 @@
 import * as React from "react";
-import { Avatar,
-    Divider,
-    Flex,
-    Grid,
-    Space,
-    Typography
-} from "antd";
+import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { Loader } from "../Loader";
 import { formatSalary, formatEmploymentType, getImage } from "../../utils";
 import { ApplyButton } from "../ApplyButton";
@@ -36,11 +28,7 @@ const JobDetail: React.FunctionComponent = () => {
         <Loader query={query}>
             {(data) => {
                 const job = data.Job;
-                const salary = formatSalary(
-                    job?.salaryRange?.min,
-                    job?.salaryRange?.max,
-                    job?.salaryRange?.currency
-                );
+                const salary = formatSalary(job?.salaryRange?.min, job?.salaryRange?.max, job?.salaryRange?.currency);
                 const { bounty, positions, companyIdentity } = getJobMeta(job);
                 const empType = formatEmploymentType(job?.employmentType);
                 const imageSrc = getImage(job) || getImage(job?.company);
@@ -64,11 +52,7 @@ const JobDetail: React.FunctionComponent = () => {
                                 </Typography.Title>
                                 {companyIdentity && (
                                     <div className="JobDetail__identityRow">
-                                        <IdentityTagLink
-                                            identity={companyIdentity}
-                                            color="success"
-                                            icon={<UsergroupAddOutlined />}
-                                        />
+                                        <IdentityTagLink identity={companyIdentity} color="success" icon={<UsergroupAddOutlined />} />
                                     </div>
                                 )}
                                 <div className="JobDetail__summary">
@@ -87,15 +71,14 @@ const JobDetail: React.FunctionComponent = () => {
                             </div>
                         </Space>
                         {isOwner && (
-                            <RouteButton to={`/jobs/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
+                            <RouteButton to={`/jobs/edit/${id}`} icon={<EditOutlined />}>
+                                Edit
+                            </RouteButton>
                         )}
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{job?.description}</Markdown>
-                            <IdentityGroups
-                                allowedIdentities={allowedIdentities}
-                                disallowedIdentities={disallowedIdentities}
-                            />
+                            <IdentityGroups allowedIdentities={allowedIdentities} disallowedIdentities={disallowedIdentities} />
                             <div>
                                 <ApplyButton url={job?.applyUrl} />
                             </div>
@@ -105,18 +88,19 @@ const JobDetail: React.FunctionComponent = () => {
                             label="Share this job"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={job ? {
-                                collection: "jobs",
-                                targetID: job.id,
-                                serverURL: job.serverURL,
-                                isSubscribed: job.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                job
+                                    ? {
+                                          collection: "jobs",
+                                          targetID: job.id,
+                                          serverURL: job.serverURL,
+                                          isSubscribed: job.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider />
-                        <EntityCommentsSection
-                            targetId={id!}
-                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
-                        />
+                        <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs} />
                     </Flex>
                 );
             }}

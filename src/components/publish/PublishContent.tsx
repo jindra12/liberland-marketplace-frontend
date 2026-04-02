@@ -10,16 +10,5 @@ export const PublishContent: React.FunctionComponent = () => {
     const emailVerified = auth.user?.profile?.email_verified;
     const { authUrl } = useEndpointContext();
 
-    return (
-        <AuthGuard redirect>
-            {!emailVerified ? (
-                <EmailVerificationWarning
-                    email={auth.user?.profile?.email as string}
-                    url={authUrl}
-                />
-            ) : (
-                <PublishForms url={authUrl} />
-            )}
-        </AuthGuard>
-    );
+    return <AuthGuard redirect>{!emailVerified ? <EmailVerificationWarning email={auth.user?.profile?.email as string} url={authUrl} /> : <PublishForms url={authUrl} />}</AuthGuard>;
 };

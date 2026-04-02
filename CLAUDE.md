@@ -20,12 +20,15 @@ Use **yarn** (not npm) for all package management and scripts.
 ## Architecture
 
 ### Data Flow
+
 GraphQL queries (`.graphql` files in `src/queries/`) → `npm run codegen` generates typed React Query hooks in `src/generated/graphql.ts` → Components consume hooks → `Loader` component handles loading/error states → Ant Design renders UI.
 
 The custom fetcher in `src/gqlFetcher.ts` uses axios to POST to the GraphQL endpoint. The backend URL is currently hardcoded there.
 
 ### Component Patterns
+
 Components follow a three-layer pattern per entity (jobs, companies, identities, products):
+
 - **Wrapper** (e.g., `Jobs.tsx`) — simple route component
 - **List** (e.g., `JobList.tsx`) — data fetching with infinite scroll pagination via `AppList`
 - **Detail** (e.g., `JobDetail.tsx`) — single entity view fetched by ID
@@ -37,12 +40,15 @@ Card components live in `src/components/cards/` — reusable across homepage, de
 Delete mutations follow the pattern: `mutation DeleteX($id: String!) { deleteX(id: $id) { id } }` in `src/queries/`. `ProfileContent.tsx` uses these with `Popconfirm`.
 
 ### Routing
+
 React Router v7 with lazy-loaded routes defined in `App.tsx`. Entity routes follow `/:entity` (list) and `/:entity/:id` (detail) patterns.
 
 ### Theming
+
 Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/lightToken.ts` and `src/darkToken.ts`, applied via `AntProvider`. Theme follows system preference.
 
 ### Webpack Overrides
+
 `config-overrides.js` adds Node.js polyfills (stream, crypto, buffer, process, vm) required by blockchain wallet libraries (Polkadot, Solana, Tron, Thirdweb).
 
 ## Key Files
@@ -70,6 +76,7 @@ Dual light/dark theme using Ant Design's ConfigProvider. Theme tokens in `src/li
 ## Testing with Playwright
 
 After making changes that affect frontend behavior (UI changes, new features, bug fixes to interactions), **proactively** use the `playwright-cli` skill to visually verify the changes in the browser. This means:
+
 - Check if the dev server is running on localhost:3001, if not, start the dev server
 - Navigate to the affected page(s) on localhost:3001
 - If you need login use user claudetest2@gmail.com password claudetest2@gmail.com
@@ -79,4 +86,5 @@ After making changes that affect frontend behavior (UI changes, new features, bu
 - **Clean up after testing** — delete any screenshot files (`.png`) created during Playwright testing so they don't clutter the repo
 
 ## Tasks
+
 No open task

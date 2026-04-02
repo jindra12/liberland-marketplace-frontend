@@ -21,9 +21,12 @@ export type GeoapifyFeatureProperties = {
     country?: string;
 };
 
-export type GeoapifyFeature = {
-    properties?: GeoapifyFeatureProperties;
-} | null | undefined;
+export type GeoapifyFeature =
+    | {
+          properties?: GeoapifyFeatureProperties;
+      }
+    | null
+    | undefined;
 
 export type AddressFields = {
     addressLine1?: string | null;

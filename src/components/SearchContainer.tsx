@@ -16,12 +16,12 @@ export const SearchContainer: React.FunctionComponent<SearchContainerProps> = (p
         case "companies":
             return <CompaniesSearch onClose={props.onClose} />;
         case "identities":
-            return <IdentitiesSearch onClose={props.onClose} />
+            return <IdentitiesSearch onClose={props.onClose} />;
         case "jobs":
-            return <JobSearch onClose={props.onClose} />
+            return <JobSearch onClose={props.onClose} />;
         case "products":
-            return <ProductsServicesSearch onClose={props.onClose} />
+            return <ProductsServicesSearch onClose={props.onClose} />;
         case "startups":
-            return <StartupsSearch onClose={props.onClose} />
+            return <StartupsSearch onClose={props.onClose} />;
     }
 };

@@ -7,9 +7,6 @@ export const useTrackPageView = (serverUrl?: string) => {
     const { hash, pathname, search } = useLocation();
 
     React.useEffect(() => {
-        analytics.page(
-            { route: `${pathname}${search}${hash}` },
-            serverUrl ? { targetUrl: serverUrl } : undefined,
-        );
+        analytics.page({ route: `${pathname}${search}${hash}` }, serverUrl ? { targetUrl: serverUrl } : undefined);
     }, [analytics, hash, pathname, search, serverUrl]);
 };

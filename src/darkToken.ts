@@ -29,8 +29,7 @@ export const darkToken: Partial<AliasToken> = {
 
     borderRadius: 18,
 
-    fontFamily:
-        "\"Montserrat\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+    fontFamily: '"Montserrat", "Segoe UI", Helvetica, Arial, sans-serif',
 
     fontSize: 18,
     fontSizeSM: 16,

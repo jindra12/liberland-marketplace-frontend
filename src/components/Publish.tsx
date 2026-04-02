@@ -22,12 +22,7 @@ const Publish: React.FunctionComponent = () => {
     };
 
     if (!serverSelected) {
-        return (
-            <PublishServerSelector
-                urls={urls}
-                onConfirm={handleServerConfirm}
-            />
-        );
+        return <PublishServerSelector urls={urls} onConfirm={handleServerConfirm} />;
     }
 
     return <PublishContent />;

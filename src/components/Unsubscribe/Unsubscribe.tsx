@@ -15,10 +15,7 @@ type UnsubscribeRouteComponentProps = {
     params: ParsedUnsubscribeParams;
 };
 
-const UNSUBSCRIBE_ROUTE_COMPONENTS: Record<
-    NotificationTargetCollection,
-    React.FunctionComponent<UnsubscribeRouteComponentProps>
-> = {
+const UNSUBSCRIBE_ROUTE_COMPONENTS: Record<NotificationTargetCollection, React.FunctionComponent<UnsubscribeRouteComponentProps>> = {
     companies: UnsubscribeCompany,
     identities: UnsubscribeIdentity,
     jobs: UnsubscribeJob,
@@ -53,12 +50,7 @@ const Unsubscribe: React.FunctionComponent = () => {
                                 </Typography.Paragraph>
                             </div>
                         </Flex>
-                        <Button
-                            type="primary"
-                            icon={<HomeOutlined />}
-                            className="UnsubscribePage__primaryAction"
-                            onClick={() => navigate("/")}
-                        >
+                        <Button type="primary" icon={<HomeOutlined />} className="UnsubscribePage__primaryAction" onClick={() => navigate("/")}>
                             Back to homepage
                         </Button>
                     </Flex>

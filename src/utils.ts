@@ -42,9 +42,12 @@ export const convertStatusCode = (status?: number): ResultStatusType => {
 
 export const getErrorMessage = (status?: number) => {
     switch (status) {
-        case 403: return "Forbidden";
-        case 404: return "Not Found";
-        default: return "Try later";
+        case 403:
+            return "Forbidden";
+        case 404:
+            return "Not Found";
+        default:
+            return "Try later";
     }
 };
 
@@ -65,8 +68,7 @@ export const timeAgo = (date: string): string => {
     return "just now";
 };
 
-const getCryptoFractionDigits = (currency: string, fallback: number): number =>
-    isCryptoCurrency(currency) ? 6 : fallback;
+const getCryptoFractionDigits = (currency: string, fallback: number): number => (isCryptoCurrency(currency) ? 6 : fallback);
 
 export const formatSalary = (min?: number | null, max?: number | null, currency?: string | null): string | null => {
     if (min == null && max == null) return null;
@@ -311,10 +313,7 @@ export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): 
     return entry.name || getSyndicationHost(entry.value);
 };
 
-export const createEndpointEntry = (
-    value: string,
-    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
-): EndpointUrl => {
+export const createEndpointEntry = (value: string, options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {}): EndpointUrl => {
     const normalizedValue = normalizeSyndicationUrl(value);
 
     return {
@@ -325,10 +324,7 @@ export const createEndpointEntry = (
     };
 };
 
-export const insertUniqueEndpoint = (
-    current: EndpointUrl[] | undefined,
-    entry: EndpointUrl,
-): EndpointUrl[] => {
+export const insertUniqueEndpoint = (current: EndpointUrl[] | undefined, entry: EndpointUrl): EndpointUrl[] => {
     const items = current || [];
 
     if (items.some((existing) => existing.value === entry.value)) {
@@ -338,30 +334,21 @@ export const insertUniqueEndpoint = (
     return [...items, entry];
 };
 
-export const setEndpointEnabled = (
-    current: EndpointUrl[] | undefined,
-    value: string,
-    nextEnabled: boolean,
-): EndpointUrl[] => {
-    return (current || []).map((entry) => (
-        entry.value === value ? { ...entry, enabled: nextEnabled } : entry
-    ));
+export const setEndpointEnabled = (current: EndpointUrl[] | undefined, value: string, nextEnabled: boolean): EndpointUrl[] => {
+    return (current || []).map((entry) => (entry.value === value ? { ...entry, enabled: nextEnabled } : entry));
 };
 
-export const mergeSyndicationUrls = (
-    current: EndpointUrl[] | undefined,
-    docs: SyndicationDoc[],
-): EndpointUrl[] => {
+export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: SyndicationDoc[]): EndpointUrl[] => {
     const items = current || [];
     const discovered = docs
         .map((doc) => {
             const normalizedValue = tryNormalizeEndpointUrl(doc.url);
             return normalizedValue
                 ? createEndpointEntry(normalizedValue, {
-                    enabled: false,
-                    name: doc.name ?? undefined,
-                    description: doc.description,
-                })
+                      enabled: false,
+                      name: doc.name ?? undefined,
+                      description: doc.description,
+                  })
                 : undefined;
         })
         .filter((entry): entry is EndpointUrl => Boolean(entry));
@@ -373,15 +360,15 @@ export const mergeSyndicationUrls = (
             return [...merged, discoveredEntry];
         }
 
-        return merged.map((entry) => (
+        return merged.map((entry) =>
             entry.value === discoveredEntry.value
                 ? {
-                    ...entry,
-                    name: discoveredEntry.name || entry.name,
-                    description: discoveredEntry.description ?? entry.description,
-                }
-                : entry
-        ));
+                      ...entry,
+                      name: discoveredEntry.name || entry.name,
+                      description: discoveredEntry.description ?? entry.description,
+                  }
+                : entry,
+        );
     }, items);
 };
 
@@ -394,7 +381,7 @@ const employmentTypeLabels: Record<Job_EmploymentType, string> = {
 };
 
 export const formatEmploymentType = (type?: Job_EmploymentType | null): string | null => {
-    return type ? employmentTypeLabels[type] ?? null : null;
+    return type ? (employmentTypeLabels[type] ?? null) : null;
 };
 
 export const parseActionLink = (value?: string | null) => {
@@ -454,21 +441,24 @@ export const toCommentItem = (comment: CommentDoc): CommentDataItem => {
 };
 
 export const buildCommentData = (docs: CommentDoc[]): CommentDataItem[] => {
-    const { roots, repliesByParent } = docs.reduce<CommentGrouping>((acc, comment) => {
-        const parentId = comment.replyComment?.id;
-        if (!parentId) {
-            acc.roots.push(comment);
-            return acc;
-        }
+    const { roots, repliesByParent } = docs.reduce<CommentGrouping>(
+        (acc, comment) => {
+            const parentId = comment.replyComment?.id;
+            if (!parentId) {
+                acc.roots.push(comment);
+                return acc;
+            }
 
-        const existingReplies = acc.repliesByParent.get(parentId) || [];
-        existingReplies.push(toCommentItem(comment));
-        acc.repliesByParent.set(parentId, existingReplies);
-        return acc;
-    }, {
-        roots: [],
-        repliesByParent: new Map<string, CommentDataItem[]>(),
-    });
+            const existingReplies = acc.repliesByParent.get(parentId) || [];
+            existingReplies.push(toCommentItem(comment));
+            acc.repliesByParent.set(parentId, existingReplies);
+            return acc;
+        },
+        {
+            roots: [],
+            repliesByParent: new Map<string, CommentDataItem[]>(),
+        },
+    );
 
     return roots.map((comment) => {
         const root = toCommentItem(comment);
@@ -479,10 +469,7 @@ export const buildCommentData = (docs: CommentDoc[]): CommentDataItem[] => {
     });
 };
 
-export const getCommentCurrentUser = (
-    isAuthenticated: boolean,
-    profile?: AuthProfile
-): CommentCurrentUser => {
+export const getCommentCurrentUser = (isAuthenticated: boolean, profile?: AuthProfile): CommentCurrentUser => {
     if (isAuthenticated) {
         const email = profile?.email;
         const name = profile?.name;
@@ -578,16 +565,14 @@ export const deepMergeConcatArrays = <T, E = T>(a: T, b: T): E =>
 
 type QueryResult<TQuery> = UseQueryResult<TQuery, Error>;
 
-const merger = <TQuery, TResult = TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TResult) => data.slice(1).reduce((acc, item) => {
-    return action(acc, item) as any as TQuery;
-}, data[0]) as any as TResult;
+const merger = <TQuery, TResult = TQuery>(data: TQuery[], action: (a: TQuery, b: TQuery) => TResult) =>
+    data.slice(1).reduce((acc, item) => {
+        return action(acc, item) as any as TQuery;
+    }, data[0]) as any as TResult;
 
-export const combineResult = <TQuery, TResult = TQuery>(
-    results: readonly QueryResult<TQuery>[],
-    mergeAction: (a: TQuery, b: TQuery) => TResult,
-) => {
-    const data = merger(results.map(r => r.data!).filter(Boolean), mergeAction);
-    const error = results.every(query => query.isError) ? results.find((query) => query.error)?.error : undefined;
+export const combineResult = <TQuery, TResult = TQuery>(results: readonly QueryResult<TQuery>[], mergeAction: (a: TQuery, b: TQuery) => TResult) => {
+    const data = merger(results.map((r) => r.data!).filter(Boolean), mergeAction);
+    const error = results.every((query) => query.isError) ? results.find((query) => query.error)?.error : undefined;
     const failureReason = results.find((query) => query.failureReason)?.failureReason;
 
     const isError = results.every((query) => query.isError);
@@ -608,9 +593,7 @@ export const combineResult = <TQuery, TResult = TQuery>(
     const isLoadingError = isError && !hasData;
     const isRefetchError = isError && hasData;
 
-    const refetch = async (
-        options?: RefetchOptions,
-    ): Promise<QueryObserverResult<TResult, Error>> => {
+    const refetch = async (options?: RefetchOptions): Promise<QueryObserverResult<TResult, Error>> => {
         const refetched = await Promise.all(results.map((query) => query.refetch(options)));
         return combineResult(refetched, mergeAction);
     };

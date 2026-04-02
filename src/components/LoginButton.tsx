@@ -3,7 +3,6 @@ import { Button } from "antd";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useAuth } from "react-oidc-context";
 import { EndpointAuthAction } from "./EndpointAuthAction";
-
 type LoginButtonProps = {
     action?: "login" | "logout";
     type?: React.ComponentProps<typeof Button>["type"];
@@ -13,37 +12,28 @@ type LoginButtonProps = {
     onAfterClick?: () => void;
     onAfterAction?: () => void | Promise<void>;
 };
-
-export const LoginButton: React.FunctionComponent<LoginButtonProps> = ({
-    action = "login",
-    type,
-    block,
-    danger,
-    className,
-    onAfterClick,
-    onAfterAction,
-}) => {
+export const LoginButton: React.FunctionComponent<LoginButtonProps> = (props) => {
+    const action = props.action === undefined ? "login" : props.action;
     const auth = useAuth();
-
     return (
         <EndpointAuthAction>
             {({ runWithEndpointSelection }) => (
                 <Button
-                    type={type}
+                    type={props.type}
                     icon={action === "login" ? <LoginOutlined /> : <LogoutOutlined />}
-                    block={block}
-                    danger={danger}
-                    className={className}
+                    block={props.block}
+                    danger={props.danger}
+                    className={props.className}
                     onClick={(event) => {
                         event.preventDefault();
                         runWithEndpointSelection(async () => {
-                            onAfterClick?.();
+                            props.onAfterClick?.();
                             if (action === "login") {
                                 await auth.signinRedirect();
                                 return;
                             }
                             await auth.removeUser();
-                            await onAfterAction?.();
+                            await props.onAfterAction?.();
                         });
                     }}
                 >

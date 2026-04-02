@@ -1,10 +1,10 @@
 import objectHash from "object-hash";
 import uniqBy from "lodash-es/uniqBy";
-import { OrderUpdate_TransactionHashes_Chain_MutationInput } from "../../generated/graphql";
-import type { MeUserQuery, MutationOrder_ShippingAddressInput } from "../../generated/graphql";
+import { OrderUpdate_TransactionHashes_Chain_MutationInput, UserUpdate_Wallets_Chain_MutationInput } from "../../generated/graphql";
+import type { MeUserQuery, MutationOrder_ShippingAddressInput, MutationUserUpdate_WalletsInput } from "../../generated/graphql";
 import type { CryptoChain, OrderForPayments } from "../../types";
 import { inferNameParts, toCryptoChain } from "../../utils";
-import type { AddressWithEmail, OrderFormValues, SubmittedOrder, TransactionHashUpdateRow } from "./types";
+import type { AddressWithEmail, OrderFormValues, PaymentProfileUsersByUrl, PaymentWalletSelection, SubmittedOrder, TransactionHashUpdateRow } from "./types";
 
 type OrderItem = NonNullable<NonNullable<Pick<OrderForPayments, "items">["items"]>[number]>;
 
@@ -68,9 +68,7 @@ const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string 
     }
 };
 
-const toTransactionHashChainInput = (
-    chain: CryptoChain,
-): OrderUpdate_TransactionHashes_Chain_MutationInput => {
+const toTransactionHashChainInput = (chain: CryptoChain): OrderUpdate_TransactionHashes_Chain_MutationInput => {
     switch (chain) {
         case "ethereum":
             return OrderUpdate_TransactionHashes_Chain_MutationInput.Ethereum;
@@ -81,9 +79,7 @@ const toTransactionHashChainInput = (
     }
 };
 
-const toTransactionHashChainInputFromUnknown = (
-    chain: unknown,
-): OrderUpdate_TransactionHashes_Chain_MutationInput | null => {
+const toTransactionHashChainInputFromUnknown = (chain: unknown): OrderUpdate_TransactionHashes_Chain_MutationInput | null => {
     switch (chain) {
         case "ethereum":
             return OrderUpdate_TransactionHashes_Chain_MutationInput.Ethereum;
@@ -101,9 +97,7 @@ export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain): stri
 };
 
 export const buildShippingAddressHeadline = (shippingAddress: AddressWithEmail) => {
-    const name = [shippingAddress.firstName, shippingAddress.lastName]
-        .filter(Boolean)
-        .join(" ");
+    const name = [shippingAddress.firstName, shippingAddress.lastName].filter(Boolean).join(" ");
 
     if (name) {
         return name;
@@ -117,16 +111,7 @@ export const buildShippingAddressHeadline = (shippingAddress: AddressWithEmail) 
 };
 
 export const buildShippingAddressSummary = (shippingAddress: AddressWithEmail) => {
-    return [
-        shippingAddress.addressLine1,
-        shippingAddress.addressLine2,
-        shippingAddress.city,
-        shippingAddress.state,
-        shippingAddress.postalCode,
-        shippingAddress.country,
-    ]
-        .filter(Boolean)
-        .join(", ");
+    return [shippingAddress.addressLine1, shippingAddress.addressLine2, shippingAddress.city, shippingAddress.state, shippingAddress.postalCode, shippingAddress.country].filter(Boolean).join(", ");
 };
 
 export const buildProfileShippingAddresses = (meUsers?: MeUserQuery | MeUserQuery[]) => {
@@ -145,18 +130,89 @@ export const buildProfileShippingAddresses = (meUsers?: MeUserQuery | MeUserQuer
                 email: user.email,
             };
 
-            return [{
-                ...shippingAddress,
-                id: objectHash(shippingAddress),
-            }];
+            return [
+                {
+                    ...shippingAddress,
+                    id: objectHash(shippingAddress),
+                },
+            ];
         }),
         ({ id }) => id,
     );
 };
 
+export const buildPaymentProfileUsersByUrl = (meUsers: MeUserQuery | MeUserQuery[] | undefined, urls: string[]): PaymentProfileUsersByUrl => {
+    const entries = Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [];
+
+    return urls.reduce<PaymentProfileUsersByUrl>((acc, url, index) => {
+        const user = entries[index]?.meUser?.user;
+
+        if (!user?.id) {
+            return {
+                ...acc,
+                [url]: undefined,
+            };
+        }
+
+        return {
+            ...acc,
+            [url]: {
+                id: user.id,
+                wallets: (user.wallets || []).flatMap((wallet) => {
+                    const chain = toCryptoChain(wallet?.chain);
+
+                    if (!chain || !wallet?.provider || !wallet.address) {
+                        return [];
+                    }
+
+                    return [
+                        {
+                            address: wallet.address,
+                            chain,
+                            provider: wallet.provider,
+                        },
+                    ];
+                }),
+            },
+        };
+    }, {});
+};
+
+export const hasPaymentWalletSelection = (wallets: PaymentWalletSelection[], selection: PaymentWalletSelection) => {
+    return wallets.some((wallet) => {
+        return wallet.address === selection.address && wallet.chain === selection.chain && wallet.provider === selection.provider;
+    });
+};
+
+export const appendPaymentWalletSelection = (wallets: PaymentWalletSelection[], selection: PaymentWalletSelection) => {
+    if (hasPaymentWalletSelection(wallets, selection)) {
+        return wallets;
+    }
+
+    return [...wallets, selection];
+};
+
+const toUserUpdateWalletChain = (chain: CryptoChain): UserUpdate_Wallets_Chain_MutationInput => {
+    switch (chain) {
+        case "ethereum":
+            return UserUpdate_Wallets_Chain_MutationInput.Ethereum;
+        case "solana":
+            return UserUpdate_Wallets_Chain_MutationInput.Solana;
+        case "tron":
+            return UserUpdate_Wallets_Chain_MutationInput.Tron;
+    }
+};
+
+export const toUserUpdateWalletInputs = (wallets: PaymentWalletSelection[]): MutationUserUpdate_WalletsInput[] => {
+    return wallets.map((wallet) => ({
+        address: wallet.address,
+        chain: toUserUpdateWalletChain(wallet.chain),
+        provider: wallet.provider,
+    }));
+};
+
 export const buildOrderPrefill = (meUsers?: MeUserQuery | MeUserQuery[]) => {
-    const users = (Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [])
-        .flatMap((entry) => entry.meUser?.user ? [entry.meUser.user] : []);
+    const users = (Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : []).flatMap((entry) => (entry.meUser?.user ? [entry.meUser.user] : []));
     const firstUser = users[0];
     const firstShippingAddress = users.find((user) => user.shippingAddress)?.shippingAddress;
     const inferredNames = inferNameParts(firstUser?.name);
@@ -201,10 +257,7 @@ export const buildOrderFormValues = ({
     };
 };
 
-export const collectProductIdsForChain = (
-    order: Pick<OrderForPayments, "items">,
-    chain: CryptoChain,
-): string[] => {
+export const collectProductIdsForChain = (order: Pick<OrderForPayments, "items">, chain: CryptoChain): string[] => {
     return Array.from(
         new Set(
             (order.items || []).reduce<string[]>((acc, item) => {
@@ -229,9 +282,7 @@ export type ChainPaymentAmount = {
     amount: string;
 };
 
-export const collectOrderChainPaymentAmounts = (
-    order: Pick<OrderForPayments, "items">,
-): ChainPaymentAmount[] => {
+export const collectOrderChainPaymentAmounts = (order: Pick<OrderForPayments, "items">): ChainPaymentAmount[] => {
     const totals = (order.items || []).reduce<Partial<Record<CryptoChain, bigint>>>((acc, item) => {
         const chain = resolveItemPaymentChain(item);
         if (!chain) {
@@ -246,25 +297,21 @@ export const collectOrderChainPaymentAmounts = (
         return acc;
     }, {});
 
-    return CHAIN_ORDER
-        .map((chain) => {
-            const amountInSmallestUnit = totals[chain] || 0n;
-            if (amountInSmallestUnit <= 0n) {
-                return undefined;
-            }
+    return CHAIN_ORDER.map((chain) => {
+        const amountInSmallestUnit = totals[chain] || 0n;
+        if (amountInSmallestUnit <= 0n) {
+            return undefined;
+        }
 
-            return {
-                chain,
-                amountInSmallestUnit,
-                amount: formatFixedNativeUnits(amountInSmallestUnit, CHAIN_DECIMALS[chain]),
-            };
-        })
-        .filter((entry): entry is ChainPaymentAmount => Boolean(entry));
+        return {
+            chain,
+            amountInSmallestUnit,
+            amount: formatFixedNativeUnits(amountInSmallestUnit, CHAIN_DECIMALS[chain]),
+        };
+    }).filter((entry): entry is ChainPaymentAmount => Boolean(entry));
 };
 
-export const toExistingTransactionHashRows = (
-    order: Pick<OrderForPayments, "transactionHashes">,
-): TransactionHashUpdateRow[] => {
+export const toExistingTransactionHashRows = (order: Pick<OrderForPayments, "transactionHashes">): TransactionHashUpdateRow[] => {
     return (order.transactionHashes || []).reduce<TransactionHashUpdateRow[]>((acc, entry) => {
         const productId = entry?.product?.id;
         const hash = entry?.transactionHash;
@@ -295,9 +342,7 @@ export const appendTransactionHashRows = ({
     chain: CryptoChain;
     txHash: string;
 }): { nextRows: TransactionHashUpdateRow[]; appendedCount: number } => {
-    const existingKeys = new Set(
-        existingRows.map((row) => `${row.product}::${row.chain}::${row.transactionHash}`),
-    );
+    const existingKeys = new Set(existingRows.map((row) => `${row.product}::${row.chain}::${row.transactionHash}`));
 
     const appendedRows = productIds.reduce<TransactionHashUpdateRow[]>((acc, productId) => {
         const key = `${productId}::${chain}::${txHash}`;
@@ -320,13 +365,6 @@ export const appendTransactionHashRows = ({
     };
 };
 
-export const replaceSubmittedOrderInList = (
-    submittedOrders: SubmittedOrder[],
-    updated: SubmittedOrder,
-): SubmittedOrder[] => {
-    return submittedOrders.map((entry) => (
-        entry.url === updated.url && entry.order.id === updated.order.id
-            ? updated
-            : entry
-    ));
+export const replaceSubmittedOrderInList = (submittedOrders: SubmittedOrder[], updated: SubmittedOrder): SubmittedOrder[] => {
+    return submittedOrders.map((entry) => (entry.url === updated.url && entry.order.id === updated.order.id ? updated : entry));
 };

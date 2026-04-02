@@ -6,40 +6,39 @@ import { NOTIFICATION_TARGET_LABELS } from "./constants";
 import { UnsubscribeEntity } from "./UnsubscribeEntity";
 import { getNotificationDetailPath } from "./utils";
 import type { ParsedUnsubscribeParams } from "./types";
-
 type UnsubscribeIdentityProps = {
     params: ParsedUnsubscribeParams;
 };
-
-const UnsubscribeIdentity: React.FunctionComponent<UnsubscribeIdentityProps> = ({ params }) => {
+const UnsubscribeIdentity: React.FunctionComponent<UnsubscribeIdentityProps> = (props) => {
     const query = useIdentityByIdQuery(
-        { id: params.id },
-        { enabled: Boolean(params.id) },
+        {
+            id: props.params.id,
+        },
+        {
+            enabled: Boolean(props.params.id),
+        },
     );
-
     return (
         <UnsubscribeEntity<IdentityByIdQuery>
-            params={params}
+            params={props.params}
             query={query}
             resolveEntity={(data) => {
                 const identity = data.Identity;
                 if (!identity) {
                     return null;
                 }
-
                 return {
-                    collection: params.collection,
-                    typeLabel: NOTIFICATION_TARGET_LABELS[params.collection],
+                    collection: props.params.collection,
+                    typeLabel: NOTIFICATION_TARGET_LABELS[props.params.collection],
                     targetID: identity.id,
-                    title: identity.name || NOTIFICATION_TARGET_LABELS[params.collection],
+                    title: identity.name || NOTIFICATION_TARGET_LABELS[props.params.collection],
                     summary: identity.description || identity.website,
                     imageURL: getImage(identity),
                     serverURL: identity.serverURL,
-                    detailPath: getNotificationDetailPath(params.collection, identity.id),
+                    detailPath: getNotificationDetailPath(props.params.collection, identity.id),
                 };
             }}
         />
     );
 };
-
 export default UnsubscribeIdentity;

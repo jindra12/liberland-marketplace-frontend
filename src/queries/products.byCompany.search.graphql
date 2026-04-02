@@ -1,77 +1,66 @@
 query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {
-      AND: [
-        { title: { contains: $searchTerm } }
-        { doc: { relationTo: products } }
-      ]
-    }
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Product {
-            __typename
+    Searches(draft: false, where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: products } }] }, page: $page, limit: $limit, sort: $sort) {
+        docs {
             id
-            isSubscribed
-            serverURL
-            name
-            description
-            cryptoAddresses {
-          chain
-          address
-        }
-            url
-            orderable
-            properties {
-              id
-              key
-              value
+            title
+            priority
+            doc(draft: false) {
+                relationTo
+                value {
+                    ... on Product {
+                        __typename
+                        id
+                        isSubscribed
+                        serverURL
+                        name
+                        description
+                        cryptoAddresses {
+                            chain
+                            address
+                        }
+                        url
+                        orderable
+                        properties {
+                            id
+                            key
+                            value
+                        }
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            serverURL
+                            name
+                            description
+                            cryptoAddresses {
+                                chain
+                                address
+                            }
+                            identity {
+                                id
+                                serverURL
+                                name
+                                description
+                            }
+                        }
+                    }
+                }
             }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            company {
-              id
-              serverURL
-              name
-              description
-              cryptoAddresses {
-          chain
-          address
         }
-              identity {
-                id
-                serverURL
-                name
-                description
-              }
-            }
-          }
-        }
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

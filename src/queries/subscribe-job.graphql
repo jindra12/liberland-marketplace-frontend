@@ -1,14 +1,8 @@
 mutation SubscribeToJobUpdates($email: String!, $targetID: String!) {
-  createNotificationSubscription(
-    data: {
-      email: $email
-      targetCollection: jobs
-      targetID: $targetID
+    createNotificationSubscription(data: { email: $email, targetCollection: jobs, targetID: $targetID }) {
+        id
+        email
+        targetCollection
+        targetID
     }
-  ) {
-    id
-    email
-    targetCollection
-    targetID
-  }
 }

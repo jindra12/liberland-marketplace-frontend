@@ -25,6 +25,36 @@
         width: 100%;
     }
 
+    &__walletField {
+        margin: 24px 0;
+    }
+
+    &__walletHint {
+        margin-bottom: 16px;
+    }
+
+    &__walletList {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__walletRow {
+        padding: 16px;
+        border: 1px solid var(--ant-color-border-secondary);
+        border-radius: 12px;
+        background: var(--ant-color-bg-layout);
+    }
+
+    &__walletRowActions {
+        display: flex;
+        width: 100%;
+    }
+
+    &__walletAddButton {
+        align-self: flex-start;
+    }
+
     &__serverField {
         margin-bottom: 0;
     }

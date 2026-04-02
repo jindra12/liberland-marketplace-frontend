@@ -10,11 +10,5 @@ export const CompanyList: React.FunctionComponent = () => {
         page,
     });
 
-    return (
-        <CompanyListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <CompanyListInternal page={page} query={query} setPage={setPage} />;
 };

@@ -2,7 +2,6 @@ import * as React from "react";
 import { Button, Empty, Flex, Modal, Radio, Typography } from "antd";
 import type { AddressWithEmail } from "./types";
 import { buildShippingAddressHeadline, buildShippingAddressSummary } from "./utils";
-
 type ShippingAddressSelectModalProps = {
     loading: boolean;
     onCancel: () => void;
@@ -11,47 +10,36 @@ type ShippingAddressSelectModalProps = {
     options: AddressWithEmail[];
     selectedKey?: string;
 };
-
-export const ShippingAddressSelectModal: React.FunctionComponent<ShippingAddressSelectModalProps> = ({
-    loading,
-    onCancel,
-    onSelect,
-    open,
-    options,
-    selectedKey,
-}) => {
+export const ShippingAddressSelectModal: React.FunctionComponent<ShippingAddressSelectModalProps> = (props) => {
     return (
         <Modal
-            open={open}
+            open={props.open}
             destroyOnHidden
             title="Choose a default shipping address"
-            onCancel={onCancel}
+            onCancel={props.onCancel}
             footer={[
-                <Button key="cancel" danger onClick={onCancel} disabled={loading}>
+                <Button key="cancel" danger onClick={props.onCancel} disabled={props.loading}>
                     Cancel
                 </Button>,
             ]}
             className="ShippingAddressSelectModal"
         >
-            {options.length === 0 ? (
+            {props.options.length === 0 ? (
                 <Empty description="No default shipping addresses found" />
             ) : (
                 <Radio.Group
-                    value={selectedKey}
+                    value={props.selectedKey}
                     onChange={(event) => {
-                        onSelect(event.target.value);
+                        props.onSelect(event.target.value);
                     }}
                     className="ShippingAddressSelectModal__group"
                 >
                     <Flex vertical gap={12}>
-                        {options.map((option) => {
+                        {props.options.map((option) => {
                             return (
                                 <label
                                     key={option.id}
-                                    className={[
-                                        "ShippingAddressSelectModal__option",
-                                        selectedKey === option.id ? "ShippingAddressSelectModal__option--selected" : "",
-                                    ].filter(Boolean).join(" ")}
+                                    className={["ShippingAddressSelectModal__option", props.selectedKey === option.id ? "ShippingAddressSelectModal__option--selected" : ""].filter(Boolean).join(" ")}
                                 >
                                     <Radio value={option.id} className="ShippingAddressSelectModal__radio" />
                                     <div className="ShippingAddressSelectModal__content">

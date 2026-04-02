@@ -147,7 +147,10 @@
     border-radius: 18px;
     background: rgba(11, 22, 34, 0.48);
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .ShippingAddressSelectModal__option:hover {

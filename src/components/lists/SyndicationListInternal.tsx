@@ -5,13 +5,7 @@ import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icon
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
 import { URL } from "../../types";
-import {
-    createEndpointEntry,
-    getSyndicationHost,
-    getSyndicationName,
-    insertUniqueEndpoint,
-    setEndpointEnabled,
-} from "../../utils";
+import { createEndpointEntry, getSyndicationHost, getSyndicationName, insertUniqueEndpoint, setEndpointEnabled } from "../../utils";
 import { Markdown } from "../Markdown";
 import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";
@@ -31,18 +25,20 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
 
-    const items = React.useMemo(() => (
-        [...urls].sort((left, right) => {
-            const leftPriority = byPriority(left);
-            const rightPriority = byPriority(right);
+    const items = React.useMemo(
+        () =>
+            [...urls].sort((left, right) => {
+                const leftPriority = byPriority(left);
+                const rightPriority = byPriority(right);
 
-            if (leftPriority !== rightPriority) {
-                return leftPriority - rightPriority;
-            }
+                if (leftPriority !== rightPriority) {
+                    return leftPriority - rightPriority;
+                }
 
-            return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
-        })
-    ), [urls]);
+                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
+            }),
+        [urls],
+    );
 
     const handleAdd = React.useCallback(() => {
         if (!draftUrl.trim()) {
@@ -80,39 +76,24 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 loading={false}
                 title="Syndication"
                 emptyText="No syndicated URLs configured yet."
-                filters={(
+                filters={
                     <Space.Compact block className="SyndicationList__addCompact">
-                        <Input
-                            value={draftUrl}
-                            prefix={<LinkOutlined />}
-                            placeholder="https://your-backend.example"
-                            onChange={(event) => setDraftUrl(event.target.value)}
-                            onPressEnter={handleAdd}
-                        />
+                        <Input value={draftUrl} prefix={<LinkOutlined />} placeholder="https://your-backend.example" onChange={(event) => setDraftUrl(event.target.value)} onPressEnter={handleAdd} />
                         <Button type="primary" onClick={handleAdd}>
                             Add URL
                         </Button>
                     </Space.Compact>
-                )}
+                }
                 renderItem={{
                     title: (entry) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={buildSyndicationHref(entry.value)}>
-                                {getSyndicationName(entry)}
-                            </Link>
-                            <Tag color={entry.enabled ? "success" : "default"}>
-                                {entry.enabled ? "Enabled" : "Disabled"}
-                            </Tag>
+                            <Link to={buildSyndicationHref(entry.value)}>{getSyndicationName(entry)}</Link>
+                            <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Enabled" : "Disabled"}</Tag>
                         </Flex>
                     ),
                     avatar: (entry) => (
                         <Link to={buildSyndicationHref(entry.value)}>
-                            <Avatar
-                                shape="square"
-                                size={80}
-                                icon={<GlobalOutlined />}
-                                className="EntityList__avatar SyndicationList__avatar"
-                            />
+                            <Avatar shape="square" size={80} icon={<GlobalOutlined />} className="EntityList__avatar SyndicationList__avatar" />
                         </Link>
                     ),
                     description: (entry) => (
@@ -122,18 +103,12 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             </Typography.Text>
                             <Flex wrap gap={8}>
                                 <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
-                                <Tag color={entry.enabled ? "success" : "default"}>
-                                    {entry.enabled ? "Visible in search" : "Hidden from search"}
-                                </Tag>
+                                <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Visible in search" : "Hidden from search"}</Tag>
                             </Flex>
                         </Flex>
                     ),
-                    body: (entry) => (
-                        <Markdown className="Markdown--clamp3 SyndicationList__description">
-                            {entry.description}
-                        </Markdown>
-                    ),
-                    actions: (entry) => (
+                    body: (entry) => <Markdown className="Markdown--clamp3 SyndicationList__description">{entry.description}</Markdown>,
+                    actions: (entry) =>
                         md ? (
                             <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
                                 <NativeShareButton
@@ -143,20 +118,10 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     size="large"
                                     className="NativeShareButton"
                                 />
-                                <Button
-                                    size="large"
-                                    icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
-                                >
+                                <Button size="large" icon={<PoweroffOutlined />} onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}>
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
-                                <RouteButton
-                                    to={buildSyndicationHref(entry.value)}
-                                    type="primary"
-                                    variant="filled"
-                                    className="ActionBtn"
-                                    size="large"
-                                >
+                                <RouteButton to={buildSyndicationHref(entry.value)} type="primary" variant="filled" className="ActionBtn" size="large">
                                     Details
                                 </RouteButton>
                             </Flex>
@@ -170,25 +135,15 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                         size="large"
                                         className="NativeShareButton"
                                     />
-                                    <RouteButton
-                                        to={buildSyndicationHref(entry.value)}
-                                        size="large"
-                                        className="ActionBtn"
-                                    >
+                                    <RouteButton to={buildSyndicationHref(entry.value)} size="large" className="ActionBtn">
                                         Details
                                     </RouteButton>
                                 </Space.Compact>
-                                <Button
-                                    size="large"
-                                    block
-                                    icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
-                                >
+                                <Button size="large" block icon={<PoweroffOutlined />} onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}>
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                             </Flex>
-                        )
-                    ),
+                        ),
                 }}
             />
         </>

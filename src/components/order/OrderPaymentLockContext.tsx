@@ -10,16 +10,15 @@ const OrderPaymentLockContext = React.createContext<OrderPaymentLockContextValue
 export const OrderPaymentLockProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const [isPaymentPending, setIsPaymentPending] = React.useState(false);
 
-    const contextValue = React.useMemo<OrderPaymentLockContextValue>(() => ({
-        isPaymentPending,
-        setIsPaymentPending,
-    }), [isPaymentPending]);
-
-    return (
-        <OrderPaymentLockContext.Provider value={contextValue}>
-            {props.children}
-        </OrderPaymentLockContext.Provider>
+    const contextValue = React.useMemo<OrderPaymentLockContextValue>(
+        () => ({
+            isPaymentPending,
+            setIsPaymentPending,
+        }),
+        [isPaymentPending],
     );
+
+    return <OrderPaymentLockContext.Provider value={contextValue}>{props.children}</OrderPaymentLockContext.Provider>;
 };
 
 export const useOrderPaymentLockContext = (): OrderPaymentLockContextValue => {
@@ -29,4 +28,3 @@ export const useOrderPaymentLockContext = (): OrderPaymentLockContextValue => {
     }
     return context;
 };
-

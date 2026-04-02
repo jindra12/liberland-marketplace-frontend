@@ -10,16 +10,15 @@ const CartMutationContext = React.createContext<CartMutationContextValue | null>
 export const CartMutationProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const [isMutating, setIsMutating] = React.useState(false);
 
-    const contextValue = React.useMemo<CartMutationContextValue>(() => ({
-        isMutating,
-        setIsMutating,
-    }), [isMutating]);
-
-    return (
-        <CartMutationContext.Provider value={contextValue}>
-            {props.children}
-        </CartMutationContext.Provider>
+    const contextValue = React.useMemo<CartMutationContextValue>(
+        () => ({
+            isMutating,
+            setIsMutating,
+        }),
+        [isMutating],
     );
+
+    return <CartMutationContext.Provider value={contextValue}>{props.children}</CartMutationContext.Provider>;
 };
 
 export const useCartMutationContext = (): CartMutationContextValue => {
