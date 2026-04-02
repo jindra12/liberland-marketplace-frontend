@@ -1,4 +1,6 @@
+import type { MessageInstance } from "antd/es/message/interface";
 import type { UseQueryResult } from "@tanstack/react-query";
+
 import type { NotificationTargetCollection } from "../share/SubscribeButton/types";
 
 export type ParsedUnsubscribeParams = {
@@ -33,4 +35,19 @@ export type UnsubscribeEntityProps<TData> = {
     params: ParsedUnsubscribeParams;
     query: UseQueryResult<TData, unknown>;
     resolveEntity: (data: TData) => ResolvedNotificationEntity | null;
+};
+
+export type UnsubscribeResolvedEntityProps = {
+    entity: ResolvedNotificationEntity;
+    params: ParsedUnsubscribeParams;
+};
+
+export type UnsubscribeLookupErrorStateProps = {
+    errorMessage: string;
+    onRetry: () => Promise<void>;
+};
+
+export type UnsubscribeConfirmButtonProps = UnsubscribeResolvedEntityProps & {
+    messageApi: MessageInstance;
+    onComplete: () => void;
 };

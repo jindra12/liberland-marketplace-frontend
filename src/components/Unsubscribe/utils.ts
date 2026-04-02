@@ -56,3 +56,9 @@ export const getNotificationDetailPath = (collection: NotificationTargetCollecti
 
 export const isAlreadyUnsubscribedError = (error: unknown) =>
     error instanceof Error && MISSING_SUBSCRIPTION_PATTERN.test(error.message);
+
+export const toUnsubscribeLookupErrorMessage = (error: unknown) => {
+    return error instanceof Error
+        ? error.message
+        : "We couldn't load the item behind this unsubscribe link.";
+};
