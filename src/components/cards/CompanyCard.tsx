@@ -1,11 +1,16 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Typography } from "antd";
+
 import { RightOutlined } from "@ant-design/icons";
+import { Avatar, Card, Grid, List, Space, Typography } from "antd";
+
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { getImage } from "../shared/image/utils";
-import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 import { RouteButton } from "../RouteButton";
+import { getImage } from "../shared/image/utils";
+
+import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
+
 type CompanyItem = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["docs"]>[number];
 type CompanyCardProps = {
     items: CompanyItem[];
@@ -56,7 +61,12 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = (props) =>
                                     avatar={
                                         imageSrc ? (
                                             <Link to={`/companies/${company.id}`}>
-                                                <Avatar shape="square" size={48} src={imageSrc} className="SplashEntityCard__avatar" />
+                                                <Avatar
+                                                    shape="square"
+                                                    size={48}
+                                                    src={imageSrc}
+                                                    className="SplashEntityCard__avatar"
+                                                />
                                             </Link>
                                         ) : null
                                     }
@@ -73,14 +83,26 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = (props) =>
                                         </Typography.Link>
                                     )}
                                 </Space>
-                                {!xl && <SplashShareDetailActionRow detailPath={`/companies/${company.id}`} title={company.name || "Company"} text={`Check out ${company.name} on NSwap.`} />}
+                                {!xl && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={`/companies/${company.id}`}
+                                        title={company.name || "Company"}
+                                        text={`Check out ${company.name} on NSwap.`}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );
                 }}
             />
             {remaining > 0 && props.identityId && (
-                <RouteButton to={`/companies?tribe=${props.identityId}`} type="link" icon={<RightOutlined />} iconPosition="end" className="SplashEntityCard__moreLink">
+                <RouteButton
+                    to={`/companies?tribe=${props.identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
                     And +{remaining} more
                 </RouteButton>
             )}

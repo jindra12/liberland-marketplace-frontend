@@ -1,14 +1,23 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
+import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
+import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
-import { URL } from "../../types";
-import { createEndpointEntry, getSyndicationHost, getSyndicationName, insertUniqueEndpoint, setEndpointEnabled } from "../endpoints/utils";
+import {
+    createEndpointEntry,
+    getSyndicationHost,
+    getSyndicationName,
+    insertUniqueEndpoint,
+    setEndpointEnabled,
+} from "../endpoints/utils";
 import { Markdown } from "../Markdown";
-import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";
+import { NativeShareButton } from "../share/NativeShareButton";
 
 const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
@@ -78,7 +87,13 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 emptyText="No syndicated URLs configured yet."
                 filters={
                     <Space.Compact block className="SyndicationList__addCompact">
-                        <Input value={draftUrl} prefix={<LinkOutlined />} placeholder="https://your-backend.example" onChange={(event) => setDraftUrl(event.target.value)} onPressEnter={handleAdd} />
+                        <Input
+                            value={draftUrl}
+                            prefix={<LinkOutlined />}
+                            placeholder="https://your-backend.example"
+                            onChange={(event) => setDraftUrl(event.target.value)}
+                            onPressEnter={handleAdd}
+                        />
                         <Button type="primary" onClick={handleAdd}>
                             Add URL
                         </Button>
@@ -88,12 +103,19 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                     title: (entry) => (
                         <Flex justify="space-between" align="center" wrap>
                             <Link to={buildSyndicationHref(entry.value)}>{getSyndicationName(entry)}</Link>
-                            <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Enabled" : "Disabled"}</Tag>
+                            <Tag color={entry.enabled ? "success" : "default"}>
+                                {entry.enabled ? "Enabled" : "Disabled"}
+                            </Tag>
                         </Flex>
                     ),
                     avatar: (entry) => (
                         <Link to={buildSyndicationHref(entry.value)}>
-                            <Avatar shape="square" size={80} icon={<GlobalOutlined />} className="EntityList__avatar SyndicationList__avatar" />
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                icon={<GlobalOutlined />}
+                                className="EntityList__avatar SyndicationList__avatar"
+                            />
                         </Link>
                     ),
                     description: (entry) => (
@@ -103,11 +125,17 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             </Typography.Text>
                             <Flex wrap gap={8}>
                                 <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
-                                <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Visible in search" : "Hidden from search"}</Tag>
+                                <Tag color={entry.enabled ? "success" : "default"}>
+                                    {entry.enabled ? "Visible in search" : "Hidden from search"}
+                                </Tag>
                             </Flex>
                         </Flex>
                     ),
-                    body: (entry) => <Markdown className="Markdown--clamp3 SyndicationList__description">{entry.description}</Markdown>,
+                    body: (entry) => (
+                        <Markdown className="Markdown--clamp3 SyndicationList__description">
+                            {entry.description}
+                        </Markdown>
+                    ),
                     actions: (entry) =>
                         md ? (
                             <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
@@ -118,10 +146,22 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     size="large"
                                     className="NativeShareButton"
                                 />
-                                <Button size="large" icon={<PoweroffOutlined />} onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}>
+                                <Button
+                                    size="large"
+                                    icon={<PoweroffOutlined />}
+                                    onClick={() =>
+                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
+                                    }
+                                >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
-                                <RouteButton to={buildSyndicationHref(entry.value)} type="primary" variant="filled" className="ActionBtn" size="large">
+                                <RouteButton
+                                    to={buildSyndicationHref(entry.value)}
+                                    type="primary"
+                                    variant="filled"
+                                    className="ActionBtn"
+                                    size="large"
+                                >
                                     Details
                                 </RouteButton>
                             </Flex>
@@ -135,11 +175,22 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                         size="large"
                                         className="NativeShareButton"
                                     />
-                                    <RouteButton to={buildSyndicationHref(entry.value)} size="large" className="ActionBtn">
+                                    <RouteButton
+                                        to={buildSyndicationHref(entry.value)}
+                                        size="large"
+                                        className="ActionBtn"
+                                    >
                                         Details
                                     </RouteButton>
                                 </Space.Compact>
-                                <Button size="large" block icon={<PoweroffOutlined />} onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}>
+                                <Button
+                                    size="large"
+                                    block
+                                    icon={<PoweroffOutlined />}
+                                    onClick={() =>
+                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
+                                    }
+                                >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                             </Flex>

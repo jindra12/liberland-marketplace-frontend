@@ -1,7 +1,9 @@
 import * as React from "react";
+
 import Image from "antd/es/image";
-import { Chains } from "../../types";
+
 import { optionsProps } from "../../constants";
+import { Chains } from "../../types";
 
 export interface RecipientIconProps {
     chain: Chains;

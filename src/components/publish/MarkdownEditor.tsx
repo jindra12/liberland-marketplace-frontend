@@ -1,5 +1,7 @@
-import React from "react";
+import * as React from "react";
+
 import MDEditor from "@uiw/react-md-editor";
+
 interface MarkdownEditorProps {
     value?: string;
     onChange?: (value: string) => void;

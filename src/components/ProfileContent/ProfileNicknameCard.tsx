@@ -1,11 +1,16 @@
 import * as React from "react";
+
+import { useAuth } from "react-oidc-context";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, message } from "antd";
-import { useAuth } from "react-oidc-context";
+
 import { useEndpointContext } from "../EndpointContext";
 import { useUpdateUserByIdMutation } from "../hooks";
+
 import type { NicknameFormValues } from "./types";
 import { validateSelectedProfileServerUser } from "./utils";
+
 type ProfileNicknameCardProps = {
     currentName?: string | null;
     selectedServerUrl: string;
@@ -52,14 +57,20 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
                             message: "Enter a nickname",
                         },
                         {
-                            validator: async () => validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUserId),
+                            validator: async () =>
+                                validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUserId),
                         },
                     ]}
                 >
                     <Input prefix={<UserOutlined />} placeholder={props.currentName || "New nickname"} />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={props.selectedServerUserLoading}>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={mutation.isPending}
+                        disabled={props.selectedServerUserLoading}
+                    >
                         Update
                     </Button>
                 </Form.Item>

@@ -1,15 +1,18 @@
 import * as React from "react";
+
 import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "antd";
 import type { FormInstance } from "antd";
+
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
-import { CRYPTO_CHAIN_LABELS } from "./constants";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
+import { RouteButton } from "../RouteButton";
+
+import { CRYPTO_CHAIN_LABELS } from "./constants";
 import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import { ShippingAddressSelectModal } from "./ShippingAddressSelectModal";
-import { buildOrderFormValues } from "./utils";
 import type { AddressWithEmail, OrderFormValues } from "./types";
-import { RouteButton } from "../RouteButton";
+import { buildOrderFormValues } from "./utils";
 
 type OrderCreateStepProps = {
     form: FormInstance<OrderFormValues>;
@@ -48,9 +51,18 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
     return (
         <>
-            <Typography.Paragraph type="secondary">One click will submit one order per server/cart using the same shipping and contact details.</Typography.Paragraph>
+            <Typography.Paragraph type="secondary">
+                One click will submit one order per server/cart using the same shipping and contact details.
+            </Typography.Paragraph>
 
-            {props.requiredChains.length > 0 && <Alert showIcon type="info" message="Payment information" description={`You'll pay on ${requiredChainText}`} />}
+            {props.requiredChains.length > 0 && (
+                <Alert
+                    showIcon
+                    type="info"
+                    message="Payment information"
+                    description={`You'll pay on ${requiredChainText}`}
+                />
+            )}
 
             <Form
                 id="order-form"
@@ -93,12 +105,20 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
                     <Row gutter={12}>
                         <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "firstName"]} label="First name" rules={[{ required: true, message: "Required" }]}>
+                            <Form.Item
+                                name={["shippingAddress", "firstName"]}
+                                label="First name"
+                                rules={[{ required: true, message: "Required" }]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "lastName"]} label="Last name" rules={[{ required: true, message: "Required" }]}>
+                            <Form.Item
+                                name={["shippingAddress", "lastName"]}
+                                label="Last name"
+                                rules={[{ required: true, message: "Required" }]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>
@@ -135,7 +155,13 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
             <Flex justify="space-between" wrap gap={12}>
                 <RouteButton to="/cart">Back to cart</RouteButton>
-                <Button type="primary" htmlType="submit" form="order-form" loading={props.isSubmitting} disabled={props.cartsWithItemsCount === 0}>
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    form="order-form"
+                    loading={props.isSubmitting}
+                    disabled={props.cartsWithItemsCount === 0}
+                >
                     Create order
                 </Button>
             </Flex>

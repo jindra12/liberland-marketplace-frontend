@@ -1,14 +1,17 @@
-import React from "react";
+import * as React from "react";
+
 import { useParams } from "react-router-dom";
+
 import { Typography } from "antd";
 import dayjs from "dayjs";
+
 import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
-import { AuthGuard } from "../AuthGuard";
-import { OwnerGuard } from "../OwnerGuard";
-import { Loader } from "../Loader";
-import { JobForm } from "../publish/JobForm";
-import { useJobByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { AuthGuard } from "../AuthGuard";
+import { useJobByIdQuery } from "../hooks";
+import { Loader } from "../Loader";
+import { OwnerGuard } from "../OwnerGuard";
+import { JobForm } from "../publish/JobForm";
 
 const EditJob: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -32,7 +35,8 @@ const EditJob: React.FunctionComponent = () => {
                                         id: job?.id,
                                         title: job?.title,
                                         description: job?.description,
-                                        employmentType: job?.employmentType as unknown as Job_EmploymentType_MutationInput,
+                                        employmentType:
+                                            job?.employmentType as unknown as Job_EmploymentType_MutationInput,
                                         positions: job?.positions,
                                         postedAt: job?.postedAt ? dayjs(job.postedAt) : dayjs(),
                                         location: job?.location,

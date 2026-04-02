@@ -15,14 +15,25 @@ const digestSubscriptionID = async (value: string) => {
         .join("");
 };
 
-export const buildNotificationSubscriptionID = async ({ email, targetCollection, targetID }: { email: string; targetCollection: NotificationTargetCollection; targetID: string }) =>
-    digestSubscriptionID(`${email.toLowerCase()}::${targetCollection}::${targetID}`);
+export const buildNotificationSubscriptionID = async ({
+    email,
+    targetCollection,
+    targetID,
+}: {
+    email: string;
+    targetCollection: NotificationTargetCollection;
+    targetID: string;
+}) => digestSubscriptionID(`${email.toLowerCase()}::${targetCollection}::${targetID}`);
 
-export const getSubscribeButtonClassName = (className?: string) => ["SubscribeButton", className].filter(Boolean).join(" ");
+export const getSubscribeButtonClassName = (className?: string) =>
+    ["SubscribeButton", className].filter(Boolean).join(" ");
 
 export const getSubscriptionMutationURL = (serverURL?: string | null) => serverURL || BACKEND_URL;
 
-export const invalidateSubscriptionQueries = async (queryClient: QueryClient, collection: NotificationTargetCollection) => {
+export const invalidateSubscriptionQueries = async (
+    queryClient: QueryClient,
+    collection: NotificationTargetCollection,
+) => {
     const queryKeyTerms = SUBSCRIPTION_QUERY_KEY_TERMS[collection];
     await queryClient.invalidateQueries({
         predicate: (query) => {

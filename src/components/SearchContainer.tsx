@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { SearchScope } from "../types";
+
 import { CompaniesSearch } from "./search/CompaniesSearch";
 import { IdentitiesSearch } from "./search/IdentitiesSearch";
 import { JobSearch } from "./search/JobSearch";

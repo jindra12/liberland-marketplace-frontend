@@ -1,8 +1,10 @@
 import * as React from "react";
-import { AxiosError } from "axios";
+
 import { UseQueryResult } from "@tanstack/react-query";
-import { Button, Result, Spin } from "antd";
+
 import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Result, Spin } from "antd";
+import { AxiosError } from "axios";
 
 import { convertStatusCode, getErrorMessage } from "./loader/utils";
 import { DetailPageSkeleton } from "./LoadingSkeleton/DetailPageSkeleton";

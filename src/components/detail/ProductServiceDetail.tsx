@@ -1,24 +1,28 @@
 import * as React from "react";
-import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
+
 import { useAuth } from "react-oidc-context";
+import { useParams } from "react-router-dom";
+
+import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
+
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
+import { CartItemCount } from "../cart/CartItemCount";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
-import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { RouteButton } from "../RouteButton";
+import { DetailShareSection } from "../share/DetailShareSection";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { IdentityGroups } from "./IdentityGroups";
-import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
-import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
-import { CartItemCount } from "../cart/CartItemCount";
-import { DetailShareSection } from "../share/DetailShareSection";
+import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
+
 import { DetailBackButton } from "./DetailBackButton";
-import { RouteButton } from "../RouteButton";
-import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
+import { IdentityGroups } from "./IdentityGroups";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -36,7 +40,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const companyData = companyQuery.data?.Company;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
                 const inventoryCount = typeof product?.inventory === "number" ? product.inventory : undefined;
-                const inventory = typeof inventoryCount === "number" ? inventoryCount.toLocaleString("en-US") : undefined;
+                const inventory =
+                    typeof inventoryCount === "number" ? inventoryCount.toLocaleString("en-US") : undefined;
                 const price = product?.priceInUSDEnabled ? formatUsdFromCents(product?.priceInUSD) : null;
                 const companyIdentity = companyData?.identity?.name
                     ? {
@@ -59,7 +64,13 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 const purchaseControl = product?.id ? (
                     canPurchase ? (
-                        <AddToCartButtonGuard block productId={product.id} serverURL={product.serverURL!} size={md ? "large" : "middle"} maxAvailable={inventoryCount} />
+                        <AddToCartButtonGuard
+                            block
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            size={md ? "large" : "middle"}
+                            maxAvailable={inventoryCount}
+                        />
                     ) : orderNowLink ? (
                         <Button block type="primary" href={orderNowLink} size={md ? "large" : "middle"}>
                             Order Now!
@@ -79,11 +90,18 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 </Typography.Title>
                                 {companyIdentity && (
                                     <div className="ProductDetail__identityRow">
-                                        <IdentityTagLink identity={companyIdentity} color="success" icon={<UsergroupAddOutlined />} />
+                                        <IdentityTagLink
+                                            identity={companyIdentity}
+                                            color="success"
+                                            icon={<UsergroupAddOutlined />}
+                                        />
                                     </div>
                                 )}
                                 <div className="ProductDetail__summary">
-                                    <ProductDetailsSummary companyName={product?.company?.name} companyId={product?.company?.id} />
+                                    <ProductDetailsSummary
+                                        companyName={product?.company?.name}
+                                        companyId={product?.company?.id}
+                                    />
                                 </div>
                                 {product?.id && (
                                     <div className="ProductDetail__purchaseSection">
@@ -114,7 +132,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         <Divider />
                         <Flex gap="32px" vertical>
                             <Markdown>{product?.description}</Markdown>
-                            <IdentityGroups allowedIdentities={allowedIdentities} disallowedIdentities={disallowedIdentities} />
+                            <IdentityGroups
+                                allowedIdentities={allowedIdentities}
+                                disallowedIdentities={disallowedIdentities}
+                            />
                         </Flex>
                         {properties.length > 0 && (
                             <>
@@ -122,7 +143,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 <Typography.Title level={4}>Properties</Typography.Title>
                                 <Descriptions bordered column={1} size="small">
                                     {properties.map((property, index) => (
-                                        <Descriptions.Item key={property?.id ?? `${property?.key ?? "property"}-${index}`} label={property?.key || "Property"}>
+                                        <Descriptions.Item
+                                            key={property?.id ?? `${property?.key ?? "property"}-${index}`}
+                                            label={property?.key || "Property"}
+                                        >
                                             {property?.value}
                                         </Descriptions.Item>
                                     ))}
@@ -138,7 +162,9 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                             Visit Website
                                         </Button>
                                     )}
-                                    {product?.company?.id && <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>}
+                                    {product?.company?.id && (
+                                        <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                    )}
                                 </Flex>
                             </>
                         )}
@@ -159,7 +185,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             }
                         />
                         <Divider />
-                        <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products} />
+                        <EntityCommentsSection
+                            targetId={id!}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                        />
                     </Flex>
                 );
             }}

@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+
 import { AutoComplete, AutoCompleteProps, Avatar, Drawer, Flex, Input, InputRef } from "antd";
 
 import { SearchOption } from "../types";
@@ -59,7 +60,14 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
                         onSelect={props.onSelect}
                         onChange={setValue}
                     >
-                        <Input.Search size="large" placeholder="Type to search" enterButton loading={props.isLoading} onSearch={onSearch} ref={inputRef} />
+                        <Input.Search
+                            size="large"
+                            placeholder="Type to search"
+                            enterButton
+                            loading={props.isLoading}
+                            onSearch={onSearch}
+                            ref={inputRef}
+                        />
                     </AutoComplete>
                 </Flex>
             </Flex>

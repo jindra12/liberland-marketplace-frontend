@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+
 import { SubscribeAnonButton } from "./SubscribeAnonButton";
 import { SubscribeAuthButton } from "./SubscribeAuthButton";
 import type { SubscribeButtonProps } from "./types";

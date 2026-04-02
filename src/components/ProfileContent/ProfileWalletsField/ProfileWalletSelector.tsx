@@ -1,12 +1,15 @@
 import * as React from "react";
+
 import { Button } from "antd";
+
 import { UserUpdate_Wallets_Chain_MutationInput } from "../../../generated/graphql";
 import type { ProfileWalletSelection } from "../types";
+
 import { EthereumWalletSelectButton } from "./EthereumWalletSelectButton";
-import { SolanaWalletSelectionObserver } from "./SolanaWalletSelectionObserver";
 import { SolanaWalletSelectButton } from "./SolanaWalletSelectButton";
-import { TronWalletSelectionObserver } from "./TronWalletSelectionObserver";
+import { SolanaWalletSelectionObserver } from "./SolanaWalletSelectionObserver";
 import { TronWalletSelectButton } from "./TronWalletSelectButton";
+import { TronWalletSelectionObserver } from "./TronWalletSelectionObserver";
 
 type ProfileWalletSelectorProps = {
     chain?: UserUpdate_Wallets_Chain_MutationInput | null;

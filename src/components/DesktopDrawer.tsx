@@ -1,12 +1,15 @@
 import * as React from "react";
-import { Button, Drawer } from "antd";
-import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+
 import { useAuth } from "react-oidc-context";
-import { SearchButton } from "./SearchButton";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Drawer } from "antd";
+
 import { EndpointAuthAction } from "./EndpointAuthAction";
-import { RouteButton } from "./RouteButton";
 import { useEndpointContext } from "./EndpointContext";
+import { RouteButton } from "./RouteButton";
+import { SearchButton } from "./SearchButton";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
     const location = useLocation();
@@ -21,10 +24,23 @@ export const DesktopDrawer: React.FunctionComponent = () => {
 
     return (
         <>
-            <Button className="AppHeader__quickActionsBtn" type="default" icon={<MenuOutlined />} aria-label="Open menu" onClick={() => setDesktopActionsOpen(true)}>
+            <Button
+                className="AppHeader__quickActionsBtn"
+                type="default"
+                icon={<MenuOutlined />}
+                aria-label="Open menu"
+                onClick={() => setDesktopActionsOpen(true)}
+            >
                 Menu
             </Button>
-            <Drawer className="AppHeader__desktopDrawer" placement="right" width={360} open={desktopActionsOpen} onClose={() => setDesktopActionsOpen(false)} title="Menu">
+            <Drawer
+                className="AppHeader__desktopDrawer"
+                placement="right"
+                width={360}
+                open={desktopActionsOpen}
+                onClose={() => setDesktopActionsOpen(false)}
+                title="Menu"
+            >
                 <div className="AppHeader__desktopDrawerNav">
                     <SearchButton type="default" block onScopeSelect={() => setDesktopActionsOpen(false)}>
                         Search

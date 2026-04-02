@@ -1,13 +1,15 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
+
 import { Avatar, Flex, Grid, Typography } from "antd";
 
 import { AppList } from "../AppList";
-import { TextSearchFilter } from "../TextSearchFilter";
-import { Markdown } from "../Markdown";
 import { useListIdentitiesQuery } from "../hooks";
-import { getImage } from "../shared/image/utils";
+import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { getImage } from "../shared/image/utils";
+import { TextSearchFilter } from "../TextSearchFilter";
 
 export const IdentityList: React.FunctionComponent = () => {
     const [searchText, setSearchText] = React.useState("");
@@ -19,7 +21,9 @@ export const IdentityList: React.FunctionComponent = () => {
     const allItems = query.data?.Identities?.docs;
 
     const sortedItems = React.useMemo(() => {
-        const filtered = searchText ? allItems?.filter((identity) => identity.name.toLowerCase().includes(searchText.toLowerCase())) : allItems;
+        const filtered = searchText
+            ? allItems?.filter((identity) => identity.name.toLowerCase().includes(searchText.toLowerCase()))
+            : allItems;
         return [...(filtered || [])].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
     }, [allItems, searchText]);
 
@@ -81,7 +85,9 @@ export const IdentityList: React.FunctionComponent = () => {
                             <Avatar src={getImage(identity)} size={md ? 120 : 88} />
                         </Link>
                     ) : undefined,
-                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
+                description: (identity) => (
+                    <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>
+                ),
             }}
         />
     );

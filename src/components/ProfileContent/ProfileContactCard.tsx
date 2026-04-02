@@ -1,13 +1,21 @@
 import * as React from "react";
+
 import { Button, Card, Form, Input, Space, message } from "antd";
 import useLocalStorage from "use-local-storage";
+
 import { useUpdateUserByIdMutation } from "../hooks";
-import { GeoapifyAddressFormItem } from "../order/GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../order/constants";
+import { GeoapifyAddressFormItem } from "../order/GeoapifyAddressFormItem/GeoapifyAddressFormItem";
 import type { AddressWithEmail } from "../order/types";
+
 import { ProfileWalletsField } from "./ProfileWalletsField/ProfileWalletsField";
 import type { ProfileContactFormValues, ProfileSelectedUser } from "./types";
-import { buildProfileContactFormValues, buildProfileContactUpdateInput, validateSelectedProfileServerUser } from "./utils";
+import {
+    buildProfileContactFormValues,
+    buildProfileContactUpdateInput,
+    validateSelectedProfileServerUser,
+} from "./utils";
+
 type ProfileContactCardProps = {
     selectedServerUrl: string;
     selectedServerUser?: ProfileSelectedUser | null;
@@ -17,7 +25,10 @@ type ProfileContactCardProps = {
 export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps> = (props) => {
     const [form] = Form.useForm<ProfileContactFormValues>();
     const mutation = useUpdateUserByIdMutation();
-    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, undefined);
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        undefined,
+    );
     React.useEffect(() => {
         form.resetFields();
     }, [form, props.selectedServerUrl]);
@@ -50,7 +61,11 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                     label="Phone number"
                     rules={[
                         {
-                            validator: async () => validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUser?.id),
+                            validator: async () =>
+                                validateSelectedProfileServerUser(
+                                    props.selectedServerUrl,
+                                    props.selectedServerUser?.id,
+                                ),
                         },
                     ]}
                 >
@@ -63,7 +78,12 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
 
                 <Form.Item>
                     <Space wrap>
-                        <Button type="primary" htmlType="submit" loading={mutation.isPending} disabled={props.selectedServerUserLoading}>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            loading={mutation.isPending}
+                            disabled={props.selectedServerUserLoading}
+                        >
                             Save Contact Information
                         </Button>
                         <Button danger onClick={handleResetSavedShippingAddress} disabled={!savedShippingAddress}>

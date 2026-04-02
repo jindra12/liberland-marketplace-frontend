@@ -1,9 +1,11 @@
 import * as React from "react";
+
+import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
+import { WalletModalProvider, WalletActionButton, ButtonProps } from "@tronweb3/tronwallet-adapter-react-ui";
 import Flex from "antd/es/flex";
 import Grid from "antd/es/grid";
-import { WalletModalProvider, WalletActionButton, ButtonProps } from "@tronweb3/tronwallet-adapter-react-ui";
-import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import useToken from "antd/es/theme/useToken";
+
 import { ConnectButtonProps } from "../../types";
 
 export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) => {

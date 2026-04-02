@@ -1,16 +1,28 @@
-import type { FetchStatus, QueryObserverResult, QueryStatus, RefetchOptions, UseQueryResult } from "@tanstack/react-query";
+import type {
+    FetchStatus,
+    QueryObserverResult,
+    QueryStatus,
+    RefetchOptions,
+    UseQueryResult,
+} from "@tanstack/react-query";
 import mergeWith from "lodash-es/mergeWith";
 
 type QueryResult<TData> = UseQueryResult<TData, Error>;
 
-const getMaxQueryMetric = <TData>(results: readonly QueryResult<TData>[], selector: (result: QueryResult<TData>) => number): number => {
+const getMaxQueryMetric = <TData>(
+    results: readonly QueryResult<TData>[],
+    selector: (result: QueryResult<TData>) => number,
+): number => {
     return results.reduce((maxMetric, result) => {
         const metric = selector(result);
         return metric > maxMetric ? metric : maxMetric;
     }, 0);
 };
 
-const mergeQueryData = <TQuery, TResult>(values: TQuery[], mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult): TQuery | TResult | undefined => {
+const mergeQueryData = <TQuery, TResult>(
+    values: TQuery[],
+    mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult,
+): TQuery | TResult | undefined => {
     if (values.length === 0) {
         return undefined;
     }
@@ -32,7 +44,10 @@ export const deepMergeConcatArrays = <T>(left: T, right: T): T => {
     }) as T;
 };
 
-export const combineResult = <TQuery, TResult = TQuery>(results: readonly QueryResult<TQuery>[], mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult): QueryResult<TResult> => {
+export const combineResult = <TQuery, TResult = TQuery>(
+    results: readonly QueryResult<TQuery>[],
+    mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult,
+): QueryResult<TResult> => {
     const dataValues = results.flatMap((result) => {
         return result.data === undefined ? [] : [result.data];
     });

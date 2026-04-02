@@ -32,7 +32,10 @@ export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): 
     return entry.name || getSyndicationHost(entry.value);
 };
 
-export const createEndpointEntry = (value: string, options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {}): EndpointUrl => {
+export const createEndpointEntry = (
+    value: string,
+    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
+): EndpointUrl => {
     const normalizedValue = normalizeSyndicationUrl(value);
 
     return {
@@ -53,7 +56,11 @@ export const insertUniqueEndpoint = (current: EndpointUrl[] | undefined, entry: 
     return [...entries, entry];
 };
 
-export const setEndpointEnabled = (current: EndpointUrl[] | undefined, value: string, nextEnabled: boolean): EndpointUrl[] => {
+export const setEndpointEnabled = (
+    current: EndpointUrl[] | undefined,
+    value: string,
+    nextEnabled: boolean,
+): EndpointUrl[] => {
     return (current ?? []).map((entry) => {
         return entry.value === value ? { ...entry, enabled: nextEnabled } : entry;
     });

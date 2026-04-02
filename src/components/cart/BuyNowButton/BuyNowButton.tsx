@@ -1,9 +1,13 @@
 import * as React from "react";
+
 import { Button } from "antd";
+
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
+
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
 import { BuyNowPaymentStep } from "./BuyNowPaymentStep";
 import type { BuyNowPreparedPurchase } from "./types";
+
 type BuyNowButtonProps = {
     block?: boolean;
     candidateProfileAddresses: AddressWithEmail[];
@@ -26,7 +30,14 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
     };
     return (
         <>
-            <Button block={props.block} type="primary" size={size} disabled={isBusy} onClick={handleBuyNow} className="AddToCartButton__buyNow">
+            <Button
+                block={props.block}
+                type="primary"
+                size={size}
+                disabled={isBusy}
+                onClick={handleBuyNow}
+                className="AddToCartButton__buyNow"
+            >
                 Buy now
             </Button>
             {preparedPurchase && (

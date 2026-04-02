@@ -1,7 +1,10 @@
 import * as React from "react";
+
 import { Button, Empty, Flex, Modal, Radio, Typography } from "antd";
+
 import type { AddressWithEmail } from "./types";
 import { buildShippingAddressHeadline, buildShippingAddressSummary } from "./utils";
+
 type ShippingAddressSelectModalProps = {
     loading: boolean;
     onCancel: () => void;
@@ -39,14 +42,26 @@ export const ShippingAddressSelectModal: React.FunctionComponent<ShippingAddress
                             return (
                                 <label
                                     key={option.id}
-                                    className={["ShippingAddressSelectModal__option", props.selectedKey === option.id ? "ShippingAddressSelectModal__option--selected" : ""].filter(Boolean).join(" ")}
+                                    className={[
+                                        "ShippingAddressSelectModal__option",
+                                        props.selectedKey === option.id
+                                            ? "ShippingAddressSelectModal__option--selected"
+                                            : "",
+                                    ]
+                                        .filter(Boolean)
+                                        .join(" ")}
                                 >
                                     <Radio value={option.id} className="ShippingAddressSelectModal__radio" />
                                     <div className="ShippingAddressSelectModal__content">
                                         <Flex align="center" gap={8} wrap>
-                                            <Typography.Text strong>{buildShippingAddressHeadline(option)}</Typography.Text>
+                                            <Typography.Text strong>
+                                                {buildShippingAddressHeadline(option)}
+                                            </Typography.Text>
                                         </Flex>
-                                        <Typography.Paragraph type="secondary" className="ShippingAddressSelectModal__summary">
+                                        <Typography.Paragraph
+                                            type="secondary"
+                                            className="ShippingAddressSelectModal__summary"
+                                        >
                                             {buildShippingAddressSummary(option)}
                                         </Typography.Paragraph>
                                     </div>

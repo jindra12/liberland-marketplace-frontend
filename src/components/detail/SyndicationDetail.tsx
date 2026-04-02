@@ -1,17 +1,22 @@
 import * as React from "react";
-import { useIsFetching } from "@tanstack/react-query";
+
 import { useParams } from "react-router-dom";
-import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
+
+import { useIsFetching } from "@tanstack/react-query";
+
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
-import { useEndpointContext } from "../EndpointContext";
-import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
+import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
+
 import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
-import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { useEndpointContext } from "../EndpointContext";
+import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
+import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { Markdown } from "../Markdown";
-import { DetailShareSection } from "../share/DetailShareSection";
-import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
+import { DetailShareSection } from "../share/DetailShareSection";
+
+import { DetailBackButton } from "./DetailBackButton";
 
 const SyndicationDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -69,7 +74,9 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         </Typography.Title>
                     </div>
                     <Flex wrap gap={8} className="SyndicationDetail__tagRow">
-                        <Tag color={entry.enabled ? "success" : "default"}>{entry.enabled ? "Enabled" : "Disabled"}</Tag>
+                        <Tag color={entry.enabled ? "success" : "default"}>
+                            {entry.enabled ? "Enabled" : "Disabled"}
+                        </Tag>
                         <Tag>{entry.name === "Main" ? "Primary endpoint" : "Syndicated endpoint"}</Tag>
                     </Flex>
                 </Flex>
@@ -107,7 +114,9 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         {entry.value}
                     </Typography.Link>
                 </Descriptions.Item>
-                <Descriptions.Item label="Status">{entry.enabled ? "Enabled in search and lists" : "Disabled locally"}</Descriptions.Item>
+                <Descriptions.Item label="Status">
+                    {entry.enabled ? "Enabled in search and lists" : "Disabled locally"}
+                </Descriptions.Item>
             </Descriptions>
         </Flex>
     );

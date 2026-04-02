@@ -1,5 +1,10 @@
 query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
-    Companies(draft: false, where: { AND: [{ allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }, page: $page, limit: $limit) {
+    Companies(
+        draft: false
+        where: { AND: [{ allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+    ) {
         docs {
             id
             isSubscribed

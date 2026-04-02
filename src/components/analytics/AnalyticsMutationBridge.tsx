@@ -1,10 +1,13 @@
 import * as React from "react";
-import useLocalStorage from "use-local-storage";
+
 import { useAnalytics } from "use-analytics";
+import useLocalStorage from "use-local-storage";
+
 import { BACKEND_URL } from "../../gqlFetcher";
+import { useTrackAnalyticsEventMutation } from "../hooks";
+
 import { ANALYTICS_DISTINCT_ID_KEY, ANALYTICS_SESSION_ID_KEY } from "./constants";
 import type { AnalyticsMutationEvent, AnalyticsPagePayload, AnalyticsTrackPayload } from "./types";
-import { useTrackAnalyticsEventMutation } from "../hooks";
 
 export const AnalyticsMutationBridge: React.FunctionComponent = () => {
     const analytics = useAnalytics();

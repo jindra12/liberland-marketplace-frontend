@@ -33,7 +33,16 @@ export const getAddressSelection = (feature: GeoapifyFeature): GeoapifyAddressSe
 };
 
 export const buildAddressSummary = (address?: AddressFields) => {
-    return [address?.addressLine1, address?.addressLine2, address?.city, address?.state, address?.postalCode, address?.country].filter(Boolean).join(", ");
+    return [
+        address?.addressLine1,
+        address?.addressLine2,
+        address?.city,
+        address?.state,
+        address?.postalCode,
+        address?.country,
+    ]
+        .filter(Boolean)
+        .join(", ");
 };
 
 export const createGeoapifyStyles = (token: ThemeToken): CSSProperties => {

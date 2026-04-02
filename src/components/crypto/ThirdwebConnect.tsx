@@ -1,14 +1,17 @@
 import * as React from "react";
-import { createThirdwebClient } from "thirdweb";
-import { ConnectButton, useActiveAccount } from "thirdweb/react";
-import { mainnet } from "thirdweb/chains";
+
 import Flex from "antd/es/flex";
 import Grid from "antd/es/grid";
 import useToken from "antd/es/theme/useToken";
+import { createThirdwebClient } from "thirdweb";
+import { mainnet } from "thirdweb/chains";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
-import { ConnectButtonProps } from "../../types";
-import { RecipientIcon } from "./RecipientIcon";
+
 import { thirdwebWallets } from "../../constants";
+import { ConnectButtonProps } from "../../types";
+
+import { RecipientIcon } from "./RecipientIcon";
 
 const client = createThirdwebClient({
     clientId: process.env.REACT_APP_THRIDWEB!,

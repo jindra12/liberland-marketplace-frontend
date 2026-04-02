@@ -1,9 +1,12 @@
 import * as React from "react";
+
 import { BellOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Typography, message } from "antd";
+
+import type { AnonymousSubscribeFormValues, SubscribeButtonProps } from "./types";
 import { useSubscriptionActions } from "./useSubscriptionActions";
 import { getSubscribeButtonClassName, getSubscriptionErrorMessage } from "./utils";
-import type { AnonymousSubscribeFormValues, SubscribeButtonProps } from "./types";
+
 export const SubscribeAnonButton: React.FunctionComponent<SubscribeButtonProps> = (props) => {
     const size = props.size === undefined ? "middle" : props.size;
     const type = props.type === undefined ? "default" : props.type;
@@ -55,9 +58,20 @@ export const SubscribeAnonButton: React.FunctionComponent<SubscribeButtonProps> 
             >
                 Subscribe
             </Button>
-            <Modal open={isModalOpen} title="Subscribe to updates" okText="Subscribe" cancelText="Cancel" confirmLoading={isPending} onCancel={handleClose} onOk={() => form.submit()} destroyOnHidden>
+            <Modal
+                open={isModalOpen}
+                title="Subscribe to updates"
+                okText="Subscribe"
+                cancelText="Cancel"
+                confirmLoading={isPending}
+                onCancel={handleClose}
+                onOk={() => form.submit()}
+                destroyOnHidden
+            >
                 <Form form={form} layout="vertical" onFinish={handleFinish}>
-                    <Typography.Paragraph className="SubscribeButton__modalCopy">Enter your email and we&apos;ll notify you when this {entityLabel} changes.</Typography.Paragraph>
+                    <Typography.Paragraph className="SubscribeButton__modalCopy">
+                        Enter your email and we&apos;ll notify you when this {entityLabel} changes.
+                    </Typography.Paragraph>
                     <Form.Item
                         name="email"
                         label="Email address"

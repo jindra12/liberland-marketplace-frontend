@@ -1,8 +1,11 @@
-import React from "react";
-import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
+import * as React from "react";
+
 import { ArrowRightOutlined, CheckCircleFilled, CloudServerOutlined } from "@ant-design/icons";
+import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
+
 import { URL } from "../../types";
 import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
+
 export interface PublishServerSelectorProps {
     urls: URL[];
     onConfirm: (url: string) => void;
@@ -40,14 +43,17 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
     return (
         <div className="PublishServer">
             <Typography.Title level={2}>Choose where to publish</Typography.Title>
-            <Typography.Paragraph type="secondary">Pick the marketplace endpoint that should receive this listing.</Typography.Paragraph>
+            <Typography.Paragraph type="secondary">
+                Pick the marketplace endpoint that should receive this listing.
+            </Typography.Paragraph>
 
             {items.length > 0 ? (
                 <>
                     <div className="PublishServer__list">
                         {items.map((endpoint) => {
                             const isSelected = endpoint.value === selectedUrl;
-                            const description = endpoint.description || "Publish through this syndicated marketplace endpoint.";
+                            const description =
+                                endpoint.description || "Publish through this syndicated marketplace endpoint.";
                             return (
                                 <Card
                                     key={endpoint.value}
@@ -64,7 +70,13 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                         setSelectedUrl(endpoint.value);
                                     }}
                                 >
-                                    <Flex justify="space-between" align="flex-start" gap={20} wrap className="PublishServer__cardRow">
+                                    <Flex
+                                        justify="space-between"
+                                        align="flex-start"
+                                        gap={20}
+                                        wrap
+                                        className="PublishServer__cardRow"
+                                    >
                                         <Flex vertical gap={14} className="PublishServer__cardContent">
                                             <Flex align="center" gap={10} wrap className="PublishServer__cardHeader">
                                                 <CloudServerOutlined className="PublishServer__icon" />
@@ -72,13 +84,21 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                                     {getSyndicationName(endpoint)}
                                                 </Typography.Title>
                                                 {endpoint.name === "Main" && <Tag color="blue">Main</Tag>}
-                                                <Tag color={endpoint.enabled ? "success" : "default"}>{endpoint.enabled ? "Enabled" : "Disabled"}</Tag>
+                                                <Tag color={endpoint.enabled ? "success" : "default"}>
+                                                    {endpoint.enabled ? "Enabled" : "Disabled"}
+                                                </Tag>
                                             </Flex>
-                                            <Typography.Text className="PublishServer__host">{getSyndicationHost(endpoint.value)}</Typography.Text>
-                                            <Typography.Paragraph className="PublishServer__description">{description}</Typography.Paragraph>
+                                            <Typography.Text className="PublishServer__host">
+                                                {getSyndicationHost(endpoint.value)}
+                                            </Typography.Text>
+                                            <Typography.Paragraph className="PublishServer__description">
+                                                {description}
+                                            </Typography.Paragraph>
                                             <div className="PublishServer__urlBlock">
                                                 <Typography.Text type="secondary">Endpoint URL</Typography.Text>
-                                                <Typography.Text className="PublishServer__url">{endpoint.value}</Typography.Text>
+                                                <Typography.Text className="PublishServer__url">
+                                                    {endpoint.value}
+                                                </Typography.Text>
                                             </div>
                                         </Flex>
                                         <div className="PublishServer__choice">
@@ -100,18 +120,32 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                     {selectedServer && (
                         <Flex justify="space-between" align="center" gap={16} wrap className="PublishServer__summary">
                             <Flex vertical gap={4} className="PublishServer__summaryCopy">
-                                <Typography.Text strong>Publishing to {getSyndicationName(selectedServer)}</Typography.Text>
-                                <Typography.Text type="secondary">{getSyndicationHost(selectedServer.value)}</Typography.Text>
+                                <Typography.Text strong>
+                                    Publishing to {getSyndicationName(selectedServer)}
+                                </Typography.Text>
+                                <Typography.Text type="secondary">
+                                    {getSyndicationHost(selectedServer.value)}
+                                </Typography.Text>
                                 <Typography.Text className="PublishServer__url">{selectedServer.value}</Typography.Text>
                             </Flex>
-                            <Button type="primary" size="large" icon={<ArrowRightOutlined />} onClick={() => props.onConfirm(selectedServer.value)}>
+                            <Button
+                                type="primary"
+                                size="large"
+                                icon={<ArrowRightOutlined />}
+                                onClick={() => props.onConfirm(selectedServer.value)}
+                            >
                                 Continue to publish
                             </Button>
                         </Flex>
                     )}
                 </>
             ) : (
-                <Alert showIcon type="warning" message="No endpoints configured" description="Add at least one syndicated marketplace URL from the header settings before publishing." />
+                <Alert
+                    showIcon
+                    type="warning"
+                    message="No endpoints configured"
+                    description="Add at least one syndicated marketplace URL from the header settings before publishing."
+                />
             )}
         </div>
     );

@@ -1,6 +1,8 @@
-import React from "react";
-import { Button, List, message, Popconfirm, Space, Tag } from "antd";
+import * as React from "react";
+
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, List, message, Popconfirm, Space, Tag } from "antd";
+
 import { RouteButton } from "./RouteButton";
 
 interface ProfileListingItem {
@@ -55,15 +57,32 @@ export const ProfileListingList = <TItem extends ProfileListingItem>(props: Prof
                 return (
                     <List.Item
                         actions={[
-                            <RouteButton key="edit" to={`${props.urlPrefix}/edit/${item.id}`} size="small" icon={<EditOutlined />}>
+                            <RouteButton
+                                key="edit"
+                                to={`${props.urlPrefix}/edit/${item.id}`}
+                                size="small"
+                                icon={<EditOutlined />}
+                            >
                                 Edit
                             </RouteButton>,
                             canView ? (
-                                <RouteButton key="view" to={`${props.urlPrefix}/${item.id}`} size="small" type="link" icon={<EyeOutlined />}>
+                                <RouteButton
+                                    key="view"
+                                    to={`${props.urlPrefix}/${item.id}`}
+                                    size="small"
+                                    type="link"
+                                    icon={<EyeOutlined />}
+                                >
                                     View
                                 </RouteButton>
                             ) : null,
-                            <Popconfirm key="delete" title={`Delete this ${props.label.toLowerCase()}?`} onConfirm={() => handleDelete(item)} okText="Delete" okButtonProps={{ danger: true }}>
+                            <Popconfirm
+                                key="delete"
+                                title={`Delete this ${props.label.toLowerCase()}?`}
+                                onConfirm={() => handleDelete(item)}
+                                okText="Delete"
+                                okButtonProps={{ danger: true }}
+                            >
                                 <Button size="small" danger icon={<DeleteOutlined />}>
                                     Delete
                                 </Button>

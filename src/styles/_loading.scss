@@ -23,8 +23,10 @@
         min-height: 100vh;
         padding: 18px 20px 40px;
         background:
-            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.18), transparent 22%), radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.18), transparent 24%),
-            radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.08), transparent 20%), linear-gradient(180deg, #020a12 0%, #04101d 44%, #03101a 100%);
+            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.18), transparent 22%),
+            radial-gradient(circle at 100% 32%, rgba(47, 140, 255, 0.18), transparent 24%),
+            radial-gradient(circle at 50% 16%, rgba(121, 230, 177, 0.08), transparent 20%),
+            linear-gradient(180deg, #020a12 0%, #04101d 44%, #03101a 100%);
     }
 
     &--surface {

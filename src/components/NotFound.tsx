@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Result } from "antd";
+
 import { RouteButton } from "./RouteButton";
 
 const NotFound: React.FunctionComponent = () => (

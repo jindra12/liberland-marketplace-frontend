@@ -1,14 +1,19 @@
 import * as React from "react";
-import { DollarOutlined } from "@ant-design/icons";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
+import { DollarOutlined } from "@ant-design/icons";
 import { RightOutlined } from "@ant-design/icons";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
 import { ListProductsQuery } from "../../generated/graphql";
+import { CartItemCount } from "../cart/CartItemCount";
+import { RouteButton } from "../RouteButton";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents } from "../shared/product/utils";
-import { CartItemCount } from "../cart/CartItemCount";
+
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
-import { RouteButton } from "../RouteButton";
+
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 type ProductServiceCardProps = {
     items: ProductItem[];
@@ -44,13 +49,31 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                     const shareTitle = product.name || "Product";
                     const shareText = `Check out ${product.name} on NSwap.`;
                     return (
-                        <List.Item actions={xl ? [<SplashShareDetailActionRow key={`product-actions-${product.id}`} detailPath={detailPath} title={shareTitle} text={shareText} />] : undefined}>
+                        <List.Item
+                            actions={
+                                xl
+                                    ? [
+                                          <SplashShareDetailActionRow
+                                              key={`product-actions-${product.id}`}
+                                              detailPath={detailPath}
+                                              title={shareTitle}
+                                              text={shareText}
+                                          />,
+                                      ]
+                                    : undefined
+                            }
+                        >
                             <div className="SplashEntityCard__itemBody">
                                 <List.Item.Meta
                                     avatar={
                                         imageSrc ? (
                                             <Link to={detailPath}>
-                                                <Avatar shape="square" size={48} src={imageSrc} className="SplashEntityCard__avatar" />
+                                                <Avatar
+                                                    shape="square"
+                                                    size={48}
+                                                    src={imageSrc}
+                                                    className="SplashEntityCard__avatar"
+                                                />
                                             </Link>
                                         ) : undefined
                                     }
@@ -68,14 +91,26 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                                     )}
                                     <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                                 </Space>
-                                {!xl && <SplashShareDetailActionRow detailPath={detailPath} title={shareTitle} text={shareText} />}
+                                {!xl && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={detailPath}
+                                        title={shareTitle}
+                                        text={shareText}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );
                 }}
             />
             {remaining > 0 && props.identityId && (
-                <RouteButton to={`/products-services?tribe=${props.identityId}`} type="link" icon={<RightOutlined />} iconPosition="end" className="SplashEntityCard__moreLink">
+                <RouteButton
+                    to={`/products-services?tribe=${props.identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
                     And +{remaining} more
                 </RouteButton>
             )}

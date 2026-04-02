@@ -1,7 +1,10 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
+
 import { DollarOutlined, HomeFilled, ShoppingOutlined } from "@ant-design/icons";
 import { Flex, Space, Typography } from "antd";
+
 type ProductDetailsSummaryProps = {
     companyName?: string | null;
     companyId?: string | null;
@@ -16,7 +19,12 @@ export const ProductDetailsSummary: React.FunctionComponent<ProductDetailsSummar
             <Space size={metaSize} wrap>
                 {props.companyName && (
                     <Typography.Text strong>
-                        <HomeFilled /> {props.companyId ? <Link to={`/companies/${props.companyId}`}>{props.companyName}</Link> : props.companyName}
+                        <HomeFilled />{" "}
+                        {props.companyId ? (
+                            <Link to={`/companies/${props.companyId}`}>{props.companyName}</Link>
+                        ) : (
+                            props.companyName
+                        )}
                     </Typography.Text>
                 )}
                 {props.inventory && (

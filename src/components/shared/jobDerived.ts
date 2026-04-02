@@ -21,7 +21,13 @@ export const getJobIdentityAccess = (job?: JobDerivedInput | null, dedupeBy: Job
     const dedupeKey = (identity: IdentityTagItem) => (dedupeBy === "name" ? identity.name : identity.id);
 
     return {
-        allowedIdentities: uniqBy([...(job?.allowedIdentities || []), ...(job?.company?.allowedIdentities || [])], dedupeKey),
-        disallowedIdentities: uniqBy([...(job?.disallowedIdentities || []), ...(job?.company?.disallowedIdentities || [])], dedupeKey),
+        allowedIdentities: uniqBy(
+            [...(job?.allowedIdentities || []), ...(job?.company?.allowedIdentities || [])],
+            dedupeKey,
+        ),
+        disallowedIdentities: uniqBy(
+            [...(job?.disallowedIdentities || []), ...(job?.company?.disallowedIdentities || [])],
+            dedupeKey,
+        ),
     };
 };

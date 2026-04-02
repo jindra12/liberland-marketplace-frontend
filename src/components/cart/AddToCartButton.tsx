@@ -1,14 +1,18 @@
 import * as React from "react";
+
 import { ConfigProvider, Form, Space } from "antd";
 import type { ButtonProps } from "antd";
 import useLocalStorage from "use-local-storage";
+
 import type { Cart, MeUserQuery } from "../../generated/graphql";
 import { useCartBySecretQuery } from "../hooks";
 import { buildProfileShippingAddresses } from "../order/utils";
-import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
-import { useCartMutationContext } from "./CartMutationContext";
-import { BuyNowButton } from "./BuyNowButton/BuyNowButton";
+
 import { AddToCartIncrementForm } from "./AddToCartIncrementForm";
+import { BuyNowButton } from "./BuyNowButton/BuyNowButton";
+import { useCartMutationContext } from "./CartMutationContext";
+import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
+
 type AddToCartButtonProps = {
     productId: string;
     variantId?: string;
@@ -23,7 +27,10 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     const size = props.size === undefined ? "large" : props.size;
     const [form] = Form.useForm();
     const [cartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
-    const cartSecret = React.useMemo(() => (cartSecrets || []).find((entry) => entry.url === props.serverURL)?.secret || "", [cartSecrets, props.serverURL]);
+    const cartSecret = React.useMemo(
+        () => (cartSecrets || []).find((entry) => entry.url === props.serverURL)?.secret || "",
+        [cartSecrets, props.serverURL],
+    );
     const cartQuery = useCartBySecretQuery(
         {
             secret: cartSecret,
@@ -36,7 +43,9 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     const { isMutating } = useCartMutationContext();
     const productKey = `${props.productId}::${props.variantId ?? ""}`;
     const existingCart = cartQuery.data?.Carts?.docs?.[0] as Cart | undefined;
-    const currentItem = existingCart?.items?.find((item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey);
+    const currentItem = existingCart?.items?.find(
+        (item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey,
+    );
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
     const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(props.me), [props.me]);
@@ -51,7 +60,8 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
         .join(" ");
     const watchedQuantity = Form.useWatch("quantity", form);
     const inputQuantity = watchedQuantity || 0;
-    const remainingQuantity = typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
+    const remainingQuantity =
+        typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
     const shouldHideButton = remainingQuantity !== undefined && remainingQuantity <= 0;
     if (shouldHideButton) {
         return null;

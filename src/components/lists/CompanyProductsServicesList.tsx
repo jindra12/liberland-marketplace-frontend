@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { ProductServiceListInternal } from "./ProductServiceListInternal";
 import { useListProductsByCompanyQuery } from "../hooks";
+
+import { ProductServiceListInternal } from "./ProductServiceListInternal";
 
 export interface CompanyProductsServicesListProps {
     companyId: string;

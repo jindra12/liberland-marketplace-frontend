@@ -1,17 +1,21 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Flex, Grid } from "antd";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+
 import { UseQueryResult } from "@tanstack/react-query";
-import { AppList } from "../AppList";
-import { Markdown } from "../Markdown";
-import { CompanyContactLinks } from "../shared/CompanyContactLinks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+
+import { UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Flex, Grid } from "antd";
+
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { getImage } from "../shared/image/utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { AppList } from "../AppList";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { CompanyContactLinks } from "../shared/CompanyContactLinks";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
@@ -25,7 +29,10 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.query.data?.Companies?.hasNextPage),
-        getIdentityIds: (company) => [...(company.allowedIdentities?.map((i) => i.id) || []), ...(company.identity?.id ? [company.identity.id] : [])],
+        getIdentityIds: (company) => [
+            ...(company.allowedIdentities?.map((i) => i.id) || []),
+            ...(company.identity?.id ? [company.identity.id] : []),
+        ],
         isLoading: props.query.isLoading,
         isFetching: props.query.isFetching,
         page: props.page,
@@ -46,7 +53,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/companies/${company.id}`}>{company.name}</Link>
-                        {company.identity?.name && <IdentityTagLink identity={company.identity} color="success" icon={<UsergroupAddOutlined />} />}
+                        {company.identity?.name && (
+                            <IdentityTagLink
+                                identity={company.identity}
+                                color="success"
+                                icon={<UsergroupAddOutlined />}
+                            />
+                        )}
                     </Flex>
                 ),
                 actions: (company) =>
@@ -90,7 +103,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     ) : undefined,
                 body: (company) => (
                     <div className="EntityList__body CompanyList__body">
-                        <CompanyContactLinks website={company.website} email={company.email} phone={company.phone} variant="compact" className="CompanyList__contacts" />
+                        <CompanyContactLinks
+                            website={company.website}
+                            email={company.email}
+                            phone={company.phone}
+                            variant="compact"
+                            className="CompanyList__contacts"
+                        />
                         <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
                     </div>
                 ),

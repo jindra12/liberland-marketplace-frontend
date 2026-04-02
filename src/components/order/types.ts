@@ -1,4 +1,8 @@
-import type { CreateOrderMutation, MutationOrder_ShippingAddressInput, MutationOrderUpdate_TransactionHashesInput } from "../../generated/graphql";
+import type {
+    CreateOrderMutation,
+    MutationOrder_ShippingAddressInput,
+    MutationOrderUpdate_TransactionHashesInput,
+} from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
 
 export type CreatedOrder = NonNullable<CreateOrderMutation["createOrder"]>;

@@ -54881,7 +54881,11 @@ export type CartBySecretQuery = {
                     priceInETH?: string | null;
                     priceInSOL?: string | null;
                     priceInTRX?: string | null;
-                    cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                    cryptoAddresses?: {
+                        __typename?: "Product_CryptoAddresses";
+                        chain?: Product_CryptoAddresses_Chain | null;
+                        address?: string | null;
+                    } | null;
                     image?: {
                         __typename?: "Media";
                         id: string;
@@ -54898,8 +54902,18 @@ export type CartBySecretQuery = {
                         serverURL?: string | null;
                         name?: string | null;
                         description?: string | null;
-                        cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                        identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                        cryptoAddresses?: {
+                            __typename?: "Company_CryptoAddresses";
+                            chain?: Company_CryptoAddresses_Chain | null;
+                            address?: string | null;
+                        } | null;
+                        identity?: {
+                            __typename?: "Identity";
+                            id: string;
+                            serverURL?: string | null;
+                            name: string;
+                            description?: string | null;
+                        } | null;
                     } | null;
                 } | null;
                 variant?: {
@@ -54909,7 +54923,13 @@ export type CartBySecretQuery = {
                     inventory?: number | null;
                     priceInUSD?: number | null;
                     priceInUSDEnabled?: boolean | null;
-                    options?: Array<{ __typename?: "VariantOption"; id: string; label: string; value: string; variantType: { __typename?: "VariantType"; id: string; name: string } }> | null;
+                    options?: Array<{
+                        __typename?: "VariantOption";
+                        id: string;
+                        label: string;
+                        value: string;
+                        variantType: { __typename?: "VariantType"; id: string; name: string };
+                    }> | null;
                 } | null;
             }> | null;
         }>;
@@ -54943,7 +54963,11 @@ export type CreateCartMutation = {
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
-                cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Product_CryptoAddresses";
+                    chain?: Product_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
             } | null;
             variant?: { __typename?: "Variant"; id: string; title?: string | null } | null;
         }> | null;
@@ -54977,7 +55001,11 @@ export type DeleteCartMutation = {
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
-                cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Product_CryptoAddresses";
+                    chain?: Product_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
             } | null;
             variant?: { __typename?: "Variant"; id: string; title?: string | null } | null;
         }> | null;
@@ -55012,7 +55040,11 @@ export type UpdateCartMutation = {
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
-                cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Product_CryptoAddresses";
+                    chain?: Product_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
             } | null;
             variant?: { __typename?: "Variant"; id: string; title?: string | null } | null;
         }> | null;
@@ -55038,7 +55070,11 @@ export type ListCompaniesByCreatorQuery = {
             serverURL?: string | null;
             name?: string | null;
             _status?: Company__Status | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
         }>;
     } | null;
 };
@@ -55061,9 +55097,25 @@ export type CompanyByIdQuery = {
         website?: string | null;
         phone?: string | null;
         email?: any | null;
-        cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-        allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-        disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+        cryptoAddresses?: {
+            __typename?: "Company_CryptoAddresses";
+            chain?: Company_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
+        allowedIdentities?: Array<{
+            __typename?: "Identity";
+            id: string;
+            serverURL?: string | null;
+            name: string;
+            description?: string | null;
+        }> | null;
+        disallowedIdentities?: Array<{
+            __typename?: "Identity";
+            id: string;
+            serverURL?: string | null;
+            name: string;
+            description?: string | null;
+        }> | null;
         createdBy?: { __typename?: "User"; id: string } | null;
         identity?: {
             __typename?: "Identity";
@@ -55124,9 +55176,25 @@ export type ListCompaniesByIdentityQuery = {
             website?: string | null;
             phone?: string | null;
             email?: any | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
             identity?: {
                 __typename?: "Identity";
                 id: string;
@@ -55197,9 +55265,25 @@ export type SearchCompaniesByIdentityQuery = {
                           website?: string | null;
                           phone?: string | null;
                           email?: any | null;
-                          cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                          allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                          disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+                          cryptoAddresses?: {
+                              __typename?: "Company_CryptoAddresses";
+                              chain?: Company_CryptoAddresses_Chain | null;
+                              address?: string | null;
+                          } | null;
+                          allowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
+                          disallowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
                           identity?: {
                               __typename?: "Identity";
                               id: string;
@@ -55266,9 +55350,25 @@ export type ListCompaniesBySecondaryIdentityQuery = {
             website?: string | null;
             phone?: string | null;
             email?: any | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
             identity?: {
                 __typename?: "Identity";
                 id: string;
@@ -55330,9 +55430,25 @@ export type SearchCompaniesBySecondaryIdentityQuery = {
             website?: string | null;
             phone?: string | null;
             email?: any | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
             identity?: {
                 __typename?: "Identity";
                 id: string;
@@ -55376,7 +55492,11 @@ export type CreateCompanyMutation = {
         id: string;
         name?: string | null;
         _status?: Company__Status | null;
-        cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+        cryptoAddresses?: {
+            __typename?: "Company_CryptoAddresses";
+            chain?: Company_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
         image?: { __typename?: "Media"; id: string; url?: string | null } | null;
     } | null;
 };
@@ -55385,7 +55505,10 @@ export type DeleteCompanyMutationVariables = Exact<{
     id: Scalars["String"]["input"];
 }>;
 
-export type DeleteCompanyMutation = { __typename?: "Mutation"; deleteCompany?: { __typename?: "Company"; id: string } | null };
+export type DeleteCompanyMutation = {
+    __typename?: "Mutation";
+    deleteCompany?: { __typename?: "Company"; id: string } | null;
+};
 
 export type ListCompaniesQueryVariables = Exact<{
     page?: InputMaybe<Scalars["Int"]["input"]>;
@@ -55414,9 +55537,25 @@ export type ListCompaniesQuery = {
             website?: string | null;
             phone?: string | null;
             email?: any | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
             identity?: {
                 __typename?: "Identity";
                 id: string;
@@ -55486,9 +55625,25 @@ export type SearchCompaniesQuery = {
                           website?: string | null;
                           phone?: string | null;
                           email?: any | null;
-                          cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                          allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                          disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+                          cryptoAddresses?: {
+                              __typename?: "Company_CryptoAddresses";
+                              chain?: Company_CryptoAddresses_Chain | null;
+                              address?: string | null;
+                          } | null;
+                          allowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
+                          disallowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
                           image?: {
                               __typename?: "Media";
                               id: string;
@@ -55499,7 +55654,13 @@ export type SearchCompaniesQuery = {
                               height?: number | null;
                               mimeType?: string | null;
                           } | null;
-                          identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                          identity?: {
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          } | null;
                       }
                     | { __typename?: "Identity" }
                     | { __typename?: "Job" }
@@ -55524,7 +55685,11 @@ export type UpdateCompanyMutation = {
         id: string;
         name?: string | null;
         _status?: Company__Status | null;
-        cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+        cryptoAddresses?: {
+            __typename?: "Company_CryptoAddresses";
+            chain?: Company_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
         image?: { __typename?: "Media"; id: string; url?: string | null } | null;
     } | null;
 };
@@ -55569,16 +55734,31 @@ export type DeleteCommentMutationVariables = Exact<{
     id: Scalars["String"]["input"];
 }>;
 
-export type DeleteCommentMutation = { __typename?: "Mutation"; deleteComment?: { __typename?: "Comment"; id: string } | null };
+export type DeleteCommentMutation = {
+    __typename?: "Mutation";
+    deleteComment?: { __typename?: "Comment"; id: string } | null;
+};
 
 export type EntityImageUrlsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type EntityImageUrlsQuery = {
     __typename?: "Query";
-    companies?: { __typename?: "Companies"; docs: Array<{ __typename?: "Company"; image?: { __typename?: "Media"; url?: string | null } | null }> } | null;
-    jobs?: { __typename?: "Jobs"; docs: Array<{ __typename?: "Job"; image?: { __typename?: "Media"; url?: string | null } | null }> } | null;
-    startups?: { __typename?: "Startups"; docs: Array<{ __typename?: "Startup"; image?: { __typename?: "Media"; url?: string | null } | null }> } | null;
-    identities?: { __typename?: "Identities"; docs: Array<{ __typename?: "Identity"; image?: { __typename?: "Media"; url?: string | null } | null }> } | null;
+    companies?: {
+        __typename?: "Companies";
+        docs: Array<{ __typename?: "Company"; image?: { __typename?: "Media"; url?: string | null } | null }>;
+    } | null;
+    jobs?: {
+        __typename?: "Jobs";
+        docs: Array<{ __typename?: "Job"; image?: { __typename?: "Media"; url?: string | null } | null }>;
+    } | null;
+    startups?: {
+        __typename?: "Startups";
+        docs: Array<{ __typename?: "Startup"; image?: { __typename?: "Media"; url?: string | null } | null }>;
+    } | null;
+    identities?: {
+        __typename?: "Identities";
+        docs: Array<{ __typename?: "Identity"; image?: { __typename?: "Media"; url?: string | null } | null }>;
+    } | null;
 };
 
 export type IdentityByIdQueryVariables = Exact<{
@@ -55732,19 +55912,57 @@ export type ListJobsByCompanyQuery = {
             description?: string | null;
             positions?: number | null;
             isActive?: boolean | null;
-            bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+            bounty?: {
+                __typename?: "Job_Bounty";
+                amount?: number | null;
+                currency?: Job_Bounty_Currency | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
             company?: {
                 __typename?: "Company";
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                allowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                disallowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
             } | null;
             image?: {
                 __typename?: "Media";
@@ -55800,19 +56018,57 @@ export type SearchJobsByCompanyQuery = {
                           description?: string | null;
                           positions?: number | null;
                           isActive?: boolean | null;
-                          bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-                          allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                          disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+                          bounty?: {
+                              __typename?: "Job_Bounty";
+                              amount?: number | null;
+                              currency?: Job_Bounty_Currency | null;
+                          } | null;
+                          allowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
+                          disallowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
                           company?: {
                               __typename?: "Company";
                               id: string;
                               serverURL?: string | null;
                               name?: string | null;
                               description?: string | null;
-                              cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                              allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                              disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                              identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                              cryptoAddresses?: {
+                                  __typename?: "Company_CryptoAddresses";
+                                  chain?: Company_CryptoAddresses_Chain | null;
+                                  address?: string | null;
+                              } | null;
+                              allowedIdentities?: Array<{
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              }> | null;
+                              disallowedIdentities?: Array<{
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              }> | null;
+                              identity?: {
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              } | null;
                           } | null;
                           image?: {
                               __typename?: "Media";
@@ -55880,9 +56136,26 @@ export type JobByIdQuery = {
         isActive?: boolean | null;
         applyUrl?: string | null;
         bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-        allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-        disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-        salaryRange?: { __typename?: "Job_SalaryRange"; min?: number | null; max?: number | null; currency?: Job_SalaryRange_Currency | null } | null;
+        allowedIdentities?: Array<{
+            __typename?: "Identity";
+            id: string;
+            serverURL?: string | null;
+            name: string;
+            description?: string | null;
+        }> | null;
+        disallowedIdentities?: Array<{
+            __typename?: "Identity";
+            id: string;
+            serverURL?: string | null;
+            name: string;
+            description?: string | null;
+        }> | null;
+        salaryRange?: {
+            __typename?: "Job_SalaryRange";
+            min?: number | null;
+            max?: number | null;
+            currency?: Job_SalaryRange_Currency | null;
+        } | null;
         createdBy?: { __typename?: "User"; id: string } | null;
         company?: {
             __typename?: "Company";
@@ -55890,10 +56163,32 @@ export type JobByIdQuery = {
             serverURL?: string | null;
             name?: string | null;
             description?: string | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            identity?: {
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            } | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -55950,10 +56245,31 @@ export type ListJobsBySecondaryIdentityQuery = {
             postedAt?: any | null;
             isActive?: boolean | null;
             applyUrl?: string | null;
-            bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            salaryRange?: { __typename?: "Job_SalaryRange"; min?: number | null; max?: number | null; currency?: Job_SalaryRange_Currency | null } | null;
+            bounty?: {
+                __typename?: "Job_Bounty";
+                amount?: number | null;
+                currency?: Job_Bounty_Currency | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            salaryRange?: {
+                __typename?: "Job_SalaryRange";
+                min?: number | null;
+                max?: number | null;
+                currency?: Job_SalaryRange_Currency | null;
+            } | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -55970,10 +56286,32 @@ export type ListJobsBySecondaryIdentityQuery = {
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                allowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                disallowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
                 image?: {
                     __typename?: "Media";
                     id: string;
@@ -56023,10 +56361,31 @@ export type SearchJobsBySecondaryIdentityQuery = {
             postedAt?: any | null;
             isActive?: boolean | null;
             applyUrl?: string | null;
-            bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            salaryRange?: { __typename?: "Job_SalaryRange"; min?: number | null; max?: number | null; currency?: Job_SalaryRange_Currency | null } | null;
+            bounty?: {
+                __typename?: "Job_Bounty";
+                amount?: number | null;
+                currency?: Job_Bounty_Currency | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            salaryRange?: {
+                __typename?: "Job_SalaryRange";
+                min?: number | null;
+                max?: number | null;
+                currency?: Job_SalaryRange_Currency | null;
+            } | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -56043,10 +56402,32 @@ export type SearchJobsBySecondaryIdentityQuery = {
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                allowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                disallowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
                 image?: {
                     __typename?: "Media";
                     id: string;
@@ -56117,10 +56498,31 @@ export type ListJobsQuery = {
             postedAt?: any | null;
             isActive?: boolean | null;
             applyUrl?: string | null;
-            bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-            allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-            salaryRange?: { __typename?: "Job_SalaryRange"; min?: number | null; max?: number | null; currency?: Job_SalaryRange_Currency | null } | null;
+            bounty?: {
+                __typename?: "Job_Bounty";
+                amount?: number | null;
+                currency?: Job_Bounty_Currency | null;
+            } | null;
+            allowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            disallowedIdentities?: Array<{
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            }> | null;
+            salaryRange?: {
+                __typename?: "Job_SalaryRange";
+                min?: number | null;
+                max?: number | null;
+                currency?: Job_SalaryRange_Currency | null;
+            } | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -56137,10 +56539,32 @@ export type ListJobsQuery = {
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                allowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                disallowedIdentities?: Array<{
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                }> | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
                 image?: {
                     __typename?: "Media";
                     id: string;
@@ -56195,9 +56619,25 @@ export type SearchJobsQuery = {
                           description?: string | null;
                           positions?: number | null;
                           isActive?: boolean | null;
-                          bounty?: { __typename?: "Job_Bounty"; amount?: number | null; currency?: Job_Bounty_Currency | null } | null;
-                          allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                          disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
+                          bounty?: {
+                              __typename?: "Job_Bounty";
+                              amount?: number | null;
+                              currency?: Job_Bounty_Currency | null;
+                          } | null;
+                          allowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
+                          disallowedIdentities?: Array<{
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          }> | null;
                           image?: {
                               __typename?: "Media";
                               id: string;
@@ -56214,10 +56654,32 @@ export type SearchJobsQuery = {
                               serverURL?: string | null;
                               name?: string | null;
                               description?: string | null;
-                              cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                              allowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                              disallowedIdentities?: Array<{ __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null }> | null;
-                              identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                              cryptoAddresses?: {
+                                  __typename?: "Company_CryptoAddresses";
+                                  chain?: Company_CryptoAddresses_Chain | null;
+                                  address?: string | null;
+                              } | null;
+                              allowedIdentities?: Array<{
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              }> | null;
+                              disallowedIdentities?: Array<{
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              }> | null;
+                              identity?: {
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              } | null;
                               image?: {
                                   __typename?: "Media";
                                   id: string;
@@ -56283,7 +56745,10 @@ export type ListCommentsByTargetQuery = {
             updatedAt?: any | null;
             createdBy?: { __typename?: "User"; id: string; name: string; email: string } | null;
             replyComment?: { __typename?: "Comment"; id: string } | null;
-            replyPost: { __typename?: "Comment_ReplyPost_Relationship"; relationTo?: Comment_ReplyPost_RelationTo | null };
+            replyPost: {
+                __typename?: "Comment_ReplyPost_Relationship";
+                relationTo?: Comment_ReplyPost_RelationTo | null;
+            };
         }>;
     } | null;
 };
@@ -56317,10 +56782,19 @@ export type ListJobsByIdentityQuery = {
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
                 image?: { __typename?: "Media"; id: string; url?: string | null } | null;
             } | null;
-            salaryRange?: { __typename?: "Job_SalaryRange"; min?: number | null; max?: number | null; currency?: Job_SalaryRange_Currency | null } | null;
+            salaryRange?: {
+                __typename?: "Job_SalaryRange";
+                min?: number | null;
+                max?: number | null;
+                currency?: Job_SalaryRange_Currency | null;
+            } | null;
             image?: { __typename?: "Media"; id: string; url?: string | null } | null;
         }>;
     } | null;
@@ -56355,13 +56829,21 @@ export type ListProductsByIdentityQuery = {
             priceInTRX?: string | null;
             _status?: Product__Status | null;
             createdAt?: any | null;
-            cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+            cryptoAddresses?: {
+                __typename?: "Product_CryptoAddresses";
+                chain?: Product_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
             company?: {
                 __typename?: "Company";
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
                 image?: { __typename?: "Media"; id: string; url?: string | null } | null;
             } | null;
             image?: { __typename?: "Media"; id: string; url?: string | null } | null;
@@ -56388,7 +56870,10 @@ export type ListRepliesToCommentQuery = {
             updatedAt?: any | null;
             createdBy?: { __typename?: "User"; id: string; name: string; email: string } | null;
             replyComment?: { __typename?: "Comment"; id: string } | null;
-            replyPost: { __typename?: "Comment_ReplyPost_Relationship"; relationTo?: Comment_ReplyPost_RelationTo | null };
+            replyPost: {
+                __typename?: "Comment_ReplyPost_Relationship";
+                relationTo?: Comment_ReplyPost_RelationTo | null;
+            };
         }>;
     } | null;
 };
@@ -56402,7 +56887,12 @@ export type TrackAnalyticsEventMutation = {
     trackAnalyticsEvent: {
         __typename?: "AnalyticsTrackResult";
         success: boolean;
-        analytics: { __typename?: "AnalyticsTrackIdentifiers"; distinctId: string; eventId?: string | null; sessionId: string };
+        analytics: {
+            __typename?: "AnalyticsTrackIdentifiers";
+            distinctId: string;
+            eventId?: string | null;
+            sessionId: string;
+        };
     };
 };
 
@@ -56453,11 +56943,19 @@ export type CreateOrderMutation = {
                 priceInETH?: string | null;
                 priceInSOL?: string | null;
                 priceInTRX?: string | null;
-                cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Product_CryptoAddresses";
+                    chain?: Product_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
                 company?: {
                     __typename?: "Company";
                     id: string;
-                    cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                    cryptoAddresses?: {
+                        __typename?: "Company_CryptoAddresses";
+                        chain?: Company_CryptoAddresses_Chain | null;
+                        address?: string | null;
+                    } | null;
                 } | null;
             } | null;
             variant?: { __typename?: "Variant"; id: string; title?: string | null } | null;
@@ -56527,11 +57025,19 @@ export type UpdateOrderMutation = {
                 priceInETH?: string | null;
                 priceInSOL?: string | null;
                 priceInTRX?: string | null;
-                cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Product_CryptoAddresses";
+                    chain?: Product_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
                 company?: {
                     __typename?: "Company";
                     id: string;
-                    cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                    cryptoAddresses?: {
+                        __typename?: "Company_CryptoAddresses";
+                        chain?: Company_CryptoAddresses_Chain | null;
+                        address?: string | null;
+                    } | null;
                 } | null;
             } | null;
             variant?: { __typename?: "Variant"; id: string; title?: string | null } | null;
@@ -56586,8 +57092,17 @@ export type ListProductsByCompanyQuery = {
             priceInETH?: string | null;
             priceInSOL?: string | null;
             priceInTRX?: string | null;
-            cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-            properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Product_CryptoAddresses";
+                chain?: Product_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            properties?: Array<{
+                __typename?: "Product_Properties";
+                id?: string | null;
+                key?: string | null;
+                value?: string | null;
+            }> | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -56604,8 +57119,18 @@ export type ListProductsByCompanyQuery = {
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
             } | null;
         }>;
     } | null;
@@ -56652,8 +57177,17 @@ export type SearchProductsByCompanyQuery = {
                           description?: string | null;
                           url?: string | null;
                           orderable?: boolean | null;
-                          cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-                          properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+                          cryptoAddresses?: {
+                              __typename?: "Product_CryptoAddresses";
+                              chain?: Product_CryptoAddresses_Chain | null;
+                              address?: string | null;
+                          } | null;
+                          properties?: Array<{
+                              __typename?: "Product_Properties";
+                              id?: string | null;
+                              key?: string | null;
+                              value?: string | null;
+                          }> | null;
                           image?: {
                               __typename?: "Media";
                               id: string;
@@ -56670,8 +57204,18 @@ export type SearchProductsByCompanyQuery = {
                               serverURL?: string | null;
                               name?: string | null;
                               description?: string | null;
-                              cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                              identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                              cryptoAddresses?: {
+                                  __typename?: "Company_CryptoAddresses";
+                                  chain?: Company_CryptoAddresses_Chain | null;
+                                  address?: string | null;
+                              } | null;
+                              identity?: {
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              } | null;
                           } | null;
                       }
                     | { __typename?: "Startup" }
@@ -56702,8 +57246,17 @@ export type ListProductsByCreatorQuery = {
             orderable?: boolean | null;
             url?: string | null;
             _status?: Product__Status | null;
-            cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-            properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Product_CryptoAddresses";
+                chain?: Product_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            properties?: Array<{
+                __typename?: "Product_Properties";
+                id?: string | null;
+                key?: string | null;
+                value?: string | null;
+            }> | null;
         }>;
     } | null;
 };
@@ -56751,20 +57304,55 @@ export type ProductByIdQuery = {
                 options?: Array<{ __typename?: "VariantOption"; id: string; label: string; value: string }> | null;
             }>;
         } | null;
-        cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-        properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+        cryptoAddresses?: {
+            __typename?: "Product_CryptoAddresses";
+            chain?: Product_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
+        properties?: Array<{
+            __typename?: "Product_Properties";
+            id?: string | null;
+            key?: string | null;
+            value?: string | null;
+        }> | null;
         company?: {
             __typename?: "Company";
             id: string;
             serverURL?: string | null;
             name?: string | null;
             description?: string | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
             createdBy?: { __typename?: "User"; id: string } | null;
-            identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
-            image?: { __typename?: "Media"; id: string; url?: string | null; filename?: string | null; mimeType?: string | null; width?: number | null; height?: number | null } | null;
+            identity?: {
+                __typename?: "Identity";
+                id: string;
+                serverURL?: string | null;
+                name: string;
+                description?: string | null;
+            } | null;
+            image?: {
+                __typename?: "Media";
+                id: string;
+                url?: string | null;
+                filename?: string | null;
+                mimeType?: string | null;
+                width?: number | null;
+                height?: number | null;
+            } | null;
         } | null;
-        image?: { __typename?: "Media"; id: string; url?: string | null; filename?: string | null; width?: number | null; height?: number | null; mimeType?: string | null } | null;
+        image?: {
+            __typename?: "Media";
+            id: string;
+            url?: string | null;
+            filename?: string | null;
+            width?: number | null;
+            height?: number | null;
+            mimeType?: string | null;
+        } | null;
     } | null;
 };
 
@@ -56780,8 +57368,17 @@ export type CreateProductMutation = {
         id: string;
         name?: string | null;
         _status?: Product__Status | null;
-        cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-        properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+        cryptoAddresses?: {
+            __typename?: "Product_CryptoAddresses";
+            chain?: Product_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
+        properties?: Array<{
+            __typename?: "Product_Properties";
+            id?: string | null;
+            key?: string | null;
+            value?: string | null;
+        }> | null;
         image?: { __typename?: "Media"; id: string; url?: string | null } | null;
     } | null;
 };
@@ -56790,7 +57387,10 @@ export type DeleteProductMutationVariables = Exact<{
     id: Scalars["String"]["input"];
 }>;
 
-export type DeleteProductMutation = { __typename?: "Mutation"; deleteProduct?: { __typename?: "Product"; id: string } | null };
+export type DeleteProductMutation = {
+    __typename?: "Mutation";
+    deleteProduct?: { __typename?: "Product"; id: string } | null;
+};
 
 export type ListProductsQueryVariables = Exact<{
     page?: InputMaybe<Scalars["Int"]["input"]>;
@@ -56824,8 +57424,17 @@ export type ListProductsQuery = {
             priceInETH?: string | null;
             priceInSOL?: string | null;
             priceInTRX?: string | null;
-            cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-            properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+            cryptoAddresses?: {
+                __typename?: "Product_CryptoAddresses";
+                chain?: Product_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
+            properties?: Array<{
+                __typename?: "Product_Properties";
+                id?: string | null;
+                key?: string | null;
+                value?: string | null;
+            }> | null;
             image?: {
                 __typename?: "Media";
                 id: string;
@@ -56842,8 +57451,18 @@ export type ListProductsQuery = {
                 serverURL?: string | null;
                 name?: string | null;
                 description?: string | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
+                identity?: {
+                    __typename?: "Identity";
+                    id: string;
+                    serverURL?: string | null;
+                    name: string;
+                    description?: string | null;
+                } | null;
                 image?: {
                     __typename?: "Media";
                     id: string;
@@ -56899,8 +57518,17 @@ export type SearchProductsQuery = {
                           description?: string | null;
                           url?: string | null;
                           orderable?: boolean | null;
-                          cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-                          properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+                          cryptoAddresses?: {
+                              __typename?: "Product_CryptoAddresses";
+                              chain?: Product_CryptoAddresses_Chain | null;
+                              address?: string | null;
+                          } | null;
+                          properties?: Array<{
+                              __typename?: "Product_Properties";
+                              id?: string | null;
+                              key?: string | null;
+                              value?: string | null;
+                          }> | null;
                           image?: {
                               __typename?: "Media";
                               id: string;
@@ -56917,8 +57545,18 @@ export type SearchProductsQuery = {
                               serverURL?: string | null;
                               name?: string | null;
                               description?: string | null;
-                              cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
-                              identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                              cryptoAddresses?: {
+                                  __typename?: "Company_CryptoAddresses";
+                                  chain?: Company_CryptoAddresses_Chain | null;
+                                  address?: string | null;
+                              } | null;
+                              identity?: {
+                                  __typename?: "Identity";
+                                  id: string;
+                                  serverURL?: string | null;
+                                  name: string;
+                                  description?: string | null;
+                              } | null;
                               image?: {
                                   __typename?: "Media";
                                   id: string;
@@ -56951,8 +57589,17 @@ export type UpdateProductMutation = {
         id: string;
         name?: string | null;
         _status?: Product__Status | null;
-        cryptoAddresses?: { __typename?: "Product_CryptoAddresses"; chain?: Product_CryptoAddresses_Chain | null; address?: string | null } | null;
-        properties?: Array<{ __typename?: "Product_Properties"; id?: string | null; key?: string | null; value?: string | null }> | null;
+        cryptoAddresses?: {
+            __typename?: "Product_CryptoAddresses";
+            chain?: Product_CryptoAddresses_Chain | null;
+            address?: string | null;
+        } | null;
+        properties?: Array<{
+            __typename?: "Product_Properties";
+            id?: string | null;
+            key?: string | null;
+            value?: string | null;
+        }> | null;
         image?: { __typename?: "Media"; id: string; url?: string | null } | null;
     } | null;
 };
@@ -56966,7 +57613,12 @@ export type JoinStartupMutation = {
     joinStartup: {
         __typename?: "StartupMembershipResult";
         message: string;
-        startup?: { __typename?: "Startup"; id: string; title?: string | null; involvedUsers?: Array<{ __typename?: "User"; id: string; name: string; email: string }> | null } | null;
+        startup?: {
+            __typename?: "Startup";
+            id: string;
+            title?: string | null;
+            involvedUsers?: Array<{ __typename?: "User"; id: string; name: string; email: string }> | null;
+        } | null;
     };
 };
 
@@ -56979,7 +57631,12 @@ export type LeaveStartupMutation = {
     leaveStartup: {
         __typename?: "StartupMembershipResult";
         message: string;
-        startup?: { __typename?: "Startup"; id: string; title?: string | null; involvedUsers?: Array<{ __typename?: "User"; id: string; name: string; email: string }> | null } | null;
+        startup?: {
+            __typename?: "Startup";
+            id: string;
+            title?: string | null;
+            involvedUsers?: Array<{ __typename?: "User"; id: string; name: string; email: string }> | null;
+        } | null;
     };
 };
 
@@ -57010,13 +57667,21 @@ export type ListStartupsByCompanyQuery = {
             stage?: Startup_Stage | null;
             lookingFor?: Array<Startup_LookingFor> | null;
             alreadyHave?: Array<Startup_AlreadyHave> | null;
-            fundsNeeded?: { __typename?: "Startup_FundsNeeded"; amount?: number | null; currency?: Startup_FundsNeeded_Currency | null } | null;
+            fundsNeeded?: {
+                __typename?: "Startup_FundsNeeded";
+                amount?: number | null;
+                currency?: Startup_FundsNeeded_Currency | null;
+            } | null;
             company?: {
                 __typename?: "Company";
                 id: string;
                 name?: string | null;
                 email?: any | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
             } | null;
             identity?: {
                 __typename?: "Identity";
@@ -57061,7 +57726,14 @@ export type ListStartupsByCreatorQuery = {
     Startups?: {
         __typename?: "Startups";
         totalDocs: number;
-        docs: Array<{ __typename?: "Startup"; id: string; isSubscribed?: boolean | null; serverURL?: string | null; title?: string | null; _status?: Startup__Status | null }>;
+        docs: Array<{
+            __typename?: "Startup";
+            id: string;
+            isSubscribed?: boolean | null;
+            serverURL?: string | null;
+            title?: string | null;
+            _status?: Startup__Status | null;
+        }>;
     } | null;
 };
 
@@ -57085,14 +57757,22 @@ export type StartupByIdQuery = {
         alreadyHave?: Array<Startup_AlreadyHave> | null;
         createdAt?: any | null;
         updatedAt?: any | null;
-        fundsNeeded?: { __typename?: "Startup_FundsNeeded"; amount?: number | null; currency?: Startup_FundsNeeded_Currency | null } | null;
+        fundsNeeded?: {
+            __typename?: "Startup_FundsNeeded";
+            amount?: number | null;
+            currency?: Startup_FundsNeeded_Currency | null;
+        } | null;
         company?: {
             __typename?: "Company";
             id: string;
             serverURL?: string | null;
             name?: string | null;
             email?: any | null;
-            cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+            cryptoAddresses?: {
+                __typename?: "Company_CryptoAddresses";
+                chain?: Company_CryptoAddresses_Chain | null;
+                address?: string | null;
+            } | null;
         } | null;
         createdBy?: { __typename?: "User"; id: string } | null;
         identity?: {
@@ -57160,14 +57840,23 @@ export type CreateStartupMutationVariables = Exact<{
 
 export type CreateStartupMutation = {
     __typename?: "Mutation";
-    createStartup?: { __typename?: "Startup"; id: string; title?: string | null; _status?: Startup__Status | null; image?: { __typename?: "Media"; id: string; url?: string | null } | null } | null;
+    createStartup?: {
+        __typename?: "Startup";
+        id: string;
+        title?: string | null;
+        _status?: Startup__Status | null;
+        image?: { __typename?: "Media"; id: string; url?: string | null } | null;
+    } | null;
 };
 
 export type DeleteStartupMutationVariables = Exact<{
     id: Scalars["String"]["input"];
 }>;
 
-export type DeleteStartupMutation = { __typename?: "Mutation"; deleteStartup?: { __typename?: "Startup"; id: string } | null };
+export type DeleteStartupMutation = {
+    __typename?: "Mutation";
+    deleteStartup?: { __typename?: "Startup"; id: string } | null;
+};
 
 export type ListStartupsQueryVariables = Exact<{
     page?: InputMaybe<Scalars["Int"]["input"]>;
@@ -57196,14 +57885,22 @@ export type ListStartupsQuery = {
             stage?: Startup_Stage | null;
             lookingFor?: Array<Startup_LookingFor> | null;
             alreadyHave?: Array<Startup_AlreadyHave> | null;
-            fundsNeeded?: { __typename?: "Startup_FundsNeeded"; amount?: number | null; currency?: Startup_FundsNeeded_Currency | null } | null;
+            fundsNeeded?: {
+                __typename?: "Startup_FundsNeeded";
+                amount?: number | null;
+                currency?: Startup_FundsNeeded_Currency | null;
+            } | null;
             company?: {
                 __typename?: "Company";
                 id: string;
                 serverURL?: string | null;
                 name?: string | null;
                 email?: any | null;
-                cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                cryptoAddresses?: {
+                    __typename?: "Company_CryptoAddresses";
+                    chain?: Company_CryptoAddresses_Chain | null;
+                    address?: string | null;
+                } | null;
             } | null;
             identity?: {
                 __typename?: "Identity";
@@ -57279,13 +57976,21 @@ export type SearchStartupsQuery = {
                           stage?: Startup_Stage | null;
                           lookingFor?: Array<Startup_LookingFor> | null;
                           alreadyHave?: Array<Startup_AlreadyHave> | null;
-                          fundsNeeded?: { __typename?: "Startup_FundsNeeded"; amount?: number | null; currency?: Startup_FundsNeeded_Currency | null } | null;
+                          fundsNeeded?: {
+                              __typename?: "Startup_FundsNeeded";
+                              amount?: number | null;
+                              currency?: Startup_FundsNeeded_Currency | null;
+                          } | null;
                           company?: {
                               __typename?: "Company";
                               id: string;
                               serverURL?: string | null;
                               name?: string | null;
-                              cryptoAddresses?: { __typename?: "Company_CryptoAddresses"; chain?: Company_CryptoAddresses_Chain | null; address?: string | null } | null;
+                              cryptoAddresses?: {
+                                  __typename?: "Company_CryptoAddresses";
+                                  chain?: Company_CryptoAddresses_Chain | null;
+                                  address?: string | null;
+                              } | null;
                           } | null;
                           image?: {
                               __typename?: "Media";
@@ -57297,7 +58002,13 @@ export type SearchStartupsQuery = {
                               height?: number | null;
                               mimeType?: string | null;
                           } | null;
-                          identity?: { __typename?: "Identity"; id: string; serverURL?: string | null; name: string; description?: string | null } | null;
+                          identity?: {
+                              __typename?: "Identity";
+                              id: string;
+                              serverURL?: string | null;
+                              name: string;
+                              description?: string | null;
+                          } | null;
                       }
                     | null;
             };
@@ -57313,7 +58024,13 @@ export type UpdateStartupMutationVariables = Exact<{
 
 export type UpdateStartupMutation = {
     __typename?: "Mutation";
-    updateStartup?: { __typename?: "Startup"; id: string; title?: string | null; _status?: Startup__Status | null; image?: { __typename?: "Media"; id: string; url?: string | null } | null } | null;
+    updateStartup?: {
+        __typename?: "Startup";
+        id: string;
+        title?: string | null;
+        _status?: Startup__Status | null;
+        image?: { __typename?: "Media"; id: string; url?: string | null } | null;
+    } | null;
 };
 
 export type SubscribeToCompanyUpdatesMutationVariables = Exact<{
@@ -57323,7 +58040,13 @@ export type SubscribeToCompanyUpdatesMutationVariables = Exact<{
 
 export type SubscribeToCompanyUpdatesMutation = {
     __typename?: "Mutation";
-    createNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null; email: any; targetCollection: NotificationSubscription_TargetCollection; targetID: string } | null;
+    createNotificationSubscription?: {
+        __typename?: "NotificationSubscription";
+        id?: string | null;
+        email: any;
+        targetCollection: NotificationSubscription_TargetCollection;
+        targetID: string;
+    } | null;
 };
 
 export type SubscribeToJobUpdatesMutationVariables = Exact<{
@@ -57333,7 +58056,13 @@ export type SubscribeToJobUpdatesMutationVariables = Exact<{
 
 export type SubscribeToJobUpdatesMutation = {
     __typename?: "Mutation";
-    createNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null; email: any; targetCollection: NotificationSubscription_TargetCollection; targetID: string } | null;
+    createNotificationSubscription?: {
+        __typename?: "NotificationSubscription";
+        id?: string | null;
+        email: any;
+        targetCollection: NotificationSubscription_TargetCollection;
+        targetID: string;
+    } | null;
 };
 
 export type SubscribeToProductUpdatesMutationVariables = Exact<{
@@ -57343,7 +58072,13 @@ export type SubscribeToProductUpdatesMutationVariables = Exact<{
 
 export type SubscribeToProductUpdatesMutation = {
     __typename?: "Mutation";
-    createNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null; email: any; targetCollection: NotificationSubscription_TargetCollection; targetID: string } | null;
+    createNotificationSubscription?: {
+        __typename?: "NotificationSubscription";
+        id?: string | null;
+        email: any;
+        targetCollection: NotificationSubscription_TargetCollection;
+        targetID: string;
+    } | null;
 };
 
 export type SubscribeToTribeUpdatesMutationVariables = Exact<{
@@ -57353,7 +58088,13 @@ export type SubscribeToTribeUpdatesMutationVariables = Exact<{
 
 export type SubscribeToTribeUpdatesMutation = {
     __typename?: "Mutation";
-    createNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null; email: any; targetCollection: NotificationSubscription_TargetCollection; targetID: string } | null;
+    createNotificationSubscription?: {
+        __typename?: "NotificationSubscription";
+        id?: string | null;
+        email: any;
+        targetCollection: NotificationSubscription_TargetCollection;
+        targetID: string;
+    } | null;
 };
 
 export type SubscribeToVentureUpdatesMutationVariables = Exact<{
@@ -57363,52 +58104,84 @@ export type SubscribeToVentureUpdatesMutationVariables = Exact<{
 
 export type SubscribeToVentureUpdatesMutation = {
     __typename?: "Mutation";
-    createNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null; email: any; targetCollection: NotificationSubscription_TargetCollection; targetID: string } | null;
+    createNotificationSubscription?: {
+        __typename?: "NotificationSubscription";
+        id?: string | null;
+        email: any;
+        targetCollection: NotificationSubscription_TargetCollection;
+        targetID: string;
+    } | null;
 };
 
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListPublishedSyndicationUrlsQuery = {
     __typename?: "Query";
-    Syndications?: { __typename?: "Syndications"; docs: Array<{ __typename?: "Syndication"; url?: string | null; name?: string | null; description?: string | null }> } | null;
+    Syndications?: {
+        __typename?: "Syndications";
+        docs: Array<{
+            __typename?: "Syndication";
+            url?: string | null;
+            name?: string | null;
+            description?: string | null;
+        }>;
+    } | null;
 };
 
 export type UnsubscribeFromCompanyUpdatesMutationVariables = Exact<{
     subscriptionID: Scalars["String"]["input"];
 }>;
 
-export type UnsubscribeFromCompanyUpdatesMutation = { __typename?: "Mutation"; deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null };
+export type UnsubscribeFromCompanyUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null;
+};
 
 export type UnsubscribeFromJobUpdatesMutationVariables = Exact<{
     subscriptionID: Scalars["String"]["input"];
 }>;
 
-export type UnsubscribeFromJobUpdatesMutation = { __typename?: "Mutation"; deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null };
+export type UnsubscribeFromJobUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null;
+};
 
 export type UnsubscribeFromProductUpdatesMutationVariables = Exact<{
     subscriptionID: Scalars["String"]["input"];
 }>;
 
-export type UnsubscribeFromProductUpdatesMutation = { __typename?: "Mutation"; deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null };
+export type UnsubscribeFromProductUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null;
+};
 
 export type UnsubscribeFromTribeUpdatesMutationVariables = Exact<{
     subscriptionID: Scalars["String"]["input"];
 }>;
 
-export type UnsubscribeFromTribeUpdatesMutation = { __typename?: "Mutation"; deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null };
+export type UnsubscribeFromTribeUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null;
+};
 
 export type UnsubscribeFromVentureUpdatesMutationVariables = Exact<{
     subscriptionID: Scalars["String"]["input"];
 }>;
 
-export type UnsubscribeFromVentureUpdatesMutation = { __typename?: "Mutation"; deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null };
+export type UnsubscribeFromVentureUpdatesMutation = {
+    __typename?: "Mutation";
+    deleteNotificationSubscription?: { __typename?: "NotificationSubscription"; id?: string | null } | null;
+};
 
 export type UpdateCommentContentMutationVariables = Exact<{
     id: Scalars["String"]["input"];
     content: Scalars["String"]["input"];
 }>;
 
-export type UpdateCommentContentMutation = { __typename?: "Mutation"; updateComment?: { __typename?: "Comment"; id: string; content: string; updatedAt?: any | null } | null };
+export type UpdateCommentContentMutation = {
+    __typename?: "Mutation";
+    updateComment?: { __typename?: "Comment"; id: string; content: string; updatedAt?: any | null } | null;
+};
 
 export type MeUserQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -57436,7 +58209,12 @@ export type MeUserQuery = {
                 country?: string | null;
                 phone?: string | null;
             } | null;
-            wallets?: Array<{ __typename?: "User_Wallets"; chain?: User_Wallets_Chain | null; provider?: string | null; address?: string | null }> | null;
+            wallets?: Array<{
+                __typename?: "User_Wallets";
+                chain?: User_Wallets_Chain | null;
+                provider?: string | null;
+                address?: string | null;
+            }> | null;
         } | null;
     } | null;
 };
@@ -57559,7 +58337,9 @@ export const CartBySecretDocument = `
 
 export const useCartBySecretQuery = <TData = CartBySecretQuery, TError = unknown>(
     variables: CartBySecretQueryVariables,
-    options?: Omit<UseQueryOptions<CartBySecretQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<CartBySecretQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<CartBySecretQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<CartBySecretQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<CartBySecretQuery, TError, TData>({
         queryKey: ["CartBySecret", variables],
@@ -57610,10 +58390,13 @@ export const CreateCartDocument = `
 }
     `;
 
-export const useCreateCartMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateCartMutation, TError, CreateCartMutationVariables, TContext>) => {
+export const useCreateCartMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateCartMutation, TError, CreateCartMutationVariables, TContext>,
+) => {
     return useMutation<CreateCartMutation, TError, CreateCartMutationVariables, TContext>({
         mutationKey: ["CreateCart"],
-        mutationFn: (variables?: CreateCartMutationVariables) => gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables)(),
+        mutationFn: (variables?: CreateCartMutationVariables) =>
+            gqlFetcher<CreateCartMutation, CreateCartMutationVariables>(CreateCartDocument, variables)(),
         ...options,
     });
 };
@@ -57658,10 +58441,13 @@ export const DeleteCartDocument = `
 }
     `;
 
-export const useDeleteCartMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>) => {
+export const useDeleteCartMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>,
+) => {
     return useMutation<DeleteCartMutation, TError, DeleteCartMutationVariables, TContext>({
         mutationKey: ["DeleteCart"],
-        mutationFn: (variables?: DeleteCartMutationVariables) => gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables)(),
+        mutationFn: (variables?: DeleteCartMutationVariables) =>
+            gqlFetcher<DeleteCartMutation, DeleteCartMutationVariables>(DeleteCartDocument, variables)(),
         ...options,
     });
 };
@@ -57706,10 +58492,13 @@ export const UpdateCartDocument = `
 }
     `;
 
-export const useUpdateCartMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>) => {
+export const useUpdateCartMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>,
+) => {
     return useMutation<UpdateCartMutation, TError, UpdateCartMutationVariables, TContext>({
         mutationKey: ["UpdateCart"],
-        mutationFn: (variables?: UpdateCartMutationVariables) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables)(),
+        mutationFn: (variables?: UpdateCartMutationVariables) =>
+            gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables)(),
         ...options,
     });
 };
@@ -57743,19 +58532,32 @@ export const ListCompaniesByCreatorDocument = `
 
 export const useListCompaniesByCreatorQuery = <TData = ListCompaniesByCreatorQuery, TError = unknown>(
     variables?: ListCompaniesByCreatorQueryVariables,
-    options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListCompaniesByCreatorQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListCompaniesByCreatorQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListCompaniesByCreator"] : ["ListCompaniesByCreator", variables],
-        queryFn: gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables),
+        queryFn: gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(
+            ListCompaniesByCreatorDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQueryVariables) => (variables === undefined ? ["ListCompaniesByCreator"] : ["ListCompaniesByCreator", variables]);
+useListCompaniesByCreatorQuery.getKey = (variables?: ListCompaniesByCreatorQueryVariables) =>
+    variables === undefined ? ["ListCompaniesByCreator"] : ["ListCompaniesByCreator", variables];
 
-useListCompaniesByCreatorQuery.fetcher = (variables?: ListCompaniesByCreatorQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(ListCompaniesByCreatorDocument, variables, options);
+useListCompaniesByCreatorQuery.fetcher = (
+    variables?: ListCompaniesByCreatorQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListCompaniesByCreatorQuery, ListCompaniesByCreatorQueryVariables>(
+        ListCompaniesByCreatorDocument,
+        variables,
+        options,
+    );
 
 export const CompanyByIdDocument = `
     query CompanyById($id: String!, $draft: Boolean = false) {
@@ -57819,7 +58621,9 @@ export const CompanyByIdDocument = `
 
 export const useCompanyByIdQuery = <TData = CompanyByIdQuery, TError = unknown>(
     variables: CompanyByIdQueryVariables,
-    options?: Omit<UseQueryOptions<CompanyByIdQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<CompanyByIdQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<CompanyByIdQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<CompanyByIdQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<CompanyByIdQuery, TError, TData>({
         queryKey: ["CompanyById", variables],
@@ -57905,19 +58709,34 @@ export const ListCompaniesByIdentityDocument = `
 
 export const useListCompaniesByIdentityQuery = <TData = ListCompaniesByIdentityQuery, TError = unknown>(
     variables: ListCompaniesByIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListCompaniesByIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListCompaniesByIdentityQuery, TError, TData>({
         queryKey: ["ListCompaniesByIdentity", variables],
-        queryFn: gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables),
+        queryFn: gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(
+            ListCompaniesByIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListCompaniesByIdentityQuery.getKey = (variables: ListCompaniesByIdentityQueryVariables) => ["ListCompaniesByIdentity", variables];
+useListCompaniesByIdentityQuery.getKey = (variables: ListCompaniesByIdentityQueryVariables) => [
+    "ListCompaniesByIdentity",
+    variables,
+];
 
-useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables, options);
+useListCompaniesByIdentityQuery.fetcher = (
+    variables: ListCompaniesByIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(
+        ListCompaniesByIdentityDocument,
+        variables,
+        options,
+    );
 
 export const SearchCompaniesByIdentityDocument = `
     query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
@@ -58003,19 +58822,34 @@ export const SearchCompaniesByIdentityDocument = `
 
 export const useSearchCompaniesByIdentityQuery = <TData = SearchCompaniesByIdentityQuery, TError = unknown>(
     variables: SearchCompaniesByIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchCompaniesByIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchCompaniesByIdentityQuery, TError, TData>({
         queryKey: ["SearchCompaniesByIdentity", variables],
-        queryFn: gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables),
+        queryFn: gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(
+            SearchCompaniesByIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentityQueryVariables) => ["SearchCompaniesByIdentity", variables];
+useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentityQueryVariables) => [
+    "SearchCompaniesByIdentity",
+    variables,
+];
 
-useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
+useSearchCompaniesByIdentityQuery.fetcher = (
+    variables: SearchCompaniesByIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(
+        SearchCompaniesByIdentityDocument,
+        variables,
+        options,
+    );
 
 export const ListCompaniesBySecondaryIdentityDocument = `
     query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
@@ -58087,7 +58921,10 @@ export const ListCompaniesBySecondaryIdentityDocument = `
 }
     `;
 
-export const useListCompaniesBySecondaryIdentityQuery = <TData = ListCompaniesBySecondaryIdentityQuery, TError = unknown>(
+export const useListCompaniesBySecondaryIdentityQuery = <
+    TData = ListCompaniesBySecondaryIdentityQuery,
+    TError = unknown,
+>(
     variables: ListCompaniesBySecondaryIdentityQueryVariables,
     options?: Omit<UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>, "queryKey"> & {
         queryKey?: UseQueryOptions<ListCompaniesBySecondaryIdentityQuery, TError, TData>["queryKey"];
@@ -58095,15 +58932,28 @@ export const useListCompaniesBySecondaryIdentityQuery = <TData = ListCompaniesBy
 ) => {
     return useQuery<ListCompaniesBySecondaryIdentityQuery, TError, TData>({
         queryKey: ["ListCompaniesBySecondaryIdentity", variables],
-        queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables),
+        queryFn: gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(
+            ListCompaniesBySecondaryIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => ["ListCompaniesBySecondaryIdentity", variables];
+useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySecondaryIdentityQueryVariables) => [
+    "ListCompaniesBySecondaryIdentity",
+    variables,
+];
 
-useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
+useListCompaniesBySecondaryIdentityQuery.fetcher = (
+    variables: ListCompaniesBySecondaryIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(
+        ListCompaniesBySecondaryIdentityDocument,
+        variables,
+        options,
+    );
 
 export const SearchCompaniesBySecondaryIdentityDocument = `
     query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -58176,7 +59026,10 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
 }
     `;
 
-export const useSearchCompaniesBySecondaryIdentityQuery = <TData = SearchCompaniesBySecondaryIdentityQuery, TError = unknown>(
+export const useSearchCompaniesBySecondaryIdentityQuery = <
+    TData = SearchCompaniesBySecondaryIdentityQuery,
+    TError = unknown,
+>(
     variables: SearchCompaniesBySecondaryIdentityQueryVariables,
     options?: Omit<UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>, "queryKey"> & {
         queryKey?: UseQueryOptions<SearchCompaniesBySecondaryIdentityQuery, TError, TData>["queryKey"];
@@ -58184,15 +59037,28 @@ export const useSearchCompaniesBySecondaryIdentityQuery = <TData = SearchCompani
 ) => {
     return useQuery<SearchCompaniesBySecondaryIdentityQuery, TError, TData>({
         queryKey: ["SearchCompaniesBySecondaryIdentity", variables],
-        queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables),
+        queryFn: gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(
+            SearchCompaniesBySecondaryIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => ["SearchCompaniesBySecondaryIdentity", variables];
+useSearchCompaniesBySecondaryIdentityQuery.getKey = (variables: SearchCompaniesBySecondaryIdentityQueryVariables) => [
+    "SearchCompaniesBySecondaryIdentity",
+    variables,
+];
 
-useSearchCompaniesBySecondaryIdentityQuery.fetcher = (variables: SearchCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(SearchCompaniesBySecondaryIdentityDocument, variables, options);
+useSearchCompaniesBySecondaryIdentityQuery.fetcher = (
+    variables: SearchCompaniesBySecondaryIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SearchCompaniesBySecondaryIdentityQuery, SearchCompaniesBySecondaryIdentityQueryVariables>(
+        SearchCompaniesBySecondaryIdentityDocument,
+        variables,
+        options,
+    );
 
 export const CreateCompanyDocument = `
     mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
@@ -58212,10 +59078,13 @@ export const CreateCompanyDocument = `
 }
     `;
 
-export const useCreateCompanyMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>) => {
+export const useCreateCompanyMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>,
+) => {
     return useMutation<CreateCompanyMutation, TError, CreateCompanyMutationVariables, TContext>({
         mutationKey: ["CreateCompany"],
-        mutationFn: (variables?: CreateCompanyMutationVariables) => gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables)(),
+        mutationFn: (variables?: CreateCompanyMutationVariables) =>
+            gqlFetcher<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, variables)(),
         ...options,
     });
 };
@@ -58231,10 +59100,13 @@ export const DeleteCompanyDocument = `
 }
     `;
 
-export const useDeleteCompanyMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>) => {
+export const useDeleteCompanyMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>,
+) => {
     return useMutation<DeleteCompanyMutation, TError, DeleteCompanyMutationVariables, TContext>({
         mutationKey: ["DeleteCompany"],
-        mutationFn: (variables?: DeleteCompanyMutationVariables) => gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables)(),
+        mutationFn: (variables?: DeleteCompanyMutationVariables) =>
+            gqlFetcher<DeleteCompanyMutation, DeleteCompanyMutationVariables>(DeleteCompanyDocument, variables)(),
         ...options,
     });
 };
@@ -58314,7 +59186,9 @@ export const ListCompaniesDocument = `
 
 export const useListCompaniesQuery = <TData = ListCompaniesQuery, TError = unknown>(
     variables?: ListCompaniesQueryVariables,
-    options?: Omit<UseQueryOptions<ListCompaniesQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListCompaniesQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListCompaniesQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListCompaniesQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListCompaniesQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListCompanies"] : ["ListCompanies", variables],
@@ -58323,7 +59197,8 @@ export const useListCompaniesQuery = <TData = ListCompaniesQuery, TError = unkno
     });
 };
 
-useListCompaniesQuery.getKey = (variables?: ListCompaniesQueryVariables) => (variables === undefined ? ["ListCompanies"] : ["ListCompanies", variables]);
+useListCompaniesQuery.getKey = (variables?: ListCompaniesQueryVariables) =>
+    variables === undefined ? ["ListCompanies"] : ["ListCompanies", variables];
 
 useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables, options);
@@ -58403,7 +59278,9 @@ export const SearchCompaniesDocument = `
 
 export const useSearchCompaniesQuery = <TData = SearchCompaniesQuery, TError = unknown>(
     variables: SearchCompaniesQueryVariables,
-    options?: Omit<UseQueryOptions<SearchCompaniesQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchCompaniesQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchCompaniesQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchCompaniesQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchCompaniesQuery, TError, TData>({
         queryKey: ["SearchCompanies", variables],
@@ -58435,10 +59312,13 @@ export const UpdateCompanyDocument = `
 }
     `;
 
-export const useUpdateCompanyMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>) => {
+export const useUpdateCompanyMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>,
+) => {
     return useMutation<UpdateCompanyMutation, TError, UpdateCompanyMutationVariables, TContext>({
         mutationKey: ["UpdateCompany"],
-        mutationFn: (variables?: UpdateCompanyMutationVariables) => gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables)(),
+        mutationFn: (variables?: UpdateCompanyMutationVariables) =>
+            gqlFetcher<UpdateCompanyMutation, UpdateCompanyMutationVariables>(UpdateCompanyDocument, variables)(),
         ...options,
     });
 };
@@ -58462,10 +59342,13 @@ export const CreateCommentDocument = `
 }
     `;
 
-export const useCreateCommentMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>) => {
+export const useCreateCommentMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>,
+) => {
     return useMutation<CreateCommentMutation, TError, CreateCommentMutationVariables, TContext>({
         mutationKey: ["CreateComment"],
-        mutationFn: (variables?: CreateCommentMutationVariables) => gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
+        mutationFn: (variables?: CreateCommentMutationVariables) =>
+            gqlFetcher<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, variables)(),
         ...options,
     });
 };
@@ -58499,13 +59382,24 @@ export const useCreateReplyToCommentMutation = <TError = unknown, TContext = unk
 ) => {
     return useMutation<CreateReplyToCommentMutation, TError, CreateReplyToCommentMutationVariables, TContext>({
         mutationKey: ["CreateReplyToComment"],
-        mutationFn: (variables?: CreateReplyToCommentMutationVariables) => gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables)(),
+        mutationFn: (variables?: CreateReplyToCommentMutationVariables) =>
+            gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(
+                CreateReplyToCommentDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useCreateReplyToCommentMutation.fetcher = (variables: CreateReplyToCommentMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(CreateReplyToCommentDocument, variables, options);
+useCreateReplyToCommentMutation.fetcher = (
+    variables: CreateReplyToCommentMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<CreateReplyToCommentMutation, CreateReplyToCommentMutationVariables>(
+        CreateReplyToCommentDocument,
+        variables,
+        options,
+    );
 
 export const DeleteCommentDocument = `
     mutation DeleteComment($id: String!) {
@@ -58515,10 +59409,13 @@ export const DeleteCommentDocument = `
 }
     `;
 
-export const useDeleteCommentMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>) => {
+export const useDeleteCommentMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>,
+) => {
     return useMutation<DeleteCommentMutation, TError, DeleteCommentMutationVariables, TContext>({
         mutationKey: ["DeleteComment"],
-        mutationFn: (variables?: DeleteCommentMutationVariables) => gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
+        mutationFn: (variables?: DeleteCommentMutationVariables) =>
+            gqlFetcher<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, variables)(),
         ...options,
     });
 };
@@ -58576,7 +59473,9 @@ export const EntityImageUrlsDocument = `
 
 export const useEntityImageUrlsQuery = <TData = EntityImageUrlsQuery, TError = unknown>(
     variables?: EntityImageUrlsQueryVariables,
-    options?: Omit<UseQueryOptions<EntityImageUrlsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<EntityImageUrlsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<EntityImageUrlsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<EntityImageUrlsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<EntityImageUrlsQuery, TError, TData>({
         queryKey: variables === undefined ? ["EntityImageUrls"] : ["EntityImageUrls", variables],
@@ -58585,7 +59484,8 @@ export const useEntityImageUrlsQuery = <TData = EntityImageUrlsQuery, TError = u
     });
 };
 
-useEntityImageUrlsQuery.getKey = (variables?: EntityImageUrlsQueryVariables) => (variables === undefined ? ["EntityImageUrls"] : ["EntityImageUrls", variables]);
+useEntityImageUrlsQuery.getKey = (variables?: EntityImageUrlsQueryVariables) =>
+    variables === undefined ? ["EntityImageUrls"] : ["EntityImageUrls", variables];
 
 useEntityImageUrlsQuery.fetcher = (variables?: EntityImageUrlsQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<EntityImageUrlsQuery, EntityImageUrlsQueryVariables>(EntityImageUrlsDocument, variables, options);
@@ -58614,7 +59514,9 @@ export const IdentityByIdDocument = `
 
 export const useIdentityByIdQuery = <TData = IdentityByIdQuery, TError = unknown>(
     variables: IdentityByIdQueryVariables,
-    options?: Omit<UseQueryOptions<IdentityByIdQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<IdentityByIdQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<IdentityByIdQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<IdentityByIdQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<IdentityByIdQuery, TError, TData>({
         queryKey: ["IdentityById", variables],
@@ -58663,7 +59565,9 @@ export const ListIdentitiesDocument = `
 
 export const useListIdentitiesQuery = <TData = ListIdentitiesQuery, TError = unknown>(
     variables?: ListIdentitiesQueryVariables,
-    options?: Omit<UseQueryOptions<ListIdentitiesQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListIdentitiesQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListIdentitiesQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListIdentitiesQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListIdentitiesQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListIdentities"] : ["ListIdentities", variables],
@@ -58672,7 +59576,8 @@ export const useListIdentitiesQuery = <TData = ListIdentitiesQuery, TError = unk
     });
 };
 
-useListIdentitiesQuery.getKey = (variables?: ListIdentitiesQueryVariables) => (variables === undefined ? ["ListIdentities"] : ["ListIdentities", variables]);
+useListIdentitiesQuery.getKey = (variables?: ListIdentitiesQueryVariables) =>
+    variables === undefined ? ["ListIdentities"] : ["ListIdentities", variables];
 
 useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables, options);
@@ -58728,7 +59633,9 @@ export const SearchIdentitiesDocument = `
 
 export const useSearchIdentitiesQuery = <TData = SearchIdentitiesQuery, TError = unknown>(
     variables: SearchIdentitiesQueryVariables,
-    options?: Omit<UseQueryOptions<SearchIdentitiesQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchIdentitiesQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchIdentitiesQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchIdentitiesQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchIdentitiesQuery, TError, TData>({
         queryKey: ["SearchIdentities", variables],
@@ -58826,11 +59733,16 @@ export const ListJobsByCompanyDocument = `
 
 export const useListJobsByCompanyQuery = <TData = ListJobsByCompanyQuery, TError = unknown>(
     variables: ListJobsByCompanyQueryVariables,
-    options?: Omit<UseQueryOptions<ListJobsByCompanyQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListJobsByCompanyQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListJobsByCompanyQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListJobsByCompanyQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListJobsByCompanyQuery, TError, TData>({
         queryKey: ["ListJobsByCompany", variables],
-        queryFn: gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables),
+        queryFn: gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(
+            ListJobsByCompanyDocument,
+            variables,
+        ),
         ...options,
     });
 };
@@ -58936,19 +59848,34 @@ export const SearchJobsByCompanyDocument = `
 
 export const useSearchJobsByCompanyQuery = <TData = SearchJobsByCompanyQuery, TError = unknown>(
     variables: SearchJobsByCompanyQueryVariables,
-    options?: Omit<UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchJobsByCompanyQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchJobsByCompanyQuery, TError, TData>({
         queryKey: ["SearchJobsByCompany", variables],
-        queryFn: gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables),
+        queryFn: gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(
+            SearchJobsByCompanyDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariables) => ["SearchJobsByCompany", variables];
+useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariables) => [
+    "SearchJobsByCompany",
+    variables,
+];
 
-useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
+useSearchJobsByCompanyQuery.fetcher = (
+    variables: SearchJobsByCompanyQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(
+        SearchJobsByCompanyDocument,
+        variables,
+        options,
+    );
 
 export const ListJobsByCreatorDocument = `
     query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
@@ -58974,16 +59901,22 @@ export const ListJobsByCreatorDocument = `
 
 export const useListJobsByCreatorQuery = <TData = ListJobsByCreatorQuery, TError = unknown>(
     variables?: ListJobsByCreatorQueryVariables,
-    options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListJobsByCreatorQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListJobsByCreatorQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListJobsByCreatorQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListJobsByCreator"] : ["ListJobsByCreator", variables],
-        queryFn: gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables),
+        queryFn: gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(
+            ListJobsByCreatorDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables) => (variables === undefined ? ["ListJobsByCreator"] : ["ListJobsByCreator", variables]);
+useListJobsByCreatorQuery.getKey = (variables?: ListJobsByCreatorQueryVariables) =>
+    variables === undefined ? ["ListJobsByCreator"] : ["ListJobsByCreator", variables];
 
 useListJobsByCreatorQuery.fetcher = (variables?: ListJobsByCreatorQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<ListJobsByCreatorQuery, ListJobsByCreatorQueryVariables>(ListJobsByCreatorDocument, variables, options);
@@ -59079,7 +60012,9 @@ export const JobByIdDocument = `
 
 export const useJobByIdQuery = <TData = JobByIdQuery, TError = unknown>(
     variables: JobByIdQueryVariables,
-    options?: Omit<UseQueryOptions<JobByIdQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<JobByIdQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<JobByIdQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<JobByIdQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<JobByIdQuery, TError, TData>({
         queryKey: ["JobById", variables],
@@ -59090,7 +60025,8 @@ export const useJobByIdQuery = <TData = JobByIdQuery, TError = unknown>(
 
 useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ["JobById", variables];
 
-useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit["headers"]) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
+useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit["headers"]) =>
+    gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsBySecondaryIdentityDocument = `
     query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
@@ -59194,19 +60130,34 @@ export const ListJobsBySecondaryIdentityDocument = `
 
 export const useListJobsBySecondaryIdentityQuery = <TData = ListJobsBySecondaryIdentityQuery, TError = unknown>(
     variables: ListJobsBySecondaryIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListJobsBySecondaryIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListJobsBySecondaryIdentityQuery, TError, TData>({
         queryKey: ["ListJobsBySecondaryIdentity", variables],
-        queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables),
+        queryFn: gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(
+            ListJobsBySecondaryIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => ["ListJobsBySecondaryIdentity", variables];
+useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIdentityQueryVariables) => [
+    "ListJobsBySecondaryIdentity",
+    variables,
+];
 
-useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
+useListJobsBySecondaryIdentityQuery.fetcher = (
+    variables: ListJobsBySecondaryIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(
+        ListJobsBySecondaryIdentityDocument,
+        variables,
+        options,
+    );
 
 export const SearchJobsBySecondaryIdentityDocument = `
     query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
@@ -59311,19 +60262,34 @@ export const SearchJobsBySecondaryIdentityDocument = `
 
 export const useSearchJobsBySecondaryIdentityQuery = <TData = SearchJobsBySecondaryIdentityQuery, TError = unknown>(
     variables: SearchJobsBySecondaryIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchJobsBySecondaryIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchJobsBySecondaryIdentityQuery, TError, TData>({
         queryKey: ["SearchJobsBySecondaryIdentity", variables],
-        queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables),
+        queryFn: gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(
+            SearchJobsBySecondaryIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => ["SearchJobsBySecondaryIdentity", variables];
+useSearchJobsBySecondaryIdentityQuery.getKey = (variables: SearchJobsBySecondaryIdentityQueryVariables) => [
+    "SearchJobsBySecondaryIdentity",
+    variables,
+];
 
-useSearchJobsBySecondaryIdentityQuery.fetcher = (variables: SearchJobsBySecondaryIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(SearchJobsBySecondaryIdentityDocument, variables, options);
+useSearchJobsBySecondaryIdentityQuery.fetcher = (
+    variables: SearchJobsBySecondaryIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SearchJobsBySecondaryIdentityQuery, SearchJobsBySecondaryIdentityQueryVariables>(
+        SearchJobsBySecondaryIdentityDocument,
+        variables,
+        options,
+    );
 
 export const CreateJobDocument = `
     mutation CreateJob($data: mutationJobInput!, $draft: Boolean!) {
@@ -59342,10 +60308,13 @@ export const CreateJobDocument = `
 }
     `;
 
-export const useCreateJobMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>) => {
+export const useCreateJobMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateJobMutation, TError, CreateJobMutationVariables, TContext>,
+) => {
     return useMutation<CreateJobMutation, TError, CreateJobMutationVariables, TContext>({
         mutationKey: ["CreateJob"],
-        mutationFn: (variables?: CreateJobMutationVariables) => gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables)(),
+        mutationFn: (variables?: CreateJobMutationVariables) =>
+            gqlFetcher<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, variables)(),
         ...options,
     });
 };
@@ -59361,10 +60330,13 @@ export const DeleteJobDocument = `
 }
     `;
 
-export const useDeleteJobMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>) => {
+export const useDeleteJobMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>,
+) => {
     return useMutation<DeleteJobMutation, TError, DeleteJobMutationVariables, TContext>({
         mutationKey: ["DeleteJob"],
-        mutationFn: (variables?: DeleteJobMutationVariables) => gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables)(),
+        mutationFn: (variables?: DeleteJobMutationVariables) =>
+            gqlFetcher<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, variables)(),
         ...options,
     });
 };
@@ -59474,7 +60446,9 @@ export const ListJobsDocument = `
 
 export const useListJobsQuery = <TData = ListJobsQuery, TError = unknown>(
     variables?: ListJobsQueryVariables,
-    options?: Omit<UseQueryOptions<ListJobsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListJobsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListJobsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListJobsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListJobsQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListJobs"] : ["ListJobs", variables],
@@ -59483,9 +60457,11 @@ export const useListJobsQuery = <TData = ListJobsQuery, TError = unknown>(
     });
 };
 
-useListJobsQuery.getKey = (variables?: ListJobsQueryVariables) => (variables === undefined ? ["ListJobs"] : ["ListJobs", variables]);
+useListJobsQuery.getKey = (variables?: ListJobsQueryVariables) =>
+    variables === undefined ? ["ListJobs"] : ["ListJobs", variables];
 
-useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: RequestInit["headers"]) => gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables, options);
+useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: RequestInit["headers"]) =>
+    gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables, options);
 
 export const SearchJobsDocument = `
     query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
@@ -59592,7 +60568,9 @@ export const SearchJobsDocument = `
 
 export const useSearchJobsQuery = <TData = SearchJobsQuery, TError = unknown>(
     variables: SearchJobsQueryVariables,
-    options?: Omit<UseQueryOptions<SearchJobsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchJobsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchJobsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchJobsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchJobsQuery, TError, TData>({
         queryKey: ["SearchJobs", variables],
@@ -59603,7 +60581,8 @@ export const useSearchJobsQuery = <TData = SearchJobsQuery, TError = unknown>(
 
 useSearchJobsQuery.getKey = (variables: SearchJobsQueryVariables) => ["SearchJobs", variables];
 
-useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit["headers"]) => gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
+useSearchJobsQuery.fetcher = (variables: SearchJobsQueryVariables, options?: RequestInit["headers"]) =>
+    gqlFetcher<SearchJobsQuery, SearchJobsQueryVariables>(SearchJobsDocument, variables, options);
 
 export const UpdateJobDocument = `
     mutation UpdateJob($id: String!, $data: mutationJobUpdateInput!, $draft: Boolean!) {
@@ -59622,10 +60601,13 @@ export const UpdateJobDocument = `
 }
     `;
 
-export const useUpdateJobMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>) => {
+export const useUpdateJobMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>,
+) => {
     return useMutation<UpdateJobMutation, TError, UpdateJobMutationVariables, TContext>({
         mutationKey: ["UpdateJob"],
-        mutationFn: (variables?: UpdateJobMutationVariables) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables)(),
+        mutationFn: (variables?: UpdateJobMutationVariables) =>
+            gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables)(),
         ...options,
     });
 };
@@ -59671,19 +60653,34 @@ export const ListCommentsByTargetDocument = `
 
 export const useListCommentsByTargetQuery = <TData = ListCommentsByTargetQuery, TError = unknown>(
     variables: ListCommentsByTargetQueryVariables,
-    options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListCommentsByTargetQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListCommentsByTargetQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListCommentsByTargetQuery, TError, TData>({
         queryKey: ["ListCommentsByTarget", variables],
-        queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables),
+        queryFn: gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(
+            ListCommentsByTargetDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => ["ListCommentsByTarget", variables];
+useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVariables) => [
+    "ListCommentsByTarget",
+    variables,
+];
 
-useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
+useListCommentsByTargetQuery.fetcher = (
+    variables: ListCommentsByTargetQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(
+        ListCommentsByTargetDocument,
+        variables,
+        options,
+    );
 
 export const ListJobsByIdentityDocument = `
     query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
@@ -59735,11 +60732,16 @@ export const ListJobsByIdentityDocument = `
 
 export const useListJobsByIdentityQuery = <TData = ListJobsByIdentityQuery, TError = unknown>(
     variables: ListJobsByIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<ListJobsByIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListJobsByIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListJobsByIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListJobsByIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListJobsByIdentityQuery, TError, TData>({
         queryKey: ["ListJobsByIdentity", variables],
-        queryFn: gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables),
+        queryFn: gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(
+            ListJobsByIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
@@ -59747,7 +60749,11 @@ export const useListJobsByIdentityQuery = <TData = ListJobsByIdentityQuery, TErr
 useListJobsByIdentityQuery.getKey = (variables: ListJobsByIdentityQueryVariables) => ["ListJobsByIdentity", variables];
 
 useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables, options);
+    gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(
+        ListJobsByIdentityDocument,
+        variables,
+        options,
+    );
 
 export const ListProductsByIdentityDocument = `
     query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
@@ -59803,19 +60809,34 @@ export const ListProductsByIdentityDocument = `
 
 export const useListProductsByIdentityQuery = <TData = ListProductsByIdentityQuery, TError = unknown>(
     variables: ListProductsByIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<ListProductsByIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListProductsByIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListProductsByIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListProductsByIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListProductsByIdentityQuery, TError, TData>({
         queryKey: ["ListProductsByIdentity", variables],
-        queryFn: gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables),
+        queryFn: gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(
+            ListProductsByIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryVariables) => ["ListProductsByIdentity", variables];
+useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryVariables) => [
+    "ListProductsByIdentity",
+    variables,
+];
 
-useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
+useListProductsByIdentityQuery.fetcher = (
+    variables: ListProductsByIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(
+        ListProductsByIdentityDocument,
+        variables,
+        options,
+    );
 
 export const ListRepliesToCommentDocument = `
     query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
@@ -59850,19 +60871,34 @@ export const ListRepliesToCommentDocument = `
 
 export const useListRepliesToCommentQuery = <TData = ListRepliesToCommentQuery, TError = unknown>(
     variables: ListRepliesToCommentQueryVariables,
-    options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListRepliesToCommentQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListRepliesToCommentQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListRepliesToCommentQuery, TError, TData>({
         queryKey: ["ListRepliesToComment", variables],
-        queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables),
+        queryFn: gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(
+            ListRepliesToCommentDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => ["ListRepliesToComment", variables];
+useListRepliesToCommentQuery.getKey = (variables: ListRepliesToCommentQueryVariables) => [
+    "ListRepliesToComment",
+    variables,
+];
 
-useListRepliesToCommentQuery.fetcher = (variables: ListRepliesToCommentQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(ListRepliesToCommentDocument, variables, options);
+useListRepliesToCommentQuery.fetcher = (
+    variables: ListRepliesToCommentQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListRepliesToCommentQuery, ListRepliesToCommentQueryVariables>(
+        ListRepliesToCommentDocument,
+        variables,
+        options,
+    );
 
 export const TrackAnalyticsEventDocument = `
     mutation TrackAnalyticsEvent($input: AnalyticsTrackInput!) {
@@ -59882,13 +60918,24 @@ export const useTrackAnalyticsEventMutation = <TError = unknown, TContext = unkn
 ) => {
     return useMutation<TrackAnalyticsEventMutation, TError, TrackAnalyticsEventMutationVariables, TContext>({
         mutationKey: ["TrackAnalyticsEvent"],
-        mutationFn: (variables?: TrackAnalyticsEventMutationVariables) => gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(TrackAnalyticsEventDocument, variables)(),
+        mutationFn: (variables?: TrackAnalyticsEventMutationVariables) =>
+            gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(
+                TrackAnalyticsEventDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useTrackAnalyticsEventMutation.fetcher = (variables: TrackAnalyticsEventMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(TrackAnalyticsEventDocument, variables, options);
+useTrackAnalyticsEventMutation.fetcher = (
+    variables: TrackAnalyticsEventMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<TrackAnalyticsEventMutation, TrackAnalyticsEventMutationVariables>(
+        TrackAnalyticsEventDocument,
+        variables,
+        options,
+    );
 
 export const CreateOrderDocument = `
     mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
@@ -59967,10 +61014,13 @@ export const CreateOrderDocument = `
 }
     `;
 
-export const useCreateOrderMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>) => {
+export const useCreateOrderMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>,
+) => {
     return useMutation<CreateOrderMutation, TError, CreateOrderMutationVariables, TContext>({
         mutationKey: ["CreateOrder"],
-        mutationFn: (variables?: CreateOrderMutationVariables) => gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables)(),
+        mutationFn: (variables?: CreateOrderMutationVariables) =>
+            gqlFetcher<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, variables)(),
         ...options,
     });
 };
@@ -60055,10 +61105,13 @@ export const UpdateOrderDocument = `
 }
     `;
 
-export const useUpdateOrderMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>) => {
+export const useUpdateOrderMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>,
+) => {
     return useMutation<UpdateOrderMutation, TError, UpdateOrderMutationVariables, TContext>({
         mutationKey: ["UpdateOrder"],
-        mutationFn: (variables?: UpdateOrderMutationVariables) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables)(),
+        mutationFn: (variables?: UpdateOrderMutationVariables) =>
+            gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables)(),
         ...options,
     });
 };
@@ -60137,19 +61190,34 @@ export const ListProductsByCompanyDocument = `
 
 export const useListProductsByCompanyQuery = <TData = ListProductsByCompanyQuery, TError = unknown>(
     variables: ListProductsByCompanyQueryVariables,
-    options?: Omit<UseQueryOptions<ListProductsByCompanyQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListProductsByCompanyQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListProductsByCompanyQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListProductsByCompanyQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListProductsByCompanyQuery, TError, TData>({
         queryKey: ["ListProductsByCompany", variables],
-        queryFn: gqlFetcher<ListProductsByCompanyQuery, ListProductsByCompanyQueryVariables>(ListProductsByCompanyDocument, variables),
+        queryFn: gqlFetcher<ListProductsByCompanyQuery, ListProductsByCompanyQueryVariables>(
+            ListProductsByCompanyDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListProductsByCompanyQuery.getKey = (variables: ListProductsByCompanyQueryVariables) => ["ListProductsByCompany", variables];
+useListProductsByCompanyQuery.getKey = (variables: ListProductsByCompanyQueryVariables) => [
+    "ListProductsByCompany",
+    variables,
+];
 
-useListProductsByCompanyQuery.fetcher = (variables: ListProductsByCompanyQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListProductsByCompanyQuery, ListProductsByCompanyQueryVariables>(ListProductsByCompanyDocument, variables, options);
+useListProductsByCompanyQuery.fetcher = (
+    variables: ListProductsByCompanyQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListProductsByCompanyQuery, ListProductsByCompanyQueryVariables>(
+        ListProductsByCompanyDocument,
+        variables,
+        options,
+    );
 
 export const SearchProductsByCompanyDocument = `
     query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
@@ -60228,19 +61296,34 @@ export const SearchProductsByCompanyDocument = `
 
 export const useSearchProductsByCompanyQuery = <TData = SearchProductsByCompanyQuery, TError = unknown>(
     variables: SearchProductsByCompanyQueryVariables,
-    options?: Omit<UseQueryOptions<SearchProductsByCompanyQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchProductsByCompanyQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchProductsByCompanyQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchProductsByCompanyQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchProductsByCompanyQuery, TError, TData>({
         queryKey: ["SearchProductsByCompany", variables],
-        queryFn: gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables),
+        queryFn: gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(
+            SearchProductsByCompanyDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQueryVariables) => ["SearchProductsByCompany", variables];
+useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQueryVariables) => [
+    "SearchProductsByCompany",
+    variables,
+];
 
-useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables, options);
+useSearchProductsByCompanyQuery.fetcher = (
+    variables: SearchProductsByCompanyQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(
+        SearchProductsByCompanyDocument,
+        variables,
+        options,
+    );
 
 export const ListProductsByCreatorDocument = `
     query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
@@ -60275,19 +61358,32 @@ export const ListProductsByCreatorDocument = `
 
 export const useListProductsByCreatorQuery = <TData = ListProductsByCreatorQuery, TError = unknown>(
     variables?: ListProductsByCreatorQueryVariables,
-    options?: Omit<UseQueryOptions<ListProductsByCreatorQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListProductsByCreatorQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListProductsByCreatorQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListProductsByCreatorQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListProductsByCreatorQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListProductsByCreator"] : ["ListProductsByCreator", variables],
-        queryFn: gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables),
+        queryFn: gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(
+            ListProductsByCreatorDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListProductsByCreatorQuery.getKey = (variables?: ListProductsByCreatorQueryVariables) => (variables === undefined ? ["ListProductsByCreator"] : ["ListProductsByCreator", variables]);
+useListProductsByCreatorQuery.getKey = (variables?: ListProductsByCreatorQueryVariables) =>
+    variables === undefined ? ["ListProductsByCreator"] : ["ListProductsByCreator", variables];
 
-useListProductsByCreatorQuery.fetcher = (variables?: ListProductsByCreatorQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(ListProductsByCreatorDocument, variables, options);
+useListProductsByCreatorQuery.fetcher = (
+    variables?: ListProductsByCreatorQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListProductsByCreatorQuery, ListProductsByCreatorQueryVariables>(
+        ListProductsByCreatorDocument,
+        variables,
+        options,
+    );
 
 export const ProductByIdDocument = `
     query ProductById($id: String!, $draft: Boolean = false) {
@@ -60382,7 +61478,9 @@ export const ProductByIdDocument = `
 
 export const useProductByIdQuery = <TData = ProductByIdQuery, TError = unknown>(
     variables: ProductByIdQueryVariables,
-    options?: Omit<UseQueryOptions<ProductByIdQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ProductByIdQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ProductByIdQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ProductByIdQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ProductByIdQuery, TError, TData>({
         queryKey: ["ProductById", variables],
@@ -60419,10 +61517,13 @@ export const CreateProductDocument = `
 }
     `;
 
-export const useCreateProductMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateProductMutation, TError, CreateProductMutationVariables, TContext>) => {
+export const useCreateProductMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateProductMutation, TError, CreateProductMutationVariables, TContext>,
+) => {
     return useMutation<CreateProductMutation, TError, CreateProductMutationVariables, TContext>({
         mutationKey: ["CreateProduct"],
-        mutationFn: (variables?: CreateProductMutationVariables) => gqlFetcher<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, variables)(),
+        mutationFn: (variables?: CreateProductMutationVariables) =>
+            gqlFetcher<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, variables)(),
         ...options,
     });
 };
@@ -60438,10 +61539,13 @@ export const DeleteProductDocument = `
 }
     `;
 
-export const useDeleteProductMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteProductMutation, TError, DeleteProductMutationVariables, TContext>) => {
+export const useDeleteProductMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteProductMutation, TError, DeleteProductMutationVariables, TContext>,
+) => {
     return useMutation<DeleteProductMutation, TError, DeleteProductMutationVariables, TContext>({
         mutationKey: ["DeleteProduct"],
-        mutationFn: (variables?: DeleteProductMutationVariables) => gqlFetcher<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, variables)(),
+        mutationFn: (variables?: DeleteProductMutationVariables) =>
+            gqlFetcher<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, variables)(),
         ...options,
     });
 };
@@ -60529,7 +61633,9 @@ export const ListProductsDocument = `
 
 export const useListProductsQuery = <TData = ListProductsQuery, TError = unknown>(
     variables?: ListProductsQueryVariables,
-    options?: Omit<UseQueryOptions<ListProductsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListProductsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListProductsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListProductsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListProductsQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListProducts"] : ["ListProducts", variables],
@@ -60538,7 +61644,8 @@ export const useListProductsQuery = <TData = ListProductsQuery, TError = unknown
     });
 };
 
-useListProductsQuery.getKey = (variables?: ListProductsQueryVariables) => (variables === undefined ? ["ListProducts"] : ["ListProducts", variables]);
+useListProductsQuery.getKey = (variables?: ListProductsQueryVariables) =>
+    variables === undefined ? ["ListProducts"] : ["ListProducts", variables];
 
 useListProductsQuery.fetcher = (variables?: ListProductsQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, variables, options);
@@ -60629,7 +61736,9 @@ export const SearchProductsDocument = `
 
 export const useSearchProductsQuery = <TData = SearchProductsQuery, TError = unknown>(
     variables: SearchProductsQueryVariables,
-    options?: Omit<UseQueryOptions<SearchProductsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchProductsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchProductsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchProductsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchProductsQuery, TError, TData>({
         queryKey: ["SearchProducts", variables],
@@ -60666,10 +61775,13 @@ export const UpdateProductDocument = `
 }
     `;
 
-export const useUpdateProductMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateProductMutation, TError, UpdateProductMutationVariables, TContext>) => {
+export const useUpdateProductMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateProductMutation, TError, UpdateProductMutationVariables, TContext>,
+) => {
     return useMutation<UpdateProductMutation, TError, UpdateProductMutationVariables, TContext>({
         mutationKey: ["UpdateProduct"],
-        mutationFn: (variables?: UpdateProductMutationVariables) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables)(),
+        mutationFn: (variables?: UpdateProductMutationVariables) =>
+            gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables)(),
         ...options,
     });
 };
@@ -60694,10 +61806,13 @@ export const JoinStartupDocument = `
 }
     `;
 
-export const useJoinStartupMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<JoinStartupMutation, TError, JoinStartupMutationVariables, TContext>) => {
+export const useJoinStartupMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<JoinStartupMutation, TError, JoinStartupMutationVariables, TContext>,
+) => {
     return useMutation<JoinStartupMutation, TError, JoinStartupMutationVariables, TContext>({
         mutationKey: ["JoinStartup"],
-        mutationFn: (variables?: JoinStartupMutationVariables) => gqlFetcher<JoinStartupMutation, JoinStartupMutationVariables>(JoinStartupDocument, variables)(),
+        mutationFn: (variables?: JoinStartupMutationVariables) =>
+            gqlFetcher<JoinStartupMutation, JoinStartupMutationVariables>(JoinStartupDocument, variables)(),
         ...options,
     });
 };
@@ -60722,10 +61837,13 @@ export const LeaveStartupDocument = `
 }
     `;
 
-export const useLeaveStartupMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<LeaveStartupMutation, TError, LeaveStartupMutationVariables, TContext>) => {
+export const useLeaveStartupMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<LeaveStartupMutation, TError, LeaveStartupMutationVariables, TContext>,
+) => {
     return useMutation<LeaveStartupMutation, TError, LeaveStartupMutationVariables, TContext>({
         mutationKey: ["LeaveStartup"],
-        mutationFn: (variables?: LeaveStartupMutationVariables) => gqlFetcher<LeaveStartupMutation, LeaveStartupMutationVariables>(LeaveStartupDocument, variables)(),
+        mutationFn: (variables?: LeaveStartupMutationVariables) =>
+            gqlFetcher<LeaveStartupMutation, LeaveStartupMutationVariables>(LeaveStartupDocument, variables)(),
         ...options,
     });
 };
@@ -60805,19 +61923,34 @@ export const ListStartupsByCompanyDocument = `
 
 export const useListStartupsByCompanyQuery = <TData = ListStartupsByCompanyQuery, TError = unknown>(
     variables: ListStartupsByCompanyQueryVariables,
-    options?: Omit<UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListStartupsByCompanyQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListStartupsByCompanyQuery, TError, TData>({
         queryKey: ["ListStartupsByCompany", variables],
-        queryFn: gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables),
+        queryFn: gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(
+            ListStartupsByCompanyDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListStartupsByCompanyQuery.getKey = (variables: ListStartupsByCompanyQueryVariables) => ["ListStartupsByCompany", variables];
+useListStartupsByCompanyQuery.getKey = (variables: ListStartupsByCompanyQueryVariables) => [
+    "ListStartupsByCompany",
+    variables,
+];
 
-useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables, options);
+useListStartupsByCompanyQuery.fetcher = (
+    variables: ListStartupsByCompanyQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(
+        ListStartupsByCompanyDocument,
+        variables,
+        options,
+    );
 
 export const ListStartupsByCreatorDocument = `
     query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
@@ -60841,19 +61974,32 @@ export const ListStartupsByCreatorDocument = `
 
 export const useListStartupsByCreatorQuery = <TData = ListStartupsByCreatorQuery, TError = unknown>(
     variables?: ListStartupsByCreatorQueryVariables,
-    options?: Omit<UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListStartupsByCreatorQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListStartupsByCreatorQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListStartupsByCreator"] : ["ListStartupsByCreator", variables],
-        queryFn: gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(ListStartupsByCreatorDocument, variables),
+        queryFn: gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(
+            ListStartupsByCreatorDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListStartupsByCreatorQuery.getKey = (variables?: ListStartupsByCreatorQueryVariables) => (variables === undefined ? ["ListStartupsByCreator"] : ["ListStartupsByCreator", variables]);
+useListStartupsByCreatorQuery.getKey = (variables?: ListStartupsByCreatorQueryVariables) =>
+    variables === undefined ? ["ListStartupsByCreator"] : ["ListStartupsByCreator", variables];
 
-useListStartupsByCreatorQuery.fetcher = (variables?: ListStartupsByCreatorQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(ListStartupsByCreatorDocument, variables, options);
+useListStartupsByCreatorQuery.fetcher = (
+    variables?: ListStartupsByCreatorQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListStartupsByCreatorQuery, ListStartupsByCreatorQueryVariables>(
+        ListStartupsByCreatorDocument,
+        variables,
+        options,
+    );
 
 export const StartupByIdDocument = `
     query StartupById($id: String!, $draft: Boolean = false) {
@@ -60922,7 +62068,9 @@ export const StartupByIdDocument = `
 
 export const useStartupByIdQuery = <TData = StartupByIdQuery, TError = unknown>(
     variables: StartupByIdQueryVariables,
-    options?: Omit<UseQueryOptions<StartupByIdQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<StartupByIdQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<StartupByIdQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<StartupByIdQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<StartupByIdQuery, TError, TData>({
         queryKey: ["StartupById", variables],
@@ -60968,19 +62116,34 @@ export const ListStartupsByIdentityDocument = `
 
 export const useListStartupsByIdentityQuery = <TData = ListStartupsByIdentityQuery, TError = unknown>(
     variables: ListStartupsByIdentityQueryVariables,
-    options?: Omit<UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListStartupsByIdentityQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListStartupsByIdentityQuery, TError, TData>({
         queryKey: ["ListStartupsByIdentity", variables],
-        queryFn: gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables),
+        queryFn: gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(
+            ListStartupsByIdentityDocument,
+            variables,
+        ),
         ...options,
     });
 };
 
-useListStartupsByIdentityQuery.getKey = (variables: ListStartupsByIdentityQueryVariables) => ["ListStartupsByIdentity", variables];
+useListStartupsByIdentityQuery.getKey = (variables: ListStartupsByIdentityQueryVariables) => [
+    "ListStartupsByIdentity",
+    variables,
+];
 
-useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables, options);
+useListStartupsByIdentityQuery.fetcher = (
+    variables: ListStartupsByIdentityQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(
+        ListStartupsByIdentityDocument,
+        variables,
+        options,
+    );
 
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
@@ -60996,10 +62159,13 @@ export const CreateStartupDocument = `
 }
     `;
 
-export const useCreateStartupMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<CreateStartupMutation, TError, CreateStartupMutationVariables, TContext>) => {
+export const useCreateStartupMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<CreateStartupMutation, TError, CreateStartupMutationVariables, TContext>,
+) => {
     return useMutation<CreateStartupMutation, TError, CreateStartupMutationVariables, TContext>({
         mutationKey: ["CreateStartup"],
-        mutationFn: (variables?: CreateStartupMutationVariables) => gqlFetcher<CreateStartupMutation, CreateStartupMutationVariables>(CreateStartupDocument, variables)(),
+        mutationFn: (variables?: CreateStartupMutationVariables) =>
+            gqlFetcher<CreateStartupMutation, CreateStartupMutationVariables>(CreateStartupDocument, variables)(),
         ...options,
     });
 };
@@ -61015,10 +62181,13 @@ export const DeleteStartupDocument = `
 }
     `;
 
-export const useDeleteStartupMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<DeleteStartupMutation, TError, DeleteStartupMutationVariables, TContext>) => {
+export const useDeleteStartupMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<DeleteStartupMutation, TError, DeleteStartupMutationVariables, TContext>,
+) => {
     return useMutation<DeleteStartupMutation, TError, DeleteStartupMutationVariables, TContext>({
         mutationKey: ["DeleteStartup"],
-        mutationFn: (variables?: DeleteStartupMutationVariables) => gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables)(),
+        mutationFn: (variables?: DeleteStartupMutationVariables) =>
+            gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables)(),
         ...options,
     });
 };
@@ -61101,7 +62270,9 @@ export const ListStartupsDocument = `
 
 export const useListStartupsQuery = <TData = ListStartupsQuery, TError = unknown>(
     variables?: ListStartupsQueryVariables,
-    options?: Omit<UseQueryOptions<ListStartupsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListStartupsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListStartupsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListStartupsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListStartupsQuery, TError, TData>({
         queryKey: variables === undefined ? ["ListStartups"] : ["ListStartups", variables],
@@ -61110,7 +62281,8 @@ export const useListStartupsQuery = <TData = ListStartupsQuery, TError = unknown
     });
 };
 
-useListStartupsQuery.getKey = (variables?: ListStartupsQueryVariables) => (variables === undefined ? ["ListStartups"] : ["ListStartups", variables]);
+useListStartupsQuery.getKey = (variables?: ListStartupsQueryVariables) =>
+    variables === undefined ? ["ListStartups"] : ["ListStartups", variables];
 
 useListStartupsQuery.fetcher = (variables?: ListStartupsQueryVariables, options?: RequestInit["headers"]) =>
     gqlFetcher<ListStartupsQuery, ListStartupsQueryVariables>(ListStartupsDocument, variables, options);
@@ -61187,7 +62359,9 @@ export const SearchStartupsDocument = `
 
 export const useSearchStartupsQuery = <TData = SearchStartupsQuery, TError = unknown>(
     variables: SearchStartupsQueryVariables,
-    options?: Omit<UseQueryOptions<SearchStartupsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<SearchStartupsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<SearchStartupsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<SearchStartupsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<SearchStartupsQuery, TError, TData>({
         queryKey: ["SearchStartups", variables],
@@ -61215,10 +62389,13 @@ export const UpdateStartupDocument = `
 }
     `;
 
-export const useUpdateStartupMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateStartupMutation, TError, UpdateStartupMutationVariables, TContext>) => {
+export const useUpdateStartupMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateStartupMutation, TError, UpdateStartupMutationVariables, TContext>,
+) => {
     return useMutation<UpdateStartupMutation, TError, UpdateStartupMutationVariables, TContext>({
         mutationKey: ["UpdateStartup"],
-        mutationFn: (variables?: UpdateStartupMutationVariables) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables)(),
+        mutationFn: (variables?: UpdateStartupMutationVariables) =>
+            gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables)(),
         ...options,
     });
 };
@@ -61240,18 +62417,35 @@ export const SubscribeToCompanyUpdatesDocument = `
     `;
 
 export const useSubscribeToCompanyUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<SubscribeToCompanyUpdatesMutation, TError, SubscribeToCompanyUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        SubscribeToCompanyUpdatesMutation,
+        TError,
+        SubscribeToCompanyUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<SubscribeToCompanyUpdatesMutation, TError, SubscribeToCompanyUpdatesMutationVariables, TContext>({
-        mutationKey: ["SubscribeToCompanyUpdates"],
-        mutationFn: (variables?: SubscribeToCompanyUpdatesMutationVariables) =>
-            gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument, variables)(),
-        ...options,
-    });
+    return useMutation<SubscribeToCompanyUpdatesMutation, TError, SubscribeToCompanyUpdatesMutationVariables, TContext>(
+        {
+            mutationKey: ["SubscribeToCompanyUpdates"],
+            mutationFn: (variables?: SubscribeToCompanyUpdatesMutationVariables) =>
+                gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(
+                    SubscribeToCompanyUpdatesDocument,
+                    variables,
+                )(),
+            ...options,
+        },
+    );
 };
 
-useSubscribeToCompanyUpdatesMutation.fetcher = (variables: SubscribeToCompanyUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument, variables, options);
+useSubscribeToCompanyUpdatesMutation.fetcher = (
+    variables: SubscribeToCompanyUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(
+        SubscribeToCompanyUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const SubscribeToJobUpdatesDocument = `
     mutation SubscribeToJobUpdates($email: String!, $targetID: String!) {
@@ -61267,18 +62461,33 @@ export const SubscribeToJobUpdatesDocument = `
     `;
 
 export const useSubscribeToJobUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<SubscribeToJobUpdatesMutation, TError, SubscribeToJobUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        SubscribeToJobUpdatesMutation,
+        TError,
+        SubscribeToJobUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
     return useMutation<SubscribeToJobUpdatesMutation, TError, SubscribeToJobUpdatesMutationVariables, TContext>({
         mutationKey: ["SubscribeToJobUpdates"],
         mutationFn: (variables?: SubscribeToJobUpdatesMutationVariables) =>
-            gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument, variables)(),
+            gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(
+                SubscribeToJobUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useSubscribeToJobUpdatesMutation.fetcher = (variables: SubscribeToJobUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument, variables, options);
+useSubscribeToJobUpdatesMutation.fetcher = (
+    variables: SubscribeToJobUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(
+        SubscribeToJobUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const SubscribeToProductUpdatesDocument = `
     mutation SubscribeToProductUpdates($email: String!, $targetID: String!) {
@@ -61294,18 +62503,35 @@ export const SubscribeToProductUpdatesDocument = `
     `;
 
 export const useSubscribeToProductUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<SubscribeToProductUpdatesMutation, TError, SubscribeToProductUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        SubscribeToProductUpdatesMutation,
+        TError,
+        SubscribeToProductUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<SubscribeToProductUpdatesMutation, TError, SubscribeToProductUpdatesMutationVariables, TContext>({
-        mutationKey: ["SubscribeToProductUpdates"],
-        mutationFn: (variables?: SubscribeToProductUpdatesMutationVariables) =>
-            gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument, variables)(),
-        ...options,
-    });
+    return useMutation<SubscribeToProductUpdatesMutation, TError, SubscribeToProductUpdatesMutationVariables, TContext>(
+        {
+            mutationKey: ["SubscribeToProductUpdates"],
+            mutationFn: (variables?: SubscribeToProductUpdatesMutationVariables) =>
+                gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(
+                    SubscribeToProductUpdatesDocument,
+                    variables,
+                )(),
+            ...options,
+        },
+    );
 };
 
-useSubscribeToProductUpdatesMutation.fetcher = (variables: SubscribeToProductUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument, variables, options);
+useSubscribeToProductUpdatesMutation.fetcher = (
+    variables: SubscribeToProductUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(
+        SubscribeToProductUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const SubscribeToTribeUpdatesDocument = `
     mutation SubscribeToTribeUpdates($email: String!, $targetID: String!) {
@@ -61321,18 +62547,33 @@ export const SubscribeToTribeUpdatesDocument = `
     `;
 
 export const useSubscribeToTribeUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<SubscribeToTribeUpdatesMutation, TError, SubscribeToTribeUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        SubscribeToTribeUpdatesMutation,
+        TError,
+        SubscribeToTribeUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
     return useMutation<SubscribeToTribeUpdatesMutation, TError, SubscribeToTribeUpdatesMutationVariables, TContext>({
         mutationKey: ["SubscribeToTribeUpdates"],
         mutationFn: (variables?: SubscribeToTribeUpdatesMutationVariables) =>
-            gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument, variables)(),
+            gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(
+                SubscribeToTribeUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useSubscribeToTribeUpdatesMutation.fetcher = (variables: SubscribeToTribeUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument, variables, options);
+useSubscribeToTribeUpdatesMutation.fetcher = (
+    variables: SubscribeToTribeUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(
+        SubscribeToTribeUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const SubscribeToVentureUpdatesDocument = `
     mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
@@ -61348,18 +62589,35 @@ export const SubscribeToVentureUpdatesDocument = `
     `;
 
 export const useSubscribeToVentureUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<SubscribeToVentureUpdatesMutation, TError, SubscribeToVentureUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        SubscribeToVentureUpdatesMutation,
+        TError,
+        SubscribeToVentureUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<SubscribeToVentureUpdatesMutation, TError, SubscribeToVentureUpdatesMutationVariables, TContext>({
-        mutationKey: ["SubscribeToVentureUpdates"],
-        mutationFn: (variables?: SubscribeToVentureUpdatesMutationVariables) =>
-            gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(SubscribeToVentureUpdatesDocument, variables)(),
-        ...options,
-    });
+    return useMutation<SubscribeToVentureUpdatesMutation, TError, SubscribeToVentureUpdatesMutationVariables, TContext>(
+        {
+            mutationKey: ["SubscribeToVentureUpdates"],
+            mutationFn: (variables?: SubscribeToVentureUpdatesMutationVariables) =>
+                gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(
+                    SubscribeToVentureUpdatesDocument,
+                    variables,
+                )(),
+            ...options,
+        },
+    );
 };
 
-useSubscribeToVentureUpdatesMutation.fetcher = (variables: SubscribeToVentureUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(SubscribeToVentureUpdatesDocument, variables, options);
+useSubscribeToVentureUpdatesMutation.fetcher = (
+    variables: SubscribeToVentureUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<SubscribeToVentureUpdatesMutation, SubscribeToVentureUpdatesMutationVariables>(
+        SubscribeToVentureUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const ListPublishedSyndicationUrlsDocument = `
     query ListPublishedSyndicationUrls {
@@ -61375,11 +62633,17 @@ export const ListPublishedSyndicationUrlsDocument = `
 
 export const useListPublishedSyndicationUrlsQuery = <TData = ListPublishedSyndicationUrlsQuery, TError = unknown>(
     variables?: ListPublishedSyndicationUrlsQueryVariables,
-    options?: Omit<UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<ListPublishedSyndicationUrlsQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<ListPublishedSyndicationUrlsQuery, TError, TData>({
-        queryKey: variables === undefined ? ["ListPublishedSyndicationUrls"] : ["ListPublishedSyndicationUrls", variables],
-        queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables),
+        queryKey:
+            variables === undefined ? ["ListPublishedSyndicationUrls"] : ["ListPublishedSyndicationUrls", variables],
+        queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
+            ListPublishedSyndicationUrlsDocument,
+            variables,
+        ),
         ...options,
     });
 };
@@ -61387,8 +62651,15 @@ export const useListPublishedSyndicationUrlsQuery = <TData = ListPublishedSyndic
 useListPublishedSyndicationUrlsQuery.getKey = (variables?: ListPublishedSyndicationUrlsQueryVariables) =>
     variables === undefined ? ["ListPublishedSyndicationUrls"] : ["ListPublishedSyndicationUrls", variables];
 
-useListPublishedSyndicationUrlsQuery.fetcher = (variables?: ListPublishedSyndicationUrlsQueryVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(ListPublishedSyndicationUrlsDocument, variables, options);
+useListPublishedSyndicationUrlsQuery.fetcher = (
+    variables?: ListPublishedSyndicationUrlsQueryVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
+        ListPublishedSyndicationUrlsDocument,
+        variables,
+        options,
+    );
 
 export const UnsubscribeFromCompanyUpdatesDocument = `
     mutation UnsubscribeFromCompanyUpdates($subscriptionID: String!) {
@@ -61399,18 +62670,38 @@ export const UnsubscribeFromCompanyUpdatesDocument = `
     `;
 
 export const useUnsubscribeFromCompanyUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<UnsubscribeFromCompanyUpdatesMutation, TError, UnsubscribeFromCompanyUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        UnsubscribeFromCompanyUpdatesMutation,
+        TError,
+        UnsubscribeFromCompanyUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<UnsubscribeFromCompanyUpdatesMutation, TError, UnsubscribeFromCompanyUpdatesMutationVariables, TContext>({
+    return useMutation<
+        UnsubscribeFromCompanyUpdatesMutation,
+        TError,
+        UnsubscribeFromCompanyUpdatesMutationVariables,
+        TContext
+    >({
         mutationKey: ["UnsubscribeFromCompanyUpdates"],
         mutationFn: (variables?: UnsubscribeFromCompanyUpdatesMutationVariables) =>
-            gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(UnsubscribeFromCompanyUpdatesDocument, variables)(),
+            gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(
+                UnsubscribeFromCompanyUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useUnsubscribeFromCompanyUpdatesMutation.fetcher = (variables: UnsubscribeFromCompanyUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(UnsubscribeFromCompanyUpdatesDocument, variables, options);
+useUnsubscribeFromCompanyUpdatesMutation.fetcher = (
+    variables: UnsubscribeFromCompanyUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UnsubscribeFromCompanyUpdatesMutation, UnsubscribeFromCompanyUpdatesMutationVariables>(
+        UnsubscribeFromCompanyUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const UnsubscribeFromJobUpdatesDocument = `
     mutation UnsubscribeFromJobUpdates($subscriptionID: String!) {
@@ -61421,18 +62712,35 @@ export const UnsubscribeFromJobUpdatesDocument = `
     `;
 
 export const useUnsubscribeFromJobUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<UnsubscribeFromJobUpdatesMutation, TError, UnsubscribeFromJobUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        UnsubscribeFromJobUpdatesMutation,
+        TError,
+        UnsubscribeFromJobUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<UnsubscribeFromJobUpdatesMutation, TError, UnsubscribeFromJobUpdatesMutationVariables, TContext>({
-        mutationKey: ["UnsubscribeFromJobUpdates"],
-        mutationFn: (variables?: UnsubscribeFromJobUpdatesMutationVariables) =>
-            gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(UnsubscribeFromJobUpdatesDocument, variables)(),
-        ...options,
-    });
+    return useMutation<UnsubscribeFromJobUpdatesMutation, TError, UnsubscribeFromJobUpdatesMutationVariables, TContext>(
+        {
+            mutationKey: ["UnsubscribeFromJobUpdates"],
+            mutationFn: (variables?: UnsubscribeFromJobUpdatesMutationVariables) =>
+                gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(
+                    UnsubscribeFromJobUpdatesDocument,
+                    variables,
+                )(),
+            ...options,
+        },
+    );
 };
 
-useUnsubscribeFromJobUpdatesMutation.fetcher = (variables: UnsubscribeFromJobUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(UnsubscribeFromJobUpdatesDocument, variables, options);
+useUnsubscribeFromJobUpdatesMutation.fetcher = (
+    variables: UnsubscribeFromJobUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UnsubscribeFromJobUpdatesMutation, UnsubscribeFromJobUpdatesMutationVariables>(
+        UnsubscribeFromJobUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const UnsubscribeFromProductUpdatesDocument = `
     mutation UnsubscribeFromProductUpdates($subscriptionID: String!) {
@@ -61443,18 +62751,38 @@ export const UnsubscribeFromProductUpdatesDocument = `
     `;
 
 export const useUnsubscribeFromProductUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<UnsubscribeFromProductUpdatesMutation, TError, UnsubscribeFromProductUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        UnsubscribeFromProductUpdatesMutation,
+        TError,
+        UnsubscribeFromProductUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<UnsubscribeFromProductUpdatesMutation, TError, UnsubscribeFromProductUpdatesMutationVariables, TContext>({
+    return useMutation<
+        UnsubscribeFromProductUpdatesMutation,
+        TError,
+        UnsubscribeFromProductUpdatesMutationVariables,
+        TContext
+    >({
         mutationKey: ["UnsubscribeFromProductUpdates"],
         mutationFn: (variables?: UnsubscribeFromProductUpdatesMutationVariables) =>
-            gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(UnsubscribeFromProductUpdatesDocument, variables)(),
+            gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(
+                UnsubscribeFromProductUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useUnsubscribeFromProductUpdatesMutation.fetcher = (variables: UnsubscribeFromProductUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(UnsubscribeFromProductUpdatesDocument, variables, options);
+useUnsubscribeFromProductUpdatesMutation.fetcher = (
+    variables: UnsubscribeFromProductUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UnsubscribeFromProductUpdatesMutation, UnsubscribeFromProductUpdatesMutationVariables>(
+        UnsubscribeFromProductUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const UnsubscribeFromTribeUpdatesDocument = `
     mutation UnsubscribeFromTribeUpdates($subscriptionID: String!) {
@@ -61465,18 +62793,38 @@ export const UnsubscribeFromTribeUpdatesDocument = `
     `;
 
 export const useUnsubscribeFromTribeUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<UnsubscribeFromTribeUpdatesMutation, TError, UnsubscribeFromTribeUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        UnsubscribeFromTribeUpdatesMutation,
+        TError,
+        UnsubscribeFromTribeUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<UnsubscribeFromTribeUpdatesMutation, TError, UnsubscribeFromTribeUpdatesMutationVariables, TContext>({
+    return useMutation<
+        UnsubscribeFromTribeUpdatesMutation,
+        TError,
+        UnsubscribeFromTribeUpdatesMutationVariables,
+        TContext
+    >({
         mutationKey: ["UnsubscribeFromTribeUpdates"],
         mutationFn: (variables?: UnsubscribeFromTribeUpdatesMutationVariables) =>
-            gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(UnsubscribeFromTribeUpdatesDocument, variables)(),
+            gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(
+                UnsubscribeFromTribeUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useUnsubscribeFromTribeUpdatesMutation.fetcher = (variables: UnsubscribeFromTribeUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(UnsubscribeFromTribeUpdatesDocument, variables, options);
+useUnsubscribeFromTribeUpdatesMutation.fetcher = (
+    variables: UnsubscribeFromTribeUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UnsubscribeFromTribeUpdatesMutation, UnsubscribeFromTribeUpdatesMutationVariables>(
+        UnsubscribeFromTribeUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const UnsubscribeFromVentureUpdatesDocument = `
     mutation UnsubscribeFromVentureUpdates($subscriptionID: String!) {
@@ -61487,18 +62835,38 @@ export const UnsubscribeFromVentureUpdatesDocument = `
     `;
 
 export const useUnsubscribeFromVentureUpdatesMutation = <TError = unknown, TContext = unknown>(
-    options?: UseMutationOptions<UnsubscribeFromVentureUpdatesMutation, TError, UnsubscribeFromVentureUpdatesMutationVariables, TContext>,
+    options?: UseMutationOptions<
+        UnsubscribeFromVentureUpdatesMutation,
+        TError,
+        UnsubscribeFromVentureUpdatesMutationVariables,
+        TContext
+    >,
 ) => {
-    return useMutation<UnsubscribeFromVentureUpdatesMutation, TError, UnsubscribeFromVentureUpdatesMutationVariables, TContext>({
+    return useMutation<
+        UnsubscribeFromVentureUpdatesMutation,
+        TError,
+        UnsubscribeFromVentureUpdatesMutationVariables,
+        TContext
+    >({
         mutationKey: ["UnsubscribeFromVentureUpdates"],
         mutationFn: (variables?: UnsubscribeFromVentureUpdatesMutationVariables) =>
-            gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument, variables)(),
+            gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(
+                UnsubscribeFromVentureUpdatesDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useUnsubscribeFromVentureUpdatesMutation.fetcher = (variables: UnsubscribeFromVentureUpdatesMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument, variables, options);
+useUnsubscribeFromVentureUpdatesMutation.fetcher = (
+    variables: UnsubscribeFromVentureUpdatesMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(
+        UnsubscribeFromVentureUpdatesDocument,
+        variables,
+        options,
+    );
 
 export const UpdateCommentContentDocument = `
     mutation UpdateCommentContent($id: String!, $content: String!) {
@@ -61515,13 +62883,24 @@ export const useUpdateCommentContentMutation = <TError = unknown, TContext = unk
 ) => {
     return useMutation<UpdateCommentContentMutation, TError, UpdateCommentContentMutationVariables, TContext>({
         mutationKey: ["UpdateCommentContent"],
-        mutationFn: (variables?: UpdateCommentContentMutationVariables) => gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables)(),
+        mutationFn: (variables?: UpdateCommentContentMutationVariables) =>
+            gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(
+                UpdateCommentContentDocument,
+                variables,
+            )(),
         ...options,
     });
 };
 
-useUpdateCommentContentMutation.fetcher = (variables: UpdateCommentContentMutationVariables, options?: RequestInit["headers"]) =>
-    gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(UpdateCommentContentDocument, variables, options);
+useUpdateCommentContentMutation.fetcher = (
+    variables: UpdateCommentContentMutationVariables,
+    options?: RequestInit["headers"],
+) =>
+    gqlFetcher<UpdateCommentContentMutation, UpdateCommentContentMutationVariables>(
+        UpdateCommentContentDocument,
+        variables,
+        options,
+    );
 
 export const MeUserDocument = `
     query MeUser {
@@ -61556,7 +62935,9 @@ export const MeUserDocument = `
 
 export const useMeUserQuery = <TData = MeUserQuery, TError = unknown>(
     variables?: MeUserQueryVariables,
-    options?: Omit<UseQueryOptions<MeUserQuery, TError, TData>, "queryKey"> & { queryKey?: UseQueryOptions<MeUserQuery, TError, TData>["queryKey"] },
+    options?: Omit<UseQueryOptions<MeUserQuery, TError, TData>, "queryKey"> & {
+        queryKey?: UseQueryOptions<MeUserQuery, TError, TData>["queryKey"];
+    },
 ) => {
     return useQuery<MeUserQuery, TError, TData>({
         queryKey: variables === undefined ? ["MeUser"] : ["MeUser", variables],
@@ -61565,9 +62946,11 @@ export const useMeUserQuery = <TData = MeUserQuery, TError = unknown>(
     });
 };
 
-useMeUserQuery.getKey = (variables?: MeUserQueryVariables) => (variables === undefined ? ["MeUser"] : ["MeUser", variables]);
+useMeUserQuery.getKey = (variables?: MeUserQueryVariables) =>
+    variables === undefined ? ["MeUser"] : ["MeUser", variables];
 
-useMeUserQuery.fetcher = (variables?: MeUserQueryVariables, options?: RequestInit["headers"]) => gqlFetcher<MeUserQuery, MeUserQueryVariables>(MeUserDocument, variables, options);
+useMeUserQuery.fetcher = (variables?: MeUserQueryVariables, options?: RequestInit["headers"]) =>
+    gqlFetcher<MeUserQuery, MeUserQueryVariables>(MeUserDocument, variables, options);
 
 export const UpdateUserByIdDocument = `
     mutation UpdateUserById($id: String!, $data: mutationUserUpdateInput!) {
@@ -61593,10 +62976,13 @@ export const UpdateUserByIdDocument = `
 }
     `;
 
-export const useUpdateUserByIdMutation = <TError = unknown, TContext = unknown>(options?: UseMutationOptions<UpdateUserByIdMutation, TError, UpdateUserByIdMutationVariables, TContext>) => {
+export const useUpdateUserByIdMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UpdateUserByIdMutation, TError, UpdateUserByIdMutationVariables, TContext>,
+) => {
     return useMutation<UpdateUserByIdMutation, TError, UpdateUserByIdMutationVariables, TContext>({
         mutationKey: ["UpdateUserById"],
-        mutationFn: (variables?: UpdateUserByIdMutationVariables) => gqlFetcher<UpdateUserByIdMutation, UpdateUserByIdMutationVariables>(UpdateUserByIdDocument, variables)(),
+        mutationFn: (variables?: UpdateUserByIdMutationVariables) =>
+            gqlFetcher<UpdateUserByIdMutation, UpdateUserByIdMutationVariables>(UpdateUserByIdDocument, variables)(),
         ...options,
     });
 };

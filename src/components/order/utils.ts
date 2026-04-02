@@ -44,7 +44,16 @@ export const buildShippingAddressHeadline = (shippingAddress: AddressWithEmail):
 };
 
 export const buildShippingAddressSummary = (shippingAddress: AddressWithEmail): string => {
-    return [shippingAddress.addressLine1, shippingAddress.addressLine2, shippingAddress.city, shippingAddress.state, shippingAddress.postalCode, shippingAddress.country].filter(Boolean).join(", ");
+    return [
+        shippingAddress.addressLine1,
+        shippingAddress.addressLine2,
+        shippingAddress.city,
+        shippingAddress.state,
+        shippingAddress.postalCode,
+        shippingAddress.country,
+    ]
+        .filter(Boolean)
+        .join(", ");
 };
 
 export const buildProfileShippingAddresses = (meUsers?: MeUserQuery | MeUserQuery[]): AddressWithEmail[] => {
@@ -88,7 +97,12 @@ export const toShippingAddressInput = (shippingAddress: AddressWithEmail): Mutat
     return input;
 };
 
-export const buildOrderFormValues = (props: { prefillFirstName?: string; prefillLastName?: string; profileEmail?: string; savedShippingAddress?: AddressWithEmail }): OrderFormValues => {
+export const buildOrderFormValues = (props: {
+    prefillFirstName?: string;
+    prefillLastName?: string;
+    profileEmail?: string;
+    savedShippingAddress?: AddressWithEmail;
+}): OrderFormValues => {
     if (props.savedShippingAddress) {
         return {
             customerEmail: props.savedShippingAddress.email,

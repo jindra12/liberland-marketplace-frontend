@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { JobListInternal } from "./JobListInternal";
 import { useListJobsByCompanyQuery } from "../hooks";
+
+import { JobListInternal } from "./JobListInternal";
 
 export interface CompanyJobsListProps {
     companyId: string;

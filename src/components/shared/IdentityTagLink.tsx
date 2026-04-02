@@ -1,6 +1,9 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
+
 import { Tag } from "antd";
+
 export type IdentityTagItem = {
     id: string;
     name: string;

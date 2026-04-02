@@ -1,17 +1,20 @@
-import React from "react";
-import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
-import type { MenuProps } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { SearchButton } from "./SearchButton";
-import { EndpointAuthAction } from "./EndpointAuthAction";
-import { LoginButton } from "./LoginButton";
+import type { MenuProps } from "antd";
+import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
+
 import { CartHeaderButton } from "./cart/CartHeaderButton";
-import { DesktopDrawer } from "./DesktopDrawer";
 import { useCartItems } from "./cart/useCartItems";
-import { RouteButton } from "./RouteButton";
+import { DesktopDrawer } from "./DesktopDrawer";
+import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
+import { LoginButton } from "./LoginButton";
+import { RouteButton } from "./RouteButton";
+import { SearchButton } from "./SearchButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -96,7 +99,13 @@ export const AppHeader: React.FunctionComponent = () => {
                 {xl ? (
                     <>
                         <div className="AppHeader__menuSlot">
-                            <Menu className="AppHeader__menu" mode="horizontal" disabledOverflow items={desktopMenuItems} selectedKeys={selectedDesktopKeys} />
+                            <Menu
+                                className="AppHeader__menu"
+                                mode="horizontal"
+                                disabledOverflow
+                                items={desktopMenuItems}
+                                selectedKeys={selectedDesktopKeys}
+                            />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
                             <EndpointAuthAction>
@@ -114,15 +123,31 @@ export const AppHeader: React.FunctionComponent = () => {
                                     </Button>
                                 )}
                             </EndpointAuthAction>
-                            <LoginButton action={authAction} type="default" className="AppHeader__authBtn" onAfterAction={() => navigate("/")} />
+                            <LoginButton
+                                action={authAction}
+                                type="default"
+                                className="AppHeader__authBtn"
+                                onAfterAction={() => navigate("/")}
+                            />
                             <DesktopDrawer />
                         </Flex>
                     </>
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
-                        <LoginButton action={authAction} type="text" className="AppHeader__mobileAuthBtn" onAfterAction={() => navigate("/")} />
+                        <LoginButton
+                            action={authAction}
+                            type="text"
+                            className="AppHeader__mobileAuthBtn"
+                            onAfterAction={() => navigate("/")}
+                        />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
-                        <Button className="AppHeader__burger AppHeader__iconButton" type="text" icon={<MenuOutlined />} aria-label="Open navigation" onClick={() => setDrawerOpen(true)} />
+                        <Button
+                            className="AppHeader__burger AppHeader__iconButton"
+                            type="text"
+                            icon={<MenuOutlined />}
+                            aria-label="Open navigation"
+                            onClick={() => setDrawerOpen(true)}
+                        />
                         <Drawer
                             className="AppHeader__drawer"
                             placement="left"
@@ -136,7 +161,12 @@ export const AppHeader: React.FunctionComponent = () => {
                             }
                         >
                             <div className="AppHeader__drawerBody">
-                                <Menu className="AppHeader__drawerMenu" mode="inline" items={drawerMenuItems} selectedKeys={selectedDrawerKeys} />
+                                <Menu
+                                    className="AppHeader__drawerMenu"
+                                    mode="inline"
+                                    items={drawerMenuItems}
+                                    selectedKeys={selectedDrawerKeys}
+                                />
                                 <div className="AppHeader__drawerNav">
                                     <SearchButton type="default" block onScopeSelect={() => setDrawerOpen(false)}>
                                         Search

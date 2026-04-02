@@ -1,7 +1,20 @@
-query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+query SearchJobsBySecondaryIdentity(
+    $identityId: JSON!
+    $companyIds: [JSON!] = []
+    $searchTerm: String!
+    $page: Int = 1
+    $limit: Int = 20
+    $sort: String
+) {
     Jobs(
         draft: false
-        where: { AND: [{ title: { contains: $searchTerm } }, { OR: [{ allowedIdentities: { in: [$identityId] } }, { company: { in: $companyIds } }] }, { _status: { equals: published } }] }
+        where: {
+            AND: [
+                { title: { contains: $searchTerm } }
+                { OR: [{ allowedIdentities: { in: [$identityId] } }, { company: { in: $companyIds } }] }
+                { _status: { equals: published } }
+            ]
+        }
         page: $page
         limit: $limit
         sort: $sort

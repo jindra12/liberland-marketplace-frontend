@@ -12,13 +12,18 @@ interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     editId?: string | null;
     url: string;
     createMutation: { isPending: boolean; mutateAsync: (vars: { data: never; draft: boolean }) => Promise<TCreate> };
-    updateMutation: { isPending: boolean; mutateAsync: (vars: { id: string; data: never; draft: boolean }) => Promise<TUpdate> };
+    updateMutation: {
+        isPending: boolean;
+        mutateAsync: (vars: { id: string; data: never; draft: boolean }) => Promise<TUpdate>;
+    };
     buildData: (values: TValues, imageId: string | undefined | null) => object;
     getCreateId: (result: TCreate) => string | undefined | null;
     getUpdateId: (result: TUpdate) => string | undefined | null;
 }
 
-export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, TUpdate>(config: UseEntityFormConfig<TValues, TCreate, TUpdate>) => {
+export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, TUpdate>(
+    config: UseEntityFormConfig<TValues, TCreate, TUpdate>,
+) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [form] = Form.useForm();
@@ -29,7 +34,11 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
 
     const onFinish = useCallback(
         async (values: TValues) => {
-            const imageId = await resolveImageId(config.url, values.imageFile as Parameters<typeof resolveImageId>[1], config.existingImageId);
+            const imageId = await resolveImageId(
+                config.url,
+                values.imageFile as Parameters<typeof resolveImageId>[1],
+                config.existingImageId,
+            );
 
             const draft = draftRef.current;
             const data = { ...config.buildData(values, imageId), _status: draft ? "draft" : "published" } as never;
@@ -42,7 +51,10 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                         data,
                         draft,
                     });
-                    await Promise.all([queryClient.invalidateQueries({ queryKey: [listQueryKey] }), queryClient.invalidateQueries({ queryKey: [byIdQueryKey] })]);
+                    await Promise.all([
+                        queryClient.invalidateQueries({ queryKey: [listQueryKey] }),
+                        queryClient.invalidateQueries({ queryKey: [byIdQueryKey] }),
+                    ]);
                     message.success(`${config.entityName} ${label}!`);
                     navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
                 } else {

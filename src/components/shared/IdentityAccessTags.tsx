@@ -1,7 +1,10 @@
 import * as React from "react";
+
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
 import { Space } from "antd";
+
 import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
+
 type IdentityAccessTagsProps = {
     allowedIdentities?: IdentityTagItem[] | null;
     disallowedIdentities?: IdentityTagItem[] | null;
@@ -22,10 +25,20 @@ export const IdentityAccessTags: React.FunctionComponent<IdentityAccessTagsProps
     return (
         <Space size={[8, 8]} wrap className={props.className}>
             {allowed.map((identity) => (
-                <IdentityTagLink key={`${keyBase}allowed-${identity.id}`} identity={identity} color="success" icon={showIcons ? <UsergroupAddOutlined /> : undefined} />
+                <IdentityTagLink
+                    key={`${keyBase}allowed-${identity.id}`}
+                    identity={identity}
+                    color="success"
+                    icon={showIcons ? <UsergroupAddOutlined /> : undefined}
+                />
             ))}
             {disallowed.map((identity) => (
-                <IdentityTagLink key={`${keyBase}disallowed-${identity.id}`} identity={identity} color="error" icon={showIcons ? <MinusCircleFilled /> : undefined} />
+                <IdentityTagLink
+                    key={`${keyBase}disallowed-${identity.id}`}
+                    identity={identity}
+                    color="error"
+                    icon={showIcons ? <MinusCircleFilled /> : undefined}
+                />
             ))}
         </Space>
     );

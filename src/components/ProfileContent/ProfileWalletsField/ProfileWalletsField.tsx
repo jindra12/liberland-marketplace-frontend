@@ -1,8 +1,11 @@
 import * as React from "react";
+
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import { Alert, Button, Form } from "antd";
 import type { FormInstance } from "antd";
+
 import type { ProfileContactFormValues, ProfileWalletSelection, ProfileWalletSelectionTarget } from "../types";
+
 import { ProfileWalletRow } from "./ProfileWalletRow";
 
 type ProfileWalletsFieldProps = {
@@ -54,7 +57,12 @@ export const ProfileWalletsField: React.FunctionComponent<ProfileWalletsFieldPro
                                 selectionTarget={selectionTarget}
                             />
                         ))}
-                        <Button className="Profile__walletAddButton" disabled={props.disabled} icon={<PlusOutlined />} onClick={() => add({})}>
+                        <Button
+                            className="Profile__walletAddButton"
+                            disabled={props.disabled}
+                            icon={<PlusOutlined />}
+                            onClick={() => add({})}
+                        >
                             Add payment wallet
                         </Button>
                     </div>

@@ -1,8 +1,11 @@
 import * as React from "react";
+
 import type { ButtonProps } from "antd";
+
 import { AuthGuard } from "../AuthGuard";
-import { AddToCartButtonContainer } from "./AddToCartButtonContainer";
+
 import { AddToCartButton } from "./AddToCartButton";
+import { AddToCartButtonContainer } from "./AddToCartButtonContainer";
 
 type AddToCartButtonGuardProps = {
     productId: string;

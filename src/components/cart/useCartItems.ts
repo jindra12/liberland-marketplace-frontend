@@ -29,7 +29,12 @@ export const useCartItems = () => {
     const queries = useQueries({
         queries: entries.map(({ url, secret }) => ({
             queryKey: ["CartBySecret", url, secret],
-            queryFn: gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(CartBySecretDocument, { secret }, undefined, url),
+            queryFn: gqlFetcher<CartBySecretQuery, CartBySecretQueryVariables>(
+                CartBySecretDocument,
+                { secret },
+                undefined,
+                url,
+            ),
         })),
     });
 

@@ -1,4 +1,12 @@
-import { QueryKey, useMutation, useQueries, UseMutationOptions, UseMutationResult, UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import {
+    QueryKey,
+    useMutation,
+    useQueries,
+    UseMutationOptions,
+    UseMutationResult,
+    UseQueryOptions,
+    UseQueryResult,
+} from "@tanstack/react-query";
 import {
     CartBySecretDocument,
     useCartBySecretQuery as useCartBySecretQuerySingle,
@@ -168,10 +176,14 @@ type QueryVariablesWithUrl<TVariables extends object | undefined> = TVariables e
       ? { url?: string }
       : TVariables & { url?: string };
 
-type MutationVariablesWithUrl<TVariables extends object | undefined> = (TVariables extends undefined ? {} : TVariables) & { url?: string };
+type MutationVariablesWithUrl<TVariables extends object | undefined> = (TVariables extends undefined
+    ? {}
+    : TVariables) & { url?: string };
 
 export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
-    <TError = unknown, TContext = unknown>(options?: UseMutationOptions<TData, TError, TVariables, TContext>): UseMutationResult<TData, TError, TVariables, TContext>;
+    <TError = unknown, TContext = unknown>(
+        options?: UseMutationOptions<TData, TError, TVariables, TContext>,
+    ): UseMutationResult<TData, TError, TVariables, TContext>;
     fetcher: (variables: TVariables, options?: RequestInit["headers"]) => () => Promise<TData>;
 };
 
@@ -179,14 +191,19 @@ export type EnhancedUseMutationHook<TData, TVariables extends object | undefined
     <TError = unknown, TContext = unknown>(
         options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
     ): UseMutationResult<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>;
-    fetcher: (variables: MutationVariablesWithUrl<TVariables>, options?: RequestInit["headers"]) => () => Promise<TData>;
+    fetcher: (
+        variables: MutationVariablesWithUrl<TVariables>,
+        options?: RequestInit["headers"],
+    ) => () => Promise<TData>;
 };
 
 export const enhancedMutationFactory = <TData, TVariables extends object | undefined>(
     _useHook: GeneratedUseMutationHook<TData, TVariables>,
     mutation: string,
 ): EnhancedUseMutationHook<TData, TVariables> => {
-    const useEnhancedMutation = <TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">) => {
+    const useEnhancedMutation = <TError = unknown, TContext = unknown>(
+        options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
+    ) => {
         return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>({
             mutationFn: (variables) => {
                 const { url, ...rest } = variables;
@@ -196,7 +213,10 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
         });
     };
 
-    useEnhancedMutation.fetcher = (variables: MutationVariablesWithUrl<TVariables>, options?: RequestInit["headers"]) => {
+    useEnhancedMutation.fetcher = (
+        variables: MutationVariablesWithUrl<TVariables>,
+        options?: RequestInit["headers"],
+    ) => {
         const { url, ...rest } = variables;
         return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url);
     };
@@ -209,7 +229,11 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
     query: string,
     mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
 ) => {
-    return (variables?: QueryVariablesWithUrl<TVariables>, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
+    return (
+        variables?: QueryVariablesWithUrl<TVariables>,
+        params?: Omit<UseQueryOptions, "queryKey" | "queryFn">,
+        options?: Headers,
+    ) => {
         const { enabled } = useEndpointContext();
         const urls = variables?.url ? [variables.url] : enabled;
 
@@ -224,44 +248,108 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
     };
 };
 
-export const useListCompaniesByCreatorQuery = enhancedQueryFactory(useListCompaniesByCreatorQuerySingle, ListCompaniesByCreatorDocument);
+export const useListCompaniesByCreatorQuery = enhancedQueryFactory(
+    useListCompaniesByCreatorQuerySingle,
+    ListCompaniesByCreatorDocument,
+);
 export const useCartBySecretQuery = enhancedQueryFactory(useCartBySecretQuerySingle, CartBySecretDocument);
 export const useCompanyByIdQuery = enhancedQueryFactory(useCompanyByIdQuerySingle, CompanyByIdDocument);
-export const useListCompaniesByIdentityQuery = enhancedQueryFactory(useListCompaniesByIdentityQuerySingle, ListCompaniesByIdentityDocument);
-export const useSearchCompaniesByIdentityQuery = enhancedQueryFactory(useSearchCompaniesByIdentityQuerySingle, SearchCompaniesByIdentityDocument);
-export const useListCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(useListCompaniesBySecondaryIdentityQuerySingle, ListCompaniesBySecondaryIdentityDocument);
-export const useSearchCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(useSearchCompaniesBySecondaryIdentityQuerySingle, SearchCompaniesBySecondaryIdentityDocument);
+export const useListCompaniesByIdentityQuery = enhancedQueryFactory(
+    useListCompaniesByIdentityQuerySingle,
+    ListCompaniesByIdentityDocument,
+);
+export const useSearchCompaniesByIdentityQuery = enhancedQueryFactory(
+    useSearchCompaniesByIdentityQuerySingle,
+    SearchCompaniesByIdentityDocument,
+);
+export const useListCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(
+    useListCompaniesBySecondaryIdentityQuerySingle,
+    ListCompaniesBySecondaryIdentityDocument,
+);
+export const useSearchCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(
+    useSearchCompaniesBySecondaryIdentityQuerySingle,
+    SearchCompaniesBySecondaryIdentityDocument,
+);
 export const useListCompaniesQuery = enhancedQueryFactory(useListCompaniesQuerySingle, ListCompaniesDocument);
 export const useSearchCompaniesQuery = enhancedQueryFactory(useSearchCompaniesQuerySingle, SearchCompaniesDocument);
 export const useIdentityByIdQuery = enhancedQueryFactory(useIdentityByIdQuerySingle, IdentityByIdDocument);
 export const useEntityImageUrlsQuery = enhancedQueryFactory(useEntityImageUrlsQuerySingle, EntityImageUrlsDocument);
 export const useListIdentitiesQuery = enhancedQueryFactory(useListIdentitiesQuerySingle, ListIdentitiesDocument);
 export const useSearchIdentitiesQuery = enhancedQueryFactory(useSearchIdentitiesQuerySingle, SearchIdentitiesDocument);
-export const useListJobsByCompanyQuery = enhancedQueryFactory(useListJobsByCompanyQuerySingle, ListJobsByCompanyDocument);
-export const useSearchJobsByCompanyQuery = enhancedQueryFactory(useSearchJobsByCompanyQuerySingle, SearchJobsByCompanyDocument);
-export const useListJobsByCreatorQuery = enhancedQueryFactory(useListJobsByCreatorQuerySingle, ListJobsByCreatorDocument);
+export const useListJobsByCompanyQuery = enhancedQueryFactory(
+    useListJobsByCompanyQuerySingle,
+    ListJobsByCompanyDocument,
+);
+export const useSearchJobsByCompanyQuery = enhancedQueryFactory(
+    useSearchJobsByCompanyQuerySingle,
+    SearchJobsByCompanyDocument,
+);
+export const useListJobsByCreatorQuery = enhancedQueryFactory(
+    useListJobsByCreatorQuerySingle,
+    ListJobsByCreatorDocument,
+);
 export const useJobByIdQuery = enhancedQueryFactory(useJobByIdQuerySingle, JobByIdDocument);
-export const useListJobsBySecondaryIdentityQuery = enhancedQueryFactory(useListJobsBySecondaryIdentityQuerySingle, ListJobsBySecondaryIdentityDocument);
-export const useSearchJobsBySecondaryIdentityQuery = enhancedQueryFactory(useSearchJobsBySecondaryIdentityQuerySingle, SearchJobsBySecondaryIdentityDocument);
+export const useListJobsBySecondaryIdentityQuery = enhancedQueryFactory(
+    useListJobsBySecondaryIdentityQuerySingle,
+    ListJobsBySecondaryIdentityDocument,
+);
+export const useSearchJobsBySecondaryIdentityQuery = enhancedQueryFactory(
+    useSearchJobsBySecondaryIdentityQuerySingle,
+    SearchJobsBySecondaryIdentityDocument,
+);
 export const useListJobsQuery = enhancedQueryFactory(useListJobsQuerySingle, ListJobsDocument);
 export const useSearchJobsQuery = enhancedQueryFactory(useSearchJobsQuerySingle, SearchJobsDocument);
-export const useListCommentsByTargetQuery = enhancedQueryFactory(useListCommentsByTargetQuerySingle, ListCommentsByTargetDocument);
-export const useListJobsByIdentityQuery = enhancedQueryFactory(useListJobsByIdentityQuerySingle, ListJobsByIdentityDocument);
-export const useListProductsByIdentityQuery = enhancedQueryFactory(useListProductsByIdentityQuerySingle, ListProductsByIdentityDocument);
-export const useListRepliesToCommentQuery = enhancedQueryFactory(useListRepliesToCommentQuerySingle, ListRepliesToCommentDocument);
-export const useListProductsByCompanyQuery = enhancedQueryFactory(useListProductsByCompanyQuerySingle, ListProductsByCompanyDocument);
-export const useSearchProductsByCompanyQuery = enhancedQueryFactory(useSearchProductsByCompanyQuerySingle, SearchProductsByCompanyDocument);
-export const useListProductsByCreatorQuery = enhancedQueryFactory(useListProductsByCreatorQuerySingle, ListProductsByCreatorDocument);
+export const useListCommentsByTargetQuery = enhancedQueryFactory(
+    useListCommentsByTargetQuerySingle,
+    ListCommentsByTargetDocument,
+);
+export const useListJobsByIdentityQuery = enhancedQueryFactory(
+    useListJobsByIdentityQuerySingle,
+    ListJobsByIdentityDocument,
+);
+export const useListProductsByIdentityQuery = enhancedQueryFactory(
+    useListProductsByIdentityQuerySingle,
+    ListProductsByIdentityDocument,
+);
+export const useListRepliesToCommentQuery = enhancedQueryFactory(
+    useListRepliesToCommentQuerySingle,
+    ListRepliesToCommentDocument,
+);
+export const useListProductsByCompanyQuery = enhancedQueryFactory(
+    useListProductsByCompanyQuerySingle,
+    ListProductsByCompanyDocument,
+);
+export const useSearchProductsByCompanyQuery = enhancedQueryFactory(
+    useSearchProductsByCompanyQuerySingle,
+    SearchProductsByCompanyDocument,
+);
+export const useListProductsByCreatorQuery = enhancedQueryFactory(
+    useListProductsByCreatorQuerySingle,
+    ListProductsByCreatorDocument,
+);
 export const useProductByIdQuery = enhancedQueryFactory(useProductByIdQuerySingle, ProductByIdDocument);
 export const useListProductsQuery = enhancedQueryFactory(useListProductsQuerySingle, ListProductsDocument);
 export const useSearchProductsQuery = enhancedQueryFactory(useSearchProductsQuerySingle, SearchProductsDocument);
-export const useListStartupsByCompanyQuery = enhancedQueryFactory(useListStartupsByCompanyQuerySingle, ListStartupsByCompanyDocument);
-export const useListStartupsByCreatorQuery = enhancedQueryFactory(useListStartupsByCreatorQuerySingle, ListStartupsByCreatorDocument);
-export const useListStartupsByIdentityQuery = enhancedQueryFactory(useListStartupsByIdentityQuerySingle, ListStartupsByIdentityDocument);
+export const useListStartupsByCompanyQuery = enhancedQueryFactory(
+    useListStartupsByCompanyQuerySingle,
+    ListStartupsByCompanyDocument,
+);
+export const useListStartupsByCreatorQuery = enhancedQueryFactory(
+    useListStartupsByCreatorQuerySingle,
+    ListStartupsByCreatorDocument,
+);
+export const useListStartupsByIdentityQuery = enhancedQueryFactory(
+    useListStartupsByIdentityQuerySingle,
+    ListStartupsByIdentityDocument,
+);
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
-export const useMeUserQuery = (variables?: { url?: string }, params?: Omit<UseQueryOptions, "queryKey" | "queryFn">, options?: Headers) => {
+export const useMeUserQuery = (
+    variables?: { url?: string },
+    params?: Omit<UseQueryOptions, "queryKey" | "queryFn">,
+    options?: Headers,
+) => {
     const { enabled } = useEndpointContext();
     const urls = variables?.url ? [variables.url] : enabled;
 
@@ -288,7 +376,10 @@ export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompany
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
 export const useUpdateOrderMutation = enhancedMutationFactory(useUpdateOrderMutationSingle, UpdateOrderDocument);
-export const useCreateReplyToCommentMutation = enhancedMutationFactory(useCreateReplyToCommentMutationSingle, CreateReplyToCommentDocument);
+export const useCreateReplyToCommentMutation = enhancedMutationFactory(
+    useCreateReplyToCommentMutationSingle,
+    CreateReplyToCommentDocument,
+);
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);
 export const useDeleteJobMutation = enhancedMutationFactory(useDeleteJobMutationSingle, DeleteJobDocument);
@@ -301,16 +392,55 @@ export const useLeaveStartupMutation = enhancedMutationFactory(useLeaveStartupMu
 export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
 export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
 export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
-export const useUpdateCommentContentMutation = enhancedMutationFactory(useUpdateCommentContentMutationSingle, UpdateCommentContentDocument);
-export const useTrackAnalyticsEventMutation = enhancedMutationFactory(useTrackAnalyticsEventMutationSingle, TrackAnalyticsEventDocument);
-export const useUpdateUserByIdMutation = enhancedMutationFactory(useUpdateUserByIdMutationSingle, UpdateUserByIdDocument);
-export const useSubscribeToCompanyUpdatesMutation = enhancedMutationFactory(useSubscribeToCompanyUpdatesMutationSingle, SubscribeToCompanyUpdatesDocument);
-export const useSubscribeToJobUpdatesMutation = enhancedMutationFactory(useSubscribeToJobUpdatesMutationSingle, SubscribeToJobUpdatesDocument);
-export const useSubscribeToProductUpdatesMutation = enhancedMutationFactory(useSubscribeToProductUpdatesMutationSingle, SubscribeToProductUpdatesDocument);
-export const useSubscribeToTribeUpdatesMutation = enhancedMutationFactory(useSubscribeToTribeUpdatesMutationSingle, SubscribeToTribeUpdatesDocument);
-export const useSubscribeToVentureUpdatesMutation = enhancedMutationFactory(useSubscribeToVentureUpdatesMutationSingle, SubscribeToVentureUpdatesDocument);
-export const useUnsubscribeFromCompanyUpdatesMutation = enhancedMutationFactory(useUnsubscribeFromCompanyUpdatesMutationSingle, UnsubscribeFromCompanyUpdatesDocument);
-export const useUnsubscribeFromJobUpdatesMutation = enhancedMutationFactory(useUnsubscribeFromJobUpdatesMutationSingle, UnsubscribeFromJobUpdatesDocument);
-export const useUnsubscribeFromProductUpdatesMutation = enhancedMutationFactory(useUnsubscribeFromProductUpdatesMutationSingle, UnsubscribeFromProductUpdatesDocument);
-export const useUnsubscribeFromTribeUpdatesMutation = enhancedMutationFactory(useUnsubscribeFromTribeUpdatesMutationSingle, UnsubscribeFromTribeUpdatesDocument);
-export const useUnsubscribeFromVentureUpdatesMutation = enhancedMutationFactory(useUnsubscribeFromVentureUpdatesMutationSingle, UnsubscribeFromVentureUpdatesDocument);
+export const useUpdateCommentContentMutation = enhancedMutationFactory(
+    useUpdateCommentContentMutationSingle,
+    UpdateCommentContentDocument,
+);
+export const useTrackAnalyticsEventMutation = enhancedMutationFactory(
+    useTrackAnalyticsEventMutationSingle,
+    TrackAnalyticsEventDocument,
+);
+export const useUpdateUserByIdMutation = enhancedMutationFactory(
+    useUpdateUserByIdMutationSingle,
+    UpdateUserByIdDocument,
+);
+export const useSubscribeToCompanyUpdatesMutation = enhancedMutationFactory(
+    useSubscribeToCompanyUpdatesMutationSingle,
+    SubscribeToCompanyUpdatesDocument,
+);
+export const useSubscribeToJobUpdatesMutation = enhancedMutationFactory(
+    useSubscribeToJobUpdatesMutationSingle,
+    SubscribeToJobUpdatesDocument,
+);
+export const useSubscribeToProductUpdatesMutation = enhancedMutationFactory(
+    useSubscribeToProductUpdatesMutationSingle,
+    SubscribeToProductUpdatesDocument,
+);
+export const useSubscribeToTribeUpdatesMutation = enhancedMutationFactory(
+    useSubscribeToTribeUpdatesMutationSingle,
+    SubscribeToTribeUpdatesDocument,
+);
+export const useSubscribeToVentureUpdatesMutation = enhancedMutationFactory(
+    useSubscribeToVentureUpdatesMutationSingle,
+    SubscribeToVentureUpdatesDocument,
+);
+export const useUnsubscribeFromCompanyUpdatesMutation = enhancedMutationFactory(
+    useUnsubscribeFromCompanyUpdatesMutationSingle,
+    UnsubscribeFromCompanyUpdatesDocument,
+);
+export const useUnsubscribeFromJobUpdatesMutation = enhancedMutationFactory(
+    useUnsubscribeFromJobUpdatesMutationSingle,
+    UnsubscribeFromJobUpdatesDocument,
+);
+export const useUnsubscribeFromProductUpdatesMutation = enhancedMutationFactory(
+    useUnsubscribeFromProductUpdatesMutationSingle,
+    UnsubscribeFromProductUpdatesDocument,
+);
+export const useUnsubscribeFromTribeUpdatesMutation = enhancedMutationFactory(
+    useUnsubscribeFromTribeUpdatesMutationSingle,
+    UnsubscribeFromTribeUpdatesDocument,
+);
+export const useUnsubscribeFromVentureUpdatesMutation = enhancedMutationFactory(
+    useUnsubscribeFromVentureUpdatesMutationSingle,
+    UnsubscribeFromVentureUpdatesDocument,
+);

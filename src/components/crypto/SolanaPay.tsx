@@ -1,19 +1,23 @@
 import * as React from "react";
-import Image from "antd/es/image";
-import Button from "antd/es/button";
-import Spin from "antd/es/spin";
-import Flex from "antd/es/flex";
+
+import { useMutation } from "@tanstack/react-query";
+
 import { createTransfer } from "@solana/pay";
-import { BigNumber } from "bignumber.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, PublicKey } from "@solana/web3.js";
-import { useMutation } from "@tanstack/react-query";
 import { Result } from "antd";
+import Button from "antd/es/button";
+import Flex from "antd/es/flex";
+import Image from "antd/es/image";
 import message from "antd/es/message";
+import Spin from "antd/es/spin";
+import { BigNumber } from "bignumber.js";
+
 import { FormModel } from "../../types";
-import { SolanaConnect } from "./SolanaConnect";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 import type { PaymentWalletSelection } from "../order/types";
+
+import { SolanaConnect } from "./SolanaConnect";
 
 export interface SolanaPayProps {
     setTransactionId: (txId: string) => Promise<void>;
@@ -97,7 +101,18 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
             <Flex wrap gap="15px" justify="center" align="center" className="CryptoPaymentGroup">
                 {sender && (
                     <Button
-                        icon={pay.isPending ? <Spin /> : <Image src={require("../../assets/solana.svg").default} width="22px" height="22px" preview={false} />}
+                        icon={
+                            pay.isPending ? (
+                                <Spin />
+                            ) : (
+                                <Image
+                                    src={require("../../assets/solana.svg").default}
+                                    width="22px"
+                                    height="22px"
+                                    preview={false}
+                                />
+                            )
+                        }
                         className="SolanaButton SolanaButton--payment SolanaButton--main"
                         type="primary"
                         disabled={pay.isPending || pay.isSuccess || isPaymentPending}
@@ -106,7 +121,12 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                         {pay.isPending ? "Loading..." : "Pay"}
                     </Button>
                 )}
-                <SolanaConnect selectWallet={(address) => setSender(address)} payment label="Connect wallet" disabled={pay.isPending || isPaymentPending} />
+                <SolanaConnect
+                    selectWallet={(address) => setSender(address)}
+                    payment
+                    label="Connect wallet"
+                    disabled={pay.isPending || isPaymentPending}
+                />
             </Flex>
             {pay.isError && <Result title="Payment failed" subTitle={`Order ID: ${props.model.orderId}`} />}
         </>

@@ -1,12 +1,34 @@
 import * as React from "react";
-import { Alert, Flex, Spin, theme } from "antd";
-import { useAuth } from "react-oidc-context";
+
 import { CommentSection } from "react-comments-section";
+import { useAuth } from "react-oidc-context";
+
+import { Alert, Flex, Spin, theme } from "antd";
+
 import "react-comments-section/dist/index.css";
-import { COMMENT_RELATION_TO_QUERY_RELATION, ENTITY_COMMENTS_DEFAULT_LIMIT, ENTITY_COMMENTS_DEFAULT_PLACEHOLDER } from "../../constants";
-import { AuthProfile, CommentDeletePayload, CommentEditPayload, CommentReplyPayload, CommentSubmitPayload, EntityCommentsSectionProps } from "../../types";
+import {
+    COMMENT_RELATION_TO_QUERY_RELATION,
+    ENTITY_COMMENTS_DEFAULT_LIMIT,
+    ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
+} from "../../constants";
+import {
+    AuthProfile,
+    CommentDeletePayload,
+    CommentEditPayload,
+    CommentReplyPayload,
+    CommentSubmitPayload,
+    EntityCommentsSectionProps,
+} from "../../types";
+import {
+    useCreateCommentMutation,
+    useCreateReplyToCommentMutation,
+    useDeleteCommentMutation,
+    useListCommentsByTargetQuery,
+    useUpdateCommentContentMutation,
+} from "../hooks";
+
 import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
-import { useCreateCommentMutation, useCreateReplyToCommentMutation, useDeleteCommentMutation, useListCommentsByTargetQuery, useUpdateCommentContentMutation } from "../hooks";
+
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = (props) => {
     const limit = props.limit === undefined ? ENTITY_COMMENTS_DEFAULT_LIMIT : props.limit;
     const placeholder = props.placeholder === undefined ? ENTITY_COMMENTS_DEFAULT_PLACEHOLDER : props.placeholder;
@@ -23,7 +45,10 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
     const updateComment = useUpdateCommentContentMutation();
     const deleteComment = useDeleteCommentMutation();
     const profile = auth.user?.profile as AuthProfile | undefined;
-    const currentUser = React.useMemo(() => getCommentCurrentUser(auth.isAuthenticated, profile), [auth.isAuthenticated, profile]);
+    const currentUser = React.useMemo(
+        () => getCommentCurrentUser(auth.isAuthenticated, profile),
+        [auth.isAuthenticated, profile],
+    );
     const commentData = React.useMemo(() => {
         const docs = comments.data?.Comments?.docs || [];
         return buildCommentData(docs);
@@ -108,10 +133,27 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         );
     }
     if (comments.error) {
-        return <Alert type="error" showIcon message="Failed to load comments" description="Try refreshing the page." className="EntityCommentsSection" />;
+        return (
+            <Alert
+                type="error"
+                showIcon
+                message="Failed to load comments"
+                description="Try refreshing the page."
+                className="EntityCommentsSection"
+            />
+        );
     }
     return (
-        <div className={["EntityCommentsSection", !auth.isAuthenticated && "EntityCommentsSection--anonymous", props.className].filter(Boolean).join(" ")} style={commentThemeVars}>
+        <div
+            className={[
+                "EntityCommentsSection",
+                !auth.isAuthenticated && "EntityCommentsSection--anonymous",
+                props.className,
+            ]
+                .filter(Boolean)
+                .join(" ")}
+            style={commentThemeVars}
+        >
             <CommentSection
                 key={`${props.relationTo}-${props.targetId}-${auth.isAuthenticated ? "auth" : "anonymous"}`}
                 currentUser={currentUser}

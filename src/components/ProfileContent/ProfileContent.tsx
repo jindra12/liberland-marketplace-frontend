@@ -1,10 +1,14 @@
 import * as React from "react";
-import { Divider, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "react-oidc-context";
+import { useNavigate } from "react-router-dom";
+
+import { Divider, Typography } from "antd";
+
+import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
 import { LoginButton } from "../LoginButton";
-import { useEndpointContext } from "../EndpointContext";
+
 import { ProfileAccountServerCard } from "./ProfileAccountServerCard";
 import { ProfileContactCard } from "./ProfileContactCard";
 import { ProfileListingsSection } from "./ProfileListingsSection";
@@ -49,7 +53,12 @@ export const ProfileContent: React.FunctionComponent = () => {
         <div className="Profile">
             <Typography.Title level={2}>My Profile</Typography.Title>
 
-            <ProfileSummaryCard email={profile?.email} emailVerified={emailVerified} name={profile?.name} picture={profile?.picture} />
+            <ProfileSummaryCard
+                email={profile?.email}
+                emailVerified={emailVerified}
+                name={profile?.name}
+                picture={profile?.picture}
+            />
 
             <Divider />
 

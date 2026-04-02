@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Typography } from "antd";
+
 type EntitySubListSectionProps = {
     title: string;
     children: React.ReactNode;

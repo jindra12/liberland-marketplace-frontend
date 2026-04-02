@@ -1,11 +1,14 @@
 import * as React from "react";
+
 import type { IdentityByIdQuery } from "../../generated/graphql";
-import { getImage } from "../shared/image/utils";
 import { useIdentityByIdQuery } from "../hooks";
+import { getImage } from "../shared/image/utils";
+
 import { NOTIFICATION_TARGET_LABELS } from "./constants";
+import type { ParsedUnsubscribeParams } from "./types";
 import { UnsubscribeEntity } from "./UnsubscribeEntity";
 import { getNotificationDetailPath } from "./utils";
-import type { ParsedUnsubscribeParams } from "./types";
+
 type UnsubscribeIdentityProps = {
     params: ParsedUnsubscribeParams;
 };

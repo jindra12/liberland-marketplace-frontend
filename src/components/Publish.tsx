@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+
 import { useEndpointContext } from "./EndpointContext";
 import { PublishContent } from "./publish/PublishContent";
 import { PublishServerSelector } from "./publish/PublishServerSelector";

@@ -1,5 +1,15 @@
 query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
-    Jobs(draft: false, where: { AND: [{ OR: [{ allowedIdentities: { in: [$identityId] } }, { company: { in: $companyIds } }] }, { _status: { equals: published } }] }, page: $page, limit: $limit) {
+    Jobs(
+        draft: false
+        where: {
+            AND: [
+                { OR: [{ allowedIdentities: { in: [$identityId] } }, { company: { in: $companyIds } }] }
+                { _status: { equals: published } }
+            ]
+        }
+        page: $page
+        limit: $limit
+    ) {
         docs {
             id
             isSubscribed

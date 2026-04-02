@@ -1,4 +1,8 @@
-mutation CreateReplyToComment($replyToPost: Comment_ReplyPostRelationshipInput!, $parentCommentId: String!, $content: String!) {
+mutation CreateReplyToComment(
+    $replyToPost: Comment_ReplyPostRelationshipInput!
+    $parentCommentId: String!
+    $content: String!
+) {
     createComment(data: { content: $content, replyPost: $replyToPost, replyComment: $parentCommentId }) {
         id
         content

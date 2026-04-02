@@ -1,7 +1,10 @@
 import * as React from "react";
-import { Divider, Flex } from "antd";
+
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
+import { Divider, Flex } from "antd";
+
 import { IdentityTagItem, IdentityTagLink } from "../shared/IdentityTagLink";
+
 type IdentityGroupsProps = {
     allowedIdentities?: IdentityTagItem[] | null;
     disallowedIdentities?: IdentityTagItem[] | null;
@@ -36,7 +39,11 @@ export const IdentityGroups: React.FunctionComponent<IdentityGroupsProps> = (pro
                             Disallowed tribes
                         </Flex>
                     </Flex>
-                    {disallowed.length ? disallowed.map((identity) => <IdentityTagLink key={`disallowed-${identity.id}`} identity={identity} color="error" />) : emptyText}
+                    {disallowed.length
+                        ? disallowed.map((identity) => (
+                              <IdentityTagLink key={`disallowed-${identity.id}`} identity={identity} color="error" />
+                          ))
+                        : emptyText}
                 </Flex>
             ) : undefined}
         </Flex>

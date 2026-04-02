@@ -1,6 +1,7 @@
 import * as React from "react";
-import Image from "antd/es/image";
+
 import Button from "antd/es/button";
+import Image from "antd/es/image";
 
 export interface SolanaButtonProps {
     onSelect: () => void;

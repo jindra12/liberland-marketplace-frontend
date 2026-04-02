@@ -1,5 +1,10 @@
 query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
-    Startups(draft: false, where: { AND: [{ identity: { equals: $identityId } }, { _status: { equals: published } }] }, page: $page, limit: $limit) {
+    Startups(
+        draft: false
+        where: { AND: [{ identity: { equals: $identityId } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+    ) {
         docs {
             id
             isSubscribed

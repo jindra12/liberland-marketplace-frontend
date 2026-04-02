@@ -1,8 +1,12 @@
 import * as React from "react";
-import { Badge, Button } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+
 import { Link } from "react-router-dom";
+
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Badge, Button } from "antd";
+
 import { useCartItems } from "./useCartItems";
+
 type CartHeaderButtonProps = {
     className?: string;
 };

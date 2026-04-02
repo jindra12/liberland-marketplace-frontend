@@ -1,16 +1,18 @@
 import * as React from "react";
-import { createThirdwebClient, prepareTransaction } from "thirdweb";
-import { ConnectButton, useActiveAccount, useActiveWallet, useSendAndConfirmTransaction } from "thirdweb/react";
-import { mainnet } from "thirdweb/chains";
-import Flex from "antd/es/flex";
-import { createWallet } from "thirdweb/wallets";
-import Button from "antd/es/button";
-import message from "antd/es/message";
-import Spin from "antd/es/spin";
-import Result from "antd/es/result";
+
 import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
-import { FormModel } from "../../types";
+import Button from "antd/es/button";
+import Flex from "antd/es/flex";
+import message from "antd/es/message";
+import Result from "antd/es/result";
+import Spin from "antd/es/spin";
+import { createThirdwebClient, prepareTransaction } from "thirdweb";
+import { mainnet } from "thirdweb/chains";
+import { ConnectButton, useActiveAccount, useActiveWallet, useSendAndConfirmTransaction } from "thirdweb/react";
+import { createWallet } from "thirdweb/wallets";
+
 import { thirdwebWallets } from "../../constants";
+import { FormModel } from "../../types";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 import type { PaymentWalletSelection } from "../order/types";
 
@@ -66,7 +68,12 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
 
     return (
         <Flex wrap gap="15px" justify="center" align="center" flex={1} className="CryptoPaymentGroup">
-            <ConnectButton client={client} chain={mainnet} autoConnect={false} wallets={thirdwebWallets.map((w) => createWallet(w))} />
+            <ConnectButton
+                client={client}
+                chain={mainnet}
+                autoConnect={false}
+                wallets={thirdwebWallets.map((w) => createWallet(w))}
+            />
             {account && (
                 <Button
                     type="primary"

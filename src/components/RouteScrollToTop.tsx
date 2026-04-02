@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useLocation } from "react-router-dom";
+
 export const RouteScrollToTop: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const location = useLocation();
     React.useEffect(() => {

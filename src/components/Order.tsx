@@ -1,20 +1,25 @@
 import * as React from "react";
-import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
-import { useQueryClient } from "@tanstack/react-query";
-import useLocalStorage from "use-local-storage";
-import { useTimeout } from "usehooks-ts";
-import type { Order as OrderType } from "../generated/graphql";
+
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
+
+import { useQueryClient } from "@tanstack/react-query";
+
+import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
+import useLocalStorage from "use-local-storage";
+import { useTimeout } from "usehooks-ts";
+
+import type { Order as OrderType } from "../generated/graphql";
+
+import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
+import { CartSummary, useCartItems } from "./cart/useCartItems";
 import { useEndpointContext } from "./EndpointContext";
 import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
-import { CartSummary, useCartItems } from "./cart/useCartItems";
-import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
-import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
-import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
 import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
+import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
 import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
 import { RouteButton } from "./RouteButton";
 
@@ -30,7 +35,10 @@ const Order: React.FunctionComponent = () => {
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
     const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
-    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, undefined);
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        undefined,
+    );
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
     const meUsersQuery = useMeUserQuery(undefined, { enabled: Boolean(auth.user) });
@@ -40,9 +48,18 @@ const Order: React.FunctionComponent = () => {
 
     const cartsWithItems = React.useMemo(() => carts.filter((cart) => cart.items.length > 0), [carts]);
     const requiredChains = React.useMemo(() => collectRequiredChainsForCarts(cartsWithItems), [cartsWithItems]);
-    const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(meUsersQuery.data), [meUsersQuery.data]);
-    const profileUsersByUrl = React.useMemo(() => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled), [enabled, meUsersQuery.data]);
-    const { profileEmail, prefillFirstName, prefillLastName } = React.useMemo(() => buildOrderPrefill(meUsersQuery.data), [meUsersQuery.data]);
+    const candidateProfileAddresses = React.useMemo(
+        () => buildProfileShippingAddresses(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
+    const profileUsersByUrl = React.useMemo(
+        () => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled),
+        [enabled, meUsersQuery.data],
+    );
+    const { profileEmail, prefillFirstName, prefillLastName } = React.useMemo(
+        () => buildOrderPrefill(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
 
     useTimeout(
         () => {
@@ -144,7 +161,9 @@ const Order: React.FunctionComponent = () => {
 
             if (summary.submittedOrders.length > 0) {
                 const submittedCartKeys = new Set(ordered.map((entry) => `${entry.cart.url}::${entry.cart.secret}`));
-                setCartSecrets((prev) => (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)));
+                setCartSecrets((prev) =>
+                    (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)),
+                );
             }
 
             setSubmittedOrders(summary.submittedOrders);
@@ -162,7 +181,8 @@ const Order: React.FunctionComponent = () => {
             message.warning("Order was partially created");
         } catch (error) {
             console.error("Order creation failed", error);
-            const errorMessage = error instanceof Error && error.message ? error.message : "Unexpected error while creating order";
+            const errorMessage =
+                error instanceof Error && error.message ? error.message : "Unexpected error while creating order";
             message.error(`Could not create order: ${errorMessage}`);
         } finally {
             setIsSubmitting(false);
@@ -200,7 +220,12 @@ const Order: React.FunctionComponent = () => {
         return (
             <Flex vertical gap={16} className="OrderPage">
                 <Typography.Title level={2}>Order</Typography.Title>
-                <Alert type="info" showIcon message="Your cart is empty" description="Add products before creating an order." />
+                <Alert
+                    type="info"
+                    showIcon
+                    message="Your cart is empty"
+                    description="Add products before creating an order."
+                />
             </Flex>
         );
     }

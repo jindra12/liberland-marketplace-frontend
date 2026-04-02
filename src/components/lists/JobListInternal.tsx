@@ -1,19 +1,23 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Flex, Grid } from "antd";
-import { ListJobsQuery } from "../../generated/graphql";
-import { ApplyButton } from "../ApplyButton";
-import { AppList } from "../AppList";
-import { getImage } from "../shared/image/utils";
-import { formatEmploymentType, formatSalary } from "../shared/job/utils";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { getJobMeta } from "../shared/jobDerived";
-import { JobDetailsSummary } from "../shared/JobDetailsSummary";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+
 import { UseQueryResult } from "@tanstack/react-query";
+
+import { Avatar, Flex, Grid } from "antd";
+
+import { ListJobsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { AppList } from "../AppList";
+import { ApplyButton } from "../ApplyButton";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatEmploymentType, formatSalary } from "../shared/job/utils";
+import { getJobMeta } from "../shared/jobDerived";
+import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -53,14 +57,22 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/jobs/${job.id}`}>{job.title}</Link>
-                        {job.company?.identity?.name && <IdentityTagLink identity={job.company.identity} color="success" />}
+                        {job.company?.identity?.name && (
+                            <IdentityTagLink identity={job.company.identity} color="success" />
+                        )}
                     </Flex>
                 ),
                 avatar: (job) => {
                     const imageSrc = getImage(job) || getImage(job.company);
                     return imageSrc ? (
                         <Link to={`/jobs/${job.id}`}>
-                            <Avatar shape="square" size={80} src={imageSrc} alt={job.title || ""} className="EntityList__avatar" />
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={imageSrc}
+                                alt={job.title || ""}
+                                className="EntityList__avatar"
+                            />
                         </Link>
                     ) : undefined;
                 },

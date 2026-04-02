@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useListStartupsByCompanyQuery } from "../../generated/graphql";
+
 import { StartupListInternal } from "./StartupListInternal";
 
 export interface CompanyStartupsListProps {

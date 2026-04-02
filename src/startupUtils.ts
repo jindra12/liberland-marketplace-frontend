@@ -20,9 +20,11 @@ const resourceLabels: Record<string, string> = {
     product: "Product",
 };
 
-export const formatStageLabel = (stage?: Startup_Stage | string | null): string => (stage ? (stageLabels[stage] ?? stage) : "Unknown");
+export const formatStageLabel = (stage?: Startup_Stage | string | null): string =>
+    stage ? (stageLabels[stage] ?? stage) : "Unknown";
 
-export const formatResourceLabel = (resource?: string | null): string => (resource ? (resourceLabels[resource] ?? resource) : "");
+export const formatResourceLabel = (resource?: string | null): string =>
+    resource ? (resourceLabels[resource] ?? resource) : "";
 
 export const formatFundsNeeded = (amount?: number | null, currency?: string | null): string | null => {
     if (amount == null) return null;

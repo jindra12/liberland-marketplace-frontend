@@ -1,14 +1,17 @@
 import * as React from "react";
-import { Button, Modal, Typography } from "antd";
+
 import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from "@geoapify/react-geocoder-autocomplete";
+
+import { Button, Modal, Typography } from "antd";
+
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
-import type { CSSProperties } from "react";
 import type { GeoapifyFeature } from "./types";
+
 type GeoapifyAddressSearchModalProps = {
     open: boolean;
     geoapifyApiKey: string;
     searchValue: string;
-    geoapifyStyles: CSSProperties;
+    geoapifyStyles: React.CSSProperties;
     onCancel: () => void;
     onSearchValueChange: (value: string) => void;
     onPlaceSelect: (feature: GeoapifyFeature) => void;
@@ -31,7 +34,9 @@ export const GeoapifyAddressSearchModal: React.FunctionComponent<GeoapifyAddress
                 </Button>,
             ]}
         >
-            <Typography.Paragraph className="Order__geoapifyModalCopy">Start typing and select a suggestion to add the shipping address.</Typography.Paragraph>
+            <Typography.Paragraph className="Order__geoapifyModalCopy">
+                Start typing and select a suggestion to add the shipping address.
+            </Typography.Paragraph>
 
             <div className="Order__geoapifyInput" style={props.geoapifyStyles}>
                 <GeoapifyContext apiKey={props.geoapifyApiKey}>

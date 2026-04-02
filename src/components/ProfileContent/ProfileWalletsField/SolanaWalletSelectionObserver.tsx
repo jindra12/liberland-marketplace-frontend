@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useWallet } from "@solana/wallet-adapter-react";
+
 import type { ProfileWalletSelection } from "../types";
 
 type SolanaWalletSelectionObserverProps = {

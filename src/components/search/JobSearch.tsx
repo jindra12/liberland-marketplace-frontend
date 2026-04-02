@@ -1,10 +1,11 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { AutoSuggest } from "../AutoSuggest";
-import { DocType, SearchOption } from "../../types";
 
-import { getImage } from "../shared/image/utils";
+import { useNavigate } from "react-router-dom";
+
+import { DocType, SearchOption } from "../../types";
+import { AutoSuggest } from "../AutoSuggest";
 import { useSearchJobsQuery } from "../hooks";
+import { getImage } from "../shared/image/utils";
 
 export interface JobSearchProps {
     onClose: () => void;

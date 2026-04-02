@@ -1,14 +1,28 @@
-import React from "react";
-import { Form, Input, InputNumber, Select } from "antd";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+
+import { Form, Input, InputNumber, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
-import { Startup_Stage_MutationInput, Startup_LookingFor_MutationInput, Startup_AlreadyHave_MutationInput } from "../../generated/graphql";
+
+import {
+    Startup_Stage_MutationInput,
+    Startup_LookingFor_MutationInput,
+    Startup_AlreadyHave_MutationInput,
+} from "../../generated/graphql";
+import {
+    useCreateStartupMutation,
+    useListCompaniesByCreatorQuery,
+    useListIdentitiesQuery,
+    useUpdateStartupMutation,
+} from "../hooks";
+
+import { currencyOptions } from "./constants";
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { currencyOptions } from "./constants";
-import { useCreateStartupMutation, useListCompaniesByCreatorQuery, useListIdentitiesQuery, useUpdateStartupMutation } from "../hooks";
+
 const stageOptions = [
     {
         value: Startup_Stage_MutationInput.Idea,
@@ -248,7 +262,12 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = (props) =>
                 <Select mode="multiple" placeholder="Select resources you need" options={resourceOptions} allowClear />
             </Form.Item>
             <Form.Item name="alreadyHave" label="Already Have">
-                <Select mode="multiple" placeholder="Select resources you already have" options={alreadyHaveOptions} allowClear />
+                <Select
+                    mode="multiple"
+                    placeholder="Select resources you already have"
+                    options={alreadyHaveOptions}
+                    allowClear
+                />
             </Form.Item>
 
             <Form.Item label="Funds Needed">
@@ -257,7 +276,12 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = (props) =>
                         <InputNumber placeholder="Amount" className="Publish__amountInput" />
                     </Form.Item>
                     <Form.Item name="fundsNeededCurrency" noStyle>
-                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" allowClear />
+                        <Select
+                            placeholder="Currency"
+                            options={currencyOptions}
+                            className="Publish__currencySelect"
+                            allowClear
+                        />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>

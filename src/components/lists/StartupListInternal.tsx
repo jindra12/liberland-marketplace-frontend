@@ -1,19 +1,24 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Tag, message } from "antd";
-import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
-import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
+
 import { useAuth } from "react-oidc-context";
-import { AppList } from "../AppList";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { Link } from "react-router-dom";
+
+import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
+
+import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
+import { Avatar, Button, Flex, Grid, Tag, message } from "antd";
+
 import { ListStartupsQuery } from "../../generated/graphql";
-import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
-import { useJoinStartupMutation, useLeaveStartupMutation } from "../hooks";
-import { getImage } from "../shared/image/utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
+import { AppList } from "../AppList";
+import { useJoinStartupMutation, useLeaveStartupMutation } from "../hooks";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+
 type StartupDoc = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 const InvolvementButton: React.FunctionComponent<{
     startup: StartupDoc;
@@ -59,13 +64,26 @@ const InvolvementButton: React.FunctionComponent<{
     };
     if (isInvolved) {
         return (
-            <Button icon={<UserDeleteOutlined />} onClick={handleLeave} loading={leaveMutation.isPending} size="large" block={props.block}>
+            <Button
+                icon={<UserDeleteOutlined />}
+                onClick={handleLeave}
+                loading={leaveMutation.isPending}
+                size="large"
+                block={props.block}
+            >
                 Remove Involvement
             </Button>
         );
     }
     return (
-        <Button type="primary" icon={<UserAddOutlined />} onClick={handleJoin} loading={joinMutation.isPending} size="large" block={props.block}>
+        <Button
+            type="primary"
+            icon={<UserAddOutlined />}
+            onClick={handleJoin}
+            loading={joinMutation.isPending}
+            size="large"
+            block={props.block}
+        >
             Get Involved
         </Button>
     );
@@ -108,7 +126,13 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                         </Flex>
                         <Flex gap={4} wrap>
                             <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
-                            {startup.identity?.name && <IdentityTagLink identity={startup.identity} color="success" icon={<UsergroupAddOutlined />} />}
+                            {startup.identity?.name && (
+                                <IdentityTagLink
+                                    identity={startup.identity}
+                                    color="success"
+                                    icon={<UsergroupAddOutlined />}
+                                />
+                            )}
                         </Flex>
                     </Flex>
                 ),
@@ -152,7 +176,12 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                 avatar: (startup) =>
                     startup.image?.url ? (
                         <Link to={`/ventures/${startup.id}`}>
-                            <Avatar shape="square" size={80} src={getImage(startup) || getImage(startup?.company)} className="EntityList__avatar" />
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={getImage(startup) || getImage(startup?.company)}
+                                className="EntityList__avatar"
+                            />
                         </Link>
                     ) : undefined,
                 description: (startup) => (
@@ -165,7 +194,9 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                         ))}
                     </Flex>
                 ),
-                body: (startup) => <Markdown className="Markdown--clamp3 EntityList__description">{startup.description}</Markdown>,
+                body: (startup) => (
+                    <Markdown className="Markdown--clamp3 EntityList__description">{startup.description}</Markdown>
+                ),
             }}
         />
     );

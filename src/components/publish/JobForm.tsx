@@ -1,15 +1,20 @@
-import React from "react";
-import { DatePicker, Form, Input, InputNumber, Select } from "antd";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
-import dayjs from "dayjs";
+
+import { DatePicker, Form, Input, InputNumber, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+import dayjs from "dayjs";
+
 import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
+import { useCreateJobMutation, useListCompaniesByCreatorQuery, useUpdateJobMutation } from "../hooks";
+
+import { currencyOptions } from "./constants";
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { currencyOptions } from "./constants";
-import { useCreateJobMutation, useListCompaniesByCreatorQuery, useUpdateJobMutation } from "../hooks";
+
 const employmentOptions = [
     {
         value: Job_EmploymentType_MutationInput.FullTime,
@@ -202,7 +207,12 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         <InputNumber placeholder="Max" className="Publish__salaryMax" />
                     </Form.Item>
                     <Form.Item name="salaryCurrency" noStyle>
-                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" allowClear />
+                        <Select
+                            placeholder="Currency"
+                            options={currencyOptions}
+                            className="Publish__currencySelect"
+                            allowClear
+                        />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>
@@ -213,7 +223,12 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         <InputNumber placeholder="Amount" className="Publish__amountInput" />
                     </Form.Item>
                     <Form.Item name="bountyCurrency" noStyle>
-                        <Select placeholder="Currency" options={currencyOptions} className="Publish__currencySelect" allowClear />
+                        <Select
+                            placeholder="Currency"
+                            options={currencyOptions}
+                            className="Publish__currencySelect"
+                            allowClear
+                        />
                     </Form.Item>
                 </Input.Group>
             </Form.Item>

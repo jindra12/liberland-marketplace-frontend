@@ -23,8 +23,10 @@
         padding: clamp(38px, 5vw, 62px) clamp(24px, 4vw, 44px);
         border-radius: 38px;
         background:
-            radial-gradient(circle at 50% 18%, rgba(121, 230, 177, 0.12), transparent 20%), radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.2), transparent 22%),
-            radial-gradient(circle at 100% 30%, rgba(47, 140, 255, 0.2), transparent 24%), linear-gradient(180deg, rgba(3, 15, 27, 0.94), rgba(4, 16, 29, 0.96));
+            radial-gradient(circle at 50% 18%, rgba(121, 230, 177, 0.12), transparent 20%),
+            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.2), transparent 22%),
+            radial-gradient(circle at 100% 30%, rgba(47, 140, 255, 0.2), transparent 24%),
+            linear-gradient(180deg, rgba(3, 15, 27, 0.94), rgba(4, 16, 29, 0.96));
         box-shadow:
             0 28px 68px rgba(0, 0, 0, 0.28),
             inset 0 1px 0 rgba(147, 214, 255, 0.06);
@@ -34,7 +36,9 @@
             position: absolute;
             inset: 0;
             z-index: 0;
-            background: linear-gradient(rgba(76, 143, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(76, 143, 255, 0.05) 1px, transparent 1px);
+            background:
+                linear-gradient(rgba(76, 143, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(76, 143, 255, 0.05) 1px, transparent 1px);
             background-size: 56px 56px;
             mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 100%);
             pointer-events: none;

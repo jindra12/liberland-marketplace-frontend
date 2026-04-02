@@ -1,6 +1,9 @@
-import React from "react";
-import { Result } from "antd";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+
+import { Result } from "antd";
+
 interface OwnerGuardProps {
     createdById?: string;
     children: React.ReactNode;

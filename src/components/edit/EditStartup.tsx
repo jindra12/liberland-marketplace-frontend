@@ -1,13 +1,15 @@
-import React from "react";
+import * as React from "react";
+
 import { useParams } from "react-router-dom";
+
 import { Typography } from "antd";
 
-import { AuthGuard } from "../AuthGuard";
-import { OwnerGuard } from "../OwnerGuard";
-import { Loader } from "../Loader";
-import { StartupForm } from "../publish/StartupForm";
-import { useStartupByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { AuthGuard } from "../AuthGuard";
+import { useStartupByIdQuery } from "../hooks";
+import { Loader } from "../Loader";
+import { OwnerGuard } from "../OwnerGuard";
+import { StartupForm } from "../publish/StartupForm";
 
 const EditStartup: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

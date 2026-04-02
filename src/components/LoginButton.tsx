@@ -1,8 +1,12 @@
 import * as React from "react";
-import { Button } from "antd";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+
 import { useAuth } from "react-oidc-context";
+
+import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+
 import { EndpointAuthAction } from "./EndpointAuthAction";
+
 type LoginButtonProps = {
     action?: "login" | "logout";
     type?: React.ComponentProps<typeof Button>["type"];

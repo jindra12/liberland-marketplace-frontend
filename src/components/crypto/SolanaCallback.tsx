@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useWallet } from "@solana/wallet-adapter-react";
+
 import { ConnectButtonProps } from "../../types";
 
 export const SolanaCallback: React.FunctionComponent<ConnectButtonProps> = (props) => {

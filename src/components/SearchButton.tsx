@@ -1,9 +1,13 @@
-import React from "react";
+import * as React from "react";
+
+import { SearchOutlined } from "@ant-design/icons";
 import { Button, Dropdown } from "antd";
 import type { ButtonProps, MenuProps } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+
 import { SearchScope } from "../types";
+
 import { SearchContainer } from "./SearchContainer";
+
 type SearchButtonProps = {
     type?: ButtonProps["type"];
     block?: boolean;
@@ -62,7 +66,13 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) 
                 placement="bottomRight"
                 overlayClassName="SearchButton__menuOverlay"
             >
-                <Button type={type} block={props.block} className={props.className} icon={<SearchOutlined />} onClick={(e) => e.preventDefault()}>
+                <Button
+                    type={type}
+                    block={props.block}
+                    className={props.className}
+                    icon={<SearchOutlined />}
+                    onClick={(e) => e.preventDefault()}
+                >
                     {props.children}
                 </Button>
             </Dropdown>

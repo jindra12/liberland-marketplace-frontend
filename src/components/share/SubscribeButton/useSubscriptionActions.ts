@@ -17,7 +17,12 @@ import type { SubscribeButtonProps } from "./types";
 
 type SubscriptionActionOptions = Pick<SubscribeButtonProps, "collection" | "targetID" | "serverURL" | "subscriptionID">;
 
-export const useSubscriptionActions = ({ collection, targetID, serverURL, subscriptionID }: SubscriptionActionOptions) => {
+export const useSubscriptionActions = ({
+    collection,
+    targetID,
+    serverURL,
+    subscriptionID,
+}: SubscriptionActionOptions) => {
     const queryClient = useQueryClient();
 
     const subscribeCompany = useSubscribeToCompanyUpdatesMutation();

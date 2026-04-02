@@ -1,19 +1,29 @@
 import * as React from "react";
+
 import { useParams } from "react-router-dom";
-import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd";
+
 import { GlobalOutlined } from "@ant-design/icons";
+import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd";
+
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
-import { Loader } from "../Loader";
-import { getImage } from "../shared/image/utils";
-import { Markdown } from "../Markdown";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { CompanyCard } from "../cards/CompanyCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
-import { CompanyCard } from "../cards/CompanyCard";
 import { StartupCard } from "../cards/StartupCard";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
-import { useIdentityByIdQuery, useListCompaniesByIdentityQuery, useListJobsByIdentityQuery, useListProductsByIdentityQuery, useListStartupsByIdentityQuery } from "../hooks";
+import {
+    useIdentityByIdQuery,
+    useListCompaniesByIdentityQuery,
+    useListJobsByIdentityQuery,
+    useListProductsByIdentityQuery,
+    useListStartupsByIdentityQuery,
+} from "../hooks";
+import { Loader } from "../Loader";
+import { Markdown } from "../Markdown";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { getImage } from "../shared/image/utils";
+
 import { DetailBackButton } from "./DetailBackButton";
 
 const IdentityDetail: React.FunctionComponent = () => {
@@ -21,9 +31,18 @@ const IdentityDetail: React.FunctionComponent = () => {
     const identity = useIdentityByIdQuery({ id: id! });
 
     const jobsQuery = useListJobsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
-    const productsQuery = useListProductsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
-    const companiesQuery = useListCompaniesByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
-    const startupsQuery = useListStartupsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
+    const productsQuery = useListProductsByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) },
+    );
+    const companiesQuery = useListCompaniesByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) },
+    );
+    const startupsQuery = useListStartupsByIdentityQuery(
+        { identityId: id!, page: 1, limit: 3 },
+        { enabled: Boolean(id) },
+    );
 
     return (
         <Loader query={identity}>
@@ -72,10 +91,20 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 />
                             </Col>
                             <Col xs={24} xl={12}>
-                                <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} totalDocs={jobsQuery.data?.Jobs?.totalDocs} identityId={id} />
+                                <JobCard
+                                    items={jobsQuery.data?.Jobs?.docs || []}
+                                    loading={jobsQuery.isLoading}
+                                    totalDocs={jobsQuery.data?.Jobs?.totalDocs}
+                                    identityId={id}
+                                />
                             </Col>
                             <Col xs={24} xl={12}>
-                                <StartupCard items={startupsQuery.data?.Startups?.docs || []} loading={startupsQuery.isLoading} totalDocs={startupsQuery.data?.Startups?.totalDocs} identityId={id} />
+                                <StartupCard
+                                    items={startupsQuery.data?.Startups?.docs || []}
+                                    loading={startupsQuery.isLoading}
+                                    totalDocs={startupsQuery.data?.Startups?.totalDocs}
+                                    identityId={id}
+                                />
                             </Col>
                         </Row>
                         <Divider />
@@ -95,7 +124,10 @@ const IdentityDetail: React.FunctionComponent = () => {
                             }
                         />
                         <Divider />
-                        <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities} />
+                        <EntityCommentsSection
+                            targetId={id!}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
+                        />
                     </Flex>
                 );
             }}

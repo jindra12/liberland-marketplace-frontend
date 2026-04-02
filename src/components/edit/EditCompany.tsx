@@ -1,13 +1,15 @@
-import React from "react";
+import * as React from "react";
+
 import { useParams } from "react-router-dom";
+
 import { Typography } from "antd";
 
-import { AuthGuard } from "../AuthGuard";
-import { OwnerGuard } from "../OwnerGuard";
-import { Loader } from "../Loader";
-import { CompanyForm } from "../publish/CompanyForm";
-import { useCompanyByIdQuery } from "../hooks";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { AuthGuard } from "../AuthGuard";
+import { useCompanyByIdQuery } from "../hooks";
+import { Loader } from "../Loader";
+import { OwnerGuard } from "../OwnerGuard";
+import { CompanyForm } from "../publish/CompanyForm";
 
 const EditCompany: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();

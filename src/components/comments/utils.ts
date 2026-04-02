@@ -6,7 +6,16 @@ import {
     ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
     ENTITY_COMMENTS_USER_FALLBACK_NAME,
 } from "../../constants";
-import type { AuthProfile, CommentCurrentUser, CommentDataItem, CommentDoc, CommentGrouping, CommentSectionStyles, CommentThemeVars, EntityCommentsThemeToken } from "../../types";
+import type {
+    AuthProfile,
+    CommentCurrentUser,
+    CommentDataItem,
+    CommentDoc,
+    CommentGrouping,
+    CommentSectionStyles,
+    CommentThemeVars,
+    EntityCommentsThemeToken,
+} from "../../types";
 
 const getCommentTimestamp = (comment: CommentDoc): string | undefined => {
     const value = comment.updatedAt ?? comment.createdAt;

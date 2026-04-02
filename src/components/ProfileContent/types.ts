@@ -1,4 +1,9 @@
-import type { MeUserQuery, MutationUserUpdateInput, MutationUserUpdate_ShippingAddressInput, UserUpdate_Wallets_Chain_MutationInput } from "../../generated/graphql";
+import type {
+    MeUserQuery,
+    MutationUserUpdateInput,
+    MutationUserUpdate_ShippingAddressInput,
+    UserUpdate_Wallets_Chain_MutationInput,
+} from "../../generated/graphql";
 
 export type ProfileServerOption = {
     label: string;

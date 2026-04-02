@@ -1,8 +1,9 @@
 import * as React from "react";
-import { message } from "antd";
+
 import { WalletError } from "@tronweb3/tronwallet-abstract-adapter";
 import { WalletProvider } from "@tronweb3/tronwallet-adapter-react-hooks";
 import { WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
+import { message } from "antd";
 
 import * as Adapters from "./tronWallets";
 

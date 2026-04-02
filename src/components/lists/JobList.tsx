@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { JobListInternal } from "./JobListInternal";
 import { useListJobsQuery } from "../hooks";
+
+import { JobListInternal } from "./JobListInternal";
 
 export interface JobListProps {
     limited?: boolean;

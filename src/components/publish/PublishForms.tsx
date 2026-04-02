@@ -1,10 +1,13 @@
-import React from "react";
-import { Button, Card, Space, Typography } from "antd";
+import * as React from "react";
+
 import { ArrowLeftOutlined, RocketOutlined, ShopOutlined, TeamOutlined, ToolOutlined } from "@ant-design/icons";
-import { JobForm } from "./JobForm";
+import { Button, Card, Space, Typography } from "antd";
+
 import { CompanyForm } from "./CompanyForm";
+import { JobForm } from "./JobForm";
 import { ProductForm } from "./ProductForm";
 import { StartupForm } from "./StartupForm";
+
 type Category = "job" | "company" | "product" | "startup";
 export interface PublishFormsProps {
     url: string;

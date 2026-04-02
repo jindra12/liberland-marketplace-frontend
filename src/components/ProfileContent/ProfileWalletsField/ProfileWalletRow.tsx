@@ -1,11 +1,19 @@
 import * as React from "react";
+
 import ArrowDownOutlined from "@ant-design/icons/ArrowDownOutlined";
 import ArrowUpOutlined from "@ant-design/icons/ArrowUpOutlined";
 import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { Button, Form, Input, Select, Space } from "antd";
 import type { FormInstance, FormListFieldData } from "antd";
+
 import { PROFILE_WALLET_CHAIN_OPTIONS } from "../constants";
-import type { ProfileContactFormValues, ProfileWalletFormValue, ProfileWalletSelection, ProfileWalletSelectionTarget } from "../types";
+import type {
+    ProfileContactFormValues,
+    ProfileWalletFormValue,
+    ProfileWalletSelection,
+    ProfileWalletSelectionTarget,
+} from "../types";
+
 import { ProfileWalletSelector } from "./ProfileWalletSelector";
 
 type ProfileWalletRowProps = {
@@ -32,7 +40,9 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                 }}
             >
                 {() => {
-                    const wallet = props.form.getFieldValue(["wallets", props.field.name]) as ProfileWalletFormValue | undefined;
+                    const wallet = props.form.getFieldValue(["wallets", props.field.name]) as
+                        | ProfileWalletFormValue
+                        | undefined;
                     const addressOptions = wallet?.address ? [{ label: wallet.address, value: wallet.address }] : [];
                     const isSelecting = props.selectionTarget?.name === props.field.name;
 
@@ -56,7 +66,11 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                             </Form.Item>
 
                             <Form.Item label="Wallet address" name={[props.field.name, "address"]}>
-                                <Select disabled={addressOptions.length === 0} options={addressOptions} placeholder="Select a wallet first" />
+                                <Select
+                                    disabled={addressOptions.length === 0}
+                                    options={addressOptions}
+                                    placeholder="Select a wallet first"
+                                />
                             </Form.Item>
 
                             <div className="Profile__walletRowActions">
@@ -66,7 +80,9 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                                         disabled={props.disabled}
                                         isSelecting={isSelecting}
                                         onSelectionStart={() => props.onSelectionStart(props.field.name)}
-                                        onWalletSelected={(selection) => props.onWalletSelected(props.field.name, selection)}
+                                        onWalletSelected={(selection) =>
+                                            props.onWalletSelected(props.field.name, selection)
+                                        }
                                     />
                                     <Button
                                         disabled={props.disabled || !props.canMoveUp}

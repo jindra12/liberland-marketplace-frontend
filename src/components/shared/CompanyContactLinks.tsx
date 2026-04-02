@@ -1,7 +1,10 @@
 import * as React from "react";
+
 import { GlobalOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { List, Typography } from "antd";
+
 import { IdentityTagItem } from "./IdentityTagLink";
+
 type CompanyContactLinksProps = {
     identity?: IdentityTagItem;
     website?: string | null;
@@ -62,7 +65,11 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
     if (items.length === 0) {
         return null;
     }
-    const resolvedClassName = ["CompanyContactLinks", variant === "compact" ? "CompanyContactLinks--compact" : "CompanyContactLinks--detail CompanyDetailLinks", props.className]
+    const resolvedClassName = [
+        "CompanyContactLinks",
+        variant === "compact" ? "CompanyContactLinks--compact" : "CompanyContactLinks--detail CompanyDetailLinks",
+        props.className,
+    ]
         .filter(Boolean)
         .join(" ");
     if (variant === "compact") {
@@ -73,7 +80,12 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
                     {items.map((item) => (
                         <div key={item.key} className="CompanyContactLinks__row">
                             <Typography.Text className="CompanyContactLinks__label">{item.title}</Typography.Text>
-                            <Typography.Link className="CompanyContactLinks__value" href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noreferrer" : undefined}>
+                            <Typography.Link
+                                className="CompanyContactLinks__value"
+                                href={item.href}
+                                target={item.external ? "_blank" : undefined}
+                                rel={item.external ? "noreferrer" : undefined}
+                            >
                                 {item.icon}
                                 <span>{item.text}</span>
                             </Typography.Link>

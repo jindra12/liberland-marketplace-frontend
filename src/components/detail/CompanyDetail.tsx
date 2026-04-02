@@ -1,25 +1,32 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Divider, Flex, Grid, Space, Tabs, Typography } from "antd";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+
 import { useAuth } from "react-oidc-context";
+import { useParams } from "react-router-dom";
+
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Divider, Flex, Grid, Space, Tabs, Typography } from "antd";
+
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
-import { useCompanyTabCounts } from "./useCompanyTabCounts";
-import { Loader } from "../Loader";
-import { getImage } from "../shared/image/utils";
-import { Markdown } from "../Markdown";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery } from "../hooks";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
 import { CompanyStartupsList } from "../lists/CompanyStartupsList";
-import { IdentityGroups } from "./IdentityGroups";
+import { Loader } from "../Loader";
+import { Markdown } from "../Markdown";
+import { RouteButton } from "../RouteButton";
+import { DetailShareSection } from "../share/DetailShareSection";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { useCompanyByIdQuery } from "../hooks";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
-import { DetailShareSection } from "../share/DetailShareSection";
+import { getImage } from "../shared/image/utils";
+
 import { DetailBackButton } from "./DetailBackButton";
-import { RouteButton } from "../RouteButton";
+import { IdentityGroups } from "./IdentityGroups";
+import { useCompanyTabCounts } from "./useCompanyTabCounts";
+
+
+
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -63,7 +70,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     </div>
                                     {companyIdentity && (
                                         <div className="CompanyDetail__identityRow">
-                                            <IdentityTagLink identity={companyIdentity} color="success" icon={<UsergroupAddOutlined />} />
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
                                         </div>
                                     )}
                                 </div>
@@ -77,8 +88,18 @@ const CompanyDetail: React.FunctionComponent = () => {
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
                         <Divider />
-                        <CompanyContactLinks identity={companyIdentity} website={companyData?.website} email={companyData?.email} phone={companyData?.phone} className="EntityDetail__meta" />
-                        <IdentityGroups allowedIdentities={allowedIdentities} disallowedIdentities={disallowedIdentities} className="EntityDetail__identityGroups" />
+                        <CompanyContactLinks
+                            identity={companyIdentity}
+                            website={companyData?.website}
+                            email={companyData?.email}
+                            phone={companyData?.phone}
+                            className="EntityDetail__meta"
+                        />
+                        <IdentityGroups
+                            allowedIdentities={allowedIdentities}
+                            disallowedIdentities={disallowedIdentities}
+                            className="EntityDetail__identityGroups"
+                        />
                         <Divider />
                         <DetailShareSection
                             label="Share this company"
@@ -118,7 +139,12 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 {
                                     key: "comments",
                                     label: "Discussion",
-                                    children: <EntityCommentsSection targetId={id!} relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies} />,
+                                    children: (
+                                        <EntityCommentsSection
+                                            targetId={id!}
+                                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                                        />
+                                    ),
                                 },
                             ]}
                         />

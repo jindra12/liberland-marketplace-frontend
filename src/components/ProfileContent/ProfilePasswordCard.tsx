@@ -1,8 +1,12 @@
 import * as React from "react";
+
 import { Button, Card, Form, Input, message } from "antd";
+
 import { useChangePasswordMutation } from "../../authApi";
+
 import type { PasswordFormValues } from "./types";
 import { validateSelectedProfileServerUrl } from "./utils";
+
 type ProfilePasswordCardProps = {
     selectedServerUrl: string;
 };

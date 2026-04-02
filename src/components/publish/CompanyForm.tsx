@@ -1,11 +1,15 @@
-import React from "react";
+import * as React from "react";
+
 import { Form, Input, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
+import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
+
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
+
 interface CompanyFormValues {
     name: string | null;
     description?: string | null;
@@ -55,7 +59,13 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
         getUpdateId: (r) => r.updateCompany?.id,
     });
     return (
-        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={props.initialValues} className="Publish__form">
+        <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={props.initialValues}
+            className="Publish__form"
+        >
             <Form.Item
                 name="name"
                 label="Company Name"

@@ -1,5 +1,11 @@
 query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
-    Comments(draft: false, where: { AND: [{ replyPostRelationTo: { equals: $relationTo } }, { replyPostValue: { equals: $targetId } }] }, sort: "createdAt", limit: $limit, page: $page) {
+    Comments(
+        draft: false
+        where: { AND: [{ replyPostRelationTo: { equals: $relationTo } }, { replyPostValue: { equals: $targetId } }] }
+        sort: "createdAt"
+        limit: $limit
+        page: $page
+    ) {
         docs {
             id
             content

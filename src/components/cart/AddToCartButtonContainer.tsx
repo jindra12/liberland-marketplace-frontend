@@ -1,8 +1,11 @@
 import * as React from "react";
+
 import { ButtonProps } from "antd";
-import { Loader } from "../Loader";
-import { AddToCartButton } from "./AddToCartButton";
+
 import { useMeUserQuery } from "../hooks";
+import { Loader } from "../Loader";
+
+import { AddToCartButton } from "./AddToCartButton";
 
 type AddToCartButtonContainerProps = {
     productId: string;

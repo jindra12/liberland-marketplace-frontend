@@ -44,7 +44,12 @@ export const getAccessToken = (url: string): string | undefined => {
 };
 
 export const gqlFetcher =
-    <TData, TVariables extends object | undefined>(query: string, variables?: TVariables, options?: RequestInit["headers"], url?: string) =>
+    <TData, TVariables extends object | undefined>(
+        query: string,
+        variables?: TVariables,
+        options?: RequestInit["headers"],
+        url?: string,
+    ) =>
     async (): Promise<TData> => {
         const defUrl = url || BACKEND_URL;
         const startedAt = Date.now();
@@ -57,7 +62,11 @@ export const gqlFetcher =
         }
 
         try {
-            const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(`${defUrl}/api/graphql`, { query, variables }, { headers });
+            const res = await axios.post<{ data?: TData; errors?: GQLError[] }>(
+                `${defUrl}/api/graphql`,
+                { query, variables },
+                { headers },
+            );
 
             if (res.data?.errors?.length) {
                 throw new Error(res.data.errors[0].message);

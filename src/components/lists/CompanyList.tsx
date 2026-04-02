@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { CompanyListInternal } from "./CompanyListInternal";
 import { useListCompaniesQuery } from "../hooks";
+
+import { CompanyListInternal } from "./CompanyListInternal";
 
 export const CompanyList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(1);

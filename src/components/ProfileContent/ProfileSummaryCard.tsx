@@ -1,7 +1,10 @@
 import * as React from "react";
+
+import { Link } from "react-router-dom";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Descriptions, Space, Tag } from "antd";
-import { Link } from "react-router-dom";
+
 type ProfileSummaryCardProps = {
     email?: string | null;
     emailVerified?: boolean;
@@ -20,7 +23,11 @@ export const ProfileSummaryCard: React.FunctionComponent<ProfileSummaryCardProps
                     <Descriptions.Item label="Email">
                         <Space>
                             {props.email || "—"}
-                            {props.emailVerified ? <Tag color="success">Verified</Tag> : <Tag color="warning">Unverified</Tag>}
+                            {props.emailVerified ? (
+                                <Tag color="success">Verified</Tag>
+                            ) : (
+                                <Tag color="warning">Unverified</Tag>
+                            )}
                         </Space>
                     </Descriptions.Item>
                 </Descriptions>

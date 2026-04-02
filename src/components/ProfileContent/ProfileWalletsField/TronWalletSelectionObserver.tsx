@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
+
 import type { ProfileWalletSelection } from "../types";
 
 type TronWalletSelectionObserverProps = {

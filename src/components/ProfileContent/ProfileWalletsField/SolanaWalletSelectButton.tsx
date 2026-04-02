@@ -1,6 +1,8 @@
 import * as React from "react";
+
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+
 import { SolanaButton } from "../../crypto/SolanaButton";
 
 type SolanaWalletSelectButtonProps = {

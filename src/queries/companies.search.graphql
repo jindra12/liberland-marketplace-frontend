@@ -1,5 +1,11 @@
 query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-    Searches(draft: false, where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: companies } }] }, page: $page, limit: $limit, sort: $sort) {
+    Searches(
+        draft: false
+        where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: companies } }] }
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
         docs {
             id
             title

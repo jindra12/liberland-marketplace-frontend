@@ -1,12 +1,17 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
 import { RightOutlined } from "@ant-design/icons";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
 import { ListJobsQuery } from "../../generated/graphql";
+import { RouteButton } from "../RouteButton";
 import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
+
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
-import { RouteButton } from "../RouteButton";
+
 type JobItem = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 type JobCardProps = {
     items: JobItem[];
@@ -43,7 +48,14 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                         <List.Item
                             actions={
                                 xl
-                                    ? [<SplashShareDetailActionRow key={`job-actions-${job.id}`} detailPath={`/jobs/${job.id}`} title={job.title || "Job"} text={`Check out ${job.title} on NSwap.`} />]
+                                    ? [
+                                          <SplashShareDetailActionRow
+                                              key={`job-actions-${job.id}`}
+                                              detailPath={`/jobs/${job.id}`}
+                                              title={job.title || "Job"}
+                                              text={`Check out ${job.title} on NSwap.`}
+                                          />,
+                                      ]
                                     : undefined
                             }
                         >
@@ -52,7 +64,12 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                                     avatar={
                                         imageSrc ? (
                                             <Link to={`/jobs/${job.id}`}>
-                                                <Avatar shape="square" size={48} src={imageSrc} className="SplashEntityCard__avatar" />
+                                                <Avatar
+                                                    shape="square"
+                                                    size={48}
+                                                    src={imageSrc}
+                                                    className="SplashEntityCard__avatar"
+                                                />
                                             </Link>
                                         ) : undefined
                                     }
@@ -66,14 +83,26 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                                     {employmentType && <Tag>{employmentType}</Tag>}
                                     {salary && <Tag color="gold">{salary}</Tag>}
                                 </Space>
-                                {!xl && <SplashShareDetailActionRow detailPath={`/jobs/${job.id}`} title={job.title || "Job"} text={`Check out ${job.title} on NSwap.`} />}
+                                {!xl && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={`/jobs/${job.id}`}
+                                        title={job.title || "Job"}
+                                        text={`Check out ${job.title} on NSwap.`}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );
                 }}
             />
             {remaining > 0 && props.identityId && (
-                <RouteButton to={`/jobs?tribe=${props.identityId}`} type="link" icon={<RightOutlined />} iconPosition="end" className="SplashEntityCard__moreLink">
+                <RouteButton
+                    to={`/jobs?tribe=${props.identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
                     And +{remaining} more
                 </RouteButton>
             )}

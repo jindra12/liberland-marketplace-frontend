@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Flex, Skeleton } from "antd";
+
 import { collectionCards } from "./SkeletonConfig";
 
 export const RouteSurfaceSkeleton: React.FunctionComponent = () => (

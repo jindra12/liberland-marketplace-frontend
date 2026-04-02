@@ -1,11 +1,26 @@
 import * as React from "react";
-import { Button, Flex, Grid, Space, Typography } from "antd";
+
+import {
+    FacebookIcon,
+    FacebookShareButton,
+    LinkedinIcon,
+    LinkedinShareButton,
+    RedditIcon,
+    RedditShareButton,
+    WhatsappIcon,
+    WhatsappShareButton,
+    XIcon,
+    XShareButton,
+} from "react-share";
+
 import { LinkOutlined } from "@ant-design/icons";
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, WhatsappIcon, WhatsappShareButton, XIcon, XShareButton } from "react-share";
+import { Button, Flex, Grid, Space, Typography } from "antd";
+
 import { NativeShareButton } from "./NativeShareButton";
-import { useCopyLink } from "./useCopyLink";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
+import { useCopyLink } from "./useCopyLink";
+
 type SharePayload = {
     title: string;
     text: string;
@@ -35,7 +50,8 @@ const SHARE_BUTTONS: ShareButtonConfig[] = [
     },
     {
         key: "subscribe",
-        render: ({ subscriptionTarget }: SharePayload) => (subscriptionTarget ? <SubscribeButton {...subscriptionTarget} /> : null),
+        render: ({ subscriptionTarget }: SharePayload) =>
+            subscriptionTarget ? <SubscribeButton {...subscriptionTarget} /> : null,
     },
     {
         key: "x",
@@ -108,10 +124,21 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                                 size={mobileShareActionSize}
                                 className="NativeShareButton ShareSection__mobileButton"
                             />
-                            <SubscribeButton {...props.subscriptionTarget} size={mobileShareActionSize} className="ShareSection__mobileButton" />
+                            <SubscribeButton
+                                {...props.subscriptionTarget}
+                                size={mobileShareActionSize}
+                                className="ShareSection__mobileButton"
+                            />
                         </Space.Compact>
                     ) : (
-                        <NativeShareButton url={shareUrl} title={props.title} text={props.text} label="Share" size={mobileShareActionSize} className="NativeShareButton ShareSection__mobileButton" />
+                        <NativeShareButton
+                            url={shareUrl}
+                            title={props.title}
+                            text={props.text}
+                            label="Share"
+                            size={mobileShareActionSize}
+                            className="NativeShareButton ShareSection__mobileButton"
+                        />
                     )}
                 </Flex>
             </>

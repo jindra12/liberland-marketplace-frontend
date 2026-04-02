@@ -1,11 +1,16 @@
 import * as React from "react";
-import { message } from "antd";
+
 import { useAuth } from "react-oidc-context";
+
+import { message } from "antd";
+
 import { useEndpointContext } from "../../EndpointContext";
 import { useMeUserQuery, useUpdateOrderMutation } from "../../hooks";
-import type { SubmittedOrder } from "../../order/types";
 import { buildPaymentProfileUsersByUrl } from "../../order/payment/utils";
+import type { SubmittedOrder } from "../../order/types";
+
 import { BuyNowPaymentModal } from "./BuyNowPaymentModal";
+
 type BuyNowPaymentStepProps = {
     onClose: () => void;
     submittedOrders: SubmittedOrder[];
@@ -19,7 +24,10 @@ export const BuyNowPaymentStep: React.FunctionComponent<BuyNowPaymentStepProps> 
     const updateOrderMutation = useUpdateOrderMutation();
     const [open, setOpen] = React.useState(false);
     const [paymentComplete, setPaymentComplete] = React.useState(false);
-    const profileUsersByUrl = React.useMemo(() => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled), [enabled, meUsersQuery.data]);
+    const profileUsersByUrl = React.useMemo(
+        () => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled),
+        [enabled, meUsersQuery.data],
+    );
     const updatePayerAddress = async (entry: SubmittedOrder, walletAddress: string) => {
         if (!entry.order.id) {
             return;

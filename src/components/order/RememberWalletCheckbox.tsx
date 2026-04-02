@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Checkbox } from "antd";
 
 type RememberWalletCheckboxProps = {
@@ -9,7 +10,11 @@ type RememberWalletCheckboxProps = {
 
 export const RememberWalletCheckbox: React.FunctionComponent<RememberWalletCheckboxProps> = (props) => {
     return (
-        <Checkbox checked={props.checked} disabled={props.disabled} onChange={(event) => props.onChange(event.target.checked)}>
+        <Checkbox
+            checked={props.checked}
+            disabled={props.disabled}
+            onChange={(event) => props.onChange(event.target.checked)}
+        >
             Remember this wallet for future payments
         </Checkbox>
     );

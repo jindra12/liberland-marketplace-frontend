@@ -1,22 +1,28 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
 import { UseQueryResult } from "@tanstack/react-query";
+
 import { DollarOutlined } from "@ant-design/icons";
+import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
-import { getImage } from "../shared/image/utils";
-import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
-import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
-type ProductListItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number] | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
+type ProductListItem =
+    | NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number]
+    | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
 
 type ProductListSourceQuery = {
     source: "query";
@@ -48,7 +54,10 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     const handleRefetch = () => {
         refetch();
     };
-    const allItems = useAccumulatedDocs(props.source === "query" ? props.query.data?.Products?.docs || [] : props.products, props.page);
+    const allItems = useAccumulatedDocs(
+        props.source === "query" ? props.query.data?.Products?.docs || [] : props.products,
+        props.page,
+    );
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
         hasNextPage: Boolean(props.source === "query" ? props.query.data?.Products?.hasNextPage : props.hasNextPage),
@@ -76,7 +85,9 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={`/products-services/${product.id}`}>{product.name}</Link>
-                        {product.company?.identity?.name && <IdentityTagLink identity={product.company.identity} color="success" />}
+                        {product.company?.identity?.name && (
+                            <IdentityTagLink identity={product.company.identity} color="success" />
+                        )}
                     </Flex>
                 ),
                 actions: (product) => {
@@ -84,7 +95,13 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
-                        <AddToCartButtonGuard productId={product.id} serverURL={product.serverURL!} block={isMobile} size={addToCartSize} maxAvailable={product.inventory} />
+                        <AddToCartButtonGuard
+                            productId={product.id}
+                            serverURL={product.serverURL!}
+                            block={isMobile}
+                            size={addToCartSize}
+                            maxAvailable={product.inventory}
+                        />
                     ) : showOrderNowFallback && orderNowLink ? (
                         <Button type="primary" size={addToCartSize} href={orderNowLink} block={isMobile}>
                             Order Now!
@@ -94,11 +111,13 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     return isMobile ? (
                         <Flex vertical gap="12px" className="ProductList__actionsRow">
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
-                                )}
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
+                                    )}
                                 <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             <ListShareDetailButtons
@@ -114,16 +133,26 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     isSubscribed: product.isSubscribed,
                                 }}
                             />
-                            {purchaseControl ? <div className="ProductList__purchaseControl">{purchaseControl}</div> : null}
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
+                            ) : null}
                         </Flex>
                     ) : (
-                        <Flex align="center" justify="space-between" gap="16px" wrap className="ProductList__actionsRow">
+                        <Flex
+                            align="center"
+                            justify="space-between"
+                            gap="16px"
+                            wrap
+                            className="ProductList__actionsRow"
+                        >
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
-                                )}
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
+                                    )}
                                 <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
@@ -140,7 +169,9 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         isSubscribed: product.isSubscribed,
                                     }}
                                 />
-                                {purchaseControl ? <div className="ProductList__purchaseControl">{purchaseControl}</div> : null}
+                                {purchaseControl ? (
+                                    <div className="ProductList__purchaseControl">{purchaseControl}</div>
+                                ) : null}
                             </Flex>
                         </Flex>
                     );
@@ -148,10 +179,17 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 avatar: (product) =>
                     product.image?.url ? (
                         <Link to={`/products-services/${product.id}`}>
-                            <Avatar shape="square" size={80} src={getImage(product) || getImage(product.company)} className="EntityList__avatar" />
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={getImage(product) || getImage(product.company)}
+                                className="EntityList__avatar"
+                            />
                         </Link>
                     ) : undefined,
-                description: (product) => <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>,
+                description: (product) => (
+                    <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>
+                ),
                 body: () => null,
             }}
         />

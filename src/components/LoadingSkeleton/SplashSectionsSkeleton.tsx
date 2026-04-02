@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Flex, Skeleton } from "antd";
+
 import { collectionCards, tribeCards } from "./SkeletonConfig";
 
 export const SplashSectionsSkeleton: React.FunctionComponent = () => (

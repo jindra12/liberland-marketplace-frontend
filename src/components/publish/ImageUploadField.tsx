@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Form, Modal, Upload } from "antd";
+import * as React from "react";
+
 import { PlusOutlined } from "@ant-design/icons";
+import { Form, Modal, Upload } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
 import { getImage } from "../shared/image/utils";
+
 const normFile = (
     e:
         | {
@@ -18,8 +21,8 @@ interface ImageUploadFieldProps {
     serverUrl: string;
 }
 export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = (props) => {
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewSrc, setPreviewSrc] = useState("");
+    const [previewOpen, setPreviewOpen] = React.useState(false);
+    const [previewSrc, setPreviewSrc] = React.useState("");
     const existingImageSrc = props.existingImageUrl
         ? getImage({
               __typename: "Product",
@@ -46,8 +49,21 @@ export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = 
     };
     return (
         <>
-            <Form.Item name="imageFile" label="Image" valuePropName="fileList" getValueFromEvent={normFile} initialValue={defaultFileList}>
-                <Upload listType="picture-card" maxCount={1} accept="image/*" beforeUpload={() => false} onPreview={handlePreview} multiple={false}>
+            <Form.Item
+                name="imageFile"
+                label="Image"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                initialValue={defaultFileList}
+            >
+                <Upload
+                    listType="picture-card"
+                    maxCount={1}
+                    accept="image/*"
+                    beforeUpload={() => false}
+                    onPreview={handlePreview}
+                    multiple={false}
+                >
                     <div>
                         <PlusOutlined />
                         <div className="ImageUpload__label">Upload</div>

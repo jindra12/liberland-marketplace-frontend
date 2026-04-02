@@ -1,6 +1,8 @@
 import * as React from "react";
+
 import { ErrorBoundary } from "react-error-boundary";
 import { useLocation } from "react-router-dom";
+
 import { AppErrorFallback } from "./AppErrorFallback";
 import { trackRuntimeError } from "./trackRuntimeError";
 

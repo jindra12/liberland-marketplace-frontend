@@ -1,12 +1,17 @@
 import * as React from "react";
-import { Avatar, Button, Flex, Skeleton, Space, Tag, Typography, message } from "antd";
-import { CheckCircleFilled, HomeOutlined, MailOutlined, ReloadOutlined, StopFilled } from "@ant-design/icons";
+
 import { useNavigate } from "react-router-dom";
+
+import { CheckCircleFilled, HomeOutlined, MailOutlined, ReloadOutlined, StopFilled } from "@ant-design/icons";
+import { Avatar, Button, Flex, Skeleton, Space, Tag, Typography, message } from "antd";
 import { useTimeout } from "usehooks-ts";
+
 import { useSubscriptionActions } from "../share/SubscribeButton/useSubscriptionActions";
 import { getSubscriptionErrorMessage } from "../share/SubscribeButton/utils";
-import { isAlreadyUnsubscribedError } from "./utils";
+
 import type { UnsubscribeEntityProps } from "./types";
+import { isAlreadyUnsubscribedError } from "./utils";
+
 export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) => {
     const navigate = useNavigate();
     const [messageApi, messageContextHolder] = message.useMessage();
@@ -93,7 +98,10 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
         );
     }
     if (props.query.error) {
-        const errorMessage = props.query.error instanceof Error ? props.query.error.message : "We couldn't load the item behind this unsubscribe link.";
+        const errorMessage =
+            props.query.error instanceof Error
+                ? props.query.error.message
+                : "We couldn't load the item behind this unsubscribe link.";
         return (
             <div className="UnsubscribePage">
                 {messageContextHolder}
@@ -111,14 +119,25 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
                                 <Typography.Title level={1} className="UnsubscribePage__title">
                                     We couldn&apos;t verify this unsubscribe request
                                 </Typography.Title>
-                                <Typography.Paragraph className="UnsubscribePage__description">{errorMessage}</Typography.Paragraph>
+                                <Typography.Paragraph className="UnsubscribePage__description">
+                                    {errorMessage}
+                                </Typography.Paragraph>
                             </div>
                         </Flex>
                         <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                            <Button type="primary" icon={<ReloadOutlined />} className="UnsubscribePage__primaryAction" onClick={handleRetryLookup}>
+                            <Button
+                                type="primary"
+                                icon={<ReloadOutlined />}
+                                className="UnsubscribePage__primaryAction"
+                                onClick={handleRetryLookup}
+                            >
                                 Retry lookup
                             </Button>
-                            <Button icon={<HomeOutlined />} className="UnsubscribePage__secondaryAction" onClick={() => navigate("/")}>
+                            <Button
+                                icon={<HomeOutlined />}
+                                className="UnsubscribePage__secondaryAction"
+                                onClick={() => navigate("/")}
+                            >
                                 Back to homepage
                             </Button>
                         </Space>
@@ -145,10 +164,16 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
                                 <Typography.Title level={1} className="UnsubscribePage__title">
                                     We couldn&apos;t find this item anymore
                                 </Typography.Title>
-                                <Typography.Paragraph className="UnsubscribePage__description">The unsubscribe link is valid, but the item behind it is no longer available.</Typography.Paragraph>
+                                <Typography.Paragraph className="UnsubscribePage__description">
+                                    The unsubscribe link is valid, but the item behind it is no longer available.
+                                </Typography.Paragraph>
                             </div>
                         </Flex>
-                        <Button icon={<HomeOutlined />} className="UnsubscribePage__secondaryAction" onClick={() => navigate("/")}>
+                        <Button
+                            icon={<HomeOutlined />}
+                            className="UnsubscribePage__secondaryAction"
+                            onClick={() => navigate("/")}
+                        >
                             Back to homepage
                         </Button>
                     </Flex>
@@ -175,15 +200,24 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
                                     You&apos;re all set
                                 </Typography.Title>
                                 <Typography.Paragraph className="UnsubscribePage__description">
-                                    We won&apos;t send any more emails to {props.params.email} about {entity.title}. Redirecting you to the homepage now.
+                                    We won&apos;t send any more emails to {props.params.email} about {entity.title}.
+                                    Redirecting you to the homepage now.
                                 </Typography.Paragraph>
                             </div>
                         </Flex>
                         <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                            <Button type="primary" icon={<HomeOutlined />} className="UnsubscribePage__primaryAction" onClick={() => navigate("/")}>
+                            <Button
+                                type="primary"
+                                icon={<HomeOutlined />}
+                                className="UnsubscribePage__primaryAction"
+                                onClick={() => navigate("/")}
+                            >
                                 Go to homepage
                             </Button>
-                            <Button className="UnsubscribePage__secondaryAction" onClick={() => navigate(entity.detailPath)}>
+                            <Button
+                                className="UnsubscribePage__secondaryAction"
+                                onClick={() => navigate(entity.detailPath)}
+                            >
                                 View {entity.typeLabel.toLowerCase()}
                             </Button>
                         </Space>
@@ -210,20 +244,33 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
                                 Unsubscribe from {entity.title}?
                             </Typography.Title>
                             <Typography.Paragraph className="UnsubscribePage__description">
-                                You&apos;re about to stop receiving update emails for this {entity.typeLabel.toLowerCase()}. You can always subscribe again later from the listing itself.
+                                You&apos;re about to stop receiving update emails for this{" "}
+                                {entity.typeLabel.toLowerCase()}. You can always subscribe again later from the listing
+                                itself.
                             </Typography.Paragraph>
                         </div>
                     </Flex>
                     <div className="UnsubscribePage__entity">
-                        <Avatar size={72} shape="square" src={!entity.imageURL ? undefined : entity.imageURL} className="UnsubscribePage__entityAvatar">
+                        <Avatar
+                            size={72}
+                            shape="square"
+                            src={!entity.imageURL ? undefined : entity.imageURL}
+                            className="UnsubscribePage__entityAvatar"
+                        >
                             {entity.title.charAt(0).toUpperCase()}
                         </Avatar>
                         <div className="UnsubscribePage__entityBody">
-                            <Typography.Text className="UnsubscribePage__entityType">{entity.typeLabel}</Typography.Text>
+                            <Typography.Text className="UnsubscribePage__entityType">
+                                {entity.typeLabel}
+                            </Typography.Text>
                             <Typography.Title level={3} className="UnsubscribePage__entityTitle">
                                 {entity.title}
                             </Typography.Title>
-                            {entity.summary ? <Typography.Paragraph className="UnsubscribePage__entitySummary">{entity.summary}</Typography.Paragraph> : null}
+                            {entity.summary ? (
+                                <Typography.Paragraph className="UnsubscribePage__entitySummary">
+                                    {entity.summary}
+                                </Typography.Paragraph>
+                            ) : null}
                         </div>
                     </div>
                     <div className="UnsubscribePage__meta">
@@ -233,10 +280,18 @@ export const UnsubscribeEntity = <TData,>(props: UnsubscribeEntityProps<TData>) 
                         </span>
                     </div>
                     <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
-                        <Button type="primary" className="UnsubscribePage__primaryAction" onClick={handleConfirm} loading={isPending}>
+                        <Button
+                            type="primary"
+                            className="UnsubscribePage__primaryAction"
+                            onClick={handleConfirm}
+                            loading={isPending}
+                        >
                             Yes, unsubscribe me
                         </Button>
-                        <Button className="UnsubscribePage__secondaryAction" onClick={() => navigate(entity.detailPath)}>
+                        <Button
+                            className="UnsubscribePage__secondaryAction"
+                            onClick={() => navigate(entity.detailPath)}
+                        >
                             No, keep me subscribed
                         </Button>
                     </Space>

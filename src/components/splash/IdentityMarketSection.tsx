@@ -1,13 +1,22 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Col, Flex, Row, Typography } from "antd";
+
 import { UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Col, Flex, Row, Typography } from "antd";
+
 import { BACKEND_URL } from "../../gqlFetcher";
 import { CompanyCard } from "../cards/CompanyCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { StartupCard } from "../cards/StartupCard";
-import { useListCompaniesByIdentityQuery, useListJobsByIdentityQuery, useListProductsByIdentityQuery, useListStartupsByIdentityQuery } from "../hooks";
+import {
+    useListCompaniesByIdentityQuery,
+    useListJobsByIdentityQuery,
+    useListProductsByIdentityQuery,
+    useListStartupsByIdentityQuery,
+} from "../hooks";
+
 type IdentityMarketSectionProps = {
     identityId: string;
     identityName: string;
@@ -68,7 +77,9 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
     const cardSections = [
         {
             key: "companies",
-            hasContent: (companiesQuery.data?.Companies?.totalDocs ?? 0) > 0 || (companiesQuery.data?.Companies?.docs?.length ?? 0) > 0,
+            hasContent:
+                (companiesQuery.data?.Companies?.totalDocs ?? 0) > 0 ||
+                (companiesQuery.data?.Companies?.docs?.length ?? 0) > 0,
             loading: companiesQuery.isLoading,
             card: (
                 <CompanyCard
@@ -81,7 +92,9 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
         },
         {
             key: "products",
-            hasContent: (productsQuery.data?.Products?.totalDocs ?? 0) > 0 || (productsQuery.data?.Products?.docs?.length ?? 0) > 0,
+            hasContent:
+                (productsQuery.data?.Products?.totalDocs ?? 0) > 0 ||
+                (productsQuery.data?.Products?.docs?.length ?? 0) > 0,
             loading: productsQuery.isLoading,
             card: (
                 <ProductServiceCard
@@ -96,11 +109,20 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
             key: "jobs",
             hasContent: (jobsQuery.data?.Jobs?.totalDocs ?? 0) > 0 || (jobsQuery.data?.Jobs?.docs?.length ?? 0) > 0,
             loading: jobsQuery.isLoading,
-            card: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined} identityId={props.identityId} />,
+            card: (
+                <JobCard
+                    items={jobsQuery.data?.Jobs?.docs || []}
+                    loading={jobsQuery.isLoading}
+                    totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
+                    identityId={props.identityId}
+                />
+            ),
         },
         {
             key: "startups",
-            hasContent: (startupsQuery.data?.Startups?.totalDocs ?? 0) > 0 || (startupsQuery.data?.Startups?.docs?.length ?? 0) > 0,
+            hasContent:
+                (startupsQuery.data?.Startups?.totalDocs ?? 0) > 0 ||
+                (startupsQuery.data?.Startups?.docs?.length ?? 0) > 0,
             loading: startupsQuery.isLoading,
             card: (
                 <StartupCard

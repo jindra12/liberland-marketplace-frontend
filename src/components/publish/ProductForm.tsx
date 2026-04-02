@@ -1,14 +1,19 @@
-import React from "react";
+import * as React from "react";
+
+import { useAuth } from "react-oidc-context";
+
 import { DollarOutlined } from "@ant-design/icons";
 import { Form, Input, InputNumber, Select } from "antd";
-import { useAuth } from "react-oidc-context";
 import type { UploadFile } from "antd/es/upload/interface";
-import { ImageUploadField } from "./ImageUploadField";
-import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
-import { useEntityForm } from "./useEntityForm";
+
 import { useCreateProductMutation, useListCompaniesByCreatorQuery, useUpdateProductMutation } from "../hooks";
 import { toCents } from "../shared/product/utils";
+
+import { FormSubmitButtons } from "./FormSubmitButtons";
+import { ImageUploadField } from "./ImageUploadField";
+import { MarkdownEditor } from "./MarkdownEditor";
+import { useEntityForm } from "./useEntityForm";
+
 interface ProductFormValues {
     name: string | null;
     description?: string | null;
@@ -91,7 +96,12 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     },
                 ]}
             >
-                <InputNumber suffix={<DollarOutlined />} placeholder="USD amount" min={0} className="Publish__amountInput" />
+                <InputNumber
+                    suffix={<DollarOutlined />}
+                    placeholder="USD amount"
+                    min={0}
+                    className="Publish__amountInput"
+                />
             </Form.Item>
             <Form.Item name="url" label="Product URL">
                 <Input />

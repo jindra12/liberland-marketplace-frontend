@@ -1,7 +1,19 @@
-query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+query SearchCompaniesBySecondaryIdentity(
+    $identityId: JSON!
+    $searchTerm: String!
+    $page: Int = 1
+    $limit: Int = 20
+    $sort: String
+) {
     Companies(
         draft: false
-        where: { AND: [{ name: { contains: $searchTerm } }, { allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }
+        where: {
+            AND: [
+                { name: { contains: $searchTerm } }
+                { allowedIdentities: { in: [$identityId] } }
+                { _status: { equals: published } }
+            ]
+        }
         page: $page
         limit: $limit
         sort: $sort

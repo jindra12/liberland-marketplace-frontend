@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Form, theme } from "antd";
+
 import { GeoapifyAddressFields } from "./GeoapifyAddressFields";
 import { GeoapifyAddressSearchControl } from "./GeoapifyAddressSearchControl";
 import { GeoapifyAddressSearchModal } from "./GeoapifyAddressSearchModal";
@@ -61,7 +63,13 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
 
     return (
         <>
-            <GeoapifyAddressSearchControl label={label} required={required} geoapifyApiKey={geoapifyApiKey} selectedAddressSummary={selectedAddressSummary} onOpenSearch={openSearchModal} />
+            <GeoapifyAddressSearchControl
+                label={label}
+                required={required}
+                geoapifyApiKey={geoapifyApiKey}
+                selectedAddressSummary={selectedAddressSummary}
+                onOpenSearch={openSearchModal}
+            />
             <GeoapifyAddressSearchModal
                 open={isSearchModalOpen}
                 geoapifyApiKey={geoapifyApiKey}

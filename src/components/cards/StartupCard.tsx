@@ -1,11 +1,16 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
 import { RightOutlined } from "@ant-design/icons";
+import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
+
 import { ListStartupsByIdentityQuery } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
-import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 import { RouteButton } from "../RouteButton";
+
+import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
+
 type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
 type StartupCardProps = {
     items: StartupItem[];
@@ -56,7 +61,12 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) =>
                                     avatar={
                                         imageUrl ? (
                                             <Link to={`/ventures/${startup.id}`}>
-                                                <Avatar shape="square" size={48} src={`${BACKEND_URL}${imageUrl}`} className="SplashEntityCard__avatar" />
+                                                <Avatar
+                                                    shape="square"
+                                                    size={48}
+                                                    src={`${BACKEND_URL}${imageUrl}`}
+                                                    className="SplashEntityCard__avatar"
+                                                />
                                             </Link>
                                         ) : undefined
                                     }
@@ -69,14 +79,26 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) =>
                                 <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                                     {startup.stage && <Tag>{startup.stage}</Tag>}
                                 </Space>
-                                {!xl && <SplashShareDetailActionRow detailPath={`/ventures/${startup.id}`} title={startup.title || "Venture"} text={`Check out ${startup.title} on NSwap.`} />}
+                                {!xl && (
+                                    <SplashShareDetailActionRow
+                                        detailPath={`/ventures/${startup.id}`}
+                                        title={startup.title || "Venture"}
+                                        text={`Check out ${startup.title} on NSwap.`}
+                                    />
+                                )}
                             </div>
                         </List.Item>
                     );
                 }}
             />
             {remaining > 0 && props.identityId && (
-                <RouteButton to={`/ventures?tribe=${props.identityId}`} type="link" icon={<RightOutlined />} iconPosition="end" className="SplashEntityCard__moreLink">
+                <RouteButton
+                    to={`/ventures?tribe=${props.identityId}`}
+                    type="link"
+                    icon={<RightOutlined />}
+                    iconPosition="end"
+                    className="SplashEntityCard__moreLink"
+                >
                     And +{remaining} more
                 </RouteButton>
             )}

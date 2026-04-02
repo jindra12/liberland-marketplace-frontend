@@ -1,8 +1,20 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { ClockCircleOutlined, DollarOutlined, EnvironmentOutlined, GiftOutlined, HomeFilled, InfoCircleOutlined, TeamOutlined } from "@ant-design/icons";
+
+import {
+    ClockCircleOutlined,
+    DollarOutlined,
+    EnvironmentOutlined,
+    GiftOutlined,
+    HomeFilled,
+    InfoCircleOutlined,
+    TeamOutlined,
+} from "@ant-design/icons";
 import { Flex, Space, Tag, Typography } from "antd";
+
 import { timeAgo } from "./job/utils";
+
 type JobDetailsSummaryProps = {
     companyName?: string | null;
     companyId?: string | null;
@@ -29,7 +41,11 @@ export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> 
                                 <HomeFilled />{" "}
                             </>
                         )}
-                        {props.companyId ? <Link to={`/companies/${props.companyId}`}>{props.companyName}</Link> : props.companyName}
+                        {props.companyId ? (
+                            <Link to={`/companies/${props.companyId}`}>{props.companyName}</Link>
+                        ) : (
+                            props.companyName
+                        )}
                     </Typography.Text>
                 )}
                 {props.location && (

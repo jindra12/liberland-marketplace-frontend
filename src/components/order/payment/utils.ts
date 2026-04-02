@@ -1,8 +1,16 @@
-import { OrderUpdate_TransactionHashes_Chain_MutationInput, UserUpdate_Wallets_Chain_MutationInput } from "../../../generated/graphql";
+import {
+    OrderUpdate_TransactionHashes_Chain_MutationInput,
+    UserUpdate_Wallets_Chain_MutationInput,
+} from "../../../generated/graphql";
 import type { MeUserQuery, MutationUserUpdate_WalletsInput } from "../../../generated/graphql";
 import type { CartForRequiredChains, CryptoChain, OrderForPayments } from "../../../types";
 import { CRYPTO_CHAIN_DECIMALS, CRYPTO_CHAIN_ORDER } from "../constants";
-import type { PaymentProfileUsersByUrl, PaymentWalletSelection, SubmittedOrder, TransactionHashUpdateRow } from "../types";
+import type {
+    PaymentProfileUsersByUrl,
+    PaymentWalletSelection,
+    SubmittedOrder,
+    TransactionHashUpdateRow,
+} from "../types";
 
 type OrderItem = NonNullable<NonNullable<Pick<OrderForPayments, "items">["items"]>[number]>;
 
@@ -26,7 +34,10 @@ export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain): stri
 };
 
 const resolveItemPaymentChain = (item: OrderItem): CryptoChain | undefined => {
-    return toCryptoChain(item.product?.cryptoAddresses?.chain) ?? toCryptoChain(item.product?.company?.cryptoAddresses?.chain);
+    return (
+        toCryptoChain(item.product?.cryptoAddresses?.chain) ??
+        toCryptoChain(item.product?.company?.cryptoAddresses?.chain)
+    );
 };
 
 const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | null | undefined => {
@@ -109,7 +120,10 @@ export const collectRequiredChainsForCarts = (carts: CartForRequiredChains[]): C
     return Array.from(chains);
 };
 
-export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "items">, chain: CryptoChain): string | undefined => {
+export const resolveOrderRecipientAddress = (
+    order: Pick<OrderForPayments, "items">,
+    chain: CryptoChain,
+): string | undefined => {
     return (order.items ?? []).reduce<string | undefined>((resolvedAddress, item) => {
         if (resolvedAddress) {
             return resolvedAddress;
@@ -133,7 +147,10 @@ export const resolveOrderRecipientAddress = (order: Pick<OrderForPayments, "item
     }, undefined);
 };
 
-export const buildPaymentProfileUsersByUrl = (meUsers: MeUserQuery | MeUserQuery[] | undefined, urls: string[]): PaymentProfileUsersByUrl => {
+export const buildPaymentProfileUsersByUrl = (
+    meUsers: MeUserQuery | MeUserQuery[] | undefined,
+    urls: string[],
+): PaymentProfileUsersByUrl => {
     const entries = Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [];
 
     return urls.reduce<PaymentProfileUsersByUrl>((result, url, index) => {
@@ -165,13 +182,23 @@ export const buildPaymentProfileUsersByUrl = (meUsers: MeUserQuery | MeUserQuery
     }, {});
 };
 
-export const hasPaymentWalletSelection = (wallets: PaymentWalletSelection[], selection: PaymentWalletSelection): boolean => {
+export const hasPaymentWalletSelection = (
+    wallets: PaymentWalletSelection[],
+    selection: PaymentWalletSelection,
+): boolean => {
     return wallets.some((wallet) => {
-        return wallet.address === selection.address && wallet.chain === selection.chain && wallet.provider === selection.provider;
+        return (
+            wallet.address === selection.address &&
+            wallet.chain === selection.chain &&
+            wallet.provider === selection.provider
+        );
     });
 };
 
-export const appendPaymentWalletSelection = (wallets: PaymentWalletSelection[], selection: PaymentWalletSelection): PaymentWalletSelection[] => {
+export const appendPaymentWalletSelection = (
+    wallets: PaymentWalletSelection[],
+    selection: PaymentWalletSelection,
+): PaymentWalletSelection[] => {
     if (hasPaymentWalletSelection(wallets, selection)) {
         return wallets;
     }
@@ -243,7 +270,9 @@ export const collectOrderChainPaymentAmounts = (order: Pick<OrderForPayments, "i
     }).filter((entry): entry is ChainPaymentAmount => Boolean(entry));
 };
 
-export const toExistingTransactionHashRows = (order: Pick<OrderForPayments, "transactionHashes">): TransactionHashUpdateRow[] => {
+export const toExistingTransactionHashRows = (
+    order: Pick<OrderForPayments, "transactionHashes">,
+): TransactionHashUpdateRow[] => {
     return (order.transactionHashes ?? []).reduce<TransactionHashUpdateRow[]>((rows, entry) => {
         const productId = entry?.product?.id;
         const transactionHash = entry?.transactionHash;
@@ -269,7 +298,9 @@ export const appendTransactionHashRows = (props: {
     chain: CryptoChain;
     txHash: string;
 }): { nextRows: TransactionHashUpdateRow[]; appendedCount: number } => {
-    const existingKeys = new Set(props.existingRows.map((row) => `${row.product}::${row.chain}::${row.transactionHash}`));
+    const existingKeys = new Set(
+        props.existingRows.map((row) => `${row.product}::${row.chain}::${row.transactionHash}`),
+    );
     const appendedRows = props.productIds.reduce<TransactionHashUpdateRow[]>((rows, productId) => {
         const key = `${productId}::${props.chain}::${props.txHash}`;
 
@@ -292,7 +323,10 @@ export const appendTransactionHashRows = (props: {
     };
 };
 
-export const replaceSubmittedOrderInList = (submittedOrders: SubmittedOrder[], updated: SubmittedOrder): SubmittedOrder[] => {
+export const replaceSubmittedOrderInList = (
+    submittedOrders: SubmittedOrder[],
+    updated: SubmittedOrder,
+): SubmittedOrder[] => {
     return submittedOrders.map((entry) => {
         return entry.url === updated.url && entry.order.id === updated.order.id ? updated : entry;
     });

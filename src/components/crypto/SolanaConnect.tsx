@@ -1,11 +1,14 @@
 import * as React from "react";
+
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import Flex from "antd/es/flex";
 import Grid from "antd/es/grid";
-import { useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
+
 import { ConnectButtonProps } from "../../types";
-import { SolanaCallback } from "./SolanaCallback";
+
 import { SolanaButton } from "./SolanaButton";
+import { SolanaCallback } from "./SolanaCallback";
 
 export interface SolanaConnectProps extends ConnectButtonProps {
     payment?: boolean;

@@ -1,9 +1,11 @@
 import * as React from "react";
+
 import { Button } from "antd";
 import { createThirdwebClient } from "thirdweb";
 import { mainnet } from "thirdweb/chains";
 import { useConnectModal } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
+
 import { thirdwebWallets } from "../../../constants";
 import type { ProfileWalletSelection } from "../types";
 

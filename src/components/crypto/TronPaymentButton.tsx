@@ -1,11 +1,13 @@
 import * as React from "react";
+
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
-import Button from "antd/es/button";
-import Image from "antd/es/image";
 import { ButtonProps, WalletActionButton, WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
+import Button from "antd/es/button";
 import Flex from "antd/es/flex";
+import Image from "antd/es/image";
 import message from "antd/es/message";
 import Result from "antd/es/result";
+
 import { FormModel } from "../../types";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 import type { PaymentWalletSelection } from "../order/types";
@@ -45,7 +47,11 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                 setLoading(true);
                 setErrorMessage(null);
                 const amountInSun = props.formModel.amount.toString();
-                const unsignedTx = await window.tronWeb.transactionBuilder.sendTrx(props.formModel.recipient, amountInSun as unknown as number, address);
+                const unsignedTx = await window.tronWeb.transactionBuilder.sendTrx(
+                    props.formModel.recipient,
+                    amountInSun as unknown as number,
+                    address,
+                );
                 const signedTx = await signTransaction(unsignedTx);
                 const transaction = await window.tronWeb.trx.sendRawTransaction(signedTx);
                 await props.setTransactionId(transaction.txid);
@@ -68,10 +74,24 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     };
 
     return (
-        <Flex wrap gap="15px" justify="center" align="center" flex={1} className="CryptoPaymentGroup TronwebModal TronwebModal--payment">
+        <Flex
+            wrap
+            gap="15px"
+            justify="center"
+            align="center"
+            flex={1}
+            className="CryptoPaymentGroup TronwebModal TronwebModal--payment"
+        >
             {canPay && (
                 <Button
-                    icon={<Image src={require("../../assets/tron.svg").default} width="22px" height="22px" preview={false} />}
+                    icon={
+                        <Image
+                            src={require("../../assets/tron.svg").default}
+                            width="22px"
+                            height="22px"
+                            preview={false}
+                        />
+                    }
                     className="TronButton TronButton--payment TronButton--main"
                     loading={loading}
                     disabled={isPaymentPending}

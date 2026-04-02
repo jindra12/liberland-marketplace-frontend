@@ -1,9 +1,13 @@
-import React from "react";
-import { Button, Result, Space, message } from "antd";
+import * as React from "react";
+
+import { useAuth } from "react-oidc-context";
+
 import { CheckCircleOutlined, MailOutlined } from "@ant-design/icons";
 import useCountdown from "@bradgarropy/use-countdown";
-import { useAuth } from "react-oidc-context";
+import { Button, Result, Space, message } from "antd";
+
 import { useSendVerificationEmailMutation } from "../../authApi";
+
 interface EmailVerificationWarningProps {
     email: string;
     url: string;
@@ -48,7 +52,13 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
                 subTitle="You need to verify your email address before you can publish listings."
                 extra={
                     <Space>
-                        <Button type="primary" icon={<MailOutlined />} loading={sendMutation.isPending} disabled={countdown.isRunning} onClick={handleResend}>
+                        <Button
+                            type="primary"
+                            icon={<MailOutlined />}
+                            loading={sendMutation.isPending}
+                            disabled={countdown.isRunning}
+                            onClick={handleResend}
+                        >
                             {countdown.isRunning ? `Resend in ${countdown.formatted}` : "Resend verification email"}
                         </Button>
                         <Button icon={<CheckCircleOutlined />} loading={checking} onClick={handleCheckVerification}>

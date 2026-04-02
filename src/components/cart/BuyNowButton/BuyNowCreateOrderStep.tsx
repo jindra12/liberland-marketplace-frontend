@@ -1,11 +1,14 @@
 import * as React from "react";
-import useLocalStorage from "use-local-storage";
+
 import { message } from "antd";
+import useLocalStorage from "use-local-storage";
+
 import { useCreateOrderMutation } from "../../hooks";
-import { ShippingAddressSelectModal } from "../../order/ShippingAddressSelectModal";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../order/constants";
+import { ShippingAddressSelectModal } from "../../order/ShippingAddressSelectModal";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { toShippingAddressInput } from "../../order/utils";
+
 import type { BuyNowPreparedPurchase } from "./types";
 
 type BuyNowCreateOrderStepProps = {

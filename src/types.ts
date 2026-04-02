@@ -46,7 +46,11 @@ type ListProductsByIdentityDoc = NonNullable<NonNullable<ListProductsByIdentityQ
 type ProductByIdDoc = NonNullable<ProductByIdQuery["Product"]>;
 type CartBySecretDoc = NonNullable<NonNullable<CartBySecretQuery["Carts"]>["docs"]>[number];
 
-export type PurchasableProduct = ListProductsDoc | ListProductsByCompanyDoc | ListProductsByIdentityDoc | ProductByIdDoc;
+export type PurchasableProduct =
+    | ListProductsDoc
+    | ListProductsByCompanyDoc
+    | ListProductsByIdentityDoc
+    | ProductByIdDoc;
 
 export type CartForRequiredChains = Pick<CartBySecretDoc, "items">;
 export type OrderForPayments = NonNullable<CreateOrderMutation["createOrder"]>;
@@ -61,7 +65,9 @@ export type ChainPrice = {
     fetchedAt?: unknown;
 };
 
-export type CryptoWalletOwner = Pick<PurchasableProduct, "cryptoAddresses"> | NonNullable<PurchasableProduct["company"]>;
+export type CryptoWalletOwner =
+    | Pick<PurchasableProduct, "cryptoAddresses">
+    | NonNullable<PurchasableProduct["company"]>;
 
 export type IdentityTagItem = {
     id: string;

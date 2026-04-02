@@ -1,9 +1,12 @@
 import * as React from "react";
+
 import { BellFilled, BellOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
+
+import type { SubscribeAuthButtonProps } from "./types";
 import { useSubscriptionActions } from "./useSubscriptionActions";
 import { getSubscribeButtonClassName, getSubscriptionErrorMessage } from "./utils";
-import type { SubscribeAuthButtonProps } from "./types";
+
 export const SubscribeAuthButton: React.FunctionComponent<SubscribeAuthButtonProps> = (props) => {
     const size = props.size === undefined ? "middle" : props.size;
     const type = props.type === undefined ? "default" : props.type;

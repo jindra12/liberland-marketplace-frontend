@@ -1,7 +1,12 @@
 import { getAccessToken } from "../../gqlFetcher";
 import type { URL as EndpointURL } from "../../types";
 import { User_Wallets_Chain, UserUpdate_Wallets_Chain_MutationInput } from "../../generated/graphql";
-import type { ProfileContactFormValues, ProfileContactUpdateInput, ProfileSelectedUser, ProfileServerOption } from "./types";
+import type {
+    ProfileContactFormValues,
+    ProfileContactUpdateInput,
+    ProfileSelectedUser,
+    ProfileServerOption,
+} from "./types";
 
 const toServerLabel = (url: string, name?: string) => {
     try {
@@ -15,7 +20,10 @@ const toServerLabel = (url: string, name?: string) => {
 
 export const buildProfileServerOptions = (urls: EndpointURL[], authUrl: string): ProfileServerOption[] => {
     const authenticatedServers = urls.filter(({ value }) => Boolean(getAccessToken(value)));
-    const sourceUrls = authenticatedServers.length > 0 ? authenticatedServers : [{ value: authUrl, name: "Current server", enabled: true }];
+    const sourceUrls =
+        authenticatedServers.length > 0
+            ? authenticatedServers
+            : [{ value: authUrl, name: "Current server", enabled: true }];
 
     return sourceUrls.reduce<ProfileServerOption[]>((options, server) => {
         if (options.some(({ value }) => value === server.value)) {
@@ -85,7 +93,10 @@ export const buildProfileContactFormValues = (user?: ProfileSelectedUser | null)
     };
 };
 
-export const buildProfileContactUpdateInput = (values: ProfileContactFormValues, user?: ProfileSelectedUser | null): ProfileContactUpdateInput => {
+export const buildProfileContactUpdateInput = (
+    values: ProfileContactFormValues,
+    user?: ProfileSelectedUser | null,
+): ProfileContactUpdateInput => {
     const currentShippingAddress = user?.shippingAddress;
 
     return {

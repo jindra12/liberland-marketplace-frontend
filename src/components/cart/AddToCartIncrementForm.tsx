@@ -1,14 +1,19 @@
 import * as React from "react";
-import { Button, Form, InputNumber, message } from "antd";
-import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import type { ButtonProps, FormInstance } from "antd";
+
 import { useQueryClient } from "@tanstack/react-query";
+
+import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Form, InputNumber, message } from "antd";
+import type { ButtonProps, FormInstance } from "antd";
 import useLocalStorage from "use-local-storage";
+
 import type { Cart, MutationCartUpdate_ItemsInput } from "../../generated/graphql";
 import { useCartBySecretQuery, useCreateCartMutation, useUpdateCartMutation } from "../hooks";
-import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
-import { useCartMutationContext } from "./CartMutationContext";
+
 import { AddToCartSubmitButton } from "./AddToCartSubmitButton";
+import { useCartMutationContext } from "./CartMutationContext";
+import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
+
 type AddToCartIncrementFormProps = {
     productId: string;
     variantId?: string;
@@ -23,7 +28,10 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     const queryClient = useQueryClient();
     const [messageApi, messageContextHolder] = message.useMessage();
     const [cartSecrets, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
-    const cartSecret = React.useMemo(() => (cartSecrets || []).find((entry) => entry.url === props.serverURL)?.secret || "", [cartSecrets, props.serverURL]);
+    const cartSecret = React.useMemo(
+        () => (cartSecrets || []).find((entry) => entry.url === props.serverURL)?.secret || "",
+        [cartSecrets, props.serverURL],
+    );
     const cartQuery = useCartBySecretQuery(
         {
             secret: cartSecret,
@@ -36,18 +44,26 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     const createCart = useCreateCartMutation();
     const updateCart = useUpdateCartMutation();
     const { isMutating, setIsMutating } = useCartMutationContext();
-    const quantityInputClassName = ["AddToCartButton__quantity", size === "small" ? "AddToCartButton__quantity--small" : "AddToCartButton__quantity--default"].join(" ");
+    const quantityInputClassName = [
+        "AddToCartButton__quantity",
+        size === "small" ? "AddToCartButton__quantity--small" : "AddToCartButton__quantity--default",
+    ].join(" ");
     const productKey = `${props.productId}::${props.variantId ?? ""}`;
     const existingCart = cartQuery.data?.Carts?.docs?.[0] as Cart | undefined;
-    const currentItem = existingCart?.items?.find((item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey);
+    const currentItem = existingCart?.items?.find(
+        (item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey,
+    );
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
     const usesSplitLayout = !hasItemInCart;
-    const formClassName = ["AddToCartButton", usesSplitLayout ? "AddToCartButton--split" : ""].filter(Boolean).join(" ");
+    const formClassName = ["AddToCartButton", usesSplitLayout ? "AddToCartButton--split" : ""]
+        .filter(Boolean)
+        .join(" ");
     const watchedQuantity = Form.useWatch("quantity", props.form);
     const inputQuantity = typeof watchedQuantity === "number" && watchedQuantity > 0 ? watchedQuantity : 1;
     const shouldRemovePartially = hasItemInCart && inputQuantity < currentItemQuantity;
-    const remainingQuantity = typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
+    const remainingQuantity =
+        typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
     const submitButtonProps = props.isAuthenticated
         ? {
               ariaLabel: "Add to cart",
@@ -98,7 +114,10 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
             }),
         );
     };
-    const updateExistingCartItems = async (existingCart: Cart, itemsByKey: Record<string, MutationCartUpdate_ItemsInput>) => {
+    const updateExistingCartItems = async (
+        existingCart: Cart,
+        itemsByKey: Record<string, MutationCartUpdate_ItemsInput>,
+    ) => {
         await updateCart.mutateAsync({
             url: props.serverURL,
             id: existingCart.id,
@@ -151,7 +170,8 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
             return;
         }
         const requestedQuantity = values.quantity && values.quantity > 0 ? values.quantity : 1;
-        const quantity = remainingQuantity !== undefined ? Math.min(requestedQuantity, remainingQuantity) : requestedQuantity;
+        const quantity =
+            remainingQuantity !== undefined ? Math.min(requestedQuantity, remainingQuantity) : requestedQuantity;
         setIsMutating(true);
         try {
             await addItemToCart(quantity);
@@ -160,7 +180,8 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
             });
             messageApi.success("Added to cart");
         } catch (error) {
-            const errorMessage = error instanceof Error && error.message ? error.message : "Could not add product to cart";
+            const errorMessage =
+                error instanceof Error && error.message ? error.message : "Could not add product to cart";
             messageApi.error(`Could not add product to cart: ${errorMessage}`);
         } finally {
             setIsMutating(false);
@@ -180,7 +201,8 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
             });
             messageApi.success("Removed from cart");
         } catch (error) {
-            const errorMessage = error instanceof Error && error.message ? error.message : "Could not remove product from cart";
+            const errorMessage =
+                error instanceof Error && error.message ? error.message : "Could not remove product from cart";
             messageApi.error(`Could not remove product from cart: ${errorMessage}`);
         } finally {
             setIsMutating(false);
@@ -198,10 +220,27 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
         >
             {messageContextHolder}
             <Form.Item name="quantity" noStyle>
-                <InputNumber min={1} max={remainingQuantity} step={1} precision={0} size={size} className={quantityInputClassName} disabled={isMutating} />
+                <InputNumber
+                    min={1}
+                    max={remainingQuantity}
+                    step={1}
+                    precision={0}
+                    size={size}
+                    className={quantityInputClassName}
+                    disabled={isMutating}
+                />
             </Form.Item>
             <AddToCartSubmitButton size={size} loading={isMutating} disabled={isMutating} {...submitButtonProps} />
-            {hasItemInCart && <Button size={size} danger icon={shouldRemovePartially ? <MinusOutlined /> : <CloseOutlined />} onClick={handleRemove} loading={isMutating} disabled={isMutating} />}
+            {hasItemInCart && (
+                <Button
+                    size={size}
+                    danger
+                    icon={shouldRemovePartially ? <MinusOutlined /> : <CloseOutlined />}
+                    onClick={handleRemove}
+                    loading={isMutating}
+                    disabled={isMutating}
+                />
+            )}
         </Form>
     );
 };

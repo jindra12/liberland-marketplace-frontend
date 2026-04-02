@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Col, Form, Input, Row } from "antd";
+
 type GeoapifyAddressFieldsProps = {
     basePath: Array<string | number>;
     required: boolean;

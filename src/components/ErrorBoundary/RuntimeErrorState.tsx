@@ -1,8 +1,12 @@
 import * as React from "react";
+
+import { useLocation } from "react-router-dom";
+
 import { HomeOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Space, Tag, Typography } from "antd";
-import { useLocation } from "react-router-dom";
+
 import { ErrorBoundaryScope } from "./trackRuntimeError";
+
 type RuntimeErrorStateProps = {
     error: Error;
     onRetry: () => void;

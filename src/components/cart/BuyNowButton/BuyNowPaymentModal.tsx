@@ -1,7 +1,10 @@
 import * as React from "react";
+
 import { Button, Modal, Result } from "antd";
+
 import { OrderPaymentStep } from "../../order/OrderPaymentStep";
 import type { PaymentProfileUsersByUrl, SubmittedOrder } from "../../order/types";
+
 type BuyNowPaymentModalProps = {
     onAllPaymentsComplete: () => void;
     onCancel: () => void;
@@ -14,7 +17,14 @@ type BuyNowPaymentModalProps = {
 };
 export const BuyNowPaymentModal: React.FunctionComponent<BuyNowPaymentModalProps> = (props) => {
     return (
-        <Modal open={props.open} destroyOnHidden footer={null} title="Complete payment" onCancel={props.onCancel} className="BuyNowPaymentModal">
+        <Modal
+            open={props.open}
+            destroyOnHidden
+            footer={null}
+            title="Complete payment"
+            onCancel={props.onCancel}
+            className="BuyNowPaymentModal"
+        >
             {props.paymentComplete ? (
                 <Result
                     status="success"

@@ -15,7 +15,10 @@ export function useCompanyTabCounts(companyId: string | undefined) {
     const startupsQuery = useListStartupsByCompanyQuery({ companyId: companyId!, limit: 1 }, { enabled });
 
     const commentsRelation = COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies];
-    const commentsQuery = useListCommentsByTargetQuery({ targetId: companyId!, relationTo: commentsRelation, limit: 1 }, { enabled });
+    const commentsQuery = useListCommentsByTargetQuery(
+        { targetId: companyId!, relationTo: commentsRelation, limit: 1 },
+        { enabled },
+    );
 
     return {
         jobs: jobsQuery.data?.Jobs?.totalDocs ?? 0,

@@ -1,8 +1,12 @@
 import * as React from "react";
+
+import { useAuth } from "react-oidc-context";
+
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
-import { useAuth } from "react-oidc-context";
+
 import { useEndpointContext } from "./EndpointContext";
+
 type EndpointAction = () => void | Promise<void>;
 type PendingAction = {
     action: EndpointAction;
@@ -95,7 +99,9 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     }, [authUrl, pendingAction, runPendingAction]);
     const items: MenuProps["items"] = urls.map((endpoint) => ({
         key: endpoint.value,
-        label: endpoint.name?.trim() ? `${endpoint.name} (${toEndpointShort(endpoint.value)})` : toEndpointShort(endpoint.value),
+        label: endpoint.name?.trim()
+            ? `${endpoint.name} (${toEndpointShort(endpoint.value)})`
+            : toEndpointShort(endpoint.value),
     }));
     const onMenuClick: MenuProps["onClick"] = (info) => {
         const url = String(info.key);

@@ -1,5 +1,10 @@
 query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-    Jobs(draft: false, where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }, limit: $limit, page: $page) {
+    Jobs(
+        draft: false
+        where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }
+        limit: $limit
+        page: $page
+    ) {
         docs {
             id
             isSubscribed
