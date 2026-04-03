@@ -1,5 +1,6 @@
 import type { GraphqlOperationResult, GraphqlVariables, MockScenarioState } from "../types";
 import { listPublished, normalizeRelationId, normalizeRelationIds, toArray, toPage } from "./shared";
+import { toCart } from "./commerce";
 import { toCompany, toIdentity, toJob, toProduct, toStartup } from "./entities";
 
 export const handleCollectionQueries = (
@@ -195,6 +196,18 @@ export const handleCollectionQueries = (
                     docs,
                     totalDocs: docs.length,
                 },
+            },
+        };
+    }
+
+    if (operationName === "CartBySecret") {
+        const secret = typeof variables.secret === "string" ? variables.secret : "";
+        const docs = toArray(state.carts)
+            .filter((cart) => cart.secret === secret)
+            .map((cart) => toCart(state, cart));
+        return {
+            data: {
+                Carts: toPage(docs, variables),
             },
         };
     }

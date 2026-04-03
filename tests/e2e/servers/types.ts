@@ -372,6 +372,7 @@ export type MockScenarioState = {
 
 export type MockScenarioSeed = Partial<Omit<MockScenarioState, "currentScenario" | "serverURL">> & {
     extends?: string;
+    denseCollections?: boolean;
 };
 
 export type MockScenarioCatalog = {

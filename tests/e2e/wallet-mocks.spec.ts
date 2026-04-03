@@ -5,6 +5,11 @@ test.beforeEach(async ({ page }) => {
     await page.goto(PLAYWRIGHT_ROUTE_PATH);
 });
 
+test.beforeEach(async ({ request }) => {
+    await request.post("http://127.0.0.1:3021/__admin/reset");
+    await request.post("http://127.0.0.1:3022/__admin/reset");
+});
+
 test("sends native ETH through the MetaMask mock", async ({ page }) => {
     await page.getByRole("button", { name: "Connect MetaMask mock" }).click();
     await expect(page.getByTestId("evm-address")).toContainText(EVM_WALLET_MOCK.sender);

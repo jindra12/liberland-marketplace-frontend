@@ -557,6 +557,18 @@
                     }
                 }
             ]
+        },
+        "pagination": {
+            "extends": "default",
+            "denseCollections": true,
+            "syndications": [
+                {
+                    "id": "beta-syndication-alpha",
+                    "url": "http://127.0.0.1:4101",
+                    "name": "Alpha Mock Market",
+                    "description": "Cross-server syndication feed for alpha content."
+                }
+            ]
         }
     }
 }

@@ -10,10 +10,11 @@ const solanaConfig = config.wallets.solana;
 
 const SYSTEM_PROGRAM_ID = "11111111111111111111111111111111";
 const BLOCKHASH = "EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k";
-const balances = new Map([
+const initialBalances = new Map([
     [solanaConfig.sender, solanaConfig.initialSenderLamports],
     [solanaConfig.recipient, solanaConfig.initialRecipientLamports],
 ]);
+const balances = new Map(initialBalances);
 let signatureCounter = 0;
 
 type SolanaRpcRequest = {
@@ -62,6 +63,14 @@ const accountInfo = (address?: string) => {
     };
 };
 
+const resetState = () => {
+    balances.clear();
+    initialBalances.forEach((value, key) => {
+        balances.set(key, value);
+    });
+    signatureCounter = 0;
+};
+
 const server = http.createServer(async (request, response) => {
     if (request.method === "OPTIONS") {
         sendJson(response, 200, { ok: true });
@@ -77,6 +86,14 @@ const server = http.createServer(async (request, response) => {
         sendJson(response, 200, {
             sender: balances.get(solanaConfig.sender),
             recipient: balances.get(solanaConfig.recipient),
+        });
+        return;
+    }
+
+    if (request.method === "POST" && request.url === "/__admin/reset") {
+        resetState();
+        sendJson(response, 200, {
+            ok: true,
         });
         return;
     }

@@ -7,6 +7,7 @@ import type {
     MockScenarioState,
     SequenceState,
 } from "./types";
+import { expandDenseScenario } from "./mockGraphqlScenarios";
 import { loadJson } from "./utils";
 
 const isObject = (value: JsonValue | undefined): value is JsonObject => {
@@ -100,7 +101,7 @@ const normalizeScenarioState = (
     scenarioName: string,
     serverURL: string,
 ): MockScenarioState => {
-    return {
+    return expandDenseScenario({
         activeUserId: scenarioState.activeUserId ?? null,
         carts: scenarioState.carts ?? [],
         comments: scenarioState.comments ?? [],
@@ -119,7 +120,8 @@ const normalizeScenarioState = (
         startups: scenarioState.startups ?? [],
         syndications: scenarioState.syndications ?? [],
         users: scenarioState.users ?? [],
-    };
+        denseCollections: scenarioState.denseCollections,
+    });
 };
 
 export const createMockGraphqlRuntime = (fixturePath: string, serverURL: string): MockGraphqlRuntime => {

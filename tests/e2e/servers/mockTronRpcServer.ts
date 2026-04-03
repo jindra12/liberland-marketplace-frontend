@@ -8,10 +8,11 @@ const port = Number(args.port);
 const config = loadJson<WalletMocksConfig>(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
 const tronConfig = config.wallets.tron;
 
-const balances = new Map([
+const initialBalances = new Map([
     [tronConfig.senderHex, tronConfig.initialSenderSun],
     [tronConfig.recipientHex, tronConfig.initialRecipientSun],
 ]);
+const balances = new Map(initialBalances);
 
 const blockTimestamp = Date.now();
 const block = {
@@ -52,6 +53,14 @@ const toTransactionInfo = (txID: string | undefined) => ({
 
 const transactions = new Map<string, TronSignedTransaction>();
 
+const resetState = () => {
+    balances.clear();
+    initialBalances.forEach((value, key) => {
+        balances.set(key, value);
+    });
+    transactions.clear();
+};
+
 const server = http.createServer(async (request, response) => {
     if (request.method === "OPTIONS") {
         sendJson(response, 200, { ok: true });
@@ -67,6 +76,14 @@ const server = http.createServer(async (request, response) => {
         sendJson(response, 200, {
             sender: balances.get(tronConfig.senderHex),
             recipient: balances.get(tronConfig.recipientHex),
+        });
+        return;
+    }
+
+    if (request.method === "POST" && request.url === "/__admin/reset") {
+        resetState();
+        sendJson(response, 200, {
+            ok: true,
         });
         return;
     }
