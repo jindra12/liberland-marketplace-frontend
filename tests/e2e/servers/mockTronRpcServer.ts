@@ -1,10 +1,11 @@
 import http from "node:http";
 
-import { loadJson, parseCliArgs, readJsonBody, sendJson } from "./utils.mjs";
+import type { WalletMocksConfig } from "./types";
+import { loadJson, parseCliArgs, readJsonBody, sendJson } from "./utils";
 
 const args = parseCliArgs(process.argv.slice(2));
 const port = Number(args.port);
-const config = loadJson(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
+const config = loadJson<WalletMocksConfig>(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
 const tronConfig = config.wallets.tron;
 
 const balances = new Map([
@@ -23,14 +24,33 @@ const block = {
     },
 };
 
-const toTransactionInfo = (txID) => ({
+type TronTransactionRequest = {
+    address?: string;
+    raw_data?: {
+        contract?: Array<{
+            parameter?: {
+                value?: {
+                    amount?: number | string | null;
+                    owner_address?: string;
+                    to_address?: string;
+                };
+            };
+        }>;
+    };
+    txID?: string;
+    value?: string;
+};
+
+type TronSignedTransaction = TronTransactionRequest;
+
+const toTransactionInfo = (txID: string | undefined) => ({
     id: txID,
     receipt: {
         result: "SUCCESS",
     },
 });
 
-const transactions = new Map();
+const transactions = new Map<string, TronSignedTransaction>();
 
 const server = http.createServer(async (request, response) => {
     if (request.method === "OPTIONS") {
@@ -56,7 +76,7 @@ const server = http.createServer(async (request, response) => {
         return;
     }
 
-    const body = await readJsonBody(request);
+    const body = await readJsonBody<TronTransactionRequest>(request);
 
     if (request.url === "/wallet/getblock") {
         sendJson(response, 200, block);
@@ -66,23 +86,23 @@ const server = http.createServer(async (request, response) => {
     if (request.url === "/wallet/getaccount" || request.url === "/walletsolidity/getaccount") {
         sendJson(response, 200, {
             address: body.address,
-            balance: balances.get(body.address) ?? 0,
+            balance: balances.get(body.address ?? "") ?? 0,
         });
         return;
     }
 
     if (request.url === "/wallet/broadcasttransaction") {
-        const signedTransaction = body;
+        const signedTransaction = body as TronSignedTransaction;
         const value = signedTransaction.raw_data?.contract?.[0]?.parameter?.value;
-        const from = value?.owner_address;
-        const to = value?.to_address;
+        const from = value?.owner_address ?? "";
+        const to = value?.to_address ?? "";
         const amount = Number(value?.amount ?? 0);
         const fromBalance = balances.get(from) ?? 0;
 
         if (fromBalance < amount) {
             sendJson(response, 200, {
                 result: false,
-                txid: signedTransaction.txID,
+                txid: signedTransaction.txID ?? "",
                 code: "CONTRACT_VALIDATE_ERROR",
                 message: "insufficient funds",
             });
@@ -91,17 +111,17 @@ const server = http.createServer(async (request, response) => {
 
         balances.set(from, fromBalance - amount);
         balances.set(to, (balances.get(to) ?? 0) + amount);
-        transactions.set(signedTransaction.txID, signedTransaction);
+        transactions.set(signedTransaction.txID ?? "", signedTransaction);
 
         sendJson(response, 200, {
             result: true,
-            txid: signedTransaction.txID,
+            txid: signedTransaction.txID ?? "",
         });
         return;
     }
 
     if (request.url === "/wallet/gettransactionbyid" || request.url === "/walletsolidity/gettransactionbyid") {
-        sendJson(response, 200, transactions.get(body.value) ?? {});
+        sendJson(response, 200, transactions.get(body.value ?? "") ?? {});
         return;
     }
 

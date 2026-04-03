@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "allowJs": false,
+        "incremental": false,
+        "noImplicitAny": true,
+        "strict": false,
+        "types": ["node"]
+    },
+    "include": ["playwright.config.ts", "tests/e2e/**/*.ts"],
+    "exclude": ["node_modules"]
+}

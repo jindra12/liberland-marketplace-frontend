@@ -1,4 +1,5 @@
 import type { BrowserContext } from "@playwright/test";
+import type { JsonValue } from "../servers/types";
 
 import {
     EVM_WALLET_MOCK,
@@ -12,6 +13,74 @@ type InitScriptPayload = {
     solanaRpcUrl: string;
     solana: typeof SOLANA_WALLET_MOCK;
     tron: typeof TRON_WALLET_MOCK;
+};
+
+type EvmTransactionRequest = {
+    from?: string | null;
+    to?: string | null;
+    value?: string | number | bigint | null;
+};
+
+type EthereumTransactionInput = EvmTransactionRequest | string | number | bigint | null | undefined;
+
+type EvmRequest = {
+    method: string;
+    params?: EthereumTransactionInput[];
+};
+
+type EvmProvider = {
+    isMetaMask: boolean;
+    on: () => void;
+    removeListener: () => void;
+    request: (props: EvmRequest) => Promise<string[] | string | null>;
+    selectedAddress: string;
+};
+
+type SolanaPublicKey = {
+    toBase58: () => string;
+    toString: () => string;
+};
+
+type SolanaInstructionData = Uint8Array | number[] | { data?: number[] } | string | null | undefined;
+
+type SolanaInstruction = {
+    data?: SolanaInstructionData;
+    keys?: Array<{ pubkey?: string | SolanaPublicKey | null }>;
+};
+
+type SolanaTransaction = {
+    instructions?: SolanaInstruction[];
+};
+
+type SolanaProvider = {
+    connect: () => Promise<{ publicKey: SolanaPublicKey }>;
+    disconnect: () => Promise<void>;
+    isPhantom: boolean;
+    isSolflare: boolean;
+    off: () => void;
+    on: () => void;
+    publicKey: SolanaPublicKey;
+    sendTransaction: (transaction: SolanaTransaction) => Promise<string>;
+};
+
+type TronSignableTransaction = Record<string, JsonValue | undefined>;
+
+type TronLinkProvider = {
+    ready: boolean;
+    request: (props: { method: string }) => Promise<{ code: number; message: string; address?: string }>;
+    tronWeb: {
+        defaultAddress: {
+            base58: string;
+            hex: string;
+        };
+        trx: {
+            sign: (transaction: TronSignableTransaction) => Promise<TronSignableTransaction & { signature: string[] }>;
+        };
+    };
+};
+
+type TronWebProvider = TronLinkProvider["tronWeb"] & {
+    ready: boolean;
 };
 
 export const installWalletMocks = async (context: BrowserContext): Promise<void> => {
@@ -33,16 +102,21 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
 
         const toHex = (value: bigint) => `0x${value.toString(16)}`;
 
-        (window as typeof window & { ethereum?: unknown }).ethereum = {
+        const toEvmTransaction = (value: EthereumTransactionInput): EvmTransactionRequest => {
+            if (typeof value === "object" && value !== null) {
+                return value as EvmTransactionRequest;
+            }
+
+            return {};
+        };
+
+        const ethereumProvider: EvmProvider = {
             isMetaMask: true,
             selectedAddress: scriptPayload.evm.sender,
             request: async ({
                 method,
                 params,
-            }: {
-                method: string;
-                params?: unknown[];
-            }) => {
+            }: EvmRequest) => {
                 if (method === "eth_requestAccounts" || method === "eth_accounts") {
                     return [scriptPayload.evm.sender];
                 }
@@ -57,7 +131,7 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
                 }
 
                 if (method === "eth_sendTransaction") {
-                    const transaction = params?.[0];
+                    const transaction = toEvmTransaction(params?.[0]);
                     const from = String(transaction?.from ?? scriptPayload.evm.sender).toLowerCase();
                     const to = String(transaction?.to ?? scriptPayload.evm.recipient).toLowerCase();
                     const value = BigInt(String(transaction?.value ?? "0"));
@@ -80,7 +154,7 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             toString: () => address,
         });
 
-        const toUint8Array = (value: unknown): Uint8Array => {
+        const toUint8Array = (value: SolanaInstructionData): Uint8Array => {
             if (value instanceof Uint8Array) {
                 return value;
             }
@@ -96,7 +170,7 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             return new Uint8Array();
         };
 
-        const getInstructionAddress = (value: unknown): string => {
+        const getInstructionAddress = (value: string | SolanaPublicKey | null | undefined): string => {
             if (typeof value === "string") {
                 return value;
             }
@@ -108,12 +182,7 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             return "";
         };
 
-        const applySolanaTransfer = async (transaction: {
-            instructions?: Array<{
-                data?: unknown;
-                keys?: Array<{ pubkey?: unknown }>;
-            }>;
-        }) => {
+        const applySolanaTransfer = async (transaction: SolanaTransaction) => {
             const instruction = transaction.instructions?.find((candidate) => candidate.keys?.length === 2);
             if (!instruction?.keys) {
                 throw new Error("Mock Solana wallet could not find a transfer instruction");
@@ -162,19 +231,12 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             disconnect: async () => {},
             on: () => {},
             off: () => {},
-            sendTransaction: async (transaction: {
-                instructions?: Array<{
-                    data?: unknown;
-                    keys?: Array<{ pubkey?: unknown }>;
-                }>;
-            }) => {
+            sendTransaction: async (transaction: SolanaTransaction) => {
                 return applySolanaTransfer(transaction);
             },
-        };
+        } satisfies SolanaProvider;
 
-        (window as typeof window & { solana?: unknown }).solana = solanaProvider;
-        (window as typeof window & { solflare?: unknown }).solflare = solanaProvider;
-        (window as typeof window & { phantom?: { solana?: unknown } }).phantom = {
+        const phantomProvider = {
             solana: {
                 ...solanaProvider,
                 isSolflare: false,
@@ -182,16 +244,16 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             },
         };
 
-        const signTransaction = async (transaction: Record<string, unknown>) => {
+        const signTransaction = async (transaction: TronSignableTransaction) => {
             return {
                 ...transaction,
                 signature: [`playwright-tron-signature-${Date.now()}`],
             };
         };
 
-        (window as typeof window & { tronLink?: unknown }).tronLink = {
+        const tronLinkProvider: TronLinkProvider = {
             ready: true,
-            request: async ({ method }: { method: string }) => {
+            request: async ({ method }) => {
                 if (method === "tron_requestAccounts") {
                     return {
                         code: 200,
@@ -213,7 +275,7 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
             },
         };
 
-        (window as typeof window & { tronWeb?: unknown }).tronWeb = {
+        const tronWebProvider: TronWebProvider = {
             ready: true,
             defaultAddress: {
                 base58: scriptPayload.tron.sender,
@@ -223,5 +285,36 @@ export const installWalletMocks = async (context: BrowserContext): Promise<void>
                 sign: signTransaction,
             },
         };
+
+        Object.defineProperty(window, "ethereum", {
+            configurable: true,
+            value: ethereumProvider,
+            writable: true,
+        });
+        Object.defineProperty(window, "solana", {
+            configurable: true,
+            value: solanaProvider,
+            writable: true,
+        });
+        Object.defineProperty(window, "solflare", {
+            configurable: true,
+            value: solanaProvider,
+            writable: true,
+        });
+        Object.defineProperty(window, "phantom", {
+            configurable: true,
+            value: phantomProvider,
+            writable: true,
+        });
+        Object.defineProperty(window, "tronLink", {
+            configurable: true,
+            value: tronLinkProvider,
+            writable: true,
+        });
+        Object.defineProperty(window, "tronWeb", {
+            configurable: true,
+            value: tronWebProvider,
+            writable: true,
+        });
     }, payload);
 };

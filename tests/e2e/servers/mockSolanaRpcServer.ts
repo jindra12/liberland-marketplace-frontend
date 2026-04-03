@@ -1,10 +1,11 @@
 import http from "node:http";
 
-import { loadJson, parseCliArgs, readJsonBody, sendJson } from "./utils.mjs";
+import type { JsonValue, WalletMocksConfig } from "./types";
+import { loadJson, parseCliArgs, readJsonBody, sendJson } from "./utils";
 
 const args = parseCliArgs(process.argv.slice(2));
 const port = Number(args.port);
-const config = loadJson(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
+const config = loadJson<WalletMocksConfig>(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
 const solanaConfig = config.wallets.solana;
 
 const SYSTEM_PROGRAM_ID = "11111111111111111111111111111111";
@@ -15,13 +16,29 @@ const balances = new Map([
 ]);
 let signatureCounter = 0;
 
-const rpcResult = (id, result) => ({
+type SolanaRpcRequest = {
+    id?: JsonValue;
+    method?: string;
+    params?: JsonValue[];
+};
+
+type SolanaTransferRequest = {
+    from: string;
+    lamports: number;
+    to: string;
+};
+
+const toStringParam = (value: JsonValue | undefined): string | undefined => {
+    return typeof value === "string" ? value : undefined;
+};
+
+const rpcResult = (id: JsonValue | null, result: JsonValue) => ({
     jsonrpc: "2.0",
     id,
     result,
 });
 
-const rpcError = (id, message) => ({
+const rpcError = (id: JsonValue | null, message: string) => ({
     jsonrpc: "2.0",
     id,
     error: {
@@ -30,15 +47,15 @@ const rpcError = (id, message) => ({
     },
 });
 
-const accountInfo = (address) => {
-    if (!balances.has(address)) {
+const accountInfo = (address?: string) => {
+    if (!address || !balances.has(address)) {
         return null;
     }
 
     return {
         data: ["", "base64"],
         executable: false,
-        lamports: balances.get(address),
+        lamports: balances.get(address) ?? 0,
         owner: SYSTEM_PROGRAM_ID,
         rentEpoch: 0,
         space: 0,
@@ -69,7 +86,7 @@ const server = http.createServer(async (request, response) => {
         return;
     }
 
-    const body = await readJsonBody(request);
+    const body = await readJsonBody<SolanaRpcRequest>(request);
     const id = body.id ?? null;
 
     if (body.method === "getAccountInfo") {
@@ -78,7 +95,7 @@ const server = http.createServer(async (request, response) => {
             200,
             rpcResult(id, {
                 context: { slot: 1 },
-                value: accountInfo(body.params?.[0]),
+                value: accountInfo(toStringParam(body.params?.[0])),
             }),
         );
         return;
@@ -90,7 +107,7 @@ const server = http.createServer(async (request, response) => {
             200,
             rpcResult(id, {
                 context: { slot: 1 },
-                value: balances.get(body.params?.[0]) ?? 0,
+                value: balances.get(toStringParam(body.params?.[0]) ?? "") ?? 0,
             }),
         );
         return;
@@ -129,7 +146,7 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (body.method === "mockApplySystemTransfer") {
-        const transfer = body.params?.[0];
+        const transfer = body.params?.[0] as SolanaTransferRequest;
         const fromBalance = balances.get(transfer.from) ?? 0;
         if (fromBalance < transfer.lamports) {
             sendJson(response, 200, rpcError(id, "insufficient funds"));

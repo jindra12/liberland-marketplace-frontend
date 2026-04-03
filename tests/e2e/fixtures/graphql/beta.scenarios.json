@@ -1,0 +1,562 @@
+{
+    "defaultScenario": "default",
+    "scenarios": {
+        "default": {
+            "activeUserId": "beta-user-complete",
+            "sequences": {
+                "analytics": 1,
+                "cart": 1,
+                "comment": 20,
+                "notificationSubscription": 1,
+                "order": 1,
+                "transactionHash": 1
+            },
+            "syndications": [
+                {
+                    "id": "beta-syndication-alpha",
+                    "url": "http://127.0.0.1:4101",
+                    "name": "Alpha Mock Market",
+                    "description": "Cross-server syndication feed for alpha content."
+                }
+            ],
+            "users": [
+                {
+                    "id": "beta-user-complete",
+                    "name": "Bela Complete",
+                    "email": "bela.complete@beta.mock",
+                    "phone": "+1 555 0200",
+                    "shippingAddress": {
+                        "title": "Headquarters",
+                        "firstName": "Bela",
+                        "lastName": "Complete",
+                        "company": "Beta Ecosystem Labs",
+                        "addressLine1": "101 Syndication Avenue",
+                        "addressLine2": "Suite 8",
+                        "city": "Prague",
+                        "state": "Prague",
+                        "postalCode": "11000",
+                        "country": "CZ",
+                        "phone": "+420 123 456 789"
+                    },
+                    "wallets": [
+                        {
+                            "chain": "ethereum",
+                            "provider": "MetaMask",
+                            "address": "0xb220000000000000000000000000000000000001"
+                        },
+                        {
+                            "chain": "solana",
+                            "provider": "Solflare",
+                            "address": "37uA3NZg5dwbVdiHWabcZqoS1zL3ygbq36Bw7zzsL3uz"
+                        },
+                        {
+                            "chain": "tron",
+                            "provider": "TronLink",
+                            "address": "TBXSw8fM4jpQkGc6zZjsVABFpVN7UvXPdV"
+                        }
+                    ]
+                },
+                {
+                    "id": "beta-user-founder",
+                    "name": "Milo Founder",
+                    "email": "milo.founder@beta.mock",
+                    "phone": "+1 555 0201",
+                    "shippingAddress": null,
+                    "wallets": []
+                },
+                {
+                    "id": "beta-user-designer",
+                    "name": "Nika Designer",
+                    "email": "nika.designer@beta.mock",
+                    "phone": "+1 555 0202",
+                    "shippingAddress": null,
+                    "wallets": []
+                }
+            ],
+            "identities": [
+                {
+                    "id": "beta-identity-network",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Syndicate Network",
+                    "description": "A tribe of companies focused on commerce infrastructure, hiring and venture incubation.",
+                    "website": "https://network.beta.mock",
+                    "priority": 98,
+                    "image": {
+                        "id": "media-beta-identity-network",
+                        "url": "https://cdn.beta.mock/identities/syndicate-network.png",
+                        "alt": "Syndicate Network mark",
+                        "filename": "syndicate-network.png",
+                        "width": 640,
+                        "height": 640,
+                        "mimeType": "image/png"
+                    }
+                },
+                {
+                    "id": "beta-identity-partial",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Quiet Orbit",
+                    "description": null,
+                    "website": null,
+                    "priority": 48,
+                    "image": null
+                }
+            ],
+            "companies": [
+                {
+                    "id": "beta-company-ecosystem",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Beta Ecosystem Labs",
+                    "_status": "published",
+                    "description": "A fully populated company mock with connected hiring, startup and checkout data.",
+                    "cryptoAddresses": {
+                        "chain": "solana",
+                        "address": "7PG2TreWcobPwBUKoPwTXgZyx9S44rhFZ7cPiHrF25US"
+                    },
+                    "website": "https://ecosystem.beta.mock",
+                    "phone": "+1 555 0210",
+                    "email": "hello@ecosystem.beta.mock",
+                    "allowedIdentities": [
+                        "beta-identity-partial"
+                    ],
+                    "disallowedIdentities": [],
+                    "createdBy": "beta-user-founder",
+                    "identity": "beta-identity-network",
+                    "priority": 99,
+                    "image": {
+                        "id": "media-beta-company-ecosystem",
+                        "url": "https://cdn.beta.mock/companies/beta-ecosystem-labs.png",
+                        "alt": "Beta Ecosystem Labs campus",
+                        "filename": "beta-ecosystem-labs.png",
+                        "width": 1400,
+                        "height": 900,
+                        "mimeType": "image/png"
+                    }
+                },
+                {
+                    "id": "beta-company-tools",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Orbit Tools",
+                    "_status": "published",
+                    "description": "An auxiliary company used for linked identity and commerce coverage.",
+                    "cryptoAddresses": {
+                        "chain": "ethereum",
+                        "address": "0xb220000000000000000000000000000000000099"
+                    },
+                    "website": "https://orbit-tools.beta.mock",
+                    "phone": "+1 555 0211",
+                    "email": "hello@orbit-tools.beta.mock",
+                    "allowedIdentities": [],
+                    "disallowedIdentities": [],
+                    "createdBy": "beta-user-founder",
+                    "identity": "beta-identity-network",
+                    "priority": 72,
+                    "image": {
+                        "id": "media-beta-company-tools",
+                        "url": "https://cdn.beta.mock/companies/orbit-tools.png",
+                        "alt": "Orbit Tools workshop",
+                        "filename": "orbit-tools.png",
+                        "width": 1200,
+                        "height": 900,
+                        "mimeType": "image/png"
+                    }
+                }
+            ],
+            "jobs": [
+                {
+                    "id": "beta-job-ops",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Operations Generalist",
+                    "_status": "published",
+                    "description": "Own marketplace operations and keep merchant onboarding moving.",
+                    "location": "Remote",
+                    "employmentType": "part-time",
+                    "positions": 1,
+                    "postedAt": "2026-03-10T09:00:00.000Z",
+                    "isActive": true,
+                    "applyUrl": "https://ecosystem.beta.mock/jobs/ops",
+                    "bounty": null,
+                    "salaryRange": null,
+                    "allowedIdentities": [],
+                    "disallowedIdentities": [],
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "priority": 60,
+                    "image": null
+                },
+                {
+                    "id": "beta-job-designer",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Senior Product Designer",
+                    "_status": "published",
+                    "description": "Design merchant, checkout and syndication flows for a multi-chain marketplace.",
+                    "location": "Prague / Remote",
+                    "employmentType": "contract",
+                    "positions": 2,
+                    "postedAt": "2026-03-12T09:00:00.000Z",
+                    "isActive": true,
+                    "applyUrl": "https://ecosystem.beta.mock/jobs/designer",
+                    "bounty": {
+                        "amount": "150",
+                        "currency": "USD"
+                    },
+                    "salaryRange": {
+                        "min": 4500,
+                        "max": 6500,
+                        "currency": "USD"
+                    },
+                    "allowedIdentities": [
+                        "beta-identity-partial"
+                    ],
+                    "disallowedIdentities": [],
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "priority": 92,
+                    "image": {
+                        "id": "media-beta-job-designer",
+                        "url": "https://cdn.beta.mock/jobs/senior-product-designer.png",
+                        "alt": "Designer role card",
+                        "filename": "senior-product-designer.png",
+                        "width": 1200,
+                        "height": 630,
+                        "mimeType": "image/png"
+                    }
+                },
+                {
+                    "id": "beta-job-rust",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Rust Infrastructure Engineer",
+                    "_status": "published",
+                    "description": "Ship services that reconcile carts, orders and syndicated listings.",
+                    "location": "Remote EU",
+                    "employmentType": "full-time",
+                    "positions": 1,
+                    "postedAt": "2026-03-14T09:00:00.000Z",
+                    "isActive": true,
+                    "applyUrl": "https://ecosystem.beta.mock/jobs/rust",
+                    "bounty": {
+                        "amount": "300",
+                        "currency": "USD"
+                    },
+                    "salaryRange": {
+                        "min": 6500,
+                        "max": 9000,
+                        "currency": "USD"
+                    },
+                    "allowedIdentities": [],
+                    "disallowedIdentities": [],
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "priority": 88,
+                    "image": {
+                        "id": "media-beta-job-rust",
+                        "url": "https://cdn.beta.mock/jobs/rust-infrastructure-engineer.png",
+                        "alt": "Rust engineer role card",
+                        "filename": "rust-infrastructure-engineer.png",
+                        "width": 1200,
+                        "height": 630,
+                        "mimeType": "image/png"
+                    }
+                }
+            ],
+            "startups": [
+                {
+                    "id": "beta-startup-scout",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Scout Ledger",
+                    "_status": "published",
+                    "description": "A lightweight startup mock with only the essentials filled in.",
+                    "stage": "idea",
+                    "lookingFor": "co-founder",
+                    "alreadyHave": "customer interviews",
+                    "fundsNeeded": {
+                        "amount": "25000",
+                        "currency": "USD"
+                    },
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "identity": "beta-identity-network",
+                    "involvedUsers": [
+                        "beta-user-founder"
+                    ],
+                    "priority": 58,
+                    "createdAt": "2026-03-08T09:00:00.000Z",
+                    "updatedAt": "2026-03-08T09:00:00.000Z",
+                    "image": null
+                },
+                {
+                    "id": "beta-startup-payments",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Checkout Relay",
+                    "_status": "published",
+                    "description": "A rich startup mock covering wallet preference, payment routing and order recovery.",
+                    "stage": "seed",
+                    "lookingFor": "senior frontend engineer",
+                    "alreadyHave": "beta product and 12 pilot merchants",
+                    "fundsNeeded": {
+                        "amount": "350000",
+                        "currency": "USD"
+                    },
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "identity": "beta-identity-network",
+                    "involvedUsers": [
+                        "beta-user-founder",
+                        "beta-user-designer"
+                    ],
+                    "priority": 91,
+                    "createdAt": "2026-03-09T09:00:00.000Z",
+                    "updatedAt": "2026-03-16T09:00:00.000Z",
+                    "image": {
+                        "id": "media-beta-startup-payments",
+                        "url": "https://cdn.beta.mock/startups/checkout-relay.png",
+                        "alt": "Checkout Relay teaser",
+                        "filename": "checkout-relay.png",
+                        "width": 1200,
+                        "height": 630,
+                        "mimeType": "image/png"
+                    }
+                },
+                {
+                    "id": "beta-startup-logistics",
+                    "serverURL": "{{SERVER_URL}}",
+                    "title": "Orbit Freight",
+                    "_status": "published",
+                    "description": "A logistics venture connected to the second company for relationship coverage.",
+                    "stage": "pre-seed",
+                    "lookingFor": "supply chain lead",
+                    "alreadyHave": "merchant waitlist",
+                    "fundsNeeded": {
+                        "amount": "120000",
+                        "currency": "USD"
+                    },
+                    "company": "beta-company-tools",
+                    "createdBy": "beta-user-founder",
+                    "identity": "beta-identity-network",
+                    "involvedUsers": [
+                        "beta-user-founder"
+                    ],
+                    "priority": 75,
+                    "createdAt": "2026-03-11T09:00:00.000Z",
+                    "updatedAt": "2026-03-15T09:00:00.000Z",
+                    "image": {
+                        "id": "media-beta-startup-logistics",
+                        "url": "https://cdn.beta.mock/startups/orbit-freight.png",
+                        "alt": "Orbit Freight teaser",
+                        "filename": "orbit-freight.png",
+                        "width": 1200,
+                        "height": 630,
+                        "mimeType": "image/png"
+                    }
+                }
+            ],
+            "products": [
+                {
+                    "id": "beta-product-node",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Validator Node Kit",
+                    "_status": "published",
+                    "inventory": 12,
+                    "enableVariants": false,
+                    "variantTypes": [],
+                    "variants": [],
+                    "priceInUSDEnabled": true,
+                    "priceInUSD": 49,
+                    "priceInETH": "0.02",
+                    "priceInSOL": "0.3",
+                    "priceInTRX": "240",
+                    "description": "A ready-to-run node deployment bundle for syndication partners.",
+                    "cryptoAddresses": {
+                        "chain": "ethereum",
+                        "address": "0xb220000000000000000000000000000000007001"
+                    },
+                    "url": "https://store.beta.mock/products/validator-node-kit",
+                    "orderable": true,
+                    "properties": [
+                        {
+                            "id": "beta-product-node-prop-runtime",
+                            "key": "runtime",
+                            "value": "linux"
+                        }
+                    ],
+                    "company": "beta-company-ecosystem",
+                    "createdBy": "beta-user-founder",
+                    "priority": 86,
+                    "createdAt": "2026-03-05T09:00:00.000Z",
+                    "updatedAt": "2026-03-15T09:00:00.000Z",
+                    "deletedAt": null,
+                    "image": {
+                        "id": "media-beta-product-node",
+                        "url": "https://cdn.beta.mock/products/validator-node-kit.png",
+                        "alt": "Validator Node Kit",
+                        "filename": "validator-node-kit.png",
+                        "width": 1200,
+                        "height": 1200,
+                        "mimeType": "image/png"
+                    }
+                },
+                {
+                    "id": "beta-product-membership",
+                    "serverURL": "{{SERVER_URL}}",
+                    "name": "Orbit Membership",
+                    "_status": "published",
+                    "inventory": null,
+                    "enableVariants": false,
+                    "variantTypes": [],
+                    "variants": [],
+                    "priceInUSDEnabled": true,
+                    "priceInUSD": 15,
+                    "priceInETH": "0.006",
+                    "priceInSOL": "0.09",
+                    "priceInTRX": "72",
+                    "description": "A recurring operator membership tied to Orbit Tools support.",
+                    "cryptoAddresses": {
+                        "chain": "solana",
+                        "address": "7PG2TreWcobPwBUKoPwTXgZyx9S44rhFZ7cPiHrF25US"
+                    },
+                    "url": "https://store.beta.mock/products/orbit-membership",
+                    "orderable": true,
+                    "properties": [
+                        {
+                            "id": "beta-product-membership-prop-plan",
+                            "key": "plan",
+                            "value": "operator"
+                        }
+                    ],
+                    "company": "beta-company-tools",
+                    "createdBy": "beta-user-founder",
+                    "priority": 67,
+                    "createdAt": "2026-03-06T09:00:00.000Z",
+                    "updatedAt": "2026-03-16T09:00:00.000Z",
+                    "deletedAt": null,
+                    "image": {
+                        "id": "media-beta-product-membership",
+                        "url": "https://cdn.beta.mock/products/orbit-membership.png",
+                        "alt": "Orbit Membership card",
+                        "filename": "orbit-membership.png",
+                        "width": 1200,
+                        "height": 1200,
+                        "mimeType": "image/png"
+                    }
+                }
+            ],
+            "comments": [
+                {
+                    "id": "beta-comment-job",
+                    "content": "This role looks unusually well scoped for a remote team.",
+                    "createdBy": "beta-user-designer",
+                    "anonymousHash": "beta-job-thread",
+                    "replyPostRelationTo": "jobs",
+                    "replyPostValue": "beta-job-designer",
+                    "replyComment": null,
+                    "createdAt": "2026-03-18T10:00:00.000Z",
+                    "updatedAt": "2026-03-18T10:00:00.000Z"
+                },
+                {
+                    "id": "beta-comment-job-reply",
+                    "content": "Thanks, we tried to make the hiring expectations very explicit.",
+                    "createdBy": "beta-user-founder",
+                    "anonymousHash": "beta-job-thread",
+                    "replyPostRelationTo": "jobs",
+                    "replyPostValue": "beta-job-designer",
+                    "replyComment": "beta-comment-job",
+                    "createdAt": "2026-03-18T12:00:00.000Z",
+                    "updatedAt": "2026-03-18T12:00:00.000Z"
+                }
+            ],
+            "notificationSubscriptions": [],
+            "carts": [],
+            "orders": []
+        },
+        "empty": {
+            "extends": "default",
+            "syndications": [],
+            "identities": [],
+            "companies": [],
+            "jobs": [],
+            "startups": [],
+            "products": [],
+            "comments": [],
+            "notificationSubscriptions": [],
+            "carts": [],
+            "orders": []
+        },
+        "prefilled-checkout": {
+            "extends": "default",
+            "notificationSubscriptions": [
+                {
+                    "id": "beta-subscription-job",
+                    "email": "bela.complete@beta.mock",
+                    "targetCollection": "jobs",
+                    "targetID": "beta-job-designer"
+                }
+            ],
+            "carts": [
+                {
+                    "id": "beta-cart-1",
+                    "secret": "beta-cart-secret-1",
+                    "status": "active",
+                    "currency": "USD",
+                    "subtotal": 98,
+                    "createdAt": "2026-03-20T09:00:00.000Z",
+                    "updatedAt": "2026-03-20T09:00:00.000Z",
+                    "purchasedAt": null,
+                    "customer": "beta-user-complete",
+                    "items": [
+                        {
+                            "id": "beta-cart-item-1",
+                            "quantity": 2,
+                            "product": "beta-product-node",
+                            "variant": null
+                        }
+                    ]
+                }
+            ],
+            "orders": [
+                {
+                    "id": "beta-order-1",
+                    "status": "pending-payment",
+                    "payerAddress": "0xb220000000000000000000000000000000000001",
+                    "customer": "beta-user-complete",
+                    "transactions": [],
+                    "cryptoPrices": [
+                        {
+                            "id": "beta-order-1-price-eth",
+                            "chain": "ethereum",
+                            "stablePerNative": "2450",
+                            "nativePerStable": "0.0004081632653",
+                            "expectedNativeAmount": "0.04",
+                            "fetchedAt": "2026-03-20T09:00:00.000Z"
+                        }
+                    ],
+                    "transactionHashes": [],
+                    "currency": "USD",
+                    "amount": 98,
+                    "customerEmail": "bela.complete@beta.mock",
+                    "createdAt": "2026-03-20T09:05:00.000Z",
+                    "updatedAt": "2026-03-20T09:05:00.000Z",
+                    "items": [
+                        {
+                            "id": "beta-order-item-1",
+                            "quantity": 2,
+                            "product": "beta-product-node",
+                            "variant": null
+                        }
+                    ],
+                    "shippingAddress": {
+                        "title": "Headquarters",
+                        "firstName": "Bela",
+                        "lastName": "Complete",
+                        "company": "Beta Ecosystem Labs",
+                        "addressLine1": "101 Syndication Avenue",
+                        "addressLine2": "Suite 8",
+                        "city": "Prague",
+                        "state": "Prague",
+                        "postalCode": "11000",
+                        "country": "CZ",
+                        "phone": "+420 123 456 789"
+                    }
+                }
+            ]
+        }
+    }
+}
