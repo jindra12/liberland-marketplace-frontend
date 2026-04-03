@@ -1,0 +1,18 @@
+{
+    "ListPublishedSyndicationUrls": {
+        "Syndications": {
+            "docs": [
+                {
+                    "name": "Alpha Mock Market",
+                    "url": "http://127.0.0.1:4101/api/graphql",
+                    "description": "First syndicated backend fixture."
+                },
+                {
+                    "name": "Beta Mock Market",
+                    "url": "http://127.0.0.1:4102/api/graphql",
+                    "description": "Second syndicated backend fixture."
+                }
+            ]
+        }
+    }
+}
