@@ -18,7 +18,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
         {
             searchTerm: term,
             limit: 5,
-            page: 0,
+            page: 1,
         },
         {
             enabled: term.length > 0,

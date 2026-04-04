@@ -29,7 +29,7 @@ const Order: React.FunctionComponent = () => {
     const navigate = useNavigate();
     const { enabled } = useEndpointContext();
 
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);

@@ -18,7 +18,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
         {
             searchTerm: term,
             limit: 5,
-            page: 0,
+            page: 1,
         },
         {
             enabled: term.length > 0,
