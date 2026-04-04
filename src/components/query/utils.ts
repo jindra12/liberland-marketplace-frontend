@@ -9,16 +9,6 @@ import mergeWith from "lodash-es/mergeWith";
 
 type QueryResult<TData> = UseQueryResult<TData, Error>;
 
-type MergeableValue =
-    | boolean
-    | null
-    | number
-    | string
-    | MergeableValue[]
-    | {
-          [key: string]: MergeableValue | undefined;
-      };
-
 const specialMergeStrategies = {
     hasNextPage: (leftValue: boolean, rightValue: boolean) => Boolean(leftValue || rightValue),
     hasPrevPage: (leftValue: boolean, rightValue: boolean) => Boolean(leftValue || rightValue),
@@ -42,7 +32,7 @@ const getMaxQueryMetric = <TData>(
 
 const mergeQueryData = <TQuery, TResult>(
     values: TQuery[],
-    mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult,
+    mergeAction: (left: TQuery | TResult, right?: TQuery | TResult) => TResult,
 ): TQuery | TResult | undefined => {
     if (values.length === 0) {
         return undefined;
@@ -52,11 +42,11 @@ const mergeQueryData = <TQuery, TResult>(
 
     return remainingValues.reduce<TQuery | TResult>((currentValue, value) => {
         return mergeAction(currentValue, value);
-    }, firstValue);
+    }, mergeAction(firstValue));
 };
 
-export const deepMergeConcatArrays = <T, E = T>(left: T, right: T): E => {
-    return mergeWith({}, left, right, (leftValue: MergeableValue, rightValue: MergeableValue, key) => {
+export const deepMergeConcatArrays = <T, E = T>(left: T, right?: T): E => {
+    return mergeWith({}, left, right || {}, (leftValue: any, rightValue: any, key) => {
         if (rightValue === null || rightValue === undefined) {
             return leftValue;
         }
@@ -69,21 +59,14 @@ export const deepMergeConcatArrays = <T, E = T>(left: T, right: T): E => {
             return [...leftValue, ...rightValue];
         }
 
-        if (typeof key === "string" && Object.prototype.hasOwnProperty.call(specialMergeStrategies, key)) {
-            const strategy = specialMergeStrategies[key as keyof typeof specialMergeStrategies] as (
-                leftValue: MergeableValue,
-                rightValue: MergeableValue,
-            ) => MergeableValue;
-            return strategy(leftValue, rightValue);
-        }
-
-        return undefined;
+        const strategy = (specialMergeStrategies as any)[key as any];
+        return strategy?.(leftValue, rightValue);
     }) as E;
 };
 
 export const combineResult = <TQuery, TResult = TQuery>(
     results: readonly QueryResult<TQuery>[],
-    mergeAction: (left: TQuery | TResult, right: TQuery | TResult) => TResult,
+    mergeAction: (left: TQuery | TResult, right?: TQuery | TResult) => TResult,
 ): QueryResult<TResult> => {
     const dataValues = results.flatMap((result) => {
         return result.data === undefined ? [] : [result.data];
