@@ -1,6 +1,8 @@
+import * as React from "react";
+
+import { WalletMockPlaygroundPage } from "../../src/components/testing/WalletMockPlayground/WalletMockPlaygroundPage";
 import {
     EVM_WALLET_MOCK,
-    PLAYWRIGHT_ROUTE_PATH,
     SOLANA_RPC_URL,
     SOLANA_WALLET_MOCK,
     TRON_RPC_URL,
@@ -8,14 +10,13 @@ import {
 } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
 
-test.beforeEach(async ({ page, network }) => {
-    await page.goto(PLAYWRIGHT_ROUTE_PATH);
-    expect(network.requests.some((request) => request.url.includes(PLAYWRIGHT_ROUTE_PATH))).toBeTruthy();
-});
-
 test.beforeEach(async ({ request }) => {
     await request.post(`${SOLANA_RPC_URL}/__admin/reset`);
     await request.post(`${TRON_RPC_URL}/__admin/reset`);
+});
+
+test.beforeEach(async ({ mount }) => {
+    await mount(React.createElement(WalletMockPlaygroundPage));
 });
 
 test("sends native ETH through the MetaMask mock", async ({ page, network }) => {
@@ -25,7 +26,6 @@ test("sends native ETH through the MetaMask mock", async ({ page, network }) => 
     await page.getByRole("button", { name: "Send 0.1 ETH" }).click();
     await expect(page.getByTestId("evm-tx")).not.toContainText("n/a");
     await expect(page.getByTestId("evm-recipient-balance")).toContainText("0.6000");
-    expect(network.requests.some((request) => request.url.includes(PLAYWRIGHT_ROUTE_PATH))).toBeTruthy();
 });
 
 test("sends native SOL through the Solana mock", async ({ page, network }) => {

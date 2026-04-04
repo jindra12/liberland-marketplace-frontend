@@ -263,7 +263,7 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
                 },
                 ...params,
             })),
-            combine: (result) => combineResult(result, mergeAction as any),
+            combine: (result) => combineResult(result, mergeAction as any) as UseQueryResult<TResult>,
         });
     };
 };

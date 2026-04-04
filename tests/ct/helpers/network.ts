@@ -4,6 +4,8 @@ import type { Request } from "@playwright/test";
 import type { GraphqlBody, GraphqlVariables, JsonObject, JsonValue } from "../servers/types";
 import { toOperationName } from "../servers/utils";
 
+const NETWORK_TIMEOUT_MS = 20000;
+
 export type RecordedRequest = {
     method: string;
     postData: string | null;
@@ -79,7 +81,7 @@ export const expectGraphqlRequest = async (
             return Boolean(request);
         },
         {
-            timeout: 60000,
+            timeout: NETWORK_TIMEOUT_MS,
         },
     ).toBeTruthy();
 

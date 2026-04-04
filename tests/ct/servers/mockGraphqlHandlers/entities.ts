@@ -288,7 +288,7 @@ export const toStartup = (
     state: MockScenarioState,
     startup: MockWithId & {
         _status?: string;
-        alreadyHave?: string | null;
+        alreadyHave?: string[] | null;
         company?: string | null;
         createdAt?: string | null;
         createdBy?: string | null;
@@ -297,7 +297,7 @@ export const toStartup = (
         image?: JsonValue;
         identity?: string | null;
         involvedUsers?: JsonValue;
-        lookingFor?: string | null;
+        lookingFor?: string[] | null;
         priority?: number;
         serverURL?: string;
         stage?: string | null;

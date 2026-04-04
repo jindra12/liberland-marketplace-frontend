@@ -1,7 +1,11 @@
+import * as React from "react";
+
+import Main from "../../src/Main";
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
 import {
     clickVisibleLink,
+    clickHeaderLink,
     clickSplashSectionLink,
     goHome,
     resetMockScenario,
@@ -18,7 +22,7 @@ const betaUrl = SYNDICATION_SERVERS[1].url;
 
 test.describe.configure({ mode: "serial" });
 
-test.beforeEach(async ({ page, request }) => {
+test.beforeEach(async ({ page, request, mount }) => {
     await resetMockScenario(request, alphaUrl);
     await resetMockScenario(request, betaUrl, "pagination");
     await setMarketplaceEndpoints(page, [
@@ -33,6 +37,10 @@ test.beforeEach(async ({ page, request }) => {
             value: alphaUrl,
         },
     ]);
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await goHome(page);
 });
 
@@ -40,35 +48,35 @@ test("anonymous users can reach every list page and load more results", async ({
     const listPages = [
         {
             label: "Jobs",
-            open: async () => clickSplashSectionLink(page, "Jobs"),
+            open: async () => clickHeaderLink(page, "Jobs"),
             operationName: "ListJobs",
             title: "Jobs",
             url: /\/jobs$/,
         },
         {
             label: "Products / Services",
-            open: async () => clickSplashSectionLink(page, "Products / Services"),
+            open: async () => clickHeaderLink(page, "Market"),
             operationName: "ListProducts",
             title: "Products / Services",
             url: /\/products-services$/,
         },
         {
             label: "Companies",
-            open: async () => clickSplashSectionLink(page, "Companies"),
+            open: async () => clickHeaderLink(page, "Companies"),
             operationName: "ListCompanies",
             title: "Companies",
             url: /\/companies$/,
         },
         {
             label: "Ventures",
-            open: async () => clickSplashSectionLink(page, "Ventures"),
+            open: async () => clickHeaderLink(page, "Ventures"),
             operationName: "ListStartups",
             title: "Ventures",
             url: /\/ventures$/,
         },
         {
             label: "Tribes",
-            open: async () => clickSplashSectionLink(page, "Tribes"),
+            open: async () => clickHeaderLink(page, "Tribes"),
             operationName: "ListIdentities",
             title: "Tribes",
             url: /\/tribes$/,
@@ -79,9 +87,9 @@ test("anonymous users can reach every list page and load more results", async ({
         await goHome(page);
         await waitForSplashContent(page);
         await listPage.open();
-        await waitForCollectionContent(page);
         await expect(page).toHaveURL(listPage.url);
-        await expect(page.getByRole("heading", { name: listPage.title })).toBeVisible();
+        await waitForCollectionContent(page);
+        await expect(page.locator(".AppList__title")).toHaveText(listPage.title);
         await expectGraphqlRequest(network.graphqlRequests, listPage.operationName);
 
         if (listPage.label === "Tribes") {

@@ -1,3 +1,6 @@
+import * as React from "react";
+
+import Main from "../../src/Main";
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
 import {
@@ -6,6 +9,7 @@ import {
     openSyndicationPage,
     resetMockScenario,
     setMarketplaceEndpoints,
+    waitForCollectionContent,
     waitForDetailContent,
     waitForSplashContent,
 } from "./helpers/marketplace";
@@ -16,7 +20,7 @@ const betaUrl = SYNDICATION_SERVERS[1].url;
 
 test.describe.configure({ mode: "serial" });
 
-test("anonymous users do not see syndication when there is only one server", async ({ page, request, network }) => {
+test("anonymous users do not see syndication when there is only one server", async ({ page, request, network, mount }) => {
     await resetMockScenario(request, alphaUrl);
     await setMarketplaceEndpoints(page, [
         {
@@ -25,6 +29,10 @@ test("anonymous users do not see syndication when there is only one server", asy
             value: alphaUrl,
         },
     ]);
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await goHome(page);
     await waitForSplashContent(page);
 
@@ -33,7 +41,7 @@ test("anonymous users do not see syndication when there is only one server", asy
     await expectGraphqlRequest(network.graphqlRequests, "ListPublishedSyndicationUrls");
 });
 
-test("anonymous users can open the syndication menu and toggle a syndicated server", async ({ page, request, network }) => {
+test("anonymous users can open the syndication menu and toggle a syndicated server", async ({ page, request, network, mount }) => {
     await resetMockScenario(request, alphaUrl);
     await resetMockScenario(request, betaUrl);
     await setMarketplaceEndpoints(page, [
@@ -48,11 +56,15 @@ test("anonymous users can open the syndication menu and toggle a syndicated serv
             value: alphaUrl,
         },
     ]);
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await goHome(page);
     await waitForSplashContent(page);
 
     await openSyndicationPage(page);
-    await waitForDetailContent(page);
+    await waitForCollectionContent(page);
     await expect(page.getByRole("heading", { name: "Syndication" })).toBeVisible();
     await page.getByRole("link", { name: "Alpha Mock Market" }).click();
     await waitForDetailContent(page);

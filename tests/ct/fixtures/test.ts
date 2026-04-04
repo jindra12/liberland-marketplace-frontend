@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { expect, test as base } from "@playwright/test";
+import { expect, test as base } from "@playwright/experimental-ct-react";
 
 import { installWalletMocks } from "./walletMocks";
 import { createRequestRecorder } from "../helpers/network";

@@ -1,6 +1,8 @@
 import http from "node:http";
 import type { ServerResponse } from "node:http";
 
+import cors from "cors";
+
 import { handleGraphqlOperation } from "./mockGraphqlHandlers/index";
 import { createMockGraphqlRuntime } from "./mockGraphqlRuntime";
 import type { GraphqlBody, GraphqlOperationResult } from "./types";
@@ -11,6 +13,11 @@ const port = Number(args.port);
 const fixturePath = String(args.fixture);
 const serverURL = `http://127.0.0.1:${port}`;
 const runtime = createMockGraphqlRuntime(fixturePath, serverURL);
+const corsMiddleware = cors({
+    origin: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+});
 
 const sendScenarioSummary = (response: ServerResponse) => {
     sendJson(response, 200, {
@@ -22,8 +29,13 @@ const sendScenarioSummary = (response: ServerResponse) => {
 };
 
 const server = http.createServer(async (request, response) => {
-    if (request.method === "OPTIONS") {
-        sendJson(response, 200, { ok: true });
+    const requestUrl = request.url ?? "";
+
+    if (request.method === "OPTIONS" && requestUrl.startsWith("/api/graphql")) {
+        corsMiddleware(request, response, () => {
+            response.writeHead(204);
+            response.end();
+        });
         return;
     }
 
@@ -86,7 +98,7 @@ const server = http.createServer(async (request, response) => {
         return;
     }
 
-    if (request.method !== "POST" || request.url !== "/api/graphql") {
+    if (request.method !== "POST" || requestUrl !== "/api/graphql") {
         sendJson(response, 404, { error: "Not found" });
         return;
     }

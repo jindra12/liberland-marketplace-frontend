@@ -1,5 +1,8 @@
+import * as React from "react";
+
 import type { Page } from "@playwright/test";
 
+import Main from "../../src/Main";
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
 import {
@@ -11,6 +14,7 @@ import {
     waitForCollectionContent,
     waitForDetailContent,
     waitForSplashContent,
+    E2E_TIMEOUT_MS,
 } from "./helpers/marketplace";
 import { expectGraphqlRequest, isJsonObject } from "./helpers/network";
 
@@ -19,7 +23,7 @@ const betaUrl = SYNDICATION_SERVERS[1].url;
 
 test.describe.configure({ mode: "serial" });
 
-test.beforeEach(async ({ page, request }) => {
+test.beforeEach(async ({ page, request, mount }) => {
     await resetMockScenario(request, alphaUrl);
     await resetMockScenario(request, betaUrl, "pagination");
     await setMarketplaceEndpoints(page, [
@@ -34,6 +38,10 @@ test.beforeEach(async ({ page, request }) => {
             value: alphaUrl,
         },
     ]);
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await goHome(page);
     await waitForSplashContent(page);
 });
@@ -43,7 +51,7 @@ const addAnonymousComment = async (page: Page, commentText: string) => {
     await expect(commentsSection).toBeVisible();
     await commentsSection.getByPlaceholder("Write your comment...").fill(commentText);
     await commentsSection.getByRole("button", { name: "Post" }).click();
-    await expect(commentsSection).toContainText(commentText, { timeout: 60000 });
+    await expect(commentsSection).toContainText(commentText, { timeout: E2E_TIMEOUT_MS });
 };
 
 const openProductDetail = async (page: Page, productName: string) => {
@@ -60,8 +68,12 @@ test("anonymous users can add a comment to a product detail page", async ({ page
     const commentText = `Playwright product comment ${Date.now()}`;
     await addAnonymousComment(page, commentText);
     await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
-        const data = request.variables.data;
-        return Boolean(isJsonObject(data) && data.content === commentText);
+        const replyToPost = request.variables.replyToPost;
+        return Boolean(
+            request.variables.content === commentText &&
+                isJsonObject(replyToPost) &&
+                replyToPost.value === "dense-4102-product-eth-1",
+        );
     });
 });
 
@@ -75,7 +87,11 @@ test("anonymous users can add a comment to a company discussion tab", async ({ p
     const commentText = `Playwright company comment ${Date.now()}`;
     await addAnonymousComment(page, commentText);
     await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
-        const data = request.variables.data;
-        return Boolean(isJsonObject(data) && data.content === commentText);
+        const replyToPost = request.variables.replyToPost;
+        return Boolean(
+            request.variables.content === commentText &&
+                isJsonObject(replyToPost) &&
+                replyToPost.value === "dense-4102-company-payments",
+        );
     });
 });

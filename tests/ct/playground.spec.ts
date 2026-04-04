@@ -1,8 +1,11 @@
+import * as React from "react";
+
+import Main from "../../src/Main";
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { setMarketplaceEndpoints } from "./helpers/marketplace";
 import { test } from "./fixtures/test";
 
-test("playground", async ({ page }) => {
+test("playground", async ({ page, mount }) => {
     const [alphaServer, betaServer] = SYNDICATION_SERVERS;
     await setMarketplaceEndpoints(page, [
         {
@@ -16,6 +19,9 @@ test("playground", async ({ page }) => {
             value: alphaServer.url,
         },
     ]);
-    await page.goto("/");
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await page.pause();
 });

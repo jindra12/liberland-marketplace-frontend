@@ -179,7 +179,7 @@ export type MockFundsNeeded = {
 
 export type MockStartup = {
     _status?: string;
-    alreadyHave?: string | null;
+    alreadyHave?: string[] | null;
     company?: string | null;
     createdAt?: string | null;
     createdBy?: string | null;
@@ -189,7 +189,7 @@ export type MockStartup = {
     identity?: string | null;
     image?: MockImage | null;
     involvedUsers?: string[];
-    lookingFor?: string | null;
+    lookingFor?: string[] | null;
     priority?: number;
     serverURL?: string;
     stage?: string | null;

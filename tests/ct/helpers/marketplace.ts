@@ -1,6 +1,10 @@
 import { expect } from "@playwright/test";
 import type { APIRequestContext, Page } from "@playwright/test";
 
+export const E2E_TIMEOUT_MS = 20000;
+export const E2E_NAVIGATION_TIMEOUT_MS = 45000;
+const E2E_LOADER_TIMEOUT_MS = 15000;
+
 export type MarketplaceEndpoint = {
     description?: string;
     enabled: boolean;
@@ -9,10 +13,17 @@ export type MarketplaceEndpoint = {
 };
 
 export const setMarketplaceEndpoints = async (page: Page, endpoints: MarketplaceEndpoint[]) => {
-    await page.addInitScript((storedEndpoints: MarketplaceEndpoint[]) => {
+    await page.evaluate((storedEndpoints: MarketplaceEndpoint[]) => {
         localStorage.clear();
         localStorage.setItem("endpoints.urls", JSON.stringify(storedEndpoints));
     }, endpoints);
+};
+
+export const navigateToPath = async (page: Page, path: string) => {
+    await page.evaluate((nextPath: string) => {
+        window.history.pushState({}, "", nextPath);
+        window.dispatchEvent(new PopStateEvent("popstate"));
+    }, path);
 };
 
 export const setMockScenario = async (request: APIRequestContext, url: string, scenario: string) => {
@@ -78,31 +89,28 @@ export const resetMockScenario = async (request: APIRequestContext, url: string,
 };
 
 export const goHome = async (page: Page) => {
-    await page.goto("/", {
-        waitUntil: "domcontentloaded",
-        timeout: 60000,
-    });
+    await navigateToPath(page, "/");
 };
 
 const waitForLoaderTransition = async (page: Page, selector: string) => {
     const loader = page.locator(selector);
-    const appeared = await expect(loader).toBeVisible({ timeout: 4000 }).then(() => true).catch(() => false);
+    const appeared = await expect(loader).toBeVisible({ timeout: E2E_LOADER_TIMEOUT_MS }).then(() => true).catch(() => false);
     if (!appeared) {
         return;
     }
 
-    await expect(loader).toBeHidden({ timeout: 60000 });
+    await expect(loader).toBeHidden({ timeout: E2E_TIMEOUT_MS });
 };
 
 export const waitForSplashContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--splashSections");
-    await expect(page.locator(".SplashEntityCard__titleLink").first()).toBeVisible({ timeout: 60000 });
+    await expect(page.locator(".SplashPage__hero")).toBeVisible({ timeout: E2E_TIMEOUT_MS });
 };
 
 export const waitForCollectionContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--collection");
-    await expect(page.locator(".InfinityScroll .ant-list-item, .IdentityList__title").first()).toBeVisible({
-        timeout: 60000,
+    await expect(page.locator(".AppList__title")).toBeVisible({
+        timeout: E2E_TIMEOUT_MS,
     });
 };
 
@@ -110,15 +118,15 @@ export const waitForDetailContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--detail");
     await expect(
         page.locator(".EntityDetail__title, .JobDetail__title, .StartupDetail__title").first(),
-    ).toHaveText(/.+/, { timeout: 60000 });
+    ).toHaveText(/.+/, { timeout: E2E_TIMEOUT_MS });
 };
 
 export const openAppMenu = async (page: Page) => {
     const openMenuButton = page.getByRole("button", { name: "Open menu" });
     if (await openMenuButton.count()) {
         await openMenuButton.click();
-        await expect(page.locator(".AppHeader__desktopDrawer .ant-drawer-content-wrapper")).toBeVisible({
-            timeout: 60000,
+        await expect(page.locator(".AppHeader__desktopDrawerNav")).toBeVisible({
+            timeout: E2E_TIMEOUT_MS,
         });
         return;
     }
@@ -126,8 +134,8 @@ export const openAppMenu = async (page: Page) => {
     const openNavigationButton = page.getByRole("button", { name: "Open navigation" });
     if (await openNavigationButton.count()) {
         await openNavigationButton.click();
-        await expect(page.locator(".AppHeader__drawer .ant-drawer-content-wrapper")).toBeVisible({
-            timeout: 60000,
+        await expect(page.locator(".AppHeader__drawerBody")).toBeVisible({
+            timeout: E2E_TIMEOUT_MS,
         });
     }
 };
@@ -150,17 +158,13 @@ export const clickVisibleLink = async (page: Page, label: string) => {
 
 export const clickSplashSectionLink = async (page: Page, label: string) => {
     const link = page.locator(".SplashEntityCard__titleLink").filter({ hasText: label }).first();
-    await expect(link).toBeVisible({ timeout: 60000 });
+    await expect(link).toBeVisible({ timeout: E2E_TIMEOUT_MS });
     await link.click();
 };
 
 export const scrollToBottom = async (page: Page) => {
     await page.locator("body").click({ position: { x: 10, y: 10 } });
     await page.keyboard.press("End");
-    for (let index = 0; index < 5; index += 1) {
-        await page.mouse.wheel(0, 4000);
-        await page.waitForTimeout(100);
-    }
     await page.evaluate(() => {
         const scrollTarget = document.querySelector(".InfinityScroll") as HTMLElement | null;
         const infiniteScrollComponent = document.querySelector(".infinite-scroll-component") as HTMLElement | null;
@@ -188,12 +192,12 @@ export const scrollToBottom = async (page: Page) => {
 
 export const openSyndicationPage = async (page: Page) => {
     await openAppMenu(page);
-    const drawerNav = page.locator(".AppHeader__drawerNav");
-    const syndicationLink = drawerNav.getByRole("link", { name: "Syndication" });
+    const drawerNavs = page.locator(".AppHeader__drawerNav, .AppHeader__desktopDrawerNav");
+    const syndicationLink = drawerNavs.getByRole("link", { name: "Syndication" }).first();
     if (await syndicationLink.count()) {
         await syndicationLink.click();
         return;
     }
 
-    await page.getByRole("link", { name: "Manage endpoints" }).click();
+    await page.locator(".SplashPage__syndicationManageBtn").click();
 };

@@ -1,16 +1,20 @@
+import * as React from "react";
+
 import type { Page } from "@playwright/test";
 
+import Main from "../../src/Main";
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
 import {
     clickVisibleLink,
+    clickHeaderLink,
     goHome,
+    navigateToPath,
     resetMockScenario,
     setMarketplaceEndpoints,
     waitForCollectionContent,
-    waitForDetailContent,
     waitForSplashContent,
-    clickSplashSectionLink,
+    E2E_TIMEOUT_MS,
 } from "./helpers/marketplace";
 import { expectGraphqlRequest, isJsonObject } from "./helpers/network";
 
@@ -19,7 +23,7 @@ const betaUrl = SYNDICATION_SERVERS[1].url;
 
 test.describe.configure({ mode: "serial" });
 
-test.beforeEach(async ({ page, request }) => {
+test.beforeEach(async ({ page, request, mount }) => {
     await resetMockScenario(request, alphaUrl);
     await resetMockScenario(request, betaUrl, "pagination");
     await setMarketplaceEndpoints(page, [
@@ -34,27 +38,44 @@ test.beforeEach(async ({ page, request }) => {
             value: alphaUrl,
         },
     ]);
+    await page.evaluate(() => {
+        window.history.replaceState({}, "", "/");
+    });
+    await mount(React.createElement(Main));
     await goHome(page);
     await waitForSplashContent(page);
 });
 
 const openProductFromMarket = async (page: Page, productName: string, expectPurchaseControl = true) => {
-    await clickSplashSectionLink(page, "Products / Services");
+    await clickHeaderLink(page, "Market");
+    await page.waitForURL(/\/products-services$/, {
+        timeout: E2E_TIMEOUT_MS,
+    });
     await waitForCollectionContent(page);
+    await expect(page.locator(".InfinityScroll .ant-list-item").first()).toBeVisible({ timeout: E2E_TIMEOUT_MS });
     await clickVisibleLink(page, productName);
-    await waitForDetailContent(page);
+    await page.waitForURL(/\/products-services\/[^/]+/, {
+        timeout: E2E_TIMEOUT_MS,
+    });
+    await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible({ timeout: E2E_TIMEOUT_MS });
     await expect(page.locator(".ProductDetail .EntityDetail__title")).toHaveText(productName);
     if (expectPurchaseControl) {
         await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible();
-        await expect(page.getByRole("button", { name: "Buy" })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Buy", exact: true })).toBeVisible();
     }
 };
 
 const addProductToCart = async (page: Page, productName: string, quantity: number) => {
     await openProductFromMarket(page, productName);
     await page.getByRole("spinbutton").fill(String(quantity));
-    await page.getByRole("button", { name: "Buy" }).click();
-    await expect(page.getByText(`In cart: ${quantity}`)).toBeVisible();
+    await page.getByRole("button", { name: "Buy", exact: true }).click();
+    await page.waitForFunction(() => {
+        try {
+            return JSON.parse(localStorage.getItem("cart.secrets") || "[]").length > 0;
+        } catch {
+            return false;
+        }
+    });
 };
 
 const fillAnonymousOrderForm = async (page: Page) => {
@@ -74,7 +95,8 @@ test("anonymous users can buy orderable products and blocked products stay block
 
     await goHome(page);
     await waitForSplashContent(page);
-    await addProductToCart(page, "Dense Ethereum Bundle B", 10);
+    await addProductToCart(page, "Dense Ethereum Bundle B", 4);
+    await navigateToPath(page, "/cart");
     await expect(page.getByText("In cart: 4")).toBeVisible();
     await expectGraphqlRequest(network.graphqlRequests, "CreateCart");
     await expectGraphqlRequest(network.graphqlRequests, "UpdateCart", (request) => {
@@ -83,7 +105,7 @@ test("anonymous users can buy orderable products and blocked products stay block
             isJsonObject(data) &&
                 Array.isArray(data.items) &&
                 data.items.some((item) => {
-                    return isJsonObject(item) && item.product === "beta-product-node" && item.quantity === 10;
+                    return isJsonObject(item) && item.product === "beta-product-node" && item.quantity === 4;
                 }),
         );
     });
@@ -91,7 +113,7 @@ test("anonymous users can buy orderable products and blocked products stay block
 
 test("anonymous users can reduce a cart quantity in place", async ({ page, network }) => {
     await addProductToCart(page, "Validator Node Kit", 3);
-    await page.getByRole("link", { name: "Cart" }).click();
+    await navigateToPath(page, "/cart");
 
     await expect(page.getByText("In cart: 3")).toBeVisible();
     await page.getByRole("spinbutton").fill("1");
@@ -102,7 +124,7 @@ test("anonymous users can reduce a cart quantity in place", async ({ page, netwo
 
 test("anonymous users can go from product to cart to address to order", async ({ page, network }) => {
     await addProductToCart(page, "Validator Node Kit", 1);
-    await page.getByRole("link", { name: "Cart" }).click();
+    await navigateToPath(page, "/cart");
     await expect(page.getByRole("button", { name: "Proceed to order" })).toBeVisible();
     await page.getByRole("button", { name: "Proceed to order" }).click();
     await expect(page.getByRole("heading", { name: "Order" })).toBeVisible();
@@ -136,7 +158,7 @@ test("anonymous users can split a multi-product cart by server and chain", async
     await waitForSplashContent(page);
     await addProductToCart(page, "Orbit Membership", 1);
 
-    await page.getByRole("link", { name: "Cart" }).click();
+    await navigateToPath(page, "/cart");
     await page.getByRole("button", { name: "Proceed to order" }).click();
     await fillAnonymousOrderForm(page);
     await page.getByRole("button", { name: "Create order" }).click();

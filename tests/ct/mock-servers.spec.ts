@@ -266,7 +266,7 @@ test("mock servers cover linked companies jobs startups identities and product o
     expect(betaJobs.data.Jobs.totalDocs).toBe(3);
     expect(betaStartups.data.Startups.totalDocs).toBe(2);
     expect(betaIdentity.data.Identity?.description).toBe(null);
-    expect(betaIdentityCompanies.data.Companies.totalDocs).toBe(2);
+    expect(betaIdentityCompanies.data.Companies.totalDocs).toBe(25);
 });
 
 test("mock servers support subscriptions carts orders and profile updates with stateful responses", async ({ request }) => {

@@ -87,8 +87,8 @@ const buildDenseStartup = (
         _status: "published",
         description: `Synthetic venture ${index} used for pagination coverage.`,
         stage: index % 3 === 0 ? "idea" : index % 3 === 1 ? "seed" : "pre-seed",
-        lookingFor: "generalist",
-        alreadyHave: "early users",
+        lookingFor: index % 2 === 0 ? ["team", "funding"] : ["product"],
+        alreadyHave: index % 2 === 0 ? ["traction"] : ["founders", "product"],
         fundsNeeded: {
             amount: String(25000 + index * 1000),
             currency: "USD",

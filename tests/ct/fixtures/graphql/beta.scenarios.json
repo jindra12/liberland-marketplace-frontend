@@ -267,8 +267,14 @@
                     "_status": "published",
                     "description": "A lightweight startup mock with only the essentials filled in.",
                     "stage": "idea",
-                    "lookingFor": "co-founder",
-                    "alreadyHave": "customer interviews",
+                    "lookingFor": [
+                        "founders",
+                        "funding"
+                    ],
+                    "alreadyHave": [
+                        "product",
+                        "traction"
+                    ],
                     "fundsNeeded": {
                         "amount": "25000",
                         "currency": "USD"
@@ -291,8 +297,12 @@
                     "_status": "published",
                     "description": "A rich startup mock covering wallet preference, payment routing and order recovery.",
                     "stage": "seed",
-                    "lookingFor": "senior frontend engineer",
-                    "alreadyHave": "beta product and 12 pilot merchants",
+                    "lookingFor": [
+                        "team"
+                    ],
+                    "alreadyHave": [
+                        "product"
+                    ],
                     "fundsNeeded": {
                         "amount": "350000",
                         "currency": "USD"
@@ -324,8 +334,13 @@
                     "_status": "published",
                     "description": "A logistics venture connected to the second company for relationship coverage.",
                     "stage": "pre-seed",
-                    "lookingFor": "supply chain lead",
-                    "alreadyHave": "merchant waitlist",
+                    "lookingFor": [
+                        "distribution"
+                    ],
+                    "alreadyHave": [
+                        "funding",
+                        "traction"
+                    ],
                     "fundsNeeded": {
                         "amount": "120000",
                         "currency": "USD"
