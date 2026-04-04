@@ -6,6 +6,8 @@ import {
     UseMutationResult,
     UseQueryOptions,
     UseQueryResult,
+    Query,
+    useQueryClient,
 } from "@tanstack/react-query";
 import {
     CartBySecretDocument,
@@ -236,11 +238,29 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
     ) => {
         const { enabled } = useEndpointContext();
         const urls = variables?.url ? [variables.url] : enabled;
+        const client = useQueryClient();
 
         return useQueries({
             queries: urls.map((url) => ({
                 queryKey: [...useHook.getKey(variables as TVariables), url],
                 queryFn: gqlFetcher<TQueryFnData, TVariables>(query, variables as TVariables, options, url),
+                enabled: (query: Query) => {
+                    const variables = (
+                        query.queryKey as object[]
+                    )[1];
+                    if (variables && "page" in variables) {
+                        const { page } = variables as { page: number };
+                        const prevKey = useHook.getKey({
+                            ...variables,
+                            page: page - 1,
+                        } as TVariables);
+                        const prevQuery = client.getQueryData(prevKey) as {
+                            hasNextPage?: boolean,
+                        };
+                        return prevQuery?.hasNextPage !== false;
+                    }
+                    return true;
+                },
                 ...params,
             })),
             combine: (result) => combineResult(result, mergeAction as any),
