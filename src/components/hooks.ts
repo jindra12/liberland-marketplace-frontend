@@ -171,14 +171,14 @@ export type GeneratedUseQueryHook<TQueryFnData, TVariables> = (<TData = TQueryFn
 };
 
 type QueryVariablesWithUrl<TVariables extends object | undefined> = TVariables extends undefined
-    ? { url?: string }
+    ? { url?: string | null }
     : TVariables extends Record<string, never>
-      ? { url?: string }
-      : TVariables & { url?: string };
+      ? { url?: string | null }
+      : TVariables & { url?: string | null };
 
 type MutationVariablesWithUrl<TVariables extends object | undefined> = (TVariables extends undefined
     ? {}
-    : TVariables) & { url?: string };
+    : TVariables) & { url?: string | null };
 
 export type GeneratedUseMutationHook<TData, TVariables extends object | undefined> = {
     <TError = unknown, TContext = unknown>(
@@ -224,10 +224,10 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
     return useEnhancedMutation;
 };
 
-export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined>(
+export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | undefined, TResult = TQueryFnData>(
     useHook: GeneratedUseQueryHook<TQueryFnData, TVariables>,
     query: string,
-    mergeAction: (a: TQueryFnData, b: TQueryFnData) => TQueryFnData = deepMergeConcatArrays,
+    mergeAction: (a: TQueryFnData, b: TQueryFnData) => TResult = deepMergeConcatArrays,
 ) => {
     return (
         variables?: QueryVariablesWithUrl<TVariables>,
@@ -243,7 +243,7 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
                 queryFn: gqlFetcher<TQueryFnData, TVariables>(query, variables as TVariables, options, url),
                 ...params,
             })),
-            combine: (result) => combineResult(result, mergeAction),
+            combine: (result) => combineResult(result, mergeAction as any),
         });
     };
 };
@@ -345,28 +345,11 @@ export const useListStartupsByIdentityQuery = enhancedQueryFactory(
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
-export const useMeUserQuery = (
-    variables?: { url?: string },
-    params?: Omit<UseQueryOptions, "queryKey" | "queryFn">,
-    options?: Headers,
-) => {
-    const { enabled } = useEndpointContext();
-    const urls = variables?.url ? [variables.url] : enabled;
-
-    return useQueries({
-        queries: urls.map((url) => ({
-            queryKey: [...useMeUserQuerySingle.getKey(undefined), url],
-            queryFn: gqlFetcher<MeUserQuery, undefined>(MeUserDocument, undefined, options, url),
-            ...params,
-        })),
-        combine: (result) =>
-            combineResult(result, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
-                const leftEntries = Array.isArray(left) ? left : [left];
-                const rightEntries = Array.isArray(right) ? right : [right];
-                return [...leftEntries, ...rightEntries];
-            }),
-    });
-};
+export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
+    const leftEntries = Array.isArray(left) ? left : [left];
+    const rightEntries = Array.isArray(right) ? right : [right];
+    return [...leftEntries, ...rightEntries];
+});
 export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);

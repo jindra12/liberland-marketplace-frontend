@@ -21,7 +21,7 @@ import type {
 export type URL = {
     enabled: boolean;
     value: string;
-    name: string;
+    name: string | null;
     description?: string | null;
 };
 
@@ -138,6 +138,7 @@ export type EntityCommentsSectionProps = {
     limit?: number;
     placeholder?: string;
     className?: string;
+    serverURL?: string | null;
 };
 
 export type CommentDoc = NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number];

@@ -9,8 +9,9 @@ import type {
 import { toArray } from "./mockGraphqlHandlers/shared";
 
 const buildDenseIdentity = (index: number, serverURL: string): MockIdentity => {
+    const serverSuffix = new URL(serverURL).port || "server";
     return {
-        id: `dense-identity-${index}`,
+        id: `dense-${serverSuffix}-identity-${index}`,
         serverURL,
         name: `Dense Tribe ${index}`,
         description: `Synthetic tribe ${index} used for pagination coverage.`,
@@ -21,16 +22,17 @@ const buildDenseIdentity = (index: number, serverURL: string): MockIdentity => {
 };
 
 const buildDenseCompany = (index: number, serverURL: string, identityId: string, createdBy?: string | null): MockCompany => {
+    const serverSuffix = new URL(serverURL).port || "server";
     return {
-        id: `dense-company-${index}`,
+        id: `dense-${serverSuffix}-company-${index}`,
         serverURL,
         name: `Dense Company ${index}`,
         _status: "published",
         description: `Synthetic company ${index} used for pagination coverage.`,
         cryptoAddresses: null,
-        website: `https://dense-company-${index}.mock`,
+        website: `https://dense-company-${serverSuffix}-${index}.mock`,
         phone: null,
-        email: `hello+dense-company-${index}@mock`,
+        email: `hello+dense-company-${serverSuffix}-${index}@mock`,
         allowedIdentities: [],
         disallowedIdentities: [],
         createdBy: createdBy ?? null,
@@ -46,8 +48,9 @@ const buildDenseJob = (
     companyId: string,
     createdBy?: string | null,
 ): MockJob => {
+    const serverSuffix = new URL(serverURL).port || "server";
     return {
-        id: `dense-job-${index}`,
+        id: `dense-${serverSuffix}-job-${index}`,
         serverURL,
         title: `Dense Job ${index}`,
         _status: "published",
@@ -57,7 +60,7 @@ const buildDenseJob = (
         positions: 1,
         postedAt: `2026-03-${String((index % 27) + 1).padStart(2, "0")}T09:00:00.000Z`,
         isActive: true,
-        applyUrl: `https://dense-company-${index}.mock/jobs/${index}`,
+        applyUrl: `https://dense-company-${serverSuffix}-${index}.mock/jobs/${index}`,
         bounty: null,
         salaryRange: null,
         allowedIdentities: [],
@@ -76,8 +79,9 @@ const buildDenseStartup = (
     identityId: string,
     createdBy?: string | null,
 ): MockStartup => {
+    const serverSuffix = new URL(serverURL).port || "server";
     return {
-        id: `dense-startup-${index}`,
+        id: `dense-${serverSuffix}-startup-${index}`,
         serverURL,
         title: `Dense Venture ${index}`,
         _status: "published",
@@ -106,8 +110,9 @@ const buildDenseProduct = (
     companyId: string,
     createdBy?: string | null,
 ): MockProduct => {
+    const serverSuffix = new URL(serverURL).port || "server";
     return {
-        id: `dense-product-${index}`,
+        id: `dense-${serverSuffix}-product-${index}`,
         serverURL,
         name: `Dense Product ${index}`,
         _status: "published",
@@ -122,7 +127,7 @@ const buildDenseProduct = (
         priceInTRX: String(75 + index * 3),
         description: `Synthetic product ${index} used for pagination coverage.`,
         cryptoAddresses: null,
-        url: `https://dense-company-${index}.mock/products/${index}`,
+        url: `https://dense-company-${serverSuffix}-${index}.mock/products/${index}`,
         orderable: true,
         properties: [],
         company: companyId,
@@ -175,16 +180,21 @@ type DenseScenarioState = MockScenarioState & {
     denseCollections?: boolean;
 };
 
+const getServerSuffix = (serverURL: string): string => {
+    return new URL(serverURL).port || "server";
+};
+
 export const expandDenseScenario = (state: DenseScenarioState): MockScenarioState => {
     if (!state.denseCollections) {
         return state;
     }
 
     const serverURL = state.serverURL;
+    const serverSuffix = getServerSuffix(serverURL);
     const createdBy = state.users[0]?.id ?? state.activeUserId ?? null;
-    const primaryIdentityId = state.identities[0]?.id ?? "dense-identity-primary";
+    const primaryIdentityId = state.identities[0]?.id ?? `dense-${serverSuffix}-identity-primary`;
     const paymentIdentityId = state.identities.find((identity) => identity.name?.includes("Network"))?.id ?? primaryIdentityId;
-    const paymentCompanyId = "dense-company-payments";
+    const paymentCompanyId = `dense-${serverSuffix}-company-payments`;
     const paymentCompany: MockCompany = {
         id: paymentCompanyId,
         serverURL,
@@ -207,7 +217,7 @@ export const expandDenseScenario = (state: DenseScenarioState): MockScenarioStat
     };
 
     const specialProducts = [
-        buildSpecialProduct(`dense-product-eth-1`, serverURL, paymentCompanyId, createdBy, {
+        buildSpecialProduct(`dense-${serverSuffix}-product-eth-1`, serverURL, paymentCompanyId, createdBy, {
             name: "Dense Ethereum Bundle A",
             priceInETH: "0.02",
             priceInUSD: 18,
@@ -216,7 +226,7 @@ export const expandDenseScenario = (state: DenseScenarioState): MockScenarioStat
             url: "https://dense-payments.mock/products/eth-a",
             priority: 998,
         }),
-        buildSpecialProduct(`dense-product-eth-2`, serverURL, paymentCompanyId, createdBy, {
+        buildSpecialProduct(`dense-${serverSuffix}-product-eth-2`, serverURL, paymentCompanyId, createdBy, {
             name: "Dense Ethereum Bundle B",
             priceInETH: "0.03",
             priceInUSD: 24,
@@ -225,7 +235,7 @@ export const expandDenseScenario = (state: DenseScenarioState): MockScenarioStat
             url: "https://dense-payments.mock/products/eth-b",
             priority: 997,
         }),
-        buildSpecialProduct(`dense-product-locked`, serverURL, paymentCompanyId, createdBy, {
+        buildSpecialProduct(`dense-${serverSuffix}-product-locked`, serverURL, paymentCompanyId, createdBy, {
             name: "Dense Advisory Locked",
             orderable: false,
             inventory: null,

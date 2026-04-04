@@ -9,6 +9,27 @@ import mergeWith from "lodash-es/mergeWith";
 
 type QueryResult<TData> = UseQueryResult<TData, Error>;
 
+type MergeableValue =
+    | boolean
+    | null
+    | number
+    | string
+    | MergeableValue[]
+    | {
+          [key: string]: MergeableValue | undefined;
+      };
+
+const specialMergeStrategies = {
+    hasNextPage: (leftValue: boolean, rightValue: boolean) => Boolean(leftValue || rightValue),
+    hasPrevPage: (leftValue: boolean, rightValue: boolean) => Boolean(leftValue || rightValue),
+    totalDocs: (leftValue: number, rightValue: number) => leftValue + rightValue,
+    totalPages: (leftValue: number, rightValue: number) => leftValue + rightValue,
+    limit: (leftValue: number, rightValue: number) => Math.max(leftValue, rightValue),
+    page: (leftValue: number, rightValue: number) => Math.min(leftValue, rightValue),
+    nextPage: (leftValue: number | null, rightValue: number | null) => leftValue ?? rightValue,
+    prevPage: (leftValue: number | null, rightValue: number | null) => leftValue ?? rightValue,
+};
+
 const getMaxQueryMetric = <TData>(
     results: readonly QueryResult<TData>[],
     selector: (result: QueryResult<TData>) => number,
@@ -34,14 +55,30 @@ const mergeQueryData = <TQuery, TResult>(
     }, firstValue);
 };
 
-export const deepMergeConcatArrays = <T>(left: T, right: T): T => {
-    return mergeWith({}, left, right, (leftValue: unknown, rightValue: unknown) => {
+export const deepMergeConcatArrays = <T, E = T>(left: T, right: T): E => {
+    return mergeWith({}, left, right, (leftValue: MergeableValue, rightValue: MergeableValue, key) => {
+        if (rightValue === null || rightValue === undefined) {
+            return leftValue;
+        }
+
+        if (leftValue === null || leftValue === undefined) {
+            return rightValue;
+        }
+
         if (Array.isArray(leftValue) && Array.isArray(rightValue)) {
             return [...leftValue, ...rightValue];
         }
 
+        if (typeof key === "string" && Object.prototype.hasOwnProperty.call(specialMergeStrategies, key)) {
+            const strategy = specialMergeStrategies[key as keyof typeof specialMergeStrategies] as (
+                leftValue: MergeableValue,
+                rightValue: MergeableValue,
+            ) => MergeableValue;
+            return strategy(leftValue, rightValue);
+        }
+
         return undefined;
-    }) as T;
+    }) as E;
 };
 
 export const combineResult = <TQuery, TResult = TQuery>(

@@ -53,7 +53,7 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
                 }}
             />
             <Divider className="StartupDetail__divider" />
-            <StartupDetailTabs startup={props.startup} startupId={props.startupId} />
+            <StartupDetailTabs startup={props.startup} startupId={props.startupId} serverURL={props.serverURL} />
         </Flex>
     );
 };

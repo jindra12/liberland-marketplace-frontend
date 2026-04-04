@@ -8,7 +8,7 @@ import type {
     ProfileServerOption,
 } from "./types";
 
-const toServerLabel = (url: string, name?: string) => {
+const toServerLabel = (url: string, name?: string | null) => {
     try {
         const parsed = new URL(url);
         const hostname = parsed.hostname.replace(/^www\./i, "");

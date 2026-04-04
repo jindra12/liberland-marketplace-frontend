@@ -20,7 +20,7 @@ const StartupDetail: React.FunctionComponent = () => {
                     return null;
                 }
 
-                return <StartupDetailContent startup={data.Startup} startupId={id!} />;
+                return <StartupDetailContent startup={data.Startup} startupId={id!} serverURL={data.Startup.serverURL} />;
             }}
         </Loader>
     );

@@ -56,7 +56,7 @@ const CompanyDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
-                        <DetailPageTracker serverUrl={companyData?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={companyData?.serverURL} />
                         <DetailBackButton to="/companies" label="Back to companies" />
                         <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
@@ -143,6 +143,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                         <EntityCommentsSection
                                             targetId={id!}
                                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                                            serverURL={companyData?.serverURL}
                                         />
                                     ),
                                 },

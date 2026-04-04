@@ -12,7 +12,62 @@
 
 - Permission request: clearly say that Codex needs approval and summarize the action.
 - Task completion: clearly say that the requested work is done.
-- Read CLAUDE.md in the same folder for further instructions
+
+## Repository Overview
+
+Liberland Marketplace Frontend is a React 18 app that connects users to syndicated free
+marketplaces. It is built with Create React App, react-app-rewired, TypeScript, Ant Design,
+GraphQL, and Tailwind-adjacent SCSS styling. The project is frontend-only and the package
+manager is `yarn`.
+
+## Commands
+
+- Use `yarn` for package management and scripts.
+- `yarn dev` starts the dev server.
+- `yarn build` creates a production build.
+- `yarn start` runs the built app.
+- `yarn test` runs the Jest/Testing Library suite.
+- `yarn test:e2e` runs Playwright.
+- `yarn playground` opens the browser playground test.
+- `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
+- `yarn lint` and `yarn lint:fix` run ESLint.
+
+## Architecture
+
+- GraphQL queries live in `src/queries/` and feed generated hooks in `src/generated/graphql.ts`.
+- `src/gqlFetcher.ts` is the shared GraphQL fetcher.
+- Components generally follow a three-layer pattern per entity: wrapper, list, and detail.
+- Search components live in `src/components/search/` and use shared autosuggest helpers.
+- Card components live in `src/components/cards/` and are reused across home, detail, and search surfaces.
+- React Router v7 defines lazy-loaded entity routes in `App.tsx`.
+- Ant Design controls most UI, with SCSS modules in `src/styles/` for custom styling.
+- Node polyfills in `config-overrides.js` support the wallet libraries.
+
+## Key Files
+
+- `src/gqlFetcher.ts` — axios-based GraphQL fetcher.
+- `src/generated/graphql.ts` — generated hooks and types, do not edit manually.
+- `src/components/AppList.tsx` — reusable infinite scroll list.
+- `src/components/Loader.tsx` — loading and error wrapper.
+- `src/components/cards/` — shared card components.
+- `codegen.ts` — GraphQL code generation config.
+- `config-overrides.js` — webpack polyfills.
+
+## Conventions
+
+- Use Ant Design components plus SCSS, not inline styles.
+- Keep component file structure small and singular-purpose.
+- TypeScript strict mode is enabled.
+- When adding or changing queries, run `yarn codegen`.
+- Startup naming stays internal; user-facing strings use Venture naming.
+
+## Playwright
+
+- Use Playwright proactively for frontend behavior changes.
+- Check the dev server on `localhost:3001`, start it if needed, then verify the affected page.
+- Use the shared test credentials from the repo context when login is required.
+- Re-test and fix any issues you find.
+- Delete any screenshots generated during test runs.
 
 ## Code Hygiene
 
@@ -25,6 +80,7 @@
 - Do not use `unknown` as a lazy stand-in for helper inputs when the data can be expressed as a concrete JSON-ish union or domain type.
 - In tests, do not use `unknown` for request bodies, fixtures, window mocks, or handler inputs. Use concrete test payload types, `JsonValue`, or small named interfaces instead.
 - Do not use `|| undefined` to coerce values. If a value can really be `null`, reflect that in the type. If a prop specifically needs `undefined`, use an explicit `!value ? undefined : value` check instead.
+- Do not use `?? undefined`. If a value can be absent, model it as `null` in the type or use a deliberate `!` assertion when the contract guarantees it.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Use `Skeleton` for page-level loading states and `Spin` for localized/action loading states.
 - In browser-only frontend code, do not add `typeof window` or similar environment guards unless there is a concrete SSR/build-time requirement already present in the repo.
@@ -41,6 +97,7 @@
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
+- If a user asks you to fix a failing test, keep running the relevant test until it passes or you have a concrete app bug to report back.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

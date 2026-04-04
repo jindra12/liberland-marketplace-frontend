@@ -5,6 +5,7 @@ export type StartupDetailEntity = NonNullable<StartupByIdQuery["Startup"]>;
 export type StartupDetailContentProps = {
     startup: StartupDetailEntity;
     startupId: string;
+    serverURL?: string | null;
 };
 
 export type StartupDetailHeaderProps = {
@@ -20,4 +21,5 @@ export type StartupDetailResourcesSectionProps = {
 export type StartupDetailTabsProps = {
     startup: StartupDetailEntity;
     startupId: string;
+    serverURL?: string | null;
 };

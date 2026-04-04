@@ -42,7 +42,7 @@ export const createEndpointEntry = (
         enabled: options.enabled ?? true,
         value: normalizedValue,
         name: options.name ?? getSyndicationHost(normalizedValue),
-        description: options.description ?? undefined,
+        description: options.description,
     };
 };
 
@@ -78,7 +78,7 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
         return [
             createEndpointEntry(normalizedValue, {
                 enabled: false,
-                name: doc.name ?? undefined,
+                name: doc.name,
                 description: doc.description,
             }),
         ];

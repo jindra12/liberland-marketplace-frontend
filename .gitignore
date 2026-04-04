@@ -159,3 +159,4 @@ dist
 .pnp.*
 .vercel
 screenshots/
+.playwright-videos/

@@ -25,7 +25,7 @@ const EditStartup: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={startup?.serverURL ?? undefined} />
+                                <DetailPageTracker serverUrl={startup?.serverURL} />
                                 <Typography.Title level={3}>Edit Venture</Typography.Title>
                                 <StartupForm
                                     mode="edit"

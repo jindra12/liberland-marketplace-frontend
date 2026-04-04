@@ -25,7 +25,7 @@ const EditCompany: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={company?.serverURL ?? undefined} />
+                                <DetailPageTracker serverUrl={company?.serverURL} />
                                 <Typography.Title level={3}>Edit Company</Typography.Title>
                                 <CompanyForm
                                     mode="edit"

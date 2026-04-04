@@ -1,13 +1,22 @@
 import { SYNDICATION_SERVERS } from "./fixtures/constants";
 import { expect, test } from "./fixtures/test";
-import { goHome, openAppMenu, resetMockScenario, setMarketplaceEndpoints } from "./helpers/marketplace";
+import {
+    goHome,
+    openAppMenu,
+    openSyndicationPage,
+    resetMockScenario,
+    setMarketplaceEndpoints,
+    waitForDetailContent,
+    waitForSplashContent,
+} from "./helpers/marketplace";
+import { expectGraphqlRequest } from "./helpers/network";
 
 const alphaUrl = SYNDICATION_SERVERS[0].url;
 const betaUrl = SYNDICATION_SERVERS[1].url;
 
 test.describe.configure({ mode: "serial" });
 
-test("anonymous users do not see syndication when there is only one server", async ({ page, request }) => {
+test("anonymous users do not see syndication when there is only one server", async ({ page, request, network }) => {
     await resetMockScenario(request, alphaUrl);
     await setMarketplaceEndpoints(page, [
         {
@@ -17,12 +26,14 @@ test("anonymous users do not see syndication when there is only one server", asy
         },
     ]);
     await goHome(page);
+    await waitForSplashContent(page);
 
     await openAppMenu(page);
-    await expect(page.getByRole("link", { name: "Syndication" })).toHaveCount(0);
+    await expect(page.locator(".AppHeader__drawerNav").getByRole("link", { name: "Syndication" })).toHaveCount(0);
+    await expectGraphqlRequest(network.graphqlRequests, "ListPublishedSyndicationUrls");
 });
 
-test("anonymous users can open the syndication menu and toggle a syndicated server", async ({ page, request }) => {
+test("anonymous users can open the syndication menu and toggle a syndicated server", async ({ page, request, network }) => {
     await resetMockScenario(request, alphaUrl);
     await resetMockScenario(request, betaUrl);
     await setMarketplaceEndpoints(page, [
@@ -38,11 +49,13 @@ test("anonymous users can open the syndication menu and toggle a syndicated serv
         },
     ]);
     await goHome(page);
+    await waitForSplashContent(page);
 
-    await openAppMenu(page);
-    await page.getByRole("link", { name: "Syndication" }).click();
+    await openSyndicationPage(page);
+    await waitForDetailContent(page);
     await expect(page.getByRole("heading", { name: "Syndication" })).toBeVisible();
     await page.getByRole("link", { name: "Alpha Mock Market" }).click();
+    await waitForDetailContent(page);
 
     await expect(page.locator(".SyndicationDetail")).toBeVisible();
     await expect(page.getByRole("button", { name: "Disable URL" })).toBeVisible();
@@ -52,4 +65,5 @@ test("anonymous users can open the syndication menu and toggle a syndicated serv
     await page.getByRole("button", { name: "Enable URL" }).click();
     await expect(page.getByRole("button", { name: "Disable URL" })).toBeVisible();
     await expect(page.getByText("Enabled in search and lists")).toBeVisible();
+    await expectGraphqlRequest(network.graphqlRequests, "ListPublishedSyndicationUrls");
 });

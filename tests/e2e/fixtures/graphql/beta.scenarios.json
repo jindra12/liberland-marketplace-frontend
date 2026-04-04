@@ -3,6 +3,7 @@
     "scenarios": {
         "default": {
             "activeUserId": "beta-user-complete",
+            "denseCollections": true,
             "sequences": {
                 "analytics": 1,
                 "cart": 1,

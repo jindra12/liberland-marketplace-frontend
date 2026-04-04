@@ -80,7 +80,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
-                        <DetailPageTracker serverUrl={product?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={product?.serverURL} />
                         <DetailBackButton to="/products-services" label="Back to products / services" />
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                             {imageSrc && <Avatar shape="circle" size={md ? 120 : 72} src={imageSrc} />}
@@ -188,6 +188,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                            serverURL={product?.serverURL}
                         />
                     </Flex>
                 );

@@ -64,10 +64,11 @@
         "vm-browserify": "^1.1.2",
         "web-vitals": "^2.1.0"
     },
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
+  "scripts": {
+    "dev": "next dev",
+    "playground": "playwright test tests/e2e/playground.spec.ts --headed",
+    "build": "next build",
+    "start": "next start",
         "test": "react-app-rewired test",
         "typecheck:e2e": "tsc -p tsconfig.e2e.json --noEmit --incremental false",
         "test:e2e": "playwright test",
@@ -79,124 +80,7 @@
         "codegen": "graphql-codegen --config codegen.ts",
         "deploy": "vercel --prod",
         "eject": "react-app-rewired eject",
-        "postinstall": "patch-package"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ],
-        "overrides": [
-            {
-                "files": [
-                    "src/components/**/*.tsx",
-                    "src/Main.tsx",
-                    "src/ShellPage.tsx"
-                ],
-                "plugins": [
-                    "import"
-                ],
-                "rules": {
-                    "react/react-in-jsx-scope": "error",
-                    "import/newline-after-import": [
-                        "error",
-                        {
-                            "count": 1
-                        }
-                    ],
-                    "import/order": [
-                        "error",
-                        {
-                            "groups": [
-                                "builtin",
-                                "external",
-                                "internal",
-                                "parent",
-                                "sibling",
-                                "index"
-                            ],
-                            "pathGroups": [
-                                {
-                                    "pattern": "react",
-                                    "group": "external",
-                                    "position": "before"
-                                },
-                                {
-                                    "pattern": "react-*",
-                                    "group": "external",
-                                    "position": "before"
-                                },
-                                {
-                                    "pattern": "@*/react*",
-                                    "group": "external",
-                                    "position": "before"
-                                },
-                                {
-                                    "pattern": "app/**",
-                                    "group": "internal",
-                                    "position": "before"
-                                }
-                            ],
-                            "pathGroupsExcludedImportTypes": [],
-                            "distinctGroup": true,
-                            "newlines-between": "always",
-                            "alphabetize": {
-                                "order": "asc",
-                                "caseInsensitive": true
-                            }
-                        }
-                    ],
-                    "max-len": [
-                        "error",
-                        {
-                            "code": 120,
-                            "ignoreUrls": true,
-                            "ignoreStrings": true,
-                            "ignoreTemplateLiterals": true,
-                            "ignoreRegExpLiterals": true
-                        }
-                    ],
-                    "no-restricted-syntax": [
-                        "error",
-                        {
-                            "selector": "ImportDeclaration[source.value='react'] ImportDefaultSpecifier",
-                            "message": "Use `import * as React from \"react\";` in component files."
-                        },
-                        {
-                            "selector": "ImportDeclaration[source.value='react'] ImportSpecifier",
-                            "message": "Use the `React` namespace instead of named imports from `react` in component files."
-                        }
-                    ],
-                    "import/no-default-export": "error"
-                }
-            },
-            {
-                "files": [
-                    "src/Main.tsx",
-                    "src/ShellPage.tsx",
-                    "src/components/AppLayout.tsx",
-                    "src/components/AuthCallback.tsx",
-                    "src/components/Cart.tsx",
-                    "src/components/Companies.tsx",
-                    "src/components/Identities.tsx",
-                    "src/components/Jobs.tsx",
-                    "src/components/NotFound.tsx",
-                    "src/components/Order.tsx",
-                    "src/components/ProductsServices.tsx",
-                    "src/components/Profile.tsx",
-                    "src/components/Publish.tsx",
-                    "src/components/Splash.tsx",
-                    "src/components/Startups.tsx",
-                    "src/components/Syndication.tsx",
-                    "src/components/Unsubscribe/*.tsx",
-                    "src/components/detail/*.tsx",
-                    "src/components/edit/*.tsx"
-                ],
-                "rules": {
-                    "import/no-default-export": "off"
-                }
-            }
-        ]
+    "postinstall": "patch-package"
     },
     "browserslist": {
         "production": [

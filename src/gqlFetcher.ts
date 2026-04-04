@@ -48,7 +48,7 @@ export const gqlFetcher =
         query: string,
         variables?: TVariables,
         options?: RequestInit["headers"],
-        url?: string,
+        url?: string | null,
     ) =>
     async (): Promise<TData> => {
         const defUrl = url || BACKEND_URL;

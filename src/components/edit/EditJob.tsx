@@ -27,7 +27,7 @@ const EditJob: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={job?.serverURL ?? undefined} />
+                                <DetailPageTracker serverUrl={job?.serverURL} />
                                 <Typography.Title level={3}>Edit Job</Typography.Title>
                                 <JobForm
                                     mode="edit"

@@ -41,6 +41,7 @@ export const StartupDetailTabs: React.FunctionComponent<StartupDetailTabsProps> 
                         <EntityCommentsSection
                             targetId={props.startupId}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Startups}
+                            serverURL={props.serverURL}
                         />
                     ),
                 },

@@ -85,7 +85,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                 <CompanyCard
                     items={companiesQuery.data?.Companies?.docs || []}
                     loading={companiesQuery.isLoading}
-                    totalDocs={companiesQuery.data?.Companies?.totalDocs ?? undefined}
+                    totalDocs={companiesQuery.data?.Companies?.totalDocs}
                     identityId={props.identityId}
                 />
             ),
@@ -100,7 +100,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                 <ProductServiceCard
                     items={productsQuery.data?.Products?.docs || []}
                     loading={productsQuery.isLoading}
-                    totalDocs={productsQuery.data?.Products?.totalDocs ?? undefined}
+                    totalDocs={productsQuery.data?.Products?.totalDocs}
                     identityId={props.identityId}
                 />
             ),
@@ -113,7 +113,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                 <JobCard
                     items={jobsQuery.data?.Jobs?.docs || []}
                     loading={jobsQuery.isLoading}
-                    totalDocs={jobsQuery.data?.Jobs?.totalDocs ?? undefined}
+                    totalDocs={jobsQuery.data?.Jobs?.totalDocs}
                     identityId={props.identityId}
                 />
             ),
@@ -128,7 +128,7 @@ export const IdentityMarketSection: React.FunctionComponent<IdentityMarketSectio
                 <StartupCard
                     items={startupsQuery.data?.Startups?.docs || []}
                     loading={startupsQuery.isLoading}
-                    totalDocs={startupsQuery.data?.Startups?.totalDocs ?? undefined}
+                    totalDocs={startupsQuery.data?.Startups?.totalDocs}
                     identityId={props.identityId}
                 />
             ),

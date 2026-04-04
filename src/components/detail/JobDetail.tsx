@@ -47,7 +47,7 @@ const JobDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail JobDetail">
-                        <DetailPageTracker serverUrl={job?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={job?.serverURL} />
                         <DetailBackButton to="/jobs" label="Back to jobs" />
                         <Space size={16} align="start" className="JobDetail__header">
                             {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
@@ -115,6 +115,7 @@ const JobDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
+                            serverURL={job?.serverURL}
                         />
                     </Flex>
                 );

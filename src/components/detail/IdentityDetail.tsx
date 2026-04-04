@@ -52,7 +52,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail IdentityDetail">
-                        <DetailPageTracker serverUrl={data.Identity?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={data.Identity?.serverURL} />
                         <DetailBackButton to="/tribes" label="Back to tribes" />
                         <Space size={16} align="start" className="EntityDetail__header">
                             {imageSrc && <Avatar shape="circle" size={96} src={imageSrc} />}
@@ -127,6 +127,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
+                            serverURL={data.Identity?.serverURL}
                         />
                     </Flex>
                 );

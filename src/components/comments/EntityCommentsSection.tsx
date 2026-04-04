@@ -39,6 +39,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         targetId: props.targetId,
         relationTo: queryRelationTo,
         limit,
+        url: props.serverURL,
     });
     const createComment = useCreateCommentMutation();
     const createReply = useCreateReplyToCommentMutation();
@@ -53,9 +54,6 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         const docs = comments.data?.Comments?.docs || [];
         return buildCommentData(docs);
     }, [comments.data]);
-    const refetchComments = async () => {
-        await comments.refetch();
-    };
     const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
     const onSubmitAction = async (payload: CommentSubmitPayload) => {
@@ -64,13 +62,13 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             return;
         }
         await createComment.mutateAsync({
+            url: props.serverURL,
             replyToPost: {
                 relationTo: props.relationTo,
                 value: props.targetId,
             },
             content,
         });
-        await refetchComments();
     };
     const onReplyAction = async (payload: CommentReplyPayload) => {
         const content = payload.text.trim();
@@ -79,6 +77,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             return;
         }
         await createReply.mutateAsync({
+            url: props.serverURL,
             replyToPost: {
                 relationTo: props.relationTo,
                 value: props.targetId,
@@ -86,7 +85,6 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             parentCommentId,
             content,
         });
-        await refetchComments();
     };
     const onEditAction = async (payload: CommentEditPayload) => {
         if (!auth.isAuthenticated) {
@@ -98,10 +96,10 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             return;
         }
         await updateComment.mutateAsync({
+            url: props.serverURL,
             id: commentId,
             content,
         });
-        await refetchComments();
     };
     const onDeleteAction = async (payload: CommentDeletePayload) => {
         const commentId = payload.comIdToDelete;
@@ -109,9 +107,9 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             return;
         }
         await deleteComment.mutateAsync({
+            url: props.serverURL,
             id: commentId,
         });
-        await refetchComments();
     };
     if (comments.isLoading) {
         return (

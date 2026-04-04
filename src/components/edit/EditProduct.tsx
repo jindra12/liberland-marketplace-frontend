@@ -26,7 +26,7 @@ const EditProduct: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={companyCreatedById}>
-                                <DetailPageTracker serverUrl={product?.serverURL ?? undefined} />
+                                <DetailPageTracker serverUrl={product?.serverURL} />
                                 <Typography.Title level={3}>Edit Product</Typography.Title>
                                 <ProductForm
                                     mode="edit"
