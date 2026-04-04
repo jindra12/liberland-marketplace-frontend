@@ -1,9 +1,9 @@
 import { expect } from "@playwright/test";
 import type { APIRequestContext, Page } from "@playwright/test";
 
-export const E2E_TIMEOUT_MS = 20000;
-export const E2E_NAVIGATION_TIMEOUT_MS = 45000;
-const E2E_LOADER_TIMEOUT_MS = 15000;
+export const CT_TIMEOUT_MS = 20000;
+export const CT_NAVIGATION_TIMEOUT_MS = 45000;
+const CT_LOADER_TIMEOUT_MS = 15000;
 
 export type MarketplaceEndpoint = {
     description?: string;
@@ -94,23 +94,23 @@ export const goHome = async (page: Page) => {
 
 const waitForLoaderTransition = async (page: Page, selector: string) => {
     const loader = page.locator(selector);
-    const appeared = await expect(loader).toBeVisible({ timeout: E2E_LOADER_TIMEOUT_MS }).then(() => true).catch(() => false);
+    const appeared = await expect(loader).toBeVisible({ timeout: CT_LOADER_TIMEOUT_MS }).then(() => true).catch(() => false);
     if (!appeared) {
         return;
     }
 
-    await expect(loader).toBeHidden({ timeout: E2E_TIMEOUT_MS });
+    await expect(loader).toBeHidden({ timeout: CT_TIMEOUT_MS });
 };
 
 export const waitForSplashContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--splashSections");
-    await expect(page.locator(".SplashPage__hero")).toBeVisible({ timeout: E2E_TIMEOUT_MS });
+    await expect(page.locator(".SplashPage__hero")).toBeVisible({ timeout: CT_TIMEOUT_MS });
 };
 
 export const waitForCollectionContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--collection");
     await expect(page.locator(".AppList__title")).toBeVisible({
-        timeout: E2E_TIMEOUT_MS,
+        timeout: CT_TIMEOUT_MS,
     });
 };
 
@@ -118,7 +118,7 @@ export const waitForDetailContent = async (page: Page) => {
     await waitForLoaderTransition(page, ".LoadingSkeleton--detail");
     await expect(
         page.locator(".EntityDetail__title, .JobDetail__title, .StartupDetail__title").first(),
-    ).toHaveText(/.+/, { timeout: E2E_TIMEOUT_MS });
+    ).toHaveText(/.+/, { timeout: CT_TIMEOUT_MS });
 };
 
 export const openAppMenu = async (page: Page) => {
@@ -126,7 +126,7 @@ export const openAppMenu = async (page: Page) => {
     if (await openMenuButton.count()) {
         await openMenuButton.click();
         await expect(page.locator(".AppHeader__desktopDrawerNav")).toBeVisible({
-            timeout: E2E_TIMEOUT_MS,
+            timeout: CT_TIMEOUT_MS,
         });
         return;
     }
@@ -135,7 +135,7 @@ export const openAppMenu = async (page: Page) => {
     if (await openNavigationButton.count()) {
         await openNavigationButton.click();
         await expect(page.locator(".AppHeader__drawerBody")).toBeVisible({
-            timeout: E2E_TIMEOUT_MS,
+            timeout: CT_TIMEOUT_MS,
         });
     }
 };
@@ -158,7 +158,7 @@ export const clickVisibleLink = async (page: Page, label: string) => {
 
 export const clickSplashSectionLink = async (page: Page, label: string) => {
     const link = page.locator(".SplashEntityCard__titleLink").filter({ hasText: label }).first();
-    await expect(link).toBeVisible({ timeout: E2E_TIMEOUT_MS });
+    await expect(link).toBeVisible({ timeout: CT_TIMEOUT_MS });
     await link.click();
 };
 

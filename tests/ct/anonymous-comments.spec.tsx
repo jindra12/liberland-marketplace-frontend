@@ -14,7 +14,7 @@ import {
     waitForCollectionContent,
     waitForDetailContent,
     waitForSplashContent,
-    E2E_TIMEOUT_MS,
+    CT_TIMEOUT_MS,
 } from "./helpers/marketplace";
 import { expectGraphqlRequest, isJsonObject } from "./helpers/network";
 
@@ -41,7 +41,7 @@ test.beforeEach(async ({ page, request, mount }) => {
     await page.evaluate(() => {
         window.history.replaceState({}, "", "/");
     });
-    await mount(React.createElement(Main));
+    await mount(<Main />);
     await goHome(page);
     await waitForSplashContent(page);
 });
@@ -51,7 +51,7 @@ const addAnonymousComment = async (page: Page, commentText: string) => {
     await expect(commentsSection).toBeVisible();
     await commentsSection.getByPlaceholder("Write your comment...").fill(commentText);
     await commentsSection.getByRole("button", { name: "Post" }).click();
-    await expect(commentsSection).toContainText(commentText, { timeout: E2E_TIMEOUT_MS });
+    await expect(commentsSection).toContainText(commentText, { timeout: CT_TIMEOUT_MS });
 };
 
 const openProductDetail = async (page: Page, productName: string) => {

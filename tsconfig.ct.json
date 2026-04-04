@@ -7,6 +7,6 @@
         "strict": false,
         "types": ["node"]
     },
-    "include": ["playwright.config.ts", "tests/e2e/**/*.ts"],
+    "include": ["playwright.config.ts", "tests/ct/**/*.ts", "tests/ct/**/*.tsx"],
     "exclude": ["node_modules"]
 }

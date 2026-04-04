@@ -27,7 +27,7 @@ manager is `yarn`.
 - `yarn build` creates a production build.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
-- `yarn test:e2e` runs Playwright.
+- `yarn test:ct` runs Playwright component tests.
 - `yarn playground` opens the browser playground test.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn lint` and `yarn lint:fix` run ESLint.

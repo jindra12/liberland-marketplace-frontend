@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { WalletMockPlaygroundPage } from "../../src/components/testing/WalletMockPlayground/WalletMockPlaygroundPage";
+import { EthereumWalletMockCard } from "../../src/components/testing/WalletMockPlayground/EthereumWalletMockCard";
+import { SolanaWalletMockCard } from "../../src/components/testing/WalletMockPlayground/SolanaWalletMockCard";
+import { TronWalletMockCard } from "../../src/components/testing/WalletMockPlayground/TronWalletMockCard";
 import {
     EVM_WALLET_MOCK,
     SOLANA_RPC_URL,
@@ -16,7 +18,13 @@ test.beforeEach(async ({ request }) => {
 });
 
 test.beforeEach(async ({ mount }) => {
-    await mount(React.createElement(WalletMockPlaygroundPage));
+    await mount(
+        <main>
+            <EthereumWalletMockCard />
+            <SolanaWalletMockCard />
+            <TronWalletMockCard />
+        </main>,
+    );
 });
 
 test("sends native ETH through the MetaMask mock", async ({ page, network }) => {

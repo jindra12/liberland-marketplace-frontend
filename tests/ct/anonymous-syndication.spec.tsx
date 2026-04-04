@@ -32,7 +32,7 @@ test("anonymous users do not see syndication when there is only one server", asy
     await page.evaluate(() => {
         window.history.replaceState({}, "", "/");
     });
-    await mount(React.createElement(Main));
+    await mount(<Main />);
     await goHome(page);
     await waitForSplashContent(page);
 
@@ -59,7 +59,7 @@ test("anonymous users can open the syndication menu and toggle a syndicated serv
     await page.evaluate(() => {
         window.history.replaceState({}, "", "/");
     });
-    await mount(React.createElement(Main));
+    await mount(<Main />);
     await goHome(page);
     await waitForSplashContent(page);
 

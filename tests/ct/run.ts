@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(dirname, "../..");
 const playwrightBinary = path.resolve(rootDir, "node_modules/.bin/playwright");
-const serveScript = path.resolve(rootDir, "tests/e2e/serve.ts");
+const serveScript = path.resolve(rootDir, "tests/ct/serve.ts");
 
 const args = process.argv.slice(2);
 
@@ -36,7 +36,7 @@ const waitForReady = async () => {
             buffer += chunk;
             process.stdout.write(chunk);
 
-            if (!resolved && buffer.includes("E2E services are ready.")) {
+            if (!resolved && buffer.includes("CT services are ready.")) {
                 resolved = true;
                 resolve();
             }
@@ -48,7 +48,7 @@ const waitForReady = async () => {
 
         serve.on("exit", (code, signal) => {
             if (!resolved) {
-                reject(new Error(`E2E services exited early${signal ? ` with signal ${signal}` : ` with code ${code ?? 1}`}`));
+                reject(new Error(`CT services exited early${signal ? ` with signal ${signal}` : ` with code ${code ?? 1}`}`));
                 return;
             }
         });
@@ -78,7 +78,10 @@ const main = async () => {
         cwd: rootDir,
         env: {
             ...process.env,
-            PLAYWRIGHT_EXTERNAL_SERVERS: "true",
+            CT_EXTERNAL_SERVERS: "true",
+            NEXT_PUBLIC_PLAYWRIGHT_TEST_ROUTE: "true",
+            NEXT_PUBLIC_PLAYWRIGHT_SOLANA_RPC_URL: "http://127.0.0.1:8899",
+            NEXT_PUBLIC_PLAYWRIGHT_TRON_RPC_URL: "http://127.0.0.1:50051",
         },
         stdio: "inherit",
     });

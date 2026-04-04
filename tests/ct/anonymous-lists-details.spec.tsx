@@ -40,7 +40,7 @@ test.beforeEach(async ({ page, request, mount }) => {
     await page.evaluate(() => {
         window.history.replaceState({}, "", "/");
     });
-    await mount(React.createElement(Main));
+    await mount(<Main />);
     await goHome(page);
 });
 

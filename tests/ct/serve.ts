@@ -65,11 +65,11 @@ const serviceSpecs: Service[] = [
         args: [
             "--import",
             "tsx",
-            path.resolve(rootDir, "tests/e2e/servers/mockGraphqlServer.ts"),
+            path.resolve(rootDir, "tests/ct/servers/mockGraphqlServer.ts"),
             "--port",
             String(server.port),
             "--fixture",
-            path.resolve(rootDir, `tests/e2e/fixtures/graphql/${server.name}.scenarios.json`),
+            path.resolve(rootDir, `tests/ct/fixtures/graphql/${server.name}.scenarios.json`),
         ],
         cwd: rootDir,
         env: {
@@ -83,7 +83,7 @@ const serviceSpecs: Service[] = [
         args: [
             "--import",
             "tsx",
-            path.resolve(rootDir, "tests/e2e/servers/mockSolanaRpcServer.ts"),
+            path.resolve(rootDir, "tests/ct/servers/mockSolanaRpcServer.ts"),
             "--port",
             String(SOLANA_RPC_PORT),
         ],
@@ -99,7 +99,7 @@ const serviceSpecs: Service[] = [
         args: [
             "--import",
             "tsx",
-            path.resolve(rootDir, "tests/e2e/servers/mockTronRpcServer.ts"),
+            path.resolve(rootDir, "tests/ct/servers/mockTronRpcServer.ts"),
             "--port",
             String(TRON_RPC_PORT),
         ],
@@ -162,7 +162,7 @@ const main = async () => {
         waitForHealth(`${TRON_RPC_URL}/healthz`, "tron-rpc"),
     ]);
 
-    console.log("E2E services are ready. Leave this process running and run the tests in another terminal.");
+    console.log("CT services are ready. Leave this process running and run the tests in another terminal.");
     await new Promise<void>(() => {});
 };
 

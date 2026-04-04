@@ -14,7 +14,7 @@ import {
     setMarketplaceEndpoints,
     waitForCollectionContent,
     waitForSplashContent,
-    E2E_TIMEOUT_MS,
+    CT_TIMEOUT_MS,
 } from "./helpers/marketplace";
 import { expectGraphqlRequest, isJsonObject } from "./helpers/network";
 
@@ -41,7 +41,7 @@ test.beforeEach(async ({ page, request, mount }) => {
     await page.evaluate(() => {
         window.history.replaceState({}, "", "/");
     });
-    await mount(React.createElement(Main));
+    await mount(<Main />);
     await goHome(page);
     await waitForSplashContent(page);
 });
@@ -49,15 +49,15 @@ test.beforeEach(async ({ page, request, mount }) => {
 const openProductFromMarket = async (page: Page, productName: string, expectPurchaseControl = true) => {
     await clickHeaderLink(page, "Market");
     await page.waitForURL(/\/products-services$/, {
-        timeout: E2E_TIMEOUT_MS,
+        timeout: CT_TIMEOUT_MS,
     });
     await waitForCollectionContent(page);
-    await expect(page.locator(".InfinityScroll .ant-list-item").first()).toBeVisible({ timeout: E2E_TIMEOUT_MS });
+    await expect(page.locator(".InfinityScroll .ant-list-item").first()).toBeVisible({ timeout: CT_TIMEOUT_MS });
     await clickVisibleLink(page, productName);
     await page.waitForURL(/\/products-services\/[^/]+/, {
-        timeout: E2E_TIMEOUT_MS,
+        timeout: CT_TIMEOUT_MS,
     });
-    await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible({ timeout: E2E_TIMEOUT_MS });
+    await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible({ timeout: CT_TIMEOUT_MS });
     await expect(page.locator(".ProductDetail .EntityDetail__title")).toHaveText(productName);
     if (expectPurchaseControl) {
         await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible();
