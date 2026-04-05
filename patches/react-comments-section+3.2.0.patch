@@ -18,7 +18,7 @@ index 7e8502f..10a594f 100644
  
  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 diff --git a/node_modules/react-comments-section/dist/index.modern.js b/node_modules/react-comments-section/dist/index.modern.js
-index 98d033a..00ddac0 100644
+index 98d033a..587b141 100644
 --- a/node_modules/react-comments-section/dist/index.modern.js
 +++ b/node_modules/react-comments-section/dist/index.modern.js
 @@ -1,13 +1,10 @@
@@ -35,3 +35,13 @@ index 98d033a..00ddac0 100644
  import { Modal } from 'react-responsive-modal';
  
  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+@@ -17673,8 +17670,7 @@ var AdvancedInput = function AdvancedInput(_ref) {
+   }, "Post")))));
+ };
+ 
+-var _require = require('uuid'),
+-  uuidv4 = _require.v4;
++import { v4 as uuidv4 } from 'uuid';
+ var InputField = function InputField(_ref) {
+   var formStyle = _ref.formStyle,
+     comId = _ref.comId,

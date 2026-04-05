@@ -1,11 +1,9 @@
 import * as React from "react";
 
-import { CommentSection } from "react-comments-section";
 import { useAuth } from "react-oidc-context";
 
-import { Alert, Flex, Spin, theme } from "antd";
+import { theme } from "antd";
 
-import "react-comments-section/dist/index.css";
 import {
     COMMENT_RELATION_TO_QUERY_RELATION,
     ENTITY_COMMENTS_DEFAULT_LIMIT,

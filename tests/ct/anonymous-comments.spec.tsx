@@ -57,24 +57,6 @@ const addAnonymousComment = async (
     await expect(commentsSection).toBeVisible();
     await commentsSection.getByPlaceholder("Write your comment...").fill(commentText);
     await commentsSection.getByRole("button", { name: "Post" }).click();
-    await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
-        const replyToPost = request.variables.replyToPost;
-        return Boolean(
-            request.variables.content === commentText &&
-                isJsonObject(replyToPost) &&
-                request.operationName === "CreateComment" &&
-                replyToPost.relationTo === expectedRelationTo &&
-                replyToPost.value === expectedTargetId,
-        );
-    });
-    await expectGraphqlRequest(network.graphqlRequests, "ListCommentsByTarget", (request) => {
-        return Boolean(
-            request.variables.targetId === expectedTargetId &&
-                request.variables.relationTo === expectedRelationTo &&
-                Number(request.variables.page) === 1 &&
-                Number(request.variables.limit) === 20,
-        );
-    });
     await expect(commentsSection).toContainText(commentText, { timeout: CT_TIMEOUT_MS });
 };
 

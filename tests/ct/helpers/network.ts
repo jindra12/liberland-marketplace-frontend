@@ -62,6 +62,7 @@ export const expectGraphqlRequest = async (
     operationName: string,
     match?: (request: RecordedGraphqlRequest) => boolean,
 ) => {
+    console.log(`[ct] waiting for GraphQL request ${operationName}`);
     let request = graphqlRequests.find((candidate) => {
         const matchesOperationName =
             candidate.operationName === operationName || candidate.query.includes(operationName);
@@ -86,5 +87,6 @@ export const expectGraphqlRequest = async (
     ).toBeTruthy();
 
     expect(request, `Expected GraphQL request ${operationName}`).toBeTruthy();
+    console.log(`[ct] matched GraphQL request ${operationName}`);
     return request;
 };

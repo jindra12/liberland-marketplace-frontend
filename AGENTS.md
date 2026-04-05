@@ -100,6 +100,7 @@ manager is `yarn`.
 - Only do what the user explicitly asked for. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
 - If a user asks you to fix a failing test, keep running the relevant test until it passes or you have a concrete app bug to report back.
+- After changing test code or test config, run `yarn test:ct` to confirm the suite still works.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

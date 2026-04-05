@@ -5,8 +5,6 @@ import { CommentSection } from "react-comments-section";
 
 import { Alert, Divider, Flex, Spin, Typography } from "antd";
 
-import "react-comments-section/dist/index.css";
-
 import { ENTITY_COMMENTS_DEFAULT_PLACEHOLDER } from "../../constants";
 import type { EntityCommentsSectionDisplayProps } from "../../types";
 

@@ -92,9 +92,6 @@ test("anonymous users can buy orderable products and blocked products stay block
     await openProductFromMarket(page, "Dense Advisory Locked", false);
     await expect(page.locator(".ProductDetail__purchaseControl")).toHaveCount(0);
     await expectGraphqlRequest(network.graphqlRequests, "ProductById");
-
-    await goHome(page);
-    await waitForSplashContent(page);
     await addProductToCart(page, "Dense Ethereum Bundle B", 4);
     await navigateToPath(page, "/cart");
     await expect(page.getByText("In cart: 4")).toBeVisible();
