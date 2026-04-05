@@ -5,7 +5,7 @@ import { loadJson, parseCliArgs, readJsonBody, sendJson } from "./utils";
 
 const args = parseCliArgs(process.argv.slice(2));
 const port = Number(args.port);
-const config = loadJson<WalletMocksConfig>(new URL("../../../playwright.wallet-mocks.json", import.meta.url));
+const config = loadJson<WalletMocksConfig>(new URL("../../../wallet-mocks.json", import.meta.url));
 const solanaConfig = config.wallets.solana;
 
 const SYSTEM_PROGRAM_ID = "11111111111111111111111111111111";

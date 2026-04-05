@@ -100,7 +100,7 @@ describe("query status checks", () => {
         mockedAxios.post.mockReset();
     });
 
-    it.each(cases)("$name returns expected HTTP status", async ({ document, variables }) => {
+    it.each(cases)("$name returns expected HTTP status", async ({ document, variables }: QueryCase) => {
         mockedAxios.post.mockResolvedValueOnce({
             status: expectedStatus,
             statusText: "OK",

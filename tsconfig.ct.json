@@ -5,8 +5,8 @@
         "incremental": false,
         "noImplicitAny": true,
         "strict": false,
-        "types": ["node"]
+        "types": ["cypress", "cypress-react-router", "node"]
     },
-    "include": ["playwright.config.ts", "tests/ct/**/*.ts", "tests/ct/**/*.tsx"],
+    "include": ["cypress.config.ts", "cypress/**/*.ts", "cypress/**/*.tsx", "cypress/**/*.d.ts", "tests/ct/servers/**/*.ts"],
     "exclude": ["node_modules"]
 }

@@ -1,5 +1,5 @@
 {
-    "routePath": "/__playwright/wallet-mocks",
+    "routePath": "/wallet-mocks",
     "frontendPort": 3001,
     "syndicationServers": [
         {

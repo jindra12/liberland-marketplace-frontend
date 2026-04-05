@@ -159,5 +159,4 @@ dist
 .pnp.*
 .vercel
 screenshots/
-.playwright-videos/
-.playwright-report/
+.cypress-videos/

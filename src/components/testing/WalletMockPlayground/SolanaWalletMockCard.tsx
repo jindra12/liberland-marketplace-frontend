@@ -38,7 +38,7 @@ export const SolanaWalletMockCard: React.FunctionComponent = () => {
         const transaction = await createTransfer(connection, new PublicKey(senderAddress), {
             recipient: new PublicKey(SOLANA_WALLET_MOCK.recipient),
             amount: new BigNumber(SOLANA_WALLET_MOCK.transferSol),
-            memo: "Playwright Solana mock transfer",
+            memo: "Cypress Solana mock transfer",
         });
         const signature = await provider.sendTransaction(transaction, connection);
         const [senderBalance, recipientBalance] = await Promise.all([

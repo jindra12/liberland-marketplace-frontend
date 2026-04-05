@@ -57,7 +57,7 @@ export const EthereumWalletMockCard: React.FunctionComponent = () => {
         <section aria-label="MetaMask / EVM mock">
             <h2>MetaMask / EVM mock</h2>
             <p>window.ethereum</p>
-            <p>Uses a Playwright-injected EIP-1193 provider with native ETH balance updates.</p>
+            <p>Uses a Cypress-injected EIP-1193 provider with native ETH balance updates.</p>
             <div>
                 <button type="button" onClick={handleConnect}>
                     Connect MetaMask mock

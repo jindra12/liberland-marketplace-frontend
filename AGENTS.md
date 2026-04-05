@@ -27,8 +27,8 @@ manager is `yarn`.
 - `yarn build` creates a production build.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
-- `yarn test:ct` runs Playwright component tests.
-- `yarn playground` opens the browser playground test.
+- `yarn test:ct` runs Cypress component tests.
+- `yarn playground` opens the Cypress playground test.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 
@@ -61,9 +61,9 @@ manager is `yarn`.
 - When adding or changing queries, run `yarn codegen`.
 - Startup naming stays internal; user-facing strings use Venture naming.
 
-## Playwright
+## Cypress
 
-- Use Playwright proactively for frontend behavior changes.
+- Use Cypress proactively for frontend behavior changes.
 - Check the dev server on `localhost:3001`, start it if needed, then verify the affected page.
 - Use the shared test credentials from the repo context when login is required.
 - Re-test and fix any issues you find.
@@ -98,6 +98,7 @@ manager is `yarn`.
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
 - Only do what the user explicitly asked for. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
+- If the user tells you not to do something, do not work around it with an indirect command or alternate path; follow the instruction directly or stop and explain the blocker.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
 - If a user asks you to fix a failing test, keep running the relevant test until it passes or you have a concrete app bug to report back.
 - After changing test code or test config, run `yarn test:ct` to confirm the suite still works.
