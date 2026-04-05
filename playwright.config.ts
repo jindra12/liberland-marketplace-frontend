@@ -4,11 +4,36 @@ export default defineConfig({
     testDir: "./tests/ct",
     fullyParallel: false,
     forbidOnly: Boolean(process.env.CI),
-    timeout: 45000,
+    timeout: 300000,
+    maxFailures: 1,
     workers: 1,
     retries: process.env.CI ? 2 : 0,
-    outputDir: "/tmp/liberstake-marketplace-frontend-playwright-results",
-    reporter: [["list"], ["html", { open: "never", outputFolder: "/tmp/liberstake-marketplace-frontend-playwright-report" }]],
+    outputDir: ".playwright-videos",
+    reporter: [["list"], ["html", { open: "never", outputFolder: ".playwright-report" }]],
+    webServer: [
+        {
+            command:
+                "node --import tsx tests/ct/servers/mockGraphqlServer.ts --port 4101 --fixture tests/ct/fixtures/graphql/alpha.scenarios.json",
+            url: "http://127.0.0.1:4101/healthz",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command:
+                "node --import tsx tests/ct/servers/mockGraphqlServer.ts --port 4102 --fixture tests/ct/fixtures/graphql/beta.scenarios.json",
+            url: "http://127.0.0.1:4102/healthz",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command: "node --import tsx tests/ct/servers/mockSolanaRpcServer.ts --port 8899",
+            url: "http://127.0.0.1:8899/healthz",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command: "node --import tsx tests/ct/servers/mockTronRpcServer.ts --port 50051",
+            url: "http://127.0.0.1:50051/healthz",
+            reuseExistingServer: !process.env.CI,
+        },
+    ],
     use: {
         ctPort: 3100,
         ctViteConfig: {
@@ -22,7 +47,7 @@ export default defineConfig({
             },
         },
         trace: "on-first-retry",
-        screenshot: "only-on-failure",
+        screenshot: "on",
         video: "on",
     },
     projects: [

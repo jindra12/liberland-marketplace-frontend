@@ -110,7 +110,7 @@ manager is `yarn`.
 - Do not introduce useless local constants that only rename an existing value. If a value is just `props.foo`, use `props.foo` directly instead of mirroring it into `const foo = props.foo`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
-- Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly.
+- Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly. Do not add random shims or loader hacks for broken packages; fix them through supported configuration, documented dependencies, or an approved patch instead.
 - Do not edit `src/components/hooks.ts` unless the user explicitly asks for changes there.
 - Do not edit `deepMergeConcatArrays` in `src/components/query/utils.ts` unless the user explicitly asks for changes there.
 - Do not touch the backend repo or backend files from this frontend workspace unless the user explicitly asks for backend changes.

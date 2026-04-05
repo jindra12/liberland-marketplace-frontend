@@ -4,6 +4,7 @@ import { useAnalytics } from "use-analytics";
 import useLocalStorage from "use-local-storage";
 
 import { BACKEND_URL } from "../../gqlFetcher";
+import type { TrackAnalyticsEventMutationVariables } from "../../generated/graphql";
 import { useTrackAnalyticsEventMutation } from "../hooks";
 
 import { ANALYTICS_DISTINCT_ID_KEY, ANALYTICS_SESSION_ID_KEY } from "./constants";
@@ -18,14 +19,15 @@ export const AnalyticsMutationBridge: React.FunctionComponent = () => {
     const trackEvent = React.useCallback(
         async (event: AnalyticsMutationEvent) => {
             try {
+                const input: TrackAnalyticsEventMutationVariables["input"] = {
+                    distinctId,
+                    metadata: event.metadata || null,
+                    route: event.route || null,
+                    sessionId,
+                    type: event.type,
+                };
                 const result = await mutation.mutateAsync({
-                    input: {
-                        distinctId,
-                        metadata: event.metadata,
-                        route: event.route,
-                        sessionId,
-                        type: event.type,
-                    },
+                    input,
                     url: event.targetUrl || BACKEND_URL,
                 });
                 const analyticsResult = result.trackAnalyticsEvent.analytics;
