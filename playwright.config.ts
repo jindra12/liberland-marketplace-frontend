@@ -37,6 +37,66 @@ export default defineConfig({
     use: {
         ctPort: 3100,
         ctViteConfig: {
+            build: {
+                cssMinify: false,
+                minify: "esbuild",
+                rollupOptions: {
+                    output: {
+                        manualChunks(id) {
+                            if (!id.includes("node_modules")) {
+                                return undefined;
+                            }
+
+                            if (id.includes("@ant-design/")) {
+                                return "vendor-antd";
+                            }
+
+                            if (
+                                id.includes("@walletconnect/") ||
+                                id.includes("/ox/") ||
+                                id.includes("@protobufjs/")
+                            ) {
+                                return "vendor-walletconnect";
+                            }
+
+                            if (id.includes("@solana/") || id.includes("bs58check") || id.includes("buffer/")) {
+                                return "vendor-solana";
+                            }
+
+                            if (id.includes("@tronweb3/") || id.includes("tronweb")) {
+                                return "vendor-tron";
+                            }
+
+                            if (id.includes("thirdweb")) {
+                                return "vendor-thirdweb";
+                            }
+
+                            if (id.includes("@geoapify/")) {
+                                return "vendor-geoapify";
+                            }
+
+                            if (id.includes("react-markdown") || id.includes("rehype-") || id.includes("remark-")) {
+                                return "vendor-markdown";
+                            }
+
+                            if (id.includes("react-router-dom")) {
+                                return "vendor-router";
+                            }
+
+                            if (id.includes("@tanstack/react-query")) {
+                                return "vendor-react-query";
+                            }
+
+                            if (id.includes("react-comments-section")) {
+                                return "vendor-comments";
+                            }
+
+                            return "vendor";
+                        },
+                    },
+                },
+                sourcemap: false,
+            },
             define: {
                 "process.env.NEXT_PUBLIC_PLAYWRIGHT_TEST_ROUTE": JSON.stringify("true"),
                 "process.env.REACT_APP_HELIUS": JSON.stringify("http://127.0.0.1:8899"),

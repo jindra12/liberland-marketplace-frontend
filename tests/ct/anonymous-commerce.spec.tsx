@@ -9,6 +9,7 @@ import {
     clickVisibleLink,
     clickHeaderLink,
     goHome,
+    logTestStep,
     navigateToPath,
     resetMockScenario,
     setMarketplaceEndpoints,
@@ -54,9 +55,12 @@ const openProductFromMarket = async (page: Page, productName: string, expectPurc
     await waitForCollectionContent(page);
     await expect(page.locator(".InfinityScroll .ant-list-item").first()).toBeVisible({ timeout: CT_TIMEOUT_MS });
     await clickVisibleLink(page, productName);
+    logTestStep(`Current URL after clicking ${productName}: ${page.url()}`);
+    logTestStep(`Wait for product detail URL ${productName}`);
     await page.waitForURL(/\/products-services\/[^/]+/, {
         timeout: CT_TIMEOUT_MS,
     });
+    logTestStep(`Finished waiting for product detail URL ${productName}`);
     await expect(page.locator(".ProductDetail__purchaseSection")).toBeVisible({ timeout: CT_TIMEOUT_MS });
     await expect(page.locator(".ProductDetail .EntityDetail__title")).toHaveText(productName);
     if (expectPurchaseControl) {
@@ -66,16 +70,24 @@ const openProductFromMarket = async (page: Page, productName: string, expectPurc
 };
 
 const addProductToCart = async (page: Page, productName: string, quantity: number) => {
+    logTestStep(`Add product ${productName}`);
     await openProductFromMarket(page, productName);
+    logTestStep(`Fill quantity ${quantity} for ${productName}`);
     await page.getByRole("spinbutton").fill(String(quantity));
+    logTestStep(`Click Buy for ${productName}`);
     await page.getByRole("button", { name: "Buy", exact: true }).click();
+    logTestStep(`Cart secrets after buying ${productName}: ${await page.evaluate(() => localStorage.getItem("cart.secrets"))}`);
+    logTestStep(`Wait for cart secrets after adding ${productName}`);
     await page.waitForFunction(() => {
         try {
             return JSON.parse(localStorage.getItem("cart.secrets") || "[]").length > 0;
         } catch {
             return false;
         }
+    }, undefined, {
+        timeout: CT_TIMEOUT_MS,
     });
+    logTestStep(`Finished adding ${productName}`);
 };
 
 const fillAnonymousOrderForm = async (page: Page) => {

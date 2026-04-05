@@ -64,14 +64,6 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     const shouldRemovePartially = hasItemInCart && inputQuantity < currentItemQuantity;
     const remainingQuantity =
         typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
-    const submitButtonProps = props.isAuthenticated
-        ? {
-              ariaLabel: "Add to cart",
-              icon: <PlusOutlined />,
-          }
-        : {
-              text: "Buy",
-          };
     const addItemToNewCart = async (quantity: number) => {
         const result = await createCart.mutateAsync({
             url: props.serverURL,
@@ -230,11 +222,18 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
                     disabled={isMutating}
                 />
             </Form.Item>
-            <AddToCartSubmitButton size={size} loading={isMutating} disabled={isMutating} {...submitButtonProps} />
+            <AddToCartSubmitButton
+                size={size}
+                loading={isMutating}
+                disabled={isMutating} 
+                ariaLabel="Add to cart"
+                icon={<PlusOutlined />}
+            />
             {hasItemInCart && (
                 <Button
                     size={size}
                     danger
+                    aria-label="Remove"
                     icon={shouldRemovePartially ? <MinusOutlined /> : <CloseOutlined />}
                     onClick={handleRemove}
                     loading={isMutating}
