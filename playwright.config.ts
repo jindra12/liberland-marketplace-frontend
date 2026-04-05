@@ -14,6 +14,9 @@ export default defineConfig({
         ctViteConfig: {
             define: {
                 "process.env.NEXT_PUBLIC_PLAYWRIGHT_TEST_ROUTE": JSON.stringify("true"),
+                "process.env.REACT_APP_HELIUS": JSON.stringify("http://127.0.0.1:8899"),
+                "process.env.REACT_APP_THIRDWEB": JSON.stringify("test-thirdweb-client-id"),
+                "process.env.REACT_APP_THRIDWEB": JSON.stringify("test-thirdweb-client-id"),
                 "process.env.NEXT_PUBLIC_PLAYWRIGHT_SOLANA_RPC_URL": JSON.stringify("http://127.0.0.1:8899"),
                 "process.env.NEXT_PUBLIC_PLAYWRIGHT_TRON_RPC_URL": JSON.stringify("http://127.0.0.1:50051"),
             },
