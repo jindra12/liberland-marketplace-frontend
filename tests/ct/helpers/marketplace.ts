@@ -1,9 +1,9 @@
 import { expect } from "@playwright/test";
 import type { APIRequestContext, Page } from "@playwright/test";
 
-export const CT_TIMEOUT_MS = 20000;
+export const CT_TIMEOUT_MS = 5000;
 export const CT_NAVIGATION_TIMEOUT_MS = 45000;
-const CT_LOADER_TIMEOUT_MS = 15000;
+const CT_LOADER_TIMEOUT_MS = 5000;
 
 export type MarketplaceEndpoint = {
     description?: string;

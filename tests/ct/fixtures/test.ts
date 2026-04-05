@@ -34,7 +34,11 @@ test.afterEach(async ({}, testInfo) => {
         .slice(0, 120);
 
     const attachments = testInfo.attachments.filter((attachment) => {
-        return attachment.path && typeof attachment.contentType === "string" && attachment.contentType.startsWith("video/");
+        return (
+            attachment.path &&
+            typeof attachment.contentType === "string" &&
+            (attachment.contentType.startsWith("video/") || attachment.contentType.startsWith("image/"))
+        );
     });
 
     await Promise.all(
@@ -42,9 +46,10 @@ test.afterEach(async ({}, testInfo) => {
             const sourcePath = attachment.path!;
             const suffix = testInfo.project.name.replace(/[^a-zA-Z0-9]+/g, "-");
             const retrySuffix = testInfo.retry > 0 ? `.retry-${testInfo.retry}` : "";
+            const extension = path.extname(sourcePath) || (attachment.contentType.startsWith("image/") ? ".png" : ".webm");
             const targetPath = path.join(
                 REVIEW_VIDEOS_DIR,
-                `${titleSlug || "video"}-${suffix}${retrySuffix}-${index + 1}.webm`,
+                `${titleSlug || "artifact"}-${suffix}${retrySuffix}-${index + 1}${extension}`,
             );
             await fs.copyFile(sourcePath, targetPath);
         }),

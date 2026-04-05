@@ -74,7 +74,7 @@ process.on("SIGTERM", () => {
 const main = async () => {
     await waitForReady();
 
-    const playwright = spawn(playwrightBinary, ["test", ...args], {
+    const playwright = spawn(playwrightBinary, ["test", "--max-failures=1", ...args], {
         cwd: rootDir,
         env: {
             ...process.env,
