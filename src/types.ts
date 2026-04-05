@@ -135,10 +135,29 @@ export type JobDetailsSummaryProps = {
 export type EntityCommentsSectionProps = {
     targetId: string;
     relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    limit?: number;
-    placeholder?: string;
     className?: string;
     serverURL?: string | null;
+};
+
+export type EntityCommentsSectionDisplayProps = {
+    className?: string;
+    commentData: CommentDataItem[];
+    commentSectionStyles: CommentSectionStyles;
+    commentThemeVars: CommentThemeVars;
+    commentsCount?: number;
+    currentUser: CommentCurrentUser;
+    hasMore: boolean;
+    isAnonymous: boolean;
+    isError: boolean;
+    isLoading: boolean;
+    onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
+    onEditAction: (payload: CommentEditPayload) => Promise<void>;
+    onLoadMore: () => void;
+    onLogin: () => void;
+    onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
+    onSignUp: () => void;
+    onSubmitAction: (payload: CommentSubmitPayload) => Promise<void>;
+    placeholder: string;
 };
 
 export type CommentDoc = NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number];

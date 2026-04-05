@@ -97,6 +97,7 @@ manager is `yarn`.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
+- Only do what the user explicitly asked for. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
 - If a user asks you to fix a failing test, keep running the relevant test until it passes or you have a concrete app bug to report back.
 - Stateless utilities belong to `utils.ts/x`.

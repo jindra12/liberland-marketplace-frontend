@@ -11,6 +11,7 @@ import {
     ENTITY_COMMENTS_DEFAULT_LIMIT,
     ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
 } from "../../constants";
+import { useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle } from "../../generated/graphql";
 import {
     AuthProfile,
     CommentDeletePayload,
@@ -28,19 +29,37 @@ import {
 } from "../hooks";
 
 import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { EntityCommentsSectionDisplay } from "./EntityCommentsSectionDisplay";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = (props) => {
-    const limit = props.limit === undefined ? ENTITY_COMMENTS_DEFAULT_LIMIT : props.limit;
-    const placeholder = props.placeholder === undefined ? ENTITY_COMMENTS_DEFAULT_PLACEHOLDER : props.placeholder;
     const auth = useAuth();
     const { token } = theme.useToken();
+    const [page, setPage] = React.useState(1);
+    const queryClient = useQueryClient();
     const queryRelationTo = COMMENT_RELATION_TO_QUERY_RELATION[props.relationTo];
     const comments = useListCommentsByTargetQuery({
         targetId: props.targetId,
         relationTo: queryRelationTo,
-        limit,
+        limit: ENTITY_COMMENTS_DEFAULT_LIMIT,
         url: props.serverURL,
+        page,
     });
+    const refresh = async () => {
+        await comments.refetch();
+        await queryClient.invalidateQueries({
+            predicate: (query) => {
+                const [type] = useListCommentsByTargetQuerySingle.getKey({
+                    targetId: props.targetId,
+                    relationTo: queryRelationTo,
+                });
+                const [predType, predVars] = query.queryKey;
+                return Boolean(
+                    type === predType && predVars && typeof predVars === "object" && "targetId" in predVars && predVars.targetId === props.targetId
+                );
+            },
+        });
+    }
     const createComment = useCreateCommentMutation();
     const createReply = useCreateReplyToCommentMutation();
     const updateComment = useUpdateCommentContentMutation();
@@ -69,6 +88,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             },
             content,
         });
+        await refresh();
     };
     const onReplyAction = async (payload: CommentReplyPayload) => {
         const content = payload.text.trim();
@@ -85,6 +105,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             parentCommentId,
             content,
         });
+        await refresh();
     };
     const onEditAction = async (payload: CommentEditPayload) => {
         if (!auth.isAuthenticated) {
@@ -100,6 +121,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             id: commentId,
             content,
         });
+        await refresh();
     };
     const onDeleteAction = async (payload: CommentDeletePayload) => {
         const commentId = payload.comIdToDelete;
@@ -110,59 +132,31 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             url: props.serverURL,
             id: commentId,
         });
+        await refresh();
     };
-    if (comments.isLoading) {
-        return (
-            <Flex justify="center" align="center" className="EntityCommentsSection">
-                <Spin />
-            </Flex>
-        );
-    }
-    if (comments.error) {
-        return (
-            <Alert
-                type="error"
-                showIcon
-                message="Failed to load comments"
-                description="Try refreshing the page."
-                className="EntityCommentsSection"
-            />
-        );
-    }
+    
     return (
-        <div
-            className={[
-                "EntityCommentsSection",
-                !auth.isAuthenticated && "EntityCommentsSection--anonymous",
-                props.className,
-            ]
-                .filter(Boolean)
-                .join(" ")}
-            style={commentThemeVars}
-        >
-            <CommentSection
-                key={`${props.relationTo}-${props.targetId}-${auth.isAuthenticated ? "auth" : "anonymous"}`}
-                currentUser={currentUser}
-                logIn={{
-                    onLogin: () => auth.signinRedirect(),
-                    onSignUp: () => auth.signinRedirect(),
-                }}
-                commentData={commentData}
-                placeHolder={placeholder}
-                showTimestamp
-                overlayStyle={commentSectionStyles.overlayStyle}
-                formStyle={commentSectionStyles.formStyle}
-                inputStyle={commentSectionStyles.inputStyle}
-                replyInputStyle={commentSectionStyles.replyInputStyle}
-                submitBtnStyle={commentSectionStyles.submitBtnStyle}
-                cancelBtnStyle={commentSectionStyles.cancelBtnStyle}
-                hrStyle={commentSectionStyles.hrStyle}
-                titleStyle={commentSectionStyles.titleStyle}
-                onSubmitAction={onSubmitAction}
-                onReplyAction={onReplyAction}
-                onEditAction={onEditAction}
-                onDeleteAction={onDeleteAction}
-            />
-        </div>
+        <EntityCommentsSectionDisplay
+            className={props.className}
+            commentData={commentData}
+            commentSectionStyles={commentSectionStyles}
+            commentThemeVars={commentThemeVars}
+            commentsCount={comments.data?.Comments?.totalDocs}
+            currentUser={currentUser}
+            hasMore={comments.data?.Comments?.hasNextPage || false}
+            isAnonymous={!auth.isAuthenticated}
+            isError={comments.isError}
+            isLoading={comments.isLoading}
+            onDeleteAction={onDeleteAction}
+            onEditAction={onEditAction}
+            onLoadMore={() => {
+                setPage((currentPage) => currentPage + 1);
+            }}
+            onLogin={() => auth.signinRedirect()}
+            onReplyAction={onReplyAction}
+            onSignUp={() => auth.signinRedirect()}
+            onSubmitAction={onSubmitAction}
+            placeholder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
+        />
     );
 };

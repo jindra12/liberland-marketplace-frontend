@@ -190,6 +190,10 @@
     --ecs-radius: 8px;
 }
 
+.EntityCommentsSection__loader {
+    padding-block: 24px;
+}
+
 .EntityCommentsSection .overlay {
     background-color: var(--ecs-bg-overlay);
     color: var(--ecs-text-primary);
