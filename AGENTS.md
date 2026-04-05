@@ -27,8 +27,6 @@ manager is `yarn`.
 - `yarn build` creates a production build.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
-- `yarn test:ct` runs Cypress component tests.
-- `yarn playground` opens the Cypress playground test.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 
@@ -60,14 +58,6 @@ manager is `yarn`.
 - TypeScript strict mode is enabled.
 - When adding or changing queries, run `yarn codegen`.
 - Startup naming stays internal; user-facing strings use Venture naming.
-
-## Cypress
-
-- Use Cypress proactively for frontend behavior changes.
-- Check the dev server on `localhost:3001`, start it if needed, then verify the affected page.
-- Use the shared test credentials from the repo context when login is required.
-- Re-test and fix any issues you find.
-- Delete any screenshots generated during test runs.
 
 ## Code Hygiene
 
@@ -113,6 +103,7 @@ manager is `yarn`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly. Do not add random shims or loader hacks for broken packages; fix them through supported configuration, documented dependencies, or an approved patch instead.
+- Do not import `IncomingMessage` or `ServerResponse` from `node:http` in shared test helpers; use tiny local request/response shapes instead so browser-facing code stays decoupled from Node HTTP typings.
 - Do not edit `src/components/hooks.ts` unless the user explicitly asks for changes there.
 - Do not edit `deepMergeConcatArrays` in `src/components/query/utils.ts` unless the user explicitly asks for changes there.
 - Do not touch the backend repo or backend files from this frontend workspace unless the user explicitly asks for backend changes.

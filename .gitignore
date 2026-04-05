@@ -159,4 +159,3 @@ dist
 .pnp.*
 .vercel
 screenshots/
-.cypress-videos/

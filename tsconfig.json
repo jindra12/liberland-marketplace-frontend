@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2020",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "types": ["node", "jest", "cypress", "cypress-react-router"],
+        "types": ["node", "jest"],
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
@@ -21,10 +21,6 @@
     },
     "include": [
         "next-env.d.ts",
-        "cypress.config.ts",
-        "cypress/**/*.ts",
-        "cypress/**/*.tsx",
-        "cypress/**/*.d.ts",
         "src/**/*.ts",
         "src/**/*.tsx",
         "tests/ct/servers/**/*.ts",
