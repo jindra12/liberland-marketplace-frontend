@@ -27,6 +27,7 @@ manager is `yarn`.
 - `yarn build` creates a production build.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
+- To verify Cypress tests, actually run them instead of only typechecking or inspecting files.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 

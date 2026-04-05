@@ -22,6 +22,8 @@ import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
 import { RouteScrollToTop } from "./components/RouteScrollToTop";
 
+import { CypressHistorySupport } from "cypress-react-router";
+
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
@@ -82,6 +84,7 @@ const Main: React.FunctionComponent = () => (
                         <ThirdwebProvider>
                             <AuthContextProvider>
                                 <BrowserRouter>
+                                    <CypressHistorySupport />
                                     <AppAnalyticsProvider>
                                         <AntProvider>
                                             <AppErrorBoundary>
