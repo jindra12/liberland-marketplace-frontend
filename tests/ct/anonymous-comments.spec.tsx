@@ -16,7 +16,7 @@ import {
     waitForSplashContent,
     CT_TIMEOUT_MS,
 } from "./helpers/marketplace";
-import { expectGraphqlRequest, isJsonObject } from "./helpers/network";
+import { expectGraphqlRequest, isJsonObject, type RecordedGraphqlRequest } from "./helpers/network";
 
 const alphaUrl = SYNDICATION_SERVERS[0].url;
 const betaUrl = SYNDICATION_SERVERS[1].url;
@@ -46,11 +46,35 @@ test.beforeEach(async ({ page, request, mount }) => {
     await waitForSplashContent(page);
 });
 
-const addAnonymousComment = async (page: Page, commentText: string) => {
+const addAnonymousComment = async (
+    page: Page,
+    network: { graphqlRequests: RecordedGraphqlRequest[] },
+    expectedTargetId: string,
+    expectedRelationTo: string,
+    commentText: string,
+) => {
     const commentsSection = page.locator(".EntityCommentsSection");
     await expect(commentsSection).toBeVisible();
     await commentsSection.getByPlaceholder("Write your comment...").fill(commentText);
     await commentsSection.getByRole("button", { name: "Post" }).click();
+    await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
+        const replyToPost = request.variables.replyToPost;
+        return Boolean(
+            request.variables.content === commentText &&
+                isJsonObject(replyToPost) &&
+                request.operationName === "CreateComment" &&
+                replyToPost.relationTo === expectedRelationTo &&
+                replyToPost.value === expectedTargetId,
+        );
+    });
+    await expectGraphqlRequest(network.graphqlRequests, "ListCommentsByTarget", (request) => {
+        return Boolean(
+            request.variables.targetId === expectedTargetId &&
+                request.variables.relationTo === expectedRelationTo &&
+                Number(request.variables.page) === 1 &&
+                Number(request.variables.limit) === 20,
+        );
+    });
     await expect(commentsSection).toContainText(commentText, { timeout: CT_TIMEOUT_MS });
 };
 
@@ -66,15 +90,7 @@ const openProductDetail = async (page: Page, productName: string) => {
 test("anonymous users can add a comment to a product detail page", async ({ page, network }) => {
     await openProductDetail(page, "Dense Ethereum Bundle A");
     const commentText = `Playwright product comment ${Date.now()}`;
-    await addAnonymousComment(page, commentText);
-    await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
-        const replyToPost = request.variables.replyToPost;
-        return Boolean(
-            request.variables.content === commentText &&
-                isJsonObject(replyToPost) &&
-                replyToPost.value === "dense-4102-product-eth-1",
-        );
-    });
+    await addAnonymousComment(page, network, "dense-4102-product-eth-1", "products", commentText);
 });
 
 test("anonymous users can add a comment to a company discussion tab", async ({ page, network }) => {
@@ -85,13 +101,5 @@ test("anonymous users can add a comment to a company discussion tab", async ({ p
     await page.getByRole("tab", { name: "Discussion" }).click();
 
     const commentText = `Playwright company comment ${Date.now()}`;
-    await addAnonymousComment(page, commentText);
-    await expectGraphqlRequest(network.graphqlRequests, "CreateComment", (request) => {
-        const replyToPost = request.variables.replyToPost;
-        return Boolean(
-            request.variables.content === commentText &&
-                isJsonObject(replyToPost) &&
-                replyToPost.value === "dense-4102-company-payments",
-        );
-    });
+    await addAnonymousComment(page, network, "dense-4102-company-payments", "companies", commentText);
 });

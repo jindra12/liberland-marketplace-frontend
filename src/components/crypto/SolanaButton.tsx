@@ -15,7 +15,7 @@ export const SolanaButton: React.FunctionComponent<SolanaButtonProps> = (props) 
         <Button
             className={["SolanaButton", props.payment ? "SolanaButton--payment" : undefined].filter(Boolean).join(" ")}
             size="large"
-            icon={<Image src={require("../../assets/solana.svg").default} width="22px" height="22px" preview={false} />}
+            icon={<Image src="/solana.svg" width="22px" height="22px" preview={false} />}
             onClick={props.onSelect}
             disabled={props.disabled}
         >

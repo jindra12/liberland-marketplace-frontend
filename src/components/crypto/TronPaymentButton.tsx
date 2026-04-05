@@ -70,7 +70,7 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
         type: "button",
         className: "TronButton TronButton--payment",
         disabled: loading || isPaymentPending,
-        icon: require("../../assets/tron.svg").default,
+        icon: "/tron.svg",
     };
 
     return (
@@ -86,7 +86,7 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                 <Button
                     icon={
                         <Image
-                            src={require("../../assets/tron.svg").default}
+                            src={"/tron.svg"}
                             width="22px"
                             height="22px"
                             preview={false}

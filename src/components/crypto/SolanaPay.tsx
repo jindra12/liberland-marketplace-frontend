@@ -106,7 +106,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                                 <Spin />
                             ) : (
                                 <Image
-                                    src={require("../../assets/solana.svg").default}
+                                    src="/solana.svg"
                                     width="22px"
                                     height="22px"
                                     preview={false}

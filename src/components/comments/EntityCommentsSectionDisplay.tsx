@@ -31,33 +31,6 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
         );
     }
 
-    const content = (
-        <CommentSection
-            key={`${props.className ?? "comments"}-${props.isAnonymous ? "anonymous" : "auth"}`}
-            currentUser={props.currentUser}
-            logIn={{
-                onLogin: props.onLogin,
-                onSignUp: props.onSignUp,
-            }}
-            commentData={props.commentData}
-            placeHolder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
-            showTimestamp
-            overlayStyle={props.commentSectionStyles.overlayStyle}
-            formStyle={props.commentSectionStyles.formStyle}
-            inputStyle={props.commentSectionStyles.inputStyle}
-            replyInputStyle={props.commentSectionStyles.replyInputStyle}
-            submitBtnStyle={props.commentSectionStyles.submitBtnStyle}
-            cancelBtnStyle={props.commentSectionStyles.cancelBtnStyle}
-            hrStyle={props.commentSectionStyles.hrStyle}
-            titleStyle={props.commentSectionStyles.titleStyle}
-            onSubmitAction={props.onSubmitAction}
-            onReplyAction={props.onReplyAction}
-            onEditAction={props.onEditAction}
-            onDeleteAction={props.onDeleteAction}
-            commentsCount={props.commentsCount}
-        />
-    );
-
     return (
         <div
             className={["EntityCommentsSection", props.isAnonymous && "EntityCommentsSection--anonymous", props.className]
@@ -83,7 +56,30 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                 scrollThreshold={0.75}
                 className="InfinityScroll"
             >
-                {content}
+                <CommentSection
+                    key={`${props.className ?? "comments"}-${props.isAnonymous ? "anonymous" : "auth"}`}
+                    currentUser={props.currentUser}
+                    logIn={{
+                        onLogin: props.onLogin,
+                        onSignUp: props.onSignUp,
+                    }}
+                    commentData={props.commentData}
+                    placeHolder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
+                    showTimestamp
+                    overlayStyle={props.commentSectionStyles.overlayStyle}
+                    formStyle={props.commentSectionStyles.formStyle}
+                    inputStyle={props.commentSectionStyles.inputStyle}
+                    replyInputStyle={props.commentSectionStyles.replyInputStyle}
+                    submitBtnStyle={props.commentSectionStyles.submitBtnStyle}
+                    cancelBtnStyle={props.commentSectionStyles.cancelBtnStyle}
+                    hrStyle={props.commentSectionStyles.hrStyle}
+                    titleStyle={props.commentSectionStyles.titleStyle}
+                    onSubmitAction={props.onSubmitAction}
+                    onReplyAction={props.onReplyAction}
+                    onEditAction={props.onEditAction}
+                    onDeleteAction={props.onDeleteAction}
+                    commentsCount={props.commentsCount}
+                />
             </InfiniteScroll>
         </div>
     );

@@ -31,6 +31,7 @@ import {
 import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { EntityCommentsSectionDisplay } from "./EntityCommentsSectionDisplay";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = (props) => {
     const auth = useAuth();
@@ -69,13 +70,14 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         () => getCommentCurrentUser(auth.isAuthenticated, profile),
         [auth.isAuthenticated, profile],
     );
+    const accumulatedDocs = useAccumulatedDocs(comments.data?.Comments?.docs || [], page);
     const commentData = React.useMemo(() => {
-        const docs = comments.data?.Comments?.docs || [];
-        return buildCommentData(docs);
-    }, [comments.data]);
+        return buildCommentData(accumulatedDocs);
+    }, [accumulatedDocs]);
     const commentThemeVars = React.useMemo(() => getCommentThemeVars(token), [token]);
     const commentSectionStyles = React.useMemo(() => getCommentSectionStyles(token), [token]);
     const onSubmitAction = async (payload: CommentSubmitPayload) => {
+        console.log(payload);
         const content = payload.text.trim();
         if (!content) {
             return;
