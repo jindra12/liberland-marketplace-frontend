@@ -3,6 +3,8 @@ import * as React from "react";
 import { mount } from "cypress/react";
 
 import Main from "../../../src/Main";
+import { CART_SECRETS_INDEX_KEY } from "../../../src/components/cart/cartSecrets";
+import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
 
 import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
 import { buildGraphQLAlias } from "../graphqlMock";
@@ -28,6 +30,21 @@ export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
+};
+
+export const seedCartSecret = (serverUrl: string, secret: string) => {
+    const entries: CartSecretEntry[] = [
+        {
+            url: serverUrl,
+            secret,
+        },
+    ];
+
+    cy.window().then((win) => {
+        const serialized = JSON.stringify(entries);
+        win.localStorage.setItem(CART_SECRETS_INDEX_KEY, serialized);
+        win.dispatchEvent(new win.StorageEvent("storage", { key: CART_SECRETS_INDEX_KEY, newValue: serialized }));
+    });
 };
 
 export const homepageQueries = () => {

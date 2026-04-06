@@ -28,6 +28,8 @@ manager is `yarn`.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
 - To verify Cypress tests, actually run them instead of only typechecking or inspecting files.
+- Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
+- If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn lint` and `yarn lint:fix` run ESLint.
