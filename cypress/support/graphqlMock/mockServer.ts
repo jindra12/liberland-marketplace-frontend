@@ -3,8 +3,11 @@ import type { GraphQLResolveInfo } from "graphql";
 import { GraphQLHandler } from "graphql-mocks";
 import { cypressHandler } from "@graphql-mocks/network-cypress";
 
-import { coopFixtures, mainFixtures } from "./fixtures";
-import type { MockCollection, MockNode } from "./types";
+import { mainFixtures } from "./fixtures";
+import { coopFixtures } from "./coopFixtures";
+import { buildGraphQLAlias, normalizeGraphQLHost } from "./alias";
+import { recordGraphQLRequestLog } from "./requestLogs";
+import type { GraphQLRequestLog, MockCollection, MockNode } from "./types";
 
 type GraphQLRequestBody = {
     operationName?: string;
@@ -14,6 +17,12 @@ type GraphQLRequestBody = {
     query?: string;
 };
 
+const nowIso = (): string => new Date().toISOString();
+
+const toRequestBody = (body: GraphQLRequestBody): Record<string, unknown> => ({
+    ...body,
+});
+
 const getOperationName = (body: GraphQLRequestBody): string => {
     if (body.operationName) {
         return body.operationName;
@@ -22,8 +31,6 @@ const getOperationName = (body: GraphQLRequestBody): string => {
     const match = body.query?.match(/\b(query|mutation|subscription)\s+([A-Za-z0-9_]+)/);
     return match?.[2] || "anonymous";
 };
-
-const toAliasSegment = (value: string): string => value.replace(/[^a-zA-Z0-9]+/g, "_");
 
 const scalar = (name: string) =>
     new GraphQLScalarType({
@@ -504,15 +511,54 @@ const graphqlHandler = new GraphQLHandler({
 
 export const installGraphQLMock = () => {
     const handler = cypressHandler(graphqlHandler);
+
+    cy.intercept("OPTIONS", /http:\/\/127\.0\.0\.1:301[01]\/api\/graphql$/, (req) => {
+        const origin = typeof req.headers.origin === "string" ? req.headers.origin : "*";
+        const host = new globalThis.URL(req.url).host;
+        const requestLog: GraphQLRequestLog = {
+            timestamp: nowIso(),
+            method: "OPTIONS",
+            url: req.url,
+            host,
+            responseStatusCode: 204,
+        };
+
+        req.reply({
+            statusCode: 204,
+            headers: {
+                "access-control-allow-origin": origin,
+                "access-control-allow-methods": "POST, OPTIONS",
+                "access-control-allow-headers": "content-type, authorization, x-requested-with",
+                "access-control-max-age": "86400",
+            },
+        });
+
+        recordGraphQLRequestLog(requestLog);
+    });
+
     cy.intercept("POST", /http:\/\/127\.0\.0\.1:301[01]\/api\/graphql$/, async (req) => {
         const body = req.body as GraphQLRequestBody;
         const operationName = getOperationName(body);
-        const host = new globalThis.URL(req.url).host;
+        const host = normalizeGraphQLHost(req.url);
         activeFixtures = host === "127.0.0.1:3011" ? coopFixtures : mainFixtures;
-        req.alias = `gql_${toAliasSegment(host)}_${toAliasSegment(operationName)}`;
+        req.alias = buildGraphQLAlias(req.url, operationName, body.variables as Record<string, unknown> | undefined);
 
         if (operationName.startsWith("Search")) {
             const response = searchResponseFor(operationName, body);
+            recordGraphQLRequestLog({
+                timestamp: nowIso(),
+                method: "POST",
+                url: req.url,
+                host,
+                operationName,
+                requestBody: toRequestBody(body),
+                responseStatusCode: 200,
+                responseBody: {
+                    data: {
+                        Searches: response,
+                    },
+                },
+            });
             req.reply({
                 statusCode: 200,
                 body: {
@@ -525,5 +571,17 @@ export const installGraphQLMock = () => {
         }
 
         await handler(req);
+        const response = req as unknown as { response?: { statusCode?: number; body?: Record<string, unknown> } };
+        recordGraphQLRequestLog({
+            timestamp: nowIso(),
+            method: "POST",
+            url: req.url,
+            host,
+            operationName,
+            alias: req.alias,
+            requestBody: toRequestBody(body),
+            responseStatusCode: response.response?.statusCode || 200,
+            responseBody: response.response?.body,
+        });
     });
 };

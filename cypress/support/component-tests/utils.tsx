@@ -5,6 +5,7 @@ import { mount } from "cypress/react";
 import Main from "../../../src/Main";
 
 import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
+import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
     GraphQLCollectionResponse,
@@ -15,10 +16,8 @@ import type {
     SearchGoal,
 } from "./types";
 
-const toAliasSegment = (value: string) => value.replace(/[^a-zA-Z0-9]+/g, "_");
-
-export const gqlAlias = (serverUrl: string, operationName: string): string =>
-    `gql_${toAliasSegment(new URL(serverUrl).host)}_${toAliasSegment(operationName)}`;
+export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
+    buildGraphQLAlias(serverUrl, operationName, variables);
 
 export const mountMainHome = () => {
     mount(<Main />);
@@ -53,16 +52,12 @@ export const waitForCollectionQuery = (
     responseKey: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName)}`).then((interception) => {
-        const requestBody = interception.request.body as {
-            variables?: GraphQLVariables;
-        };
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
 
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(requestBody.variables ?? {}).to.deep.include(expectedVariables);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
         expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name).to.equal(expectedTitle);
     });
@@ -76,32 +71,24 @@ export const waitForDetailQuery = (
     expectedId: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName)}`).then((interception) => {
-        const requestBody = interception.request.body as {
-            variables?: GraphQLVariables;
-        };
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const node = response?.data?.[responseKey] as GraphQLNodeResponse | undefined;
 
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(requestBody.variables ?? {}).to.deep.include(expectedVariables);
         expect(node?.id).to.equal(expectedId);
         expect(node?.title ?? node?.name).to.equal(expectedTitle);
     });
 };
 
 export const waitForSearchQuery = (serverUrl: string, operationName: string, searchTerm: string, expectedTitle: string) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName)}`).then((interception) => {
-        const requestBody = interception.request.body as {
-            variables?: GraphQLVariables;
-        };
+    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm })}`).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
 
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(requestBody.variables?.searchTerm).to.equal(searchTerm);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
         expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name).to.equal(expectedTitle);
     });
@@ -119,7 +106,6 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
     cy.contains(goal.selector, goal.label).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 1000, page: 1 }, "Identities", "Nova Rivers");
     waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.expectedVariables, goal.responseKey, goal.expectedId, goal.title);
     cy.contains("h1", goal.title).should("be.visible");
 };

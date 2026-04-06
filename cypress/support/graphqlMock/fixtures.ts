@@ -1,5 +1,8 @@
 import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
 
+const MAIN_SYNDICATION_URL = "http://127.0.0.1:3010";
+const COOP_SYNDICATION_URL = "http://127.0.0.1:3011";
+
 const node = (value: Record<string, unknown>): MockNode => value as MockNode;
 
 const image = (id: string, alt: string): MockNode => node({
@@ -25,25 +28,25 @@ const collection = (docs: MockNode[]): MockCollection => ({
 });
 
 export const identities = [
-    node({ id: "identity-nova", name: "Nova Rivers", description: "Harbor logistics lead", website: "https://nova.example", email: "nova@example.test", serverURL: "https://mock.example/identity-nova", image: image("identity-nova", "Nova Rivers") }),
-    node({ id: "identity-atlas", name: "Atlas Pike", description: "Product explorer", website: "https://atlas.example", email: "atlas@example.test", serverURL: "https://mock.example/identity-atlas", image: image("identity-atlas", "Atlas Pike") }),
-    node({ id: "identity-mira", name: "Mira Vale", description: "Community operator", website: "https://mira.example", email: "mira@example.test", serverURL: "https://mock.example/identity-mira", image: image("identity-mira", "Mira Vale") }),
-    node({ id: "identity-orion", name: "Orion Swift", description: "Shipwright", website: "https://orion.example", email: "orion@example.test", serverURL: "https://mock.example/identity-orion", image: image("identity-orion", "Orion Swift") }),
-    node({ id: "identity-sage", name: "Sage Bloom", description: "Independent maker", website: "https://sage.example", email: "sage@example.test", serverURL: "https://mock.example/identity-sage", image: image("identity-sage", "Sage Bloom") }),
+    node({ id: "identity-nova", name: "Nova Rivers", description: "Harbor logistics lead", website: "https://nova.example", email: "nova@example.test", serverURL: MAIN_SYNDICATION_URL, image: image("identity-nova", "Nova Rivers") }),
+    node({ id: "identity-atlas", name: "Atlas Pike", description: "Product explorer", website: "https://atlas.example", email: "atlas@example.test", serverURL: MAIN_SYNDICATION_URL, image: image("identity-atlas", "Atlas Pike") }),
+    node({ id: "identity-mira", name: "Mira Vale", description: "Community operator", website: "https://mira.example", email: "mira@example.test", serverURL: MAIN_SYNDICATION_URL, image: image("identity-mira", "Mira Vale") }),
+    node({ id: "identity-orion", name: "Orion Swift", description: "Shipwright", website: "https://orion.example", email: "orion@example.test", serverURL: MAIN_SYNDICATION_URL, image: image("identity-orion", "Orion Swift") }),
+    node({ id: "identity-sage", name: "Sage Bloom", description: "Independent maker", website: "https://sage.example", email: "sage@example.test", serverURL: MAIN_SYNDICATION_URL, image: image("identity-sage", "Sage Bloom") }),
 ];
 
 export const companies = [
-    node({ id: "company-harbor-labs", name: "Harbor Labs", description: "Distributed shipping and tooling", website: "https://harbor.example", phone: "+1 555 1200", email: "hello@harbor.example", serverURL: "https://mock.example/company-harbor-labs", _status: "published", isSubscribed: true, createdBy: identities[0], identity: identities[0], allowedIdentities: [identities[0], identities[2]], disallowedIdentities: [identities[4]], cryptoAddresses: [node({ chain: "solana", address: "SoHarbor111" }), node({ chain: "ethereum", address: "0xHarbor111" })], image: image("company-harbor-labs", "Harbor Labs") }),
-    node({ id: "company-reef-studio", name: "Reef Studio", description: "Limited-run goods and premium design", website: "https://reef.example", phone: "+1 555 2200", email: "team@reef.example", serverURL: "https://mock.example/company-reef-studio", _status: "published", isSubscribed: false, createdBy: identities[1], identity: identities[1], allowedIdentities: [identities[1], identities[3]], disallowedIdentities: [identities[2]], cryptoAddresses: [node({ chain: "solana", address: "SoReef222" })], image: image("company-reef-studio", "Reef Studio") }),
-    node({ id: "company-bazaar-foundry", name: "Bazaar Foundry", description: "High-volume marketplace operator", website: "https://bazaar.example", phone: "+1 555 3300", email: "info@bazaar.example", serverURL: "https://mock.example/company-bazaar-foundry", _status: "published", isSubscribed: true, createdBy: identities[3], identity: identities[3], allowedIdentities: [identities[0], identities[3]], disallowedIdentities: [identities[1]], cryptoAddresses: [node({ chain: "tron", address: "TBazaar333" })], image: image("company-bazaar-foundry", "Bazaar Foundry") }),
-    node({ id: "company-nomad-collective", name: "Nomad Collective", description: "No primary company owner", website: "https://nomad.example", phone: "+1 555 4400", email: "join@nomad.example", serverURL: "https://mock.example/company-nomad-collective", _status: "published", isSubscribed: false, createdBy: identities[2], identity: null, allowedIdentities: [identities[2], identities[4]], disallowedIdentities: [identities[0]], cryptoAddresses: [node({ chain: "solana", address: "SoNomad444" })], image: image("company-nomad-collective", "Nomad Collective") }),
+    node({ id: "company-harbor-labs", name: "Harbor Labs", description: "Distributed shipping and tooling", website: "https://harbor.example", phone: "+1 555 1200", email: "hello@harbor.example", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: true, createdBy: identities[0], identity: identities[0], allowedIdentities: [identities[0], identities[2]], disallowedIdentities: [identities[4]], cryptoAddresses: [node({ chain: "solana", address: "SoHarbor111" }), node({ chain: "ethereum", address: "0xHarbor111" })], image: image("company-harbor-labs", "Harbor Labs") }),
+    node({ id: "company-reef-studio", name: "Reef Studio", description: "Limited-run goods and premium design", website: "https://reef.example", phone: "+1 555 2200", email: "team@reef.example", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: false, createdBy: identities[1], identity: identities[1], allowedIdentities: [identities[1], identities[3]], disallowedIdentities: [identities[2]], cryptoAddresses: [node({ chain: "solana", address: "SoReef222" })], image: image("company-reef-studio", "Reef Studio") }),
+    node({ id: "company-bazaar-foundry", name: "Bazaar Foundry", description: "High-volume marketplace operator", website: "https://bazaar.example", phone: "+1 555 3300", email: "info@bazaar.example", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: true, createdBy: identities[3], identity: identities[3], allowedIdentities: [identities[0], identities[3]], disallowedIdentities: [identities[1]], cryptoAddresses: [node({ chain: "tron", address: "TBazaar333" })], image: image("company-bazaar-foundry", "Bazaar Foundry") }),
+    node({ id: "company-nomad-collective", name: "Nomad Collective", description: "No primary company owner", website: "https://nomad.example", phone: "+1 555 4400", email: "join@nomad.example", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: false, createdBy: identities[2], identity: null, allowedIdentities: [identities[2], identities[4]], disallowedIdentities: [identities[0]], cryptoAddresses: [node({ chain: "solana", address: "SoNomad444" })], image: image("company-nomad-collective", "Nomad Collective") }),
 ];
 
 export const products = [
-    node({ id: "product-solar-widget", name: "Solar Widget", description: "Unlimited utility hardware", serverURL: "https://mock.example/product-solar-widget", _status: "published", isSubscribed: true, url: "/products/solar-widget", inventory: null, orderable: true, enableVariants: true, companyIdentityId: identities[0].id, priceInUSDEnabled: true, priceInUSD: 49, priceInETH: 0.019, priceInSOL: 0.83, priceInTRX: 127, cryptoAddresses: [node({ chain: "solana", address: "SoSolar111" })], variantTypes: [node({ id: "variant-size", name: "size", label: "Size" }), node({ id: "variant-color", name: "color", label: "Color" })], variants: collection([node({ id: "solar-widget-mini", title: "Mini", inventory: 6, priceInUSDEnabled: true, priceInUSD: 39, options: [node({ id: "mini-size", label: "Size", value: "Mini", variantType: node({ id: "variant-size", name: "size" }) })] }), node({ id: "solar-widget-pro", title: "Pro", inventory: 0, priceInUSDEnabled: true, priceInUSD: 69, options: [node({ id: "pro-size", label: "Size", value: "Pro", variantType: node({ id: "variant-size", name: "size" }) }), node({ id: "pro-color", label: "Color", value: "Orange", variantType: node({ id: "variant-color", name: "color" }) })] })]), properties: [node({ id: "solar-prop-warranty", key: "warranty", value: "24 months" })], image: image("product-solar-widget", "Solar Widget"), company: companies[0] }),
-    node({ id: "product-moon-lamp", name: "Moon Lamp", description: "Limited stock desk lamp", serverURL: "https://mock.example/product-moon-lamp", _status: "published", isSubscribed: false, url: "/products/moon-lamp", inventory: 7, orderable: true, enableVariants: false, companyIdentityId: identities[1].id, priceInUSDEnabled: true, priceInUSD: 125, priceInETH: 0.058, priceInSOL: 2.2, priceInTRX: 315, cryptoAddresses: [node({ chain: "ethereum", address: "0xMoonLamp555" })], variantTypes: [], variants: collection([]), properties: [node({ id: "moon-prop-theme", key: "theme", value: "night" })], image: image("product-moon-lamp", "Moon Lamp"), company: companies[1] }),
-    node({ id: "product-harbor-pack", name: "Harbor Pack", description: "Bundle pack with tiny inventory", serverURL: "https://mock.example/product-harbor-pack", _status: "published", isSubscribed: false, url: "/products/harbor-pack", inventory: 2, orderable: true, enableVariants: true, companyIdentityId: identities[3].id, priceInUSDEnabled: false, priceInUSD: null, priceInETH: 0.12, priceInSOL: 4.5, priceInTRX: 650, cryptoAddresses: [node({ chain: "tron", address: "THarborPack666" })], variantTypes: [node({ id: "variant-pack", name: "pack", label: "Pack" })], variants: collection([node({ id: "harbor-pack-basic", title: "Basic", inventory: 2, priceInUSDEnabled: false, priceInUSD: null, options: [node({ id: "basic-pack", label: "Pack", value: "Basic", variantType: node({ id: "variant-pack", name: "pack" }) })] })]), properties: [node({ id: "harbor-prop-usage", key: "usage", value: "seasonal" })], image: image("product-harbor-pack", "Harbor Pack"), company: companies[2] }),
-    node({ id: "product-nomad-seat", name: "Nomad Seat", description: "Unlimited membership access", serverURL: "https://mock.example/product-nomad-seat", _status: "published", isSubscribed: true, url: "/products/nomad-seat", inventory: null, orderable: true, enableVariants: false, companyIdentityId: identities[2].id, priceInUSDEnabled: true, priceInUSD: 15, priceInETH: 0.005, priceInSOL: 0.18, priceInTRX: 28, cryptoAddresses: [node({ chain: "solana", address: "SoNomadSeat777" })], variantTypes: [], variants: collection([]), properties: [node({ id: "nomad-prop-access", key: "access", value: "open" })], image: image("product-nomad-seat", "Nomad Seat"), company: companies[3] }),
+    node({ id: "product-solar-widget", name: "Solar Widget", description: "Unlimited utility hardware", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: true, url: "/products/solar-widget", inventory: null, orderable: true, enableVariants: true, companyIdentityId: identities[0].id, priceInUSDEnabled: true, priceInUSD: 49, priceInETH: 0.019, priceInSOL: 0.83, priceInTRX: 127, cryptoAddresses: [node({ chain: "solana", address: "SoSolar111" })], variantTypes: [node({ id: "variant-size", name: "size", label: "Size" }), node({ id: "variant-color", name: "color", label: "Color" })], variants: collection([node({ id: "solar-widget-mini", title: "Mini", inventory: 6, priceInUSDEnabled: true, priceInUSD: 39, options: [node({ id: "mini-size", label: "Size", value: "Mini", variantType: node({ id: "variant-size", name: "size" }) })] }), node({ id: "solar-widget-pro", title: "Pro", inventory: 0, priceInUSDEnabled: true, priceInUSD: 69, options: [node({ id: "pro-size", label: "Size", value: "Pro", variantType: node({ id: "variant-size", name: "size" }) }), node({ id: "pro-color", label: "Color", value: "Orange", variantType: node({ id: "variant-color", name: "color" }) })] })]), properties: [node({ id: "solar-prop-warranty", key: "warranty", value: "24 months" })], image: image("product-solar-widget", "Solar Widget"), company: companies[0] }),
+    node({ id: "product-moon-lamp", name: "Moon Lamp", description: "Limited stock desk lamp", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: false, url: "/products/moon-lamp", inventory: 7, orderable: true, enableVariants: false, companyIdentityId: identities[1].id, priceInUSDEnabled: true, priceInUSD: 125, priceInETH: 0.058, priceInSOL: 2.2, priceInTRX: 315, cryptoAddresses: [node({ chain: "ethereum", address: "0xMoonLamp555" })], variantTypes: [], variants: collection([]), properties: [node({ id: "moon-prop-theme", key: "theme", value: "night" })], image: image("product-moon-lamp", "Moon Lamp"), company: companies[1] }),
+    node({ id: "product-harbor-pack", name: "Harbor Pack", description: "Bundle pack with tiny inventory", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: false, url: "/products/harbor-pack", inventory: 2, orderable: true, enableVariants: true, companyIdentityId: identities[3].id, priceInUSDEnabled: false, priceInUSD: null, priceInETH: 0.12, priceInSOL: 4.5, priceInTRX: 650, cryptoAddresses: [node({ chain: "tron", address: "THarborPack666" })], variantTypes: [node({ id: "variant-pack", name: "pack", label: "Pack" })], variants: collection([node({ id: "harbor-pack-basic", title: "Basic", inventory: 2, priceInUSDEnabled: false, priceInUSD: null, options: [node({ id: "basic-pack", label: "Pack", value: "Basic", variantType: node({ id: "variant-pack", name: "pack" }) })] })]), properties: [node({ id: "harbor-prop-usage", key: "usage", value: "seasonal" })], image: image("product-harbor-pack", "Harbor Pack"), company: companies[2] }),
+    node({ id: "product-nomad-seat", name: "Nomad Seat", description: "Unlimited membership access", serverURL: MAIN_SYNDICATION_URL, _status: "published", isSubscribed: true, url: "/products/nomad-seat", inventory: null, orderable: true, enableVariants: false, companyIdentityId: identities[2].id, priceInUSDEnabled: true, priceInUSD: 15, priceInETH: 0.005, priceInSOL: 0.18, priceInTRX: 28, cryptoAddresses: [node({ chain: "solana", address: "SoNomadSeat777" })], variantTypes: [], variants: collection([]), properties: [node({ id: "nomad-prop-access", key: "access", value: "open" })], image: image("product-nomad-seat", "Nomad Seat"), company: companies[3] }),
 ];
 
 export const jobs = [
@@ -51,7 +54,7 @@ export const jobs = [
         id: "job-dockmaster",
         title: "Dockmaster",
         description: "Coordinate shipping and fulfilment",
-        serverURL: "https://mock.example/job-dockmaster",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: true,
         url: "/jobs/dockmaster",
@@ -72,7 +75,7 @@ export const jobs = [
         id: "job-product-hero",
         title: "Product Hero",
         description: "Help shape product experience",
-        serverURL: "https://mock.example/job-product-hero",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: false,
         url: "/jobs/product-hero",
@@ -93,7 +96,7 @@ export const jobs = [
         id: "job-inventory-lead",
         title: "Inventory Lead",
         description: "Track limited inventory timing",
-        serverURL: "https://mock.example/job-inventory-lead",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: false,
         url: "/jobs/inventory-lead",
@@ -117,7 +120,7 @@ export const startups = [
         id: "startup-sky-relay",
         title: "Sky Relay",
         description: "Relay beacons for the marketplace",
-        serverURL: "https://mock.example/startup-sky-relay",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: true,
         stage: "mvp",
@@ -136,7 +139,7 @@ export const startups = [
         id: "startup-tide-loop",
         title: "Tide Loop",
         description: "Supply chain dashboard",
-        serverURL: "https://mock.example/startup-tide-loop",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: false,
         stage: "early",
@@ -155,7 +158,7 @@ export const startups = [
         id: "startup-nomad-nest",
         title: "Nomad Nest",
         description: "Open membership community infra",
-        serverURL: "https://mock.example/startup-nomad-nest",
+        serverURL: MAIN_SYNDICATION_URL,
         _status: "published",
         isSubscribed: true,
         stage: "idea",
@@ -181,8 +184,8 @@ export const comments = [
 ];
 
 export const syndications = [
-    node({ id: "syndication-main", name: "Main", description: "Primary syndicated content source", url: "http://127.0.0.1:3010" }),
-    node({ id: "syndication-coop", name: "Co-op", description: "Cooperative marketplace server", url: "http://127.0.0.1:3011" }),
+    node({ id: "syndication-main", name: "Main", description: "Primary syndicated content source", url: MAIN_SYNDICATION_URL }),
+    node({ id: "syndication-coop", name: "Co-op", description: "Cooperative marketplace server", url: COOP_SYNDICATION_URL }),
 ];
 
 export const carts = [
@@ -218,72 +221,3 @@ export const mainFixtures: GraphQLFixtureBundle = {
     orders,
     meUser,
 };
-
-type FixtureVariant = {
-    idPrefix: string;
-    label: string;
-};
-
-const buildIdMap = (value: unknown, idMap: Map<string, string>, variant: FixtureVariant): void => {
-    if (Array.isArray(value)) {
-        value.forEach((item) => buildIdMap(item, idMap, variant));
-        return;
-    }
-
-    if (value === null || value === undefined || typeof value !== "object") {
-        return;
-    }
-
-    const record = value as Record<string, unknown>;
-    if (typeof record.id === "string") {
-        idMap.set(record.id, `${variant.idPrefix}${record.id}`);
-    }
-
-    Object.values(record).forEach((item) => buildIdMap(item, idMap, variant));
-};
-
-const replaceMappedIds = (value: string, idMap: Map<string, string>): string =>
-    Array.from(idMap.entries()).reduce((accumulator, [oldId, newId]) => accumulator.split(oldId).join(newId), value);
-
-const cloneVariantValue = (value: unknown, key: string | undefined, idMap: Map<string, string>, variant: FixtureVariant): unknown => {
-    if (Array.isArray(value)) {
-        return value.map((item) => cloneVariantValue(item, undefined, idMap, variant));
-    }
-
-    if (value === null || value === undefined || typeof value !== "object") {
-        if (typeof value !== "string") {
-            return value;
-        }
-
-        if (key === "id") {
-            return `${variant.idPrefix}${value}`;
-        }
-
-        if (key === "name" || key === "title") {
-            return `${value} ${variant.label}`;
-        }
-
-        if (key === "description" || key === "content") {
-            return `${value} (${variant.label})`;
-        }
-
-        return replaceMappedIds(value, idMap);
-    }
-
-    const record = value as Record<string, unknown>;
-    return Object.fromEntries(
-        Object.entries(record).map(([childKey, childValue]) => [childKey, cloneVariantValue(childValue, childKey, idMap, variant)]),
-    );
-};
-
-const createVariantFixtures = (source: GraphQLFixtureBundle, variant: FixtureVariant): GraphQLFixtureBundle => {
-    const idMap = new Map<string, string>();
-    buildIdMap(source, idMap, variant);
-
-    return cloneVariantValue(source, undefined, idMap, variant) as GraphQLFixtureBundle;
-};
-
-export const coopFixtures = createVariantFixtures(mainFixtures, {
-    idPrefix: "coop-",
-    label: "Co-op",
-});

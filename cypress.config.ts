@@ -1,6 +1,8 @@
 import { defineConfig } from "cypress";
 import fs from "node:fs";
 import path from "node:path";
+import { format } from "prettier";
+import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 
 process.env.REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://127.0.0.1:3010";
 
@@ -22,6 +24,26 @@ export default defineConfig({
         setupNodeEvents(on) {
             on("before:run", () => {
                 fs.rmSync(path.resolve("cypress/artifacts"), { recursive: true, force: true });
+            });
+
+            on("task", {
+                async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
+                    if (payload.logs.length === 0) {
+                        return null;
+                    }
+
+                    const networkDir = path.resolve("cypress/artifacts/network");
+                    fs.mkdirSync(networkDir, { recursive: true });
+
+                    const targetFile = path.join(networkDir, `${payload.specRelative.replace(/[\\/]/g, "__")}.json`);
+                    const existingLogs = fs.existsSync(targetFile)
+                        ? (JSON.parse(fs.readFileSync(targetFile, "utf8")) as GraphQLRequestLogPayload["logs"])
+                        : [];
+                    const nextLogs = existingLogs.concat(payload.logs);
+                    const formatted = await format(JSON.stringify(nextLogs), { parser: "json" });
+                    fs.writeFileSync(targetFile, formatted);
+                    return null;
+                },
             });
 
             on("after:spec", (spec, results) => {

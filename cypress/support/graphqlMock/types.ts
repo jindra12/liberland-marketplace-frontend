@@ -144,3 +144,20 @@ export type GraphQLFixtureBundle = {
     orders: MockNode[];
     meUser: MockNode;
 };
+
+export type GraphQLRequestLog = {
+    timestamp: string;
+    method: "OPTIONS" | "POST";
+    url: string;
+    host: string;
+    operationName?: string;
+    requestBody?: Record<string, unknown>;
+    responseStatusCode: number;
+    responseBody?: Record<string, unknown>;
+    alias?: string;
+};
+
+export type GraphQLRequestLogPayload = {
+    specRelative: string;
+    logs: GraphQLRequestLog[];
+};
