@@ -19,9 +19,13 @@ import type {
 export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
     buildGraphQLAlias(serverUrl, operationName, variables);
 
-export const mountMainHome = () => {
+export const mountMainRoute = (route: string) => {
     mount(<Main />);
-    cy.routerNavigate("/");
+    cy.routerNavigate(route);
+};
+
+export const mountMainHome = () => {
+    mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
 };
@@ -45,6 +49,13 @@ export const waitForPageShell = () => {
     cy.get(".LoadingSkeleton--surface").should("not.exist");
 };
 
+export const waitForRouteLoad = (pageSkeletonSelector: string) => {
+    cy.get(".LoadingSkeleton--surface").should("exist");
+    cy.get(".LoadingSkeleton--surface").should("not.exist");
+    cy.get(pageSkeletonSelector).should("exist");
+    cy.get(pageSkeletonSelector).should("not.exist");
+};
+
 export const waitForCollectionQuery = (
     serverUrl: string,
     operationName: string,
@@ -59,7 +70,9 @@ export const waitForCollectionQuery = (
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name).to.equal(expectedTitle);
+        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
+            expectedTitle,
+        );
     });
 };
 
@@ -82,7 +95,12 @@ export const waitForDetailQuery = (
     });
 };
 
-export const waitForSearchQuery = (serverUrl: string, operationName: string, searchTerm: string, expectedTitle: string) => {
+export const waitForSearchQuery = (
+    serverUrl: string,
+    operationName: string,
+    searchTerm: string,
+    expectedTitle: string,
+) => {
     cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
@@ -90,7 +108,9 @@ export const waitForSearchQuery = (serverUrl: string, operationName: string, sea
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name).to.equal(expectedTitle);
+        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
+            expectedTitle,
+        );
     });
 };
 
@@ -98,7 +118,13 @@ export const goToList = (goal: ListGoal) => {
     cy.contains(".AppHeader__menuLink", goal.trigger).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    waitForCollectionQuery(MAIN_SERVER_URL, goal.operationName, goal.expectedVariables, goal.responseKey, goal.expectedResultTitle);
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        goal.operationName,
+        goal.expectedVariables,
+        goal.responseKey,
+        goal.expectedResultTitle,
+    );
     cy.contains("h2", goal.title).should("be.visible");
 };
 
@@ -127,7 +153,14 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
     cy.get(".ant-select-item-option").contains(goal.resultLabel).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    waitForDetailQuery(MAIN_SERVER_URL, goal.detailOperationName, goal.detailExpectedVariables, goal.responseKey, goal.expectedId, goal.title);
+    waitForDetailQuery(
+        MAIN_SERVER_URL,
+        goal.detailOperationName,
+        goal.detailExpectedVariables,
+        goal.responseKey,
+        goal.expectedId,
+        goal.title,
+    );
     cy.contains("h1", goal.title).should("be.visible");
 };
 

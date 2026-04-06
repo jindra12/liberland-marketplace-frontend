@@ -77,6 +77,8 @@
         "test:ct:details:headed": "cypress run --component --browser electron --headed --spec cypress/component/Details.cy.tsx",
         "test:ct:search": "cypress run --component --browser electron --spec cypress/component/Search.cy.tsx",
         "test:ct:search:headed": "cypress run --component --browser electron --headed --spec cypress/component/Search.cy.tsx",
+        "test:ct:deep-dive": "cypress run --component --browser electron --spec cypress/component/DeepDive.cy.tsx",
+        "test:ct:deep-dive:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDive.cy.tsx",
         "format": "prettier --write .",
         "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
         "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",

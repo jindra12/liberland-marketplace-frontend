@@ -201,3 +201,13 @@ export const SEARCH_GOALS: SearchGoal[] = [
         detailExpectedVariables: { id: "startup-sky-relay" },
     },
 ];
+
+export const DEEP_DIVE_ROUTES = {
+    home: "/",
+    companies: "/companies",
+    company: "/companies/company-harbor-labs",
+    job: "/jobs/job-dockmaster",
+    inactiveJob: "/jobs/job-harbor-watch",
+    venture: "/ventures/startup-sky-relay",
+    identity: "/tribes/identity-nova",
+} as const;
