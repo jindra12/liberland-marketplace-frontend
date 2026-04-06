@@ -1,5 +1,5 @@
 import "cypress-react-router/add-commands";
-import { drainGraphQLRequestLogs, installGraphQLMock } from "./graphqlMock";
+import { drainGraphQLRequestLogs, installGraphQLMock, resetGraphQLMock } from "./graphqlMock";
 
 import "../../src/index.scss";
 
@@ -7,11 +7,16 @@ type CypressWithStop = Cypress.Cypress & {
     stop?: () => void;
 };
 
+Cypress.Commands.add("resetQL", () => {
+    resetGraphQLMock();
+});
+
 beforeEach(() => {
     installGraphQLMock();
 });
 
 afterEach(function (this: Mocha.Context) {
+    cy.resetQL();
     cy.screenshot();
 
     const logs = drainGraphQLRequestLogs();
