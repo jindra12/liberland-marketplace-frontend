@@ -17,10 +17,12 @@ export type DetailGoal = {
     label: string;
     route: string;
     title: string;
-    operationName: string;
-    responseKey: string;
-    expectedId: string;
-    expectedVariables: GraphQLVariables;
+    query?: {
+        operationName: string;
+        responseKey: string;
+        expectedId: string;
+        expectedVariables: GraphQLVariables;
+    };
 };
 
 export type SearchGoal = {

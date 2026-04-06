@@ -42,6 +42,12 @@ describe("details", () => {
             goToDetailFromHome(goal);
         });
     });
+});
+
+describe("search", () => {
+    beforeEach(() => {
+        mountMainHome();
+    });
 
     SEARCH_GOALS.forEach((goal) => {
         it(`opens the ${goal.title} detail through ${goal.scopeLabel} search`, () => {

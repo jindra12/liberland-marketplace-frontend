@@ -106,14 +106,23 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
     cy.contains(goal.selector, goal.label).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.expectedVariables, goal.responseKey, goal.expectedId, goal.title);
+    if (goal.query !== undefined) {
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            goal.query.operationName,
+            goal.query.expectedVariables,
+            goal.query.responseKey,
+            goal.query.expectedId,
+            goal.title,
+        );
+    }
     cy.contains("h1", goal.title).should("be.visible");
 };
 
 export const goToDetailFromSearch = (goal: SearchGoal) => {
     openSearchScope(goal.scopeLabel);
-    cy.contains("h2,h3", goal.searchTitle).should("be.visible");
-    cy.get('input[placeholder="Type to search"]').type(goal.term);
+    cy.contains(".ant-drawer-title", goal.searchTitle).should("be.visible");
+    cy.get('input[type="search"]').type(goal.term);
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
     cy.get(".ant-select-item-option").contains(goal.resultLabel).click();
     cy.location("pathname").should("eq", goal.route);
