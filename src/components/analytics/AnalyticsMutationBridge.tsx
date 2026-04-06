@@ -3,8 +3,8 @@ import * as React from "react";
 import { useAnalytics } from "use-analytics";
 import useLocalStorage from "use-local-storage";
 
-import { BACKEND_URL } from "../../gqlFetcher";
 import type { TrackAnalyticsEventMutationVariables } from "../../generated/graphql";
+import { BACKEND_URL } from "../../gqlFetcher";
 import { useTrackAnalyticsEventMutation } from "../hooks";
 
 import { ANALYTICS_DISTINCT_ID_KEY, ANALYTICS_SESSION_ID_KEY } from "./constants";

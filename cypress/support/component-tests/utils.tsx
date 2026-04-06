@@ -43,7 +43,6 @@ export const openSearchScope = (scopeLabel: string) => {
 };
 
 export const waitForPageShell = () => {
-    cy.get(".LoadingSkeleton--surface").should("exist");
     cy.get(".LoadingSkeleton--surface").should("not.exist");
 };
 

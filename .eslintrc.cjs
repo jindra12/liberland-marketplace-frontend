@@ -64,7 +64,7 @@ module.exports = {
                     },
                 ],
                 "import/no-default-export": "error",
-                "testing-library/prefer-screen-queries": "ignore",
+                "testing-library/prefer-screen-queries": 0,
             },
         },
         {

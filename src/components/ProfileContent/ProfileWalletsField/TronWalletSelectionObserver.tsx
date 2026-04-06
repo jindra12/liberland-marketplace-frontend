@@ -21,6 +21,7 @@ export const TronWalletSelectionObserver: React.FunctionComponent<TronWalletSele
             address,
             provider: wallet.adapter.name,
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address, connected, props.active, props.onWalletSelected, wallet]);
 
     return null;

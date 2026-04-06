@@ -2,7 +2,9 @@ import * as React from "react";
 
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { CypressHistorySupport } from "cypress-react-router";
 import { ThirdwebProvider } from "thirdweb/react";
 

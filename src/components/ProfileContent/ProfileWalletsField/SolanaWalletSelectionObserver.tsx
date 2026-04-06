@@ -36,6 +36,7 @@ export const SolanaWalletSelectionObserver: React.FunctionComponent<SolanaWallet
                 provider: wallet.adapter.name,
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [connect, connected, connecting, props.active, props.onWalletSelected, publicKey, wallet]);
 
     return null;

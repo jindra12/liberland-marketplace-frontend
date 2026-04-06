@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import InfiniteScroll from "react-infinite-scroll-component";
 import { CommentSection } from "react-comments-section";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Alert, Divider, Flex, Spin, Typography } from "antd";
 

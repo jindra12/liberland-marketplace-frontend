@@ -9,33 +9,24 @@ import { useListIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { getImage } from "../shared/image/utils";
-import { TextSearchFilter } from "../TextSearchFilter";
 
 export const IdentityList: React.FunctionComponent = () => {
-    const [searchText, setSearchText] = React.useState("");
     const { md } = Grid.useBreakpoint();
+    const [page, setPage] = React.useState(1);
     const query = useListIdentitiesQuery({
-        limit: 100,
-        page: 1,
+        limit: 20,
+        page,
     });
-    const allItems = query.data?.Identities?.docs;
-
-    const sortedItems = React.useMemo(() => {
-        const filtered = searchText
-            ? allItems?.filter((identity) => identity.name.toLowerCase().includes(searchText.toLowerCase()))
-            : allItems;
-        return [...(filtered || [])].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
-    }, [allItems, searchText]);
+    const allItems = query.data?.Identities?.docs || [];
 
     return (
         <AppList
             hasMore={false}
-            items={sortedItems}
-            next={() => {}}
+            items={allItems}
+            next={() => setPage(page + 1)}
             loading={query.isLoading}
             refetch={query.refetch}
             title="Tribes"
-            filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>

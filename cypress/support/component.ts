@@ -3,7 +3,7 @@ import { installGraphQLMock } from "./graphqlMock";
 
 import "../../src/index.scss";
 
-beforeEach(() => {
+before(() => {
     installGraphQLMock();
 });
 

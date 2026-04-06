@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 import { theme } from "antd";
 
 import {
@@ -10,6 +12,7 @@ import {
     ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
 } from "../../constants";
 import { useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import {
     AuthProfile,
     CommentDeletePayload,
@@ -26,10 +29,8 @@ import {
     useUpdateCommentContentMutation,
 } from "../hooks";
 
-import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
-import { useQueryClient } from "@tanstack/react-query";
 import { EntityCommentsSectionDisplay } from "./EntityCommentsSectionDisplay";
-import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { buildCommentData, getCommentCurrentUser, getCommentSectionStyles, getCommentThemeVars } from "./utils";
 
 export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectionProps> = (props) => {
     const auth = useAuth();

@@ -20,6 +20,10 @@ export default defineConfig({
         specPattern: "cypress/component/**/*.cy.tsx",
         supportFile: "cypress/support/component.ts",
         setupNodeEvents(on) {
+            on("before:run", () => {
+                fs.rmSync(path.resolve("cypress/artifacts"), { recursive: true, force: true });
+            });
+
             on("after:spec", (spec, results) => {
                 const reportDir = path.resolve("cypress/artifacts/reports");
                 fs.mkdirSync(reportDir, { recursive: true });
