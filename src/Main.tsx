@@ -2,9 +2,8 @@ import * as React from "react";
 
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import { CypressHistorySupport } from "cypress-react-router";
 import { ThirdwebProvider } from "thirdweb/react";
 
 import { AnalyticsPageTracker } from "./components/analytics/AnalyticsPageTracker";
@@ -21,8 +20,6 @@ import { RouteErrorBoundary } from "./components/ErrorBoundary/RouteErrorBoundar
 import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
 import { RouteScrollToTop } from "./components/RouteScrollToTop";
-
-import { CypressHistorySupport } from "cypress-react-router";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));

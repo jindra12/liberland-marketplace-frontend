@@ -1,0 +1,93 @@
+import type { MockCollection, MockNode } from "./types";
+
+const node = (value: Record<string, unknown>): MockNode => value as MockNode;
+
+const image = (id: string, alt: string): MockNode => node({
+    id,
+    url: `/images/${id}.png`,
+    alt,
+    filename: `${id}.png`,
+    mimeType: "image/png",
+    width: 1200,
+    height: 800,
+});
+
+const collection = (docs: MockNode[]): MockCollection => ({
+    docs,
+    totalDocs: docs.length,
+    limit: docs.length,
+    totalPages: 1,
+    page: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null,
+});
+
+export const identities = [
+    node({ id: "identity-nova", name: "Nova Rivers", description: "Harbor logistics lead", website: "https://nova.example", email: "nova@example.test", serverURL: "https://mock.example/identity-nova", image: image("identity-nova", "Nova Rivers") }),
+    node({ id: "identity-atlas", name: "Atlas Pike", description: "Product explorer", website: "https://atlas.example", email: "atlas@example.test", serverURL: "https://mock.example/identity-atlas", image: image("identity-atlas", "Atlas Pike") }),
+    node({ id: "identity-mira", name: "Mira Vale", description: "Community operator", website: "https://mira.example", email: "mira@example.test", serverURL: "https://mock.example/identity-mira", image: image("identity-mira", "Mira Vale") }),
+    node({ id: "identity-orion", name: "Orion Swift", description: "Shipwright", website: "https://orion.example", email: "orion@example.test", serverURL: "https://mock.example/identity-orion", image: image("identity-orion", "Orion Swift") }),
+    node({ id: "identity-sage", name: "Sage Bloom", description: "Independent maker", website: "https://sage.example", email: "sage@example.test", serverURL: "https://mock.example/identity-sage", image: image("identity-sage", "Sage Bloom") }),
+];
+
+export const companies = [
+    node({ id: "company-harbor-labs", name: "Harbor Labs", description: "Distributed shipping and tooling", website: "https://harbor.example", phone: "+1 555 1200", email: "hello@harbor.example", serverURL: "https://mock.example/company-harbor-labs", _status: "published", isSubscribed: true, createdBy: identities[0], identity: identities[0], allowedIdentities: [identities[0], identities[2]], disallowedIdentities: [identities[4]], cryptoAddresses: [node({ chain: "solana", address: "SoHarbor111" }), node({ chain: "ethereum", address: "0xHarbor111" })], image: image("company-harbor-labs", "Harbor Labs") }),
+    node({ id: "company-reef-studio", name: "Reef Studio", description: "Limited-run goods and premium design", website: "https://reef.example", phone: "+1 555 2200", email: "team@reef.example", serverURL: "https://mock.example/company-reef-studio", _status: "published", isSubscribed: false, createdBy: identities[1], identity: identities[1], allowedIdentities: [identities[1], identities[3]], disallowedIdentities: [identities[2]], cryptoAddresses: [node({ chain: "solana", address: "SoReef222" })], image: image("company-reef-studio", "Reef Studio") }),
+    node({ id: "company-bazaar-foundry", name: "Bazaar Foundry", description: "High-volume marketplace operator", website: "https://bazaar.example", phone: "+1 555 3300", email: "info@bazaar.example", serverURL: "https://mock.example/company-bazaar-foundry", _status: "published", isSubscribed: true, createdBy: identities[3], identity: identities[3], allowedIdentities: [identities[0], identities[3]], disallowedIdentities: [identities[1]], cryptoAddresses: [node({ chain: "tron", address: "TBazaar333" })], image: image("company-bazaar-foundry", "Bazaar Foundry") }),
+    node({ id: "company-nomad-collective", name: "Nomad Collective", description: "No primary company owner", website: "https://nomad.example", phone: "+1 555 4400", email: "join@nomad.example", serverURL: "https://mock.example/company-nomad-collective", _status: "published", isSubscribed: false, createdBy: identities[2], identity: null, allowedIdentities: [identities[2], identities[4]], disallowedIdentities: [identities[0]], cryptoAddresses: [node({ chain: "solana", address: "SoNomad444" })], image: image("company-nomad-collective", "Nomad Collective") }),
+];
+
+export const products = [
+    node({ id: "product-solar-widget", name: "Solar Widget", description: "Unlimited utility hardware", serverURL: "https://mock.example/product-solar-widget", _status: "published", isSubscribed: true, url: "/products/solar-widget", inventory: null, orderable: true, enableVariants: true, companyIdentityId: identities[0].id, priceInUSDEnabled: true, priceInUSD: 49, priceInETH: 0.019, priceInSOL: 0.83, priceInTRX: 127, cryptoAddresses: [node({ chain: "solana", address: "SoSolar111" })], variantTypes: [node({ id: "variant-size", name: "size", label: "Size" }), node({ id: "variant-color", name: "color", label: "Color" })], variants: collection([node({ id: "solar-widget-mini", title: "Mini", inventory: 6, priceInUSDEnabled: true, priceInUSD: 39, options: [node({ id: "mini-size", label: "Size", value: "Mini", variantType: node({ id: "variant-size", name: "size" }) })] }), node({ id: "solar-widget-pro", title: "Pro", inventory: 0, priceInUSDEnabled: true, priceInUSD: 69, options: [node({ id: "pro-size", label: "Size", value: "Pro", variantType: node({ id: "variant-size", name: "size" }) }), node({ id: "pro-color", label: "Color", value: "Orange", variantType: node({ id: "variant-color", name: "color" }) })] })]), properties: [node({ id: "solar-prop-warranty", key: "warranty", value: "24 months" })], image: image("product-solar-widget", "Solar Widget"), company: companies[0] }),
+    node({ id: "product-moon-lamp", name: "Moon Lamp", description: "Limited stock desk lamp", serverURL: "https://mock.example/product-moon-lamp", _status: "published", isSubscribed: false, url: "/products/moon-lamp", inventory: 7, orderable: true, enableVariants: false, companyIdentityId: identities[1].id, priceInUSDEnabled: true, priceInUSD: 125, priceInETH: 0.058, priceInSOL: 2.2, priceInTRX: 315, cryptoAddresses: [node({ chain: "ethereum", address: "0xMoonLamp555" })], variantTypes: [], variants: collection([]), properties: [node({ id: "moon-prop-theme", key: "theme", value: "night" })], image: image("product-moon-lamp", "Moon Lamp"), company: companies[1] }),
+    node({ id: "product-harbor-pack", name: "Harbor Pack", description: "Bundle pack with tiny inventory", serverURL: "https://mock.example/product-harbor-pack", _status: "published", isSubscribed: false, url: "/products/harbor-pack", inventory: 2, orderable: true, enableVariants: true, companyIdentityId: identities[3].id, priceInUSDEnabled: false, priceInUSD: null, priceInETH: 0.12, priceInSOL: 4.5, priceInTRX: 650, cryptoAddresses: [node({ chain: "tron", address: "THarborPack666" })], variantTypes: [node({ id: "variant-pack", name: "pack", label: "Pack" })], variants: collection([node({ id: "harbor-pack-basic", title: "Basic", inventory: 2, priceInUSDEnabled: false, priceInUSD: null, options: [node({ id: "basic-pack", label: "Pack", value: "Basic", variantType: node({ id: "variant-pack", name: "pack" }) })] })]), properties: [node({ id: "harbor-prop-usage", key: "usage", value: "seasonal" })], image: image("product-harbor-pack", "Harbor Pack"), company: companies[2] }),
+    node({ id: "product-nomad-seat", name: "Nomad Seat", description: "Unlimited membership access", serverURL: "https://mock.example/product-nomad-seat", _status: "published", isSubscribed: true, url: "/products/nomad-seat", inventory: null, orderable: true, enableVariants: false, companyIdentityId: identities[2].id, priceInUSDEnabled: true, priceInUSD: 15, priceInETH: 0.005, priceInSOL: 0.18, priceInTRX: 28, cryptoAddresses: [node({ chain: "solana", address: "SoNomadSeat777" })], variantTypes: [], variants: collection([]), properties: [node({ id: "nomad-prop-access", key: "access", value: "open" })], image: image("product-nomad-seat", "Nomad Seat"), company: companies[3] }),
+];
+
+export const jobs = [
+    node({ id: "job-dockmaster", title: "Dockmaster", description: "Coordinate shipping and fulfilment", serverURL: "https://mock.example/job-dockmaster", _status: "published", isSubscribed: true, url: "/jobs/dockmaster", salaryRange: "$3,200-$4,000", employmentType: "full-time", applyUrl: "https://harbor.example/apply/dockmaster", location: "Harbor City", bounty: node({ amount: 2200, currency: "USD" }), company: companies[0], createdBy: identities[0], allowedIdentities: [identities[0], identities[2]], disallowedIdentities: [identities[4]], cryptoAddresses: [node({ chain: "solana", address: "SoDockmaster888" })], image: image("job-dockmaster", "Dockmaster") }),
+    node({ id: "job-product-hero", title: "Product Hero", description: "Help shape product experience", serverURL: "https://mock.example/job-product-hero", _status: "published", isSubscribed: false, url: "/jobs/product-hero", salaryRange: "$4,500-$5,200", employmentType: "contract", applyUrl: "https://reef.example/apply/product-hero", location: "Remote", bounty: node({ amount: 1800, currency: "USD" }), company: companies[1], createdBy: identities[1], allowedIdentities: [identities[1], identities[3]], disallowedIdentities: [identities[2]], cryptoAddresses: [node({ chain: "ethereum", address: "0xProductHero999" })], image: image("job-product-hero", "Product Hero") }),
+    node({ id: "job-inventory-lead", title: "Inventory Lead", description: "Track limited inventory timing", serverURL: "https://mock.example/job-inventory-lead", _status: "published", isSubscribed: false, url: "/jobs/inventory-lead", salaryRange: "$2,900-$3,600", employmentType: "part-time", applyUrl: "https://bazaar.example/apply/inventory-lead", location: "Warehouse District", bounty: node({ amount: 950, currency: "USD" }), company: companies[2], createdBy: identities[3], allowedIdentities: [identities[3], identities[4]], disallowedIdentities: [identities[0]], cryptoAddresses: [node({ chain: "tron", address: "TInventoryLead101" })], image: image("job-inventory-lead", "Inventory Lead") }),
+];
+
+export const startups = [
+    node({ id: "startup-sky-relay", title: "Sky Relay", description: "Relay beacons for the marketplace", serverURL: "https://mock.example/startup-sky-relay", _status: "published", isSubscribed: true, stage: "build", location: "Remote", lookingFor: "Co-founders", fundsNeeded: node({ amount: 45000, currency: "USD" }), applyUrl: "https://sky-relay.example/apply", company: companies[0], createdBy: identities[0], involvedUsers: [identities[0], identities[2]], cryptoAddresses: [node({ chain: "solana", address: "SoSkyRelay121" })], image: image("startup-sky-relay", "Sky Relay") }),
+    node({ id: "startup-tide-loop", title: "Tide Loop", description: "Supply chain dashboard", serverURL: "https://mock.example/startup-tide-loop", _status: "published", isSubscribed: false, stage: "prototype", location: "Coastal", lookingFor: "Design partners", fundsNeeded: node({ amount: 12000, currency: "USD" }), applyUrl: "https://tide-loop.example/apply", company: companies[1], createdBy: identities[1], involvedUsers: [identities[1], identities[4]], cryptoAddresses: [node({ chain: "ethereum", address: "0xTideLoop131" })], image: image("startup-tide-loop", "Tide Loop") }),
+    node({ id: "startup-nomad-nest", title: "Nomad Nest", description: "Open membership community infra", serverURL: "https://mock.example/startup-nomad-nest", _status: "published", isSubscribed: true, stage: "idea", location: "Distributed", lookingFor: "Operators", fundsNeeded: node({ amount: 8400, currency: "USD" }), applyUrl: "https://nomad-nest.example/apply", company: companies[3], createdBy: identities[2], involvedUsers: [identities[2], identities[4]], cryptoAddresses: [node({ chain: "tron", address: "TNomadNest141" })], image: image("startup-nomad-nest", "Nomad Nest") }),
+];
+
+export const comments = [
+    node({ id: "comment-company-harbor-1", content: "Harbor Labs has strong logistics.", createdBy: identities[2], anonymousHash: "anon-harbor-1", replyPostRelationTo: "companies", replyPostValue: companies[0].id, createdAt: "2025-01-03T10:00:00.000Z", updatedAt: "2025-01-03T10:00:00.000Z" }),
+    node({ id: "comment-company-reef-1", content: "Reef Studio looks premium.", createdBy: identities[0], anonymousHash: "anon-reef-1", replyPostRelationTo: "companies", replyPostValue: companies[1].id, createdAt: "2025-01-04T10:00:00.000Z", updatedAt: "2025-01-04T10:00:00.000Z" }),
+    node({ id: "comment-product-solar-1", content: "Keep the Solar Widget unlimited.", createdBy: identities[3], anonymousHash: "anon-solar-1", replyPostRelationTo: "products", replyPostValue: products[0].id, createdAt: "2025-01-05T10:00:00.000Z", updatedAt: "2025-01-05T10:00:00.000Z" }),
+    node({ id: "comment-startup-sky-1", content: "Sky Relay could use more testers.", createdBy: identities[4], anonymousHash: "anon-startup-1", replyPostRelationTo: "startups", replyPostValue: startups[0].id, createdAt: "2025-01-07T10:00:00.000Z", updatedAt: "2025-01-07T10:00:00.000Z" }),
+    node({ id: "comment-reply-1", content: "Replying to the Sky Relay thread.", createdBy: identities[0], anonymousHash: "anon-reply-1", replyComment: node({ id: "comment-startup-sky-1" }), replyPost: node({ relationTo: "startups" }), createdAt: "2025-01-07T11:00:00.000Z", updatedAt: "2025-01-07T11:00:00.000Z" }),
+];
+
+export const syndications = [
+    node({ id: "syndication-main", name: "Main", description: "Primary syndicated content source", url: "http://127.0.0.1:3010" }),
+    node({ id: "syndication-coop", name: "Co-op", description: "Cooperative marketplace server", url: "http://127.0.0.1:3011" }),
+];
+
+export const carts = [
+    node({ id: "cart-alpha", secret: "alpha-secret", status: "pending", currency: "USD", subtotal: 188, createdAt: "2025-02-01T09:00:00.000Z", updatedAt: "2025-02-01T10:00:00.000Z", purchasedAt: null, customer: node({ id: identities[2].id, name: identities[2].name, email: identities[2].email }), items: [node({ id: "cart-alpha-item-1", quantity: 2, product: products[0], variant: products[0].variants?.docs[0] }), node({ id: "cart-alpha-item-2", quantity: 1, product: products[1] })] }),
+    node({ id: "cart-beta", secret: "beta-secret", status: "ready", currency: "USD", subtotal: 267, createdAt: "2025-02-02T09:00:00.000Z", updatedAt: "2025-02-02T10:00:00.000Z", purchasedAt: "2025-02-03T09:00:00.000Z", customer: node({ id: identities[0].id, name: identities[0].name, email: identities[0].email }), items: [node({ id: "cart-beta-item-1", quantity: 1, product: products[2], variant: products[2].variants?.docs[0] }), node({ id: "cart-beta-item-2", quantity: 4, product: products[3] })] }),
+];
+
+export const orders = [
+    node({ id: "order-alpha", status: "awaiting-payment", payerAddress: "SoOrderAlpha1515", customer: node({ id: identities[2].id }), transactions: [node({ id: "tx-alpha-1" }), node({ id: "tx-alpha-2" })], cryptoPrices: [node({ id: "crypto-price-1", chain: "solana", stablePerNative: 19, nativePerStable: 0.0526315, expectedNativeAmount: "4.250000000", fetchedAt: "2025-02-10T12:00:00.000Z" })], transactionHashes: [node({ id: "hash-alpha-1", chain: "solana", transactionHash: "solana-tx-alpha-1", product: node({ id: products[0].id }) })], currency: "USD", amount: 267, customerEmail: identities[2].email, createdAt: "2025-02-10T12:00:00.000Z", updatedAt: "2025-02-10T12:05:00.000Z", items: [node({ id: "order-alpha-item-1", quantity: 2, product: node({ id: products[0].id, serverURL: products[0].serverURL, name: products[0].name, priceInETH: products[0].priceInETH, priceInSOL: products[0].priceInSOL, priceInTRX: products[0].priceInTRX, cryptoAddresses: products[0].cryptoAddresses, company: node({ id: companies[0].id, cryptoAddresses: companies[0].cryptoAddresses }) }), variant: node({ id: products[0].variants?.docs[0]?.id, title: products[0].variants?.docs[0]?.title }) })], shippingAddress: node({ title: "Home", firstName: "Mira", lastName: "Vale", company: "Nomad Collective", addressLine1: "1 Harbor Way", addressLine2: "Suite 42", city: "Port Sol", postalCode: "11000", state: "Coast", country: "Liberland", phone: "+1 555 0101" }) }),
+    node({ id: "order-beta", status: "paid", payerAddress: "0xOrderBeta1616", customer: node({ id: identities[0].id }), transactions: [node({ id: "tx-beta-1" })], cryptoPrices: [node({ id: "crypto-price-2", chain: "ethereum", stablePerNative: 2050, nativePerStable: 0.0004878, expectedNativeAmount: "0.160000000", fetchedAt: "2025-02-11T12:00:00.000Z" })], transactionHashes: [node({ id: "hash-beta-1", chain: "ethereum", transactionHash: "eth-tx-beta-1", product: node({ id: products[3].id }) })], currency: "USD", amount: 84, customerEmail: identities[0].email, createdAt: "2025-02-11T12:00:00.000Z", updatedAt: "2025-02-11T12:05:00.000Z", items: [node({ id: "order-beta-item-1", quantity: 4, product: node({ id: products[3].id, serverURL: products[3].serverURL, name: products[3].name, priceInETH: products[3].priceInETH, priceInSOL: products[3].priceInSOL, priceInTRX: products[3].priceInTRX, cryptoAddresses: products[3].cryptoAddresses, company: node({ id: companies[3].id, cryptoAddresses: companies[3].cryptoAddresses }) }) })], shippingAddress: node({ title: "Office", firstName: "Nova", lastName: "Rivers", company: "Harbor Labs", addressLine1: "22 Dockside Road", addressLine2: "", city: "Harbor City", postalCode: "12000", state: "Harbor", country: "Liberland", phone: "+1 555 0202" }) }),
+];
+
+export const meUser = node({
+    user: node({
+        id: "user-nova",
+        name: "Nova Rivers",
+        email: "nova@example.test",
+        phone: "+1 555 0001",
+        shippingAddress: node({ title: "Home", firstName: "Nova", lastName: "Rivers", company: "Harbor Labs", addressLine1: "1 Dockside Road", addressLine2: "Apt 12", city: "Port Sol", state: "Coast", postalCode: "11001", country: "Liberland", phone: "+1 555 0002" }),
+        wallets: [node({ chain: "solana", provider: "phantom", address: "SoUserWallet1717" }), node({ chain: "ethereum", provider: "metamask", address: "0xUserWallet1818" })],
+    }),
+});
