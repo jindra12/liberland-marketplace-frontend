@@ -15,11 +15,6 @@ export const GeoapifyAddressSearchControl: React.FunctionComponent<GeoapifyAddre
             label={props.label}
             required={props.required}
             className="Order__geoapifySearchItem"
-            extra={
-                props.geoapifyApiKey
-                    ? "Use address search to fill the fields quickly, then adjust them below if needed."
-                    : "Geoapify key is missing. Enter the shipping address manually below."
-            }
         >
             {props.geoapifyApiKey ? (
                 <Flex className="Order__geoapifySearchActions" gap={12} wrap>

@@ -78,6 +78,8 @@
     "test:ct:details:headed": "cypress run --component --browser electron --headed --spec cypress/component/Details.cy.tsx",
     "test:ct:search": "cypress run --component --browser electron --spec cypress/component/Search.cy.tsx",
     "test:ct:search:headed": "cypress run --component --browser electron --headed --spec cypress/component/Search.cy.tsx",
+    "test:ct:profile": "cypress run --component --browser electron --spec cypress/component/Profile.cy.tsx",
+    "test:ct:profile:headed": "cypress run --component --browser electron --headed --spec cypress/component/Profile.cy.tsx",
     "test:ct:deep-dive:company": "cypress run --component --browser electron --spec cypress/component/DeepDiveCompany.cy.tsx",
     "test:ct:deep-dive:company:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDiveCompany.cy.tsx",
     "test:ct:deep-dive:job": "cypress run --component --browser electron --spec cypress/component/DeepDiveJob.cy.tsx",

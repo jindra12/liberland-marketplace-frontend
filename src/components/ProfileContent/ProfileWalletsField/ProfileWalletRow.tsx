@@ -15,6 +15,7 @@ import type {
 } from "../types";
 
 import { ProfileWalletSelector } from "./ProfileWalletSelector";
+import { buildProfileWalletDuplicateValidator } from "./utils";
 
 type ProfileWalletRowProps = {
     canMoveDown: boolean;
@@ -43,12 +44,15 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                     const wallet = props.form.getFieldValue(["wallets", props.field.name]) as
                         | ProfileWalletFormValue
                         | undefined;
-                    const addressOptions = wallet?.address ? [{ label: wallet.address, value: wallet.address }] : [];
                     const isSelecting = props.selectionTarget?.name === props.field.name;
 
                     return (
                         <>
-                            <Form.Item label="Chain" name={[props.field.name, "chain"]}>
+                            <Form.Item
+                                label="Chain"
+                                name={[props.field.name, "chain"]}
+                                rules={[{ required: true, message: "Select a chain" }]}
+                            >
                                 <Select
                                     allowClear
                                     options={PROFILE_WALLET_CHAIN_OPTIONS.map((option) => ({ ...option }))}
@@ -61,29 +65,63 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                                 />
                             </Form.Item>
 
-                            <Form.Item label="Wallet provider" name={[props.field.name, "provider"]}>
-                                <Input placeholder="Select a wallet" readOnly />
-                            </Form.Item>
+                            <Form.Item className="Profile__walletCompactField" label="Wallet">
+                                <Space.Compact block className="Profile__walletCompact">
+                                    <Form.Item
+                                        noStyle
+                                        name={[props.field.name, "provider"]}
+                                        rules={[{ required: true, message: "Select a wallet provider" }]}
+                                    >
+                                        <Input placeholder="Select a wallet" readOnly />
+                                    </Form.Item>
 
-                            <Form.Item label="Wallet address" name={[props.field.name, "address"]}>
-                                <Select
-                                    disabled={addressOptions.length === 0}
-                                    options={addressOptions}
-                                    placeholder="Select a wallet first"
-                                />
-                            </Form.Item>
-
-                            <div className="Profile__walletRowActions">
-                                <Space wrap>
                                     <ProfileWalletSelector
                                         chain={wallet?.chain}
                                         disabled={props.disabled}
                                         isSelecting={isSelecting}
+                                        label="Select wallet"
                                         onSelectionStart={() => props.onSelectionStart(props.field.name)}
                                         onWalletSelected={(selection) =>
                                             props.onWalletSelected(props.field.name, selection)
                                         }
                                     />
+                                </Space.Compact>
+                            </Form.Item>
+
+                            <Form.Item className="Profile__walletCompactField" label="Wallet address">
+                                <Space.Compact block className="Profile__walletCompact">
+                                    <Form.Item
+                                        noStyle
+                                        dependencies={["wallets"]}
+                                        name={[props.field.name, "address"]}
+                                        rules={[
+                                            { required: true, message: "Wallet address is required" },
+                                            {
+                                                validator: buildProfileWalletDuplicateValidator(
+                                                    props.form,
+                                                    props.field.name,
+                                                ),
+                                            },
+                                        ]}
+                                    >
+                                        <Input placeholder="Enter wallet address" />
+                                    </Form.Item>
+
+                                    <ProfileWalletSelector
+                                        chain={wallet?.chain}
+                                        disabled={props.disabled}
+                                        isSelecting={isSelecting}
+                                        label="Select account"
+                                        onSelectionStart={() => props.onSelectionStart(props.field.name)}
+                                        onWalletSelected={(selection) =>
+                                            props.onWalletSelected(props.field.name, selection)
+                                        }
+                                    />
+                                </Space.Compact>
+                            </Form.Item>
+
+                            <div className="Profile__walletRowActions">
+                                <Space wrap>
                                     <Button
                                         disabled={props.disabled || !props.canMoveUp}
                                         icon={<ArrowUpOutlined />}

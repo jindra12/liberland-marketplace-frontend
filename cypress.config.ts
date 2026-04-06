@@ -4,7 +4,27 @@ import path from "node:path";
 import { format } from "prettier";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 
-process.env.REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://127.0.0.1:3010";
+const envFile = fs.readFileSync(path.resolve(".env"), "utf8");
+
+envFile.split(/\r?\n/).forEach((line) => {
+    const trimmedLine = line.trim();
+    if (!trimmedLine || trimmedLine.startsWith("#")) {
+        return;
+    }
+
+    const separatorIndex = trimmedLine.indexOf("=");
+    if (separatorIndex < 0) {
+        return;
+    }
+
+    const key = trimmedLine.slice(0, separatorIndex);
+    const value = trimmedLine.slice(separatorIndex + 1);
+    if (process.env[key] === undefined) {
+        process.env[key] = value;
+    }
+});
+
+process.env.REACT_APP_BACKEND_URL = "http://127.0.0.1:3010";
 
 export default defineConfig({
     video: true,

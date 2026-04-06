@@ -8,7 +8,12 @@ import useToken from "antd/es/theme/useToken";
 
 import { ConnectButtonProps } from "../../types";
 
-export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) => {
+export interface TronConnectProps extends ConnectButtonProps {
+    inline?: boolean;
+    label?: React.ReactNode;
+}
+
+export const TronConnect: React.FunctionComponent<TronConnectProps> = (props) => {
     const { address, connected } = useWallet();
     const screens = Grid.useBreakpoint();
     const stackButtons = !screens.lg;
@@ -46,11 +51,17 @@ export const TronConnect: React.FunctionComponent<ConnectButtonProps> = (props) 
         icon: "/tron.svg",
     };
 
+    const button = <WalletActionButton {...buttonProps}>{props.inline ? props.label || "Tronweb" : "Select"}</WalletActionButton>;
+
     return (
         <WalletModalProvider>
-            <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
-                <WalletActionButton {...buttonProps}>Select</WalletActionButton>
-            </Flex>
+            {props.inline ? (
+                button
+            ) : (
+                <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
+                    {button}
+                </Flex>
+            )}
         </WalletModalProvider>
     );
 };

@@ -1,9 +1,9 @@
-import * as React from "react";
-
 import { mount } from "cypress/react";
+import { User } from "oidc-client-ts";
 
 import Main from "../../../src/Main";
 import { CART_SECRETS_INDEX_KEY } from "../../../src/components/cart/cartSecrets";
+import { BACKEND_URL } from "../../../src/gqlFetcher";
 import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
 
 import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
@@ -24,6 +24,39 @@ export const gqlAlias = (serverUrl: string, operationName: string, variables: Gr
 export const mountMainRoute = (route: string) => {
     mount(<Main />);
     cy.routerNavigate(route);
+};
+
+const buildAuthStorageKey = () => `oidc.user:${BACKEND_URL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+
+const seedAuthorizedProfile = (win: Window) => {
+    const now = Math.floor(Date.now() / 1000);
+    const user = new User({
+        access_token: "mock-profile-access-token",
+        token_type: "Bearer",
+        scope: "openid profile email",
+        expires_at: now + 3600,
+        profile: {
+            iss: `${BACKEND_URL}/api/auth`,
+            aud: "frontend-app",
+            exp: now + 3600,
+            iat: now,
+            sub: "user-nova",
+            email: "nova@example.test",
+            email_verified: true,
+            name: "Nova Rivers",
+            picture: "https://example.test/nova.png",
+        },
+    });
+
+    win.localStorage.setItem(buildAuthStorageKey(), user.toStorageString());
+};
+
+export const mountProfileRoute = () => {
+    cy.window().then((win) => {
+        seedAuthorizedProfile(win);
+        win.history.pushState({}, "", "/profile");
+    });
+    mount(<Main />);
 };
 
 export const mountMainHome = () => {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
 
-import { Divider, Typography } from "antd";
+import { Divider, Flex, Typography } from "antd";
 
 import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
@@ -61,13 +61,15 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <div className="Profile__forms">
-                <ProfileAccountServerCard
-                    profileServerOptions={profileServerOptions}
-                    selectedServerLabel={selectedServerLabel}
-                    selectedServerUrl={selectedServerUrl}
-                    onChangeServer={setSelectedServerUrlState}
-                />
+            <Flex vertical gap="16px">
+                {profileServerOptions.length > 1 && (
+                    <ProfileAccountServerCard
+                        profileServerOptions={profileServerOptions}
+                        selectedServerLabel={selectedServerLabel}
+                        selectedServerUrl={selectedServerUrl}
+                        onChangeServer={setSelectedServerUrlState}
+                    />
+                )}
                 <ProfileNicknameCard
                     currentName={selectedServerUser?.name}
                     selectedServerUrl={selectedServerUrl}
@@ -76,7 +78,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                     onUserUpdated={refreshSelectedServerUser}
                 />
                 <ProfilePasswordCard selectedServerUrl={selectedServerUrl} />
-            </div>
+            </Flex>
 
             <Divider />
 

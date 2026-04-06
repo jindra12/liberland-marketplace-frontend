@@ -14,6 +14,7 @@ export interface SolanaConnectProps extends ConnectButtonProps {
     payment?: boolean;
     label?: React.ReactNode;
     disabled?: boolean;
+    inline?: boolean;
 }
 
 export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props) => {
@@ -22,6 +23,22 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
     const { select, disconnect, connected } = useWallet();
     const screens = Grid.useBreakpoint();
     const stackButtons = !screens.lg;
+
+    const button = (
+        <SolanaButton
+            onSelect={async () => {
+                if (connected) {
+                    await disconnect();
+                }
+                setStartedProcess(true);
+                select(null);
+                setVisible(true);
+            }}
+            label={props.inline ? props.label || "Solana" : props.label || "Select wallet"}
+            payment={props.payment}
+            disabled={props.disabled}
+        />
+    );
 
     return (
         <>
@@ -33,21 +50,13 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
                     }}
                 />
             )}
-            <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
-                <SolanaButton
-                    onSelect={async () => {
-                        if (connected) {
-                            await disconnect();
-                        }
-                        setStartedProcess(true);
-                        select(null);
-                        setVisible(true);
-                    }}
-                    label={props.label}
-                    payment={props.payment}
-                    disabled={props.disabled}
-                />
-            </Flex>
+            {props.inline ? (
+                button
+            ) : (
+                <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
+                    {button}
+                </Flex>
+            )}
         </>
     );
 };

@@ -15,19 +15,33 @@ type ProfileWalletSelectorProps = {
     chain?: UserUpdate_Wallets_Chain_MutationInput | null;
     disabled?: boolean;
     isSelecting: boolean;
+    inline?: boolean;
+    label?: React.ReactNode;
     onSelectionStart: () => void;
     onWalletSelected: (wallet: ProfileWalletSelection) => void;
 };
 
 export const ProfileWalletSelector: React.FunctionComponent<ProfileWalletSelectorProps> = (props) => {
     if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Ethereum) {
-        return <EthereumWalletSelectButton disabled={props.disabled} onWalletSelected={props.onWalletSelected} />;
+        return (
+            <EthereumWalletSelectButton
+                disabled={props.disabled}
+                inline={props.inline}
+                label={props.label}
+                onWalletSelected={props.onWalletSelected}
+            />
+        );
     }
 
     if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Solana) {
         return (
             <>
-                <SolanaWalletSelectButton disabled={props.disabled} onSelectionStart={props.onSelectionStart} />
+                <SolanaWalletSelectButton
+                    disabled={props.disabled}
+                    inline={props.inline}
+                    label={props.label}
+                    onSelectionStart={props.onSelectionStart}
+                />
                 <SolanaWalletSelectionObserver active={props.isSelecting} onWalletSelected={props.onWalletSelected} />
             </>
         );
@@ -36,11 +50,16 @@ export const ProfileWalletSelector: React.FunctionComponent<ProfileWalletSelecto
     if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Tron) {
         return (
             <>
-                <TronWalletSelectButton disabled={props.disabled} onSelectionStart={props.onSelectionStart} />
+                <TronWalletSelectButton
+                    disabled={props.disabled}
+                    inline={props.inline}
+                    label={props.label}
+                    onSelectionStart={props.onSelectionStart}
+                />
                 <TronWalletSelectionObserver active={props.isSelecting} onWalletSelected={props.onWalletSelected} />
             </>
         );
     }
 
-    return <Button disabled>Select wallet</Button>;
+    return <Button disabled>{props.label || "Select wallet"}</Button>;
 };

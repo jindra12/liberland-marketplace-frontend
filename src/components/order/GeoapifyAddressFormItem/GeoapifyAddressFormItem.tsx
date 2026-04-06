@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Form, theme } from "antd";
+import { Divider, Form, theme } from "antd";
 
 import { GeoapifyAddressFields } from "./GeoapifyAddressFields";
 import { GeoapifyAddressSearchControl } from "./GeoapifyAddressSearchControl";
@@ -59,13 +59,16 @@ export const GeoapifyAddressFormItem: React.FunctionComponent<GeoapifyAddressFor
 
     return (
         <>
-            <GeoapifyAddressSearchControl
-                label={props.label}
-                required={props.required}
-                geoapifyApiKey={geoapifyApiKey}
-                selectedAddressSummary={selectedAddressSummary}
-                onOpenSearch={openSearchModal}
-            />
+            {geoapifyApiKey && (
+                <GeoapifyAddressSearchControl
+                    label={props.label}
+                    required={props.required}
+                    geoapifyApiKey={geoapifyApiKey}
+                    selectedAddressSummary={selectedAddressSummary}
+                    onOpenSearch={openSearchModal}
+                />
+            )}
+            <Divider />
             <GeoapifyAddressSearchModal
                 open={isSearchModalOpen}
                 geoapifyApiKey={geoapifyApiKey}

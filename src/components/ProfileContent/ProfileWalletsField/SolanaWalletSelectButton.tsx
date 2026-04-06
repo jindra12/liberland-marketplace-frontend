@@ -7,6 +7,8 @@ import { SolanaButton } from "../../crypto/SolanaButton";
 
 type SolanaWalletSelectButtonProps = {
     disabled?: boolean;
+    inline?: boolean;
+    label?: React.ReactNode;
     onSelectionStart: () => void;
 };
 
@@ -25,5 +27,5 @@ export const SolanaWalletSelectButton: React.FunctionComponent<SolanaWalletSelec
         setVisible(true);
     };
 
-    return <SolanaButton disabled={props.disabled} label="Select wallet" onSelect={handleSelect} />;
+    return <SolanaButton disabled={props.disabled} label={props.label || "Solana"} onSelect={handleSelect} />;
 };

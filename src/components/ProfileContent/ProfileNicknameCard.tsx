@@ -25,8 +25,8 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
     const mutation = useUpdateUserByIdMutation();
 
     React.useEffect(() => {
-        form.resetFields();
-    }, [form, props.selectedServerUrl]);
+        form.setFieldValue("name", props.currentName);
+    }, [form, props.currentName, props.selectedServerUrl]);
 
     const handleFinish = async (values: NicknameFormValues) => {
         try {
@@ -50,7 +50,7 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
     };
     return (
         <Card title="Change Nickname" size="small" className="Profile__card">
-            <Form form={form} layout="inline" onFinish={handleFinish}>
+            <Form form={form} layout="vertical" onFinish={handleFinish}>
                 <Form.Item
                     name="name"
                     rules={[

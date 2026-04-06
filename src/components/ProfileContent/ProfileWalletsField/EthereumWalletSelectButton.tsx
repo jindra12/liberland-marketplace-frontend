@@ -10,13 +10,15 @@ import { thirdwebWallets } from "../../../constants";
 import type { ProfileWalletSelection } from "../types";
 
 const client = createThirdwebClient({
-    clientId: process.env.REACT_APP_THRIDWEB!,
+    clientId: process.env.REACT_APP_THIRDWEB!,
 });
 
 const wallets = thirdwebWallets.map((wallet) => createWallet(wallet));
 
 type EthereumWalletSelectButtonProps = {
     disabled?: boolean;
+    inline?: boolean;
+    label?: React.ReactNode;
     onWalletSelected: (wallet: ProfileWalletSelection) => void;
 };
 
@@ -49,7 +51,7 @@ export const EthereumWalletSelectButton: React.FunctionComponent<EthereumWalletS
 
     return (
         <Button disabled={props.disabled || isConnecting} loading={isConnecting} onClick={handleSelect}>
-            Select wallet
+            {props.label || "Thirdweb"}
         </Button>
     );
 };

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, Card, Form, Input, Space, message } from "antd";
+import { Button, Card, Divider, Form, Input, Space, message } from "antd";
 import useLocalStorage from "use-local-storage";
 
 import { useUpdateUserByIdMutation } from "../hooks";
@@ -31,12 +31,11 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
     );
 
     React.useEffect(() => {
-        form.resetFields();
-    }, [form, props.selectedServerUrl]);
-
-    React.useEffect(() => {
-        form.setFieldsValue(buildProfileContactFormValues(props.selectedServerUser));
-    }, [form, props.selectedServerUser]);
+        const values = buildProfileContactFormValues(props.selectedServerUser);
+        form.setFieldValue("phone", values.phone);
+        form.setFieldValue("shippingAddress", values.shippingAddress);
+        form.setFieldValue("wallets", values.wallets);
+    }, [form, props.selectedServerUrl, props.selectedServerUser]);
 
     const handleFinish = async (values: ProfileContactFormValues) => {
         try {
@@ -79,9 +78,9 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                 >
                     <Input placeholder="Phone number" />
                 </Form.Item>
-
-                <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required={false} />
-
+                <Divider />
+                <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required />
+                <Divider />
                 <ProfileWalletsField form={form} disabled={props.selectedServerUserLoading} />
 
                 <Form.Item>
