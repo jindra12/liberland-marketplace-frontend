@@ -14,6 +14,17 @@ type GraphQLRequestBody = {
     query?: string;
 };
 
+const getOperationName = (body: GraphQLRequestBody): string => {
+    if (body.operationName) {
+        return body.operationName;
+    }
+
+    const match = body.query?.match(/\b(query|mutation|subscription)\s+([A-Za-z0-9_]+)/);
+    return match?.[2] || "anonymous";
+};
+
+const toAliasSegment = (value: string): string => value.replace(/[^a-zA-Z0-9]+/g, "_");
+
 const scalar = (name: string) =>
     new GraphQLScalarType({
         name,
@@ -227,15 +238,56 @@ const schema = buildSchema(`
     scalar mutationUserUpdateInput
 
     type Query {
-        Carts(draft: Boolean, limit: Int, where: JSON): MockCollection!
+        Carts(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
         Searches(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
-        Companies(draft: Boolean, limit: Int, searchTerm: String, where: JSON): MockCollection!
-        Jobs(draft: Boolean, limit: Int, searchTerm: String, where: JSON): MockCollection!
-        Products(draft: Boolean, limit: Int, searchTerm: String, where: JSON): MockCollection!
-        Startups(draft: Boolean, limit: Int, searchTerm: String, where: JSON): MockCollection!
-        Identities(draft: Boolean, limit: Int, searchTerm: String, where: JSON): MockCollection!
-        Comments(draft: Boolean, limit: Int, sort: String, where: JSON): MockCollection!
-        Syndications(draft: Boolean, limit: Int, where: JSON): MockCollection!
+        Companies(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            identityId: JSON
+            companyId: JSON
+            userId: JSON
+        ): MockCollection!
+        Jobs(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+            companyIds: [JSON!]
+        ): MockCollection!
+        Products(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            companyIds: [JSON]
+        ): MockCollection!
+        Startups(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+        ): MockCollection!
+        Identities(draft: Boolean, limit: Int, page: Int, sort: String, searchTerm: String, where: JSON): MockCollection!
+        Comments(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
+        Syndications(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
         Company(id: String!, draft: Boolean): MockNode
         Job(id: String!, draft: Boolean): MockNode
         Product(id: String!, draft: Boolean): MockNode
@@ -271,6 +323,34 @@ const schema = buildSchema(`
         leaveStartup(id: String!): MockNode
         updateUser(id: String!, data: mutationUserUpdateInput): MockNode
         trackAnalyticsEvent(input: AnalyticsTrackInput): MockNode
+    }
+
+    type SalaryRange {
+        min: Float
+        max: Float
+        currency: String
+    }
+
+    enum StartupLookingFor {
+        funding
+        founders
+        team
+        traction
+        distribution
+        production
+        idea
+        product
+    }
+
+    enum StartupAlreadyHave {
+        funding
+        founders
+        team
+        traction
+        distribution
+        production
+        idea
+        product
     }
 
     type MockCollection {
@@ -317,11 +397,13 @@ const schema = buildSchema(`
         companyIdentityId: JSON
         url: JSON
         applyUrl: JSON
-        salaryRange: JSON
+        salaryRange: SalaryRange
+        positions: Float
         location: JSON
         employmentType: JSON
         stage: JSON
-        lookingFor: JSON
+        lookingFor: [StartupLookingFor!]
+        alreadyHave: [StartupAlreadyHave!]
         itemCount: JSON
         amount: JSON
         quantity: JSON
@@ -421,9 +503,12 @@ export const installGraphQLMock = () => {
     const handler = cypressHandler(graphqlHandler);
     cy.intercept("POST", /http:\/\/127\.0\.0\.1:301[01]\/api\/graphql$/, async (req) => {
         const body = req.body as GraphQLRequestBody;
+        const operationName = getOperationName(body);
+        const host = new globalThis.URL(req.url).host;
+        req.alias = `gql_${toAliasSegment(host)}_${toAliasSegment(operationName)}`;
 
-        if (body.operationName && body.operationName.startsWith("Search")) {
-            const response = searchResponseFor(body.operationName, body);
+        if (operationName.startsWith("Search")) {
+            const response = searchResponseFor(operationName, body);
             req.reply({
                 statusCode: 200,
                 body: {

@@ -31,10 +31,12 @@ export type MockNode = {
     url?: string;
     applyUrl?: string;
     salaryRange?: string;
+    positions?: number | null;
+    alreadyHave?: string[];
     location?: string;
     employmentType?: string;
     stage?: string;
-    lookingFor?: string;
+    lookingFor?: string[];
     itemCount?: number;
     amount?: number | null;
     quantity?: number;
