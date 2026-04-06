@@ -3,7 +3,7 @@ import type { GraphQLResolveInfo } from "graphql";
 import { GraphQLHandler } from "graphql-mocks";
 import { cypressHandler } from "@graphql-mocks/network-cypress";
 
-import { carts, companies, comments, identities, jobs, meUser, orders, products, startups, syndications } from "./fixtures";
+import { coopFixtures, mainFixtures } from "./fixtures";
 import type { MockCollection, MockNode } from "./types";
 
 type GraphQLRequestBody = {
@@ -78,6 +78,8 @@ const includes = (value: string | undefined, term: string | undefined): boolean 
 
 const getSearchTerm = (body: GraphQLRequestBody): string | undefined => body.variables?.searchTerm;
 
+let activeFixtures = mainFixtures;
+
 const buildSearchCollection = (docs: MockNode[]): MockCollection => collection(docs);
 
 const searchNode = (value: Record<string, unknown>): MockNode => value as MockNode;
@@ -98,7 +100,7 @@ const searchResponseFor = (operationName: string | undefined, body: GraphQLReque
 
     if (operationName === "SearchJobs" || operationName === "SearchJobsByCompany" || operationName === "SearchJobsBySecondaryIdentity") {
         return buildSearchCollection(
-            jobs.filter((job) => includes(job.title, term) || includes(job.description, term)).map((job, index) => buildSearchDoc("jobs", job, index)),
+            activeFixtures.jobs.filter((job) => includes(job.title, term) || includes(job.description, term)).map((job, index) => buildSearchDoc("jobs", job, index)),
         );
     }
 
@@ -108,7 +110,7 @@ const searchResponseFor = (operationName: string | undefined, body: GraphQLReque
         operationName === "SearchCompaniesBySecondaryIdentity"
     ) {
         return buildSearchCollection(
-            companies.filter((company) => includes(company.name, term) || includes(company.description, term)).map((company, index) => buildSearchDoc("companies", company, index)),
+            activeFixtures.companies.filter((company) => includes(company.name, term) || includes(company.description, term)).map((company, index) => buildSearchDoc("companies", company, index)),
         );
     }
 
@@ -118,19 +120,19 @@ const searchResponseFor = (operationName: string | undefined, body: GraphQLReque
         operationName === "SearchProductsByIdentity"
     ) {
         return buildSearchCollection(
-            products.filter((product) => includes(product.name, term) || includes(product.description, term)).map((product, index) => buildSearchDoc("products", product, index)),
+            activeFixtures.products.filter((product) => includes(product.name, term) || includes(product.description, term)).map((product, index) => buildSearchDoc("products", product, index)),
         );
     }
 
     if (operationName === "SearchIdentities") {
         return buildSearchCollection(
-            identities.filter((identity) => includes(identity.name, term) || includes(identity.description, term)).map((identity, index) => buildSearchDoc("identities", identity, index)),
+            activeFixtures.identities.filter((identity) => includes(identity.name, term) || includes(identity.description, term)).map((identity, index) => buildSearchDoc("identities", identity, index)),
         );
     }
 
     if (operationName === "SearchStartups") {
         return buildSearchCollection(
-            startups.filter((startup) => includes(startup.title, term) || includes(startup.description, term)).map((startup, index) => buildSearchDoc("startups", startup, index)),
+            activeFixtures.startups.filter((startup) => includes(startup.title, term) || includes(startup.description, term)).map((startup, index) => buildSearchDoc("startups", startup, index)),
         );
     }
 
@@ -143,6 +145,7 @@ const resolveCollection = (items: MockNode[], args: { page?: number; limit?: num
 
 const queryResolvers = {
     Carts: (_parent: unknown, args: { limit?: number; where?: { secret?: { equals?: string } } }, _context: unknown, info: GraphQLResolveInfo): MockCollection => {
+        const carts = activeFixtures.carts;
         const filtered = args.where?.secret?.equals ? carts.filter((item) => item.secret === args.where?.secret?.equals) : carts;
         return info.operation.name?.value === "CartBySecret" ? resolveCollection(filtered, { limit: 1 }) : resolveCollection(filtered, args);
     },
@@ -150,27 +153,27 @@ const queryResolvers = {
         return searchResponseFor(info.operation.name?.value, { query: "", variables: { searchTerm: undefined } });
     },
     Companies: (_parent: unknown, args: { limit?: number; searchTerm?: string }, _context: unknown): MockCollection => {
-        const filtered = args.searchTerm ? companies.filter((company) => includes(company.name, args.searchTerm) || includes(company.description, args.searchTerm)) : companies;
+        const filtered = args.searchTerm ? activeFixtures.companies.filter((company) => includes(company.name, args.searchTerm) || includes(company.description, args.searchTerm)) : activeFixtures.companies;
         return resolveCollection(filtered, args);
     },
     Jobs: (_parent: unknown, args: { limit?: number; searchTerm?: string }, _context: unknown): MockCollection => {
-        const filtered = args.searchTerm ? jobs.filter((job) => includes(job.title, args.searchTerm) || includes(job.description, args.searchTerm)) : jobs;
+        const filtered = args.searchTerm ? activeFixtures.jobs.filter((job) => includes(job.title, args.searchTerm) || includes(job.description, args.searchTerm)) : activeFixtures.jobs;
         return resolveCollection(filtered, args);
     },
     Products: (_parent: unknown, args: { limit?: number; searchTerm?: string }, _context: unknown): MockCollection => {
-        const filtered = args.searchTerm ? products.filter((product) => includes(product.name, args.searchTerm) || includes(product.description, args.searchTerm)) : products;
+        const filtered = args.searchTerm ? activeFixtures.products.filter((product) => includes(product.name, args.searchTerm) || includes(product.description, args.searchTerm)) : activeFixtures.products;
         return resolveCollection(filtered, args);
     },
     Startups: (_parent: unknown, args: { limit?: number; searchTerm?: string }, _context: unknown): MockCollection => {
-        const filtered = args.searchTerm ? startups.filter((startup) => includes(startup.title, args.searchTerm) || includes(startup.description, args.searchTerm)) : startups;
+        const filtered = args.searchTerm ? activeFixtures.startups.filter((startup) => includes(startup.title, args.searchTerm) || includes(startup.description, args.searchTerm)) : activeFixtures.startups;
         return resolveCollection(filtered, args);
     },
     Identities: (_parent: unknown, args: { limit?: number; searchTerm?: string }, _context: unknown): MockCollection => {
-        const filtered = args.searchTerm ? identities.filter((identity) => includes(identity.name, args.searchTerm) || includes(identity.description, args.searchTerm)) : identities;
+        const filtered = args.searchTerm ? activeFixtures.identities.filter((identity) => includes(identity.name, args.searchTerm) || includes(identity.description, args.searchTerm)) : activeFixtures.identities;
         return resolveCollection(filtered, args);
     },
     Comments: (_parent: unknown, args: { limit?: number; where?: { replyPostRelationTo?: { equals?: string }; replyPostValue?: { equals?: string }; replyComment?: { equals?: string } } }, _context: unknown): MockCollection => {
-        const filtered = comments.filter((comment) => {
+        const filtered = activeFixtures.comments.filter((comment) => {
             if (args.where?.replyComment?.equals) {
                 return comment.replyComment?.id === args.where.replyComment.equals;
             }
@@ -181,40 +184,40 @@ const queryResolvers = {
         });
         return resolveCollection(filtered, args);
     },
-    Syndications: (_parent: unknown, args: { limit?: number }, _context: unknown): MockCollection => resolveCollection(syndications, args),
-    Company: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(companies, args.id),
-    Job: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(jobs, args.id),
-    Product: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(products, args.id),
-    Startup: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(startups, args.id),
-    Identity: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(identities, args.id),
-    meUser: (): MockNode => meUser,
+    Syndications: (_parent: unknown, args: { limit?: number }, _context: unknown): MockCollection => resolveCollection(activeFixtures.syndications, args),
+    Company: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(activeFixtures.companies, args.id),
+    Job: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(activeFixtures.jobs, args.id),
+    Product: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(activeFixtures.products, args.id),
+    Startup: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(activeFixtures.startups, args.id),
+    Identity: (_parent: unknown, args: { id?: string }, _context: unknown): MockNode => byId(activeFixtures.identities, args.id),
+    meUser: (): MockNode => activeFixtures.meUser,
 };
 
 const mutationResolvers = {
-    createCart: (): MockNode => carts[0],
+    createCart: (): MockNode => activeFixtures.carts[0],
     deleteCart: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateCart: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    createCompany: (): MockNode => companies[0],
+    createCompany: (): MockNode => activeFixtures.companies[0],
     deleteCompany: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateCompany: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    createJob: (): MockNode => jobs[0],
+    createJob: (): MockNode => activeFixtures.jobs[0],
     deleteJob: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateJob: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    createProduct: (): MockNode => products[0],
+    createProduct: (): MockNode => activeFixtures.products[0],
     deleteProduct: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateProduct: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    createStartup: (): MockNode => startups[0],
+    createStartup: (): MockNode => activeFixtures.startups[0],
     deleteStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    createOrder: (): MockNode => orders[0],
+    createOrder: (): MockNode => activeFixtures.orders[0],
     updateOrder: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     createComment: (_parent: unknown, args: { data?: { content?: string } }): MockNode => ({ id: "comment-created", content: args.data?.content || "Mock comment" }),
     deleteComment: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
     updateCommentContent: (_parent: unknown, args: { id?: string; content?: string }): MockNode => ({ id: args.id, content: args.content }),
     createNotificationSubscription: (_parent: unknown, args: { data?: { email?: string; targetCollection?: string; targetID?: string } }): MockNode => ({ id: "subscription-created", email: args.data?.email, targetCollection: args.data?.targetCollection, targetID: args.data?.targetID }),
     deleteNotificationSubscription: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id }),
-    joinStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ message: "Joined", startup: { id: args.id, title: startups[0].title, involvedUsers: [identities[0], identities[2]] } }),
-    leaveStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ message: "Left", startup: { id: args.id, title: startups[0].title, involvedUsers: [identities[0]] } }),
+    joinStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ message: "Joined", startup: { id: args.id, title: activeFixtures.startups[0].title, involvedUsers: [activeFixtures.identities[0], activeFixtures.identities[2]] } }),
+    leaveStartup: (_parent: unknown, args: { id?: string }): MockNode => ({ message: "Left", startup: { id: args.id, title: activeFixtures.startups[0].title, involvedUsers: [activeFixtures.identities[0]] } }),
     updateUser: (_parent: unknown, args: { id?: string }): MockNode => ({ id: args.id, name: "Nova Rivers", email: "nova@example.test" }),
     trackAnalyticsEvent: (): MockNode => ({ success: true, analytics: { distinctId: "distinct-mock", eventId: "event-mock", sessionId: "session-mock" } }),
 };
@@ -505,6 +508,7 @@ export const installGraphQLMock = () => {
         const body = req.body as GraphQLRequestBody;
         const operationName = getOperationName(body);
         const host = new globalThis.URL(req.url).host;
+        activeFixtures = host === "127.0.0.1:3011" ? coopFixtures : mainFixtures;
         req.alias = `gql_${toAliasSegment(host)}_${toAliasSegment(operationName)}`;
 
         if (operationName.startsWith("Search")) {

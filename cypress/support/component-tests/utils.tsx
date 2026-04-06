@@ -25,7 +25,9 @@ export const mountMainHome = () => {
     cy.routerNavigate("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
-    cy.pause();
+};
+
+export const homepageQueries = () => {
     waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 100, page: 1 }, "Identities", "Nova Rivers");
     waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main");
 };
@@ -111,13 +113,14 @@ export const goToList = (goal: ListGoal) => {
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
     waitForCollectionQuery(MAIN_SERVER_URL, goal.operationName, goal.expectedVariables, goal.responseKey, goal.expectedResultTitle);
-    cy.contains("h1", goal.title).should("be.visible");
+    cy.contains("h2", goal.title).should("be.visible");
 };
 
 export const goToDetailFromHome = (goal: DetailGoal) => {
     cy.contains(goal.selector, goal.label).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 1000, page: 1 }, "Identities", "Nova Rivers");
     waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.expectedVariables, goal.responseKey, goal.expectedId, goal.title);
     cy.contains("h1", goal.title).should("be.visible");
 };

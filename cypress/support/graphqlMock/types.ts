@@ -30,7 +30,7 @@ export type MockNode = {
     companyIdentityId?: string;
     url?: string;
     applyUrl?: string;
-    salaryRange?: string;
+    salaryRange?: MockNode | null;
     positions?: number | null;
     alreadyHave?: string[];
     location?: string;
@@ -130,4 +130,17 @@ export type MockCollection = {
     hasNextPage: boolean;
     prevPage: number | null;
     nextPage: number | null;
+};
+
+export type GraphQLFixtureBundle = {
+    identities: MockNode[];
+    companies: MockNode[];
+    products: MockNode[];
+    jobs: MockNode[];
+    startups: MockNode[];
+    comments: MockNode[];
+    syndications: MockNode[];
+    carts: MockNode[];
+    orders: MockNode[];
+    meUser: MockNode;
 };

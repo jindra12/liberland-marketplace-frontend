@@ -1,4 +1,4 @@
-import type { MockCollection, MockNode } from "./types";
+import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
 
 const node = (value: Record<string, unknown>): MockNode => value as MockNode;
 
@@ -204,4 +204,86 @@ export const meUser = node({
         shippingAddress: node({ title: "Home", firstName: "Nova", lastName: "Rivers", company: "Harbor Labs", addressLine1: "1 Dockside Road", addressLine2: "Apt 12", city: "Port Sol", state: "Coast", postalCode: "11001", country: "Liberland", phone: "+1 555 0002" }),
         wallets: [node({ chain: "solana", provider: "phantom", address: "SoUserWallet1717" }), node({ chain: "ethereum", provider: "metamask", address: "0xUserWallet1818" })],
     }),
+});
+
+export const mainFixtures: GraphQLFixtureBundle = {
+    identities,
+    companies,
+    products,
+    jobs,
+    startups,
+    comments,
+    syndications,
+    carts,
+    orders,
+    meUser,
+};
+
+type FixtureVariant = {
+    idPrefix: string;
+    label: string;
+};
+
+const buildIdMap = (value: unknown, idMap: Map<string, string>, variant: FixtureVariant): void => {
+    if (Array.isArray(value)) {
+        value.forEach((item) => buildIdMap(item, idMap, variant));
+        return;
+    }
+
+    if (value === null || value === undefined || typeof value !== "object") {
+        return;
+    }
+
+    const record = value as Record<string, unknown>;
+    if (typeof record.id === "string") {
+        idMap.set(record.id, `${variant.idPrefix}${record.id}`);
+    }
+
+    Object.values(record).forEach((item) => buildIdMap(item, idMap, variant));
+};
+
+const replaceMappedIds = (value: string, idMap: Map<string, string>): string =>
+    Array.from(idMap.entries()).reduce((accumulator, [oldId, newId]) => accumulator.split(oldId).join(newId), value);
+
+const cloneVariantValue = (value: unknown, key: string | undefined, idMap: Map<string, string>, variant: FixtureVariant): unknown => {
+    if (Array.isArray(value)) {
+        return value.map((item) => cloneVariantValue(item, undefined, idMap, variant));
+    }
+
+    if (value === null || value === undefined || typeof value !== "object") {
+        if (typeof value !== "string") {
+            return value;
+        }
+
+        if (key === "id") {
+            return `${variant.idPrefix}${value}`;
+        }
+
+        if (key === "name" || key === "title") {
+            return `${value} ${variant.label}`;
+        }
+
+        if (key === "description" || key === "content") {
+            return `${value} (${variant.label})`;
+        }
+
+        return replaceMappedIds(value, idMap);
+    }
+
+    const record = value as Record<string, unknown>;
+    return Object.fromEntries(
+        Object.entries(record).map(([childKey, childValue]) => [childKey, cloneVariantValue(childValue, childKey, idMap, variant)]),
+    );
+};
+
+const createVariantFixtures = (source: GraphQLFixtureBundle, variant: FixtureVariant): GraphQLFixtureBundle => {
+    const idMap = new Map<string, string>();
+    buildIdMap(source, idMap, variant);
+
+    return cloneVariantValue(source, undefined, idMap, variant) as GraphQLFixtureBundle;
+};
+
+export const coopFixtures = createVariantFixtures(mainFixtures, {
+    idPrefix: "coop-",
+    label: "Co-op",
 });

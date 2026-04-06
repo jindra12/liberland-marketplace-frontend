@@ -9,7 +9,7 @@ export const LIST_GOALS: ListGoal[] = [
         title: "Jobs",
         operationName: "ListJobs",
         responseKey: "Jobs",
-        expectedVariables: { limit: 20, page: 1, draft: false },
+        expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Dockmaster",
     },
     {
@@ -18,7 +18,7 @@ export const LIST_GOALS: ListGoal[] = [
         title: "Products / Services",
         operationName: "ListProducts",
         responseKey: "Products",
-        expectedVariables: { limit: 20, page: 1, draft: false },
+        expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Solar Widget",
     },
     {
@@ -27,7 +27,7 @@ export const LIST_GOALS: ListGoal[] = [
         title: "Companies",
         operationName: "ListCompanies",
         responseKey: "Companies",
-        expectedVariables: { limit: 20, page: 1, draft: false },
+        expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Harbor Labs",
     },
     {
@@ -36,7 +36,7 @@ export const LIST_GOALS: ListGoal[] = [
         title: "Ventures",
         operationName: "ListStartups",
         responseKey: "Startups",
-        expectedVariables: { limit: 20, page: 1, draft: false },
+        expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Sky Relay",
     },
     {
@@ -45,7 +45,7 @@ export const LIST_GOALS: ListGoal[] = [
         title: "Tribes",
         operationName: "ListIdentities",
         responseKey: "Identities",
-        expectedVariables: { limit: 20, page: 1, draft: false },
+        expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Nova Rivers",
     },
 ];
@@ -69,7 +69,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
         operationName: "JobById",
         responseKey: "Job",
         expectedId: "job-dockmaster",
-        expectedVariables: { id: "job-dockmaster", draft: false },
+        expectedVariables: { id: "job-dockmaster" },
     },
     {
         selector: ".SplashEntityCard__itemLink",
@@ -79,7 +79,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
         operationName: "ProductById",
         responseKey: "Product",
         expectedId: "product-solar-widget",
-        expectedVariables: { id: "product-solar-widget", draft: false },
+        expectedVariables: { id: "product-solar-widget" },
     },
     {
         selector: ".SplashEntityCard__itemLink",
@@ -89,7 +89,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
         operationName: "CompanyById",
         responseKey: "Company",
         expectedId: "company-harbor-labs",
-        expectedVariables: { id: "company-harbor-labs", draft: false },
+        expectedVariables: { id: "company-harbor-labs" },
     },
     {
         selector: ".SplashEntityCard__itemLink",
@@ -99,7 +99,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
         operationName: "StartupById",
         responseKey: "Startup",
         expectedId: "startup-sky-relay",
-        expectedVariables: { id: "startup-sky-relay", draft: false },
+        expectedVariables: { id: "startup-sky-relay" },
     },
     {
         selector: ".SplashPage__identityHeadingLink",
@@ -136,7 +136,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         expectedId: "job-dockmaster",
         responseKey: "Job",
         searchExpectedTitle: "Dockmaster",
-        detailExpectedVariables: { id: "job-dockmaster", draft: false },
+        detailExpectedVariables: { id: "job-dockmaster" },
     },
     {
         scopeLabel: "Products / Services",
@@ -150,7 +150,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         expectedId: "product-solar-widget",
         responseKey: "Product",
         searchExpectedTitle: "Solar Widget",
-        detailExpectedVariables: { id: "product-solar-widget", draft: false },
+        detailExpectedVariables: { id: "product-solar-widget" },
     },
     {
         scopeLabel: "Companies",
@@ -164,7 +164,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         expectedId: "company-harbor-labs",
         responseKey: "Company",
         searchExpectedTitle: "Harbor Labs",
-        detailExpectedVariables: { id: "company-harbor-labs", draft: false },
+        detailExpectedVariables: { id: "company-harbor-labs" },
     },
     {
         scopeLabel: "Tribes",
@@ -192,6 +192,6 @@ export const SEARCH_GOALS: SearchGoal[] = [
         expectedId: "startup-sky-relay",
         responseKey: "Startup",
         searchExpectedTitle: "Sky Relay",
-        detailExpectedVariables: { id: "startup-sky-relay", draft: false },
+        detailExpectedVariables: { id: "startup-sky-relay" },
     },
 ];

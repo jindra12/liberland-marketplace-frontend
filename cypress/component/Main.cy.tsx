@@ -8,12 +8,17 @@ import {
     goToDetailFromSearch,
     goToList,
     goToSyndicationList,
+    homepageQueries,
     mountMainHome,
 } from "../support/component-tests/utils";
 
 describe("lists", () => {
     beforeEach(() => {
         mountMainHome();
+    });
+
+    it("Fetches homepage queries", () => {
+        homepageQueries();
     });
 
     LIST_GOALS.forEach((goal) => {
@@ -30,6 +35,10 @@ describe("lists", () => {
 describe("details", () => {
     beforeEach(() => {
         mountMainHome();
+    });
+
+    it("Fetches homepage queries", () => {
+        homepageQueries();
     });
 
     DETAIL_HOME_GOALS.forEach((goal) => {
