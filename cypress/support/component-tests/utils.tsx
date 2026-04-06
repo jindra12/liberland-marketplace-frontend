@@ -83,7 +83,7 @@ export const waitForDetailQuery = (
 };
 
 export const waitForSearchQuery = (serverUrl: string, operationName: string, searchTerm: string, expectedTitle: string) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm })}`).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
 

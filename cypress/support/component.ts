@@ -3,6 +3,10 @@ import { drainGraphQLRequestLogs, installGraphQLMock } from "./graphqlMock";
 
 import "../../src/index.scss";
 
+type CypressWithStop = Cypress.Cypress & {
+    stop?: () => void;
+};
+
 beforeEach(() => {
     installGraphQLMock();
 });
@@ -19,7 +23,8 @@ afterEach(function (this: Mocha.Context) {
     }
 
     if (this.currentTest?.state === "failed" && Cypress.browser.isHeaded !== true) {
-        Cypress.stop();
+        const cypress = Cypress as CypressWithStop;
+        cypress.stop?.();
         return;
     }
 });
