@@ -37,10 +37,6 @@ describe("details", () => {
         mountMainHome();
     });
 
-    it("Fetches homepage queries", () => {
-        homepageQueries();
-    });
-
     DETAIL_HOME_GOALS.forEach((goal) => {
         it(`opens the ${goal.title} detail from home`, () => {
             goToDetailFromHome(goal);

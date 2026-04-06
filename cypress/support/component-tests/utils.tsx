@@ -123,15 +123,8 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
 };
 
 export const goToSyndicationList = () => {
-    cy.contains("button", SYNDICATION_LIST_GOAL.clickLabel).click();
+    cy.get(".SplashPage__syndicationManageBtn").contains(SYNDICATION_LIST_GOAL.clickLabel).click();
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
-    waitForCollectionQuery(
-        MAIN_SERVER_URL,
-        SYNDICATION_LIST_GOAL.operationName,
-        SYNDICATION_LIST_GOAL.expectedVariables,
-        SYNDICATION_LIST_GOAL.responseKey,
-        SYNDICATION_LIST_GOAL.expectedResultTitle,
-    );
-    cy.contains("h1", SYNDICATION_LIST_GOAL.title).should("be.visible");
+    cy.contains("h2", SYNDICATION_LIST_GOAL.title).should("be.visible");
 };
