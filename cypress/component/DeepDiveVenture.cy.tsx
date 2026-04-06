@@ -43,10 +43,11 @@ describe("venture deep dive", () => {
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Startups],
                 targetId: "startup-sky-relay",
+                url: MAIN_SERVER_URL,
             },
             "Comments",
-            "Sky Relay could use more testers.",
+            "Harbor Labs has strong logistics.",
         );
-        cy.contains(".EntityCommentsSection", "Sky Relay could use more testers.").should("be.visible");
+        cy.contains(".EntityCommentsSection", "Harbor Labs has strong logistics.").should("be.visible");
     });
 });

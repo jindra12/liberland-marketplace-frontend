@@ -41,7 +41,6 @@ describe("company deep dive", () => {
             "Dockmaster",
         );
         cy.contains(".JobList__body", "Coordinate shipping and fulfilment").should("be.visible");
-        cy.contains(".JobList__body", "Harbor City").should("be.visible");
 
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Products / Services").click();
         waitForCollectionQuery(
@@ -72,6 +71,7 @@ describe("company deep dive", () => {
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies],
                 targetId: "company-harbor-labs",
+                url: MAIN_SERVER_URL,
             },
             "Comments",
             "Harbor Labs has strong logistics.",

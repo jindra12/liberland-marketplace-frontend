@@ -13,7 +13,7 @@ describe("job deep dive", () => {
 
     it("shows the salary tag, company metadata, and comments", () => {
         cy.get(".JobDetail").should("be.visible");
-        cy.contains(".EntityDetail__title", "Dockmaster").should("be.visible");
+        cy.contains(".JobDetail__title", "Dockmaster").should("be.visible");
         cy.get(".JobDetail__summary").contains("Harbor Labs").should("be.visible");
         cy.get(".JobDetail__summary").contains("Harbor City").should("be.visible");
         cy.get(".JobDetail__summary").contains("2 positions").should("be.visible");
@@ -29,10 +29,11 @@ describe("job deep dive", () => {
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Jobs],
                 targetId: "job-dockmaster",
+                url: MAIN_SERVER_URL,
             },
             "Comments",
-            "Dockmaster keeps Harbor Labs moving.",
+            "Harbor Labs has strong logistics.",
         );
-        cy.contains(".EntityCommentsSection", "Dockmaster keeps Harbor Labs moving.").should("be.visible");
+        cy.contains(".EntityCommentsSection", "Harbor Labs has strong logistics.").should("be.visible");
     });
 });

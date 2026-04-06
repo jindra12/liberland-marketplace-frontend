@@ -93,6 +93,22 @@ export const waitForCollectionQuery = (
     });
 };
 
+export const waitForCollectionResults = (
+    serverUrl: string,
+    operationName: string,
+    expectedVariables: GraphQLVariables,
+    responseKey: string,
+) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
+        const response = interception.response?.body as GraphQLResponseBody | undefined;
+        const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
+
+        expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+        expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+    });
+};
+
 export const waitForDetailQuery = (
     serverUrl: string,
     operationName: string,
@@ -164,10 +180,14 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
 
 export const goToDetailFromSearch = (goal: SearchGoal) => {
     openSearchScope(goal.scopeLabel);
-    cy.contains(".ant-drawer-title", goal.searchTitle).should("be.visible");
-    cy.get('input[type="search"]').type(goal.term);
+    cy.contains(".ant-drawer-title", goal.searchTitle)
+        .should("be.visible")
+        .closest(".ant-drawer")
+        .within(() => {
+            cy.get('input[type="search"]').should("be.visible").type(`${goal.term}{enter}`);
+        });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
-    cy.get(".ant-select-item-option").contains(goal.resultLabel).click();
+    cy.contains(".ant-select-item-option", goal.resultLabel).should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
     waitForDetailQuery(

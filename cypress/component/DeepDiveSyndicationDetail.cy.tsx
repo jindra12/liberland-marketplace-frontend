@@ -1,10 +1,9 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForCollectionQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { mountMainRoute, waitForCollectionQuery } from "../support/component-tests/utils";
 
 describe("syndication detail", () => {
     it("shows endpoint metadata and share controls for an enabled endpoint", () => {
         mountMainRoute(`/syndication/${encodeURIComponent(MAIN_SERVER_URL)}`);
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListPublishedSyndicationUrls",
@@ -27,7 +26,6 @@ describe("syndication detail", () => {
 
     it("shows the 404 fallback when the endpoint is not in the current context", () => {
         mountMainRoute(`/syndication/${encodeURIComponent("http://127.0.0.1:3999")}`);
-        waitForRouteLoad(".LoadingSkeleton--detail");
         cy.contains(".ant-result-title", "Syndicated URL not found").should("be.visible");
         cy.contains(".ant-result-subtitle", "current marketplace context").should("be.visible");
         cy.contains(".ant-result", "Back to syndication").should("be.visible");

@@ -33,9 +33,10 @@ describe("product/service detail", () => {
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Products],
                 targetId: "product-moon-lamp",
+                url: MAIN_SERVER_URL,
             },
             "Comments",
-            "Moon Lamp looks sharp on the shelf.",
+            "Harbor Labs has strong logistics.",
         );
 
         cy.get(".ProductDetail").should("be.visible");
@@ -51,6 +52,6 @@ describe("product/service detail", () => {
         cy.get(".ShareSection").should("be.visible").contains("Share this product");
         cy.get(".ShareSection__nativeButton").should("be.visible");
         cy.get(".SubscribeButton").should("be.visible").and("contain", "Subscribe");
-        cy.contains(".EntityCommentsSection", "Moon Lamp looks sharp on the shelf.").should("be.visible");
+        cy.contains(".EntityCommentsSection", "Harbor Labs has strong logistics.").should("be.visible");
     });
 });

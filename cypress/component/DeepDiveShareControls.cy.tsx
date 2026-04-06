@@ -24,9 +24,8 @@ describe("share controls", () => {
     });
 
     it("uses the mobile share layout below 1200px", () => {
-        cy.viewport(1199, 1200);
+        cy.viewport(767, 1200);
         mountMainRoute("/companies/company-harbor-labs");
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",

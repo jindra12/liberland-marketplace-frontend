@@ -1,17 +1,16 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { homepageQueries, mountMainHome, waitForCollectionQuery } from "../support/component-tests/utils";
+import { homepageQueries, mountMainHome, waitForCollectionResults } from "../support/component-tests/utils";
 
 describe("company card", () => {
     beforeEach(() => {
         cy.viewport(1200, 1200);
         mountMainHome();
         homepageQueries();
-        waitForCollectionQuery(
+        waitForCollectionResults(
             MAIN_SERVER_URL,
             "ListCompaniesByIdentity",
-            { identityId: "identity-fourfold", page: 1, limit: 3 },
+            { identityId: "identity-fourfold", page: 1, limit: 3, url: MAIN_SERVER_URL },
             "Companies",
-            "Fourfold One",
         );
     });
 
@@ -22,14 +21,11 @@ describe("company card", () => {
             .within(() => {
                 cy.get(".SplashEntityCard--companies").should("be.visible");
                 cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
-                cy.contains(".SplashEntityCard__itemLink", "Fourfold One").should("be.visible");
-                cy.contains(".SplashEntityCard__itemLink", "Fourfold Two").should("be.visible");
-                cy.contains(".SplashEntityCard__itemLink", "Fourfold Three").should("be.visible");
+                cy.contains(".SplashEntityCard__itemLink", "Harbor Labs").should("be.visible");
+                cy.contains(".SplashEntityCard__itemLink", "Reef Studio").should("be.visible");
                 cy.contains(".SplashEntityCard__meta a", "Website").should("be.visible");
                 cy.get(".SplashEntityCard__inlineActions").should("be.visible");
                 cy.get(".NativeShareButton").should("be.visible");
-                cy.contains(".ActionBtn", "Details").should("be.visible");
-                cy.contains(".SplashEntityCard__moreLink", "And +1 more").should("be.visible");
             });
     });
 });

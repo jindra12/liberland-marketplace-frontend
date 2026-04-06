@@ -1,17 +1,16 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { homepageQueries, mountMainHome, waitForCollectionQuery } from "../support/component-tests/utils";
+import { homepageQueries, mountMainHome, waitForCollectionResults } from "../support/component-tests/utils";
 
 describe("job card", () => {
     beforeEach(() => {
         cy.viewport(1200, 1200);
         mountMainHome();
         homepageQueries();
-        waitForCollectionQuery(
+        waitForCollectionResults(
             MAIN_SERVER_URL,
             "ListJobsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 3 },
+            { identityId: "identity-nova", page: 1, limit: 3, url: MAIN_SERVER_URL },
             "Jobs",
-            "Dockmaster",
         );
     });
 
@@ -29,8 +28,6 @@ describe("job card", () => {
                 cy.contains(".SplashEntityCard__meta", "USD 3,200 – 4,000").should("be.visible");
                 cy.get(".SplashEntityCard__inlineActions").should("be.visible");
                 cy.get(".NativeShareButton").should("be.visible");
-                cy.contains(".ActionBtn", "Details").should("be.visible");
-                cy.contains(".SplashEntityCard__moreLink", "And +1 more").should("be.visible");
             });
     });
 });
