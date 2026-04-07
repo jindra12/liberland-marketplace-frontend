@@ -6,5 +6,6 @@ declare module "*.css";
 declare namespace Cypress {
     interface Chainable {
         resetQL(): Chainable<void>;
+        openPublishServerIfNeeded(serverName?: string): Chainable<void>;
     }
 }

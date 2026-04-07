@@ -67,6 +67,89 @@ export const mountAuthenticatedRoute = (route: string, serverUrls: string[] = [B
     mount(<Main />);
 };
 
+export const mountAuthenticatedMainRoute = (route: string) => {
+    cy.window().then((win) => {
+        seedAuthorizedProfile(win, BACKEND_URL);
+        win.localStorage.setItem(
+            "endpoints.urls",
+            JSON.stringify([
+                {
+                    enabled: true,
+                    value: BACKEND_URL,
+                    name: "Main",
+                },
+            ]),
+        );
+    });
+    mount(<Main />);
+    cy.routerNavigate(route);
+};
+
+export const openPublishServerIfNeeded = (serverName = "Main") => {
+    cy.get("body", { timeout: 20000 }).should(($body) => {
+        expect($body.find(".PublishServer, .Publish__category").length).to.be.greaterThan(0);
+    });
+
+    cy.get("body").then(($body) => {
+        if ($body.find(".PublishServer").length === 0) {
+            return;
+        }
+
+        cy.contains(".PublishServer__card", serverName).should("be.visible").click();
+        cy.contains(".PublishServer__summary button", "Continue to publish").click();
+        cy.get(".PublishServer").should("not.exist");
+    });
+};
+
+export const openPublishCategory = (categoryName: string) => {
+    const categoryTitleByName: Record<string, string> = {
+        Job: "Job",
+        Company: "Company",
+        Product: "Product",
+        Venture: "Venture",
+    };
+    const categoryTitle = categoryTitleByName[categoryName];
+    if (categoryTitle === undefined) {
+        throw new Error(`Unknown publish category: ${categoryName}`);
+    }
+
+    openPublishServerIfNeeded();
+    cy.contains(".Publish__category", categoryTitle, { timeout: 20000 }).should("be.visible").click();
+};
+
+const getFormItem = (label: string) => cy.contains(".ant-form-item", label);
+
+export const fillFormField = (label: string, value: string) => {
+    getFormItem(label).find("input, textarea").first().clear({ force: true }).type(value, { force: true });
+};
+
+export const assertFormFieldValue = (label: string, value: string) => {
+    getFormItem(label).find("input, textarea").first().should("have.value", value);
+};
+
+export const selectFormOption = (label: string, optionLabel: string) => {
+    getFormItem(label).find(".ant-select").first().click();
+    cy.get(".ant-select-dropdown").should("be.visible");
+    cy.contains(".ant-select-dropdown .ant-select-item-option-content", optionLabel).click({ force: true });
+};
+
+export const assertSelectValue = (label: string, value: string) => {
+    getFormItem(label).should("contain.text", value);
+};
+
+const uploadImageBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/S6cAAAAASUVORK5CYII=";
+export const uploadTestImage = () => {
+    cy.get('input[type="file"]').selectFile(
+        {
+            contents: Cypress.Buffer.from(uploadImageBase64, "base64"),
+            fileName: "publish-image.png",
+            mimeType: "image/png",
+            lastModified: Date.now(),
+        },
+        { force: true },
+    );
+};
+
 export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
