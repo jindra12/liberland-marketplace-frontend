@@ -4,6 +4,7 @@ import {
 } from "../../../generated/graphql";
 import type { MeUserQuery, MutationUserUpdate_WalletsInput } from "../../../generated/graphql";
 import type { CartForRequiredChains, CryptoChain, OrderForPayments } from "../../../types";
+import { getPrimaryCryptoAddress } from "../../shared/product/utils";
 import { CRYPTO_CHAIN_DECIMALS, CRYPTO_CHAIN_ORDER } from "../constants";
 import type {
     PaymentProfileUsersByUrl,
@@ -34,10 +35,10 @@ export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain): stri
 };
 
 const resolveItemPaymentChain = (item: OrderItem): CryptoChain | undefined => {
-    return (
-        toCryptoChain(item.product?.cryptoAddresses?.chain) ??
-        toCryptoChain(item.product?.company?.cryptoAddresses?.chain)
-    );
+    const productAddress = getPrimaryCryptoAddress(item.product);
+    const companyAddress = getPrimaryCryptoAddress(item.product?.company);
+
+    return toCryptoChain(productAddress?.chain) ?? toCryptoChain(companyAddress?.chain);
 };
 
 const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | null | undefined => {
@@ -54,7 +55,9 @@ const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string 
 const toFixedNativeUnits = (value: string | null | undefined, decimals: number): bigint => {
     const [wholePart = "0", fractionPartRaw = ""] = String(value ?? "0").split(".");
     const fractionPart = fractionPartRaw.slice(0, decimals).padEnd(decimals, "0");
-    const factor = 10n ** BigInt(decimals);
+    const factor = Array.from({ length: decimals }).reduce<bigint>((accumulator) => {
+        return accumulator * 10n;
+    }, 1n);
     const wholeUnits = BigInt(wholePart) * factor;
     const fractionUnits = fractionPart ? BigInt(fractionPart) : 0n;
     return wholeUnits + fractionUnits;
@@ -65,7 +68,9 @@ const formatFixedNativeUnits = (units: bigint, decimals: number): string => {
         return "0";
     }
 
-    const factor = 10n ** BigInt(decimals);
+    const factor = Array.from({ length: decimals }).reduce<bigint>((accumulator) => {
+        return accumulator * 10n;
+    }, 1n);
     const wholePart = units / factor;
     const fractionPart = units % factor;
 
@@ -129,18 +134,18 @@ export const resolveOrderRecipientAddress = (
             return resolvedAddress;
         }
 
-        const productChain = toCryptoChain(item?.product?.cryptoAddresses?.chain);
-        const productAddress = item?.product?.cryptoAddresses?.address;
+        const productAddress = getPrimaryCryptoAddress(item?.product);
+        const productChain = toCryptoChain(productAddress?.chain);
 
-        if (productChain === chain && productAddress) {
-            return productAddress;
+        if (productChain === chain && productAddress?.address) {
+            return productAddress.address;
         }
 
-        const companyChain = toCryptoChain(item?.product?.company?.cryptoAddresses?.chain);
-        const companyAddress = item?.product?.company?.cryptoAddresses?.address;
+        const companyAddress = getPrimaryCryptoAddress(item?.product?.company);
+        const companyChain = toCryptoChain(companyAddress?.chain);
 
-        if (companyChain === chain && companyAddress) {
-            return companyAddress;
+        if (companyChain === chain && companyAddress?.address) {
+            return companyAddress.address;
         }
 
         return undefined;

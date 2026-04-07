@@ -1,9 +1,6 @@
 import * as React from "react";
 
-import { DollarOutlined } from "@ant-design/icons";
-import { Alert, Card, List, Tag } from "antd";
-
-import { formatPriceFromCents, formatUsdFromCents } from "../shared/product/utils";
+import { Alert, Card, List } from "antd";
 
 import { OrderPaymentChainRow } from "./OrderPaymentChainRow";
 import { buildOrderEntryKey, collectOrderChainPaymentAmounts } from "./payment/utils";
@@ -12,6 +9,7 @@ import type { PaymentProfileUser, SubmittedOrder } from "./types";
 type OrderPaymentOrderCardProps = {
     entry: SubmittedOrder;
     isLargeScreen: boolean;
+    orderIndex: number;
     onPayerAddressSelected: (entry: SubmittedOrder, walletAddress: string) => Promise<void>;
     onPaymentCompleted: (paymentKey: string) => void;
     onPaymentWalletRemembered?: () => Promise<void>;
@@ -22,22 +20,11 @@ export const OrderPaymentOrderCard: React.FunctionComponent<OrderPaymentOrderCar
     const [entryState, setEntryState] = React.useState(props.entry);
 
     const chainPayments = collectOrderChainPaymentAmounts(entryState.order);
-    const orderTotal =
-        formatUsdFromCents(entryState.order.amount) ||
-        formatPriceFromCents(entryState.order.amount, entryState.order.currency);
 
     return (
         <Card
-            title={`Order ${entryState.order.id}`}
+            title={`${props.orderIndex}${props.orderIndex === 1 ? "st" : props.orderIndex === 2 ? "nd" : props.orderIndex === 3 ? "rd" : "th"} payment`}
             key={buildOrderEntryKey(entryState.url, entryState.order.id)}
-            extra={
-                <Tag
-                    color={orderTotal ? "gold" : "default"}
-                    icon={orderTotal ? <DollarOutlined /> : undefined}
-                >
-                    {orderTotal ? `Price: ${orderTotal}` : "Price: N/A"}
-                </Tag>
-            }
         >
             {chainPayments.length === 0 ? (
                 <Alert

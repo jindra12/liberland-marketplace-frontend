@@ -78,7 +78,7 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
             wrap
             gap="15px"
             justify="center"
-            align="center"
+            align="stretch"
             flex={1}
             className="CryptoPaymentGroup TronwebModal TronwebModal--payment"
         >

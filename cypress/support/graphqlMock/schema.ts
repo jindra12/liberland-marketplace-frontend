@@ -79,7 +79,7 @@ export const graphqlSchema = buildSchema(`
 
     type Mutation {
         createCart(data: mutationCartInput, draft: Boolean): MockNode
-        deleteCart(id: String!): MockNode
+        deleteCart(id: String!, trash: Boolean): MockNode
         updateCart(id: String!, data: mutationCartUpdateInput, draft: Boolean): MockNode
         createCompany(data: mutationCompanyInput, draft: Boolean): MockNode
         deleteCompany(id: String!): MockNode
@@ -163,6 +163,7 @@ export const graphqlSchema = buildSchema(`
         currency: JSON
         secret: JSON
         subtotal: JSON
+        customerEmail: JSON
         status: JSON
         createdAt: JSON
         updatedAt: JSON

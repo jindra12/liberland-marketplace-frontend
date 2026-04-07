@@ -59,12 +59,13 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
                 Orders submitted. Pay each order using the chain amount below.
             </Typography.Paragraph>
 
-            {props.submittedOrders.map((entry) => {
+            {props.submittedOrders.map((entry, index) => {
                 return (
                     <OrderPaymentOrderCard
                         key={`${entry.url}::${entry.order.id}`}
                         entry={entry}
                         isLargeScreen={Boolean(lg)}
+                        orderIndex={index + 1}
                         onPayerAddressSelected={props.onPayerAddressSelected}
                         onPaymentCompleted={markPaymentSubmitted}
                         onPaymentWalletRemembered={props.onPaymentWalletRemembered}

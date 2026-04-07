@@ -225,7 +225,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
             <AddToCartSubmitButton
                 size={size}
                 loading={isMutating}
-                disabled={isMutating} 
+                disabled={isMutating}
                 ariaLabel="Add to cart"
                 icon={<PlusOutlined />}
             />

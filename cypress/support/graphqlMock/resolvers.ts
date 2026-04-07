@@ -101,6 +101,9 @@ export const mutationResolvers = {
     createCart: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeCartData(data);
+        if (data.secret === undefined) {
+            data.secret = nextNodeId("cart");
+        }
         if (data.status === undefined) {
             data.status = "pending";
         }

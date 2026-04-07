@@ -66,8 +66,25 @@ export const parseActionLink = (value?: string | null): string | undefined => {
     return match?.getAnchorHref();
 };
 
+type CryptoAddressLike = {
+    chain?: string | null;
+    address?: string | null;
+};
+
+export const getPrimaryCryptoAddress = (
+    entity?: { cryptoAddresses?: CryptoAddressLike | CryptoAddressLike[] | null } | null,
+) => {
+    const addresses = entity?.cryptoAddresses;
+
+    if (Array.isArray(addresses)) {
+        return addresses.find((address) => Boolean(address?.address) || Boolean(address?.chain));
+    }
+
+    return addresses ?? undefined;
+};
+
 export const hasCryptoWallet = (entity?: CryptoWalletOwner | null): boolean => {
-    return Boolean(entity?.cryptoAddresses?.address);
+    return Boolean(getPrimaryCryptoAddress(entity)?.address);
 };
 
 export const isProductPurchasable = (product?: PurchasableProduct | null): boolean => {

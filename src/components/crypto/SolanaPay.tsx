@@ -98,7 +98,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     });
     return (
         <>
-            <Flex wrap gap="15px" justify="center" align="center" className="CryptoPaymentGroup">
+            <Flex wrap gap="15px" justify="center" align="stretch" className="CryptoPaymentGroup">
                 {sender && (
                     <Button
                         icon={
@@ -111,7 +111,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                                     height="22px"
                                     preview={false}
                                 />
-                            )
+                        )
                         }
                         className="SolanaButton SolanaButton--payment SolanaButton--main"
                         type="primary"

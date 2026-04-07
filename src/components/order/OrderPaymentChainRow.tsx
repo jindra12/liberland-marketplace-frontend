@@ -27,26 +27,53 @@ export const OrderPaymentChainRow: React.FunctionComponent<OrderPaymentChainRowP
     const hasExpectedAmount = props.chainPayment.amountInSmallestUnit > 0n;
     const canPay = Boolean(recipient && hasExpectedAmount);
     const paymentKey = buildPaymentKey(props.entry, props.chainPayment.chain);
+    const action = (
+        <OrderPaymentChainAction
+            canPay={canPay}
+            chainPayment={props.chainPayment}
+            entry={props.entry}
+            hasExpectedAmount={hasExpectedAmount}
+            isLargeScreen={props.isLargeScreen}
+            key={paymentKey}
+            onEntryUpdated={props.onEntryUpdated}
+            onPayerAddressSelected={props.onPayerAddressSelected}
+            onPaymentCompleted={props.onPaymentCompleted}
+            onPaymentWalletRemembered={props.onPaymentWalletRemembered}
+            paymentKey={paymentKey}
+            profileUser={props.profileUser}
+            recipient={recipient}
+        />
+    );
+
+    if (!props.isLargeScreen) {
+        return (
+            <List.Item>
+                <Flex vertical gap={12} className="OrderPaymentChainRow">
+                    <List.Item.Meta
+                        title={`${CRYPTO_CHAIN_LABELS[props.chainPayment.chain]} (${CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]})`}
+                        description={
+                            <Flex vertical gap={4}>
+                                <Typography.Text>
+                                    Amount due: {props.chainPayment.amount}{" "}
+                                    {CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]}
+                                </Typography.Text>
+                                {recipient && (
+                                    <Typography.Text type="secondary">
+                                        Recipient: {recipient}
+                                    </Typography.Text>
+                                )}
+                            </Flex>
+                        }
+                    />
+                    {action}
+                </Flex>
+            </List.Item>
+        );
+    }
 
     return (
         <List.Item
-            actions={[
-                <OrderPaymentChainAction
-                    canPay={canPay}
-                    chainPayment={props.chainPayment}
-                    entry={props.entry}
-                    hasExpectedAmount={hasExpectedAmount}
-                    isLargeScreen={props.isLargeScreen}
-                    key={paymentKey}
-                    onEntryUpdated={props.onEntryUpdated}
-                    onPayerAddressSelected={props.onPayerAddressSelected}
-                    onPaymentCompleted={props.onPaymentCompleted}
-                    onPaymentWalletRemembered={props.onPaymentWalletRemembered}
-                    paymentKey={paymentKey}
-                    profileUser={props.profileUser}
-                    recipient={recipient}
-                />,
-            ]}
+            actions={[action]}
         >
             <List.Item.Meta
                 title={`${CRYPTO_CHAIN_LABELS[props.chainPayment.chain]} (${CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]})`}

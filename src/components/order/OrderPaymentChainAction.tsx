@@ -38,7 +38,7 @@ export const OrderPaymentChainAction: React.FunctionComponent<OrderPaymentChainA
 
     if (props.canPay && props.recipient) {
         return (
-            <Flex align="center" gap={8} vertical>
+            <Flex align="stretch" gap={8} vertical className="OrderPaymentChainAction">
                 {!props.isLargeScreen && <Divider />}
                 <OrderPaymentChainButton
                     chainPayment={props.chainPayment}

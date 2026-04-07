@@ -67,12 +67,18 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     };
 
     return (
-        <Flex wrap gap="15px" justify="center" align="center" flex={1} className="CryptoPaymentGroup">
+        <Flex wrap gap="15px" justify="center" align="stretch" flex={1} className="CryptoPaymentGroup">
             <ConnectButton
                 client={client}
                 chain={mainnet}
                 autoConnect={false}
                 wallets={thirdwebWallets.map((w) => createWallet(w))}
+                connectButton={{
+                    className: "ThirdwebPay__connect",
+                }}
+                detailsButton={{
+                    className: "ThirdwebPay__connect",
+                }}
             />
             {account && (
                 <Button

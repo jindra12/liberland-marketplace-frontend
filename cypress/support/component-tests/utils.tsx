@@ -4,6 +4,7 @@ import { User } from "oidc-client-ts";
 import Main from "../../../src/Main";
 import { CART_SECRETS_INDEX_KEY } from "../../../src/components/cart/cartSecrets";
 import { BACKEND_URL } from "../../../src/gqlFetcher";
+import type { URL as EndpointURL } from "../../../src/types";
 import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
 
 import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
@@ -85,6 +86,39 @@ export const mountAuthenticatedMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
+const buildEndpointUrls = (serverUrls: string[]): EndpointURL[] => {
+    return serverUrls.map((serverUrl, index) => ({
+        enabled: true,
+        value: serverUrl,
+        name: index === 0 ? "Main" : index === 1 ? "Co-op" : `Server ${index + 1}`,
+    }));
+};
+
+export const mountAnonymousRoute = (
+    route: string,
+    serverUrls: string[] = [BACKEND_URL],
+    cartSecrets?: Record<string, string>,
+) => {
+    cy.window().then((win) => {
+        win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
+        if (cartSecrets) {
+            const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
+            win.localStorage.setItem(CART_SECRETS_INDEX_KEY, JSON.stringify(entries));
+        }
+        win.history.pushState({}, "", route);
+    });
+    mount(<Main />);
+    if (cartSecrets) {
+        cy.window().then((win) => {
+            const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
+            const serialized = JSON.stringify(entries);
+            win.localStorage.setItem(CART_SECRETS_INDEX_KEY, serialized);
+            win.dispatchEvent(new win.StorageEvent("storage", { key: CART_SECRETS_INDEX_KEY, newValue: serialized }));
+        });
+    }
+    cy.routerNavigate(route);
+};
+
 export const openPublishServerIfNeeded = (serverName = "Main") => {
     cy.get("body", { timeout: 20000 }).should(($body) => {
         expect($body.find(".PublishServer, .Publish__category").length).to.be.greaterThan(0);
@@ -148,6 +182,18 @@ export const uploadTestImage = () => {
         },
         { force: true },
     );
+};
+
+export const addToCart = () => {
+    cy.get('button[aria-label="Add to cart"]').click();
+};
+
+export const removeFromCart = () => {
+    cy.get('button[aria-label="Remove"]').click();
+};
+
+export const setCartQuantity = (quantity: number) => {
+    cy.get(".AddToCartButton__quantity").find("input").clear({ force: true }).type(String(quantity), { force: true });
 };
 
 export const mountMainHome = () => {
