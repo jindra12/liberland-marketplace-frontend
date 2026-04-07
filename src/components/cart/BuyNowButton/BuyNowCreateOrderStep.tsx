@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { message } from "antd";
+import { Button, Empty, message, Modal } from "antd";
 import useLocalStorage from "use-local-storage";
 
+import { RouteButton } from "../../RouteButton";
 import { useCreateOrderMutation } from "../../hooks";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../order/constants";
 import { ShippingAddressSelectModal } from "../../order/ShippingAddressSelectModal";
@@ -28,6 +29,31 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
         SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
         props.purchase.candidateProfileAddresses.length === 1 ? props.purchase.candidateProfileAddresses[0] : undefined,
     );
+
+    if (props.purchase.candidateProfileAddresses.length === 0) {
+        return (
+            <>
+                {contextHolder}
+                <Modal
+                    open
+                    destroyOnHidden
+                    title="Choose a default shipping address"
+                    onCancel={props.onCancel}
+                    footer={[
+                        <Button key="cancel" danger onClick={props.onCancel} disabled={createOrderMutation.isPending}>
+                            Cancel
+                        </Button>,
+                        <RouteButton key="profile" type="primary" to="/profile">
+                            Go to profile
+                        </RouteButton>,
+                    ]}
+                    className="BuyNowCreateOrderStep"
+                >
+                    <Empty description="No default shipping addresses found" />
+                </Modal>
+            </>
+        );
+    }
 
     React.useEffect(() => {
         if (shippingAddress) {

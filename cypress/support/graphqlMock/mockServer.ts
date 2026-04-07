@@ -66,7 +66,7 @@ const graphqlHandler = new GraphQLHandler({
 export const installGraphQLMock = () => {
     const handler = cypressHandler(graphqlHandler);
 
-    cy.intercept("OPTIONS", /http:\/\/127\.0\.0\.1:301[01]\/api\/graphql$/, (req) => {
+    cy.intercept("OPTIONS", /http:\/\/127\.0\.0\.1:301[0-2]\/api\/graphql$/, (req) => {
         const origin = typeof req.headers.origin === "string" ? req.headers.origin : "*";
         const host = new globalThis.URL(req.url).host;
         const requestLog = {
@@ -90,7 +90,7 @@ export const installGraphQLMock = () => {
         recordGraphQLRequestLog(requestLog);
     });
 
-    cy.intercept("POST", /http:\/\/127\.0\.0\.1:301[01]\/api\/graphql$/, async (req) => {
+    cy.intercept("POST", /http:\/\/127\.0\.0\.1:301[0-2]\/api\/graphql$/, async (req) => {
         const body = req.body as GraphQLRequestBody;
         const operationName = getOperationName(body);
         const host = normalizeGraphQLHost(req.url);

@@ -51,6 +51,7 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                         setPreparedPurchase(undefined);
                     }}
                     onOrderCreated={(submittedOrder) => {
+                        setPreparedPurchase(undefined);
                         setSubmittedOrders([submittedOrder]);
                     }}
                 />

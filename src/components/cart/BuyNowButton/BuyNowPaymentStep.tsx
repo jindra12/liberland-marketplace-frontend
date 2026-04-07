@@ -22,7 +22,7 @@ export const BuyNowPaymentStep: React.FunctionComponent<BuyNowPaymentStepProps> 
         enabled: Boolean(auth.user),
     });
     const updateOrderMutation = useUpdateOrderMutation();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [paymentComplete, setPaymentComplete] = React.useState(false);
     const profileUsersByUrl = React.useMemo(
         () => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled),

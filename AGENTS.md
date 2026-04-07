@@ -28,6 +28,8 @@ manager is `yarn`.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
 - To verify Cypress tests, actually run them instead of only typechecking or inspecting files.
+- When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
+- Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
@@ -96,8 +98,8 @@ manager is `yarn`.
 - Never duplicate helper methods. If a helper is needed in more than one place, extract it to a single shared utility and import it from there.
 - If the user tells you not to do something, do not work around it with an indirect command or alternate path; follow the instruction directly or stop and explain the blocker.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
-- If a user asks you to fix a failing test, keep running the relevant test until it passes or you have a concrete app bug to report back.
-- After changing test code or test config, run `yarn test:ct` to confirm the suite still works.
+- If a user asks you to fix a failing test, keep running the relevant targeted test until it passes or you have a concrete app bug to report back.
+- After changing test code or test config, run the smallest relevant targeted test or spec to confirm the change, not the full Cypress suite unless the user explicitly asks for it.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

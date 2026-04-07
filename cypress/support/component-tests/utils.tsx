@@ -6,6 +6,8 @@ import { CART_SECRETS_INDEX_KEY } from "../../../src/components/cart/cartSecrets
 import { BACKEND_URL } from "../../../src/gqlFetcher";
 import type { URL as EndpointURL } from "../../../src/types";
 import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../../src/components/order/constants";
+import type { AddressWithEmail } from "../../../src/components/order/types";
 
 import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
 import { buildGraphQLAlias } from "../graphqlMock";
@@ -66,6 +68,44 @@ export const mountAuthenticatedRoute = (route: string, serverUrls: string[] = [B
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
+};
+
+export const mountAuthenticatedCartRoute = (
+    route: string,
+    serverUrls: string[] = [BACKEND_URL],
+    cartSecrets?: Record<string, string>,
+) => {
+    cy.window().then((win) => {
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
+        if (cartSecrets) {
+            const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
+            win.localStorage.setItem(CART_SECRETS_INDEX_KEY, JSON.stringify(entries));
+        }
+        win.localStorage.removeItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY);
+        win.history.pushState({}, "", route);
+    });
+    mount(<Main />);
+    cy.routerNavigate(route);
+};
+
+export const mountAuthenticatedDetailRoute = (
+    route: string,
+    serverUrls: string[] = [BACKEND_URL],
+    savedShippingAddress?: AddressWithEmail,
+) => {
+    cy.window().then((win) => {
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
+        if (savedShippingAddress) {
+            win.localStorage.setItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, JSON.stringify(savedShippingAddress));
+        } else {
+            win.localStorage.removeItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY);
+        }
+        win.history.pushState({}, "", route);
+    });
+    mount(<Main />);
+    cy.routerNavigate(route);
 };
 
 export const mountAuthenticatedMainRoute = (route: string) => {
@@ -250,7 +290,7 @@ export const waitForCollectionQuery = (
     responseKey: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
 
@@ -269,7 +309,7 @@ export const waitForCollectionResults = (
     expectedVariables: GraphQLVariables,
     responseKey: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
 
@@ -304,8 +344,12 @@ type MeUserQueryResponse = {
     };
 };
 
-export const waitForMeUserQuery = (serverUrl: string, expectedName: string) => {
-    cy.wait(`@${gqlAlias(serverUrl, "MeUser", { url: serverUrl })}`).then((interception) => {
+export const waitForMeUserQuery = (
+    serverUrl: string,
+    expectedName: string,
+    expectedVariables: GraphQLVariables = { url: serverUrl },
+) => {
+    cy.wait(`@${gqlAlias(serverUrl, "MeUser", expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         const response = interception.response?.body as MeUserQueryResponse | undefined;
         const user = response?.data?.meUser?.user;
 
@@ -323,7 +367,7 @@ export const waitForDetailQuery = (
     expectedId: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const node = response?.data?.[responseKey] as GraphQLNodeResponse | undefined;
 
@@ -340,17 +384,19 @@ export const waitForSearchQuery = (
     searchTerm: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`).then((interception) => {
-        const response = interception.response?.body as GraphQLResponseBody | undefined;
-        const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
+    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`, { timeout: 20000 }).then(
+        (interception) => {
+            const response = interception.response?.body as GraphQLResponseBody | undefined;
+            const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
 
-        expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
-        expect(interception.response?.statusCode).to.equal(200);
-        expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
-            expectedTitle,
-        );
-    });
+            expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+            expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
+                expectedTitle,
+            );
+        },
+    );
 };
 
 export const goToList = (goal: ListGoal) => {

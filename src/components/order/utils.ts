@@ -9,7 +9,7 @@ const toProfileUsers = (meUsers?: MeUserQuery | MeUserQuery[]): ProfileUser[] =>
     const entries = Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [];
 
     return entries.flatMap((entry) => {
-        return entry.meUser?.user ? [entry.meUser.user] : [];
+        return entry?.meUser?.user ? [entry.meUser.user] : [];
     });
 };
 

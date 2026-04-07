@@ -1,5 +1,6 @@
 import { mainFixtures } from "./fixtures";
 import { coopFixtures } from "./coopFixtures";
+import { guestFixtures } from "./guestFixtures";
 import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
 
 export type GraphQLRequestBody = {
@@ -57,6 +58,7 @@ const mergeIntoImpl = (target: Record<string, unknown>, source: Record<string, u
 
 let mainFixturesState = cloneFixtureBundle(mainFixtures);
 let coopFixturesState = cloneFixtureBundle(coopFixtures);
+let guestFixturesState = cloneFixtureBundle(guestFixtures);
 
 export let activeFixtures = mainFixturesState;
 export const notificationSubscriptions: MockNode[] = [];
@@ -88,13 +90,24 @@ const resetIdCounters = () => {
 export const resetGraphQLMock = (): void => {
     mainFixturesState = cloneFixtureBundle(mainFixtures);
     coopFixturesState = cloneFixtureBundle(coopFixtures);
+    guestFixturesState = cloneFixtureBundle(guestFixtures);
     activeFixtures = mainFixturesState;
     notificationSubscriptions.length = 0;
     resetIdCounters();
 };
 
 export const useGraphQLFixturesForHost = (host: string): void => {
-    activeFixtures = host === "127.0.0.1:3011" ? coopFixturesState : mainFixturesState;
+    if (host === "127.0.0.1:3011") {
+        activeFixtures = coopFixturesState;
+        return;
+    }
+
+    if (host === "127.0.0.1:3012") {
+        activeFixtures = guestFixturesState;
+        return;
+    }
+
+    activeFixtures = mainFixturesState;
 };
 
 export const nextNodeId = (prefix: keyof typeof nextIds): string => {

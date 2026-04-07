@@ -245,13 +245,11 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
                 queryKey: [...useHook.getKey(variables as TVariables), url],
                 queryFn: gqlFetcher<TQueryFnData, TVariables>(query, variables as TVariables, options, url),
                 enabled: (query: Query) => {
-                    const variables = (
-                        query.queryKey as object[]
-                    )[1];
-                    if (variables && "page" in variables) {
-                        const { page } = variables as { page: number };
+                    const queryVariables = query.queryKey[1];
+                    if (queryVariables && typeof queryVariables === "object" && "page" in queryVariables) {
+                        const { page } = queryVariables as { page: number };
                         const prevKey = useHook.getKey({
-                            ...variables,
+                            ...queryVariables,
                             page: page - 1,
                         } as TVariables);
                         const prevQuery = client.getQueryData(prevKey) as {

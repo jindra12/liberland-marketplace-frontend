@@ -2,6 +2,7 @@ import type { DetailGoal, ListGoal, SearchGoal } from "./types";
 
 export const MAIN_SERVER_URL = "http://127.0.0.1:3010";
 export const COOP_SERVER_URL = "http://127.0.0.1:3011";
+export const GUEST_SERVER_URL = "http://127.0.0.1:3012";
 
 export const LIST_GOALS: ListGoal[] = [
     {
