@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { Button, Card, Form, Input, message } from "antd";
+import { Button, Card, Form, Input } from "antd";
+import type { MessageInstance } from "antd/es/message/interface";
 
 import { useChangePasswordMutation } from "../../authApi";
 
@@ -8,6 +9,7 @@ import type { PasswordFormValues } from "./types";
 import { validateSelectedProfileServerUrl } from "./utils";
 
 type ProfilePasswordCardProps = {
+    messageApi: MessageInstance;
     selectedServerUrl: string;
 };
 export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardProps> = (props) => {
@@ -25,11 +27,11 @@ export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardPro
                 currentPassword: values.currentPassword,
                 newPassword: values.newPassword,
             });
-            message.success("Password changed");
+            props.messageApi.success("Password changed");
             form.resetFields();
         } catch (error) {
             console.error("Failed to change password", error);
-            message.error("Failed to change password");
+            props.messageApi.error("Failed to change password");
         }
     };
     return (

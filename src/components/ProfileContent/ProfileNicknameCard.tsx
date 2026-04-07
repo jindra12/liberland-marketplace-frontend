@@ -3,7 +3,8 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, message } from "antd";
+import { Button, Card, Form, Input } from "antd";
+import type { MessageInstance } from "antd/es/message/interface";
 
 import { useEndpointContext } from "../EndpointContext";
 import { useUpdateUserByIdMutation } from "../hooks";
@@ -13,6 +14,7 @@ import { validateSelectedProfileServerUser } from "./utils";
 
 type ProfileNicknameCardProps = {
     currentName?: string | null;
+    messageApi: MessageInstance;
     selectedServerUrl: string;
     selectedServerUserId?: string;
     selectedServerUserLoading: boolean;
@@ -41,11 +43,11 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
                 await auth.signinSilent();
             }
             await props.onUserUpdated();
-            message.success("Nickname updated");
+            props.messageApi.success("Nickname updated");
             form.resetFields();
         } catch (error) {
             console.error("Failed to update nickname", error);
-            message.error("Failed to update nickname");
+            props.messageApi.error("Failed to update nickname");
         }
     };
     return (

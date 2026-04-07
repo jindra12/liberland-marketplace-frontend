@@ -26,9 +26,9 @@ export const mountMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
-const buildAuthStorageKey = () => `oidc.user:${BACKEND_URL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+const buildAuthStorageKey = (serverUrl: string) => `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
-const seedAuthorizedProfile = (win: Window) => {
+const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
     const now = Math.floor(Date.now() / 1000);
     const user = new User({
         access_token: "mock-profile-access-token",
@@ -48,12 +48,12 @@ const seedAuthorizedProfile = (win: Window) => {
         },
     });
 
-    win.localStorage.setItem(buildAuthStorageKey(), user.toStorageString());
+    win.localStorage.setItem(buildAuthStorageKey(serverUrl), user.toStorageString());
 };
 
-export const mountProfileRoute = () => {
+export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL]) => {
     cy.window().then((win) => {
-        seedAuthorizedProfile(win);
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
         win.history.pushState({}, "", "/profile");
     });
     mount(<Main />);
@@ -139,6 +139,42 @@ export const waitForCollectionResults = (
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+    });
+};
+
+type MeUserQueryResponse = {
+    data?: {
+        meUser?: {
+            user?: {
+                email?: string | null;
+                name?: string | null;
+                phone?: string | null;
+                shippingAddress?: {
+                    addressLine1?: string | null;
+                    addressLine2?: string | null;
+                    city?: string | null;
+                    country?: string | null;
+                    postalCode?: string | null;
+                    state?: string | null;
+                } | null;
+                wallets?: Array<{
+                    address?: string | null;
+                    chain?: string | null;
+                    provider?: string | null;
+                } | null> | null;
+            } | null;
+        } | null;
+    };
+};
+
+export const waitForMeUserQuery = (serverUrl: string, expectedName: string) => {
+    cy.wait(`@${gqlAlias(serverUrl, "MeUser", { url: serverUrl })}`).then((interception) => {
+        const response = interception.response?.body as MeUserQueryResponse | undefined;
+        const user = response?.data?.meUser?.user;
+
+        expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+        expect(user?.name).to.equal(expectedName);
     });
 };
 

@@ -261,10 +261,24 @@ export const graphqlSchema = buildSchema(`
         replyPost: MockNode
         variant: MockNode
         variantType: MockNode
-        shippingAddress: MockNode
+        shippingAddress: User_ShippingAddress
         bounty: MockNode
         fundsNeeded: MockNode
         analytics: MockNode
         variants: MockCollection
+    }
+
+    type User_ShippingAddress {
+        title: JSON
+        firstName: JSON
+        lastName: JSON
+        company: String
+        addressLine1: JSON
+        addressLine2: JSON
+        city: JSON
+        state: JSON
+        postalCode: JSON
+        country: JSON
+        phone: JSON
     }
 `);

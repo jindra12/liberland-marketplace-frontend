@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { Button, Card, Divider, Form, Input, Space, message } from "antd";
+import { Button, Card, Divider, Form, Input, Space } from "antd";
+import type { MessageInstance } from "antd/es/message/interface";
 import useLocalStorage from "use-local-storage";
 
 import { useUpdateUserByIdMutation } from "../hooks";
@@ -17,6 +18,7 @@ import {
 } from "./utils";
 
 type ProfileContactCardProps = {
+    messageApi: MessageInstance;
     selectedServerUrl: string;
     selectedServerUser?: ProfileSelectedUser | null;
     selectedServerUserLoading: boolean;
@@ -45,15 +47,15 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                 url: props.selectedServerUrl,
             });
             await props.onUserUpdated();
-            message.success("Contact information updated");
+            props.messageApi.success("Contact information updated");
         } catch (error) {
             console.error("Failed to update contact information", error);
-            message.error("Failed to update contact information");
+            props.messageApi.error("Failed to update contact information");
         }
     };
     const handleResetSavedShippingAddress = () => {
         setSavedShippingAddress(undefined);
-        message.success("Saved shipping address was reset");
+        props.messageApi.success("Saved shipping address was reset");
     };
     return (
         <Card title="Contact & Payment" size="small" className="Profile__card Profile__contactCard">

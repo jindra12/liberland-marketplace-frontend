@@ -3,7 +3,7 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
 
-import { Divider, Flex, Typography } from "antd";
+import { Divider, Flex, Typography, message } from "antd";
 
 import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
@@ -26,6 +26,7 @@ export const ProfileContent: React.FunctionComponent = () => {
     const emailVerified = profile?.email_verified;
 
     const profileServerOptions = React.useMemo(() => buildProfileServerOptions(urls, authUrl), [authUrl, urls]);
+    const [messageApi, messageContextHolder] = message.useMessage();
     const [selectedServerUrlState, setSelectedServerUrlState] = React.useState(
         profileServerOptions[0]?.value || authUrl,
     );
@@ -50,6 +51,7 @@ export const ProfileContent: React.FunctionComponent = () => {
 
     return (
         <div className="Profile">
+            {messageContextHolder}
             <Typography.Title level={2}>My Profile</Typography.Title>
 
             <ProfileSummaryCard
@@ -76,8 +78,9 @@ export const ProfileContent: React.FunctionComponent = () => {
                     selectedServerUserId={selectedServerUser?.id}
                     selectedServerUserLoading={selectedServerUserQuery.isFetching}
                     onUserUpdated={refreshSelectedServerUser}
+                    messageApi={messageApi}
                 />
-                <ProfilePasswordCard selectedServerUrl={selectedServerUrl} />
+                <ProfilePasswordCard selectedServerUrl={selectedServerUrl} messageApi={messageApi} />
             </Flex>
 
             <Divider />
@@ -87,6 +90,7 @@ export const ProfileContent: React.FunctionComponent = () => {
                 selectedServerUser={selectedServerUser}
                 selectedServerUserLoading={selectedServerUserQuery.isFetching}
                 onUserUpdated={refreshSelectedServerUser}
+                messageApi={messageApi}
             />
 
             <Divider />
