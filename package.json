@@ -98,6 +98,8 @@
     "test:ct:buy-now:headed": "cypress run --component --browser electron --headed --spec cypress/component/BuyNow.cy.tsx",
     "test:ct:cart-auth": "cypress run --component --browser electron --spec cypress/component/AuthenticatedCart.cy.tsx",
     "test:ct:cart-auth:headed": "cypress run --component --browser electron --headed --spec cypress/component/AuthenticatedCart.cy.tsx",
+    "test:ct:remember-wallet": "cypress run --component --browser electron --spec cypress/component/RememberWallet.cy.tsx",
+    "test:ct:remember-wallet:headed": "cypress run --component --browser electron --headed --spec cypress/component/RememberWallet.cy.tsx",
     "test:ct:notfound": "cypress run --component --browser electron --spec cypress/component/NotFound.cy.tsx",
     "test:ct:notfound:headed": "cypress run --component --browser electron --headed --spec cypress/component/NotFound.cy.tsx",
     "test:ct:unsubscribe": "cypress run --component --browser electron --spec cypress/component/Unsubscribe.cy.tsx",
