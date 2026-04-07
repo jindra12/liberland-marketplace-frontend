@@ -59,6 +59,14 @@ export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL]) => {
     mount(<Main />);
 };
 
+export const mountAuthenticatedRoute = (route: string, serverUrls: string[] = [BACKEND_URL]) => {
+    cy.window().then((win) => {
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        win.history.pushState({}, "", route);
+    });
+    mount(<Main />);
+};
+
 export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
