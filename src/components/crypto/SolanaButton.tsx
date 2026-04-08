@@ -8,12 +8,17 @@ export interface SolanaButtonProps {
     label?: React.ReactNode;
     payment?: boolean;
     disabled?: boolean;
+    className?: string;
 }
 
 export const SolanaButton: React.FunctionComponent<SolanaButtonProps> = (props) => {
     return (
         <Button
-            className={["SolanaButton", props.payment ? "SolanaButton--payment" : undefined].filter(Boolean).join(" ")}
+            className={[
+                "SolanaButton",
+                props.className,
+                props.payment ? "SolanaButton--payment" : undefined
+            ].filter(Boolean).join(" ")}
             size="large"
             icon={<Image src="/solana.svg" width="22px" height="22px" preview={false} />}
             onClick={props.onSelect}

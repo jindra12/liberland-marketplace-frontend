@@ -124,7 +124,7 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                 <SolanaConnect
                     selectWallet={(address) => setSender(address)}
                     payment
-                    label="Connect wallet"
+                    label="Connect"
                     disabled={pay.isPending || isPaymentPending}
                 />
             </Flex>

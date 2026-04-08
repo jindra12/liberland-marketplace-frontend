@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
+import Avatar from "antd/es/avatar";
 import Button from "antd/es/button";
 import Flex from "antd/es/flex";
 import message from "antd/es/message";
@@ -74,10 +75,16 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                 autoConnect={false}
                 wallets={thirdwebWallets.map((w) => createWallet(w))}
                 connectButton={{
-                    className: "ThirdwebPay__connect",
+                    className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
+                    label: (
+                        <Flex wrap gap="10px" justify="center" align="center">
+                            <Avatar src="/ethereum.svg" size={22} shape="square" />
+                            Connect
+                        </Flex>
+                    ),
                 }}
                 detailsButton={{
-                    className: "ThirdwebPay__connect",
+                    className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
                 }}
             />
             {account && (

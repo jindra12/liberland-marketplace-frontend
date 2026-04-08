@@ -26,6 +26,7 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
 
     const button = (
         <SolanaButton
+            className="CryptoPaymentGroup__connectButton"
             onSelect={async () => {
                 if (connected) {
                     await disconnect();

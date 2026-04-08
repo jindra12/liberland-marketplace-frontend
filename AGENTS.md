@@ -79,6 +79,7 @@ manager is `yarn`.
 - Do not use `?? undefined`. If a value can be absent, model it as `null` in the type or use a deliberate `!` assertion when the contract guarantees it.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Do not use inline `style={{ ... }}` props. Prefer SCSS classes or component props unless a one-off runtime value genuinely cannot be expressed otherwise.
+- Do not use bare `<img>` tags in UI code. Use Ant `Image` with `preview={false}` or `Avatar` instead.
 - Use `Skeleton` for page-level loading states and `Spin` for localized/action loading states.
 - In browser-only frontend code, do not add `typeof window` or similar environment guards unless there is a concrete SSR/build-time requirement already present in the repo.
 - Do not add `.catch()` blocks to promises unless the user explicitly asks for that handling style or the behavior clearly requires local error handling.
