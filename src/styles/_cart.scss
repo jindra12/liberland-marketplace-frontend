@@ -24,13 +24,13 @@
 }
 
 .AddToCartButton__quantity {
-    width: 56px;
-    max-width: 56px;
+    width: 100px;
+    max-width: 100px;
 }
 
 .AddToCartButton__quantity--default {
-    width: 56px;
-    max-width: 56px;
+    width: 100px;
+    max-width: 100px;
 }
 
 .AddToCartButton__quantity--small {
@@ -98,9 +98,9 @@
 }
 
 .AddToCartButton__compact > .ant-input-number {
-    flex: 0 0 56px;
-    width: 56px !important;
-    max-width: 56px;
+    flex: 0 0 100px;
+    width: 100px !important;
+    max-width: 100px;
     min-width: 0;
 }
 
@@ -141,8 +141,8 @@
 }
 
 .AddToCartButton__compact .AddToCartButton__quantity.ant-input-number .ant-input-number-input {
-    padding-inline-start: 8px;
-    padding-inline-end: 8px;
+    padding-inline-start: 4px;
+    padding-inline-end: 4px;
     text-align: center;
 }
 
