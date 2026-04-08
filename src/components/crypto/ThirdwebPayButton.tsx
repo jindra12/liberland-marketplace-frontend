@@ -78,7 +78,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                     className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
                     label: (
                         <Flex wrap gap="10px" justify="center" align="center">
-                            <Avatar src="/ethereum.svg" size={22} shape="square" />
+                            <Avatar src="/ethereum.svg" size={32} shape="square" className="ThirdwebPay__ethIcon" />
                             Connect
                         </Flex>
                     ),

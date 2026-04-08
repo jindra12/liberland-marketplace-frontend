@@ -159,6 +159,18 @@
     max-width: 100%;
     margin: 0 auto;
     border-radius: 10px !important;
+
+    .ThirdwebPay__ethIcon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        line-height: 0;
+
+        img {
+            object-fit: contain;
+        }
+    }
 }
 .ThirdwebConnect {
     width: 180px;
