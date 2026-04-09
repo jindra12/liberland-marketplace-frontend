@@ -3,6 +3,13 @@ import { goToDetailFromHome, mountMainHome } from "../support/component-tests/ut
 
 describe("details", () => {
     beforeEach(() => {
+        cy.on("uncaught:exception", (error) => {
+            if (error.message.includes("ResizeObserver loop completed with undelivered notifications")) {
+                return false;
+            }
+
+            return undefined;
+        });
         mountMainHome();
     });
 

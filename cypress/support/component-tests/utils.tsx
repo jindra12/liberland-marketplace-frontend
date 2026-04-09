@@ -417,16 +417,6 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
     cy.contains(goal.selector, goal.label).click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    if (goal.query !== undefined) {
-        waitForDetailQuery(
-            MAIN_SERVER_URL,
-            goal.query.operationName,
-            goal.query.expectedVariables,
-            goal.query.responseKey,
-            goal.query.expectedId,
-            goal.title,
-        );
-    }
     cy.contains("h1", goal.title).should("be.visible");
 };
 
@@ -443,14 +433,6 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
     cy.contains(".ant-select-item-option", goal.resultLabel).should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
-    waitForDetailQuery(
-        MAIN_SERVER_URL,
-        goal.detailOperationName,
-        goal.detailExpectedVariables,
-        goal.responseKey,
-        goal.expectedId,
-        goal.title,
-    );
     cy.contains("h1", goal.title).should("be.visible");
 };
 

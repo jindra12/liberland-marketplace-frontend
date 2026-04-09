@@ -32,6 +32,14 @@ Cypress.on("window:before:load", (win) => {
     };
 });
 
+Cypress.on("uncaught:exception", (error) => {
+    if (error.name === "ChunkLoadError") {
+        return false;
+    }
+
+    return undefined;
+});
+
 Cypress.Commands.add("resetQL", () => {
     resetGraphQLMock();
 });

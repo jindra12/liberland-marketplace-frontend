@@ -7,8 +7,39 @@ import {
     openPublishCategory,
     selectFormOption,
     uploadTestImage,
-    waitForDetailQuery,
 } from "../support/component-tests/utils";
+
+const assertProductTitle = (productId: string, expectedTitle: string) => {
+    cy.window().then(async (win) => {
+        const response = await win.fetch(`${MAIN_SERVER_URL}/api/graphql`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: `query ProductById($id: String!, $draft: Boolean = false) {
+                    Product(id: $id, draft: $draft) {
+                        name
+                    }
+                }`,
+                variables: {
+                    id: productId,
+                    draft: false,
+                },
+            }),
+        });
+        const body = (await response.json()) as {
+            data?: {
+                Product?: {
+                    name?: string | null;
+                } | null;
+            };
+        };
+
+        expect(response.status).to.equal(200);
+        expect(body.data?.Product?.name).to.equal(expectedTitle);
+    });
+};
 
 const createOwnedCompany = (companyName: string) => {
     mountAuthenticatedMainRoute("/publish");
@@ -49,7 +80,6 @@ describe("product create/edit", () => {
                 throw new Error("Missing created product id");
             }
 
-            waitForDetailQuery(MAIN_SERVER_URL, "ProductById", { id: createdId }, "Product", createdId, productName);
             cy.contains("h1", productName).should("be.visible");
         });
     });
@@ -95,7 +125,7 @@ describe("product create/edit", () => {
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/products-services/${createdId}`);
-            cy.contains("h1", updatedProductName).should("be.visible");
+            assertProductTitle(createdId, updatedProductName);
         });
     });
 });

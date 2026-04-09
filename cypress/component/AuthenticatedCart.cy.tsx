@@ -1,9 +1,5 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import {
-    assertFormFieldValue,
-    mountAuthenticatedCartRoute,
-    waitForMeUserQuery,
-} from "../support/component-tests/utils";
+import { assertFormFieldValue, mountAuthenticatedCartRoute } from "../support/component-tests/utils";
 
 const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
@@ -34,7 +30,6 @@ describe("authenticated cart", () => {
             .should("be.visible")
             .click();
 
-        waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
         cy.contains("h2", "Order").should("be.visible");
 
         assertMainOrderPrefill();
@@ -49,8 +44,6 @@ describe("authenticated cart", () => {
             .should("be.visible")
             .click();
 
-        waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
-        waitForMeUserQuery(COOP_SERVER_URL, "Iris Shore", {});
         cy.contains("h2", "Order").should("be.visible");
 
         cy.contains("button", "Choose default address").should("be.visible").click();

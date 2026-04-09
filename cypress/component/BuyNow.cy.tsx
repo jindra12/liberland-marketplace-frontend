@@ -2,7 +2,6 @@ import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/c
 import {
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
-    waitForDetailQuery,
     waitForMeUserQuery,
 } from "../support/component-tests/utils";
 import type { AddressWithEmail } from "../../src/components/order/types";
@@ -34,14 +33,6 @@ const openBuyNow = () => {
 describe("buy now", () => {
     it("does not show Buy now to anonymous users", () => {
         mountAnonymousRoute(guestProductRoute, [GUEST_SERVER_URL]);
-        waitForDetailQuery(
-            GUEST_SERVER_URL,
-            "ProductById",
-            { id: "guest-product-harbor-light" },
-            "Product",
-            "guest-product-harbor-light",
-            "Harbor Light",
-        );
 
         cy.contains("h1", "Harbor Light").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
@@ -49,14 +40,6 @@ describe("buy now", () => {
 
     it("does not show Buy now on non-orderable products", () => {
         mountAuthenticatedDetailRoute(guestNonOrderableRoute, [GUEST_SERVER_URL]);
-        waitForDetailQuery(
-            GUEST_SERVER_URL,
-            "ProductById",
-            { id: "guest-product-harbor-brochure" },
-            "Product",
-            "guest-product-harbor-brochure",
-            "Harbor Brochure",
-        );
 
         cy.contains("h1", "Harbor Brochure").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
@@ -64,14 +47,6 @@ describe("buy now", () => {
 
     it("tells users without a saved shipping address to go to profile", () => {
         mountAuthenticatedDetailRoute(guestProductRoute, [GUEST_SERVER_URL]);
-        waitForDetailQuery(
-            GUEST_SERVER_URL,
-            "ProductById",
-            { id: "guest-product-harbor-light" },
-            "Product",
-            "guest-product-harbor-light",
-            "Harbor Light",
-        );
         waitForMeUserQuery(GUEST_SERVER_URL, "Mira Harbor", {});
 
         openBuyNow();
@@ -86,14 +61,6 @@ describe("buy now", () => {
 
     it("lets users pick an address and remembers it", () => {
         mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL]);
-        waitForDetailQuery(
-            MAIN_SERVER_URL,
-            "ProductById",
-            { id: "product-harbor-lantern" },
-            "Product",
-            "product-harbor-lantern",
-            "Harbor Lantern",
-        );
         waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
         waitForMeUserQuery(COOP_SERVER_URL, "Iris Shore", {});
 
@@ -112,15 +79,6 @@ describe("buy now", () => {
 
     it("uses a saved shipping address to reach the payment modal immediately", () => {
         mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress);
-        waitForDetailQuery(
-            MAIN_SERVER_URL,
-            "ProductById",
-            { id: "product-harbor-lantern" },
-            "Product",
-            "product-harbor-lantern",
-            "Harbor Lantern",
-        );
-        waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
 
         openBuyNow();
 

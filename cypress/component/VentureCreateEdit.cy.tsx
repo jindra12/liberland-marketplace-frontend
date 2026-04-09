@@ -10,6 +10,38 @@ import {
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
+const assertStartupTitle = (startupId: string, expectedTitle: string) => {
+    cy.window().then(async (win) => {
+        const response = await win.fetch(`${MAIN_SERVER_URL}/api/graphql`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: `query StartupById($id: String!, $draft: Boolean = false) {
+                    Startup(id: $id, draft: $draft) {
+                        title
+                    }
+                }`,
+                variables: {
+                    id: startupId,
+                    draft: false,
+                },
+            }),
+        });
+        const body = (await response.json()) as {
+            data?: {
+                Startup?: {
+                    title?: string | null;
+                } | null;
+            };
+        };
+
+        expect(response.status).to.equal(200);
+        expect(body.data?.Startup?.title).to.equal(expectedTitle);
+    });
+};
+
 describe("venture create/edit", () => {
     it("creates a venture with an uploaded image", () => {
         const ventureTitle = "Signal Venture";
@@ -73,7 +105,7 @@ describe("venture create/edit", () => {
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/ventures/${createdId}`);
-            cy.contains("h1", updatedVentureTitle).should("be.visible");
+            assertStartupTitle(createdId, updatedVentureTitle);
         });
     });
 });

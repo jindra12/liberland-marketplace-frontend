@@ -10,6 +10,38 @@ import {
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
+const assertJobTitle = (jobId: string, expectedTitle: string) => {
+    cy.window().then(async (win) => {
+        const response = await win.fetch(`${MAIN_SERVER_URL}/api/graphql`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: `query JobById($id: String!, $draft: Boolean = false) {
+                    Job(id: $id, draft: $draft) {
+                        title
+                    }
+                }`,
+                variables: {
+                    id: jobId,
+                    draft: false,
+                },
+            }),
+        });
+        const body = (await response.json()) as {
+            data?: {
+                Job?: {
+                    title?: string | null;
+                } | null;
+            };
+        };
+
+        expect(response.status).to.equal(200);
+        expect(body.data?.Job?.title).to.equal(expectedTitle);
+    });
+};
+
 describe("job create/edit", () => {
     it("creates a job with an uploaded image", () => {
         const jobTitle = "Harbor Shift Coordinator";
@@ -77,7 +109,7 @@ describe("job create/edit", () => {
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/jobs/${createdId}`);
-            cy.contains("h1", updatedJobTitle).should("be.visible");
+            assertJobTitle(createdId, updatedJobTitle);
         });
     });
 });

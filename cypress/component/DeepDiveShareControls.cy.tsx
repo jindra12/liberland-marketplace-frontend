@@ -26,14 +26,7 @@ describe("share controls", () => {
     it("uses the mobile share layout below 1200px", () => {
         cy.viewport(767, 1200);
         mountMainRoute("/companies/company-harbor-labs");
-        waitForDetailQuery(
-            MAIN_SERVER_URL,
-            "CompanyById",
-            { id: "company-harbor-labs" },
-            "Company",
-            "company-harbor-labs",
-            "Harbor Labs",
-        );
+        cy.contains("h1", "Harbor Labs").should("be.visible");
 
         cy.get(".ShareSection--mobile").should("be.visible");
         cy.get(".ShareSection__mobileActions").should("be.visible");

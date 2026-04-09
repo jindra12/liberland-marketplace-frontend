@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Button } from "antd";
+import { Button, Empty, Modal } from "antd";
 
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
+import { RouteButton } from "../../RouteButton";
 
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
 import { BuyNowPaymentStep } from "./BuyNowPaymentStep";
@@ -28,6 +29,9 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
             candidateProfileAddresses: props.candidateProfileAddresses,
         });
     };
+    const onCancel = () => {
+        setPreparedPurchase(undefined);
+    };
     return (
         <>
             <Button
@@ -41,20 +45,40 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                 Buy now
             </Button>
             {preparedPurchase && (
-                <BuyNowCreateOrderStep
-                    purchase={preparedPurchase}
-                    productId={props.productId}
-                    quantity={props.quantity}
-                    serverURL={props.serverURL}
-                    variantId={props.variantId}
-                    onCancel={() => {
-                        setPreparedPurchase(undefined);
-                    }}
-                    onOrderCreated={(submittedOrder) => {
-                        setPreparedPurchase(undefined);
-                        setSubmittedOrders([submittedOrder]);
-                    }}
-                />
+                <>
+                    {preparedPurchase.candidateProfileAddresses.length === 0 ? (
+                        <Modal
+                            open
+                            destroyOnHidden
+                            title="Choose a default shipping address"
+                            onCancel={onCancel}
+                            footer={[
+                                <Button key="cancel" danger onClick={onCancel}>
+                                    Cancel
+                                </Button>,
+                                <RouteButton key="profile" type="primary" to="/profile">
+                                    Go to profile
+                                </RouteButton>,
+                            ]}
+                            className="BuyNowCreateOrderStep"
+                        >
+                            <Empty description="No default shipping addresses found" />
+                        </Modal>
+                    ) : (
+                        <BuyNowCreateOrderStep
+                            purchase={preparedPurchase}
+                            productId={props.productId}
+                            quantity={props.quantity}
+                            serverURL={props.serverURL}
+                            variantId={props.variantId}
+                            onCancel={onCancel}
+                            onOrderCreated={(submittedOrder) => {
+                                setPreparedPurchase(undefined);
+                                setSubmittedOrders([submittedOrder]);
+                            }}
+                        />
+                    )}
+                </>
             )}
             {submittedOrders.length > 0 && (
                 <BuyNowPaymentStep

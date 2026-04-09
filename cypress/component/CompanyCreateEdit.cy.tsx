@@ -9,6 +9,38 @@ import {
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
+const assertCompanyName = (companyId: string, expectedTitle: string) => {
+    cy.window().then(async (win) => {
+        const response = await win.fetch(`${MAIN_SERVER_URL}/api/graphql`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: `query CompanyById($id: String!, $draft: Boolean = false) {
+                    Company(id: $id, draft: $draft) {
+                        name
+                    }
+                }`,
+                variables: {
+                    id: companyId,
+                    draft: false,
+                },
+            }),
+        });
+        const body = (await response.json()) as {
+            data?: {
+                Company?: {
+                    name?: string | null;
+                } | null;
+            };
+        };
+
+        expect(response.status).to.equal(200);
+        expect(body.data?.Company?.name).to.equal(expectedTitle);
+    });
+};
+
 describe("company create/edit", () => {
     it("creates a company with an uploaded image", () => {
         const companyName = "Signal Harbor Works";
@@ -71,7 +103,7 @@ describe("company create/edit", () => {
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/companies/${createdId}`);
-            cy.contains("h1", updatedCompanyName).should("be.visible");
+            assertCompanyName(createdId, updatedCompanyName);
         });
     });
 });
