@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import MoneyCollectOutlined from "@ant-design/icons/MoneyCollectOutlined";
 import Avatar from "antd/es/avatar";
 import Button from "antd/es/button";
 import Flex from "antd/es/flex";
@@ -16,6 +15,8 @@ import { thirdwebWallets } from "../../constants";
 import { FormModel } from "../../types";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 import type { PaymentWalletSelection } from "../order/types";
+
+import { ThirdwebPayButtonView } from "./payment/ThirdwebPayButtonView";
 
 const client = createThirdwebClient({
     clientId: process.env.REACT_APP_THIRDWEB!,
@@ -68,38 +69,42 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     };
 
     return (
-        <Flex wrap gap="15px" justify="center" align="stretch" flex={1} className="CryptoPaymentGroup">
-            <ConnectButton
-                client={client}
-                chain={mainnet}
-                autoConnect={false}
-                wallets={thirdwebWallets.map((w) => createWallet(w))}
-                connectButton={{
-                    className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
-                    label: (
-                        <Flex wrap gap="10px" justify="center" align="center">
-                            <Avatar src="/ethereum.svg" size={32} shape="square" className="ThirdwebPay__ethIcon" />
-                            Connect
-                        </Flex>
-                    ),
-                }}
-                detailsButton={{
-                    className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
-                }}
-            />
-            {account && (
-                <Button
-                    type="primary"
-                    htmlType="button"
-                    className="ThirdwebPay ThirdwebPay--payment"
-                    onClick={onPay}
-                    disabled={isPending || isSuccess || isPaymentPending}
-                    icon={isPending ? <Spin /> : <MoneyCollectOutlined />}
-                >
-                    Pay with Ethereum
-                </Button>
-            )}
-            {isError && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
-        </Flex>
+        <ThirdwebPayButtonView
+            connectButton={
+                <ConnectButton
+                    client={client}
+                    chain={mainnet}
+                    autoConnect={false}
+                    wallets={thirdwebWallets.map((w) => createWallet(w))}
+                    connectButton={{
+                        className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
+                        label: (
+                            <Flex wrap gap="10px" justify="center" align="center">
+                                <Avatar src="/ethereum.svg" size={32} shape="square" className="ThirdwebPay__ethIcon" />
+                                Connect
+                            </Flex>
+                        ),
+                    }}
+                    detailsButton={{
+                        className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
+                    }}
+                />
+            }
+            payButton={
+                account && (
+                    <Button
+                        type="primary"
+                        htmlType="button"
+                        className="ThirdwebPay ThirdwebPay--payment"
+                        onClick={onPay}
+                        disabled={isPending || isSuccess || isPaymentPending}
+                        icon={isPending ? <Spin /> : undefined}
+                    >
+                        Pay
+                    </Button>
+                )
+            }
+            status={isError && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
+        />
     );
 };

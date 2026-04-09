@@ -1,12 +1,36 @@
 import "cypress-react-router/add-commands";
 import { drainGraphQLRequestLogs, installGraphQLMock, resetGraphQLMock } from "./graphqlMock";
 import { installMediaUploadMock, resetMediaUploadMock } from "./graphqlMock/mediaMock";
+import { resetWalletStubState } from "./walletStub/state";
 
 import "../../src/index.scss";
 
 type CypressWithStop = Cypress.Cypress & {
     stop?: () => void;
 };
+
+Cypress.on("window:before:load", (win) => {
+    const subtle = win.crypto.subtle as SubtleCrypto & {
+        digest: (algorithm: AlgorithmIdentifier, data: BufferSource) => Promise<ArrayBuffer>;
+    };
+
+    subtle.digest = async (_algorithm, data) => {
+        const nextBuffer = new ArrayBuffer(data.byteLength);
+        const nextBytes = new Uint8Array(nextBuffer);
+
+        if (data instanceof ArrayBuffer) {
+            nextBytes.set(new Uint8Array(data));
+            return nextBuffer;
+        }
+
+        if (ArrayBuffer.isView(data)) {
+            nextBytes.set(new Uint8Array(data.buffer, data.byteOffset, data.byteLength));
+            return nextBuffer;
+        }
+
+        return new ArrayBuffer(32);
+    };
+});
 
 Cypress.Commands.add("resetQL", () => {
     resetGraphQLMock();
@@ -42,6 +66,7 @@ beforeEach(() => {
     installGraphQLMock();
     installMediaUploadMock();
     resetMediaUploadMock();
+    resetWalletStubState();
 });
 
 afterEach(function (this: Mocha.Context) {

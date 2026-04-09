@@ -3,14 +3,14 @@ import * as React from "react";
 import { useWallet } from "@tronweb3/tronwallet-adapter-react-hooks";
 import { ButtonProps, WalletActionButton, WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
 import Button from "antd/es/button";
-import Flex from "antd/es/flex";
-import Image from "antd/es/image";
 import message from "antd/es/message";
 import Result from "antd/es/result";
 
 import { FormModel } from "../../types";
 import { useOrderPaymentLockContext } from "../order/OrderPaymentLockContext";
 import type { PaymentWalletSelection } from "../order/types";
+
+import { TronPaymentButtonView } from "./payment/TronPaymentButtonView";
 
 export interface TronPaymentButtonProps {
     formModel: FormModel;
@@ -74,36 +74,26 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     };
 
     return (
-        <Flex
-            wrap
-            gap="15px"
-            justify="center"
-            align="stretch"
-            flex={1}
-            className="CryptoPaymentGroup TronwebModal TronwebModal--payment"
-        >
-            {canPay && (
-                <Button
-                    icon={
-                        <Image
-                            src={"/tron.svg"}
-                            width="22px"
-                            height="22px"
-                            preview={false}
-                        />
-                    }
-                    className="TronButton TronButton--payment TronButton--main"
-                    loading={loading}
-                    disabled={isPaymentPending}
-                    onClick={sendPayment}
-                >
-                    Pay
-                </Button>
-            )}
-            <WalletModalProvider>
-                <WalletActionButton {...buttonProps}>{canPay ? "Connected" : "Connect"}</WalletActionButton>
-            </WalletModalProvider>
-            {errorMessage && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
-        </Flex>
+        <TronPaymentButtonView
+            payButton={
+                canPay && (
+                    <Button
+                        type="primary"
+                        className="TronButton TronButton--payment"
+                        loading={loading}
+                        disabled={isPaymentPending}
+                        onClick={sendPayment}
+                    >
+                        Pay
+                    </Button>
+                )
+            }
+            connectButton={
+                <WalletModalProvider>
+                    <WalletActionButton {...buttonProps}>{canPay ? "Connected" : "Connect"}</WalletActionButton>
+                </WalletModalProvider>
+            }
+            status={errorMessage && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
+        />
     );
 };

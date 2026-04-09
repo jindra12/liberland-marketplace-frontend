@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 import fs from "node:fs";
 import path from "node:path";
 import { format } from "prettier";
+import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 
 const envFile = fs.readFileSync(path.resolve(".env"), "utf8");
@@ -26,6 +27,32 @@ envFile.split(/\r?\n/).forEach((line) => {
 
 process.env.REACT_APP_BACKEND_URL = "http://127.0.0.1:3010";
 
+const walletStubWebpackConfig = {
+    plugins: [
+        new webpack.NormalModuleReplacementPlugin(
+            /SolanaPay$/,
+            path.resolve("cypress/support/walletStub/solana-pay-component.tsx"),
+        ),
+    ],
+    resolve: {
+        alias: {
+            "thirdweb/react$": path.resolve("cypress/support/walletStub/thirdweb-react.tsx"),
+            "@solana/wallet-adapter-react$": path.resolve("cypress/support/walletStub/solana-wallet-adapter-react.tsx"),
+            "@solana/wallet-adapter-react-ui$": path.resolve(
+                "cypress/support/walletStub/solana-wallet-adapter-react-ui.tsx",
+            ),
+            "@solana/pay$": path.resolve("cypress/support/walletStub/solana-pay.ts"),
+            "@solana/web3.js$": path.resolve("cypress/support/walletStub/solana-web3.ts"),
+            "@tronweb3/tronwallet-adapter-react-hooks$": path.resolve(
+                "cypress/support/walletStub/tronwallet-adapter-react-hooks.tsx",
+            ),
+            "@tronweb3/tronwallet-adapter-react-ui$": path.resolve(
+                "cypress/support/walletStub/tronwallet-adapter-react-ui.tsx",
+            ),
+        },
+    },
+};
+
 export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
@@ -38,6 +65,7 @@ export default defineConfig({
         devServer: {
             framework: "next",
             bundler: "webpack",
+            webpackConfig: walletStubWebpackConfig,
         },
         specPattern: "cypress/component/**/*.cy.tsx",
         supportFile: "cypress/support/component.ts",

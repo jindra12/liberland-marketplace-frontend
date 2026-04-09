@@ -159,6 +159,8 @@
     max-width: 100%;
     margin: 0 auto;
     border-radius: 10px !important;
+    min-height: 44px;
+    font-weight: 600;
 
     .ThirdwebPay__ethIcon {
         display: inline-flex;
@@ -200,4 +202,21 @@
 }
 .adapter-dropdown .TronConnect {
     width: 180px;
+}
+
+.ThirdwebPay--payment,
+.SolanaButton--payment,
+.TronButton--payment {
+    height: 44px !important;
+    min-height: 44px !important;
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    border-radius: 10px !important;
+    border-color: transparent !important;
+    font-weight: 600;
+}
+
+.SolanaButton--pay-now {
+    color: black!important;
 }
