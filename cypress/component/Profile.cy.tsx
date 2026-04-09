@@ -42,9 +42,10 @@ const assertMainDefaults = () => {
         assertFormItemValue("Country", "Liberland");
     });
 
-    cy.get(".Profile__walletRow").should("have.length", 2);
+    cy.get(".Profile__walletRow").should("have.length", 3);
     assertWalletRow(0, "Solana", "phantom", "SoUserWallet1717");
     assertWalletRow(1, "Ethereum", "metamask", "0xUserWallet1818");
+    assertWalletRow(2, "Tron", "TronLink Stub", "TUserWallet1919");
 };
 
 const assertCoopDefaults = () => {

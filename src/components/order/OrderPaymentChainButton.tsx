@@ -10,6 +10,7 @@ import type { PaymentWalletSelection, SubmittedOrder } from "./types";
 type OrderPaymentChainButtonProps = {
     chainPayment: ChainPaymentAmount;
     entry: SubmittedOrder;
+    preferredWallet?: PaymentWalletSelection;
     onTransactionId: (txHash: string) => Promise<void>;
     onWalletSelected: (selection: PaymentWalletSelection) => Promise<void>;
     recipient: string;
@@ -26,6 +27,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
                     orderId: props.entry.order.id,
                     recipient: props.recipient,
                 }}
+                preferredWallet={props.preferredWallet}
                 onWalletSelected={props.onWalletSelected}
                 setTransactionId={props.onTransactionId}
             />
@@ -40,6 +42,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
                     orderId: props.entry.order.id,
                     recipient: props.recipient,
                 }}
+                preferredWallet={props.preferredWallet}
                 onWalletSelected={props.onWalletSelected}
                 setTransactionId={props.onTransactionId}
             />
@@ -53,6 +56,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
                 orderId: props.entry.order.id,
                 recipient: props.recipient,
             }}
+            preferredWallet={props.preferredWallet}
             onWalletSelected={props.onWalletSelected}
             setTransactionId={props.onTransactionId}
         />

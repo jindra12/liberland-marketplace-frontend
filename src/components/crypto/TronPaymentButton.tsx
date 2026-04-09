@@ -15,6 +15,7 @@ import { TronPaymentButtonView } from "./payment/TronPaymentButtonView";
 export interface TronPaymentButtonProps {
     formModel: FormModel;
     setTransactionId: (txId: string) => Promise<void>;
+    preferredWallet?: PaymentWalletSelection;
     onWalletSelected?: (wallet: PaymentWalletSelection) => void;
 }
 
@@ -22,11 +23,26 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     const { address, connected, signTransaction, wallet } = useWallet();
     const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
     const canPay = address && connected && window.tronWeb;
+    const isPreferredWalletSelected = Boolean(
+        canPay &&
+            props.preferredWallet &&
+            address === props.preferredWallet.address &&
+            wallet?.adapter.name === props.preferredWallet.provider,
+    );
+    const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
+    const showPayButton = Boolean(canPay && (!props.preferredWallet || isPreferredWalletSelected));
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         if (address && connected && wallet?.adapter.name) {
+            if (
+                props.preferredWallet &&
+                (address !== props.preferredWallet.address || wallet.adapter.name !== props.preferredWallet.provider)
+            ) {
+                return;
+            }
+
             props.onWalletSelected?.({
                 address,
                 chain: "tron",
@@ -76,7 +92,7 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
     return (
         <TronPaymentButtonView
             payButton={
-                canPay && (
+                showPayButton && (
                     <Button
                         type="primary"
                         className="TronButton TronButton--payment"
@@ -89,9 +105,11 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                 )
             }
             connectButton={
-                <WalletModalProvider>
-                    <WalletActionButton {...buttonProps}>{canPay ? "Connected" : "Connect"}</WalletActionButton>
-                </WalletModalProvider>
+                showConnectButton ? (
+                    <WalletModalProvider>
+                        <WalletActionButton {...buttonProps}>{canPay ? "Connected" : "Connect"}</WalletActionButton>
+                    </WalletModalProvider>
+                ) : undefined
             }
             status={errorMessage && <Result title="Payment failed" subTitle={`Order ID: ${props.formModel.orderId}`} />}
         />

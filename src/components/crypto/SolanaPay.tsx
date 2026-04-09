@@ -21,6 +21,7 @@ import { SolanaConnect } from "./SolanaConnect";
 export interface SolanaPayProps {
     setTransactionId: (txId: string) => Promise<void>;
     model: FormModel;
+    preferredWallet?: PaymentWalletSelection;
     onWalletSelected?: (wallet: PaymentWalletSelection) => void;
 }
 
@@ -41,9 +42,24 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     const [sender, setSender] = React.useState<string>();
     const { sendTransaction, connected, connect, wallet } = useWallet();
     const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
+    const isPreferredWalletSelected = Boolean(
+        sender &&
+            wallet?.adapter.name &&
+            (!props.preferredWallet ||
+                (sender === props.preferredWallet.address && wallet.adapter.name === props.preferredWallet.provider)),
+    );
+    const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
+    const showPayButton = Boolean(sender && (!props.preferredWallet || isPreferredWalletSelected));
 
     React.useEffect(() => {
         if (sender && wallet?.adapter.name) {
+            if (
+                props.preferredWallet &&
+                (sender !== props.preferredWallet.address || wallet.adapter.name !== props.preferredWallet.provider)
+            ) {
+                return;
+            }
+
             props.onWalletSelected?.({
                 address: sender,
                 chain: "solana",
@@ -98,10 +114,10 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     return (
         <SolanaPayView
             payButton={
-                sender && (
+                showPayButton && (
                     <Button
                         icon={pay.isPending ? <Spin /> : undefined}
-                        className="SolanaButton SolanaButton--payment SolanaButton--pay-now"
+                        className="SolanaButton SolanaButton--payment"
                         type="primary"
                         disabled={pay.isPending || pay.isSuccess || isPaymentPending}
                         onClick={() => pay.mutate()}
@@ -111,12 +127,15 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                 )
             }
             connectButton={
-                <SolanaConnect
-                    selectWallet={(address) => setSender(address)}
-                    payment
-                    label="Connect"
-                    disabled={pay.isPending || isPaymentPending}
-                />
+                showConnectButton ? (
+                    <SolanaConnect
+                        selectWallet={(address) => setSender(address)}
+                        payment
+                        label="Connect"
+                        disabled={pay.isPending || isPaymentPending}
+                        preferredWallet={props.preferredWallet}
+                    />
+                ) : undefined
             }
             status={pay.isError && <Result title="Payment failed" subTitle={`Order ID: ${props.model.orderId}`} />}
         />

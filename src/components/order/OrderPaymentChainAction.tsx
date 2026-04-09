@@ -3,7 +3,7 @@ import * as React from "react";
 import { Divider, Flex, Result, Tag } from "antd";
 
 import { OrderPaymentChainButton } from "./OrderPaymentChainButton";
-import { type ChainPaymentAmount } from "./payment/utils";
+import { findPaymentWalletForChain, type ChainPaymentAmount } from "./payment/utils";
 import { RememberWalletCheckbox } from "./RememberWalletCheckbox";
 import type { PaymentProfileUser, SubmittedOrder } from "./types";
 import { useOrderPaymentChainController } from "./useOrderPaymentChainController";
@@ -27,6 +27,7 @@ export const OrderPaymentChainAction: React.FunctionComponent<OrderPaymentChainA
     props,
 ) => {
     const controller = useOrderPaymentChainController(props);
+    const preferredWallet = findPaymentWalletForChain(props.profileUser, props.chainPayment.chain);
 
     if (controller.isPaymentCompleted) {
         return (
@@ -46,6 +47,7 @@ export const OrderPaymentChainAction: React.FunctionComponent<OrderPaymentChainA
                     onTransactionId={controller.handleTransactionId}
                     onWalletSelected={controller.handleWalletSelected}
                     recipient={props.recipient}
+                    preferredWallet={preferredWallet}
                 />
                 {controller.showRememberWallet && (
                     <RememberWalletCheckbox

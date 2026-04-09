@@ -8,6 +8,7 @@ import { getPrimaryCryptoAddress } from "../../shared/product/utils";
 import { CRYPTO_CHAIN_DECIMALS, CRYPTO_CHAIN_ORDER } from "../constants";
 import type {
     PaymentProfileUsersByUrl,
+    PaymentProfileUser,
     PaymentWalletSelection,
     SubmittedOrder,
     TransactionHashUpdateRow,
@@ -123,6 +124,15 @@ export const collectRequiredChainsForCarts = (carts: CartForRequiredChains[]): C
     }, new Set<CryptoChain>());
 
     return Array.from(chains);
+};
+
+export const findPaymentWalletForChain = (
+    user: PaymentProfileUser | undefined,
+    chain: CryptoChain,
+): PaymentWalletSelection | undefined => {
+    return user?.wallets.find((wallet) => {
+        return wallet.chain === chain;
+    });
 };
 
 export const resolveOrderRecipientAddress = (

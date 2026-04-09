@@ -24,6 +24,7 @@ const client = createThirdwebClient({
 
 export interface ThirdwebPayButtonProps {
     formModel: FormModel;
+    preferredWallet?: PaymentWalletSelection;
     setTransactionId: (txId: string) => Promise<void>;
     onWalletSelected?: (wallet: PaymentWalletSelection) => void;
 }
@@ -33,9 +34,23 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     const wallet = useActiveWallet();
     const { mutateAsync, isPending, isError, isSuccess } = useSendAndConfirmTransaction();
     const { isPaymentPending, setIsPaymentPending } = useOrderPaymentLockContext();
+    const isPreferredWalletSelected = Boolean(
+        props.preferredWallet &&
+            account?.address === props.preferredWallet.address &&
+            wallet?.id === props.preferredWallet.provider,
+    );
+    const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
+    const showPayButton = Boolean(account && (!props.preferredWallet || isPreferredWalletSelected));
 
     React.useEffect(() => {
         if (account?.address && wallet?.id) {
+            if (
+                props.preferredWallet &&
+                (account.address !== props.preferredWallet.address || wallet.id !== props.preferredWallet.provider)
+            ) {
+                return;
+            }
+
             props.onWalletSelected?.({
                 address: account.address,
                 chain: "ethereum",
@@ -71,6 +86,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
     return (
         <ThirdwebPayButtonView
             connectButton={
+                showConnectButton ? (
                 <ConnectButton
                     client={client}
                     chain={mainnet}
@@ -89,9 +105,10 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
                         className: "ThirdwebPay__connect CryptoPaymentGroup__connectButton",
                     }}
                 />
+                ) : undefined
             }
             payButton={
-                account && (
+                showPayButton && (
                     <Button
                         type="primary"
                         htmlType="button"

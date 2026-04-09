@@ -1018,6 +1018,7 @@ export const meUser = node({
         wallets: [
             node({ chain: "solana", provider: "phantom", address: "SoUserWallet1717" }),
             node({ chain: "ethereum", provider: "metamask", address: "0xUserWallet1818" }),
+            node({ chain: "tron", provider: "TronLink Stub", address: "TUserWallet1919" }),
         ],
     }),
 });
