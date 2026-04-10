@@ -78,7 +78,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                 },
             }}
         >
-            <Space.Compact block={props.block} className={compactClassName}>
+            <Space.Compact block={props.block && !canBuyNow} className={compactClassName}>
                 <AddToCartIncrementForm
                     form={form}
                     productId={props.productId}

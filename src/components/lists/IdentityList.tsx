@@ -44,7 +44,6 @@ export const IdentityList: React.FunctionComponent = () => {
                                 detailPath={`/tribes/${identity.id}`}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "identities",
                                     targetID: identity.id,
@@ -60,7 +59,6 @@ export const IdentityList: React.FunctionComponent = () => {
                                 detailPath={`/tribes/${identity.id}`}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "identities",
                                     targetID: identity.id,

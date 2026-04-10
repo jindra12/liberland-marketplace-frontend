@@ -6,13 +6,11 @@ import {
     mountMainRoute,
     waitForCollectionQuery,
     waitForDetailQuery,
-    waitForRouteLoad,
 } from "../support/component-tests/utils";
 
 describe("company deep dive", () => {
     beforeEach(() => {
         mountMainRoute("/companies/company-harbor-labs");
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",

@@ -69,7 +69,6 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 detailPath={`/companies/${company.id}`}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "companies",
                                     targetID: company.id,
@@ -85,7 +84,6 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 detailPath={`/companies/${company.id}`}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "companies",
                                     targetID: company.id,

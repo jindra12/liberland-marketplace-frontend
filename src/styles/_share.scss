@@ -71,6 +71,19 @@
     justify-content: center;
 }
 
+.ListShareDetailButtons--stacked {
+    width: 100%;
+    align-items: stretch;
+}
+
+.ListShareDetailButtons--stacked .ListShareDetailButtons__button {
+    width: 100%;
+}
+
+.ListShareDetailButtons--stacked .ant-btn {
+    justify-content: center;
+}
+
 .SplashEntityCard__actionGroup {
     justify-content: flex-end;
 }

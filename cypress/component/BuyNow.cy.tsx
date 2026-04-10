@@ -2,6 +2,7 @@ import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/c
 import {
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
+    waitForDetailQuery,
     waitForMeUserQuery,
 } from "../support/component-tests/utils";
 import type { AddressWithEmail } from "../../src/components/order/types";
@@ -33,6 +34,14 @@ const openBuyNow = () => {
 describe("buy now", () => {
     it("does not show Buy now to anonymous users", () => {
         mountAnonymousRoute(guestProductRoute, [GUEST_SERVER_URL]);
+        waitForDetailQuery(
+            GUEST_SERVER_URL,
+            "ProductById",
+            { id: "guest-product-harbor-light" },
+            "Product",
+            "guest-product-harbor-light",
+            "Harbor Light",
+        );
 
         cy.contains("h1", "Harbor Light").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
@@ -40,6 +49,14 @@ describe("buy now", () => {
 
     it("does not show Buy now on non-orderable products", () => {
         mountAuthenticatedDetailRoute(guestNonOrderableRoute, [GUEST_SERVER_URL]);
+        waitForDetailQuery(
+            GUEST_SERVER_URL,
+            "ProductById",
+            { id: "guest-product-harbor-brochure" },
+            "Product",
+            "guest-product-harbor-brochure",
+            "Harbor Brochure",
+        );
 
         cy.contains("h1", "Harbor Brochure").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");

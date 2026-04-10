@@ -1,11 +1,10 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { mountMainRoute, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("share controls", () => {
     it("uses the desktop share layout at 1200px and up", () => {
         cy.viewport(1200, 1200);
         mountMainRoute("/companies/company-harbor-labs");
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",
@@ -14,6 +13,7 @@ describe("share controls", () => {
             "company-harbor-labs",
             "Harbor Labs",
         );
+        cy.contains("h1", "Harbor Labs").should("be.visible");
 
         cy.get(".ShareSection").should("be.visible");
         cy.get(".ShareSection--mobile").should("not.exist");

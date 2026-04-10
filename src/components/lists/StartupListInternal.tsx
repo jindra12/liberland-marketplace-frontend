@@ -144,7 +144,6 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                                     detailPath={`/ventures/${startup.id}`}
                                     title={startup.title}
                                     text={`Check out ${startup.title} on NSwap.`}
-                                    desktopDetailButtonType="primary"
                                     subscriptionTarget={{
                                         collection: "startups",
                                         targetID: startup.id,
@@ -162,7 +161,6 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                                 detailPath={`/ventures/${startup.id}`}
                                 title={startup.title}
                                 text={`Check out ${startup.title} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "startups",
                                     targetID: startup.id,

@@ -2,7 +2,7 @@ import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { homepageQueries, mountMainHome, seedCartSecret, waitForCollectionResults } from "../support/component-tests/utils";
 
 describe("product card", () => {
-    beforeEach(() => {
+    const loadDesktopHome = () => {
         cy.viewport(1200, 1200);
         mountMainHome();
         homepageQueries();
@@ -13,9 +13,11 @@ describe("product card", () => {
             { identityId: "identity-nova", page: 1, limit: 3, url: MAIN_SERVER_URL },
             "Products",
         );
-    });
+    };
 
     it("shows price, cart count, share controls, and overflow link", () => {
+        loadDesktopHome();
+
         cy.contains(".SplashPage__identityHeadingLink", "Nova Rivers")
             .parents(".SplashPage__identitySection")
             .should("have.length", 1)
