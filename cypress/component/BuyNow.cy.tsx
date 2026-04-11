@@ -114,4 +114,26 @@ describe("buy now", () => {
         });
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
+
+    it("keeps the buy-now purchase control compact on the product detail page", () => {
+        cy.viewport(1200, 1200);
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress);
+
+        cy.get(".ProductDetail__purchaseControl .AddToCartButton__compact")
+            .should("be.visible");
+
+        cy.get(".ProductDetail__purchaseControl .AddToCartButton__compact")
+            .then(($purchaseControl) => $purchaseControl[0].getBoundingClientRect().width)
+            .then((purchaseControlWidth) => {
+                cy.get(".ProductDetail__purchaseControl")
+                    .then(($purchaseSection) => $purchaseSection[0].getBoundingClientRect().width)
+                    .then((purchaseSectionWidth) => {
+                        expect(purchaseControlWidth).to.be.lessThan(purchaseSectionWidth);
+                    });
+            });
+
+        cy.screenshot("buy-now-compact-purchase-control", {
+            capture: "fullPage",
+        });
+    });
 });
