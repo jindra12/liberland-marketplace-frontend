@@ -27,19 +27,21 @@ type ProductListItem =
 type ProductListSourceQuery = {
     source: "query";
     query: UseQueryResult<ProductListQuery, unknown>;
+    setPage: (page: number) => void;
+    page: number;
 };
 
 type ProductListSourceStatic = {
     source: "static";
     products: ProductListItem[];
+    setPage?: (page: number) => void;
+    page?: number;
     hasNextPage: boolean;
     isLoading: boolean;
     refetch: () => void | Promise<unknown>;
 };
 
 type ProductServiceListInternalProps = {
-    setPage: (page: number) => void;
-    page: number;
     title?: string;
     showOrderNowFallback?: boolean;
 } & (ProductListSourceQuery | ProductListSourceStatic);
@@ -56,7 +58,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     };
     const allItems = useAccumulatedDocs(
         props.source === "query" ? props.query.data?.Products?.docs || [] : props.products,
-        props.page,
+        props.page ?? 1,
     );
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -75,7 +77,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
         <AppList
             hasMore={hasMore}
             items={items}
-            next={() => props.setPage(props.page + 1)}
+            next={() => props.setPage?.((props.page ?? 1) + 1)}
             refetch={handleRefetch}
             loading={isLoading}
             title={props.title || "Products / Services"}

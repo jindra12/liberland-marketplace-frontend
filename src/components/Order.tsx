@@ -29,7 +29,6 @@ const Order: React.FunctionComponent = () => {
     const navigate = useNavigate();
     const { enabled } = useEndpointContext();
 
-    const [page, setPage] = React.useState(1);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
@@ -250,8 +249,6 @@ const Order: React.FunctionComponent = () => {
                     isProductsLoading={isLoading}
                     refetchProducts={refetch}
                     onSubmit={onSubmit}
-                    page={page}
-                    setPage={setPage}
                     isSubmitting={isSubmitting}
                     cartsWithItemsCount={cartsWithItems.length}
                     candidateProfileAddresses={candidateProfileAddresses}

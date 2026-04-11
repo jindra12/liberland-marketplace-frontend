@@ -9,8 +9,8 @@ interface UseTribeFilterOptions<TItem> {
     getIdentityIds: (item: TItem) => string[];
     isLoading: boolean;
     isFetching: boolean;
-    page: number;
-    setPage: (page: number) => void;
+    page?: number;
+    setPage?: (page: number) => void;
 }
 
 export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) {
@@ -32,7 +32,7 @@ export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) 
     // Auto-fetch next page when tribe filter yields 0 visible items but more pages exist
     React.useEffect(() => {
         if (isTribeFiltered && items.length === 0 && hasNextPage && !isLoading && !isFetching) {
-            setPage(page + 1);
+            setPage?.((page ?? 1) + 1);
         }
     }, [isTribeFiltered, items.length, hasNextPage, isLoading, isFetching, page, setPage]);
 

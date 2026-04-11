@@ -18,8 +18,6 @@ type OrderCreateStepProps = {
     isProductsLoading: boolean;
     refetchProducts: () => Promise<void>;
     onSubmit: (values: OrderFormValues) => Promise<void>;
-    page: number;
-    setPage: (page: number) => void;
     isSubmitting: boolean;
     cartsWithItemsCount: number;
     candidateProfileAddresses: AddressWithEmail[];
@@ -142,8 +140,6 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
             <ProductServiceListInternal
                 source="static"
-                page={props.page}
-                setPage={props.setPage}
                 products={props.products}
                 isLoading={props.isProductsLoading}
                 hasNextPage={false}
