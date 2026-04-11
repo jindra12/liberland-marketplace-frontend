@@ -3,6 +3,7 @@ import {
     addToCart,
     fillFormField,
     mountAuthenticatedCartRoute,
+    screenshotStep,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 import { connectThirdwebWalletStub, connectTronWalletStub, connectSolanaWalletStub } from "../support/walletStub/state";
@@ -30,6 +31,7 @@ const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
         scenario.productName,
     );
     cy.get(".ProductDetail").should("be.visible");
+    screenshotStep(`remembered-wallet-product-${scenario.productId}`);
     addToCart();
 
     cy.routerNavigate("/cart");
@@ -44,6 +46,7 @@ const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     fillFormField("Country", "Liberland");
     cy.contains("button", "Create order").click();
     cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
+    screenshotStep(`remembered-wallet-order-${scenario.productId}`);
 };
 
 describe("remembered wallet shortcut", () => {
@@ -58,10 +61,11 @@ describe("remembered wallet shortcut", () => {
         cy.contains(".ant-card", "1st payment").within(() => {
             cy.contains("Solana (SOL)").parents(".ant-list-item").first().within(() => {
                 cy.contains("button", "Connect").should("not.exist");
-                cy.contains("button", "Pay").should("be.visible").click();
-                cy.contains("Payment submitted").should("be.visible");
-            });
+            cy.contains("button", "Pay").should("be.visible").click();
+            cy.contains("Payment submitted").should("be.visible");
         });
+        screenshotStep("remembered-wallet-saved-solana");
+    });
     });
 
     it("skips connect when the saved thirdweb wallet is already connected", () => {
@@ -75,10 +79,11 @@ describe("remembered wallet shortcut", () => {
         cy.contains(".ant-card", "1st payment").within(() => {
             cy.contains("Ethereum (ETH)").parents(".ant-list-item").first().within(() => {
                 cy.contains("button", "Connect").should("not.exist");
-                cy.contains("button", "Pay").should("be.visible").click();
-                cy.contains("Payment submitted").should("be.visible");
-            });
+            cy.contains("button", "Pay").should("be.visible").click();
+            cy.contains("Payment submitted").should("be.visible");
         });
+        screenshotStep("remembered-wallet-saved-ethereum");
+    });
     });
 
     it("skips connect when the saved tron wallet is already connected", () => {
@@ -92,9 +97,10 @@ describe("remembered wallet shortcut", () => {
         cy.contains(".ant-card", "1st payment").within(() => {
             cy.contains("Tron (TRX)").parents(".ant-list-item").first().within(() => {
                 cy.contains("button", "Connect").should("not.exist");
-                cy.contains("button", "Pay").should("be.visible").click();
-                cy.contains("Payment submitted").should("be.visible");
-            });
+            cy.contains("button", "Pay").should("be.visible").click();
+            cy.contains("Payment submitted").should("be.visible");
         });
+        screenshotStep("remembered-wallet-saved-tron");
     });
+});
 });

@@ -5,6 +5,7 @@ import {
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    screenshotStep,
     selectFormOption,
     uploadTestImage,
     waitForDetailQuery,
@@ -66,6 +67,7 @@ describe("venture create/edit", () => {
 
             waitForDetailQuery(MAIN_SERVER_URL, "StartupById", { id: createdId }, "Startup", createdId, ventureTitle);
             cy.contains("h1", ventureTitle).should("be.visible");
+            screenshotStep("venture-created-page");
         });
     });
 
@@ -106,6 +108,7 @@ describe("venture create/edit", () => {
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/ventures/${createdId}`);
             assertStartupTitle(createdId, updatedVentureTitle);
+            screenshotStep("venture-updated-page");
         });
     });
 });

@@ -4,6 +4,7 @@ import {
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    screenshotStep,
     selectFormOption,
     uploadTestImage,
     waitForDetailQuery,
@@ -66,6 +67,7 @@ describe("company create/edit", () => {
 
             waitForDetailQuery(MAIN_SERVER_URL, "CompanyById", { id: createdId }, "Company", createdId, companyName);
             cy.contains("h1", companyName).should("be.visible");
+            screenshotStep("company-created-page");
         });
     });
 
@@ -104,6 +106,7 @@ describe("company create/edit", () => {
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/companies/${createdId}`);
             assertCompanyName(createdId, updatedCompanyName);
+            screenshotStep("company-updated-page");
         });
     });
 });

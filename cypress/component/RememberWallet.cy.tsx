@@ -12,6 +12,7 @@ import { useOrderPaymentChainController } from "../../src/components/order/useOr
 import type { ChainPaymentAmount } from "../../src/components/order/payment/utils";
 import type { PaymentProfileUser } from "../../src/components/order/types";
 import { Company_CryptoAddresses_Chain } from "../../src/generated/graphql";
+import { screenshotStep } from "../support/component-tests/utils";
 
 const chainPayment: ChainPaymentAmount = {
     amount: "1",
@@ -105,6 +106,7 @@ describe("remember wallet", () => {
 
         cy.contains("Select wallet").click();
         cy.contains("Remember this wallet for future payments").should("not.exist");
+        screenshotStep("remember-wallet-anonymous");
     });
 
     it("shows the remember checkbox for authenticated users", () => {
@@ -112,6 +114,7 @@ describe("remember wallet", () => {
 
         cy.contains("Select wallet").click();
         cy.contains("Remember this wallet for future payments").should("be.visible");
+        screenshotStep("remember-wallet-visible");
     });
 
     it("does not remember the wallet unless the checkbox is checked", () => {
@@ -119,6 +122,7 @@ describe("remember wallet", () => {
 
         cy.contains("Select wallet").click();
         cy.contains("Remember this wallet for future payments").should("be.visible");
+        screenshotStep("remember-wallet-checked-state");
         cy.contains("Commit payment").click();
         cy.get(".RememberWalletHarness__rememberedCount").should("have.text", "0");
     });
@@ -131,5 +135,6 @@ describe("remember wallet", () => {
         cy.contains("Commit payment").click();
         cy.get(".RememberWalletHarness__rememberedCount").should("have.text", "1");
         cy.contains(".RememberWalletHarness__paymentComplete", "Payment complete").should("be.visible");
+        screenshotStep("remember-wallet-remembered");
     });
 });

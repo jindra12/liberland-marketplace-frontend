@@ -9,6 +9,18 @@ type CypressWithStop = Cypress.Cypress & {
     stop?: () => void;
 };
 
+const buildScreenshotName = (test?: Mocha.Test): string => {
+    if (test === undefined) {
+        return "after-test";
+    }
+
+    const nextName = `${Cypress.spec.name} ${test.fullTitle()}`
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+    return nextName.length > 0 ? nextName : "after-test";
+};
+
 Cypress.on("window:before:load", (win) => {
     const subtle = win.crypto.subtle as SubtleCrypto & {
         digest: (algorithm: AlgorithmIdentifier, data: BufferSource) => Promise<ArrayBuffer>;
@@ -79,7 +91,9 @@ beforeEach(() => {
 
 afterEach(function (this: Mocha.Context) {
     cy.resetQL();
-    cy.screenshot();
+    cy.screenshot(buildScreenshotName(this.currentTest), {
+        capture: "fullPage",
+    });
 
     const logs = drainGraphQLRequestLogs();
     if (logs.length > 0) {

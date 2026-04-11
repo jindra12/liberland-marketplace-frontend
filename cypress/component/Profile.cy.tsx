@@ -1,5 +1,5 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountProfileRoute, waitForMeUserQuery } from "../support/component-tests/utils";
+import { mountProfileRoute, screenshotStep, waitForMeUserQuery } from "../support/component-tests/utils";
 
 const assertNicknameValue = (value: string) => {
     cy.contains(".Profile__card", "Change Nickname", { timeout: 10000 }).within(() => {
@@ -124,6 +124,7 @@ describe("profile", () => {
     it("refreshes the form defaults when the selected server changes to COOP", () => {
         selectProfileServer("Co-op Main (127.0.0.1)");
 
+        screenshotStep("profile-coop-selected");
         assertCoopDefaults();
     });
 
@@ -137,6 +138,7 @@ describe("profile", () => {
 
         assertFreshMeUserName(MAIN_SERVER_URL, editedName);
 
+        screenshotStep("profile-nickname-saved");
         assertNicknameValue(editedName);
     });
 
@@ -157,6 +159,7 @@ describe("profile", () => {
         });
 
         assertFreshMeUserName(MAIN_SERVER_URL, "Nova Rivers");
+        screenshotStep("profile-contact-and-wallet-saved");
 
         cy.contains(".Profile__contactCard", "Contact & Payment").within(() => {
             cy.get('input[placeholder="Phone number"]').should("have.value", editedPhone);

@@ -1,5 +1,5 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { fillFormField, mountAnonymousRoute, waitForDetailQuery } from "../support/component-tests/utils";
+import { fillFormField, mountAnonymousRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
 
 const anonymousCartSecrets = {
     [MAIN_SERVER_URL]: "anon-shopping-main-secret",
@@ -24,6 +24,7 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
     );
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
     cy.get(".ProductDetail").should("be.visible");
+    screenshotStep(`wallet-stub-product-${id}`);
 };
 
 const openOrderPaymentPage = () => {
@@ -42,9 +43,11 @@ const openOrderPaymentPage = () => {
     cy.routerNavigate("/cart");
     cy.contains("Proceed to order").click();
     cy.contains("h2", "Order").should("be.visible");
+    screenshotStep("wallet-stub-order-form");
     fillOrderAddress();
     cy.contains("button", "Create order").click();
     cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
+    screenshotStep("wallet-stub-payment-page");
 };
 
 describe("wallet stubs", () => {
@@ -60,6 +63,7 @@ describe("wallet stubs", () => {
                     cy.contains("button", "Pay").should("be.visible").click();
                     cy.pause();
                     cy.contains("Payment submitted").should("be.visible");
+                    screenshotStep("wallet-stub-ethereum-paid");
                 });
 
             cy.contains("Solana (SOL)")
@@ -70,6 +74,7 @@ describe("wallet stubs", () => {
                     cy.contains("button", "Pay").should("be.visible").click();
                     cy.pause();
                     cy.contains("Payment submitted").should("be.visible");
+                    screenshotStep("wallet-stub-solana-paid");
                 });
 
             cy.contains("Tron (TRX)")
@@ -80,6 +85,7 @@ describe("wallet stubs", () => {
                     cy.contains("button", "Pay").should("be.visible").click();
                     cy.pause();
                     cy.contains("Payment submitted").should("be.visible");
+                    screenshotStep("wallet-stub-tron-paid");
                 });
         });
     });

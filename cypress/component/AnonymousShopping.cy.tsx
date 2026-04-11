@@ -28,6 +28,9 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
     );
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
     cy.get(".ProductDetail").should("be.visible");
+    cy.screenshot(`anonymous-shopping-${id}-detail`, {
+        capture: "fullPage",
+    });
 };
 
 describe("anonymous shopping", () => {
@@ -54,9 +57,18 @@ describe("anonymous shopping", () => {
         cy.routerNavigate("/cart");
         cy.contains("Proceed to order").click();
         cy.contains("h2", "Order").should("be.visible");
+        cy.screenshot("anonymous-shopping-order-form", {
+            capture: "fullPage",
+        });
         fillOrderAddress();
+        cy.screenshot("anonymous-shopping-order-form-filled", {
+            capture: "fullPage",
+        });
         cy.contains("button", "Create order").click();
         cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
+        cy.screenshot("anonymous-shopping-order-payment-page", {
+            capture: "fullPage",
+        });
         cy.get(".OrderPage .ant-card").should("have.length", 2);
         cy.get(".OrderPage").then(($page) => {
             const text = $page.text();

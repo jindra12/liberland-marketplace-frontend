@@ -1,5 +1,5 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountAuthenticatedRoute, waitForDetailQuery } from "../support/component-tests/utils";
+import { mountAuthenticatedRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
 
 const assertTeamButton = (label: string) => {
     cy.contains(".StartupDetail__joinAction button", label).should("be.visible");
@@ -42,6 +42,7 @@ describe("startup mutations", () => {
 
         assertTeamButton("Remove Involvement");
         assertTeamCount(3);
+        screenshotStep("startup-joined");
     });
 
     it("leaves a startup and refreshes the team state without a page reload", () => {
@@ -63,6 +64,7 @@ describe("startup mutations", () => {
 
         assertTeamButton("Remove Involvement");
         assertTeamCount(3);
+        screenshotStep("startup-joined-before-leave");
 
         cy.contains(".StartupDetail__joinAction button", "Remove Involvement").click();
 
@@ -77,5 +79,6 @@ describe("startup mutations", () => {
 
         assertTeamButton("Get Involved");
         assertTeamCount(2);
+        screenshotStep("startup-left");
     });
 });

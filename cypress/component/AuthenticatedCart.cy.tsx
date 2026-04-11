@@ -31,6 +31,9 @@ describe("authenticated cart", () => {
             .click();
 
         cy.contains("h2", "Order").should("be.visible");
+        cy.screenshot("authenticated-cart-main-prefill", {
+            capture: "fullPage",
+        });
 
         assertMainOrderPrefill();
     });
@@ -49,9 +52,15 @@ describe("authenticated cart", () => {
         cy.contains("button", "Choose default address").should("be.visible").click();
 
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
+        cy.screenshot("authenticated-cart-shipping-address-picker", {
+            capture: "fullPage",
+        });
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
+        cy.screenshot("authenticated-cart-coop-prefill", {
+            capture: "fullPage",
+        });
         assertCoopOrderPrefill();
     });
 });

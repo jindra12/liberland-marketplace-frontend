@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 132px;
     margin-top: 10px;
-    flex: 1 1 132px;
+    flex: 0 0 132px;
     min-width: 132px;
 }
 
@@ -19,7 +19,7 @@
     width: 100%;
     max-width: 132px;
     margin-top: 10px;
-    flex: 1 1 132px;
+    flex: 0 0 132px;
     min-width: 132px;
 }
 
@@ -68,7 +68,8 @@
 }
 
 .AddToCartButton__compact--split.ant-space-compact {
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .AddToCartButton__compact--noBuyNow.ant-space-compact {
@@ -113,7 +114,7 @@
 
 .AddToCartButton__compact > .ant-btn-primary,
 .AddToCartButton__compact > .AddToCartButton__buyNow {
-    flex: 1 1 132px;
+    flex: 0 0 132px;
     width: 132px !important;
     max-width: 132px;
     min-width: 0;

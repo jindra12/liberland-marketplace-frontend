@@ -69,6 +69,9 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".BuyNowCreateOrderStep", "No default shipping addresses found").should("be.visible");
+        cy.screenshot("buy-now-no-default-shipping-addresses", {
+            capture: "fullPage",
+        });
         cy.contains(".BuyNowCreateOrderStep .ant-modal-footer .ant-btn", "Go to profile")
             .should("be.visible")
             .click({ force: true });
@@ -84,10 +87,16 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
+        cy.screenshot("buy-now-shipping-address-picker", {
+            capture: "fullPage",
+        });
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.screenshot("buy-now-payment-modal-after-address-choice", {
+            capture: "fullPage",
+        });
         cy.get(".BuyNowPaymentModal .ant-modal-close").click();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
@@ -100,6 +109,9 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.screenshot("buy-now-saved-shipping-address-payment-modal", {
+            capture: "fullPage",
+        });
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
 });

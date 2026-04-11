@@ -5,6 +5,7 @@ import {
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    screenshotStep,
     selectFormOption,
     uploadTestImage,
     waitForDetailQuery,
@@ -68,6 +69,7 @@ describe("job create/edit", () => {
 
             waitForDetailQuery(MAIN_SERVER_URL, "JobById", { id: createdId }, "Job", createdId, jobTitle);
             cy.contains("h1", jobTitle).should("be.visible");
+            screenshotStep("job-created-page");
         });
     });
 
@@ -110,6 +112,7 @@ describe("job create/edit", () => {
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/jobs/${createdId}`);
             assertJobTitle(createdId, updatedJobTitle);
+            screenshotStep("job-updated-page");
         });
     });
 });

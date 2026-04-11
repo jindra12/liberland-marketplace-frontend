@@ -5,6 +5,7 @@ import {
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    screenshotStep,
     selectFormOption,
     uploadTestImage,
 } from "../support/component-tests/utils";
@@ -53,6 +54,7 @@ const createOwnedCompany = (companyName: string) => {
     cy.wait("@mediaUpload");
     cy.location("pathname").should("match", /\/companies\/company-/);
     cy.contains("h1", companyName).should("be.visible");
+    screenshotStep("owned-company-created");
 };
 
 describe("product create/edit", () => {
@@ -81,6 +83,7 @@ describe("product create/edit", () => {
             }
 
             cy.contains("h1", productName).should("be.visible");
+            screenshotStep("product-created-page");
         });
     });
 
@@ -126,6 +129,7 @@ describe("product create/edit", () => {
             cy.wait("@mediaUpload");
             cy.location("pathname").should("eq", `/products-services/${createdId}`);
             assertProductTitle(createdId, updatedProductName);
+            screenshotStep("product-updated-page");
         });
     });
 });

@@ -24,6 +24,16 @@ import type {
 export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
     buildGraphQLAlias(serverUrl, operationName, variables);
 
+export const screenshotStep = (step: string) => {
+    const nextName = `${Cypress.spec.name} ${step}`
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+    cy.screenshot(nextName.length > 0 ? nextName : "after-test-step", {
+        capture: "fullPage",
+    });
+};
+
 export const mountMainRoute = (route: string) => {
     mount(<Main />);
     cy.routerNavigate(route);
@@ -170,6 +180,7 @@ export const openPublishServerIfNeeded = (serverName = "Main") => {
         }
 
         cy.contains(".PublishServer__card", serverName).should("be.visible").click();
+        screenshotStep(`publish-server-selected-${serverName}`);
         cy.contains(".PublishServer__summary button", "Continue to publish").click();
         cy.get(".PublishServer").should("not.exist");
     });
@@ -189,6 +200,7 @@ export const openPublishCategory = (categoryName: string) => {
 
     openPublishServerIfNeeded();
     cy.contains(".Publish__category", categoryTitle, { timeout: 20000 }).should("be.visible").click();
+    screenshotStep(`publish-category-${categoryName}`);
 };
 
 const getFormItem = (label: string) => cy.contains(".ant-form-item", label);
@@ -240,6 +252,7 @@ export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
+    screenshotStep("home-loaded");
 };
 
 export const seedCartSecret = (serverUrl: string, secret: string) => {
@@ -260,6 +273,7 @@ export const seedCartSecret = (serverUrl: string, secret: string) => {
 export const homepageQueries = () => {
     waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 100, page: 1 }, "Identities", "Nova Rivers");
     waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main");
+    screenshotStep("homepage-queries-loaded");
 };
 
 export const openDesktopMenu = () => {
@@ -300,6 +314,7 @@ export const waitForCollectionQuery = (
         expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
             expectedTitle,
         );
+        screenshotStep(`${operationName}-${expectedTitle}`);
     });
 };
 
@@ -316,6 +331,7 @@ export const waitForCollectionResults = (
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+        screenshotStep(`${operationName}-results`);
     });
 };
 
@@ -356,6 +372,7 @@ export const waitForMeUserQuery = (
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(user?.name).to.equal(expectedName);
+        screenshotStep(`me-${expectedName}`);
     });
 };
 
@@ -375,6 +392,7 @@ export const waitForDetailQuery = (
         expect(interception.response?.statusCode).to.equal(200);
         expect(node?.id).to.equal(expectedId);
         expect(node?.title ?? node?.name).to.equal(expectedTitle);
+        screenshotStep(`${operationName}-${expectedTitle}`);
     });
 };
 
@@ -395,6 +413,7 @@ export const waitForSearchQuery = (
             expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
                 expectedTitle,
             );
+            screenshotStep(`${operationName}-${expectedTitle}`);
         },
     );
 };
@@ -411,6 +430,7 @@ export const goToList = (goal: ListGoal) => {
         goal.expectedResultTitle,
     );
     cy.contains("h2", goal.title).should("be.visible");
+    screenshotStep(`list-${goal.title}`);
 };
 
 export const goToDetailFromHome = (goal: DetailGoal) => {
@@ -418,6 +438,7 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
+    screenshotStep(`detail-${goal.title}`);
 };
 
 export const goToDetailFromSearch = (goal: SearchGoal) => {
@@ -434,6 +455,7 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
+    screenshotStep(`search-detail-${goal.title}`);
 };
 
 export const goToSyndicationList = () => {
@@ -441,4 +463,5 @@ export const goToSyndicationList = () => {
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
     cy.contains("h2", SYNDICATION_LIST_GOAL.title).should("be.visible");
+    screenshotStep("syndication-list");
 };
