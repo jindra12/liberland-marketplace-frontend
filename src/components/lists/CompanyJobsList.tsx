@@ -1,11 +1,12 @@
 import * as React from "react";
 
-import { JobListInternal } from "./JobListInternal";
 import { useListJobsByCompanyQuery } from "../hooks";
+
+import { JobListInternal } from "./JobListInternal";
 
 export interface CompanyJobsListProps {
     companyId: string;
-};
+}
 
 export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (props) => {
     const [page, setPage] = React.useState(1);
@@ -15,11 +16,5 @@ export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (p
         limit: 20,
     });
 
-    return (
-        <JobListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <JobListInternal page={page} query={query} setPage={setPage} />;
 };

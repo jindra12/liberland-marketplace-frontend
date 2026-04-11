@@ -1,8 +1,9 @@
 import * as React from "react";
-import {
-    useQueries,
-} from "@tanstack/react-query";
+
+import { useQueries } from "@tanstack/react-query";
+
 import useLocalStorage from "use-local-storage";
+
 import {
     useListPublishedSyndicationUrlsQuery,
     ListPublishedSyndicationUrlsQueryVariables,
@@ -11,7 +12,9 @@ import {
 } from "../generated/graphql";
 import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
-import { combineResult, deepMergeConcatArrays, mergeSyndicationUrls } from "../utils";
+
+import { mergeSyndicationUrls } from "./endpoints/utils";
+import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
 export interface EndpointContextType {
     urls: URL[];
@@ -26,14 +29,14 @@ const defaultUrls: URL[] = [{ enabled: true, value: BACKEND_URL, name: "Main" }]
 
 export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[]) => URL[]) | URL[]) => void) => {
     const queries = useQueries({
-        queries: urls.map(url => ({
+        queries: urls.map((url) => ({
             queryKey: [...useListPublishedSyndicationUrlsQuery.getKey({}), url.value],
             queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
                 ListPublishedSyndicationUrlsDocument,
                 {},
                 undefined,
                 url.value,
-            )
+            ),
         })),
         combine: (result) => {
             return combineResult(result, deepMergeConcatArrays);

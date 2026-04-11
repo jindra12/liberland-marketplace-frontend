@@ -1,10 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { BACKEND_URL } from "../../../gqlFetcher";
 import { SUBSCRIPTION_QUERY_KEY_TERMS } from "./constants";
-import type {
-    NotificationTargetCollection,
-    SubscriptionAction,
-} from "./types";
+import type { NotificationTargetCollection, SubscriptionAction } from "./types";
 
 const digestSubscriptionID = async (value: string) => {
     if (!window.crypto?.subtle) {
@@ -31,8 +28,7 @@ export const buildNotificationSubscriptionID = async ({
 export const getSubscribeButtonClassName = (className?: string) =>
     ["SubscribeButton", className].filter(Boolean).join(" ");
 
-export const getSubscriptionMutationURL = (serverURL?: string | null) =>
-    serverURL || BACKEND_URL;
+export const getSubscriptionMutationURL = (serverURL?: string | null) => serverURL || BACKEND_URL;
 
 export const invalidateSubscriptionQueries = async (
     queryClient: QueryClient,
@@ -52,11 +48,7 @@ export const invalidateSubscriptionQueries = async (
     });
 };
 
-export const getSubscriptionErrorMessage = (
-    error: unknown,
-    action: SubscriptionAction,
-    entityLabel: string,
-) => {
+export const getSubscriptionErrorMessage = (error: unknown, action: SubscriptionAction, entityLabel: string) => {
     if (error instanceof Error && error.message) {
         return error.message;
     }

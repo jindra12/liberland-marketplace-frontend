@@ -1,11 +1,11 @@
 mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {
-  createStartup(data: $data, draft: $draft) {
-    id
-    title
-    _status
-    image {
-      id
-      url
+    createStartup(data: $data, draft: $draft) {
+        id
+        title
+        _status
+        image {
+            id
+            url
+        }
     }
-  }
 }

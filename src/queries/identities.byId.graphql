@@ -1,19 +1,19 @@
 query IdentityById($id: String!) {
-  Identity(id: $id, draft: false) {
-    id
-    isSubscribed
-    serverURL
-    name
-    description
-    website
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
+    Identity(id: $id, draft: false) {
+        id
+        isSubscribed
+        serverURL
+        name
+        description
+        website
+        image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+        }
     }
-  }
 }

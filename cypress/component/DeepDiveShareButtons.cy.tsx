@@ -1,0 +1,21 @@
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { homepageQueries, mountMainRoute, waitForCollectionQuery, waitForRouteLoad } from "../support/component-tests/utils";
+
+describe("share buttons", () => {
+    it("shows list share controls on the companies list and home cards", () => {
+        mountMainRoute("/");
+        waitForRouteLoad(".LoadingSkeleton--splashSections");
+        homepageQueries();
+
+        cy.get(".SplashPage__identitySection .NativeShareButton").its("length").should("be.greaterThan", 0);
+        cy.get(".SplashPage__syndicationCardActions .NativeShareButton").its("length").should("be.greaterThan", 0);
+
+        mountMainRoute("/companies");
+        waitForRouteLoad(".LoadingSkeleton--collection");
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListCompanies", { limit: 20, page: 1 }, "Companies", "Harbor Labs");
+
+        cy.get(".ListShareDetailButtons").should("be.visible");
+        cy.get(".NativeShareButton").should("be.visible");
+        cy.get(".ActionBtn").contains("Details").should("be.visible");
+    });
+});

@@ -90,9 +90,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 24px;
-    background:
-        linear-gradient(135deg, rgba(90, 166, 255, 0.24), rgba(121, 230, 177, 0.18)),
-        rgba(7, 20, 35, 0.72);
+    background: linear-gradient(135deg, rgba(90, 166, 255, 0.24), rgba(121, 230, 177, 0.18)), rgba(7, 20, 35, 0.72);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.1),
         0 18px 30px rgba(0, 0, 0, 0.22);
@@ -101,9 +99,7 @@
 }
 
 .UnsubscribePage__iconWrap--success {
-    background:
-        linear-gradient(135deg, rgba(121, 230, 177, 0.28), rgba(82, 168, 255, 0.16)),
-        rgba(7, 20, 35, 0.72);
+    background: linear-gradient(135deg, rgba(121, 230, 177, 0.28), rgba(82, 168, 255, 0.16)), rgba(7, 20, 35, 0.72);
     color: #effff7;
 }
 
@@ -213,19 +209,6 @@
     border-radius: 999px;
     font-weight: 800;
     letter-spacing: 0.01em;
-}
-
-.UnsubscribePage__primaryAction.ant-btn {
-    border: 0;
-    background: linear-gradient(135deg, rgba(23, 121, 89, 0.94), rgba(10, 63, 120, 0.96));
-    box-shadow: 0 16px 30px rgba(9, 63, 120, 0.26);
-    color: #eef8f3;
-}
-
-.UnsubscribePage__primaryAction.ant-btn:hover,
-.UnsubscribePage__primaryAction.ant-btn:focus {
-    background: linear-gradient(135deg, rgba(28, 136, 100, 0.96), rgba(16, 77, 143, 0.98)) !important;
-    color: #eef8f3 !important;
 }
 
 .UnsubscribePage__secondaryAction.ant-btn {

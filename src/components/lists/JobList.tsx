@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { JobListInternal } from "./JobListInternal";
 import { useListJobsQuery } from "../hooks";
+
+import { JobListInternal } from "./JobListInternal";
 
 export interface JobListProps {
     limited?: boolean;
@@ -14,12 +15,5 @@ export const JobList: React.FunctionComponent<JobListProps> = (props) => {
         page,
     });
 
-    return (
-        <JobListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-            limited={props.limited}
-        />
-    )
+    return <JobListInternal page={page} query={query} setPage={setPage} limited={props.limited} />;
 };

@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Helmet } from "react-helmet-async";
 import { matchPath, useLocation } from "react-router-dom";
 
@@ -36,9 +37,7 @@ const routeTitles: RouteTitle[] = [
 ];
 
 const getRouteTitle = (pathname: string): string => {
-    const match = routeTitles.find((route) =>
-        Boolean(matchPath({ path: route.path, end: true }, pathname))
-    );
+    const match = routeTitles.find((route) => Boolean(matchPath({ path: route.path, end: true }, pathname)));
 
     if (!match) {
         return `Not Found | ${APP_NAME}`;

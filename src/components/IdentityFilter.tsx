@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Select } from "antd";
 
 import { useListIdentitiesQuery } from "./hooks";
@@ -9,7 +10,7 @@ export interface IdentityFilterProps {
 }
 
 export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (props) => {
-    const query = useListIdentitiesQuery({ limit: 1000, page: 0 });
+    const query = useListIdentitiesQuery({ limit: 1000, page: 1 });
     const identities = query.data?.Identities?.docs || [];
 
     const options = identities.map((identity) => ({

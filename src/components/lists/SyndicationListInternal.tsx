@@ -1,20 +1,23 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
+import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
+import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
-import { URL } from "../../types";
 import {
     createEndpointEntry,
     getSyndicationHost,
     getSyndicationName,
     insertUniqueEndpoint,
     setEndpointEnabled,
-} from "../../utils";
+} from "../endpoints/utils";
 import { Markdown } from "../Markdown";
-import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";
+import { NativeShareButton } from "../share/NativeShareButton";
 
 const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
@@ -31,18 +34,20 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
 
-    const items = React.useMemo(() => (
-        [...urls].sort((left, right) => {
-            const leftPriority = byPriority(left);
-            const rightPriority = byPriority(right);
+    const items = React.useMemo(
+        () =>
+            [...urls].sort((left, right) => {
+                const leftPriority = byPriority(left);
+                const rightPriority = byPriority(right);
 
-            if (leftPriority !== rightPriority) {
-                return leftPriority - rightPriority;
-            }
+                if (leftPriority !== rightPriority) {
+                    return leftPriority - rightPriority;
+                }
 
-            return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
-        })
-    ), [urls]);
+                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
+            }),
+        [urls],
+    );
 
     const handleAdd = React.useCallback(() => {
         if (!draftUrl.trim()) {
@@ -80,7 +85,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 loading={false}
                 title="Syndication"
                 emptyText="No syndicated URLs configured yet."
-                filters={(
+                filters={
                     <Space.Compact block className="SyndicationList__addCompact">
                         <Input
                             value={draftUrl}
@@ -93,13 +98,11 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             Add URL
                         </Button>
                     </Space.Compact>
-                )}
+                }
                 renderItem={{
                     title: (entry) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={buildSyndicationHref(entry.value)}>
-                                {getSyndicationName(entry)}
-                            </Link>
+                            <Link to={buildSyndicationHref(entry.value)}>{getSyndicationName(entry)}</Link>
                             <Tag color={entry.enabled ? "success" : "default"}>
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
@@ -133,7 +136,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             {entry.description}
                         </Markdown>
                     ),
-                    actions: (entry) => (
+                    actions: (entry) =>
                         md ? (
                             <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
                                 <NativeShareButton
@@ -146,7 +149,9 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                 <Button
                                     size="large"
                                     icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                    onClick={() =>
+                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
+                                    }
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
@@ -182,13 +187,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     size="large"
                                     block
                                     icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                    onClick={() =>
+                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
+                                    }
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                             </Flex>
-                        )
-                    ),
+                        ),
                 }}
             />
         </>

@@ -1,15 +1,19 @@
 import * as React from "react";
-import { Button, Flex, Space, Tag, Typography } from "antd";
-import { HomeOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
+
 import { useNavigate, useSearchParams } from "react-router-dom";
+
+import { HomeOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
+import { Button, Flex, Space, Tag, Typography } from "antd";
+
 import type { NotificationTargetCollection } from "../share/SubscribeButton/types";
+
 import type { ParsedUnsubscribeParams } from "./types";
-import { parseUnsubscribeSearchParams } from "./utils";
 import UnsubscribeCompany from "./UnsubscribeCompany";
 import UnsubscribeIdentity from "./UnsubscribeIdentity";
 import UnsubscribeJob from "./UnsubscribeJob";
 import UnsubscribeProduct from "./UnsubscribeProduct";
 import UnsubscribeStartup from "./UnsubscribeStartup";
+import { parseUnsubscribeSearchParams } from "./utils";
 
 type UnsubscribeRouteComponentProps = {
     params: ParsedUnsubscribeParams;
@@ -49,7 +53,8 @@ const Unsubscribe: React.FunctionComponent = () => {
                                     We couldn&apos;t trust this unsubscribe URL
                                 </Typography.Title>
                                 <Typography.Paragraph className="UnsubscribePage__description">
-                                    {parsed.reason} For your safety, we only accept recognized notification types, safe item IDs, and valid email addresses.
+                                    {parsed.reason} For your safety, we only accept recognized notification types, safe
+                                    item IDs, and valid email addresses.
                                 </Typography.Paragraph>
                             </div>
                         </Flex>

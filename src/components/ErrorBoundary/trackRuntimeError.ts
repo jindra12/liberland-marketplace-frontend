@@ -3,8 +3,7 @@ import { appAnalytics } from "../analytics/analytics";
 
 export type ErrorBoundaryScope = "app" | "route";
 
-const getCurrentRoute = () =>
-    `${window.location.pathname}${window.location.search}${window.location.hash}`;
+const getCurrentRoute = () => `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
 export const trackRuntimeError = (scope: ErrorBoundaryScope, error: Error, info: ErrorInfo) => {
     (async () => {

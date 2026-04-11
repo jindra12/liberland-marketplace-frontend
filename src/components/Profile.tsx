@@ -1,6 +1,7 @@
-import React from "react";
+import * as React from "react";
+
 import { AuthGuard } from "./AuthGuard";
-import { ProfileContent } from "./ProfileContent";
+import { ProfileContent } from "./ProfileContent/ProfileContent";
 
 const Profile: React.FunctionComponent = () => (
     <AuthGuard>

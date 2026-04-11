@@ -1,34 +1,32 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
-import { Avatar,
-    Divider,
-    Flex,
-    Grid,
-    Space,
-    Tabs,
-    Typography
-} from "antd";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+
 import { useAuth } from "react-oidc-context";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
-import { useCompanyTabCounts } from "./useCompanyTabCounts";
-import { Loader } from "../Loader";
-import { getImage } from "../../utils";
-import { Markdown } from "../Markdown";
+import { useParams } from "react-router-dom";
+
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Divider, Flex, Grid, Space, Tabs, Typography } from "antd";
+
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery } from "../hooks";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
 import { CompanyStartupsList } from "../lists/CompanyStartupsList";
-import { IdentityGroups } from "./IdentityGroups";
+import { Loader } from "../Loader";
+import { Markdown } from "../Markdown";
+import { RouteButton } from "../RouteButton";
+import { DetailShareSection } from "../share/DetailShareSection";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { useCompanyByIdQuery } from "../hooks";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
-import { DetailShareSection } from "../share/DetailShareSection";
+import { getImage } from "../shared/image/utils";
+
 import { DetailBackButton } from "./DetailBackButton";
-import { RouteButton } from "../RouteButton";
+import { IdentityGroups } from "./IdentityGroups";
+import { useCompanyTabCounts } from "./useCompanyTabCounts";
+
+
+
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -43,10 +41,12 @@ const CompanyDetail: React.FunctionComponent = () => {
             {(data) => {
                 const companyData = data.Company;
                 const imageSrc = getImage(companyData);
-                const companyIdentity = companyData?.identity?.name ? {
-                    id: companyData.identity.id,
-                    name: companyData.identity.name,
-                } : undefined;
+                const companyIdentity = companyData?.identity?.name
+                    ? {
+                          id: companyData.identity.id,
+                          name: companyData.identity.name,
+                      }
+                    : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 72;
@@ -56,21 +56,13 @@ const CompanyDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
-                        <DetailPageTracker serverUrl={companyData?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={companyData?.serverURL} />
                         <DetailBackButton to="/companies" label="Back to companies" />
                         <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
-                            {imageSrc && (
-                                <Avatar
-                                    shape="circle"
-                                    size={avatarSize}
-                                    src={imageSrc}
-                                />
-                            )}
+                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                             <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
                                 <div className="EntityDetail__titleBlock">
-                                    <Typography.Text className="EntityDetail__eyebrow">
-                                        Company
-                                    </Typography.Text>
+                                    <Typography.Text className="EntityDetail__eyebrow">Company</Typography.Text>
                                     <div className="EntityDetail__titleRow">
                                         <Typography.Title level={1} className="EntityDetail__title">
                                             {companyData?.name}
@@ -89,7 +81,9 @@ const CompanyDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Space>
                         {isOwner && (
-                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
+                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>
+                                Edit
+                            </RouteButton>
                         )}
                         <Divider />
                         <Markdown>{companyData?.description}</Markdown>
@@ -111,12 +105,16 @@ const CompanyDetail: React.FunctionComponent = () => {
                             label="Share this company"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={companyData ? {
-                                collection: "companies",
-                                targetID: companyData.id,
-                                serverURL: companyData.serverURL,
-                                isSubscribed: companyData.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                companyData
+                                    ? {
+                                          collection: "companies",
+                                          targetID: companyData.id,
+                                          serverURL: companyData.serverURL,
+                                          isSubscribed: companyData.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider />
                         <Tabs
@@ -145,6 +143,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                         <EntityCommentsSection
                                             targetId={id!}
                                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                                            serverURL={companyData?.serverURL}
                                         />
                                     ),
                                 },

@@ -1,86 +1,86 @@
 query JobById($id: String!, $draft: Boolean = false) {
-  Job(id: $id, draft: $draft) {
-    id
-    isSubscribed
-    serverURL
-    title
-    _status
-    description
-    location
-    employmentType
-    positions
-    postedAt
-    isActive
-    applyUrl
-    bounty {
-      amount
-      currency
-    }
-    allowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    disallowedIdentities {
-      id
-      serverURL
-      name
-      description
-    }
-    salaryRange {
-      min
-      max
-      currency
-    }
-    createdBy {
-      id
-    }
-    company {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-          chain
-          address
+    Job(id: $id, draft: $draft) {
+        id
+        isSubscribed
+        serverURL
+        title
+        _status
+        description
+        location
+        employmentType
+        positions
+        postedAt
+        isActive
+        applyUrl
+        bounty {
+            amount
+            currency
         }
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
+        allowedIdentities {
+            id
+            serverURL
+            name
+            description
+        }
+        disallowedIdentities {
+            id
+            serverURL
+            name
+            description
+        }
+        salaryRange {
+            min
+            max
+            currency
+        }
+        createdBy {
+            id
+        }
+        company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+                chain
+                address
+            }
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            identity {
+                id
+                serverURL
+                name
+                description
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+        }
+        image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+        }
     }
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-  }
 }

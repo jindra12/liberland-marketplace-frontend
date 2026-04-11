@@ -1,11 +1,12 @@
 import * as React from "react";
+
 import { Alert, Empty, Flex, Typography } from "antd";
 
+import { useListIdentitiesQuery } from "./hooks";
 import { SplashSectionsSkeleton } from "./LoadingSkeleton/SplashSectionsSkeleton";
+import { RouteButton } from "./RouteButton";
 import { IdentityMarketSection } from "./splash/IdentityMarketSection";
 import { SyndicationSection } from "./splash/SyndicationSection";
-import { useListIdentitiesQuery } from "./hooks";
-import { RouteButton } from "./RouteButton";
 
 const Splash: React.FunctionComponent = () => {
     const identitiesQuery = useListIdentitiesQuery({
@@ -17,7 +18,7 @@ const Splash: React.FunctionComponent = () => {
     const hasError = Boolean(identitiesQuery.error);
 
     const sortedIdentities = React.useMemo(
-        () => [...identities || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
+        () => [...(identities || [])].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
         [identities],
     );
 
@@ -30,7 +31,8 @@ const Splash: React.FunctionComponent = () => {
                         Discover <span className="SplashPage__heroAccent">companies, jobs, products</span> and ventures.
                     </Typography.Title>
                     <Typography.Paragraph className="SplashPage__heroDescription">
-                        Tribe-first marketplace across decentralized servers. Browse companies, products, services, jobs, and ventures
+                        Tribe-first marketplace across decentralized servers. Browse companies, products, services,
+                        jobs, and ventures
                     </Typography.Paragraph>
                     <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
                         <RouteButton to="/products-services" type="primary" size="large">
@@ -59,9 +61,7 @@ const Splash: React.FunctionComponent = () => {
                     </div>
                 )}
 
-                {!hasError && !identities?.length && !isLoading && (
-                    <Empty description="No tribes found yet." />
-                )}
+                {!hasError && !identities?.length && !isLoading && <Empty description="No tribes found yet." />}
 
                 {sortedIdentities.length > 0 && (
                     <Flex vertical gap={24} className="SplashPage__identityList">

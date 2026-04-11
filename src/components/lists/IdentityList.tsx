@@ -1,41 +1,32 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
+
 import { Avatar, Flex, Grid, Typography } from "antd";
 
 import { AppList } from "../AppList";
-import { TextSearchFilter } from "../TextSearchFilter";
-import { Markdown } from "../Markdown";
 import { useListIdentitiesQuery } from "../hooks";
-import { getImage } from "../../utils";
+import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { getImage } from "../shared/image/utils";
 
 export const IdentityList: React.FunctionComponent = () => {
-    const [searchText, setSearchText] = React.useState("");
     const { md } = Grid.useBreakpoint();
+    const [page, setPage] = React.useState(1);
     const query = useListIdentitiesQuery({
-        limit: 100,
-        page: 1,
+        limit: 20,
+        page,
     });
-    const allItems = query.data?.Identities?.docs;
-
-    const sortedItems = React.useMemo(() => {
-        const filtered = searchText
-            ? allItems?.filter((identity) =>
-                identity.name.toLowerCase().includes(searchText.toLowerCase())
-            )
-            : allItems;
-        return [...filtered || []].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0));
-    }, [allItems, searchText]);
+    const allItems = query.data?.Identities?.docs || [];
 
     return (
         <AppList
             hasMore={false}
-            items={sortedItems}
-            next={() => {}}
+            items={allItems}
+            next={() => setPage(page + 1)}
             loading={query.isLoading}
             refetch={query.refetch}
             title="Tribes"
-            filters={<TextSearchFilter value={searchText} onChange={setSearchText} />}
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>
@@ -46,14 +37,13 @@ export const IdentityList: React.FunctionComponent = () => {
                         </Link>
                     </Flex>
                 ),
-                actions: (identity) => (
+                actions: (identity) =>
                     md ? (
                         <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
                             <ListShareDetailButtons
                                 detailPath={`/tribes/${identity.id}`}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "identities",
                                     targetID: identity.id,
@@ -69,7 +59,6 @@ export const IdentityList: React.FunctionComponent = () => {
                                 detailPath={`/tribes/${identity.id}`}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "identities",
                                     targetID: identity.id,
@@ -78,14 +67,16 @@ export const IdentityList: React.FunctionComponent = () => {
                                 }}
                             />
                         </Flex>
-                    )
+                    ),
+                avatar: (identity) =>
+                    identity.image?.url ? (
+                        <Link to={`/tribes/${identity.id}`}>
+                            <Avatar src={getImage(identity)} size={md ? 120 : 88} />
+                        </Link>
+                    ) : undefined,
+                description: (identity) => (
+                    <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>
                 ),
-                avatar: (identity) => identity.image?.url ? (
-                    <Link to={`/tribes/${identity.id}`}>
-                        <Avatar src={getImage(identity)} size={md ? 120 : 88} />
-                    </Link>
-                ) : undefined,
-                description: (identity) => <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>,
             }}
         />
     );

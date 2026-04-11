@@ -1,28 +1,33 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
+
 import { Card, Flex, Space, Tag, Typography } from "antd";
+
 import { BACKEND_URL } from "../../gqlFetcher";
 import { useEndpointContext } from "../EndpointContext";
-import { getSyndicationHost, getSyndicationName } from "../../utils";
-import { NativeShareButton } from "../share/NativeShareButton";
+import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 import { RouteButton } from "../RouteButton";
+import { NativeShareButton } from "../share/NativeShareButton";
 
 export const SyndicationSection: React.FunctionComponent = () => {
     const { urls, enabled } = useEndpointContext();
-    const items = React.useMemo(() => (
-        [...urls].sort((left, right) => {
-            if (left.name === "Main" && right.name !== "Main") {
-                return -1;
-            }
-            if (right.name === "Main" && left.name !== "Main") {
-                return 1;
-            }
-            if (left.enabled !== right.enabled) {
-                return left.enabled ? -1 : 1;
-            }
-            return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
-        })
-    ), [urls]);
+    const items = React.useMemo(
+        () =>
+            [...urls].sort((left, right) => {
+                if (left.name === "Main" && right.name !== "Main") {
+                    return -1;
+                }
+                if (right.name === "Main" && left.name !== "Main") {
+                    return 1;
+                }
+                if (left.enabled !== right.enabled) {
+                    return left.enabled ? -1 : 1;
+                }
+                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
+            }),
+        [urls],
+    );
 
     if (items.length <= 1) {
         return null;
@@ -37,8 +42,8 @@ export const SyndicationSection: React.FunctionComponent = () => {
                         Manage syndicated marketplace URLs
                     </Typography.Title>
                     <Typography.Paragraph className="SplashPage__syndicationDescription">
-                        Currently tracking {urls.length} endpoints with {enabled.length} enabled for browsing.
-                        Open the list to add new URLs, and use any card to review or toggle a specific syndicated source.
+                        Currently tracking {urls.length} endpoints with {enabled.length} enabled for browsing. Open the
+                        list to add new URLs, and use any card to review or toggle a specific syndicated source.
                     </Typography.Paragraph>
                 </Flex>
                 <RouteButton to="/syndication" type="primary" className="SplashPage__syndicationManageBtn">
@@ -58,7 +63,7 @@ export const SyndicationSection: React.FunctionComponent = () => {
                         <Card
                             key={endpoint.value}
                             className={`SplashEntityCard SplashPage__syndicationEntityCard${endpoint.enabled ? " SplashPage__syndicationEntityCard--enabled" : ""}`}
-                            title={(
+                            title={
                                 <Flex vertical gap={4} className="SplashPage__syndicationCardHeader">
                                     <span className="SplashPage__syndicationCardEyebrow">{eyebrow}</span>
                                     <Typography.Title level={4} className="SplashPage__syndicationCardTitle">
@@ -70,7 +75,7 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                         {host}
                                     </Typography.Text>
                                 </Flex>
-                            )}
+                            }
                             extra={isDefault ? <Tag color="blue">Main</Tag> : undefined}
                         >
                             <Flex vertical gap={16} className="SplashPage__syndicationCardBody">
@@ -81,15 +86,19 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                     <Tag color={endpoint.enabled ? "success" : "default"}>
                                         {endpoint.enabled ? "Visible in search" : "Disabled"}
                                     </Tag>
-                                    {!isDefault && (
-                                        <Tag>
-                                            {endpoint.enabled ? "Active source" : "Available source"}
-                                        </Tag>
-                                    )}
+                                    {!isDefault && <Tag>{endpoint.enabled ? "Active source" : "Available source"}</Tag>}
                                 </Flex>
-                                <Flex justify="space-between" align="center" wrap gap={12} className="SplashPage__syndicationCardActions">
+                                <Flex
+                                    justify="space-between"
+                                    align="center"
+                                    wrap
+                                    gap={12}
+                                    className="SplashPage__syndicationCardActions"
+                                >
                                     <Typography.Text className="SplashPage__syndicationCardMetaCopy">
-                                        {endpoint.enabled ? "Included in marketplace browsing." : "Stored locally until enabled."}
+                                        {endpoint.enabled
+                                            ? "Included in marketplace browsing."
+                                            : "Stored locally until enabled."}
                                     </Typography.Text>
                                     <Space.Compact className="SplashPage__syndicationCardCompactActions">
                                         <NativeShareButton
@@ -98,10 +107,7 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                             text={`Check out ${getSyndicationName(endpoint)} on NSwap.`}
                                             className="NativeShareButton"
                                         />
-                                        <RouteButton
-                                            to={detailHref}
-                                            type="primary"
-                                        >
+                                        <RouteButton to={detailHref} type="primary">
                                             Details
                                         </RouteButton>
                                     </Space.Compact>

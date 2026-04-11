@@ -1,75 +1,70 @@
 query ListProducts($page: Int = 1, $limit: Int = 20) {
-  Products(
-    draft: false
-    where: { _status: { equals: published } }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      name
-      inventory
-      description
-      cryptoAddresses {
-          chain
-          address
+    Products(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            inventory
+            description
+            cryptoAddresses {
+                chain
+                address
+            }
+            url
+            orderable
+            priceInUSDEnabled
+            priceInUSD
+            priceInETH
+            priceInSOL
+            priceInTRX
+            properties {
+                id
+                key
+                value
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
         }
-      url
-      orderable
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      properties {
-        id
-        key
-        value
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

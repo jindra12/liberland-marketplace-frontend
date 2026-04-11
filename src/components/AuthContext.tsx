@@ -1,12 +1,13 @@
 import * as React from "react";
+
 import { AuthProvider } from "react-oidc-context";
+
 import { WebStorageStateStore } from "oidc-client-ts";
+
 import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
-    const {
-        authUrl: auth
-    } = useEndpointContext();
+    const { authUrl: auth } = useEndpointContext();
 
     const store = React.useMemo(() => new WebStorageStateStore({ store: window.localStorage }), []);
 

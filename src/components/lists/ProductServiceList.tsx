@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { ProductServiceListInternal } from "./ProductServiceListInternal";
 import { useListProductsQuery } from "../hooks";
+
+import { ProductServiceListInternal } from "./ProductServiceListInternal";
 
 export const ProductsServicesList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(1);
@@ -10,12 +11,5 @@ export const ProductsServicesList: React.FunctionComponent = () => {
         page,
     });
 
-    return (
-        <ProductServiceListInternal
-            source="query"
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <ProductServiceListInternal source="query" page={page} query={query} setPage={setPage} />;
 };

@@ -1,5 +1,5 @@
 mutation DeleteProduct($id: String!) {
-  deleteProduct(id: $id) {
-    id
-  }
+    deleteProduct(id: $id) {
+        id
+    }
 }

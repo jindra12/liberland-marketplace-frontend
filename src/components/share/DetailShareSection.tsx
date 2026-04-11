@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Button, Flex, Grid, Space, Typography } from "antd";
-import { LinkOutlined } from "@ant-design/icons";
+
 import {
     FacebookIcon,
     FacebookShareButton,
@@ -13,10 +12,14 @@ import {
     XIcon,
     XShareButton,
 } from "react-share";
+
+import { LinkOutlined } from "@ant-design/icons";
+import { Button, Flex, Grid, Space, Typography } from "antd";
+
 import { NativeShareButton } from "./NativeShareButton";
-import { useCopyLink } from "./useCopyLink";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
+import { useCopyLink } from "./useCopyLink";
 
 type SharePayload = {
     title: string;
@@ -25,12 +28,10 @@ type SharePayload = {
     onCopyLink: () => void;
     subscriptionTarget?: SubscriptionTarget | null;
 };
-
 type ShareButtonConfig = {
     key: string;
     render: (payload: SharePayload) => React.ReactNode;
 };
-
 type DetailShareSectionProps = {
     label: string;
     title: string;
@@ -38,16 +39,11 @@ type DetailShareSectionProps = {
     url?: string;
     subscriptionTarget?: SubscriptionTarget | null;
 };
-
 const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
         key: "copy",
         render: ({ onCopyLink }: SharePayload) => (
-            <Button
-                icon={<LinkOutlined />}
-                className="ShareSection__nativeButton"
-                onClick={onCopyLink}
-            >
+            <Button icon={<LinkOutlined />} className="ShareSection__nativeButton" onClick={onCopyLink}>
                 Copy Link
             </Button>
         ),
@@ -76,12 +72,7 @@ const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
         key: "linkedin",
         render: ({ url, title, text }: SharePayload) => (
-            <LinkedinShareButton
-                url={url}
-                title={title}
-                summary={text}
-                className="ShareSection__iconButton"
-            >
+            <LinkedinShareButton url={url} title={title} summary={text} className="ShareSection__iconButton">
                 <LinkedinIcon size={40} round />
             </LinkedinShareButton>
         ),
@@ -103,48 +94,38 @@ const SHARE_BUTTONS: ShareButtonConfig[] = [
         ),
     },
 ];
-
-export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps> = ({
-    label,
-    title,
-    text,
-    url,
-    subscriptionTarget,
-}) => {
+export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps> = (props) => {
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
-    const shareUrl = url ?? window.location.href;
+    const shareUrl = props.url ?? window.location.href;
     const mobileShareActionSize = "middle";
     const payload = {
-        title,
-        text,
+        title: props.title,
+        text: props.text,
         url: shareUrl,
         onCopyLink: async () => {
             await copyLink(shareUrl);
         },
-        subscriptionTarget,
+        subscriptionTarget: props.subscriptionTarget,
     };
-
     if (!md) {
         return (
             <>
                 {messageContextHolder}
                 <Flex vertical gap={12} className="ShareSection ShareSection--mobile">
-                    <Typography.Text className="ShareSection__label">
-                        {label}
-                    </Typography.Text>
-                    {subscriptionTarget ? (
+                    <Typography.Text className="ShareSection__label">{props.label}</Typography.Text>
+                    {props.subscriptionTarget ? (
                         <Space.Compact block className="ShareSection__mobileActions">
                             <NativeShareButton
                                 url={shareUrl}
-                                title={title}
-                                text={text}
+                                title={props.title}
+                                text={props.text}
                                 label="Share"
                                 size={mobileShareActionSize}
                                 className="NativeShareButton ShareSection__mobileButton"
                             />
                             <SubscribeButton
-                                {...subscriptionTarget}
+                                {...props.subscriptionTarget}
                                 size={mobileShareActionSize}
                                 className="ShareSection__mobileButton"
                             />
@@ -152,8 +133,8 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                     ) : (
                         <NativeShareButton
                             url={shareUrl}
-                            title={title}
-                            text={text}
+                            title={props.title}
+                            text={props.text}
                             label="Share"
                             size={mobileShareActionSize}
                             className="NativeShareButton ShareSection__mobileButton"
@@ -163,20 +144,15 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
             </>
         );
     }
-
     return (
         <>
             {messageContextHolder}
             <Flex justify="space-between" align="center" wrap gap="16px" className="ShareSection">
-                <Typography.Text className="ShareSection__label">
-                    {label}
-                </Typography.Text>
+                <Typography.Text className="ShareSection__label">{props.label}</Typography.Text>
                 <Flex wrap gap="12px" align="center" className="ShareSection__actions">
                     <Space size={[12, 12]} wrap className="ShareSection__buttons">
                         {SHARE_BUTTONS.map(({ key, render }) => (
-                            <React.Fragment key={key}>
-                                {render(payload)}
-                            </React.Fragment>
+                            <React.Fragment key={key}>{render(payload)}</React.Fragment>
                         ))}
                     </Space>
                 </Flex>

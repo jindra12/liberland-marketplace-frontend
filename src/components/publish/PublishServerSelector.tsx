@@ -1,47 +1,39 @@
-import React from "react";
-import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
+import * as React from "react";
+
 import { ArrowRightOutlined, CheckCircleFilled, CloudServerOutlined } from "@ant-design/icons";
+import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
+
 import { URL } from "../../types";
-import { getSyndicationHost, getSyndicationName } from "../../utils";
+import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 
 export interface PublishServerSelectorProps {
     urls: URL[];
     onConfirm: (url: string) => void;
 }
-
-export const PublishServerSelector: React.FunctionComponent<PublishServerSelectorProps> = ({
-    urls,
-    onConfirm,
-}) => {
-    const items = React.useMemo(() => (
-        [...urls].sort((left, right) => {
-            if (left.name === "Main" && right.name !== "Main") {
-                return -1;
-            }
-            if (right.name === "Main" && left.name !== "Main") {
-                return 1;
-            }
-            if (left.enabled !== right.enabled) {
-                return left.enabled ? -1 : 1;
-            }
-            return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
-        })
-    ), [urls]);
-    const [selectedUrl, setSelectedUrl] = React.useState<string>();
-
-    React.useEffect(() => {
-        if (!items.length) {
-            setSelectedUrl(undefined);
-            return;
-        }
-
-        if (!selectedUrl || !items.some((entry) => entry.value === selectedUrl)) {
-            setSelectedUrl(items[0].value);
-        }
-    }, [items, selectedUrl]);
-
+export const PublishServerSelector: React.FunctionComponent<PublishServerSelectorProps> = (props) => {
+    const items = React.useMemo(
+        () =>
+            [...props.urls].sort((left, right) => {
+                if (left.name === "Main" && right.name !== "Main") {
+                    return -1;
+                }
+                if (right.name === "Main" && left.name !== "Main") {
+                    return 1;
+                }
+                if (left.enabled !== right.enabled) {
+                    return left.enabled ? -1 : 1;
+                }
+                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", {
+                    sensitivity: "base",
+                });
+            }),
+        [props.urls],
+    );
+    const [selectedUrlState, setSelectedUrlState] = React.useState<string>();
+    const selectedUrl = items.some((entry) => entry.value === selectedUrlState)
+        ? selectedUrlState
+        : items[0]?.value;
     const selectedServer = items.find((entry) => entry.value === selectedUrl);
-
     return (
         <div className="PublishServer">
             <Typography.Title level={2}>Choose where to publish</Typography.Title>
@@ -54,8 +46,8 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                     <div className="PublishServer__list">
                         {items.map((endpoint) => {
                             const isSelected = endpoint.value === selectedUrl;
-                            const description = endpoint.description || "Publish through this syndicated marketplace endpoint.";
-
+                            const description =
+                                endpoint.description || "Publish through this syndicated marketplace endpoint.";
                             return (
                                 <Card
                                     key={endpoint.value}
@@ -63,17 +55,22 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                     role="button"
                                     tabIndex={0}
                                     className={`PublishServer__card${isSelected ? " PublishServer__card--selected" : ""}`}
-                                    onClick={() => setSelectedUrl(endpoint.value)}
+                                    onClick={() => setSelectedUrlState(endpoint.value)}
                                     onKeyDown={(event) => {
                                         if (event.key !== "Enter" && event.key !== " ") {
                                             return;
                                         }
-
                                         event.preventDefault();
-                                        setSelectedUrl(endpoint.value);
+                                        setSelectedUrlState(endpoint.value);
                                     }}
                                 >
-                                    <Flex justify="space-between" align="flex-start" gap={20} wrap className="PublishServer__cardRow">
+                                    <Flex
+                                        justify="space-between"
+                                        align="flex-start"
+                                        gap={20}
+                                        wrap
+                                        className="PublishServer__cardRow"
+                                    >
                                         <Flex vertical gap={14} className="PublishServer__cardContent">
                                             <Flex align="center" gap={10} wrap className="PublishServer__cardHeader">
                                                 <CloudServerOutlined className="PublishServer__icon" />
@@ -92,9 +89,7 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                                 {description}
                                             </Typography.Paragraph>
                                             <div className="PublishServer__urlBlock">
-                                                <Typography.Text type="secondary">
-                                                    Endpoint URL
-                                                </Typography.Text>
+                                                <Typography.Text type="secondary">Endpoint URL</Typography.Text>
                                                 <Typography.Text className="PublishServer__url">
                                                     {endpoint.value}
                                                 </Typography.Text>
@@ -125,15 +120,13 @@ export const PublishServerSelector: React.FunctionComponent<PublishServerSelecto
                                 <Typography.Text type="secondary">
                                     {getSyndicationHost(selectedServer.value)}
                                 </Typography.Text>
-                                <Typography.Text className="PublishServer__url">
-                                    {selectedServer.value}
-                                </Typography.Text>
+                                <Typography.Text className="PublishServer__url">{selectedServer.value}</Typography.Text>
                             </Flex>
                             <Button
                                 type="primary"
                                 size="large"
                                 icon={<ArrowRightOutlined />}
-                                onClick={() => onConfirm(selectedServer.value)}
+                                onClick={() => props.onConfirm(selectedServer.value)}
                             >
                                 Continue to publish
                             </Button>

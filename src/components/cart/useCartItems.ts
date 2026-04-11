@@ -2,16 +2,9 @@ import * as React from "react";
 import { useQueries } from "@tanstack/react-query";
 import useLocalStorage from "use-local-storage";
 import type { ListProductsQuery } from "../../generated/graphql";
-import {
-    CartBySecretDocument,
-    CartBySecretQuery,
-    CartBySecretQueryVariables,
-} from "../../generated/graphql";
+import { CartBySecretDocument, CartBySecretQuery, CartBySecretQueryVariables } from "../../generated/graphql";
 import { gqlFetcher } from "../../gqlFetcher";
-import {
-    CartSecretEntry,
-    CART_SECRETS_INDEX_KEY,
-} from "./cartSecrets";
+import { CartSecretEntry, CART_SECRETS_INDEX_KEY } from "./cartSecrets";
 
 type ProductDoc = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
 type CartDoc = NonNullable<NonNullable<CartBySecretQuery["Carts"]>["docs"]>[number];

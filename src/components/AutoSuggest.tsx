@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+
 import { AutoComplete, AutoCompleteProps, Avatar, Drawer, Flex, Input, InputRef } from "antd";
 
 import { SearchOption } from "../types";
@@ -50,9 +51,7 @@ export const AutoSuggest: React.FunctionComponent<AutoSuggestProps> = (props) =>
                             ...option,
                             label: (
                                 <Flex align="center" gap="8px">
-                                    {option.image && (
-                                        <Avatar src={option.image} size={24} />
-                                    )}
+                                    {option.image && <Avatar src={option.image} size={24} />}
                                     {option.label}
                                 </Flex>
                             ),

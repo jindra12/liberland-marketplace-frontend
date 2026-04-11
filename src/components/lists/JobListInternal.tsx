@@ -1,18 +1,23 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Flex, Grid } from "antd";
-import { ListJobsQuery } from "../../generated/graphql";
-import { ApplyButton } from "../ApplyButton";
-import { AppList } from "../AppList";
-import { formatSalary, formatEmploymentType, getImage } from "../../utils";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { getJobMeta } from "../shared/jobDerived";
-import { JobDetailsSummary } from "../shared/JobDetailsSummary";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+
 import { UseQueryResult } from "@tanstack/react-query";
+
+import { Avatar, Flex, Grid } from "antd";
+
+import { ListJobsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { AppList } from "../AppList";
+import { ApplyButton } from "../ApplyButton";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatEmploymentType, formatSalary } from "../shared/job/utils";
+import { getJobMeta } from "../shared/jobDerived";
+import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 export interface JobListInternalProps {
     query: UseQueryResult<ListJobsQuery, unknown>;
@@ -72,11 +77,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     ) : undefined;
                 },
                 body: (job) => {
-                    const salary = formatSalary(
-                        job.salaryRange?.min,
-                        job.salaryRange?.max,
-                        job.salaryRange?.currency
-                    );
+                    const salary = formatSalary(job.salaryRange?.min, job.salaryRange?.max, job.salaryRange?.currency);
                     const { bounty, positions } = getJobMeta(job);
                     const isInactive = job.isActive === false;
                     const employmentType = formatEmploymentType(job.employmentType);
@@ -101,7 +102,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                         </div>
                     );
                 },
-                actions: (job) => (
+                actions: (job) =>
                     md ? (
                         <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
                             <ListShareDetailButtons
@@ -133,8 +134,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                             />
                             <ApplyButton url={job.applyUrl} block />
                         </Flex>
-                    )
-                ),
+                    ),
             }}
         />
     );

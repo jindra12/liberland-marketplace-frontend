@@ -1,18 +1,23 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
 import { UseQueryResult } from "@tanstack/react-query";
+
 import { DollarOutlined } from "@ant-design/icons";
+import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
 import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
-import { AppList } from "../AppList";
-import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
-import { CartItemCount } from "../cart/CartItemCount";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { AppList } from "../AppList";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
+import { CartItemCount } from "../cart/CartItemCount";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
 type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
 type ProductListItem =
@@ -22,19 +27,21 @@ type ProductListItem =
 type ProductListSourceQuery = {
     source: "query";
     query: UseQueryResult<ProductListQuery, unknown>;
+    setPage: (page: number) => void;
+    page: number;
 };
 
 type ProductListSourceStatic = {
     source: "static";
     products: ProductListItem[];
+    setPage?: (page: number) => void;
+    page?: number;
     hasNextPage: boolean;
     isLoading: boolean;
     refetch: () => void | Promise<unknown>;
 };
 
 type ProductServiceListInternalProps = {
-    setPage: (page: number) => void;
-    page: number;
     title?: string;
     showOrderNowFallback?: boolean;
 } & (ProductListSourceQuery | ProductListSourceStatic);
@@ -44,20 +51,14 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
     const addToCartSize = screens.lg ? "large" : "middle";
     const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
-    const isLoading = props.source === "query"
-        ? props.query.isLoading
-        : props.isLoading;
-    const refetch = props.source === "query"
-        ? props.query.refetch
-        : props.refetch;
+    const isLoading = props.source === "query" ? props.query.isLoading : props.isLoading;
+    const refetch = props.source === "query" ? props.query.refetch : props.refetch;
     const handleRefetch = () => {
         refetch();
     };
     const allItems = useAccumulatedDocs(
-        props.source === "query"
-            ? (props.query.data?.Products?.docs || [])
-            : props.products,
-        props.page
+        props.source === "query" ? props.query.data?.Products?.docs || [] : props.products,
+        props.page ?? 1,
     );
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -76,7 +77,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
         <AppList
             hasMore={hasMore}
             items={items}
-            next={() => props.setPage(props.page + 1)}
+            next={() => props.setPage?.((props.page ?? 1) + 1)}
             refetch={handleRefetch}
             loading={isLoading}
             title={props.title || "Products / Services"}
@@ -96,7 +97,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
-                        <AddToCartButton
+                        <AddToCartButtonGuard
                             productId={product.id}
                             serverURL={product.serverURL!}
                             block={isMobile}
@@ -112,15 +113,14 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     return isMobile ? (
                         <Flex vertical gap="12px" className="ProductList__actionsRow">
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
-                                )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
+                                    )}
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             <ListShareDetailButtons
                                 compact
@@ -136,23 +136,26 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                 }}
                             />
                             {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">
-                                    {purchaseControl}
-                                </div>
+                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
                             ) : null}
                         </Flex>
                     ) : (
-                        <Flex align="center" justify="space-between" gap="16px" wrap className="ProductList__actionsRow">
+                        <Flex
+                            align="center"
+                            justify="space-between"
+                            gap="16px"
+                            wrap
+                            className="ProductList__actionsRow"
+                        >
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
-                                )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
+                                    )}
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
                             <Flex gap="12px" wrap justify="flex-end" className="ProductList__controls">
@@ -169,28 +172,25 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     }}
                                 />
                                 {purchaseControl ? (
-                                    <div className="ProductList__purchaseControl">
-                                        {purchaseControl}
-                                    </div>
+                                    <div className="ProductList__purchaseControl">{purchaseControl}</div>
                                 ) : null}
                             </Flex>
                         </Flex>
                     );
                 },
-                avatar: (product) => product.image?.url ? (
-                    <Link to={`/products-services/${product.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={getImage(product) || getImage(product.company)}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
+                avatar: (product) =>
+                    product.image?.url ? (
+                        <Link to={`/products-services/${product.id}`}>
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={getImage(product) || getImage(product.company)}
+                                className="EntityList__avatar"
+                            />
+                        </Link>
+                    ) : undefined,
                 description: (product) => (
-                    <Markdown className="Markdown--clamp3 EntityList__description">
-                        {product.description}
-                    </Markdown>
+                    <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>
                 ),
                 body: () => null,
             }}

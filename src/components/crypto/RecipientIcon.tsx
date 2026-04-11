@@ -1,7 +1,9 @@
 import * as React from "react";
+
 import Image from "antd/es/image";
-import { Chains } from "../../types";
+
 import { optionsProps } from "../../constants";
+import { Chains } from "../../types";
 
 export interface RecipientIconProps {
     chain: Chains;
@@ -18,10 +20,10 @@ export const RecipientIcon: React.FunctionComponent<RecipientIconProps> = (props
     };
     switch (props.chain) {
         case "Ethereum":
-            return <Image src={require("../../assets/ethereum.svg").default} {...modifiedProps} />;
+            return <Image src="/ethereum.svg" {...modifiedProps} />;
         case "Solana":
-            return <Image src={require("../../assets/solana.svg").default} {...modifiedProps} />;
+            return <Image src="/solana.svg" {...modifiedProps} />;
         case "Tron":
-            return <Image src={require("../../assets/tron.svg").default} {...modifiedProps} />;
+            return <Image src="/tron.svg" {...modifiedProps} />;
     }
 };

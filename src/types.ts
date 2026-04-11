@@ -18,11 +18,10 @@ import type {
     Startup,
 } from "./generated/graphql";
 
-
 export type URL = {
-    enabled: boolean,
-    value: string,
-    name: string;
+    enabled: boolean;
+    value: string;
+    name: string | null;
     description?: string | null;
 };
 
@@ -33,7 +32,7 @@ export type SyndicationDoc = {
 };
 
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
-export type SearchOption = { key: string; value: string; id: string; label?: ReactNode, image?: string | null };
+export type SearchOption = { key: string; value: string; id: string; label?: ReactNode; image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 export type ImageDoc = {
     __typename?: "Company" | "Identity" | "Job" | "Product" | "Startup";
@@ -136,9 +135,29 @@ export type JobDetailsSummaryProps = {
 export type EntityCommentsSectionProps = {
     targetId: string;
     relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    limit?: number;
-    placeholder?: string;
     className?: string;
+    serverURL?: string | null;
+};
+
+export type EntityCommentsSectionDisplayProps = {
+    className?: string;
+    commentData: CommentDataItem[];
+    commentSectionStyles: CommentSectionStyles;
+    commentThemeVars: CommentThemeVars;
+    commentsCount?: number;
+    currentUser: CommentCurrentUser;
+    hasMore: boolean;
+    isAnonymous: boolean;
+    isError: boolean;
+    isLoading: boolean;
+    onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
+    onEditAction: (payload: CommentEditPayload) => Promise<void>;
+    onLoadMore: () => void;
+    onLogin: () => void;
+    onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
+    onSignUp: () => void;
+    onSubmitAction: (payload: CommentSubmitPayload) => Promise<void>;
+    placeholder: string;
 };
 
 export type CommentDoc = NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number];

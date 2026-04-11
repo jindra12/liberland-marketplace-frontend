@@ -1,65 +1,70 @@
 import * as React from "react";
-import { Alert, Flex, Form, Result, Spin, Typography, message } from "antd";
-import { useQueryClient } from "@tanstack/react-query";
-import useLocalStorage from "use-local-storage";
-import type { Order as OrderType } from "../generated/graphql";
+
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
-import { useCreateOrderMutation, useDeleteCartMutation, useUpdateOrderMutation } from "./hooks";
-import { CartSummary, useCartItems } from "./cart/useCartItems";
+
+import { useQueryClient } from "@tanstack/react-query";
+
+import { Alert, Flex, Result, Spin, Typography, message } from "antd";
+import useLocalStorage from "use-local-storage";
+import { useTimeout } from "usehooks-ts";
+
+import type { Order as OrderType } from "../generated/graphql";
+
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
+import { CartSummary, useCartItems } from "./cart/useCartItems";
+import { useEndpointContext } from "./EndpointContext";
+import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
+import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
-import type { OrderFormValues, SubmittedOrder } from "./order/types";
+import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
+import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
+import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
 import { RouteButton } from "./RouteButton";
-import {
-    collectRequiredChainsForCarts,
-    inferNameParts,
-} from "../utils";
 
 const Order: React.FunctionComponent = () => {
-    const [form] = Form.useForm<OrderFormValues>();
     const queryClient = useQueryClient();
     const auth = useAuth();
     const navigate = useNavigate();
+    const { enabled } = useEndpointContext();
 
-    const [page, setPage] = React.useState(0);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
     const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
+        SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
+        undefined,
+    );
 
     const { isLoading, carts, products, refetch, totalQuantity } = useCartItems();
+    const meUsersQuery = useMeUserQuery(undefined, { enabled: Boolean(auth.user) });
     const createOrderMutation = useCreateOrderMutation();
     const deleteCartMutation = useDeleteCartMutation();
     const updateOrderMutation = useUpdateOrderMutation();
 
     const cartsWithItems = React.useMemo(() => carts.filter((cart) => cart.items.length > 0), [carts]);
     const requiredChains = React.useMemo(() => collectRequiredChainsForCarts(cartsWithItems), [cartsWithItems]);
+    const candidateProfileAddresses = React.useMemo(
+        () => buildProfileShippingAddresses(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
+    const profileUsersByUrl = React.useMemo(
+        () => buildPaymentProfileUsersByUrl(meUsersQuery.data, enabled),
+        [enabled, meUsersQuery.data],
+    );
+    const { profileEmail, prefillFirstName, prefillLastName } = React.useMemo(
+        () => buildOrderPrefill(meUsersQuery.data),
+        [meUsersQuery.data],
+    );
 
-    const profile = auth.user?.profile;
-    const profileEmail = profile?.email;
-    const profileGivenName = profile?.given_name;
-    const profileFamilyName = profile?.family_name;
-    const profileName = profile?.name;
-    const inferredNames = inferNameParts(profileName);
-
-    const prefillFirstName = profileGivenName || inferredNames.firstName;
-    const prefillLastName = profileFamilyName || inferredNames.lastName;
-
-    React.useEffect(() => {
-        if (!showPaymentSuccess) {
-            return;
-        }
-
-        const timeout = window.setTimeout(() => {
+    useTimeout(
+        () => {
             navigate("/");
-        }, 4000);
-
-        return () => {
-            window.clearTimeout(timeout);
-        };
-    }, [navigate, showPaymentSuccess]);
+        },
+        showPaymentSuccess ? 4000 : null,
+    );
 
     const updatePayerAddress = async (entry: SubmittedOrder, walletAddress: string) => {
         if (!entry.order.id) {
@@ -83,11 +88,6 @@ const Order: React.FunctionComponent = () => {
     };
 
     const onSubmit = async (values: OrderFormValues) => {
-        if (cartsWithItems.length === 0) {
-            message.info("Your cart is empty");
-            return;
-        }
-
         setShowPaymentSuccess(false);
         setIsSubmitting(true);
 
@@ -137,23 +137,31 @@ const Order: React.FunctionComponent = () => {
                 });
             }
 
-            const summary = ordered.reduce((acc, result) => {
-                return {
-                    ...acc,
-                    submittedCarts: acc.submittedCarts + 1,
-                    submittedOrders: [...acc.submittedOrders, {
-                        url: result.cart.url,
-                        order: result.order,
-                    }],
-                };
-            }, {
-                submittedCarts: 0,
-                submittedOrders: [] as SubmittedOrder[],
-            });
+            const summary = ordered.reduce(
+                (acc, result) => {
+                    return {
+                        ...acc,
+                        submittedCarts: acc.submittedCarts + 1,
+                        submittedOrders: [
+                            ...acc.submittedOrders,
+                            {
+                                url: result.cart.url,
+                                order: result.order,
+                            },
+                        ],
+                    };
+                },
+                {
+                    submittedCarts: 0,
+                    submittedOrders: [] as SubmittedOrder[],
+                },
+            );
 
             if (summary.submittedOrders.length > 0) {
                 const submittedCartKeys = new Set(ordered.map((entry) => `${entry.cart.url}::${entry.cart.secret}`));
-                setCartSecrets((prev) => (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)));
+                setCartSecrets((prev) =>
+                    (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)),
+                );
             }
 
             setSubmittedOrders(summary.submittedOrders);
@@ -168,17 +176,11 @@ const Order: React.FunctionComponent = () => {
                 return;
             }
 
-            if (summary.submittedCarts === 0) {
-                message.error("No products submitted");
-                return;
-            }
-
             message.warning("Order was partially created");
         } catch (error) {
             console.error("Order creation failed", error);
-            const errorMessage = error instanceof Error && error.message
-                ? error.message
-                : "Unexpected error while creating order";
+            const errorMessage =
+                error instanceof Error && error.message ? error.message : "Unexpected error while creating order";
             message.error(`Could not create order: ${errorMessage}`);
         } finally {
             setIsSubmitting(false);
@@ -231,23 +233,30 @@ const Order: React.FunctionComponent = () => {
             <Typography.Title level={2}>Order</Typography.Title>
             {submittedOrders.length > 0 ? (
                 <OrderPaymentStep
+                    onPaymentWalletRemembered={async () => {
+                        await meUsersQuery.refetch();
+                    }}
                     submittedOrders={submittedOrders}
                     onPayerAddressSelected={updatePayerAddress}
                     onAllPaymentsComplete={() => {
                         setShowPaymentSuccess(true);
                     }}
+                    profileUsersByUrl={profileUsersByUrl}
                 />
             ) : (
                 <OrderCreateStep
-                    form={form}
                     products={products}
                     isProductsLoading={isLoading}
                     refetchProducts={refetch}
                     onSubmit={onSubmit}
-                    page={page}
-                    setPage={setPage}
                     isSubmitting={isSubmitting}
                     cartsWithItemsCount={cartsWithItems.length}
+                    candidateProfileAddresses={candidateProfileAddresses}
+                    isLoadingProfileAddresses={meUsersQuery.isLoading}
+                    savedShippingAddress={savedShippingAddress}
+                    onSelectSavedShippingAddress={(id) => {
+                        setSavedShippingAddress(candidateProfileAddresses.find((address) => address.id === id));
+                    }}
                     profileEmail={profileEmail}
                     prefillFirstName={prefillFirstName}
                     prefillLastName={prefillLastName}

@@ -26,7 +26,9 @@
 .ShareSection__iconButton {
     display: inline-flex;
     border-radius: 999px;
-    transition: transform 0.18s ease, filter 0.18s ease;
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .ShareSection__iconButton:hover {
@@ -66,6 +68,19 @@
 
 .ShareSection__mobileButton.ant-btn {
     width: 100%;
+    justify-content: center;
+}
+
+.ListShareDetailButtons--stacked {
+    width: 100%;
+    align-items: stretch;
+}
+
+.ListShareDetailButtons--stacked .ListShareDetailButtons__button {
+    width: 100%;
+}
+
+.ListShareDetailButtons--stacked .ant-btn {
     justify-content: center;
 }
 
@@ -111,7 +126,9 @@
 .rws-icon {
     border-radius: 14px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    transition: transform 0.18s ease, filter 0.18s ease;
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .rws-icon:hover {

@@ -1,26 +1,31 @@
-import React from "react";
-import { Button, Result, Space, message } from "antd";
+import * as React from "react";
+
+import { useAuth } from "react-oidc-context";
+
 import { CheckCircleOutlined, MailOutlined } from "@ant-design/icons";
 import useCountdown from "@bradgarropy/use-countdown";
-import { useAuth } from "react-oidc-context";
+import { Button, Result, Space, message } from "antd";
+
 import { useSendVerificationEmailMutation } from "../../authApi";
 
 interface EmailVerificationWarningProps {
     email: string;
     url: string;
 }
-
-export const EmailVerificationWarning: React.FunctionComponent<EmailVerificationWarningProps> = ({ email, url }) => {
+export const EmailVerificationWarning: React.FunctionComponent<EmailVerificationWarningProps> = (props) => {
     const auth = useAuth();
     const sendMutation = useSendVerificationEmailMutation();
-    const countdown = useCountdown({ minutes: 1, seconds: 0, autoStart: false });
+    const countdown = useCountdown({
+        minutes: 1,
+        seconds: 0,
+        autoStart: false,
+    });
     const [checking, setChecking] = React.useState(false);
-
     const handleResend = async () => {
         try {
             await sendMutation.mutateAsync({
-                email,
-                url,
+                email: props.email,
+                url: props.url,
             });
             message.success("Verification email sent");
             countdown.reset();
@@ -29,7 +34,6 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
             message.error("Failed to send verification email");
         }
     };
-
     const handleCheckVerification = async () => {
         setChecking(true);
         try {
@@ -40,7 +44,6 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
             setChecking(false);
         }
     };
-
     return (
         <div className="Publish">
             <Result
@@ -58,11 +61,7 @@ export const EmailVerificationWarning: React.FunctionComponent<EmailVerification
                         >
                             {countdown.isRunning ? `Resend in ${countdown.formatted}` : "Resend verification email"}
                         </Button>
-                        <Button
-                            icon={<CheckCircleOutlined />}
-                            loading={checking}
-                            onClick={handleCheckVerification}
-                        >
+                        <Button icon={<CheckCircleOutlined />} loading={checking} onClick={handleCheckVerification}>
                             I've verified my email
                         </Button>
                     </Space>

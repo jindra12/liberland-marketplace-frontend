@@ -36,10 +36,26 @@ type QueryCase = {
 
 const cases: QueryCase[] = [
     { name: "CompanyById", document: CompanyByIdDocument, variables: { id: "company-id" } },
-    { name: "ListCompaniesByIdentity", document: ListCompaniesByIdentityDocument, variables: { identityId: "identity-id" } },
-    { name: "ListCompaniesBySecondaryIdentity", document: ListCompaniesBySecondaryIdentityDocument, variables: { identityId: "identity-id" } },
-    { name: "SearchCompaniesByIdentity", document: SearchCompaniesByIdentityDocument, variables: { identityId: "identity-id", searchTerm: "term" } },
-    { name: "SearchCompaniesBySecondaryIdentity", document: SearchCompaniesBySecondaryIdentityDocument, variables: { identityId: "identity-id", searchTerm: "term" } },
+    {
+        name: "ListCompaniesByIdentity",
+        document: ListCompaniesByIdentityDocument,
+        variables: { identityId: "identity-id" },
+    },
+    {
+        name: "ListCompaniesBySecondaryIdentity",
+        document: ListCompaniesBySecondaryIdentityDocument,
+        variables: { identityId: "identity-id" },
+    },
+    {
+        name: "SearchCompaniesByIdentity",
+        document: SearchCompaniesByIdentityDocument,
+        variables: { identityId: "identity-id", searchTerm: "term" },
+    },
+    {
+        name: "SearchCompaniesBySecondaryIdentity",
+        document: SearchCompaniesBySecondaryIdentityDocument,
+        variables: { identityId: "identity-id", searchTerm: "term" },
+    },
     { name: "ListCompanies", document: ListCompaniesDocument },
     { name: "SearchCompanies", document: SearchCompaniesDocument, variables: { searchTerm: "term" } },
     { name: "IdentityById", document: IdentityByIdDocument, variables: { id: "identity-id" } },
@@ -47,14 +63,30 @@ const cases: QueryCase[] = [
     { name: "SearchIdentities", document: SearchIdentitiesDocument, variables: { searchTerm: "term" } },
     { name: "ListJobsByCompany", document: ListJobsByCompanyDocument, variables: { companyId: "company-id" } },
     { name: "ListJobsByIdentity", document: ListJobsByIdentityDocument, variables: { identityId: "identity-id" } },
-    { name: "ListJobsBySecondaryIdentity", document: ListJobsBySecondaryIdentityDocument, variables: { identityId: "identity-id" } },
-    { name: "SearchJobsByCompany", document: SearchJobsByCompanyDocument, variables: { companyId: "company-id", searchTerm: "term" } },
-    { name: "SearchJobsBySecondaryIdentity", document: SearchJobsBySecondaryIdentityDocument, variables: { identityId: "identity-id", searchTerm: "term" } },
+    {
+        name: "ListJobsBySecondaryIdentity",
+        document: ListJobsBySecondaryIdentityDocument,
+        variables: { identityId: "identity-id" },
+    },
+    {
+        name: "SearchJobsByCompany",
+        document: SearchJobsByCompanyDocument,
+        variables: { companyId: "company-id", searchTerm: "term" },
+    },
+    {
+        name: "SearchJobsBySecondaryIdentity",
+        document: SearchJobsBySecondaryIdentityDocument,
+        variables: { identityId: "identity-id", searchTerm: "term" },
+    },
     { name: "JobById", document: JobByIdDocument, variables: { id: "job-id" } },
     { name: "ListJobs", document: ListJobsDocument },
     { name: "SearchJobs", document: SearchJobsDocument, variables: { searchTerm: "term" } },
     { name: "ListProductsByCompany", document: ListProductsByCompanyDocument, variables: { companyId: "company-id" } },
-    { name: "SearchProductsByCompany", document: SearchProductsByCompanyDocument, variables: { companyId: "company-id", searchTerm: "term" } },
+    {
+        name: "SearchProductsByCompany",
+        document: SearchProductsByCompanyDocument,
+        variables: { companyId: "company-id", searchTerm: "term" },
+    },
     { name: "ProductById", document: ProductByIdDocument, variables: { id: "product-id" } },
     { name: "ListProducts", document: ListProductsDocument },
     { name: "SearchProducts", document: SearchProductsDocument, variables: { searchTerm: "term" } },
@@ -68,7 +100,7 @@ describe("query status checks", () => {
         mockedAxios.post.mockReset();
     });
 
-    it.each(cases)("$name returns expected HTTP status", async ({ document, variables }) => {
+    it.each(cases)("$name returns expected HTTP status", async ({ document, variables }: QueryCase) => {
         mockedAxios.post.mockResolvedValueOnce({
             status: expectedStatus,
             statusText: "OK",

@@ -1,10 +1,13 @@
 import * as React from "react";
-import { Flex, Space } from "antd";
+
+import { Flex, Grid, Space } from "antd";
 import type { ButtonProps } from "antd";
+
+import { RouteButton } from "../RouteButton";
+
 import { NativeShareButton } from "./NativeShareButton";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
-import { RouteButton } from "../RouteButton";
 
 type ListShareDetailButtonsProps = {
     detailPath: string;
@@ -12,65 +15,70 @@ type ListShareDetailButtonsProps = {
     text: string;
     size?: ButtonProps["size"];
     compact?: boolean;
-    desktopDetailButtonType?: ButtonProps["type"];
     subscriptionTarget?: SubscriptionTarget | null;
 };
-
-export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = ({
-    detailPath,
-    title,
-    text,
-    size = "large",
-    compact = false,
-    desktopDetailButtonType,
-    subscriptionTarget,
-}) => {
+export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = (props) => {
+    const { sm } = Grid.useBreakpoint();
+    const size = props.size === undefined ? "large" : props.size;
+    const compact = props.compact === undefined ? false : props.compact;
     const compactShareActionSize = compact && size === "large" ? "middle" : size;
+
+    if (!sm) {
+        return (
+            <Flex vertical gap="8px" className="ListShareDetailButtons ListShareDetailButtons--stacked">
+                <NativeShareButton
+                    path={props.detailPath}
+                    title={props.title}
+                    text={props.text}
+                    size={compactShareActionSize}
+                    className="NativeShareButton ListShareDetailButtons__button"
+                />
+                {props.subscriptionTarget ? (
+                    <SubscribeButton
+                        {...props.subscriptionTarget}
+                        size={compactShareActionSize}
+                        className="ListShareDetailButtons__button"
+                    />
+                ) : null}
+                <RouteButton
+                    to={props.detailPath}
+                    type="primary"
+                    size={size}
+                    className="ActionBtn ListShareDetailButtons__button"
+                >
+                    Details
+                </RouteButton>
+            </Flex>
+        );
+    }
 
     return compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
             <NativeShareButton
-                path={detailPath}
-                title={title}
-                text={text}
+                path={props.detailPath}
+                title={props.title}
+                text={props.text}
                 size={compactShareActionSize}
                 className="NativeShareButton"
             />
-            {subscriptionTarget ? (
-                <SubscribeButton
-                    {...subscriptionTarget}
-                    size={compactShareActionSize}
-                />
+            {props.subscriptionTarget ? (
+                <SubscribeButton {...props.subscriptionTarget} size={compactShareActionSize} />
             ) : null}
-            <RouteButton
-                to={detailPath}
-                size={size}
-                className="ActionBtn"
-            >
+            <RouteButton to={props.detailPath} size={size} className="ActionBtn">
                 Details
             </RouteButton>
         </Space.Compact>
     ) : (
         <Flex wrap gap="12px" className="ListShareDetailButtons">
             <NativeShareButton
-                path={detailPath}
-                title={title}
-                text={text}
+                path={props.detailPath}
+                title={props.title}
+                text={props.text}
                 size={size}
                 className="NativeShareButton"
             />
-            {subscriptionTarget ? (
-                <SubscribeButton
-                    {...subscriptionTarget}
-                    size={size}
-                />
-            ) : null}
-            <RouteButton
-                to={detailPath}
-                type={desktopDetailButtonType}
-                size={size}
-                className="ActionBtn"
-            >
+            {props.subscriptionTarget ? <SubscribeButton {...props.subscriptionTarget} size={size} /> : null}
+            <RouteButton to={props.detailPath} type="primary" size={size} className="ActionBtn">
                 Details
             </RouteButton>
         </Flex>

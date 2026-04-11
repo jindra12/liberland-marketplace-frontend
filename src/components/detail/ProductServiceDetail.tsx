@@ -1,33 +1,28 @@
 import * as React from "react";
-import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
-import { Avatar,
-    Button,
-    Descriptions,
-    Divider,
-    Flex,
-    Grid,
-    Tag,
-    Typography
- } from "antd";
+
 import { useAuth } from "react-oidc-context";
-import {
-    Comment_ReplyPostRelationshipInputRelationTo,
-} from "../../generated/graphql";
+import { useParams } from "react-router-dom";
+
+import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
+
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
+import { CartItemCount } from "../cart/CartItemCount";
+import { EntityCommentsSection } from "../comments/EntityCommentsSection";
+import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
-import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { IdentityGroups } from "./IdentityGroups";
-import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
-import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
-import { formatUsdFromCents, parseActionLink, getImage, isProductPurchasable } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
-import { CartItemCount } from "../cart/CartItemCount";
-import { DetailShareSection } from "../share/DetailShareSection";
-import { DetailBackButton } from "./DetailBackButton";
 import { RouteButton } from "../RouteButton";
+import { DetailShareSection } from "../share/DetailShareSection";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
+import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
+
+import { DetailBackButton } from "./DetailBackButton";
+import { IdentityGroups } from "./IdentityGroups";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -35,10 +30,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
     const auth = useAuth();
     const query = useProductByIdQuery({ id: id! });
     const companyId = query.data?.Product?.company?.id;
-    const companyQuery = useCompanyByIdQuery(
-        { id: companyId || "" },
-        { enabled: Boolean(companyId) }
-    );
+    const companyQuery = useCompanyByIdQuery({ id: companyId || "" }, { enabled: Boolean(companyId) });
 
     return (
         <Loader query={query}>
@@ -47,20 +39,21 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const imageSrc = getImage(product) || getImage(product?.company);
                 const companyData = companyQuery.data?.Company;
                 const properties = (product?.properties ?? []).filter((property) => property?.key || property?.value);
-                const inventoryCount = typeof product?.inventory === "number"
-                    ? product.inventory
-                    : undefined;
-                const inventory = typeof inventoryCount === "number"
-                    ? inventoryCount.toLocaleString("en-US")
-                    : undefined;
+                const inventoryCount = typeof product?.inventory === "number" ? product.inventory : undefined;
+                const inventory =
+                    typeof inventoryCount === "number" ? inventoryCount.toLocaleString("en-US") : undefined;
                 const price = product?.priceInUSDEnabled ? formatUsdFromCents(product?.priceInUSD) : null;
-                const companyIdentity = companyData?.identity?.name ? {
-                    id: companyData.identity.id,
-                    name: companyData.identity.name,
-                } : product?.company?.identity?.name ? {
-                    id: product.company.identity.id,
-                    name: product.company.identity.name,
-                } : undefined;
+                const companyIdentity = companyData?.identity?.name
+                    ? {
+                          id: companyData.identity.id,
+                          name: companyData.identity.name,
+                      }
+                    : product?.company?.identity?.name
+                      ? {
+                            id: product.company.identity.id,
+                            name: product.company.identity.name,
+                        }
+                      : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
@@ -71,7 +64,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 const purchaseControl = product?.id ? (
                     canPurchase ? (
-                        <AddToCartButton
+                        <AddToCartButtonGuard
                             block
                             productId={product.id}
                             serverURL={product.serverURL!}
@@ -79,12 +72,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             maxAvailable={inventoryCount}
                         />
                     ) : orderNowLink ? (
-                        <Button
-                            block
-                            type="primary"
-                            href={orderNowLink}
-                            size={md ? "large" : "middle"}
-                        >
+                        <Button block type="primary" href={orderNowLink} size={md ? "large" : "middle"}>
                             Order Now!
                         </Button>
                     ) : null
@@ -92,16 +80,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
 
                 return (
                     <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
-                        <DetailPageTracker serverUrl={product?.serverURL ?? undefined} />
+                        <DetailPageTracker serverUrl={product?.serverURL} />
                         <DetailBackButton to="/products-services" label="Back to products / services" />
                         <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageSrc && (
-                                <Avatar
-                                    shape="circle"
-                                    size={md ? 120 : 72}
-                                    src={imageSrc}
-                                />
-                            )}
+                            {imageSrc && <Avatar shape="circle" size={md ? 120 : 72} src={imageSrc} />}
                             <Flex flex={1} vertical className="EntityDetail__headerBody">
                                 <Typography.Title level={1} className="EntityDetail__title">
                                     {product?.name}
@@ -129,20 +111,13 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                     {`Price: ${price}`}
                                                 </Tag>
                                             )}
-                                            {inventory && (
-                                                <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>
-                                            )}
-                                            <CartItemCount
-                                                productId={product.id}
-                                                serverURL={product.serverURL!}
-                                            />
+                                            {inventory && <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>}
+                                            <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                                         </Flex>
                                         {purchaseControl && (
                                             <>
                                                 <Divider className="ProductDetail__purchaseDivider" />
-                                                <div className="ProductDetail__purchaseControl">
-                                                    {purchaseControl}
-                                                </div>
+                                                <div className="ProductDetail__purchaseControl">{purchaseControl}</div>
                                             </>
                                         )}
                                     </div>
@@ -150,7 +125,9 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             </Flex>
                         </Flex>
                         {isOwner && (
-                            <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>Edit</RouteButton>
+                            <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
+                                Edit
+                            </RouteButton>
                         )}
                         <Divider />
                         <Flex gap="32px" vertical>
@@ -181,10 +158,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 <Divider />
                                 <Flex wrap gap="12px">
                                     {orderLink && (
-                                        <Button
-                                            type="primary"
-                                            href={orderLink}
-                                        >
+                                        <Button type="primary" href={orderLink}>
                                             Visit Website
                                         </Button>
                                     )}
@@ -199,17 +173,22 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             label="Share this product"
                             title={shareTitle}
                             text={shareText}
-                            subscriptionTarget={product ? {
-                                collection: "products",
-                                targetID: product.id,
-                                serverURL: product.serverURL,
-                                isSubscribed: product.isSubscribed,
-                            } : undefined}
+                            subscriptionTarget={
+                                product
+                                    ? {
+                                          collection: "products",
+                                          targetID: product.id,
+                                          serverURL: product.serverURL,
+                                          isSubscribed: product.isSubscribed,
+                                      }
+                                    : undefined
+                            }
                         />
                         <Divider />
                         <EntityCommentsSection
                             targetId={id!}
                             relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                            serverURL={product?.serverURL}
                         />
                     </Flex>
                 );

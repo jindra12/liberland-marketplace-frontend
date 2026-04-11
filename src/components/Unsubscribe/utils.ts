@@ -51,10 +51,14 @@ export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): Uns
     };
 };
 
-export const getNotificationDetailPath = (
-    collection: NotificationTargetCollection,
-    id: string,
-) => `/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}`;
+export const getNotificationDetailPath = (collection: NotificationTargetCollection, id: string) =>
+    `/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}`;
 
 export const isAlreadyUnsubscribedError = (error: unknown) =>
     error instanceof Error && MISSING_SUBSCRIPTION_PATTERN.test(error.message);
+
+export const toUnsubscribeLookupErrorMessage = (error: unknown) => {
+    return error instanceof Error
+        ? error.message
+        : "We couldn't load the item behind this unsubscribe link.";
+};

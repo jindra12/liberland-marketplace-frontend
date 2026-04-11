@@ -7,6 +7,11 @@ import type { CryptoChain } from "../../types";
 
 export type CreatedOrder = NonNullable<CreateOrderMutation["createOrder"]>;
 
+export type AddressWithEmail = MutationOrder_ShippingAddressInput & {
+    email: string;
+    id: string;
+};
+
 export type SubmittedOrder = {
     url: string;
     order: CreatedOrder;
@@ -24,3 +29,16 @@ export type SaveTransactionHashParams = {
     chain: CryptoChain;
     txHash: string;
 };
+
+export type PaymentWalletSelection = {
+    address: string;
+    chain: CryptoChain;
+    provider: string;
+};
+
+export type PaymentProfileUser = {
+    id: string;
+    wallets: PaymentWalletSelection[];
+};
+
+export type PaymentProfileUsersByUrl = Record<string, PaymentProfileUser | undefined>;

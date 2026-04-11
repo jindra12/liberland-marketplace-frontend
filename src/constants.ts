@@ -32,13 +32,7 @@ const RAINBOW = "me.rainbow";
 const ZERION = "io.zerion.wallet";
 const RABBY = "io.rabby";
 
-export const thirdwebWallets = [
-    COINBASE,
-    METAMASK,
-    RAINBOW,
-    ZERION,
-    RABBY,
-] as const;
+export const thirdwebWallets = [COINBASE, METAMASK, RAINBOW, ZERION, RABBY] as const;
 
 export const optionsProps = {
     className: "Exchange__image",

@@ -1,17 +1,14 @@
 import * as React from "react";
-import useLocalStorage from "use-local-storage";
+
 import { useAnalytics } from "use-analytics";
+import useLocalStorage from "use-local-storage";
+
+import type { TrackAnalyticsEventMutationVariables } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
-import {
-    ANALYTICS_DISTINCT_ID_KEY,
-    ANALYTICS_SESSION_ID_KEY,
-} from "./constants";
-import type {
-    AnalyticsMutationEvent,
-    AnalyticsPagePayload,
-    AnalyticsTrackPayload,
-} from "./types";
 import { useTrackAnalyticsEventMutation } from "../hooks";
+
+import { ANALYTICS_DISTINCT_ID_KEY, ANALYTICS_SESSION_ID_KEY } from "./constants";
+import type { AnalyticsMutationEvent, AnalyticsPagePayload, AnalyticsTrackPayload } from "./types";
 
 export const AnalyticsMutationBridge: React.FunctionComponent = () => {
     const analytics = useAnalytics();
@@ -19,37 +16,35 @@ export const AnalyticsMutationBridge: React.FunctionComponent = () => {
     const [sessionId, setSessionId] = useLocalStorage<string | null>(ANALYTICS_SESSION_ID_KEY, null);
     const mutation = useTrackAnalyticsEventMutation();
 
-    const trackEvent = React.useCallback(async (event: AnalyticsMutationEvent) => {
-        try {
-            const result = await mutation.mutateAsync({
-                input: {
-                    distinctId: distinctId || undefined,
-                    metadata: event.metadata,
-                    route: event.route,
-                    sessionId: sessionId || undefined,
+    const trackEvent = React.useCallback(
+        async (event: AnalyticsMutationEvent) => {
+            try {
+                const input: TrackAnalyticsEventMutationVariables["input"] = {
+                    distinctId,
+                    metadata: event.metadata || null,
+                    route: event.route || null,
+                    sessionId,
                     type: event.type,
-                },
-                url: event.targetUrl || BACKEND_URL,
-            });
-            const analyticsResult = result.trackAnalyticsEvent.analytics;
+                };
+                const result = await mutation.mutateAsync({
+                    input,
+                    url: event.targetUrl || BACKEND_URL,
+                });
+                const analyticsResult = result.trackAnalyticsEvent.analytics;
 
-            if (analyticsResult.distinctId !== distinctId) {
-                setDistinctId(analyticsResult.distinctId);
-            }
+                if (analyticsResult.distinctId !== distinctId) {
+                    setDistinctId(analyticsResult.distinctId);
+                }
 
-            if (analyticsResult.sessionId !== sessionId) {
-                setSessionId(analyticsResult.sessionId);
+                if (analyticsResult.sessionId !== sessionId) {
+                    setSessionId(analyticsResult.sessionId);
+                }
+            } catch (error) {
+                console.error(`Failed to send analytics event "${event.type}".`, error);
             }
-        } catch (error) {
-            console.error(`Failed to send analytics event "${event.type}".`, error);
-        }
-    }, [
-        distinctId,
-        mutation,
-        sessionId,
-        setDistinctId,
-        setSessionId,
-    ]);
+        },
+        [distinctId, mutation, sessionId, setDistinctId, setSessionId],
+    );
 
     React.useEffect(() => {
         const unsubscribePage = analytics.on("page", ({ payload }: { payload: AnalyticsPagePayload }) => {

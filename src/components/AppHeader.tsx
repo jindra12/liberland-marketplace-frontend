@@ -1,17 +1,20 @@
-import React from "react";
-import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
-import type { MenuProps } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { SearchButton } from "./SearchButton";
-import { EndpointAuthAction } from "./EndpointAuthAction";
-import { LoginButton } from "./LoginButton";
+import type { MenuProps } from "antd";
+import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
+
 import { CartHeaderButton } from "./cart/CartHeaderButton";
-import { DesktopDrawer } from "./DesktopDrawer";
 import { useCartItems } from "./cart/useCartItems";
-import { RouteButton } from "./RouteButton";
+import { DesktopDrawer } from "./DesktopDrawer";
+import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
+import { LoginButton } from "./LoginButton";
+import { RouteButton } from "./RouteButton";
+import { SearchButton } from "./SearchButton";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -60,30 +63,30 @@ export const AppHeader: React.FunctionComponent = () => {
 
     const selectedDesktopKeys = getSelectedKeys(location.pathname, desktopItems);
     const selectedDrawerKeys = getSelectedKeys(location.pathname, drawerItems);
-    const desktopMenuItems: MenuProps["items"] = React.useMemo(() => (
-        desktopItems.map((item) => ({
-            key: item.key,
-            label: (
-                <Link to={item.key} className="AppHeader__menuLink">
-                    {item.label}
-                </Link>
-            ),
-        }))
-    ), [desktopItems]);
-    const drawerMenuItems: MenuProps["items"] = React.useMemo(() => (
-        drawerItems.map((item) => ({
-            key: item.key,
-            label: (
-                <Link
-                    to={item.key}
-                    className="AppHeader__drawerMenuLink"
-                    onClick={() => setDrawerOpen(false)}
-                >
-                    {item.label}
-                </Link>
-            ),
-        }))
-    ), [drawerItems]);
+    const desktopMenuItems: MenuProps["items"] = React.useMemo(
+        () =>
+            desktopItems.map((item) => ({
+                key: item.key,
+                label: (
+                    <Link to={item.key} className="AppHeader__menuLink">
+                        {item.label}
+                    </Link>
+                ),
+            })),
+        [desktopItems],
+    );
+    const drawerMenuItems: MenuProps["items"] = React.useMemo(
+        () =>
+            drawerItems.map((item) => ({
+                key: item.key,
+                label: (
+                    <Link to={item.key} className="AppHeader__drawerMenuLink" onClick={() => setDrawerOpen(false)}>
+                        {item.label}
+                    </Link>
+                ),
+            })),
+        [drawerItems],
+    );
 
     return (
         <Header className="AppHeader">
@@ -165,20 +168,11 @@ export const AppHeader: React.FunctionComponent = () => {
                                     selectedKeys={selectedDrawerKeys}
                                 />
                                 <div className="AppHeader__drawerNav">
-                                    <SearchButton
-                                        type="default"
-                                        block
-                                        onScopeSelect={() => setDrawerOpen(false)}
-                                    >
+                                    <SearchButton type="default" block onScopeSelect={() => setDrawerOpen(false)}>
                                         Search
                                     </SearchButton>
                                     {urls.length > 1 ? (
-                                        <RouteButton
-                                            to="/syndication"
-                                            block
-                                            type="default"
-                                            icon={<GlobalOutlined />}
-                                        >
+                                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
                                             Syndication
                                         </RouteButton>
                                     ) : null}
@@ -191,7 +185,10 @@ export const AppHeader: React.FunctionComponent = () => {
                                                 onClick={(event) => {
                                                     event.preventDefault();
                                                     runWithAuthOrLogin(
-                                                        () => { navigate("/publish"); setDrawerOpen(false); },
+                                                        () => {
+                                                            navigate("/publish");
+                                                            setDrawerOpen(false);
+                                                        },
                                                         { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
                                                     );
                                                 }}
@@ -205,7 +202,10 @@ export const AppHeader: React.FunctionComponent = () => {
                                         <Button
                                             block
                                             icon={<UserOutlined />}
-                                            onClick={() => { navigate("/profile"); setDrawerOpen(false); }}
+                                            onClick={() => {
+                                                navigate("/profile");
+                                                setDrawerOpen(false);
+                                            }}
                                         >
                                             Profile
                                         </Button>

@@ -1,0 +1,104 @@
+import type { SyndicationDoc, URL as EndpointUrl } from "../../types";
+
+export const normalizeSyndicationUrl = (value: string): string => {
+    const parsed = new globalThis.URL(value);
+
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        throw new Error("invalid protocol");
+    }
+
+    parsed.hash = "";
+    parsed.search = "";
+    return parsed.toString().replace(/\/+$/, "");
+};
+
+const tryNormalizeEndpointUrl = (value?: string | null): string | undefined => {
+    if (!value) {
+        return undefined;
+    }
+
+    try {
+        return normalizeSyndicationUrl(value);
+    } catch {
+        return undefined;
+    }
+};
+
+export const getSyndicationHost = (value: string): string => {
+    return new globalThis.URL(value).host;
+};
+
+export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): string => {
+    return entry.name || getSyndicationHost(entry.value);
+};
+
+export const createEndpointEntry = (
+    value: string,
+    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
+): EndpointUrl => {
+    const normalizedValue = normalizeSyndicationUrl(value);
+
+    return {
+        enabled: options.enabled ?? true,
+        value: normalizedValue,
+        name: options.name ?? getSyndicationHost(normalizedValue),
+        description: options.description,
+    };
+};
+
+export const insertUniqueEndpoint = (current: EndpointUrl[] | undefined, entry: EndpointUrl): EndpointUrl[] => {
+    const entries = current ?? [];
+
+    if (entries.some((existingEntry) => existingEntry.value === entry.value)) {
+        throw new Error("duplicate");
+    }
+
+    return [...entries, entry];
+};
+
+export const setEndpointEnabled = (
+    current: EndpointUrl[] | undefined,
+    value: string,
+    nextEnabled: boolean,
+): EndpointUrl[] => {
+    return (current ?? []).map((entry) => {
+        return entry.value === value ? { ...entry, enabled: nextEnabled } : entry;
+    });
+};
+
+export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: SyndicationDoc[]): EndpointUrl[] => {
+    const entries = current ?? [];
+    const discoveredEntries = docs.flatMap((doc) => {
+        const normalizedValue = tryNormalizeEndpointUrl(doc.url);
+
+        if (!normalizedValue) {
+            return [];
+        }
+
+        return [
+            createEndpointEntry(normalizedValue, {
+                enabled: false,
+                name: doc.name,
+                description: doc.description,
+            }),
+        ];
+    });
+
+    return discoveredEntries.reduce<EndpointUrl[]>((mergedEntries, discoveredEntry) => {
+        if (!mergedEntries.some((entry) => entry.value === discoveredEntry.value)) {
+            return [...mergedEntries, discoveredEntry];
+        }
+
+        return mergedEntries.map((entry) => {
+            if (entry.value !== discoveredEntry.value) {
+                return entry;
+            }
+
+            return {
+                ...entry,
+                name: discoveredEntry.name || entry.name,
+                description: discoveredEntry.description ?? entry.description,
+            };
+        });
+    }, entries);
+};

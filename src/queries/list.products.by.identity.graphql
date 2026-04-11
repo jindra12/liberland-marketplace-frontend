@@ -1,54 +1,49 @@
 query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-  Products(
-    draft: false
-    where: {
-      AND: [
-        { companyIdentityId: { equals: $identityId } }
-        { _status: { equals: published } }
-      ]
+    Products(
+        draft: false
+        where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }
+        limit: $limit
+        page: $page
+    ) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            cryptoAddresses {
+                chain
+                address
+            }
+            orderable
+            url
+            companyIdentityId
+            priceInUSDEnabled
+            priceInUSD
+            priceInETH
+            priceInSOL
+            priceInTRX
+            company {
+                id
+                serverURL
+                name
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                image {
+                    id
+                    url
+                }
+            }
+            image {
+                id
+                url
+            }
+            _status
+            createdAt
+        }
+        totalDocs
+        hasNextPage
+        nextPage
     }
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      isSubscribed
-      serverURL
-      name
-      cryptoAddresses {
-          chain
-          address
-        }
-      orderable
-      url
-      companyIdentityId
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
-        }
-        image {
-          id
-          url
-        }
-      }
-      image {
-        id
-        url
-      }
-      _status
-      createdAt
-    }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
 }

@@ -1,12 +1,15 @@
 import * as React from "react";
-import { Button, Drawer } from "antd";
-import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+
 import { useAuth } from "react-oidc-context";
-import { SearchButton } from "./SearchButton";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Drawer } from "antd";
+
 import { EndpointAuthAction } from "./EndpointAuthAction";
-import { RouteButton } from "./RouteButton";
 import { useEndpointContext } from "./EndpointContext";
+import { RouteButton } from "./RouteButton";
+import { SearchButton } from "./SearchButton";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
     const location = useLocation();
@@ -43,12 +46,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                         Search
                     </SearchButton>
                     {urls.length > 1 ? (
-                        <RouteButton
-                            to="/syndication"
-                            block
-                            type="default"
-                            icon={<GlobalOutlined />}
-                        >
+                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
                             Syndication
                         </RouteButton>
                     ) : null}
@@ -61,7 +59,10 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                                 onClick={(event) => {
                                     event.preventDefault();
                                     runWithAuthOrLogin(
-                                        () => { navigate("/publish"); setDesktopActionsOpen(false); },
+                                        () => {
+                                            navigate("/publish");
+                                            setDesktopActionsOpen(false);
+                                        },
                                         { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
                                     );
                                 }}
@@ -75,7 +76,10 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                         <Button
                             block
                             icon={<UserOutlined />}
-                            onClick={() => { navigate("/profile"); setDesktopActionsOpen(false); }}
+                            onClick={() => {
+                                navigate("/profile");
+                                setDesktopActionsOpen(false);
+                            }}
                         >
                             Profile
                         </Button>

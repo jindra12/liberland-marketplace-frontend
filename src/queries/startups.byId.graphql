@@ -1,62 +1,62 @@
 query StartupById($id: String!, $draft: Boolean = false) {
-  Startup(id: $id, draft: $draft) {
-    id
-    isSubscribed
-    serverURL
-    title
-    _status
-    description
-    stage
-    lookingFor
-    alreadyHave
-    fundsNeeded {
-      amount
-      currency
-    }
-    company {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-          chain
-          address
-        }
-      email
-    }
-    createdBy {
-      id
-    }
-    identity {
-      id
-      serverURL
-      name
-      description
-      website
-      image {
+    Startup(id: $id, draft: $draft) {
         id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
+        isSubscribed
+        serverURL
+        title
+        _status
+        description
+        stage
+        lookingFor
+        alreadyHave
+        fundsNeeded {
+            amount
+            currency
+        }
+        company {
+            id
+            serverURL
+            name
+            cryptoAddresses {
+                chain
+                address
+            }
+            email
+        }
+        createdBy {
+            id
+        }
+        identity {
+            id
+            serverURL
+            name
+            description
+            website
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+        }
+        image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+        }
+        involvedUsers {
+            id
+            name
+            email
+        }
+        createdAt
+        updatedAt
     }
-    image {
-      id
-      url
-      alt
-      filename
-      width
-      height
-      mimeType
-    }
-    involvedUsers {
-      id
-      name
-      email
-    }
-    createdAt
-    updatedAt
-  }
 }

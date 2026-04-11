@@ -1,18 +1,14 @@
-import React from "react";
-import {
-    Form,
-    Input,
-    Select } from "antd";
+import * as React from "react";
+
+import { Form, Input, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
+import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
+
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import {
-    useCreateCompanyMutation,
-    useListIdentitiesQuery,
-    useUpdateCompanyMutation,
-} from "../hooks";
 
 interface CompanyFormValues {
     name: string | null;
@@ -23,7 +19,6 @@ interface CompanyFormValues {
     identity?: string | null;
     imageFile?: UploadFile[];
 }
-
 export interface CompanyFormProps {
     mode: "create" | "edit";
     url: string;
@@ -33,23 +28,22 @@ export interface CompanyFormProps {
         existingImageId?: string | null;
     };
 }
-
-export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues, url }) => {
+export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) => {
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
-
-    const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
+    const identitiesQuery = useListIdentitiesQuery({
+        limit: 100,
+    });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
-
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Company",
         routePrefix: "/companies",
-        mode,
-        existingImageId: initialValues?.existingImageId,
-        editId: initialValues?.id,
+        mode: props.mode,
+        existingImageId: props.initialValues?.existingImageId,
+        editId: props.initialValues?.id,
         createMutation,
         updateMutation,
-        url,
+        url: props.url,
         buildData: (values: CompanyFormValues, imageId) => ({
             name: values.name,
             description: values.description,
@@ -57,26 +51,53 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
             phone: values.phone,
             website: values.website,
             identity: values.identity,
-            ...(imageId !== undefined && { image: imageId }),
+            ...(imageId !== undefined && {
+                image: imageId,
+            }),
         }),
         getCreateId: (r) => r.createCompany?.id,
         getUpdateId: (r) => r.updateCompany?.id,
     });
-
     return (
-        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
-            <Form.Item name="name" label="Company Name" rules={[{ required: true }]}>
+        <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={props.initialValues}
+            className="Publish__form"
+        >
+            <Form.Item
+                name="name"
+                label="Company Name"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
-            <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
+            <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
+            <Form.Item
+                name="identity"
+                label="Tribe"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please select a tribe",
+                    },
+                ]}
+            >
                 <Select
                     loading={identitiesQuery.isLoading}
                     placeholder="Select a tribe"
-                    options={identities.map((i) => ({ value: i.id, label: i.name }))}
+                    options={identities.map((i) => ({
+                        value: i.id,
+                        label: i.name,
+                    }))}
                 />
             </Form.Item>
             <Form.Item name="email" label="Email">
@@ -89,7 +110,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, i
                 <Input />
             </Form.Item>
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Company" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={props.mode} entityName="Company" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

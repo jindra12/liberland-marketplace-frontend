@@ -36,9 +36,7 @@ export type AnalyticsRuntimeErrorTrackPayload = {
     };
 };
 
-export type AnalyticsTrackPayload =
-    | AnalyticsGraphqlTrackPayload
-    | AnalyticsRuntimeErrorTrackPayload;
+export type AnalyticsTrackPayload = AnalyticsGraphqlTrackPayload | AnalyticsRuntimeErrorTrackPayload;
 
 export type AnalyticsMutationEvent = {
     metadata?: Record<string, unknown>;

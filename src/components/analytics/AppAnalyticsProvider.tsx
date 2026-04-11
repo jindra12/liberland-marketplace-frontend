@@ -1,7 +1,9 @@
 import * as React from "react";
+
 import { AnalyticsProvider } from "use-analytics";
-import { AnalyticsMutationBridge } from "./AnalyticsMutationBridge";
+
 import { appAnalytics } from "./analytics";
+import { AnalyticsMutationBridge } from "./AnalyticsMutationBridge";
 
 export const AppAnalyticsProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     return (

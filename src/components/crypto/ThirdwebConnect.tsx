@@ -1,20 +1,28 @@
 import * as React from "react";
-import { createThirdwebClient } from "thirdweb";
-import { ConnectButton, useActiveAccount } from "thirdweb/react";
-import { mainnet } from "thirdweb/chains";
+
 import Flex from "antd/es/flex";
 import Grid from "antd/es/grid";
 import useToken from "antd/es/theme/useToken";
+import { createThirdwebClient } from "thirdweb";
+import { mainnet } from "thirdweb/chains";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
-import { ConnectButtonProps } from "../../types";
-import { RecipientIcon } from "./RecipientIcon";
+
 import { thirdwebWallets } from "../../constants";
+import { ConnectButtonProps } from "../../types";
+
+import { RecipientIcon } from "./RecipientIcon";
 
 const client = createThirdwebClient({
-    clientId: process.env.REACT_APP_THRIDWEB!,
+    clientId: process.env.REACT_APP_THIRDWEB!,
 });
 
-export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (props) => {
+export interface ThirdwebConnectProps extends ConnectButtonProps {
+    inline?: boolean;
+    label?: React.ReactNode;
+}
+
+export const ThirdwebConnect: React.FunctionComponent<ThirdwebConnectProps> = (props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, token] = useToken();
     const account = useActiveAccount();
@@ -25,7 +33,7 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
         if (account?.address) {
             props.selectWallet(account.address);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account?.address]);
 
     const btnStyle: React.CSSProperties = {
@@ -45,27 +53,31 @@ export const ThirdwebConnect: React.FunctionComponent<ConnectButtonProps> = (pro
         minWidth: "0",
     };
 
-    return (
-        <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>
-            <ConnectButton
-                client={client}
-                chain={mainnet}
-                detailsButton={{
-                    style: btnStyle,
-                }}
-                autoConnect={false}
-                wallets={thirdwebWallets.map(w => createWallet(w))}
-                connectButton={{
-                    label: (
-                        <Flex wrap gap="10px" justify="center" align="center">
-                            <RecipientIcon chain="Ethereum" size={22} />
-                            Select
-                        </Flex>
-                    ),
-                    style: btnStyle,
-                    className: "",
-                }}
-            />
-        </Flex>
+    const connectButton = (
+        <ConnectButton
+            client={client}
+            chain={mainnet}
+            detailsButton={{
+                style: btnStyle,
+            }}
+            autoConnect={false}
+            wallets={thirdwebWallets.map((w) => createWallet(w))}
+            connectButton={{
+                label: (
+                    <Flex wrap gap="10px" justify="center" align="center">
+                        <RecipientIcon chain="Ethereum" size={22} />
+                        {props.inline ? props.label || "Thirdweb" : "Select"}
+                    </Flex>
+                ),
+                style: btnStyle,
+                className: "",
+            }}
+        />
     );
+
+    if (props.inline) {
+        return connectButton;
+    }
+
+    return <Flex vertical={stackButtons} wrap={!stackButtons} gap="15px" justify="center" align="center" flex={1}>{connectButton}</Flex>;
 };

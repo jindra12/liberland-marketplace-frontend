@@ -1,0 +1,161 @@
+import * as React from "react";
+
+import { PlusOutlined } from "@ant-design/icons";
+import { Tabs, Typography } from "antd";
+
+import {
+    useDeleteCompanyMutation,
+    useDeleteJobMutation,
+    useDeleteProductMutation,
+    useDeleteStartupMutation,
+    useListCompaniesByCreatorQuery,
+    useListJobsByCreatorQuery,
+    useListProductsByCreatorQuery,
+    useListStartupsByCreatorQuery,
+} from "../hooks";
+import { ProfileListingList } from "../ProfileListingList";
+import { RouteButton } from "../RouteButton";
+import { formatEmploymentType } from "../shared/job/utils";
+
+type ProfileListingsSectionProps = {
+    userId?: string;
+};
+export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSectionProps> = (props) => {
+    const deleteJobMutation = useDeleteJobMutation();
+    const deleteCompanyMutation = useDeleteCompanyMutation();
+    const deleteProductMutation = useDeleteProductMutation();
+    const deleteStartupMutation = useDeleteStartupMutation();
+    const jobsQuery = useListJobsByCreatorQuery(
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
+    );
+    const companiesQuery = useListCompaniesByCreatorQuery(
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
+    );
+    const startupsQuery = useListStartupsByCreatorQuery(
+        {
+            userId: props.userId,
+            draft: true,
+        },
+        {
+            enabled: !!props.userId,
+            refetchOnMount: "always",
+        },
+    );
+    const companyIds = (companiesQuery.data?.Companies?.docs ?? []).map((company) => company.id);
+    const productsQuery = useListProductsByCreatorQuery(
+        {
+            companyIds,
+            draft: true,
+        },
+        {
+            enabled: companyIds.length > 0,
+            refetchOnMount: "always",
+        },
+    );
+    const jobs = jobsQuery.data?.Jobs?.docs ?? [];
+    const companies = companiesQuery.data?.Companies?.docs ?? [];
+    const startups = startupsQuery.data?.Startups?.docs ?? [];
+    const products = productsQuery.data?.Products?.docs ?? [];
+    const listingTabs = [
+        {
+            key: "jobs",
+            label: `Jobs (${jobsQuery.data?.Jobs?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteJobMutation}
+                    label="Job"
+                    emptyText="No jobs created yet"
+                    items={jobs}
+                    loading={jobsQuery.isLoading}
+                    refetch={jobsQuery.refetch}
+                    urlPrefix="/jobs"
+                    renderMeta={(job) => ({
+                        title: job.title,
+                        description: formatEmploymentType(job.employmentType),
+                    })}
+                />
+            ),
+        },
+        {
+            key: "companies",
+            label: `Companies (${companiesQuery.data?.Companies?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteCompanyMutation}
+                    label="Company"
+                    emptyText="No companies created yet"
+                    items={companies}
+                    loading={companiesQuery.isLoading}
+                    refetch={companiesQuery.refetch}
+                    urlPrefix="/companies"
+                    renderMeta={(company) => ({
+                        title: company.name,
+                    })}
+                />
+            ),
+        },
+        {
+            key: "startups",
+            label: `Ventures (${startupsQuery.data?.Startups?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteStartupMutation}
+                    label="Venture"
+                    emptyText="No ventures created yet"
+                    items={startups}
+                    loading={startupsQuery.isLoading}
+                    refetch={startupsQuery.refetch}
+                    urlPrefix="/ventures"
+                    renderMeta={(startup) => ({
+                        title: startup.title,
+                    })}
+                />
+            ),
+        },
+        {
+            key: "products",
+            label: `Products (${productsQuery.data?.Products?.totalDocs ?? 0})`,
+            children: (
+                <ProfileListingList
+                    deleteMutation={deleteProductMutation}
+                    label="Product / service"
+                    emptyText="No products or services created yet"
+                    items={products}
+                    loading={productsQuery.isLoading}
+                    refetch={productsQuery.refetch}
+                    urlPrefix="/products-services"
+                    renderMeta={(product) => ({
+                        title: product.name,
+                    })}
+                />
+            ),
+        },
+    ];
+    return (
+        <>
+            <div className="Profile__listingsHeader">
+                <Typography.Title level={3} className="Profile__listingsTitle">
+                    My Listings
+                </Typography.Title>
+                <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>
+                    Create Listing
+                </RouteButton>
+            </div>
+            <Tabs items={listingTabs} />
+        </>
+    );
+};

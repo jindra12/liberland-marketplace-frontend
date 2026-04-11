@@ -1,5 +1,5 @@
 mutation DeleteCompany($id: String!) {
-  deleteCompany(id: $id) {
-    id
-  }
+    deleteCompany(id: $id) {
+        id
+    }
 }

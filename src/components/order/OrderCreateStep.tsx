@@ -1,34 +1,29 @@
 import * as React from "react";
-import {
-    Alert,
-    Button,
-    Card,
-    Col,
-    Flex,
-    Form,
-    Input,
-    Row,
-    Typography,
-} from "antd";
-import type { FormInstance } from "antd";
+
+import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "antd";
+
 import type { ListProductsQuery } from "../../generated/graphql";
 import type { CryptoChain } from "../../types";
-import { CRYPTO_CHAIN_LABELS } from "../../utils";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
-import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem";
-import type { OrderFormValues } from "./types";
 import { RouteButton } from "../RouteButton";
 
+import { CRYPTO_CHAIN_LABELS } from "./constants";
+import { GeoapifyAddressFormItem } from "./GeoapifyAddressFormItem/GeoapifyAddressFormItem";
+import { ShippingAddressSelectModal } from "./ShippingAddressSelectModal";
+import type { AddressWithEmail, OrderFormValues } from "./types";
+import { buildOrderFormValues } from "./utils";
+
 type OrderCreateStepProps = {
-    form: FormInstance<OrderFormValues>;
     products: NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>;
     isProductsLoading: boolean;
     refetchProducts: () => Promise<void>;
     onSubmit: (values: OrderFormValues) => Promise<void>;
-    page: number;
-    setPage: (page: number) => void;
     isSubmitting: boolean;
     cartsWithItemsCount: number;
+    candidateProfileAddresses: AddressWithEmail[];
+    isLoadingProfileAddresses: boolean;
+    savedShippingAddress?: AddressWithEmail;
+    onSelectSavedShippingAddress: (id: string) => void;
     profileEmail?: string;
     prefillFirstName?: string;
     prefillLastName?: string;
@@ -36,9 +31,20 @@ type OrderCreateStepProps = {
 };
 
 export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (props) => {
-    const requiredChainText = props.requiredChains
-        .map((chain) => CRYPTO_CHAIN_LABELS[chain])
-        .join(", ");
+    const [form] = Form.useForm<OrderFormValues>();
+    const [isShippingAddressSelectOpen, setIsShippingAddressSelectOpen] = React.useState(false);
+    const requiredChainText = props.requiredChains.map((chain) => CRYPTO_CHAIN_LABELS[chain]).join(", ");
+
+    React.useEffect(() => {
+        form.setFieldsValue(
+            buildOrderFormValues({
+                prefillFirstName: props.prefillFirstName,
+                prefillLastName: props.prefillLastName,
+                profileEmail: props.profileEmail,
+                savedShippingAddress: props.savedShippingAddress,
+            }),
+        );
+    }, [form, props.prefillFirstName, props.prefillLastName, props.profileEmail, props.savedShippingAddress]);
 
     return (
         <>
@@ -58,18 +64,31 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             <Form
                 id="order-form"
                 layout="vertical"
-                form={props.form}
+                form={form}
                 onFinish={props.onSubmit}
-                initialValues={{
-                    customerEmail: props.profileEmail,
-                    shippingAddress: {
-                        country: "United States",
-                        firstName: props.prefillFirstName,
-                        lastName: props.prefillLastName,
-                    },
-                }}
+                initialValues={buildOrderFormValues({
+                    prefillFirstName: props.prefillFirstName,
+                    prefillLastName: props.prefillLastName,
+                    profileEmail: props.profileEmail,
+                    savedShippingAddress: props.savedShippingAddress,
+                })}
             >
-                <Card title="Shipping">
+                <Card
+                    title="Shipping"
+                    extra={
+                        props.candidateProfileAddresses.length > 0 && (
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    setIsShippingAddressSelectOpen(true);
+                                }}
+                                loading={props.isLoadingProfileAddresses}
+                            >
+                                Choose default address
+                            </Button>
+                        )
+                    }
+                >
                     <Form.Item
                         name="customerEmail"
                         label="Email"
@@ -121,8 +140,6 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
             <ProductServiceListInternal
                 source="static"
-                page={props.page}
-                setPage={props.setPage}
                 products={props.products}
                 isLoading={props.isProductsLoading}
                 hasNextPage={false}
@@ -143,6 +160,32 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                     Create order
                 </Button>
             </Flex>
+
+            <ShippingAddressSelectModal
+                open={isShippingAddressSelectOpen}
+                loading={false}
+                options={props.candidateProfileAddresses}
+                selectedKey={props.savedShippingAddress?.id}
+                onCancel={() => {
+                    setIsShippingAddressSelectOpen(false);
+                }}
+                onSelect={(id) => {
+                    const selectedAddress = props.candidateProfileAddresses.find(
+                        (address) => address.id === id,
+                    );
+
+                    props.onSelectSavedShippingAddress(id);
+                    form.setFieldsValue(
+                        buildOrderFormValues({
+                            prefillFirstName: props.prefillFirstName,
+                            prefillLastName: props.prefillLastName,
+                            profileEmail: props.profileEmail,
+                            savedShippingAddress: selectedAddress,
+                        }),
+                    );
+                    setIsShippingAddressSelectOpen(false);
+                }}
+            />
         </>
     );
 };

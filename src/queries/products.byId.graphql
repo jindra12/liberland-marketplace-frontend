@@ -1,88 +1,88 @@
 query ProductById($id: String!, $draft: Boolean = false) {
-  Product(id: $id, draft: $draft) {
-    id
-    isSubscribed
-    inventory
-    enableVariants
-    variantTypes {
-      id
-      label
-      name
-    }
-    variants {
-      docs {
+    Product(id: $id, draft: $draft) {
         id
-        title
+        isSubscribed
         inventory
+        enableVariants
+        variantTypes {
+            id
+            label
+            name
+        }
+        variants {
+            docs {
+                id
+                title
+                inventory
+                priceInUSDEnabled
+                priceInUSD
+                options {
+                    id
+                    label
+                    value
+                }
+            }
+            hasNextPage
+            totalDocs
+        }
         priceInUSDEnabled
         priceInUSD
-        options {
-          id
-          label
-          value
-        }
-      }
-      hasNextPage
-      totalDocs
-    }
-    priceInUSDEnabled
-    priceInUSD
-    priceInETH
-    priceInSOL
-    priceInTRX
-    serverURL
-    name
-    companyIdentityId
-    _status
-    description
-    cryptoAddresses {
-      chain
-      address
-    }
-    url
-    orderable
-    properties {
-      id
-      key
-      value
-    }
-    updatedAt
-    createdAt
-    deletedAt
-    company {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-        chain
-        address
-      }
-      createdBy {
-        id
-      }
-      identity {
-        id
+        priceInETH
+        priceInSOL
+        priceInTRX
         serverURL
         name
+        companyIdentityId
+        _status
         description
-      }
-      image {
-        id
+        cryptoAddresses {
+            chain
+            address
+        }
         url
-        filename
-        mimeType
-        width
-        height
-      }
+        orderable
+        properties {
+            id
+            key
+            value
+        }
+        updatedAt
+        createdAt
+        deletedAt
+        company {
+            id
+            serverURL
+            name
+            description
+            cryptoAddresses {
+                chain
+                address
+            }
+            createdBy {
+                id
+            }
+            identity {
+                id
+                serverURL
+                name
+                description
+            }
+            image {
+                id
+                url
+                filename
+                mimeType
+                width
+                height
+            }
+        }
+        image {
+            id
+            url
+            filename
+            width
+            height
+            mimeType
+        }
     }
-    image {
-      id
-      url
-      filename
-      width
-      height
-      mimeType
-    }
-  }
 }

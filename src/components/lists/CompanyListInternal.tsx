@@ -1,24 +1,27 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Flex, Grid } from "antd";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+
 import { UseQueryResult } from "@tanstack/react-query";
-import { AppList } from "../AppList";
-import { Markdown } from "../Markdown";
-import { CompanyContactLinks } from "../shared/CompanyContactLinks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+
+import { UsergroupAddOutlined } from "@ant-design/icons";
+import { Avatar, Flex, Grid } from "antd";
+
 import { ListCompaniesQuery } from "../../generated/graphql";
-import { getImage } from "../../utils";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { AppList } from "../AppList";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { CompanyContactLinks } from "../shared/CompanyContactLinks";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
 
 export interface CompanyListInternalProps {
     query: UseQueryResult<ListCompaniesQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
 }
-
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
@@ -59,14 +62,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         )}
                     </Flex>
                 ),
-                actions: (company) => (
+                actions: (company) =>
                     md ? (
                         <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
                             <ListShareDetailButtons
                                 detailPath={`/companies/${company.id}`}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "companies",
                                     targetID: company.id,
@@ -82,7 +84,6 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 detailPath={`/companies/${company.id}`}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
-                                desktopDetailButtonType="primary"
                                 subscriptionTarget={{
                                     collection: "companies",
                                     targetID: company.id,
@@ -91,18 +92,13 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                                 }}
                             />
                         </Flex>
-                    )
-                ),
-                avatar: (company) => company.image?.url ? (
-                    <Link to={`/companies/${company.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={getImage(company)}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
+                    ),
+                avatar: (company) =>
+                    company.image?.url ? (
+                        <Link to={`/companies/${company.id}`}>
+                            <Avatar shape="square" size={80} src={getImage(company)} className="EntityList__avatar" />
+                        </Link>
+                    ) : undefined,
                 body: (company) => (
                     <div className="EntityList__body CompanyList__body">
                         <CompanyContactLinks

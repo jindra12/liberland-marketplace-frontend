@@ -1,0 +1,14 @@
+mutation LeaveStartup($id: String!) {
+    leaveStartup(id: $id) {
+        message
+        startup {
+            id
+            title
+            involvedUsers {
+                id
+                name
+                email
+            }
+        }
+    }
+}

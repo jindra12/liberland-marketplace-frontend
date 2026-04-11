@@ -1,14 +1,8 @@
 mutation SubscribeToTribeUpdates($email: String!, $targetID: String!) {
-  createNotificationSubscription(
-    data: {
-      email: $email
-      targetCollection: identities
-      targetID: $targetID
+    createNotificationSubscription(data: { email: $email, targetCollection: identities, targetID: $targetID }) {
+        id
+        email
+        targetCollection
+        targetID
     }
-  ) {
-    id
-    email
-    targetCollection
-    targetID
-  }
 }

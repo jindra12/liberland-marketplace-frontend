@@ -12,17 +12,10 @@ import {
     useUnsubscribeFromVentureUpdatesMutation,
 } from "../../hooks";
 import { ENTITY_LABELS } from "./constants";
-import {
-    buildNotificationSubscriptionID,
-    getSubscriptionMutationURL,
-    invalidateSubscriptionQueries,
-} from "./utils";
+import { buildNotificationSubscriptionID, getSubscriptionMutationURL, invalidateSubscriptionQueries } from "./utils";
 import type { SubscribeButtonProps } from "./types";
 
-type SubscriptionActionOptions = Pick<
-    SubscribeButtonProps,
-    "collection" | "targetID" | "serverURL" | "subscriptionID"
->;
+type SubscriptionActionOptions = Pick<SubscribeButtonProps, "collection" | "targetID" | "serverURL" | "subscriptionID">;
 
 export const useSubscriptionActions = ({
     collection,
@@ -88,11 +81,13 @@ export const useSubscriptionActions = ({
             throw new Error("Missing subscription target.");
         }
 
-        const resolvedSubscriptionID = subscriptionID || await buildNotificationSubscriptionID({
-            email,
-            targetCollection: collection,
-            targetID,
-        });
+        const resolvedSubscriptionID =
+            subscriptionID ||
+            (await buildNotificationSubscriptionID({
+                email,
+                targetCollection: collection,
+                targetID,
+            }));
 
         await mutationConfig.unsubscribe.mutateAsync({
             subscriptionID: resolvedSubscriptionID,

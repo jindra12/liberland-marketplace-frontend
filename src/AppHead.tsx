@@ -1,6 +1,5 @@
 import * as React from "react";
 import Head from "next/head";
-
 type AppHeadProps = {
     title?: string;
     description?: string;
@@ -9,26 +8,16 @@ type AppHeadProps = {
     jsonLd?: Record<string, unknown>[];
     siteUrl?: string;
 };
-
 const DEFAULT_TITLE = "NSwap";
 const DEFAULT_DESCRIPTION = "Network marketplace for all your needs";
 const DEFAULT_PREVIEW_IMAGE = "/preview-image.png";
 const DEFAULT_URL = "https://nswap.io";
-
-export const AppHead: React.FunctionComponent<AppHeadProps> = ({
-    title,
-    description,
-    canonicalPath,
-    noIndex,
-    jsonLd,
-    siteUrl,
-}) => {
-    const titleValue = title || DEFAULT_TITLE;
-    const descriptionValue = description || DEFAULT_DESCRIPTION;
-    const resolvedSiteUrl = siteUrl || DEFAULT_URL;
-    const canonicalUrl = canonicalPath ? `${resolvedSiteUrl}${canonicalPath}` : undefined;
-    const robotsValue = noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
-
+export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
+    const titleValue = props.title || DEFAULT_TITLE;
+    const descriptionValue = props.description || DEFAULT_DESCRIPTION;
+    const resolvedSiteUrl = props.siteUrl || DEFAULT_URL;
+    const canonicalUrl = props.canonicalPath ? `${resolvedSiteUrl}${props.canonicalPath}` : undefined;
+    const robotsValue = props.noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
     return (
         <Head>
             <meta charSet="utf-8" />
@@ -50,11 +39,13 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = ({
             <link rel="apple-touch-icon" href="/logo192.png" />
             <link rel="manifest" href="/manifest.json" />
             <title>{titleValue}</title>
-            {(jsonLd || []).map((entry, index) => (
+            {(props.jsonLd || []).map((entry, index) => (
                 <script
                     key={`jsonld-${index}`}
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(entry),
+                    }}
                 />
             ))}
         </Head>

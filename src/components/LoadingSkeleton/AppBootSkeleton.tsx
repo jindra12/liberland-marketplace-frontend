@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Skeleton } from "antd";
+
 import { summaryCards } from "./SkeletonConfig";
 
 export const AppBootSkeleton: React.FunctionComponent = () => (

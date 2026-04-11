@@ -1,23 +1,18 @@
-import React from "react";
-import { DollarOutlined } from "@ant-design/icons";
-import {
-    Form,
-    Input,
-    InputNumber,
-    Select,
-} from "antd";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+
+import { DollarOutlined } from "@ant-design/icons";
+import { Form, Input, InputNumber, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
+import { useCreateProductMutation, useListCompaniesByCreatorQuery, useUpdateProductMutation } from "../hooks";
+import { toCents } from "../shared/product/utils";
+
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import {
-    useCreateProductMutation,
-    useListCompaniesByCreatorQuery,
-    useUpdateProductMutation,
-} from "../hooks";
-import { toCents } from "../../utils";
 
 interface ProductFormValues {
     name: string | null;
@@ -28,7 +23,6 @@ interface ProductFormValues {
     company?: string | null;
     imageFile?: UploadFile[];
 }
-
 export interface ProductFormProps {
     mode: "create" | "edit";
     url: string;
@@ -38,28 +32,28 @@ export interface ProductFormProps {
         existingImageId?: string | null;
     };
 }
-
-export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues, url }) => {
+export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) => {
     const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
-
     const userId = auth.user?.profile?.sub;
-    const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId, draft: true },
-    );
+    const companiesQuery = useListCompaniesByCreatorQuery({
+        userId,
+        draft: true,
+    });
     const companies = companiesQuery.data?.Companies?.docs ?? [];
-    const defaults: Partial<ProductFormValues> = { ...initialValues };
-
+    const defaults: Partial<ProductFormValues> = {
+        ...props.initialValues,
+    };
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
         routePrefix: "/products-services",
-        mode,
-        existingImageId: initialValues?.existingImageId,
-        editId: initialValues?.id,
+        mode: props.mode,
+        existingImageId: props.initialValues?.existingImageId,
+        editId: props.initialValues?.id,
         createMutation,
         updateMutation,
-        url,
+        url: props.url,
         buildData: (values: ProductFormValues, imageId) => ({
             name: values.name,
             description: values.description,
@@ -68,27 +62,46 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             priceInUSDEnabled: true,
             priceInUSD: toCents(values.priceInUSD),
             inventory: values.inventory,
-            ...(imageId !== undefined && { image: imageId }),
+            ...(imageId !== undefined && {
+                image: imageId,
+            }),
         }),
         getCreateId: (r) => r.createProduct?.id,
         getUpdateId: (r) => r.updateProduct?.id,
     });
-
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
-            <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+            <Form.Item
+                name="name"
+                label="Product Name"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
+            <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
             <Form.Item
                 name="priceInUSD"
                 label="Price (USD)"
-                rules={[{ required: true, message: "Enter USD price" }]}
+                rules={[
+                    {
+                        required: true,
+                        message: "Enter USD price",
+                    },
+                ]}
             >
-                <InputNumber suffix={<DollarOutlined />} placeholder="USD amount" min={0} className="Publish__amountInput" />
+                <InputNumber
+                    suffix={<DollarOutlined />}
+                    placeholder="USD amount"
+                    min={0}
+                    className="Publish__amountInput"
+                />
             </Form.Item>
             <Form.Item name="url" label="Product URL">
                 <Input />
@@ -96,14 +109,25 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, i
             <Form.Item name="inventory" label="Inventory">
                 <InputNumber min={0} className="Publish__fullWidth" />
             </Form.Item>
-            <Form.Item name="company" label="Company" rules={[{ required: true }]}>
+            <Form.Item
+                name="company"
+                label="Company"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
                 <Select
                     placeholder="Select a company"
-                    options={companies.map((c) => ({ value: c.id, label: c.name }))}
+                    options={companies.map((c) => ({
+                        value: c.id,
+                        label: c.name,
+                    }))}
                 />
             </Form.Item>
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Product" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={props.mode} entityName="Product" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

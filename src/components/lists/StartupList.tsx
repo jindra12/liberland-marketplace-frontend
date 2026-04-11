@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { StartupListInternal } from "./StartupListInternal";
 import { useListStartupsQuery } from "../hooks";
+
+import { StartupListInternal } from "./StartupListInternal";
 
 export const StartupList: React.FunctionComponent = () => {
     const [page, setPage] = React.useState(1);
@@ -10,11 +11,5 @@ export const StartupList: React.FunctionComponent = () => {
         page,
     });
 
-    return (
-        <StartupListInternal
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <StartupListInternal page={page} query={query} setPage={setPage} />;
 };

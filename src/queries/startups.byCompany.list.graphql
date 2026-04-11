@@ -1,72 +1,67 @@
 query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
-  Startups(
-    draft: false
-    where: {
-      AND: [
-        { company: { equals: $companyId } }
-        { _status: { equals: published } }
-      ]
-    }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      isSubscribed
-      title
-      description
-      stage
-      lookingFor
-      alreadyHave
-      fundsNeeded {
-        amount
-        currency
-      }
-      company {
-        id
-        name
-        cryptoAddresses {
-          chain
-          address
+    Startups(
+        draft: false
+        where: { AND: [{ company: { equals: $companyId } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+    ) {
+        docs {
+            id
+            isSubscribed
+            title
+            description
+            stage
+            lookingFor
+            alreadyHave
+            fundsNeeded {
+                amount
+                currency
+            }
+            company {
+                id
+                name
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                email
+            }
+            identity {
+                id
+                name
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            involvedUsers {
+                id
+                name
+                email
+            }
         }
-        email
-      }
-      identity {
-        id
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      involvedUsers {
-        id
-        name
-        email
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

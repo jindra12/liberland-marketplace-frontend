@@ -1,11 +1,12 @@
 import * as React from "react";
 
-import { ProductServiceListInternal } from "./ProductServiceListInternal";
 import { useListProductsByCompanyQuery } from "../hooks";
+
+import { ProductServiceListInternal } from "./ProductServiceListInternal";
 
 export interface CompanyProductsServicesListProps {
     companyId: string;
-};
+}
 
 export const CompanyProductsServicesList: React.FunctionComponent<CompanyProductsServicesListProps> = (props) => {
     const [page, setPage] = React.useState(1);
@@ -15,12 +16,5 @@ export const CompanyProductsServicesList: React.FunctionComponent<CompanyProduct
         limit: 20,
     });
 
-    return (
-        <ProductServiceListInternal
-            source="query"
-            page={page}
-            query={query}
-            setPage={setPage}
-        />
-    );
+    return <ProductServiceListInternal source="query" page={page} query={query} setPage={setPage} />;
 };

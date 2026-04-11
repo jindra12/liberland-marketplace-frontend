@@ -1,10 +1,10 @@
 mutation TrackAnalyticsEvent($input: AnalyticsTrackInput!) {
-  trackAnalyticsEvent(input: $input) {
-    success
-    analytics {
-      distinctId
-      eventId
-      sessionId
+    trackAnalyticsEvent(input: $input) {
+        success
+        analytics {
+            distinctId
+            eventId
+            sessionId
+        }
     }
-  }
 }
