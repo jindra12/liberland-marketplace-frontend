@@ -45,21 +45,15 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
     const isPreferredWalletSelected = Boolean(
         sender &&
             wallet?.adapter.name &&
-            (!props.preferredWallet ||
-                (sender === props.preferredWallet.address && wallet.adapter.name === props.preferredWallet.provider)),
+            props.preferredWallet &&
+            sender === props.preferredWallet.address &&
+            wallet.adapter.name === props.preferredWallet.provider,
     );
     const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
-    const showPayButton = Boolean(sender && (!props.preferredWallet || isPreferredWalletSelected));
+    const showPayButton = Boolean(sender);
 
     React.useEffect(() => {
         if (sender && wallet?.adapter.name) {
-            if (
-                props.preferredWallet &&
-                (sender !== props.preferredWallet.address || wallet.adapter.name !== props.preferredWallet.provider)
-            ) {
-                return;
-            }
-
             props.onWalletSelected?.({
                 address: sender,
                 chain: "solana",

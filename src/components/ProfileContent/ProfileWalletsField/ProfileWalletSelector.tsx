@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { Button } from "antd";
-
 import { UserUpdate_Wallets_Chain_MutationInput } from "../../../generated/graphql";
 import type { ProfileWalletSelection } from "../types";
 
@@ -22,44 +20,47 @@ type ProfileWalletSelectorProps = {
 };
 
 export const ProfileWalletSelector: React.FunctionComponent<ProfileWalletSelectorProps> = (props) => {
-    if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Ethereum) {
-        return (
-            <EthereumWalletSelectButton
-                disabled={props.disabled}
-                inline={props.inline}
-                label={props.label}
-                onWalletSelected={props.onWalletSelected}
-            />
-        );
-    }
-
-    if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Solana) {
-        return (
-            <>
-                <SolanaWalletSelectButton
+    switch (props.chain) {
+        case UserUpdate_Wallets_Chain_MutationInput.Ethereum:
+            return (
+                <EthereumWalletSelectButton
                     disabled={props.disabled}
                     inline={props.inline}
                     label={props.label}
-                    onSelectionStart={props.onSelectionStart}
+                    onWalletSelected={props.onWalletSelected}
                 />
-                <SolanaWalletSelectionObserver active={props.isSelecting} onWalletSelected={props.onWalletSelected} />
-            </>
-        );
+            );
+        case UserUpdate_Wallets_Chain_MutationInput.Solana:
+            return (
+                <>
+                    <SolanaWalletSelectButton
+                        disabled={props.disabled}
+                        inline={props.inline}
+                        label={props.label}
+                        onSelectionStart={props.onSelectionStart}
+                    />
+                    <SolanaWalletSelectionObserver
+                        active={props.isSelecting}
+                        onWalletSelected={props.onWalletSelected}
+                    />
+                </>
+            );
+        case UserUpdate_Wallets_Chain_MutationInput.Tron:
+            return (
+                <>
+                    <TronWalletSelectButton
+                        disabled={props.disabled}
+                        inline={props.inline}
+                        label={props.label}
+                        onSelectionStart={props.onSelectionStart}
+                    />
+                    <TronWalletSelectionObserver
+                        active={props.isSelecting}
+                        onWalletSelected={props.onWalletSelected}
+                    />
+                </>
+            );
+        default:
+            return null;
     }
-
-    if (props.chain === UserUpdate_Wallets_Chain_MutationInput.Tron) {
-        return (
-            <>
-                <TronWalletSelectButton
-                    disabled={props.disabled}
-                    inline={props.inline}
-                    label={props.label}
-                    onSelectionStart={props.onSelectionStart}
-                />
-                <TronWalletSelectionObserver active={props.isSelecting} onWalletSelected={props.onWalletSelected} />
-            </>
-        );
-    }
-
-    return <Button disabled>{props.label || "Select wallet"}</Button>;
 };

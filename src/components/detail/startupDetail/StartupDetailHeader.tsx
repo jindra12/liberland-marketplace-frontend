@@ -69,7 +69,7 @@ export const StartupDetailHeader: React.FunctionComponent<StartupDetailHeaderWit
                             )}
                         </Tag>
                     )}
-                    {typeof props.startup.company?.email === "string" && props.startup.company.email && (
+                    {props.startup.company?.email && (
                         <Typography.Link
                             href={`mailto:${props.startup.company.email}`}
                             className="StartupDetail__summaryLink"

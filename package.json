@@ -96,6 +96,8 @@
     "test:ct:anonymous-shopping-mobile:headed": "cypress run --component --browser electron --headed --spec cypress/component/AnonymousShoppingMobile.cy.tsx",
     "test:ct:wallet-stub": "cypress run --component --browser electron --spec cypress/component/WalletStub.cy.tsx",
     "test:ct:wallet-stub:headed": "cypress run --component --browser electron --headed --spec cypress/component/WalletStub.cy.tsx",
+    "test:ct:non-preferred-wallet-payments": "cypress run --component --browser electron --spec cypress/component/NonPreferredWalletPayments.cy.tsx",
+    "test:ct:non-preferred-wallet-payments:headed": "cypress run --component --browser electron --headed --spec cypress/component/NonPreferredWalletPayments.cy.tsx",
     "test:ct:buy-now": "cypress run --component --browser electron --spec cypress/component/BuyNow.cy.tsx",
     "test:ct:buy-now:headed": "cypress run --component --browser electron --headed --spec cypress/component/BuyNow.cy.tsx",
     "test:ct:cart-auth": "cypress run --component --browser electron --spec cypress/component/AuthenticatedCart.cy.tsx",

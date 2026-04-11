@@ -113,7 +113,6 @@ export const buildOrderFormValues = (props: {
     return {
         customerEmail: props.profileEmail ?? "",
         shippingAddress: {
-            country: "United States",
             firstName: props.prefillFirstName,
             lastName: props.prefillLastName,
         },

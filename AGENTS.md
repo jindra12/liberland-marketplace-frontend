@@ -28,6 +28,7 @@ manager is `yarn`.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
 - To verify Cypress tests, actually run them instead of only typechecking or inspecting files.
+- When the user asks for a test, treat that as a Cypress component test. Do not switch to Jest unless the user explicitly asks for Jest or another runner.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
@@ -95,6 +96,8 @@ manager is `yarn`.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
+- Payment wallet preferences are advisory only. In Solana, Thirdweb, and Tron payment components, never block or hide payment solely because the connected wallet does not match `preferredWallet`; users must be able to complete payment with any connected wallet.
+- If a component has three conditional branches for rendering or behavior, replace the chain with `switch` instead of a triple `if`; if the logic is getting bulky, split out a small component instead of piling more branches into one file.
 - Only do what the user explicitly asked for. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
 - Never duplicate helper methods. If a helper is needed in more than one place, extract it to a single shared utility and import it from there.
 - If the user tells you not to do something, do not work around it with an indirect command or alternate path; follow the instruction directly or stop and explain the blocker.

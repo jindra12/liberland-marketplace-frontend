@@ -40,17 +40,10 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
             wallet?.id === props.preferredWallet.provider,
     );
     const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
-    const showPayButton = Boolean(account && (!props.preferredWallet || isPreferredWalletSelected));
+    const showPayButton = Boolean(account);
 
     React.useEffect(() => {
         if (account?.address && wallet?.id) {
-            if (
-                props.preferredWallet &&
-                (account.address !== props.preferredWallet.address || wallet.id !== props.preferredWallet.provider)
-            ) {
-                return;
-            }
-
             props.onWalletSelected?.({
                 address: account.address,
                 chain: "ethereum",

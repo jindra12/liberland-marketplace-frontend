@@ -32,13 +32,6 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
             return;
         }
 
-        if (
-            props.preferredWallet &&
-            (props.preferredWallet.address !== publicKeyValue || props.preferredWallet.provider !== wallet.adapter.name)
-        ) {
-            return;
-        }
-
         props.selectWallet(publicKeyValue);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [

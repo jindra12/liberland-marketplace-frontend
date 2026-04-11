@@ -30,19 +30,12 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
             wallet?.adapter.name === props.preferredWallet.provider,
     );
     const showConnectButton = !props.preferredWallet || !isPreferredWalletSelected;
-    const showPayButton = Boolean(canPay && (!props.preferredWallet || isPreferredWalletSelected));
+    const showPayButton = Boolean(canPay);
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         if (address && connected && wallet?.adapter.name) {
-            if (
-                props.preferredWallet &&
-                (address !== props.preferredWallet.address || wallet.adapter.name !== props.preferredWallet.provider)
-            ) {
-                return;
-            }
-
             props.onWalletSelected?.({
                 address,
                 chain: "tron",
