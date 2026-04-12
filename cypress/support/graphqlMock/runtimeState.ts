@@ -7,6 +7,8 @@ export type GraphQLRequestBody = {
     operationName?: string;
     variables?: {
         searchTerm?: string;
+        limit?: number;
+        page?: number;
     };
     query?: string;
 };
