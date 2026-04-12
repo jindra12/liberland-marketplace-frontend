@@ -1,0 +1,36 @@
+.SearchDrawer {
+    .ant-drawer-body {
+        padding-top: 20px;
+    }
+
+    .ant-drawer-footer {
+        padding: 18px 24px 24px;
+        border-top: 1px solid rgba(147, 214, 255, 0.08);
+        background:
+            linear-gradient(180deg, rgba(4, 15, 25, 0.96), rgba(3, 12, 21, 0.98)),
+            radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 28%);
+    }
+}
+
+.SearchDrawer__footerForm {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.SearchDrawer__footerInput {
+    flex: 1;
+    min-width: 0;
+}
+
+.SearchDrawer__footerForm .ant-input-affix-wrapper,
+.SearchDrawer__footerForm .ant-input {
+    min-height: 52px;
+    border-radius: 16px;
+}
+
+.SearchDrawer__footerForm .ant-btn {
+    min-height: 52px;
+    border-radius: 16px;
+    font-weight: 800;
+}

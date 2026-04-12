@@ -1,61 +1,109 @@
 import * as React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { DocType, SearchOption } from "../../types";
-import { AutoSuggest } from "../AutoSuggest";
-import { useSearchStartupsQuery } from "../hooks";
+import { Avatar, Flex, Tag } from "antd";
+
+import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
+import { useListStartupsQuery, useSearchStartupsQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
+
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchStartups } from "./utils";
 
 export interface StartupsSearchProps {
     onClose: () => void;
 }
 
 export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (props) => {
-    const navigate = useNavigate();
-    const [term, setTerm] = React.useState("");
-    const startups = useSearchStartupsQuery(
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const defaultStartups = useListStartupsQuery({
+        limit: 5,
+        page: 1,
+    });
+    const searchedStartups = useSearchStartupsQuery(
         {
-            searchTerm: term,
+            searchTerm: submittedSearchValue,
             limit: 5,
             page: 1,
         },
         {
-            enabled: term.length > 0,
+            enabled: submittedSearchValue.length > 0,
         },
     );
-    const options: SearchOption[] =
-        !term || !startups.isFetched || !startups.data
-            ? []
-            : (startups.data.Searches?.docs ?? [])
-                  .filter((searchDoc) => searchDoc.doc?.relationTo === "startups")
-                  .map((searchDoc, index) => {
-                      const doc = searchDoc.doc!.value as DocType;
-                      const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                      return {
-                          key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                          value,
-                          id: doc.id!,
-                          label: searchDoc.title,
-                          image: getImage(doc),
-                      };
-                  });
+    const items =
+        submittedSearchValue.length > 0
+            ? mapSearchStartups(searchedStartups.data?.Searches?.docs)
+            : defaultStartups.data?.Startups?.docs ?? [];
+    const loading = submittedSearchValue.length > 0 ? searchedStartups.isLoading : defaultStartups.isLoading;
 
     return (
-        <AutoSuggest
-            onClose={props.onClose}
-            onSelect={(_, { id }) => {
-                navigate(`/ventures/${id}`);
-                props.onClose();
-            }}
-            options={options}
+        <SearchDrawer
             title="Startup search"
-            runSearch={setTerm}
-            setOptions={() => {
-                setTerm("");
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
             }}
-            isLoading={startups.isLoading}
-        />
+            placeholder="Search ventures"
+        >
+            <SearchResultsList
+                title={
+                    submittedSearchValue.length > 0
+                        ? `Search results for "${submittedSearchValue}"`
+                        : "Ventures"
+                }
+                items={items}
+                loading={loading}
+                refetch={submittedSearchValue.length > 0 ? searchedStartups.refetch : defaultStartups.refetch}
+                emptyText="No matching ventures"
+                renderItem={{
+                    title: (startup) => (
+                        <Flex justify="space-between" align="center" wrap>
+                            <Flex align="center" gap={8}>
+                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                    {startup.title}
+                                </Link>
+                            </Flex>
+                            <Flex gap={4} wrap>
+                                <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
+                                {startup.identity?.name && (
+                                    <IdentityTagLink identity={startup.identity} color="success" />
+                                )}
+                            </Flex>
+                        </Flex>
+                    ),
+                    avatar: (startup) =>
+                        startup.image?.url ? (
+                            <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(startup) || getImage(startup?.company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
+                        ) : undefined,
+                    description: (startup) => (
+                        <Flex gap={4} wrap className="StartupList__meta">
+                            {startup.company?.name && <Tag>{startup.company.name}</Tag>}
+                            {startup.lookingFor?.map((r) => (
+                                <Tag key={r} color="orange">
+                                    {formatResourceLabel(r)}
+                                </Tag>
+                            ))}
+                        </Flex>
+                    ),
+                    body: (startup) => (
+                        <Markdown className="Markdown--clamp3 EntityList__description">{startup.description}</Markdown>
+                    ),
+                }}
+            />
+        </SearchDrawer>
     );
 };

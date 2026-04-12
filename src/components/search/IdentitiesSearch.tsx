@@ -1,61 +1,84 @@
 import * as React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { DocType, SearchOption } from "../../types";
-import { AutoSuggest } from "../AutoSuggest";
-import { useSearchIdentitiesQuery } from "../hooks";
+import { Avatar, Flex } from "antd";
+
+import { useListIdentitiesQuery, useSearchIdentitiesQuery } from "../hooks";
+import { Markdown } from "../Markdown";
 import { getImage } from "../shared/image/utils";
+
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchIdentities } from "./utils";
 
 export interface IdentitiesSearchProps {
     onClose: () => void;
 }
 
 export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = (props) => {
-    const navigate = useNavigate();
-    const [term, setTerm] = React.useState("");
-    const identities = useSearchIdentitiesQuery(
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const defaultIdentities = useListIdentitiesQuery({
+        limit: 5,
+        page: 1,
+    });
+    const searchedIdentities = useSearchIdentitiesQuery(
         {
-            searchTerm: term,
+            searchTerm: submittedSearchValue,
             limit: 5,
             page: 1,
         },
         {
-            enabled: term.length > 0,
+            enabled: submittedSearchValue.length > 0,
         },
     );
-    const options: SearchOption[] =
-        !term || !identities.isFetched || !identities.data
-            ? []
-            : (identities.data.Searches?.docs ?? [])
-                  .filter((searchDoc) => searchDoc.doc?.relationTo === "identities")
-                  .map((searchDoc, index) => {
-                      const doc = searchDoc.doc!.value as DocType;
-                      const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                      return {
-                          key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                          value,
-                          id: doc.id!,
-                          label: searchDoc.title,
-                          image: getImage(doc),
-                      };
-                  });
+    const items =
+        submittedSearchValue.length > 0
+            ? mapSearchIdentities(searchedIdentities.data?.Searches?.docs)
+            : defaultIdentities.data?.Identities?.docs ?? [];
+    const loading = submittedSearchValue.length > 0 ? searchedIdentities.isLoading : defaultIdentities.isLoading;
 
     return (
-        <AutoSuggest
-            onClose={props.onClose}
-            onSelect={(_, option) => {
-                navigate(`/tribes/${option.id}`);
-                props.onClose();
-            }}
-            options={options}
+        <SearchDrawer
             title="Tribe search"
-            runSearch={setTerm}
-            setOptions={() => {
-                setTerm("");
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
             }}
-            isLoading={identities.isLoading}
-        />
+            placeholder="Search tribes"
+        >
+            <SearchResultsList
+                title={
+                    submittedSearchValue.length > 0
+                        ? `Search results for "${submittedSearchValue}"`
+                        : "Tribes"
+                }
+                items={items}
+                loading={loading}
+                refetch={submittedSearchValue.length > 0 ? searchedIdentities.refetch : defaultIdentities.refetch}
+                emptyText="No matching tribes"
+                renderItem={{
+                    title: (identity) => (
+                        <Flex align="center" gap={12}>
+                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                {identity.name}
+                            </Link>
+                        </Flex>
+                    ),
+                    avatar: (identity) =>
+                        identity.image?.url ? (
+                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                <Avatar src={getImage(identity)} size={88} />
+                            </Link>
+                        ) : undefined,
+                    description: (identity) => (
+                        <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>
+                    ),
+                }}
+            />
+        </SearchDrawer>
     );
 };

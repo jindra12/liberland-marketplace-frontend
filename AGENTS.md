@@ -32,6 +32,8 @@ manager is `yarn`.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
+- Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
+- Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.

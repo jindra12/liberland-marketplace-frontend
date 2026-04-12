@@ -447,12 +447,17 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
         .should("be.visible")
         .closest(".ant-drawer")
         .within(() => {
-            cy.get('input[type="search"]').should("be.visible").clear().type(goal.term).should("have.value", goal.term);
-            cy.get(".ant-input-search-button").should("be.visible").click();
-        });
+            cy.get(".SearchDrawer__footerForm input").should("be.visible").clear().type(`${goal.term}{enter}`);
+    });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
-    cy.contains(".ant-select-item-option", goal.resultLabel).should("be.visible").click();
+    cy.get(".SearchDrawer .ant-list-item")
+        .first()
+        .find("a")
+        .first()
+        .should("be.visible")
+        .click();
     cy.location("pathname").should("eq", goal.route);
+    cy.get(".SearchDrawer").should("not.exist");
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
     screenshotStep(`search-detail-${goal.title}`);
