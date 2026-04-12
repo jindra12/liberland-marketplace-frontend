@@ -124,17 +124,32 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 {
                                     key: "jobs",
                                     label: `Jobs (${counts.jobs})`,
-                                    children: <CompanyJobsList companyId={id!} />,
+                                    children: (
+                                        <CompanyJobsList
+                                            companyId={id!}
+                                            serverUrl={companyData?.serverURL}
+                                        />
+                                    ),
                                 },
                                 {
                                     key: "products-services",
                                     label: `Products / Services (${counts.products})`,
-                                    children: <CompanyProductsServicesList companyId={id!} />,
+                                    children: (
+                                        <CompanyProductsServicesList
+                                            companyId={id!}
+                                            serverUrl={companyData?.serverURL}
+                                        />
+                                    ),
                                 },
                                 {
                                     key: "startups",
                                     label: `Ventures (${counts.startups})`,
-                                    children: <CompanyStartupsList companyId={id!} />,
+                                    children: (
+                                        <CompanyStartupsList
+                                            companyId={id!}
+                                            serverUrl={companyData?.serverURL}
+                                        />
+                                    ),
                                 },
                                 {
                                     key: "comments",

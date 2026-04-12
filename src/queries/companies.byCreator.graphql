@@ -5,6 +5,7 @@ query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $
             isSubscribed
             serverURL
             name
+            likeCount
             cryptoAddresses {
                 chain
                 address

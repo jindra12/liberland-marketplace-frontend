@@ -1,0 +1,9 @@
+mutation CreatePost($data: mutationPostInput!, $draft: Boolean) {
+  createPost(data: $data, draft: $draft) {
+    id
+    title
+    slug
+    hasLiked
+    likeCount
+  }
+}

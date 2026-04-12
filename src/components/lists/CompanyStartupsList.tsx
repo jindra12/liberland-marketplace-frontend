@@ -1,11 +1,12 @@
 import * as React from "react";
 
-import { useListStartupsByCompanyQuery } from "../../generated/graphql";
+import { useListStartupsByCompanyQuery } from "../hooks";
 
 import { StartupListInternal } from "./StartupListInternal";
 
 export interface CompanyStartupsListProps {
     companyId: string;
+    serverUrl?: string | null;
 }
 
 export const CompanyStartupsList: React.FunctionComponent<CompanyStartupsListProps> = (props) => {
@@ -14,6 +15,7 @@ export const CompanyStartupsList: React.FunctionComponent<CompanyStartupsListPro
         companyId: props.companyId,
         page,
         limit: 20,
+        url: props.serverUrl,
     });
 
     return <StartupListInternal page={page} query={query} setPage={setPage} />;

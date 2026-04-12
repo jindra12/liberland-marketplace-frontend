@@ -1,0 +1,25 @@
+query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-createdAt") {
+  Posts(
+    draft: false
+    where: { title: { contains: $searchTerm } }
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      slug
+      hasLiked
+      likeCount
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

@@ -24,6 +24,7 @@ query SearchCompaniesBySecondaryIdentity(
             serverURL
             name
             description
+            likeCount
             cryptoAddresses {
                 chain
                 address

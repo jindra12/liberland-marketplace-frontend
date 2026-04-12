@@ -34,6 +34,7 @@ manager is `yarn`.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
+- For small layout-only wrappers, prefer Ant Design `Flex` or `Space` instead of custom wrapper `div`s and CSS spacing shims.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
@@ -109,6 +110,7 @@ manager is `yarn`.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.
+- Keep stateless helper functions in `utils.ts/x` and shared non-component types in `types.ts`; component files should stay focused on rendering and event wiring.
 - When a component stops being small and readable, split it into a component family folder and move stateless helpers out of the component file into `utils.ts/x`.
 - A component should have exactly one purpose. If a component starts coordinating multiple concerns or multiple chain integrations, split it into smaller focused components instead of branching inside one file.
 - Avoid components with more than 2 hooks. If a component needs a third hook, stop and split the behavior into smaller components or an observer/helper component.

@@ -1,0 +1,9 @@
+query PostById($id: String!, $draft: Boolean = false) {
+  Post(id: $id, draft: $draft) {
+    id
+    title
+    slug
+    hasLiked
+    likeCount
+  }
+}

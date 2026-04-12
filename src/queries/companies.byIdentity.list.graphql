@@ -11,6 +11,7 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
             serverURL
             name
             description
+            likeCount
             cryptoAddresses {
                 chain
                 address

@@ -12,6 +12,7 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20)
             name
             inventory
             description
+            likeCount
             cryptoAddresses {
                 chain
                 address

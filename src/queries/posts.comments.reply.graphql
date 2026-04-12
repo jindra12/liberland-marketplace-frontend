@@ -1,0 +1,20 @@
+mutation CreatePostReplyComment(
+  $replyToPost: Comment_ReplyPostRelationshipInput!
+  $parentCommentId: String!
+  $content: String!
+) {
+  createComment(data: { content: $content, replyPost: $replyToPost, replyComment: $parentCommentId }) {
+    id
+    content
+    replyComment {
+      id
+    }
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    createdAt
+  }
+}

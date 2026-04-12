@@ -5,6 +5,7 @@ query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 1
             isSubscribed
             serverURL
             name
+            likeCount
             cryptoAddresses {
                 chain
                 address

@@ -2,12 +2,9 @@ import * as React from "react";
 
 import { useParams } from "react-router-dom";
 
-import { useIsFetching } from "@tanstack/react-query";
-
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
 
-import { useListPublishedSyndicationUrlsQuery } from "../../generated/graphql";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
@@ -21,7 +18,6 @@ import { DetailBackButton } from "./DetailBackButton";
 const SyndicationDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
     const { urls, setUrls } = useEndpointContext();
-    const syndicationLoading = useIsFetching({ queryKey: useListPublishedSyndicationUrlsQuery.getKey({}) }) > 0;
 
     const decodedUrl = React.useMemo(() => {
         if (!id) {
@@ -37,7 +33,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
 
     const entry = React.useMemo(() => urls.find((current) => current.value === decodedUrl), [decodedUrl, urls]);
 
-    if (syndicationLoading && !entry) {
+    if (!entry) {
         return <DetailPageSkeleton />;
     }
 

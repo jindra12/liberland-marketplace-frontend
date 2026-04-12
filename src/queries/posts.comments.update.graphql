@@ -1,0 +1,7 @@
+mutation UpdatePostCommentContent($id: String!, $content: String!) {
+  updateComment(id: $id, data: { content: $content }) {
+    id
+    content
+    updatedAt
+  }
+}

@@ -40,10 +40,18 @@ import {
     useDeleteCompanyMutation as useDeleteCompanyMutationSingle,
     UpdateCompanyDocument,
     useUpdateCompanyMutation as useUpdateCompanyMutationSingle,
+    DislikeCompanyDocument,
+    useDislikeCompanyMutation as useDislikeCompanyMutationSingle,
+    LikeCompanyDocument,
+    useLikeCompanyMutation as useLikeCompanyMutationSingle,
     IdentityByIdDocument,
     useIdentityByIdQuery as useIdentityByIdQuerySingle,
+    DislikeIdentityDocument,
+    useDislikeIdentityMutation as useDislikeIdentityMutationSingle,
     EntityImageUrlsDocument,
     useEntityImageUrlsQuery as useEntityImageUrlsQuerySingle,
+    LikeIdentityDocument,
+    useLikeIdentityMutation as useLikeIdentityMutationSingle,
     ListIdentitiesDocument,
     useListIdentitiesQuery as useListIdentitiesQuerySingle,
     SearchIdentitiesDocument,
@@ -66,6 +74,10 @@ import {
     useDeleteJobMutation as useDeleteJobMutationSingle,
     UpdateJobDocument,
     useUpdateJobMutation as useUpdateJobMutationSingle,
+    DislikeJobDocument,
+    useDislikeJobMutation as useDislikeJobMutationSingle,
+    LikeJobDocument,
+    useLikeJobMutation as useLikeJobMutationSingle,
     ListJobsDocument,
     useListJobsQuery as useListJobsQuerySingle,
     SearchJobsDocument,
@@ -76,6 +88,34 @@ import {
     useCreateCommentMutation as useCreateCommentMutationSingle,
     CreateOrderDocument,
     useCreateOrderMutation as useCreateOrderMutationSingle,
+    PostByIdDocument,
+    usePostByIdQuery as usePostByIdQuerySingle,
+    CreatePostCommentDocument,
+    useCreatePostCommentMutation as useCreatePostCommentMutationSingle,
+    DeletePostCommentDocument,
+    useDeletePostCommentMutation as useDeletePostCommentMutationSingle,
+    ListPostCommentsDocument,
+    useListPostCommentsQuery as useListPostCommentsQuerySingle,
+    ListPostCommentRepliesDocument,
+    useListPostCommentRepliesQuery as useListPostCommentRepliesQuerySingle,
+    CreatePostReplyCommentDocument,
+    useCreatePostReplyCommentMutation as useCreatePostReplyCommentMutationSingle,
+    UpdatePostCommentContentDocument,
+    useUpdatePostCommentContentMutation as useUpdatePostCommentContentMutationSingle,
+    CreatePostDocument,
+    useCreatePostMutation as useCreatePostMutationSingle,
+    DeletePostDocument,
+    useDeletePostMutation as useDeletePostMutationSingle,
+    DislikePostDocument,
+    useDislikePostMutation as useDislikePostMutationSingle,
+    LikePostDocument,
+    useLikePostMutation as useLikePostMutationSingle,
+    ListPostsDocument,
+    useListPostsQuery as useListPostsQuerySingle,
+    SearchPostsDocument,
+    useSearchPostsQuery as useSearchPostsQuerySingle,
+    UpdatePostDocument,
+    useUpdatePostMutation as useUpdatePostMutationSingle,
     CreateReplyToCommentDocument,
     useCreateReplyToCommentMutation as useCreateReplyToCommentMutationSingle,
     DeleteCommentDocument,
@@ -98,6 +138,10 @@ import {
     useDeleteProductMutation as useDeleteProductMutationSingle,
     UpdateProductDocument,
     useUpdateProductMutation as useUpdateProductMutationSingle,
+    DislikeProductDocument,
+    useDislikeProductMutation as useDislikeProductMutationSingle,
+    LikeProductDocument,
+    useLikeProductMutation as useLikeProductMutationSingle,
     ListProductsByCreatorDocument,
     useListProductsByCreatorQuery as useListProductsByCreatorQuerySingle,
     ProductByIdDocument,
@@ -144,6 +188,8 @@ import {
     useSubscribeToTribeUpdatesMutation as useSubscribeToTribeUpdatesMutationSingle,
     SubscribeToVentureUpdatesDocument,
     useSubscribeToVentureUpdatesMutation as useSubscribeToVentureUpdatesMutationSingle,
+    ListPublishedSyndicationUrlsDocument,
+    useListPublishedSyndicationUrlsQuery as useListPublishedSyndicationUrlsQuerySingle,
     UnsubscribeFromCompanyUpdatesDocument,
     useUnsubscribeFromCompanyUpdatesMutation as useUnsubscribeFromCompanyUpdatesMutationSingle,
     UnsubscribeFromJobUpdatesDocument,
@@ -156,6 +202,10 @@ import {
     useUnsubscribeFromVentureUpdatesMutation as useUnsubscribeFromVentureUpdatesMutationSingle,
     UpdateUserByIdDocument,
     useUpdateUserByIdMutation as useUpdateUserByIdMutationSingle,
+    DislikeVentureDocument,
+    useDislikeVentureMutation as useDislikeVentureMutationSingle,
+    LikeVentureDocument,
+    useLikeVentureMutation as useLikeVentureMutationSingle,
     MeUserQuery,
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
@@ -363,6 +413,21 @@ export const useListStartupsByIdentityQuery = enhancedQueryFactory(
 export const useStartupByIdQuery = enhancedQueryFactory(useStartupByIdQuerySingle, StartupByIdDocument);
 export const useListStartupsQuery = enhancedQueryFactory(useListStartupsQuerySingle, ListStartupsDocument);
 export const useSearchStartupsQuery = enhancedQueryFactory(useSearchStartupsQuerySingle, SearchStartupsDocument);
+export const useListPublishedSyndicationUrlsQuery = enhancedQueryFactory(
+    useListPublishedSyndicationUrlsQuerySingle,
+    ListPublishedSyndicationUrlsDocument,
+);
+export const usePostByIdQuery = enhancedQueryFactory(usePostByIdQuerySingle, PostByIdDocument);
+export const useListPostCommentsQuery = enhancedQueryFactory(
+    useListPostCommentsQuerySingle,
+    ListPostCommentsDocument,
+);
+export const useListPostCommentRepliesQuery = enhancedQueryFactory(
+    useListPostCommentRepliesQuerySingle,
+    ListPostCommentRepliesDocument,
+);
+export const useListPostsQuery = enhancedQueryFactory(useListPostsQuerySingle, ListPostsDocument);
+export const useSearchPostsQuery = enhancedQueryFactory(useSearchPostsQuerySingle, SearchPostsDocument);
 export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
     const leftEntries = Array.isArray(left) ? left : [left];
     const rightEntries = Array.isArray(right) ? right : [right];
@@ -374,9 +439,35 @@ export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutati
 export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutationSingle, UpdateCartDocument);
 export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompanyMutationSingle, DeleteCompanyDocument);
 export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
+export const useDislikeCompanyMutation = enhancedMutationFactory(
+    useDislikeCompanyMutationSingle,
+    DislikeCompanyDocument,
+);
+export const useLikeCompanyMutation = enhancedMutationFactory(useLikeCompanyMutationSingle, LikeCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
 export const useUpdateOrderMutation = enhancedMutationFactory(useUpdateOrderMutationSingle, UpdateOrderDocument);
+export const useCreatePostCommentMutation = enhancedMutationFactory(
+    useCreatePostCommentMutationSingle,
+    CreatePostCommentDocument,
+);
+export const useDeletePostCommentMutation = enhancedMutationFactory(
+    useDeletePostCommentMutationSingle,
+    DeletePostCommentDocument,
+);
+export const useCreatePostReplyCommentMutation = enhancedMutationFactory(
+    useCreatePostReplyCommentMutationSingle,
+    CreatePostReplyCommentDocument,
+);
+export const useUpdatePostCommentContentMutation = enhancedMutationFactory(
+    useUpdatePostCommentContentMutationSingle,
+    UpdatePostCommentContentDocument,
+);
+export const useCreatePostMutation = enhancedMutationFactory(useCreatePostMutationSingle, CreatePostDocument);
+export const useDeletePostMutation = enhancedMutationFactory(useDeletePostMutationSingle, DeletePostDocument);
+export const useDislikePostMutation = enhancedMutationFactory(useDislikePostMutationSingle, DislikePostDocument);
+export const useLikePostMutation = enhancedMutationFactory(useLikePostMutationSingle, LikePostDocument);
+export const useUpdatePostMutation = enhancedMutationFactory(useUpdatePostMutationSingle, UpdatePostDocument);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(
     useCreateReplyToCommentMutationSingle,
     CreateReplyToCommentDocument,
@@ -385,9 +476,16 @@ export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteComment
 export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);
 export const useDeleteJobMutation = enhancedMutationFactory(useDeleteJobMutationSingle, DeleteJobDocument);
 export const useUpdateJobMutation = enhancedMutationFactory(useUpdateJobMutationSingle, UpdateJobDocument);
+export const useDislikeJobMutation = enhancedMutationFactory(useDislikeJobMutationSingle, DislikeJobDocument);
+export const useLikeJobMutation = enhancedMutationFactory(useLikeJobMutationSingle, LikeJobDocument);
 export const useCreateProductMutation = enhancedMutationFactory(useCreateProductMutationSingle, CreateProductDocument);
 export const useDeleteProductMutation = enhancedMutationFactory(useDeleteProductMutationSingle, DeleteProductDocument);
 export const useUpdateProductMutation = enhancedMutationFactory(useUpdateProductMutationSingle, UpdateProductDocument);
+export const useDislikeProductMutation = enhancedMutationFactory(
+    useDislikeProductMutationSingle,
+    DislikeProductDocument,
+);
+export const useLikeProductMutation = enhancedMutationFactory(useLikeProductMutationSingle, LikeProductDocument);
 export const useJoinStartupMutation = enhancedMutationFactory(useJoinStartupMutationSingle, JoinStartupDocument);
 export const useLeaveStartupMutation = enhancedMutationFactory(useLeaveStartupMutationSingle, LeaveStartupDocument);
 export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
@@ -405,6 +503,11 @@ export const useUpdateUserByIdMutation = enhancedMutationFactory(
     useUpdateUserByIdMutationSingle,
     UpdateUserByIdDocument,
 );
+export const useDislikeIdentityMutation = enhancedMutationFactory(
+    useDislikeIdentityMutationSingle,
+    DislikeIdentityDocument,
+);
+export const useLikeIdentityMutation = enhancedMutationFactory(useLikeIdentityMutationSingle, LikeIdentityDocument);
 export const useSubscribeToCompanyUpdatesMutation = enhancedMutationFactory(
     useSubscribeToCompanyUpdatesMutationSingle,
     SubscribeToCompanyUpdatesDocument,
@@ -445,3 +548,8 @@ export const useUnsubscribeFromVentureUpdatesMutation = enhancedMutationFactory(
     useUnsubscribeFromVentureUpdatesMutationSingle,
     UnsubscribeFromVentureUpdatesDocument,
 );
+export const useDislikeVentureMutation = enhancedMutationFactory(
+    useDislikeVentureMutationSingle,
+    DislikeVentureDocument,
+);
+export const useLikeVentureMutation = enhancedMutationFactory(useLikeVentureMutationSingle, LikeVentureDocument);

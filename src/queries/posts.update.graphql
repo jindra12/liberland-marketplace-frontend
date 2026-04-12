@@ -1,0 +1,9 @@
+mutation UpdatePost($id: String!, $data: mutationPostUpdateInput!, $draft: Boolean) {
+  updatePost(id: $id, data: $data, draft: $draft) {
+    id
+    title
+    slug
+    hasLiked
+    likeCount
+  }
+}

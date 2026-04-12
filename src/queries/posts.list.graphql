@@ -1,0 +1,19 @@
+query ListPosts($page: Int = 1, $limit: Int = 20) {
+  Posts(draft: false, page: $page, limit: $limit) {
+    docs {
+      id
+      title
+      slug
+      hasLiked
+      likeCount
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}

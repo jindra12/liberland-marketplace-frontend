@@ -1,0 +1,8 @@
+mutation DislikeJob($id: String!) {
+  setLikeState(collection: jobs, id: $id, liked: false) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}
