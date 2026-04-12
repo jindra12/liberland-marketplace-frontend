@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
 
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListIdentitiesQuery, useSearchIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { getImage } from "../shared/image/utils";
 
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
 import { SearchResultsList } from "./SearchResultsList";
 import { mapSearchIdentities } from "./utils";
@@ -19,6 +21,7 @@ export interface IdentitiesSearchProps {
 export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
     const defaultIdentities = useListIdentitiesQuery({
         limit: 5,
         page: 1,
@@ -27,17 +30,22 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
         {
             searchTerm: submittedSearchValue,
             limit: 5,
-            page: 1,
+            page,
         },
         {
             enabled: submittedSearchValue.length > 0,
         },
     );
+    const searchDocs = useAccumulatedDocs(searchedIdentities.data?.Searches?.docs, page);
     const items =
         submittedSearchValue.length > 0
-            ? mapSearchIdentities(searchedIdentities.data?.Searches?.docs)
+            ? mapSearchIdentities(searchDocs)
             : defaultIdentities.data?.Identities?.docs ?? [];
-    const loading = submittedSearchValue.length > 0 ? searchedIdentities.isLoading : defaultIdentities.isLoading;
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedIdentities.isLoading && searchDocs.length === 0
+            : defaultIdentities.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedIdentities.data?.Searches?.hasNextPage) : false;
 
     return (
         <SearchDrawer
@@ -47,6 +55,7 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
             onSearchValueChange={setSearchValue}
             onSubmit={() => {
                 setSubmittedSearchValue(searchValue);
+                setPage(1);
             }}
             placeholder="Search tribes"
         >
@@ -58,7 +67,12 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
                 }
                 items={items}
                 loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
                 refetch={submittedSearchValue.length > 0 ? searchedIdentities.refetch : defaultIdentities.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
                 emptyText="No matching tribes"
                 renderItem={{
                     title: (identity) => (

@@ -26,8 +26,8 @@ type SearchStartupDoc = NonNullable<NonNullable<NonNullable<SearchStartupsQuery[
 type IdentityDoc = NonNullable<NonNullable<ListIdentitiesQuery["Identities"]>["docs"]>[number];
 type SearchIdentityDoc = NonNullable<NonNullable<NonNullable<SearchIdentitiesQuery["Searches"]>["docs"]>[number]>;
 
-const mapSearchDocs = <TDoc, TSearchDoc extends { doc?: { relationTo?: string | null; value?: TDoc | null } | null }>(
-    docs: TSearchDoc[] | undefined,
+const mapSearchDocs = <TDoc>(
+    docs: Array<{ doc?: { relationTo?: string | null; value?: Record<string, unknown> | null } | null }> | undefined,
     relationTo: string,
 ): TDoc[] => {
     return (docs ?? []).flatMap((searchDoc) => {
@@ -40,7 +40,7 @@ const mapSearchDocs = <TDoc, TSearchDoc extends { doc?: { relationTo?: string | 
             return [];
         }
 
-        return [doc];
+        return [doc as TDoc];
     });
 };
 

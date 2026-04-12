@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
 
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListJobsQuery, useSearchJobsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -12,6 +13,7 @@ import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
 import { SearchResultsList } from "./SearchResultsList";
 import { mapSearchJobs } from "./utils";
@@ -23,6 +25,7 @@ export interface JobSearchProps {
 export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
     const defaultJobs = useListJobsQuery({
         limit: 5,
         page: 1,
@@ -31,17 +34,20 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
         {
             searchTerm: submittedSearchValue,
             limit: 5,
-            page: 1,
+            page,
         },
         {
             enabled: submittedSearchValue.length > 0,
         },
     );
+    const searchDocs = useAccumulatedDocs(searchedJobs.data?.Searches?.docs, page);
     const items =
         submittedSearchValue.length > 0
-            ? mapSearchJobs(searchedJobs.data?.Searches?.docs)
+            ? mapSearchJobs(searchDocs)
             : defaultJobs.data?.Jobs?.docs ?? [];
-    const loading = submittedSearchValue.length > 0 ? searchedJobs.isLoading : defaultJobs.isLoading;
+    const loading =
+        submittedSearchValue.length > 0 ? searchedJobs.isLoading && searchDocs.length === 0 : defaultJobs.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedJobs.data?.Searches?.hasNextPage) : false;
 
     return (
         <SearchDrawer
@@ -51,6 +57,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
             onSearchValueChange={setSearchValue}
             onSubmit={() => {
                 setSubmittedSearchValue(searchValue);
+                setPage(1);
             }}
             placeholder="Search jobs"
         >
@@ -60,7 +67,12 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                 }
                 items={items}
                 loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
                 refetch={submittedSearchValue.length > 0 ? searchedJobs.refetch : defaultJobs.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
                 emptyText="No matching jobs"
                 renderItem={{
                     title: (job) => (

@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Button, Drawer, Form, Input, InputRef } from "antd";
 
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
+
 type SearchDrawerProps = {
     title: string;
     onClose: () => void;
@@ -14,7 +16,6 @@ type SearchDrawerProps = {
 
 export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) => {
     const inputRef = React.useRef<InputRef>(null);
-    const [form] = Form.useForm();
 
     return (
         <Drawer
@@ -34,7 +35,6 @@ export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) 
                 <Form
                     className="SearchDrawer__footerForm"
                     onFinish={props.onSubmit}
-                    form={form}
                 >
                     <Form.Item className="SearchDrawer__footerInputItem" noStyle>
                         <Input
@@ -52,7 +52,9 @@ export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) 
                 </Form>
             }
         >
-            {props.children}
+            <div id={SEARCH_DRAWER_SCROLLABLE_ID} className="SearchDrawer__scrollable">
+                {props.children}
+            </div>
         </Drawer>
     );
 };

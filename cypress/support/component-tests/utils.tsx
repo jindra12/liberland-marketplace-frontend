@@ -401,8 +401,9 @@ export const waitForSearchQuery = (
     operationName: string,
     searchTerm: string,
     expectedTitle: string,
+    page = 1,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`, { timeout: 20000 }).then(
+    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page, limit: 5 })}`, { timeout: 20000 }).then(
         (interception) => {
             const response = interception.response?.body as GraphQLResponseBody | undefined;
             const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
@@ -414,6 +415,20 @@ export const waitForSearchQuery = (
                 expectedTitle,
             );
             screenshotStep(`${operationName}-${expectedTitle}`);
+        },
+    );
+};
+
+export const waitForSearchResultsPage = (serverUrl: string, operationName: string, searchTerm: string, page: number) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page, limit: 5 })}`, { timeout: 20000 }).then(
+        (interception) => {
+            const response = interception.response?.body as GraphQLResponseBody | undefined;
+            const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
+
+            expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+            screenshotStep(`${operationName}-page-${page}`);
         },
     );
 };
@@ -450,9 +465,7 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
             cy.get(".SearchDrawer__footerForm input").should("be.visible").clear().type(`${goal.term}{enter}`);
     });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
-    cy.get(".SearchDrawer .ant-list-item")
-        .first()
-        .find("a")
+    cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 })
         .first()
         .should("be.visible")
         .click();

@@ -7,6 +7,9 @@ type SearchResultsListProps<TItem> = {
     items: TItem[];
     loading: boolean;
     refetch: () => void;
+    hasMore: boolean;
+    next: () => void;
+    scrollableTarget: string;
     renderItem: Partial<
         Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode>
     >;
@@ -16,9 +19,10 @@ type SearchResultsListProps<TItem> = {
 export const SearchResultsList = <TItem,>(props: SearchResultsListProps<TItem>) => {
     return (
         <AppList
-            hasMore={false}
+            hasMore={props.hasMore}
             items={props.items}
-            next={() => {}}
+            next={props.next}
+            scrollableTarget={props.scrollableTarget}
             refetch={props.refetch}
             title={props.title}
             loading={props.loading}

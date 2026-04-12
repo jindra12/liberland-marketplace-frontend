@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Tag } from "antd";
 
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useListStartupsQuery, useSearchStartupsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
 import { SearchResultsList } from "./SearchResultsList";
 import { mapSearchStartups } from "./utils";
@@ -21,6 +23,7 @@ export interface StartupsSearchProps {
 export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
     const defaultStartups = useListStartupsQuery({
         limit: 5,
         page: 1,
@@ -29,17 +32,22 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
         {
             searchTerm: submittedSearchValue,
             limit: 5,
-            page: 1,
+            page,
         },
         {
             enabled: submittedSearchValue.length > 0,
         },
     );
+    const searchDocs = useAccumulatedDocs(searchedStartups.data?.Searches?.docs, page);
     const items =
         submittedSearchValue.length > 0
-            ? mapSearchStartups(searchedStartups.data?.Searches?.docs)
+            ? mapSearchStartups(searchDocs)
             : defaultStartups.data?.Startups?.docs ?? [];
-    const loading = submittedSearchValue.length > 0 ? searchedStartups.isLoading : defaultStartups.isLoading;
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedStartups.isLoading && searchDocs.length === 0
+            : defaultStartups.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedStartups.data?.Searches?.hasNextPage) : false;
 
     return (
         <SearchDrawer
@@ -49,6 +57,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
             onSearchValueChange={setSearchValue}
             onSubmit={() => {
                 setSubmittedSearchValue(searchValue);
+                setPage(1);
             }}
             placeholder="Search ventures"
         >
@@ -60,7 +69,12 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                 }
                 items={items}
                 loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
                 refetch={submittedSearchValue.length > 0 ? searchedStartups.refetch : defaultStartups.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
                 emptyText="No matching ventures"
                 renderItem={{
                     title: (startup) => (

@@ -19,6 +19,7 @@ export interface AppListProps<TItem> {
     emptyText?: React.ReactNode;
     loading?: boolean;
     endMessage?: React.ReactNode;
+    scrollableTarget?: string;
 }
 
 export const AppList = <TItem,>(props: AppListProps<TItem>) => {
@@ -31,6 +32,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
             dataLength={props.items.length}
             next={props.next}
             hasMore={props.hasMore}
+            scrollableTarget={props.scrollableTarget}
             loader={
                 <Flex justify="center" align="center">
                     <Spin />

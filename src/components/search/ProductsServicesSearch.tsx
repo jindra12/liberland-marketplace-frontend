@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Tag } from "antd";
 
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListProductsQuery, useSearchProductsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents } from "../shared/product/utils";
 
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
 import { SearchResultsList } from "./SearchResultsList";
 import { mapSearchProducts } from "./utils";
@@ -21,6 +23,7 @@ export interface ProductsServicesSearchProps {
 export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSearchProps> = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
     const defaultProducts = useListProductsQuery({
         limit: 5,
         page: 1,
@@ -29,17 +32,22 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
         {
             searchTerm: submittedSearchValue,
             limit: 5,
-            page: 1,
+            page,
         },
         {
             enabled: submittedSearchValue.length > 0,
         },
     );
+    const searchDocs = useAccumulatedDocs(searchedProducts.data?.Searches?.docs, page);
     const items =
         submittedSearchValue.length > 0
-            ? mapSearchProducts(searchedProducts.data?.Searches?.docs)
+            ? mapSearchProducts(searchDocs)
             : defaultProducts.data?.Products?.docs ?? [];
-    const loading = submittedSearchValue.length > 0 ? searchedProducts.isLoading : defaultProducts.isLoading;
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedProducts.isLoading && searchDocs.length === 0
+            : defaultProducts.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedProducts.data?.Searches?.hasNextPage) : false;
 
     return (
         <SearchDrawer
@@ -49,6 +57,7 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             onSearchValueChange={setSearchValue}
             onSubmit={() => {
                 setSubmittedSearchValue(searchValue);
+                setPage(1);
             }}
             placeholder="Search products / services"
         >
@@ -60,7 +69,12 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 }
                 items={items}
                 loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
                 refetch={submittedSearchValue.length > 0 ? searchedProducts.refetch : defaultProducts.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
                 emptyText="No matching products / services"
                 renderItem={{
                     title: (product) => (

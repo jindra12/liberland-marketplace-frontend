@@ -1,6 +1,10 @@
 .SearchDrawer {
     .ant-drawer-body {
+        display: flex;
+        flex-direction: column;
         padding-top: 20px;
+        min-height: 0;
+        overflow: hidden;
     }
 
     .ant-drawer-footer {
@@ -11,6 +15,13 @@
             radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 28%);
     }
 }
+
+.SearchDrawer__scrollable {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
 
 .SearchDrawer__footerForm {
     display: flex;
