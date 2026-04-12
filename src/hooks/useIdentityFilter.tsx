@@ -49,7 +49,7 @@ export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) 
             </div>
         ) : undefined;
 
-    const filterNode = <IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />;
+    const filterNode = <IdentityFilter onChange={setSelectedIdentityIds} />;
 
     return { items, hasMore: hasNextPage, endMessage, filterNode };
 }
