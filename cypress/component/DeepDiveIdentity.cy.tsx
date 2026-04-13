@@ -13,38 +13,38 @@ describe("identity deep dive", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListProductsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Products",
             "Solar Widget",
         );
-        cy.get(".SplashEntityCard--products").should("be.visible").contains("Solar Widget");
+        cy.contains(".ant-list-item-meta-title", "Solar Widget").should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Jobs").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListJobsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Jobs",
             "Dockmaster",
         );
-        cy.get(".SplashEntityCard--jobs").should("be.visible").contains("Dockmaster");
+        cy.contains(".ant-list-item-meta-title", "Dockmaster").should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListCompaniesByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Companies",
             "Harbor Labs",
         );
-        cy.get(".SplashEntityCard--companies").should("be.visible").contains("Harbor Labs");
+        cy.contains(".ant-list-item-meta-title", "Harbor Labs").should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Ventures").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListStartupsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Startups",
             "Sky Relay",
         );
-        cy.get(".SplashEntityCard--ventures").should("be.visible").contains("Sky Relay");
+        cy.contains(".ant-list-item-meta-title", "Sky Relay").should("be.visible");
         cy.get(".LikeButton").should("have.length.at.least", 4);
         cy.get(".ShareSection").should("be.visible").contains("Share this tribe");
     });

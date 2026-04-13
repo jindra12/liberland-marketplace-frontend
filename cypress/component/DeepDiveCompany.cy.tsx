@@ -31,10 +31,11 @@ describe("company deep dive", () => {
         cy.get(".ShareSection__iconButton").its("length").should("be.greaterThan", 0);
         cy.get(".CompanyDetail__identityRow").should("be.visible");
 
+        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Jobs").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListJobsByCompany",
-            { companyId: "company-harbor-labs", page: 1, limit: 20 },
+            { companyId: "company-harbor-labs", page: 1, limit: 20, url: MAIN_SERVER_URL },
             "Jobs",
             "Dockmaster",
         );
@@ -44,7 +45,7 @@ describe("company deep dive", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListProductsByCompany",
-            { companyId: "company-harbor-labs", page: 1, limit: 20 },
+            { companyId: "company-harbor-labs", page: 1, limit: 20, url: MAIN_SERVER_URL },
             "Products",
             "Solar Widget",
         );
@@ -54,7 +55,7 @@ describe("company deep dive", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListStartupsByCompany",
-            { companyId: "company-harbor-labs", page: 1, limit: 20 },
+            { companyId: "company-harbor-labs", page: 1, limit: 20, url: MAIN_SERVER_URL },
             "Startups",
             "Sky Relay",
         );

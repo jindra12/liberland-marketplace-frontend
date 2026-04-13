@@ -59590,7 +59590,7 @@ export type ListJobsQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListJobsQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchJobsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -59643,7 +59643,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, hasLiked?: boolean | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, hasLiked?: boolean | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -59946,7 +59946,7 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
@@ -62349,6 +62349,7 @@ export const ListJobsDocument = `
       title
       description
       hasLiked
+      likeCount
       location
       employmentType
       positions
@@ -62754,6 +62755,8 @@ export const ListProductsByIdentityDocument = `
       isSubscribed
       serverURL
       name
+      description
+      inventory
       hasLiked
       likeCount
       cryptoAddresses {
@@ -62775,6 +62778,12 @@ export const ListProductsByIdentityDocument = `
         cryptoAddresses {
           chain
           address
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
         }
         image {
           id
@@ -64584,14 +64593,33 @@ export const ListStartupsByIdentityDocument = `
     docs {
       id
       isSubscribed
+      serverURL
       title
       description
       hasLiked
       likeCount
       stage
+      lookingFor
+      company {
+        id
+        serverURL
+        name
+        email
+      }
       identity {
         id
+        serverURL
         name
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
       }
       image {
         id

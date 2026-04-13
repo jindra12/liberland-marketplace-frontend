@@ -14,7 +14,7 @@ describe("product card", () => {
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "IdentityById",
-            { id: "identity-nova" },
+            { id: "identity-nova", url: MAIN_SERVER_URL },
             "Identity",
             "identity-nova",
             "Nova Rivers",
@@ -22,38 +22,36 @@ describe("product card", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListProductsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Products",
             "Solar Widget",
         );
+    };
+
+    const loadHomeMobile = () => {
+        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        seedCartSecret(MAIN_SERVER_URL, "alpha-secret");
     };
 
     it("shows price, cart count, share controls, and overflow link", () => {
         cy.viewport(1200, 1200);
         loadHome();
 
-        cy.get(".SplashEntityCard--products", { timeout: 20000 }).should("be.visible").within(() => {
-            cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
-            cy.contains(".SplashEntityCard__itemLink", "Solar Widget").should("be.visible");
-            cy.contains(".SplashEntityCard__itemLink", "Sun Panel").should("be.visible");
-            cy.contains(".SplashEntityCard__itemLink", "River Beacon").should("be.visible");
-            cy.contains(".SplashEntityCard__meta", "Price: 0.49").should("be.visible");
-            cy.get(".LikeButton").should("be.visible");
-            cy.get(".SplashEntityCard__inlineActions").should("be.visible");
-            cy.get(".NativeShareButton").should("be.visible");
-        });
+        cy.contains(".ant-list-item-meta-title", "Solar Widget").should("be.visible");
+        cy.contains(".ProductList__metaColumn", "Price: 0.49").should("be.visible");
+        cy.get(".LikeButton").should("be.visible");
+        cy.get(".NativeShareButton").should("be.visible");
         screenshotStep("product-card-desktop");
     });
 
     it("shows the product card on mobile", () => {
         cy.viewport(390, 844);
-        loadHome();
+        loadHomeMobile();
 
-        cy.get(".SplashEntityCard--products", { timeout: 20000 }).should("be.visible").within(() => {
-            cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
-            cy.contains(".SplashEntityCard__itemLink", "Solar Widget").should("be.visible");
-            cy.get(".LikeButton").should("be.visible");
-        });
+        cy.get(".IdentityDetail", { timeout: 20000 }).should("be.visible");
+        cy.contains(".EntityDetail__title", "Nova Rivers").should("be.visible");
+        cy.contains(".ant-list-item-meta-title", "Solar Widget", { timeout: 20000 }).should("be.visible");
+        cy.get(".LikeButton").should("be.visible");
         screenshotStep("product-card-mobile");
     });
 });

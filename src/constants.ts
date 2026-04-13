@@ -20,6 +20,7 @@ export const COMMENT_RELATION_TO_QUERY_RELATION: Record<
     [Comment_ReplyPostRelationshipInputRelationTo.Companies]: Comment_ReplyPost_Relation_RelationTo.Companies,
     [Comment_ReplyPostRelationshipInputRelationTo.Identities]: Comment_ReplyPost_Relation_RelationTo.Identities,
     [Comment_ReplyPostRelationshipInputRelationTo.Jobs]: Comment_ReplyPost_Relation_RelationTo.Jobs,
+    [Comment_ReplyPostRelationshipInputRelationTo.Posts]: Comment_ReplyPost_Relation_RelationTo.Posts,
     [Comment_ReplyPostRelationshipInputRelationTo.Products]: Comment_ReplyPost_Relation_RelationTo.Products,
     [Comment_ReplyPostRelationshipInputRelationTo.Startups]: Comment_ReplyPost_Relation_RelationTo.Startups,
 };

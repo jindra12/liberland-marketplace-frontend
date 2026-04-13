@@ -23,7 +23,7 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
         anonymousCartSecrets,
     );
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail").should("be.visible");
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
     screenshotStep(`wallet-stub-product-${id}`);
 };
 

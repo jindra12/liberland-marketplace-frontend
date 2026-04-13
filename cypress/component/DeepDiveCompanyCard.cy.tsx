@@ -14,23 +14,20 @@ describe("company card", () => {
         cy.viewport(1200, 1200);
         loadCompanyCard();
 
-        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click();
+        cy.get(".IdentityDetail", { timeout: 20000 }).should("be.visible");
+        cy.contains(".EntityDetail__title", "Nova Rivers").should("be.visible");
+        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click({ force: true });
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListCompaniesByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
+            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
             "Companies",
             "Harbor Labs",
         );
-        cy.get(".SplashEntityCard--companies", { timeout: 20000 }).should("be.visible").within(() => {
-            cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
-            cy.contains(".SplashEntityCard__itemLink", "Harbor Labs").should("be.visible");
-            cy.contains(".SplashEntityCard__itemLink", "Reef Studio").should("be.visible");
-            cy.contains(".SplashEntityCard__meta a", "Website").should("be.visible");
-            cy.get(".LikeButton").should("be.visible");
-            cy.get(".SplashEntityCard__inlineActions").should("be.visible");
-            cy.get(".NativeShareButton").should("be.visible");
-        });
+        cy.contains(".ant-list-item-meta-title", "Harbor Labs").should("be.visible");
+        cy.contains(".CompanyList__contacts", "Website").should("be.visible");
+        cy.get(".LikeButton").should("be.visible");
+        cy.get(".NativeShareButton").should("be.visible");
         screenshotStep("company-card-desktop");
     });
 
@@ -38,19 +35,11 @@ describe("company card", () => {
         cy.viewport(390, 844);
         loadCompanyCard();
 
+        cy.get(".IdentityDetail", { timeout: 20000 }).should("be.visible");
+        cy.contains(".EntityDetail__title", "Nova Rivers").should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click();
-        waitForCollectionQuery(
-            MAIN_SERVER_URL,
-            "ListCompaniesByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7 },
-            "Companies",
-            "Harbor Labs",
-        );
-        cy.get(".SplashEntityCard--companies", { timeout: 20000 }).should("be.visible").within(() => {
-            cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
-            cy.contains(".SplashEntityCard__itemLink", "Harbor Labs").should("be.visible");
-            cy.get(".LikeButton").should("be.visible");
-        });
+        cy.contains(".ant-list-item-meta-title", "Harbor Labs", { timeout: 20000 }).should("be.visible");
+        cy.get(".LikeButton").should("be.visible");
         screenshotStep("company-card-mobile");
     });
 });

@@ -1,5 +1,11 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { homepageQueries, mountMainRoute, waitForCollectionQuery, waitForPageShell } from "../support/component-tests/utils";
+import {
+    homepageQueries,
+    mountMainRoute,
+    waitForCollectionQuery,
+    waitForPageShell,
+    waitForRouteLoad,
+} from "../support/component-tests/utils";
 
 describe("share buttons", () => {
     it("shows list share controls on the companies list and home cards", () => {

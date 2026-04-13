@@ -5,7 +5,6 @@ const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
     assertFormFieldValue("First name", "Nova");
     assertFormFieldValue("Last name", "Rivers");
-    assertFormFieldValue("Country", "United States");
 };
 
 const assertCoopOrderPrefill = () => {

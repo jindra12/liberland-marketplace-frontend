@@ -8,14 +8,14 @@ import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton
 import { Like } from "./shared/Like/Like";
 import type { DislikeMutation, LikeMutation } from "./shared/Like/types";
 
-interface AppListItem {
+interface AppListLikeItem {
     id?: string;
-    likeCount?: number;
+    likeCount?: number | null;
     hasLiked?: boolean | null;
     serverURL?: string | null;
 }
 
-export interface AppListProps<TItem extends AppListItem> {
+export interface AppListProps<TItem> {
     items: TItem[];
     renderItem: Partial<
         Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode> & {
@@ -37,7 +37,7 @@ export interface AppListProps<TItem extends AppListItem> {
     };
 }
 
-export const AppList = <TItem extends AppListItem>(props: AppListProps<TItem>) => {
+export const AppList = <TItem,>(props: AppListProps<TItem>) => {
     const { md } = Grid.useBreakpoint();
 
     if (props.loading && props.items.length === 0) {
@@ -87,12 +87,13 @@ export const AppList = <TItem extends AppListItem>(props: AppListProps<TItem>) =
                 locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                 renderItem={(item) =>
                     (() => {
+                        const likeItem = item as TItem & AppListLikeItem;
                         const like = props.likeActions ? (
                             <Like
-                                id={item.id ?? ""}
-                                liked={item.hasLiked}
-                                likeCount={item.likeCount ?? 0}
-                                serverURL={item.serverURL}
+                                id={likeItem.id ?? ""}
+                                liked={likeItem.hasLiked}
+                                likeCount={likeItem.likeCount ?? 0}
+                                serverURL={likeItem.serverURL}
                                 likeMutation={props.likeActions.likeMutation}
                                 dislikeMutation={props.likeActions.dislikeMutation}
                             />

@@ -160,6 +160,8 @@ export const graphqlSchema = buildSchema(`
         anonymousHash: JSON
         replyPostRelationTo: JSON
         replyPostValue: JSON
+        likeCount: JSON
+        hasLiked: JSON
         currency: JSON
         secret: JSON
         subtotal: JSON

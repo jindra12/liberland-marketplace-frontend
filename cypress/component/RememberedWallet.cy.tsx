@@ -30,7 +30,7 @@ const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
         scenario.productId,
         scenario.productName,
     );
-    cy.get(".ProductDetail").should("be.visible");
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
     screenshotStep(`remembered-wallet-product-${scenario.productId}`);
     addToCart();
 

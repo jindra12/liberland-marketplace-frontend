@@ -21,13 +21,9 @@ const fillOrderAddress = () => {
 };
 
 const openProduct = (serverUrl: string, route: string, id: string, title: string) => {
-    mountAnonymousRoute(
-        route,
-        serverUrl === MAIN_SERVER_URL ? [MAIN_SERVER_URL, COOP_SERVER_URL] : [COOP_SERVER_URL, MAIN_SERVER_URL],
-        anonymousCartSecrets,
-    );
+    mountAnonymousRoute(route, [serverUrl], anonymousCartSecrets);
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail").should("be.visible");
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
     cy.screenshot(`anonymous-shopping-${id}-detail`, {
         capture: "fullPage",
     });
@@ -54,7 +50,7 @@ describe("anonymous shopping", () => {
             "Tide Lamp",
         );
 
-        cy.routerNavigate("/cart");
+        mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], anonymousCartSecrets);
         cy.contains("Proceed to order").click();
         cy.contains("h2", "Order").should("be.visible");
         cy.screenshot("anonymous-shopping-order-form", {

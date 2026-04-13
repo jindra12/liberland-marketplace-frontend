@@ -8,7 +8,6 @@ import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } 
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
-import { DetailPageSkeleton } from "../LoadingSkeleton/DetailPageSkeleton";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { DetailShareSection } from "../share/DetailShareSection";
@@ -32,10 +31,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
     }, [id]);
 
     const entry = React.useMemo(() => urls.find((current) => current.value === decodedUrl), [decodedUrl, urls]);
-
-    if (!entry) {
-        return <DetailPageSkeleton />;
-    }
 
     if (!entry) {
         return (

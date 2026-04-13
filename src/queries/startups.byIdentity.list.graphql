@@ -8,14 +8,33 @@ query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 2
         docs {
             id
             isSubscribed
+            serverURL
             title
             description
             hasLiked
             likeCount
             stage
+            lookingFor
+            company {
+                id
+                serverURL
+                name
+                email
+            }
             identity {
                 id
+                serverURL
                 name
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
             }
             image {
                 id

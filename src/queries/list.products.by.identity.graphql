@@ -10,6 +10,8 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
             isSubscribed
             serverURL
             name
+            description
+            inventory
             hasLiked
             likeCount
             cryptoAddresses {
@@ -31,6 +33,12 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
                 cryptoAddresses {
                     chain
                     address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
                 }
                 image {
                     id

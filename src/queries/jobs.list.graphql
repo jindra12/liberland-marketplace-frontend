@@ -7,6 +7,7 @@ query ListJobs($page: Int = 1, $limit: Int = 20) {
             title
             description
             hasLiked
+            likeCount
             location
             employmentType
             positions
