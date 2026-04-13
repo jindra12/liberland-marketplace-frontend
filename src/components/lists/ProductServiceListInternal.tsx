@@ -7,7 +7,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
 
-import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
+import { ListProductsByCompanyQuery, ListProductsByIdentityQuery, ListProductsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
@@ -20,7 +20,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
-type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
+type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery | ListProductsByIdentityQuery;
 type ProductListItem =
     | NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number]
     | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];

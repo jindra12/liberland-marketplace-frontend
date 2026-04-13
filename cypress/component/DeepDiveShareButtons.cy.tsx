@@ -1,13 +1,13 @@
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { homepageQueries, mountMainRoute, waitForCollectionQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { homepageQueries, mountMainRoute, waitForCollectionQuery, waitForPageShell } from "../support/component-tests/utils";
 
 describe("share buttons", () => {
     it("shows list share controls on the companies list and home cards", () => {
         mountMainRoute("/");
-        waitForRouteLoad(".LoadingSkeleton--splashSections");
+        waitForPageShell();
         homepageQueries();
 
-        cy.get(".SplashPage__identitySection .NativeShareButton").its("length").should("be.greaterThan", 0);
+        cy.get(".MarketAccordion .NativeShareButton").its("length").should("be.greaterThan", 0);
         cy.get(".SplashPage__syndicationCardActions .NativeShareButton").its("length").should("be.greaterThan", 0);
 
         mountMainRoute("/companies");

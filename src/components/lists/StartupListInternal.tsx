@@ -8,7 +8,7 @@ import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, Flex, Grid, Tag, message } from "antd";
 
-import { ListStartupsQuery } from "../../generated/graphql";
+import { ListStartupsByIdentityQuery, ListStartupsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
@@ -94,7 +94,7 @@ const InvolvementButton: React.FunctionComponent<{
     );
 };
 export interface StartupListInternalProps {
-    query: UseQueryResult<ListStartupsQuery, unknown>;
+    query: UseQueryResult<ListStartupsQuery | ListStartupsByIdentityQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
 }

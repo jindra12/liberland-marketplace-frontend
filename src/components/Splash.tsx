@@ -1,27 +1,12 @@
 import * as React from "react";
 
-import { Alert, Empty, Flex, Typography } from "antd";
+import { Flex, Typography } from "antd";
 
-import { useListIdentitiesQuery } from "./hooks";
-import { SplashSectionsSkeleton } from "./LoadingSkeleton/SplashSectionsSkeleton";
 import { RouteButton } from "./RouteButton";
-import { IdentityMarketSection } from "./splash/IdentityMarketSection";
+import { MarketAccordion } from "./splash/MarketAccordion";
 import { SyndicationSection } from "./splash/SyndicationSection";
 
 const Splash: React.FunctionComponent = () => {
-    const identitiesQuery = useListIdentitiesQuery({
-        page: 1,
-        limit: 100,
-    });
-    const identities = identitiesQuery.data?.Identities?.docs;
-    const isLoading = identitiesQuery.isLoading;
-    const hasError = Boolean(identitiesQuery.error);
-
-    const sortedIdentities = React.useMemo(
-        () => [...(identities || [])].sort((a, b) => (b.itemCount ?? 0) - (a.itemCount ?? 0)),
-        [identities],
-    );
-
     return (
         <Flex vertical gap={24} className="SplashPage">
             <section className="SplashPage__hero">
@@ -46,36 +31,9 @@ const Splash: React.FunctionComponent = () => {
             </section>
 
             <Flex vertical gap={20} className="SplashPage__sections">
-                {hasError && (
-                    <Alert
-                        type="error"
-                        showIcon
-                        message="Failed to load tribes"
-                        description="Try refreshing the page."
-                    />
-                )}
-
-                {!hasError && !identities?.length && isLoading && (
-                    <div className="SplashPage__loading">
-                        <SplashSectionsSkeleton />
-                    </div>
-                )}
-
-                {!hasError && !identities?.length && !isLoading && <Empty description="No tribes found yet." />}
-
-                {sortedIdentities.length > 0 && (
-                    <Flex vertical gap={24} className="SplashPage__identityList">
-                        {sortedIdentities.map((identity, index) => (
-                            <IdentityMarketSection
-                                key={identity.id + identity.serverURL! + index}
-                                identityId={identity.id}
-                                identityName={identity.name || "Tribe"}
-                                identityUrl={identity.serverURL!}
-                                identityImageUrl={identity.image?.url}
-                            />
-                        ))}
-                    </Flex>
-                )}
+                <div className="SplashPage__marketAccordion">
+                    <MarketAccordion />
+                </div>
 
                 <SyndicationSection />
             </Flex>

@@ -1,6 +1,9 @@
 import * as React from "react";
 
-import { Flex, Grid, List } from "antd";
+import { Link } from "react-router-dom";
+
+import { Flex, Grid } from "antd";
+import { Card, Typography } from "antd";
 
 import { Like } from "../shared/Like/Like";
 
@@ -42,8 +45,21 @@ export const SplashCardItem: React.FunctionComponent<SplashCardItemProps> = (pro
         ) : undefined;
 
     return (
-        <List.Item actions={wrappedActions ? [wrappedActions] : undefined}>
-            <div className="SplashEntityCard__itemBody">{props.children}</div>
-        </List.Item>
+        <Card className="SplashEntityCard__itemCard" bordered={false}>
+            <Flex vertical gap="14px" className="SplashEntityCard__itemBody">
+                <Flex align="start" gap="14px" className="SplashEntityCard__itemHeader">
+                    {props.avatar}
+                    <Flex vertical gap="4px" className="SplashEntityCard__itemHeading">
+                        <Typography.Title level={4} className="SplashEntityCard__itemTitle">
+                            <Link to={props.detailPath} className="SplashEntityCard__itemLink">
+                                {props.title}
+                            </Link>
+                        </Typography.Title>
+                        {props.children}
+                    </Flex>
+                </Flex>
+                {wrappedActions}
+            </Flex>
+        </Card>
     );
 };

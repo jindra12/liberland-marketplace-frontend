@@ -3,46 +3,25 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 
 import { GlobalOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Divider, Flex, Row, Space, Typography } from "antd";
+import { Avatar, Button, Divider, Flex, Space, Tabs, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { BACKEND_URL } from "../../gqlFetcher";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
-import { CompanyCard } from "../cards/CompanyCard";
-import { JobCard } from "../cards/JobCard";
-import { ProductServiceCard } from "../cards/ProductServiceCard";
-import { StartupCard } from "../cards/StartupCard";
-import { EntityCommentsSection } from "../comments/EntityCommentsSection";
-import {
-    useIdentityByIdQuery,
-    useListCompaniesByIdentityQuery,
-    useListJobsByIdentityQuery,
-    useListProductsByIdentityQuery,
-    useListStartupsByIdentityQuery,
-} from "../hooks";
+import { useIdentityByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { DetailShareSection } from "../share/DetailShareSection";
 import { getImage } from "../shared/image/utils";
 
 import { DetailBackButton } from "./DetailBackButton";
+import { IdentityCompaniesTab } from "./identityDetail/IdentityCompaniesTab";
+import { IdentityJobsTab } from "./identityDetail/IdentityJobsTab";
+import { IdentityProductsTab } from "./identityDetail/IdentityProductsTab";
+import { IdentityVenturesTab } from "./identityDetail/IdentityVenturesTab";
 
 const IdentityDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
-    const identity = useIdentityByIdQuery({ id: id! });
-
-    const jobsQuery = useListJobsByIdentityQuery({ identityId: id!, page: 1, limit: 3 }, { enabled: Boolean(id) });
-    const productsQuery = useListProductsByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) },
-    );
-    const companiesQuery = useListCompaniesByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) },
-    );
-    const startupsQuery = useListStartupsByIdentityQuery(
-        { identityId: id!, page: 1, limit: 3 },
-        { enabled: Boolean(id) },
-    );
+    const identity = useIdentityByIdQuery({ id: id!, url: BACKEND_URL });
 
     return (
         <Loader query={identity}>
@@ -73,61 +52,65 @@ const IdentityDetail: React.FunctionComponent = () => {
                         <Divider />
                         <Markdown>{data.Identity?.description}</Markdown>
                         <Divider />
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} xl={12}>
-                                <CompanyCard
-                                    items={companiesQuery.data?.Companies?.docs || []}
-                                    loading={companiesQuery.isLoading}
-                                    totalDocs={companiesQuery.data?.Companies?.totalDocs}
-                                    identityId={id}
-                                />
-                            </Col>
-                            <Col xs={24} xl={12}>
-                                <ProductServiceCard
-                                    items={productsQuery.data?.Products?.docs || []}
-                                    loading={productsQuery.isLoading}
-                                    totalDocs={productsQuery.data?.Products?.totalDocs}
-                                    identityId={id}
-                                />
-                            </Col>
-                            <Col xs={24} xl={12}>
-                                <JobCard
-                                    items={jobsQuery.data?.Jobs?.docs || []}
-                                    loading={jobsQuery.isLoading}
-                                    totalDocs={jobsQuery.data?.Jobs?.totalDocs}
-                                    identityId={id}
-                                />
-                            </Col>
-                            <Col xs={24} xl={12}>
-                                <StartupCard
-                                    items={startupsQuery.data?.Startups?.docs || []}
-                                    loading={startupsQuery.isLoading}
-                                    totalDocs={startupsQuery.data?.Startups?.totalDocs}
-                                    identityId={id}
-                                />
-                            </Col>
-                        </Row>
-                        <Divider />
                         <DetailShareSection
                             label="Share this tribe"
                             title={shareTitle}
                             text={shareText}
                             subscriptionTarget={
-                                data.Identity
-                                    ? {
-                                          collection: "identities",
-                                          targetID: data.Identity.id,
-                                          serverURL: data.Identity.serverURL,
-                                          isSubscribed: data.Identity.isSubscribed,
-                                      }
-                                    : undefined
+                                {
+                                    collection: "identities",
+                                    targetID: data.Identity?.id ?? id!,
+                                    serverURL: data.Identity?.serverURL,
+                                    isSubscribed: data.Identity?.isSubscribed,
+                                }
                             }
                         />
                         <Divider />
-                        <EntityCommentsSection
-                            targetId={id!}
-                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Identities}
-                            serverURL={data.Identity?.serverURL}
+                        <Tabs
+                            className="EntityDetail__tabs IdentityDetail__tabs"
+                            defaultActiveKey="products"
+                            items={[
+                                {
+                                    key: "products",
+                                    label: "Products",
+                                    children: (
+                                        <IdentityProductsTab
+                                            identityId={data.Identity?.id ?? id!}
+                                            serverURL={data.Identity?.serverURL}
+                                        />
+                                    ),
+                                },
+                                {
+                                    key: "jobs",
+                                    label: "Jobs",
+                                    children: (
+                                        <IdentityJobsTab
+                                            identityId={data.Identity?.id ?? id!}
+                                            serverURL={data.Identity?.serverURL}
+                                        />
+                                    ),
+                                },
+                                {
+                                    key: "companies",
+                                    label: "Companies",
+                                    children: (
+                                        <IdentityCompaniesTab
+                                            identityId={data.Identity?.id ?? id!}
+                                            serverURL={data.Identity?.serverURL}
+                                        />
+                                    ),
+                                },
+                                {
+                                    key: "ventures",
+                                    label: "Ventures",
+                                    children: (
+                                        <IdentityVenturesTab
+                                            identityId={data.Identity?.id ?? id!}
+                                            serverURL={data.Identity?.serverURL}
+                                        />
+                                    ),
+                                },
+                            ]}
                         />
                     </Flex>
                 );

@@ -1,49 +1,27 @@
 import * as React from "react";
 
-import { Link } from "react-router-dom";
-
-import { RightOutlined } from "@ant-design/icons";
-import { Card, List, Typography } from "antd";
-
-import { RouteButton } from "../RouteButton";
+import { Flex, Spin, Typography } from "antd";
 
 import type { SplashCardProps } from "./types";
-import { getRemainingDocs } from "./utils";
 
-export const SplashCard = <TItem,>(props: SplashCardProps<TItem>) => {
-    const remaining = getRemainingDocs(props.totalDocs, props.items.length);
-
+export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<TItem>) => {
     return (
-        <Card
-            className={`SplashEntityCard ${props.className}`}
-            title={
-                <Typography.Title level={3} className="SplashEntityCard__title">
-                    <Link to={props.titleRoute} className="SplashEntityCard__titleLink">
-                        {props.title}
-                    </Link>
-                </Typography.Title>
-            }
-        >
-            <List
-                className="SplashEntityCard__list"
-                loading={props.loading}
-                dataSource={props.items}
-                locale={{
-                    emptyText: props.emptyText ?? "Coming soon!",
-                }}
-                renderItem={(item) => props.renderItem(item)}
-            />
-            {remaining > 0 && props.identityId && (
-                <RouteButton
-                    to={props.buildMoreLinkRoute(props.identityId)}
-                    type="link"
-                    icon={<RightOutlined />}
-                    iconPosition="end"
-                    className="SplashEntityCard__moreLink"
-                >
-                    And +{remaining} more
-                </RouteButton>
-            )}
-        </Card>
+        <div className={`SplashEntityCard ${props.className}`}>
+            <Spin spinning={Boolean(props.loading)} className="SplashEntityCard__spin">
+                {props.items.length === 0 ? (
+                    <Typography.Text className="SplashEntityCard__empty">
+                        {props.emptyText ?? "Coming soon!"}
+                    </Typography.Text>
+                ) : (
+                    <Flex gap="16px" wrap={false} className="SplashEntityCard__strip">
+                        {props.items.map((item) => (
+                            <div key={item.id} className="SplashEntityCard__stripItem">
+                                {props.renderItem(item)}
+                            </div>
+                        ))}
+                    </Flex>
+                )}
+            </Spin>
+        </div>
     );
 };

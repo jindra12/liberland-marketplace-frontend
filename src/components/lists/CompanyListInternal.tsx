@@ -7,7 +7,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Grid } from "antd";
 
-import { ListCompaniesQuery } from "../../generated/graphql";
+import { ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
@@ -19,7 +19,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 export interface CompanyListInternalProps {
-    query: UseQueryResult<ListCompaniesQuery, unknown>;
+    query: UseQueryResult<ListCompaniesQuery | ListCompaniesByIdentityQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
 }

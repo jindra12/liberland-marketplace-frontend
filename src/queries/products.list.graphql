@@ -7,6 +7,7 @@ query ListProducts($page: Int = 1, $limit: Int = 20) {
             name
             inventory
             description
+            hasLiked
             likeCount
             cryptoAddresses {
                 chain

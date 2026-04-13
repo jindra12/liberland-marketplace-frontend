@@ -6,6 +6,7 @@ query ListStartups($page: Int = 1, $limit: Int = 20) {
             serverURL
             title
             description
+            hasLiked
             likeCount
             stage
             lookingFor

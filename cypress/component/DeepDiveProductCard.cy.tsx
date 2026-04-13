@@ -3,12 +3,29 @@ import {
     mountAnonymousRoute,
     screenshotStep,
     seedCartSecret,
+    waitForCollectionQuery,
+    waitForDetailQuery,
 } from "../support/component-tests/utils";
 
 describe("product card", () => {
     const loadHome = () => {
         mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
         seedCartSecret(MAIN_SERVER_URL, "alpha-secret");
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            "IdentityById",
+            { id: "identity-nova" },
+            "Identity",
+            "identity-nova",
+            "Nova Rivers",
+        );
+        waitForCollectionQuery(
+            MAIN_SERVER_URL,
+            "ListProductsByIdentity",
+            { identityId: "identity-nova", page: 1, limit: 7 },
+            "Products",
+            "Solar Widget",
+        );
     };
 
     it("shows price, cart count, share controls, and overflow link", () => {

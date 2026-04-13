@@ -6,7 +6,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 
 import { Avatar, Flex, Grid } from "antd";
 
-import { ListJobsQuery } from "../../generated/graphql";
+import { ListJobsByIdentityQuery, ListJobsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
@@ -21,7 +21,7 @@ import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 export interface JobListInternalProps {
-    query: UseQueryResult<ListJobsQuery, unknown>;
+    query: UseQueryResult<ListJobsQuery | ListJobsByIdentityQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
     limited?: boolean;

@@ -1,15 +1,27 @@
-import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountAnonymousRoute, screenshotStep } from "../support/component-tests/utils";
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import {
+    mountAnonymousRoute,
+    screenshotStep,
+    waitForCollectionQuery,
+} from "../support/component-tests/utils";
 
 describe("company card", () => {
     const loadCompanyCard = () => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL]);
     };
 
     it("shows title, avatar, website, share controls, and overflow link", () => {
         cy.viewport(1200, 1200);
         loadCompanyCard();
 
+        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click();
+        waitForCollectionQuery(
+            MAIN_SERVER_URL,
+            "ListCompaniesByIdentity",
+            { identityId: "identity-nova", page: 1, limit: 7 },
+            "Companies",
+            "Harbor Labs",
+        );
         cy.get(".SplashEntityCard--companies", { timeout: 20000 }).should("be.visible").within(() => {
             cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
             cy.contains(".SplashEntityCard__itemLink", "Harbor Labs").should("be.visible");
@@ -26,6 +38,14 @@ describe("company card", () => {
         cy.viewport(390, 844);
         loadCompanyCard();
 
+        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Companies").click();
+        waitForCollectionQuery(
+            MAIN_SERVER_URL,
+            "ListCompaniesByIdentity",
+            { identityId: "identity-nova", page: 1, limit: 7 },
+            "Companies",
+            "Harbor Labs",
+        );
         cy.get(".SplashEntityCard--companies", { timeout: 20000 }).should("be.visible").within(() => {
             cy.get(".SplashEntityCard__avatar").should("have.length.at.least", 1);
             cy.contains(".SplashEntityCard__itemLink", "Harbor Labs").should("be.visible");
