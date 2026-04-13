@@ -2,14 +2,25 @@ import * as React from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Divider, Flex, List, Spin, Typography } from "antd";
+import { Divider, Flex, Grid, List, Spin, Typography } from "antd";
 
 import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton";
+import { Like } from "./shared/Like/Like";
+import type { DislikeMutation, LikeMutation } from "./shared/Like/types";
 
-export interface AppListProps<TItem> {
+interface AppListItem {
+    id?: string;
+    likeCount?: number;
+    hasLiked?: boolean | null;
+    serverURL?: string | null;
+}
+
+export interface AppListProps<TItem extends AppListItem> {
     items: TItem[];
     renderItem: Partial<
-        Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode>
+        Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode> & {
+            like?: (item: TItem) => React.ReactNode;
+        }
     >;
     hasMore: boolean;
     refetch: () => void;
@@ -20,9 +31,15 @@ export interface AppListProps<TItem> {
     loading?: boolean;
     endMessage?: React.ReactNode;
     scrollableTarget?: string;
+    likeActions?: {
+        likeMutation: LikeMutation;
+        dislikeMutation: DislikeMutation;
+    };
 }
 
-export const AppList = <TItem,>(props: AppListProps<TItem>) => {
+export const AppList = <TItem extends AppListItem>(props: AppListProps<TItem>) => {
+    const { md } = Grid.useBreakpoint();
+
     if (props.loading && props.items.length === 0) {
         return <CollectionListSkeleton />;
     }
@@ -70,8 +87,30 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                 locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
                 renderItem={(item) =>
                     (() => {
+                        const like = props.likeActions ? (
+                            <Like
+                                id={item.id ?? ""}
+                                liked={item.hasLiked}
+                                likeCount={item.likeCount ?? 0}
+                                serverURL={item.serverURL}
+                                likeMutation={props.likeActions.likeMutation}
+                                dislikeMutation={props.likeActions.dislikeMutation}
+                            />
+                        ) : undefined;
                         const actions = props.renderItem["actions"]?.(item);
-                        const wrappedActions = actions ? <div className="AppList__actions">{actions}</div> : undefined;
+                        const actionContent = [like, actions].filter(Boolean);
+                        const wrappedActions =
+                            actionContent.length > 0 ? (
+                                <Flex
+                                    vertical={!md}
+                                    justify={md ? "flex-end" : undefined}
+                                    align={md ? "center" : "flex-end"}
+                                    gap="12px"
+                                    className={`AppList__actions${md ? "" : " AppList__actions--stacked"}`}
+                                >
+                                    {actionContent}
+                                </Flex>
+                            ) : undefined;
                         return (
                             <List.Item
                                 extra={props.renderItem["extra"]?.(item)}

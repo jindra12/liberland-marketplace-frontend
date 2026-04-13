@@ -11,6 +11,7 @@ import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
 import { ApplyButton } from "../ApplyButton";
+import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -28,6 +29,8 @@ export interface JobListInternalProps {
 
 export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
+    const likeMutation = useLikeJobMutation();
+    const dislikeMutation = useDislikeJobMutation();
     const allItems = useAccumulatedDocs(props.query.data?.Jobs?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -53,6 +56,10 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             refetch={props.query.refetch}
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>

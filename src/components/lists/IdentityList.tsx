@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import { Avatar, Flex, Grid, Typography } from "antd";
 
 import { AppList } from "../AppList";
-import { useListIdentitiesQuery } from "../hooks";
+import { useDislikeIdentityMutation, useLikeIdentityMutation, useListIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { getImage } from "../shared/image/utils";
 
 export const IdentityList: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
+    const likeMutation = useLikeIdentityMutation();
+    const dislikeMutation = useDislikeIdentityMutation();
     const [page, setPage] = React.useState(1);
     const query = useListIdentitiesQuery({
         limit: 20,
@@ -27,6 +29,10 @@ export const IdentityList: React.FunctionComponent = () => {
             loading={query.isLoading}
             refetch={query.refetch}
             title="Tribes"
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>

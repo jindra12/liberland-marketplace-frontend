@@ -1,10 +1,9 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { mountAnonymousRoute, waitForCollectionQuery, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("identity deep dive", () => {
     beforeEach(() => {
-        mountMainRoute("/tribes/identity-nova");
-        waitForRouteLoad(".LoadingSkeleton--detail");
+        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "IdentityById",
@@ -51,6 +50,7 @@ describe("identity deep dive", () => {
         cy.get(".SplashEntityCard--jobs").should("be.visible").contains("Dockmaster");
         cy.get(".SplashEntityCard--products").should("be.visible").contains("Solar Widget");
         cy.get(".SplashEntityCard--ventures").should("be.visible").contains("Sky Relay");
+        cy.get(".LikeButton").should("have.length.at.least", 4);
         cy.get(".ShareSection").should("be.visible").contains("Share this tribe");
     });
 });

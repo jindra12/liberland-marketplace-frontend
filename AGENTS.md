@@ -38,6 +38,7 @@ manager is `yarn`.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
+- `yarn codegen` requires the sibling backend dev server in `../liberland-marketplace` to be running on port `3001`; start it first and shut it down after codegen finishes.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 
 ## Architecture
@@ -118,6 +119,7 @@ manager is `yarn`.
 - Do not introduce useless local constants that only rename an existing value. If a value is just `props.foo`, use `props.foo` directly instead of mirroring it into `const foo = props.foo`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
+- When a component uses `React.FunctionComponent` or other React namespace types, import React normally with `import React from "react";` rather than `import type * as React from "react";`.
 - Do not add compatibility shim files, fallback re-export files, or similar workaround files when the correct fix is to update imports or references directly. Do not add random shims or loader hacks for broken packages; fix them through supported configuration, documented dependencies, or an approved patch instead.
 - Do not import `IncomingMessage` or `ServerResponse` from `node:http` in shared test helpers; use tiny local request/response shapes instead so browser-facing code stays decoupled from Node HTTP typings.
 - Do not edit `src/components/hooks.ts` unless the user explicitly asks for changes there.

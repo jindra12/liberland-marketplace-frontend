@@ -51,7 +51,10 @@ describe("like", () => {
             cy.get(".LikeButton").should("be.visible").and("have.class", "LikeButton--unliked");
             cy.get(".LikeButton").should("have.css", "border-radius", "999px");
             cy.get(".LikeButton").should("have.css", "transition-property").and("contain", "transform");
-            cy.get(".LikeButton").should("have.css", "background-image").and("not.equal", "none");
+            cy.get(".LikeButton").should("have.css", "background-image", "none");
+            cy.get(".LikeButton").should("have.css", "background-color", "rgba(0, 0, 0, 0)");
+            cy.get(".LikeButton").should("have.css", "box-shadow", "none");
+            cy.get(".LikeButton").should("have.css", "text-shadow").and("not.equal", "none");
             cy.get(".LikeButton__heart--outlined").should("be.visible");
             cy.get(".LikeButton__count").should("have.text", "42");
 

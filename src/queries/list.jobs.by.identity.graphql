@@ -10,6 +10,8 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1)
             isSubscribed
             serverURL
             title
+            hasLiked
+            likeCount
             companyIdentityId
             company {
                 id

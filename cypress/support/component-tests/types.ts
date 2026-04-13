@@ -10,6 +10,7 @@ export type ListGoal = {
     responseKey: string;
     expectedVariables: GraphQLVariables;
     expectedResultTitle: string;
+    minimumDocs?: number;
 };
 
 export type DetailGoal = {
@@ -17,6 +18,8 @@ export type DetailGoal = {
     label: string;
     route: string;
     title: string;
+    detailTitleSelector: string;
+    mountMode?: "main" | "anonymous";
     query?: {
         operationName: string;
         responseKey: string;

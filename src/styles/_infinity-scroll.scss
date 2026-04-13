@@ -78,6 +78,10 @@
     padding-top: 16px;
 }
 
+.AppList__actions--stacked {
+    align-items: flex-end;
+}
+
 .infinite-scroll-component__outerdiv,
 [id^="infinite"] {
     width: 100%;

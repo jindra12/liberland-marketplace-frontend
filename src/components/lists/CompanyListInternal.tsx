@@ -11,6 +11,7 @@ import { ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
+import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
@@ -25,6 +26,8 @@ export interface CompanyListInternalProps {
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
+    const likeMutation = useLikeCompanyMutation();
+    const dislikeMutation = useDislikeCompanyMutation();
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -49,6 +52,10 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             title="Companies"
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>

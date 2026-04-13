@@ -59311,7 +59311,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -59634,7 +59634,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, hasLiked?: boolean | null, likeCount?: number | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -59643,7 +59643,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, hasLiked?: boolean | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -59946,7 +59946,7 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, stage?: Startup_Stage | null, identity?: { __typename?: 'Identity', id: string, name: string } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
@@ -60522,6 +60522,7 @@ export const ListCompaniesByIdentityDocument = `
       serverURL
       name
       description
+      hasLiked
       likeCount
       cryptoAddresses {
         chain
@@ -62680,6 +62681,8 @@ export const ListJobsByIdentityDocument = `
       isSubscribed
       serverURL
       title
+      hasLiked
+      likeCount
       companyIdentityId
       company {
         id
@@ -62749,6 +62752,7 @@ export const ListProductsByIdentityDocument = `
       isSubscribed
       serverURL
       name
+      hasLiked
       likeCount
       cryptoAddresses {
         chain
@@ -64579,6 +64583,7 @@ export const ListStartupsByIdentityDocument = `
       isSubscribed
       title
       description
+      hasLiked
       likeCount
       stage
       identity {

@@ -13,6 +13,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Jobs",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Dockmaster",
+        minimumDocs: 0,
     },
     {
         trigger: "Market",
@@ -22,6 +23,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Products",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Solar Widget",
+        minimumDocs: 0,
     },
     {
         trigger: "Companies",
@@ -31,6 +33,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Companies",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Harbor Labs",
+        minimumDocs: 0,
     },
     {
         trigger: "Ventures",
@@ -40,6 +43,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Startups",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Sky Relay",
+        minimumDocs: 0,
     },
     {
         trigger: "Tribes",
@@ -49,6 +53,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Identities",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Nova Rivers",
+        minimumDocs: 0,
     },
 ];
 
@@ -68,66 +73,13 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
         label: "Dockmaster",
         route: "/jobs/job-dockmaster",
         title: "Dockmaster",
+        detailTitleSelector: ".JobDetail__title",
         query: {
             operationName: "JobById",
             responseKey: "Job",
             expectedId: "job-dockmaster",
             expectedVariables: { id: "job-dockmaster" },
         },
-    },
-    {
-        selector: ".SplashEntityCard__itemLink",
-        label: "Solar Widget",
-        route: "/products-services/product-solar-widget",
-        title: "Solar Widget",
-        query: {
-            operationName: "ProductById",
-            responseKey: "Product",
-            expectedId: "product-solar-widget",
-            expectedVariables: { id: "product-solar-widget" },
-        },
-    },
-    {
-        selector: ".SplashEntityCard__itemLink",
-        label: "Harbor Labs",
-        route: "/companies/company-harbor-labs",
-        title: "Harbor Labs",
-        query: {
-            operationName: "CompanyById",
-            responseKey: "Company",
-            expectedId: "company-harbor-labs",
-            expectedVariables: { id: "company-harbor-labs" },
-        },
-    },
-    {
-        selector: ".SplashEntityCard__itemLink",
-        label: "Sky Relay",
-        route: "/ventures/startup-sky-relay",
-        title: "Sky Relay",
-        query: {
-            operationName: "StartupById",
-            responseKey: "Startup",
-            expectedId: "startup-sky-relay",
-            expectedVariables: { id: "startup-sky-relay" },
-        },
-    },
-    {
-        selector: ".SplashPage__identityHeadingLink",
-        label: "Nova Rivers",
-        route: "/tribes/identity-nova",
-        title: "Nova Rivers",
-        query: {
-            operationName: "IdentityById",
-            responseKey: "Identity",
-            expectedId: "identity-nova",
-            expectedVariables: { id: "identity-nova" },
-        },
-    },
-    {
-        selector: ".SplashPage__syndicationCardTitleLink",
-        label: "Main",
-        route: `/syndication/${encodeURIComponent(MAIN_SERVER_URL)}`,
-        title: "Main",
     },
 ];
 

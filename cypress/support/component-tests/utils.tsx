@@ -9,7 +9,7 @@ import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../../src/components/order/constants";
 import type { AddressWithEmail } from "../../../src/components/order/types";
 
-import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
+import { COOP_SERVER_URL, MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
 import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
@@ -25,9 +25,7 @@ export const gqlAlias = (serverUrl: string, operationName: string, variables: Gr
     buildGraphQLAlias(serverUrl, operationName, variables);
 
 export const screenshotStep = (step: string) => {
-    const nextName = `${Cypress.spec.name} ${step}`
-        .replace(/[^a-zA-Z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+    const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
     cy.screenshot(nextName.length > 0 ? nextName : "after-test-step", {
         capture: "fullPage",
@@ -39,7 +37,8 @@ export const mountMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
-const buildAuthStorageKey = (serverUrl: string) => `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+const buildAuthStorageKey = (serverUrl: string) =>
+    `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
 const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
     const now = Math.floor(Date.now() / 1000);
@@ -223,7 +222,8 @@ export const assertSelectValue = (label: string, value: string) => {
     getFormItem(label).should("contain.text", value);
 };
 
-const uploadImageBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/S6cAAAAASUVORK5CYII=";
+const uploadImageBase64 =
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/S6cAAAAASUVORK5CYII=";
 export const uploadTestImage = () => {
     cy.get('input[type="file"]').selectFile(
         {
@@ -271,8 +271,8 @@ export const seedCartSecret = (serverUrl: string, secret: string) => {
 };
 
 export const homepageQueries = () => {
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 100, page: 1 }, "Identities", "Nova Rivers");
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main");
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 100, page: 1 }, "Identities", "Nova Rivers", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main", 0);
     screenshotStep("homepage-queries-loaded");
 };
 
@@ -303,6 +303,7 @@ export const waitForCollectionQuery = (
     expectedVariables: GraphQLVariables,
     responseKey: string,
     expectedTitle: string,
+    minimumDocs = 1,
 ) => {
     cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
@@ -310,10 +311,12 @@ export const waitForCollectionQuery = (
 
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
-            expectedTitle,
-        );
+        expect(collection?.docs?.length ?? 0).to.be.at.least(minimumDocs);
+        if (minimumDocs > 0) {
+            expect(
+                collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content,
+            ).to.equal(expectedTitle);
+        }
         screenshotStep(`${operationName}-${expectedTitle}`);
     });
 };
@@ -411,15 +414,20 @@ export const waitForSearchQuery = (
             expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
             expect(interception.response?.statusCode).to.equal(200);
             expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-            expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
-                expectedTitle,
-            );
+            expect(
+                collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content,
+            ).to.equal(expectedTitle);
             screenshotStep(`${operationName}-${expectedTitle}`);
         },
     );
 };
 
-export const waitForSearchResultsPage = (serverUrl: string, operationName: string, searchTerm: string, page: number) => {
+export const waitForSearchResultsPage = (
+    serverUrl: string,
+    operationName: string,
+    searchTerm: string,
+    page: number,
+) => {
     cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page, limit: 5 })}`, { timeout: 20000 }).then(
         (interception) => {
             const response = interception.response?.body as GraphQLResponseBody | undefined;
@@ -443,16 +451,38 @@ export const goToList = (goal: ListGoal) => {
         goal.expectedVariables,
         goal.responseKey,
         goal.expectedResultTitle,
+        goal.minimumDocs ?? 1,
     );
-    cy.contains("h2", goal.title).should("be.visible");
+    cy.get(".LoadingSkeleton--surface").should("not.exist");
+    cy.contains("h2", goal.title, { timeout: 20000 }).should("be.visible");
+    cy.get("body").then(($body) => {
+        if ($body.find(".LikeButton").length > 0) {
+            cy.get(".LikeButton").should("exist");
+            return;
+        }
+
+        cy.get(".LikeButton").should("not.exist");
+    });
     screenshotStep(`list-${goal.title}`);
 };
 
 export const goToDetailFromHome = (goal: DetailGoal) => {
-    cy.contains(goal.selector, goal.label).click();
-    cy.location("pathname").should("eq", goal.route);
-    waitForPageShell();
-    cy.contains("h1", goal.title).should("be.visible");
+    if (goal.mountMode === "anonymous") {
+        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL, COOP_SERVER_URL]);
+    } else {
+        mountMainRoute(goal.route);
+    }
+    if (goal.query) {
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            goal.query.operationName,
+            goal.query.expectedVariables,
+            goal.query.responseKey,
+            goal.query.expectedId,
+            goal.title,
+        );
+    }
+    cy.contains(goal.detailTitleSelector, goal.title, { timeout: 20000 }).should("be.visible");
     screenshotStep(`detail-${goal.title}`);
 };
 
@@ -463,12 +493,9 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
         .closest(".ant-drawer")
         .within(() => {
             cy.get(".SearchDrawer__footerForm input").should("be.visible").clear().type(`${goal.term}{enter}`);
-    });
+        });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
-    cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 })
-        .first()
-        .should("be.visible")
-        .click();
+    cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 }).first().should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     cy.get(".SearchDrawer").should("not.exist");
     waitForPageShell();

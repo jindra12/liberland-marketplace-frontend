@@ -34,13 +34,16 @@
 .LikeButton.ant-btn {
     height: auto;
     padding: 8px 12px;
-    border: 1px solid transparent;
+    border: 0;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(6, 28, 38, 0.94), rgba(4, 40, 44, 0.94));
+    outline: none;
+    background: transparent;
     color: #78ffe6;
-    box-shadow:
-        0 16px 34px rgba(35, 255, 214, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: none;
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.32),
+        0 0 8px rgba(35, 255, 214, 0.36),
+        0 0 18px rgba(35, 255, 214, 0.24);
     transition:
         transform 180ms ease,
         border-color 180ms ease,
@@ -49,27 +52,33 @@
         color 180ms ease;
 }
 
+.LikeButton.ant-btn::before {
+    display: none;
+}
+
 .LikeButton.ant-btn:hover,
 .LikeButton.ant-btn:focus-visible {
-    background: linear-gradient(135deg, rgba(8, 38, 48, 0.96), rgba(7, 62, 66, 0.96));
+    outline: none;
     color: #b1fff3;
     transform: translateY(-1px);
-    box-shadow:
-        0 20px 40px rgba(35, 255, 214, 0.18),
-        0 0 0 3px rgba(105, 255, 226, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(105, 255, 226, 0.42),
+        0 0 24px rgba(105, 255, 226, 0.28);
 }
 
 .LikeButton--liked.ant-btn {
-    border-color: transparent;
-    background: linear-gradient(135deg, rgba(12, 54, 56, 0.96), rgba(10, 74, 77, 0.98));
+    border: 0;
+    background: transparent;
     color: #a8fff0;
 }
 
 .LikeButton--liked.ant-btn:hover,
 .LikeButton--liked.ant-btn:focus-visible {
-    background: linear-gradient(135deg, rgba(15, 70, 69, 0.98), rgba(12, 90, 88, 0.98));
+    outline: none;
     color: #d5fffa;
+    box-shadow: none;
 }
 
 .LikeButton--loading.ant-btn {
@@ -79,6 +88,10 @@
 .LikeButton__heart {
     font-size: 16px;
     line-height: 1;
+    filter:
+        drop-shadow(0 0 2px rgba(255, 255, 255, 0.3))
+        drop-shadow(0 0 8px rgba(35, 255, 214, 0.28))
+        drop-shadow(0 0 14px rgba(35, 255, 214, 0.18));
     transition:
         transform 180ms ease,
         opacity 180ms ease,
@@ -93,4 +106,5 @@
     color: inherit !important;
     font-weight: 600;
     letter-spacing: 0.01em;
+    text-shadow: inherit;
 }

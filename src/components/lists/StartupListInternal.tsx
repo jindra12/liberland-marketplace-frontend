@@ -13,7 +13,12 @@ import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
 import { AppList } from "../AppList";
-import { useJoinStartupMutation, useLeaveStartupMutation } from "../hooks";
+import {
+    useDislikeVentureMutation,
+    useJoinStartupMutation,
+    useLeaveStartupMutation,
+    useLikeVentureMutation,
+} from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -95,6 +100,8 @@ export interface StartupListInternalProps {
 }
 export const StartupListInternal: React.FunctionComponent<StartupListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
+    const likeMutation = useLikeVentureMutation();
+    const dislikeMutation = useDislikeVentureMutation();
     const allItems = useAccumulatedDocs(props.query.data?.Startups?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -117,6 +124,10 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
             title="Ventures"
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (startup) => (
                     <Flex justify="space-between" align="center" wrap>

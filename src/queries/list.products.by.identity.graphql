@@ -10,6 +10,7 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
             isSubscribed
             serverURL
             name
+            hasLiked
             likeCount
             cryptoAddresses {
                 chain

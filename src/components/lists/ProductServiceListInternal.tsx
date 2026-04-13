@@ -13,6 +13,7 @@ import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
+import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -48,6 +49,8 @@ type ProductServiceListInternalProps = {
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const screens = Grid.useBreakpoint();
+    const likeMutation = useLikeProductMutation();
+    const dislikeMutation = useDislikeProductMutation();
     const addToCartSize = screens.lg ? "large" : "middle";
     const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
@@ -83,6 +86,10 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             title={props.title || "Products / Services"}
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
