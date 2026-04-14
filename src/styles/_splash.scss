@@ -83,18 +83,10 @@
         line-height: 0.98 !important;
         letter-spacing: -0.055em;
         text-wrap: balance;
-        font-size: 86px !important;
+        font-size: 46px !important;
 
-        @include lg-min {
-            font-size: 72px !important;
-        }
-
-        @include md-min {
-            font-size: 58px !important;
-        }
-
-        @include sm-min {
-            font-size: 46px !important;
+        @media (min-width: 1200px) {
+            font-size: 86px !important;
         }
     }
 
@@ -115,19 +107,10 @@
         max-width: 36rem;
         text-align: center;
         color: rgba(188, 217, 203, 0.84);
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.5;
 
-        @include sm-min {
-            font-size: 14px;
-        }
-
-        @include md-min {
-            font-size: 16px;
-            max-width: 40rem;
-        }
-
-        @include lg-min {
+        @media (min-width: 1200px) {
             font-size: 18px;
             max-width: 44rem;
         }
@@ -148,7 +131,7 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent !important;
-        font-size: 52px !important;
+        font-size: 46px !important;
         line-height: 0.94 !important;
         letter-spacing: -0.025em;
         text-align: center;
@@ -156,16 +139,8 @@
             0 0 18px rgba(121, 230, 177, 0.24),
             0 0 42px rgba(90, 166, 255, 0.18);
 
-        @include sm-min {
-            font-size: 58px !important;
-        }
-
-        @include md-min {
-            font-size: 68px !important;
-        }
-
-        @include lg-min {
-            font-size: 80px !important;
+        @media (min-width: 1200px) {
+            font-size: 86px !important;
         }
     }
 
