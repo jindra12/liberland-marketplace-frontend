@@ -11,7 +11,8 @@ describe("homepage", () => {
         mountMainRoute("/");
         waitForPageShell();
         homepageQueries();
-
+        cy.pause();
+    
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
@@ -20,6 +21,7 @@ describe("homepage", () => {
         cy.get(".MarketAccordion").should("be.visible");
         cy.get(".MarketAccordion .SplashEntityCard--tribes").should("be.visible");
         cy.get(".SplashPage__syndicationSection").should("be.visible");
+
         screenshotStep("homepage-desktop");
     });
 
@@ -27,6 +29,7 @@ describe("homepage", () => {
         cy.viewport(390, 844);
         mountMainRoute("/");
         waitForPageShell();
+        cy.pause();
 
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
@@ -40,6 +43,7 @@ describe("homepage", () => {
         cy.contains(".MarketAccordionMobile__section", "Jobs").find(".SplashEntityCard__itemCard").should("have.length", 3);
         cy.get(".MarketAccordion").should("not.exist");
         cy.get(".SplashPage__syndicationSection").should("not.exist");
+
         screenshotStep("homepage-mobile");
     });
 });

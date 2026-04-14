@@ -29,9 +29,7 @@ export const UnsubscribeEntityLoadingState: React.FunctionComponent = () => {
                         <Skeleton.Input
                             active
                             size="small"
-                            style={{
-                                width: 220,
-                            }}
+                            className="UnsubscribePage__skeletonInput"
                         />
                         <Skeleton
                             active

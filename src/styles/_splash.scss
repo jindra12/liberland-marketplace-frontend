@@ -21,7 +21,7 @@
         position: relative;
         isolation: isolate;
         width: min(1360px, 100%);
-        min-height: 600px;
+        min-height: 300px;
         padding: 0;
         border-radius: 0;
         background: transparent;
@@ -73,7 +73,8 @@
         text-align: center;
         color: #eef8f3 !important;
         line-height: 0.98 !important;
-        letter-spacing: -0.055em;
+        letter-spacing: -0.1em;
+        padding-right: 0.1em;
         text-wrap: balance;
         font-size: 86px !important;
 

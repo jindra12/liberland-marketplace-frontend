@@ -26,6 +26,9 @@ const Splash: React.FunctionComponent = () => {
                         <Typography.Title level={1} className="SplashPage__heroWordmark">
                             NSWAP
                         </Typography.Title>
+                        <Typography.Paragraph className="SplashPage__heroDescription">
+                            Decentralized marketplace across tribes
+                        </Typography.Paragraph>
                         <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
                             <RouteButton to="/products-services" type="primary" size="large" className="SplashPage__heroPrimaryBtn">
                                 Explore market
