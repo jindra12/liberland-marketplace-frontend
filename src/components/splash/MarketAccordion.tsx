@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Flex, Typography } from "antd";
+import { Flex, Grid, Typography } from "antd";
 
 import { CompanyCard } from "../cards/CompanyCard";
 import { IdentityCard } from "../cards/IdentityCard";
@@ -18,6 +18,7 @@ import {
 } from "../hooks";
 
 export const MarketAccordion: React.FunctionComponent = () => {
+    const { md } = Grid.useBreakpoint();
     const companiesQuery = useListCompaniesQuery({
         page: 1,
         limit: 7,
@@ -51,6 +52,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     loading={productsQuery.isLoading}
                 />
             ),
+            isMobile: true,
         },
         {
             key: "jobs",
@@ -58,6 +60,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
             route: "/jobs",
             titleClassName: "MarketAccordion__titleLink--jobs",
             body: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} />,
+            isMobile: true,
         },
         {
             key: "companies",
@@ -78,6 +81,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
             title: "Tribes",
             route: "/tribes",
             titleClassName: "MarketAccordion__titleLink--tribes",
+            isMobile: true,
             body: (
                 <IdentityCard
                     items={identitiesQuery.data?.Identities?.docs || []}
@@ -87,11 +91,26 @@ export const MarketAccordion: React.FunctionComponent = () => {
         },
     ];
 
-    return (
-        <Flex vertical gap="144px" className="MarketAccordion">
+    return md ? (
+        <Flex vertical gap="64px" className="MarketAccordion">
             {items.map((item) => (
                 <section key={item.key} className="MarketAccordion__section">
                     <Flex vertical gap={24} className="MarketAccordion__header">
+                        <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
+                            <Typography.Title level={2} className="MarketAccordion__title">
+                                {item.title}
+                            </Typography.Title>
+                        </Link>
+                    </Flex>
+                    {item.body}
+                </section>
+            ))}
+        </Flex>
+    ) : (
+        <Flex vertical gap="32px" className="MarketAccordionMobile">
+            {items.filter(({ isMobile }) => isMobile).map((item) => (
+                <section key={item.key} className="MarketAccordionMobile__section">
+                    <Flex vertical gap={18} className="MarketAccordionMobile__header">
                         <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
                             <Typography.Title level={2} className="MarketAccordion__title">
                                 {item.title}

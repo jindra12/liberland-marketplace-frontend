@@ -1,45 +1,47 @@
 import * as React from "react";
 
-import { Flex, Typography } from "antd";
-import { useMediaQuery } from "usehooks-ts";
+import { Image, Flex, Typography, Grid } from "antd";
 
 import { RouteButton } from "./RouteButton";
 import { MarketAccordion } from "./splash/MarketAccordion";
-import { MarketAccordionMobile } from "./splash/MarketAccordionMobile";
 import { SyndicationSection } from "./splash/SyndicationSection";
 
 const Splash: React.FunctionComponent = () => {
-    const isMobile = useMediaQuery("(max-width: 767.98px)", {
-        initializeWithValue: true,
-    });
+    const { md } = Grid.useBreakpoint();
 
     return (
         <Flex vertical gap={24} className="SplashPage">
             <section className="SplashPage__hero">
-                <Flex vertical align="center" gap={18} className="SplashPage__heroInner">
-                    <span className="SplashPage__eyebrow">Beacon Catalogue</span>
-                    <Typography.Title level={1} className="SplashPage__heroTitle">
-                        Discover <span className="SplashPage__heroAccent">companies, jobs, products</span> and ventures.
-                    </Typography.Title>
-                    <Typography.Paragraph className="SplashPage__heroDescription">
-                        Tribe-first marketplace across decentralized servers. Browse companies, products, services,
-                        jobs, and ventures
-                    </Typography.Paragraph>
-                    <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
-                        <RouteButton to="/products-services" type="primary" size="large">
-                            Explore market
-                        </RouteButton>
-                        <RouteButton to="/tribes" size="large">
-                            Browse tribes
-                        </RouteButton>
+                <Flex vertical align="center" justify="center" className="SplashPage__heroInner">
+                    <Image
+                        preview={false}
+                        src="/hero/nswap-hero-bg.svg"
+                        alt=""
+                        aria-hidden="true"
+                        width={940}
+                        height={540}
+                        className="SplashPage__heroBackdrop"
+                    />
+                    <Flex vertical align="center" justify="center" gap={18} className="SplashPage__heroOverlay">
+                        <Typography.Title level={1} className="SplashPage__heroWordmark">
+                            NSWAP
+                        </Typography.Title>
+                        <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
+                            <RouteButton to="/products-services" type="primary" size="large" className="SplashPage__heroPrimaryBtn">
+                                Explore market
+                            </RouteButton>
+                            <RouteButton to="/tribes" size="large" className="SplashPage__heroSecondaryBtn">
+                                Explore Tribes
+                            </RouteButton>
+                        </Flex>
                     </Flex>
                 </Flex>
             </section>
 
             <Flex vertical gap={20} className="SplashPage__sections">
-                {isMobile ? (
+                {!md ? (
                     <div className="SplashPage__marketAccordion SplashPage__marketAccordion--mobile">
-                        <MarketAccordionMobile />
+                        <MarketAccordion />
                     </div>
                 ) : (
                     <>

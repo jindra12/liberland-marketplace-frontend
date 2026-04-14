@@ -20,48 +20,49 @@
     &__heroInner {
         position: relative;
         isolation: isolate;
-        padding: clamp(38px, 5vw, 62px) clamp(24px, 4vw, 44px);
-        border-radius: 38px;
-        background:
-            radial-gradient(circle at 50% 18%, rgba(121, 230, 177, 0.12), transparent 20%),
-            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.2), transparent 22%),
-            radial-gradient(circle at 100% 30%, rgba(47, 140, 255, 0.2), transparent 24%),
-            linear-gradient(180deg, rgba(3, 15, 27, 0.94), rgba(4, 16, 29, 0.96));
-        box-shadow:
-            0 28px 68px rgba(0, 0, 0, 0.28),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        width: min(1360px, 100%);
+        min-height: 600px;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
 
         &::before {
             content: "";
             position: absolute;
             inset: 0;
             z-index: 0;
-            background:
-                linear-gradient(rgba(76, 143, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(76, 143, 255, 0.05) 1px, transparent 1px);
-            background-size: 56px 56px;
-            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 100%);
+            background: radial-gradient(circle at 50% 34%, rgba(0, 167, 216, 0.18), transparent 28%);
             pointer-events: none;
         }
     }
 
-    &__eyebrow {
-        position: relative;
+    &__heroBackdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: min(1160px, 102vw);
+        height: auto;
+        margin: auto;
+        opacity: 0.34;
+        transform: translateY(16px) scale(1.02);
+        filter:
+            brightness(0.42)
+            saturate(0.7)
+            drop-shadow(0 0 28px rgba(0, 167, 216, 0.16))
+            drop-shadow(0 0 58px rgba(121, 230, 177, 0.08));
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &__heroOverlay {
+        position: absolute;
+        inset: 0;
         z-index: 1;
-        display: inline-flex;
-        align-items: center;
-        min-height: 32px;
-        margin: 0;
-        padding: 0 14px;
-        width: fit-content;
-        border-radius: 999px;
-        background: rgba(8, 25, 39, 0.82);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
-        color: #79e6b1;
-        font-size: 11px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
+        min-height: 100%;
+        max-width: 100%;
+        text-align: center;
+        padding: clamp(40px, 5vw, 72px) clamp(24px, 4vw, 92px);
     }
 
     &__heroTitle {
@@ -103,11 +104,11 @@
         margin: 0 !important;
         position: relative;
         z-index: 1;
-        max-width: 44rem;
+        max-width: 36rem;
         text-align: center;
         color: rgba(188, 217, 203, 0.84);
         font-size: 20px;
-        line-height: 1.6;
+        line-height: 1.45;
 
         @include md-min {
             font-size: 17px;
@@ -117,6 +118,51 @@
     &__heroActions {
         position: relative;
         z-index: 1;
+        margin-top: 14px;
+    }
+
+    &__heroWordmark.ant-typography {
+        margin: 0 !important;
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(135deg, #f6fbff 0%, #8ef6d2 42%, #7edfff 68%, #5aa6ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent !important;
+        font-size: 118px !important;
+        line-height: 0.88 !important;
+        letter-spacing: -0.12em;
+        text-align: center;
+        text-shadow:
+            0 0 18px rgba(121, 230, 177, 0.24),
+            0 0 42px rgba(90, 166, 255, 0.18);
+    }
+
+    &__heroPrimaryBtn.ant-btn {
+        position: relative;
+        z-index: 1;
+        min-width: 220px;
+        min-height: 48px;
+        border-radius: 999px;
+        font-weight: 800;
+        box-shadow:
+            0 14px 32px rgba(90, 166, 255, 0.22),
+            0 0 0 1px rgba(121, 230, 177, 0.14);
+    }
+
+    &__heroSecondaryBtn.ant-btn {
+        position: relative;
+        z-index: 1;
+        min-width: 188px;
+        min-height: 48px;
+        border-radius: 999px;
+        font-weight: 800;
+        color: #79e6b1;
+        border-color: rgba(121, 230, 177, 0.3);
+        background: rgba(6, 23, 37, 0.72);
+        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
     }
 
     &__sections {
@@ -666,6 +712,10 @@
         font-size: 34px !important;
     }
 
+    .SplashPage__heroInner {
+        min-height: 520px;
+    }
+
     .SplashEntityCard__itemCard .ant-card-body {
         padding: 18px;
     }
@@ -712,8 +762,16 @@
 
     .SplashPage {
         &__heroInner {
-            border-radius: 28px;
-            padding: 28px 18px;
+            min-height: 420px;
+        }
+
+        &__heroBackdrop {
+            opacity: 0.3;
+            transform: translateY(12px) scale(1.02);
+        }
+
+        &__heroOverlay {
+            padding: 32px 18px 42px;
         }
 
         &__identitySection {
@@ -760,6 +818,18 @@
 
         &__identityHeading {
             font-size: 24px !important;
+        }
+
+        &__heroWordmark.ant-typography {
+            font-size: 72px !important;
+        }
+
+        &__heroPrimaryBtn.ant-btn {
+            min-width: 196px;
+        }
+
+        &__heroSecondaryBtn.ant-btn {
+            min-width: 188px;
         }
     }
 

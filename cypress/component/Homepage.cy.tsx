@@ -1,5 +1,4 @@
 import {
-    homepageMobileQueries,
     homepageQueries,
     mountMainRoute,
     screenshotStep,
@@ -14,7 +13,10 @@ describe("homepage", () => {
         homepageQueries();
 
         cy.get(".SplashPage").should("be.visible");
-        cy.get(".SplashPage__heroTitle").should("be.visible").contains("Discover");
+        cy.get(".SplashPage__heroBackdrop").should("be.visible");
+        cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
+        cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
+        cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
         cy.get(".MarketAccordion").should("be.visible");
         cy.get(".MarketAccordion .SplashEntityCard--tribes").should("be.visible");
         cy.get(".SplashPage__syndicationSection").should("be.visible");
@@ -25,16 +27,17 @@ describe("homepage", () => {
         cy.viewport(390, 844);
         mountMainRoute("/");
         waitForPageShell();
-        homepageMobileQueries();
 
         cy.get(".SplashPage").should("be.visible");
-        cy.get(".SplashPage__heroTitle").should("be.visible").contains("Discover");
+        cy.get(".SplashPage__heroBackdrop").should("be.visible");
+        cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
+        cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
+        cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
         cy.get(".MarketAccordionMobile").should("be.visible");
-        cy.get(".MarketAccordionMobile .SplashEntityCard--products .SplashEntityCard__itemCard").should(
-            "have.length",
-            3,
-        );
-        cy.get(".MarketAccordionMobile .SplashEntityCard--jobs .SplashEntityCard__itemCard").should("have.length", 3);
+        cy.contains(".MarketAccordionMobile__section", "Products")
+            .find(".SplashEntityCard__itemCard")
+            .should("have.length", 3);
+        cy.contains(".MarketAccordionMobile__section", "Jobs").find(".SplashEntityCard__itemCard").should("have.length", 3);
         cy.get(".MarketAccordion").should("not.exist");
         cy.get(".SplashPage__syndicationSection").should("not.exist");
         screenshotStep("homepage-mobile");
