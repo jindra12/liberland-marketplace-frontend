@@ -33,6 +33,7 @@ manager is `yarn`.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
+- After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"
 - Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
 - For small layout-only wrappers, prefer Ant Design `Flex` or `Space` instead of custom wrapper `div`s and CSS spacing shims.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.

@@ -17,6 +17,7 @@ import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
@@ -55,116 +56,118 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 
                 return (
-                    <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
-                        <DetailPageTracker serverUrl={companyData?.serverURL} />
-                        <DetailBackButton to="/companies" label="Back to companies" />
-                        <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
-                            {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
-                            <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
-                                <div className="EntityDetail__titleBlock">
-                                    <Typography.Text className="EntityDetail__eyebrow">Company</Typography.Text>
-                                    <div className="EntityDetail__titleRow">
-                                        <Typography.Title level={1} className="EntityDetail__title">
-                                            {companyData?.name}
-                                        </Typography.Title>
-                                    </div>
-                                    {companyIdentity && (
-                                        <div className="CompanyDetail__identityRow">
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
+                    <AnimatedIn>
+                        <Flex flex={1} vertical gap={md ? 18 : 16} className="EntityDetail CompanyDetail">
+                            <DetailPageTracker serverUrl={companyData?.serverURL} />
+                            <DetailBackButton to="/companies" label="Back to companies" />
+                            <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
+                                {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
+                                <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
+                                    <div className="EntityDetail__titleBlock">
+                                        <Typography.Text className="EntityDetail__eyebrow">Company</Typography.Text>
+                                        <div className="EntityDetail__titleRow">
+                                            <Typography.Title level={1} className="EntityDetail__title">
+                                                {companyData?.name}
+                                            </Typography.Title>
                                         </div>
-                                    )}
-                                </div>
-                            </Flex>
-                        </Space>
-                        {isOwner && (
-                            <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>
-                                Edit
-                            </RouteButton>
-                        )}
-                        <Divider />
-                        <Markdown>{companyData?.description}</Markdown>
-                        <Divider />
-                        <CompanyContactLinks
-                            identity={companyIdentity}
-                            website={companyData?.website}
-                            email={companyData?.email}
-                            phone={companyData?.phone}
-                            className="EntityDetail__meta"
-                        />
-                        <IdentityGroups
-                            allowedIdentities={allowedIdentities}
-                            disallowedIdentities={disallowedIdentities}
-                            className="EntityDetail__identityGroups"
-                        />
-                        <Divider />
-                        <DetailShareSection
-                            label="Share this company"
-                            title={shareTitle}
-                            text={shareText}
-                            subscriptionTarget={
-                                companyData
-                                    ? {
-                                          collection: "companies",
-                                          targetID: companyData.id,
-                                          serverURL: companyData.serverURL,
-                                          isSubscribed: companyData.isSubscribed,
-                                      }
-                                    : undefined
-                            }
-                        />
-                        <Divider />
-                        <Tabs
-                            className="EntityDetail__tabs"
-                            defaultActiveKey="jobs"
-                            items={[
-                                {
-                                    key: "jobs",
-                                    label: `Jobs (${counts.jobs})`,
-                                    children: (
-                                        <CompanyJobsList
-                                            companyId={id!}
-                                            serverUrl={companyData?.serverURL}
-                                        />
-                                    ),
-                                },
-                                {
-                                    key: "products-services",
-                                    label: `Products / Services (${counts.products})`,
-                                    children: (
-                                        <CompanyProductsServicesList
-                                            companyId={id!}
-                                            serverUrl={companyData?.serverURL}
-                                        />
-                                    ),
-                                },
-                                {
-                                    key: "startups",
-                                    label: `Ventures (${counts.startups})`,
-                                    children: (
-                                        <CompanyStartupsList
-                                            companyId={id!}
-                                            serverUrl={companyData?.serverURL}
-                                        />
-                                    ),
-                                },
-                                {
-                                    key: "comments",
-                                    label: "Discussion",
-                                    children: (
-                                        <EntityCommentsSection
-                                            targetId={id!}
-                                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                                            serverURL={companyData?.serverURL}
-                                        />
-                                    ),
-                                },
-                            ]}
-                        />
-                    </Flex>
+                                        {companyIdentity && (
+                                            <div className="CompanyDetail__identityRow">
+                                                <IdentityTagLink
+                                                    identity={companyIdentity}
+                                                    color="success"
+                                                    icon={<UsergroupAddOutlined />}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </Flex>
+                            </Space>
+                            {isOwner && (
+                                <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>
+                                    Edit
+                                </RouteButton>
+                            )}
+                            <Divider />
+                            <Markdown>{companyData?.description}</Markdown>
+                            <Divider />
+                            <CompanyContactLinks
+                                identity={companyIdentity}
+                                website={companyData?.website}
+                                email={companyData?.email}
+                                phone={companyData?.phone}
+                                className="EntityDetail__meta"
+                            />
+                            <IdentityGroups
+                                allowedIdentities={allowedIdentities}
+                                disallowedIdentities={disallowedIdentities}
+                                className="EntityDetail__identityGroups"
+                            />
+                            <Divider />
+                            <DetailShareSection
+                                label="Share this company"
+                                title={shareTitle}
+                                text={shareText}
+                                subscriptionTarget={
+                                    companyData
+                                        ? {
+                                              collection: "companies",
+                                              targetID: companyData.id,
+                                              serverURL: companyData.serverURL,
+                                              isSubscribed: companyData.isSubscribed,
+                                          }
+                                        : undefined
+                                }
+                            />
+                            <Divider />
+                            <Tabs
+                                className="EntityDetail__tabs"
+                                defaultActiveKey="jobs"
+                                items={[
+                                    {
+                                        key: "jobs",
+                                        label: `Jobs (${counts.jobs})`,
+                                        children: (
+                                            <CompanyJobsList
+                                                companyId={id!}
+                                                serverUrl={companyData?.serverURL}
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: "products-services",
+                                        label: `Products / Services (${counts.products})`,
+                                        children: (
+                                            <CompanyProductsServicesList
+                                                companyId={id!}
+                                                serverUrl={companyData?.serverURL}
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: "startups",
+                                        label: `Ventures (${counts.startups})`,
+                                        children: (
+                                            <CompanyStartupsList
+                                                companyId={id!}
+                                                serverUrl={companyData?.serverURL}
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: "comments",
+                                        label: "Discussion",
+                                        children: (
+                                            <EntityCommentsSection
+                                                targetId={id!}
+                                                relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
+                                                serverURL={companyData?.serverURL}
+                                            />
+                                        ),
+                                    },
+                                ]}
+                            />
+                        </Flex>
+                    </AnimatedIn>
                 );
             }}
         </Loader>

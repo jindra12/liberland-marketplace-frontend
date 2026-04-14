@@ -11,10 +11,10 @@ describe("homepage", () => {
         mountMainRoute("/");
         waitForPageShell();
         homepageQueries();
-        cy.pause();
     
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
+        cy.get(".SplashPage .AnimatedIn").first().should("have.css", "opacity", "1");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
         cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
         cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
@@ -29,10 +29,10 @@ describe("homepage", () => {
         cy.viewport(390, 844);
         mountMainRoute("/");
         waitForPageShell();
-        cy.pause();
 
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
+        cy.get(".SplashPage .AnimatedIn").first().should("have.css", "opacity", "1");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
         cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
         cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");

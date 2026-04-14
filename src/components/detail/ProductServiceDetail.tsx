@@ -16,6 +16,7 @@ import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { DetailShareSection } from "../share/DetailShareSection";
+import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
@@ -79,118 +80,125 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 ) : null;
 
                 return (
-                    <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
-                        <DetailPageTracker serverUrl={product?.serverURL} />
-                        <DetailBackButton to="/products-services" label="Back to products / services" />
-                        <Flex gap="32px" align="center" wrap className="EntityDetail__header">
-                            {imageSrc && <Avatar shape="circle" size={md ? 120 : 72} src={imageSrc} />}
-                            <Flex flex={1} vertical className="EntityDetail__headerBody">
-                                <Typography.Title level={1} className="EntityDetail__title">
-                                    {product?.name}
-                                </Typography.Title>
-                                {companyIdentity && (
-                                    <div className="ProductDetail__identityRow">
-                                        <IdentityTagLink
-                                            identity={companyIdentity}
-                                            color="success"
-                                            icon={<UsergroupAddOutlined />}
+                    <AnimatedIn>
+                        <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
+                            <DetailPageTracker serverUrl={product?.serverURL} />
+                            <DetailBackButton to="/products-services" label="Back to products / services" />
+                            <Flex gap="32px" align="center" wrap className="EntityDetail__header">
+                                {imageSrc && <Avatar shape="circle" size={md ? 120 : 72} src={imageSrc} />}
+                                <Flex flex={1} vertical className="EntityDetail__headerBody">
+                                    <Typography.Title level={1} className="EntityDetail__title">
+                                        {product?.name}
+                                    </Typography.Title>
+                                    {companyIdentity && (
+                                        <div className="ProductDetail__identityRow">
+                                            <IdentityTagLink
+                                                identity={companyIdentity}
+                                                color="success"
+                                                icon={<UsergroupAddOutlined />}
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="ProductDetail__summary">
+                                        <ProductDetailsSummary
+                                            companyName={product?.company?.name}
+                                            companyId={product?.company?.id}
                                         />
                                     </div>
-                                )}
-                                <div className="ProductDetail__summary">
-                                    <ProductDetailsSummary
-                                        companyName={product?.company?.name}
-                                        companyId={product?.company?.id}
-                                    />
-                                </div>
-                                {product?.id && (
-                                    <div className="ProductDetail__purchaseSection">
-                                        <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
-                                            {price && (
-                                                <Tag color="success" icon={<DollarOutlined />}>
-                                                    {`Price: ${price}`}
-                                                </Tag>
+                                    {product?.id && (
+                                        <div className="ProductDetail__purchaseSection">
+                                            <Flex gap="8px" wrap className="ProductDetail__purchaseMeta">
+                                                {price && (
+                                                    <Tag color="success" icon={<DollarOutlined />}>
+                                                        {`Price: ${price}`}
+                                                    </Tag>
+                                                )}
+                                                {inventory && (
+                                                    <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>
+                                                )}
+                                                <CartItemCount
+                                                    productId={product.id}
+                                                    serverURL={product.serverURL!}
+                                                />
+                                            </Flex>
+                                            {purchaseControl && (
+                                                <>
+                                                    <Divider className="ProductDetail__purchaseDivider" />
+                                                    <div className="ProductDetail__purchaseControl">{purchaseControl}</div>
+                                                </>
                                             )}
-                                            {inventory && <Tag icon={<ShoppingOutlined />}>Inventory: {inventory}</Tag>}
-                                            <CartItemCount productId={product.id} serverURL={product.serverURL!} />
-                                        </Flex>
-                                        {purchaseControl && (
-                                            <>
-                                                <Divider className="ProductDetail__purchaseDivider" />
-                                                <div className="ProductDetail__purchaseControl">{purchaseControl}</div>
-                                            </>
-                                        )}
-                                    </div>
-                                )}
-                            </Flex>
-                        </Flex>
-                        {isOwner && (
-                            <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
-                                Edit
-                            </RouteButton>
-                        )}
-                        <Divider />
-                        <Flex gap="32px" vertical>
-                            <Markdown>{product?.description}</Markdown>
-                            <IdentityGroups
-                                allowedIdentities={allowedIdentities}
-                                disallowedIdentities={disallowedIdentities}
-                            />
-                        </Flex>
-                        {properties.length > 0 && (
-                            <>
-                                <Divider />
-                                <Typography.Title level={4}>Properties</Typography.Title>
-                                <Descriptions bordered column={1} size="small">
-                                    {properties.map((property, index) => (
-                                        <Descriptions.Item
-                                            key={property?.id ?? `${property?.key ?? "property"}-${index}`}
-                                            label={property?.key || "Property"}
-                                        >
-                                            {property?.value}
-                                        </Descriptions.Item>
-                                    ))}
-                                </Descriptions>
-                            </>
-                        )}
-                        {(orderLink || product?.company?.id) && (
-                            <>
-                                <Divider />
-                                <Flex wrap gap="12px">
-                                    {orderLink && (
-                                        <Button type="primary" href={orderLink}>
-                                            Visit Website
-                                        </Button>
-                                    )}
-                                    {product?.company?.id && (
-                                        <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                        </div>
                                     )}
                                 </Flex>
-                            </>
-                        )}
-                        <Divider />
-                        <DetailShareSection
-                            label="Share this product"
-                            title={shareTitle}
-                            text={shareText}
-                            subscriptionTarget={
-                                product
-                                    ? {
-                                          collection: "products",
-                                          targetID: product.id,
-                                          serverURL: product.serverURL,
-                                          isSubscribed: product.isSubscribed,
-                                      }
-                                    : undefined
-                            }
-                        />
-                        <Divider />
-                        <EntityCommentsSection
-                            targetId={id!}
-                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                            serverURL={product?.serverURL}
-                        />
-                    </Flex>
+                            </Flex>
+                            {isOwner && (
+                                <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
+                                    Edit
+                                </RouteButton>
+                            )}
+                            <Divider />
+                            <Flex gap="32px" vertical>
+                                <Markdown>{product?.description}</Markdown>
+                                <IdentityGroups
+                                    allowedIdentities={allowedIdentities}
+                                    disallowedIdentities={disallowedIdentities}
+                                />
+                            </Flex>
+                            {properties.length > 0 && (
+                                <>
+                                    <Divider />
+                                    <Typography.Title level={4}>Properties</Typography.Title>
+                                    <Descriptions bordered column={1} size="small">
+                                        {properties.map((property, index) => (
+                                            <Descriptions.Item
+                                                key={property?.id ?? `${property?.key ?? "property"}-${index}`}
+                                                label={property?.key || "Property"}
+                                            >
+                                                {property?.value}
+                                            </Descriptions.Item>
+                                        ))}
+                                    </Descriptions>
+                                </>
+                            )}
+                            {(orderLink || product?.company?.id) && (
+                                <>
+                                    <Divider />
+                                    <Flex wrap gap="12px">
+                                        {orderLink && (
+                                            <Button type="primary" href={orderLink}>
+                                                Visit Website
+                                            </Button>
+                                        )}
+                                        {product?.company?.id && (
+                                            <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                        )}
+                                    </Flex>
+                                </>
+                            )}
+                            <Divider />
+                            <DetailShareSection
+                                label="Share this product"
+                                title={shareTitle}
+                                text={shareText}
+                                subscriptionTarget={
+                                    product
+                                        ? {
+                                              collection: "products",
+                                              targetID: product.id,
+                                              serverURL: product.serverURL,
+                                              isSubscribed: product.isSubscribed,
+                                          }
+                                        : undefined
+                                }
+                            />
+                            <Divider />
+                            <EntityCommentsSection
+                                targetId={id!}
+                                relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                                serverURL={product?.serverURL}
+                            />
+                        </Flex>
+                    </AnimatedIn>
                 );
             }}
         </Loader>

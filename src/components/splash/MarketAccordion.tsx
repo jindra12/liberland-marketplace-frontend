@@ -16,6 +16,7 @@ import {
     useListProductsQuery,
     useListStartupsQuery,
 } from "../hooks";
+import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 
 export const MarketAccordion: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
@@ -94,31 +95,35 @@ export const MarketAccordion: React.FunctionComponent = () => {
     return md ? (
         <Flex vertical gap="64px" className="MarketAccordion">
             {items.map((item) => (
-                <section key={item.key} className="MarketAccordion__section">
-                    <Flex vertical gap={24} className="MarketAccordion__header">
-                        <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                            <Typography.Title level={2} className="MarketAccordion__title">
-                                {item.title}
-                            </Typography.Title>
-                        </Link>
-                    </Flex>
-                    {item.body}
-                </section>
+                <AnimatedIn key={item.key}>
+                    <section className="MarketAccordion__section">
+                        <Flex vertical gap={24} className="MarketAccordion__header">
+                            <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
+                                <Typography.Title level={2} className="MarketAccordion__title">
+                                    {item.title}
+                                </Typography.Title>
+                            </Link>
+                        </Flex>
+                        {item.body}
+                    </section>
+                </AnimatedIn>
             ))}
         </Flex>
     ) : (
         <Flex vertical gap="32px" className="MarketAccordionMobile">
             {items.filter(({ isMobile }) => isMobile).map((item) => (
-                <section key={item.key} className="MarketAccordionMobile__section">
-                    <Flex vertical gap={18} className="MarketAccordionMobile__header">
-                        <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                            <Typography.Title level={2} className="MarketAccordion__title">
-                                {item.title}
-                            </Typography.Title>
-                        </Link>
-                    </Flex>
-                    {item.body}
-                </section>
+                <AnimatedIn key={item.key}>
+                    <section className="MarketAccordionMobile__section">
+                        <Flex vertical gap={18} className="MarketAccordionMobile__header">
+                            <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
+                                <Typography.Title level={2} className="MarketAccordion__title">
+                                    {item.title}
+                                </Typography.Title>
+                            </Link>
+                        </Flex>
+                        {item.body}
+                    </section>
+                </AnimatedIn>
             ))}
         </Flex>
     );

@@ -21,7 +21,7 @@
         position: relative;
         isolation: isolate;
         width: min(1360px, 100%);
-        min-height: 300px;
+        min-height: 150px;
         padding: 0;
         border-radius: 0;
         background: transparent;
@@ -41,11 +41,11 @@
         position: absolute;
         inset: 0;
         z-index: 0;
-        width: min(1160px, 102vw);
+        width: min(300px, 36vw);
         height: auto;
         margin: auto;
-        opacity: 0.34;
-        transform: translateY(16px) scale(1.02);
+        opacity: 0.22;
+        transform: translateY(2px) scale(1);
         filter:
             brightness(0.42)
             saturate(0.7)
@@ -59,10 +59,18 @@
         position: absolute;
         inset: 0;
         z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         min-height: 100%;
         max-width: 100%;
         text-align: center;
-        padding: clamp(40px, 5vw, 72px) clamp(24px, 4vw, 92px);
+        padding: clamp(6px, 1vw, 14px) clamp(10px, 1.5vw, 24px);
+    }
+
+    &__heroOverlayInner {
+        width: 100%;
     }
 
     &__heroTitle {
@@ -73,8 +81,7 @@
         text-align: center;
         color: #eef8f3 !important;
         line-height: 0.98 !important;
-        letter-spacing: -0.1em;
-        padding-right: 0.1em;
+        letter-spacing: -0.055em;
         text-wrap: balance;
         font-size: 86px !important;
 
@@ -108,18 +115,28 @@
         max-width: 36rem;
         text-align: center;
         color: rgba(188, 217, 203, 0.84);
-        font-size: 20px;
-        line-height: 1.45;
+        font-size: 13px;
+        line-height: 1.5;
+
+        @include sm-min {
+            font-size: 14px;
+        }
 
         @include md-min {
-            font-size: 17px;
+            font-size: 16px;
+            max-width: 40rem;
+        }
+
+        @include lg-min {
+            font-size: 18px;
+            max-width: 44rem;
         }
     }
 
     &__heroActions {
         position: relative;
         z-index: 1;
-        margin-top: 14px;
+        margin-top: 8px;
     }
 
     &__heroWordmark.ant-typography {
@@ -131,20 +148,32 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent !important;
-        font-size: 118px !important;
-        line-height: 0.88 !important;
-        letter-spacing: -0.12em;
+        font-size: 52px !important;
+        line-height: 0.94 !important;
+        letter-spacing: -0.025em;
         text-align: center;
         text-shadow:
             0 0 18px rgba(121, 230, 177, 0.24),
             0 0 42px rgba(90, 166, 255, 0.18);
+
+        @include sm-min {
+            font-size: 58px !important;
+        }
+
+        @include md-min {
+            font-size: 68px !important;
+        }
+
+        @include lg-min {
+            font-size: 80px !important;
+        }
     }
 
     &__heroPrimaryBtn.ant-btn {
         position: relative;
         z-index: 1;
-        min-width: 220px;
-        min-height: 48px;
+        min-width: 142px;
+        min-height: 36px;
         border-radius: 999px;
         font-weight: 800;
         box-shadow:
@@ -155,8 +184,8 @@
     &__heroSecondaryBtn.ant-btn {
         position: relative;
         z-index: 1;
-        min-width: 188px;
-        min-height: 48px;
+        min-width: 142px;
+        min-height: 36px;
         border-radius: 999px;
         font-weight: 800;
         color: #79e6b1;
@@ -714,7 +743,7 @@
     }
 
     .SplashPage__heroInner {
-        min-height: 520px;
+        min-height: 180px;
     }
 
     .SplashEntityCard__itemCard .ant-card-body {
@@ -763,16 +792,17 @@
 
     .SplashPage {
         &__heroInner {
-            min-height: 420px;
+            min-height: 180px;
         }
 
         &__heroBackdrop {
-            opacity: 0.3;
-            transform: translateY(12px) scale(1.02);
+            width: min(220px, 48vw);
+            opacity: 0.2;
+            transform: translateY(2px) scale(1);
         }
 
         &__heroOverlay {
-            padding: 32px 18px 42px;
+            padding: 12px 12px 18px;
         }
 
         &__identitySection {
@@ -822,15 +852,23 @@
         }
 
         &__heroWordmark.ant-typography {
-            font-size: 72px !important;
+            font-size: 40px !important;
+            letter-spacing: -0.02em;
+        }
+
+        &__heroDescription {
+            max-width: 16rem;
+            font-size: 11px;
         }
 
         &__heroPrimaryBtn.ant-btn {
-            min-width: 196px;
+            min-width: 124px;
+            min-height: 38px;
         }
 
         &__heroSecondaryBtn.ant-btn {
-            min-width: 188px;
+            min-width: 124px;
+            min-height: 38px;
         }
     }
 

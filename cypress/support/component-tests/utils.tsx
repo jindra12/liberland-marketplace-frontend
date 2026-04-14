@@ -14,7 +14,6 @@ import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
     GraphQLCollectionResponse,
-    GraphQLNodeResponse,
     GraphQLResponseBody,
     GraphQLVariables,
     ListGoal,
@@ -24,11 +23,30 @@ import type {
 export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
     buildGraphQLAlias(serverUrl, operationName, variables);
 
-export const screenshotStep = (step: string) => {
+export const screenshotStep = (step: string, capture: "fullPage" | "viewport" | "runner" = "fullPage") => {
     const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
+    waitForAnimatedIn();
     cy.screenshot(nextName.length > 0 ? nextName : "after-test-step", {
-        capture: "fullPage",
+        capture,
+    });
+};
+
+export const screenshotDetailStep = (step: string) => {
+    const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+    waitForAnimatedIn();
+    cy.wait(1000);
+    cy.get(".EntityDetail", { timeout: 20000 })
+        .should("be.visible")
+        .screenshot(nextName.length > 0 ? nextName : "after-test-step");
+};
+
+export const waitForAnimatedIn = () => {
+    cy.get("body").then(($body) => {
+        if ($body.find(".AnimatedIn").length > 0) {
+            cy.get(".AnimatedIn", { timeout: 20000 }).last().should("have.css", "opacity", "1");
+        }
     });
 };
 
@@ -254,7 +272,6 @@ export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
-    screenshotStep("home-loaded");
 };
 
 export const seedCartSecret = (serverUrl: string, secret: string) => {
@@ -329,7 +346,7 @@ export const waitForCollectionQuery = (
                 collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content,
             ).to.equal(expectedTitle);
         }
-        screenshotStep(`${operationName}-${expectedTitle}`);
+        screenshotStep(`${operationName}-${expectedTitle}`, "viewport");
     });
 };
 
@@ -402,7 +419,8 @@ export const waitForDetailQuery = (
     cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        screenshotStep(`${operationName}-${expectedTitle}`);
+        cy.contains("h1", expectedTitle, { timeout: 20000 }).should("be.visible").scrollIntoView();
+        screenshotDetailStep(`${operationName}-${expectedTitle}`);
     });
 };
 
@@ -490,7 +508,7 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
         );
     }
     cy.contains(goal.detailTitleSelector, goal.title, { timeout: 20000 }).should("be.visible");
-    screenshotStep(`detail-${goal.title}`);
+    screenshotDetailStep(`detail-${goal.title}`);
 };
 
 export const goToDetailFromSearch = (goal: SearchGoal) => {
@@ -507,7 +525,7 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
     cy.get(".SearchDrawer").should("not.exist");
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
-    screenshotStep(`search-detail-${goal.title}`);
+    screenshotDetailStep(`search-detail-${goal.title}`);
 };
 
 export const goToSyndicationList = () => {

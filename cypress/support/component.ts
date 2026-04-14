@@ -83,6 +83,9 @@ Cypress.Commands.add("openPublishServerIfNeeded", (serverName = "Main") => {
 });
 
 beforeEach(() => {
+    cy.document().then((doc) => {
+        doc.documentElement.setAttribute("data-cypress", "true");
+    });
     installGraphQLMock();
     installMediaUploadMock();
     resetMediaUploadMock();
@@ -90,6 +93,9 @@ beforeEach(() => {
 });
 
 afterEach(function (this: Mocha.Context) {
+    cy.document().then((doc) => {
+        doc.documentElement.removeAttribute("data-cypress");
+    });
     cy.resetQL();
     cy.screenshot(buildScreenshotName(this.currentTest), {
         capture: "fullPage",

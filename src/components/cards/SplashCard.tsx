@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Carousel, Flex, Grid, Spin } from "antd";
 
+import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
+
 import type { SplashCardProps } from "./types";
 
 export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<TItem>) => {
@@ -14,9 +16,9 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                 {props.items.length === 0 ? null : !screens.md ? (
                     <Flex vertical gap={12} className="SplashEntityCard__stack">
                         {props.items.slice(0, 3).map((item) => (
-                            <div key={item.id} className="SplashEntityCard__stackItem">
+                            <AnimatedIn key={item.id} className="SplashEntityCard__stackItem">
                                 {props.renderItem(item)}
-                            </div>
+                            </AnimatedIn>
                         ))}
                     </Flex>
                 ) : (
@@ -48,9 +50,9 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                         ]}
                     >
                         {props.items.map((item) => (
-                            <div key={item.id} className="SplashEntityCard__carouselSlide">
+                            <AnimatedIn key={item.id} className="SplashEntityCard__carouselSlide">
                                 {props.renderItem(item)}
-                            </div>
+                            </AnimatedIn>
                         ))}
                     </Carousel>
                 )}

@@ -37,6 +37,7 @@ describe("lists", () => {
         waitForPageShell();
         cy.contains("h2", jobsGoal.title, { timeout: 20000 }).should("be.visible");
         cy.get(".JobList__body").should("be.visible").contains("Coordinate shipping and fulfilment");
+        cy.get(".JobList__body").closest(".AnimatedIn").should("have.css", "opacity", "1");
         cy.get(".LikeButton").should("exist");
         screenshotStep("list-Jobs-mobile");
     });

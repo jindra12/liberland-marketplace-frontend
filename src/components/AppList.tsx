@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, Flex, Grid, List, Spin, Typography } from "antd";
 
 import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton";
+import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
 import { Like } from "./shared/Like/Like";
 import type { DislikeMutation, LikeMutation } from "./shared/Like/types";
 
@@ -117,12 +118,14 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                                 extra={props.renderItem["extra"]?.(item)}
                                 actions={wrappedActions ? [wrappedActions] : undefined}
                             >
-                                <List.Item.Meta
-                                    title={props.renderItem["title"]?.(item)}
-                                    description={props.renderItem["description"]?.(item)}
-                                    avatar={props.renderItem["avatar"]?.(item)}
-                                />
-                                {props.renderItem["body"]?.(item)}
+                                <AnimatedIn className="AppList__itemReveal">
+                                    <List.Item.Meta
+                                        title={props.renderItem["title"]?.(item)}
+                                        description={props.renderItem["description"]?.(item)}
+                                        avatar={props.renderItem["avatar"]?.(item)}
+                                    />
+                                    {props.renderItem["body"]?.(item)}
+                                </AnimatedIn>
                             </List.Item>
                         );
                     })()

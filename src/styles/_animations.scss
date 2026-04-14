@@ -1,0 +1,24 @@
+.AnimatedIn {
+    opacity: var(--default-opacity, 0);
+    animation: AnimatedInFade 1s ease-out forwards;
+}
+
+html[data-cypress="true"] {
+    --default-opacity: 1;
+}
+
+html[data-cypress="true"] .AnimatedIn {
+    animation: none;
+}
+
+@keyframes AnimatedInFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .AnimatedIn {
+        opacity: 1;
+        animation: none;
+    }
+}
