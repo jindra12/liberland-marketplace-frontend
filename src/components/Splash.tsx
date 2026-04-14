@@ -1,12 +1,18 @@
 import * as React from "react";
 
 import { Flex, Typography } from "antd";
+import { useMediaQuery } from "usehooks-ts";
 
 import { RouteButton } from "./RouteButton";
 import { MarketAccordion } from "./splash/MarketAccordion";
+import { MarketAccordionMobile } from "./splash/MarketAccordionMobile";
 import { SyndicationSection } from "./splash/SyndicationSection";
 
 const Splash: React.FunctionComponent = () => {
+    const isMobile = useMediaQuery("(max-width: 767.98px)", {
+        initializeWithValue: true,
+    });
+
     return (
         <Flex vertical gap={24} className="SplashPage">
             <section className="SplashPage__hero">
@@ -31,11 +37,18 @@ const Splash: React.FunctionComponent = () => {
             </section>
 
             <Flex vertical gap={20} className="SplashPage__sections">
-                <div className="SplashPage__marketAccordion">
-                    <MarketAccordion />
-                </div>
-
-                <SyndicationSection />
+                {isMobile ? (
+                    <div className="SplashPage__marketAccordion SplashPage__marketAccordion--mobile">
+                        <MarketAccordionMobile />
+                    </div>
+                ) : (
+                    <>
+                        <div className="SplashPage__marketAccordion">
+                            <MarketAccordion />
+                        </div>
+                        <SyndicationSection />
+                    </>
+                )}
             </Flex>
         </Flex>
     );

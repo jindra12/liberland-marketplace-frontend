@@ -282,6 +282,12 @@ export const homepageQueries = () => {
     screenshotStep("homepage-queries-loaded");
 };
 
+export const homepageMobileQueries = () => {
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 3, page: 1 }, "Products", "Solar Widget", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 3, page: 1 }, "Jobs", "Dockmaster", 0);
+    screenshotStep("homepage-mobile-queries-loaded");
+};
+
 export const openDesktopMenu = () => {
     cy.get('button[aria-label="Open menu"]').click();
 };

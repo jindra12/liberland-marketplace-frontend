@@ -1,20 +1,24 @@
 import * as React from "react";
 
-import { Carousel, Grid, Spin, Typography } from "antd";
+import { Carousel, Flex, Grid, Spin } from "antd";
 
 import type { SplashCardProps } from "./types";
 
 export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<TItem>) => {
     const screens = Grid.useBreakpoint();
-    const slidesToShow = screens.xl ? 3 : screens.md ? 2 : 1.15;
+    const slidesToShow = screens.xl ? 3 : 2;
 
     return (
         <div className={`SplashEntityCard ${props.className}`}>
             <Spin spinning={Boolean(props.loading)} className="SplashEntityCard__spin">
-                {props.items.length === 0 ? (
-                    <Typography.Text className="SplashEntityCard__empty">
-                        {props.emptyText ?? "Coming soon!"}
-                    </Typography.Text>
+                {props.items.length === 0 ? null : !screens.md ? (
+                    <Flex vertical gap={12} className="SplashEntityCard__stack">
+                        {props.items.slice(0, 3).map((item) => (
+                            <div key={item.id} className="SplashEntityCard__stackItem">
+                                {props.renderItem(item)}
+                            </div>
+                        ))}
+                    </Flex>
                 ) : (
                     <Carousel
                         dots={false}

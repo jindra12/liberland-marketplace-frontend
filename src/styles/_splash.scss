@@ -386,7 +386,7 @@
 .MarketAccordion__title.ant-typography {
     margin: 0 !important;
     color: inherit;
-    font-size: 28px !important;
+    font-size: 36px !important;
     line-height: 1 !important;
 }
 
@@ -500,7 +500,7 @@
 
 .MarketAccordion__header {
     min-width: 0;
-    margin-bottom: 18px;
+    margin-bottom: 40px;
 }
 
 .SplashPage__tribesSection {
@@ -563,6 +563,14 @@
 .SplashEntityCard__carouselSlide {
     height: 100%;
     padding-inline: 8px;
+}
+
+.SplashEntityCard__stack {
+    width: 100%;
+}
+
+.SplashEntityCard__stackItem {
+    width: 100%;
 }
 
 .SplashEntityCard {
@@ -655,7 +663,7 @@
 @include xl-min {
     .IdentityMarketAccordion__title.ant-typography,
     .MarketAccordion__title.ant-typography {
-        font-size: 26px !important;
+        font-size: 34px !important;
     }
 
     .SplashEntityCard__itemCard .ant-card-body {
@@ -691,7 +699,7 @@
 @include md-min {
     .IdentityMarketAccordion__title.ant-typography,
     .MarketAccordion__title.ant-typography {
-        font-size: 24px !important;
+        font-size: 30px !important;
     }
 
     .SplashEntityCard__itemCard .ant-card-body {

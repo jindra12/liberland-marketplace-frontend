@@ -22,6 +22,5 @@ export type SplashCardProps<TItem extends { id: string }> = {
     className: string;
     items: TItem[];
     loading?: boolean;
-    emptyText?: string;
     renderItem: (item: TItem) => React.ReactNode;
 };

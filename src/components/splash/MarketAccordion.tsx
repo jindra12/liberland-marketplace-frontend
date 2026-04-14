@@ -88,12 +88,12 @@ export const MarketAccordion: React.FunctionComponent = () => {
     ];
 
     return (
-        <Flex vertical gap="32px" className="MarketAccordion">
+        <Flex vertical gap="144px" className="MarketAccordion">
             {items.map((item) => (
                 <section key={item.key} className="MarketAccordion__section">
-                    <Flex vertical gap={12} className="MarketAccordion__header">
+                    <Flex vertical gap={24} className="MarketAccordion__header">
                         <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                            <Typography.Title level={3} className="MarketAccordion__title">
+                            <Typography.Title level={2} className="MarketAccordion__title">
                                 {item.title}
                             </Typography.Title>
                         </Link>
