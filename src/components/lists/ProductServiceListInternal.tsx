@@ -126,9 +126,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         <Tag color="success" icon={<DollarOutlined />}>
                                             {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                         </Tag>
-                                    )}
+                                )}
                                 <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
+                            ) : null}
                             <ListShareDetailButtons
                                 compact
                                 detailPath={detailHref}
@@ -142,9 +145,6 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     isSubscribed: product.isSubscribed,
                                 }}
                             />
-                            {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
-                            ) : null}
                         </Flex>
                     ) : (
                         <Flex

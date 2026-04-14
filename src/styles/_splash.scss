@@ -357,41 +357,6 @@
 .IdentityMarketAccordion,
 .MarketAccordion {
     width: 100%;
-
-    .ant-collapse-item {
-        border: 0;
-        border-radius: 24px;
-        overflow: hidden;
-        background: linear-gradient(180deg, rgba(6, 20, 35, 0.94), rgba(4, 16, 29, 0.92));
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    .ant-collapse-item + .ant-collapse-item {
-        margin-top: 18px;
-    }
-
-    .ant-collapse-header {
-        align-items: center !important;
-        padding: 18px 20px !important;
-        min-height: 92px;
-        background: rgba(8, 25, 39, 0.72);
-        box-shadow: inset 0 -1px 0 rgba(28, 61, 86, 0.34);
-    }
-
-    .ant-collapse-content {
-        border-top: 0;
-        background: transparent;
-    }
-
-    .ant-collapse-content-box {
-        padding: 18px 20px 20px !important;
-    }
-
-    .ant-collapse-expand-icon {
-        align-self: center;
-        color: rgba(188, 217, 203, 0.82);
-        font-size: 18px;
-    }
 }
 
 .IdentityMarketAccordion__label,
@@ -401,15 +366,109 @@
 
 .IdentityMarketAccordion__titleLink,
 .MarketAccordion__titleLink {
+    display: inline-flex;
+    width: fit-content;
     color: inherit;
+    text-decoration: none;
+    transition:
+        transform 0.22s ease,
+        text-shadow 0.22s ease,
+        color 0.22s ease;
+
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
 }
 
 .IdentityMarketAccordion__title.ant-typography,
 .MarketAccordion__title.ant-typography {
     margin: 0 !important;
-    color: #eef8f3;
-    font-size: 24px !important;
+    color: inherit;
+    font-size: 28px !important;
     line-height: 1 !important;
+}
+
+.MarketAccordion__titleLink--products,
+.MarketAccordion__titleLink--jobs,
+.MarketAccordion__titleLink--companies,
+.MarketAccordion__titleLink--ventures,
+.MarketAccordion__titleLink--tribes,
+.SplashPage__tribesTitleLink {
+    text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
+}
+
+.MarketAccordion__titleLink--products {
+    color: #7ee3df;
+
+    &:hover,
+    &:focus-visible {
+        color: #b7faf6;
+        text-shadow:
+            0 0 10px rgba(126, 227, 223, 0.5),
+            0 0 24px rgba(126, 227, 223, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--jobs {
+    color: #79e6b1;
+
+    &:hover,
+    &:focus-visible {
+        color: #bbffd8;
+        text-shadow:
+            0 0 10px rgba(121, 230, 177, 0.48),
+            0 0 24px rgba(121, 230, 177, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--companies {
+    color: #8ab8ff;
+
+    &:hover,
+    &:focus-visible {
+        color: #d0e2ff;
+        text-shadow:
+            0 0 10px rgba(138, 184, 255, 0.5),
+            0 0 24px rgba(138, 184, 255, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--ventures {
+    color: #ffd166;
+
+    &:hover,
+    &:focus-visible {
+        color: #ffe9b3;
+        text-shadow:
+            0 0 10px rgba(255, 209, 102, 0.52),
+            0 0 24px rgba(255, 209, 102, 0.24);
+    }
+}
+
+.SplashPage__tribesTitleLink {
+    color: #c49bff;
+
+    &:hover,
+    &:focus-visible {
+        color: #ecdcff;
+        text-shadow:
+            0 0 10px rgba(196, 155, 255, 0.5),
+            0 0 24px rgba(196, 155, 255, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--tribes {
+    color: #c49bff;
+
+    &:hover,
+    &:focus-visible {
+        color: #ecdcff;
+        text-shadow:
+            0 0 10px rgba(196, 155, 255, 0.5),
+            0 0 24px rgba(196, 155, 255, 0.24);
+    }
 }
 
 .IdentityMarketAccordion__identityLink {
@@ -435,6 +494,77 @@
     color: inherit;
 }
 
+.MarketAccordion__section {
+    width: 100%;
+}
+
+.MarketAccordion__header {
+    min-width: 0;
+    margin-bottom: 18px;
+}
+
+.SplashPage__tribesSection {
+    padding: 28px;
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
+    box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(147, 214, 255, 0.06);
+}
+
+.SplashPage__tribesHeader {
+    margin-bottom: 18px;
+}
+
+.SplashPage__tribesEyebrow {
+    color: #c49bff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.SplashPage__tribesTitle {
+    margin: 0 !important;
+    color: #eef8f3 !important;
+    line-height: 1.02 !important;
+}
+
+.SplashPage__tribesDescription {
+    margin: 0 !important;
+    color: rgba(188, 217, 203, 0.82);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.SplashPage__tribesMeta {
+    color: rgba(188, 217, 203, 0.76);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.SplashEntityCard__carousel {
+    width: 100%;
+
+    .slick-list {
+        overflow: hidden;
+    }
+
+    .slick-slide {
+        height: auto;
+    }
+
+    .slick-slide > div {
+        height: 100%;
+    }
+}
+
+.SplashEntityCard__carouselSlide {
+    height: 100%;
+    padding-inline: 8px;
+}
+
 .SplashEntityCard {
     width: 100%;
 }
@@ -448,20 +578,6 @@
     padding: 16px 4px;
     color: rgba(188, 217, 203, 0.72);
     font-weight: 700;
-}
-
-.SplashEntityCard__strip {
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    scroll-snap-type: x proximity;
-    scrollbar-width: thin;
-}
-
-.SplashEntityCard__stripItem {
-    flex: 0 0 calc((100% - 32px) / 3);
-    min-width: 0;
-    scroll-snap-align: start;
 }
 
 .SplashEntityCard__itemCard.ant-card {
@@ -537,19 +653,9 @@
 }
 
 @include xl-min {
-    .IdentityMarketAccordion .ant-collapse-header,
-    .MarketAccordion .ant-collapse-header {
-        min-height: 88px;
-        padding: 16px 18px !important;
-    }
-
     .IdentityMarketAccordion__title.ant-typography,
     .MarketAccordion__title.ant-typography {
-        font-size: 22px !important;
-    }
-
-    .SplashEntityCard__stripItem {
-        flex-basis: calc(82% - 2px);
+        font-size: 26px !important;
     }
 
     .SplashEntityCard__itemCard .ant-card-body {
@@ -573,25 +679,19 @@
     margin-top: 20px;
 }
 
+.SplashPage__tribesCarousel {
+    margin-top: 20px;
+}
+
 .SplashPage__marketNote.ant-alert {
     border: 0;
     background: linear-gradient(180deg, rgba(8, 25, 39, 0.82), rgba(5, 18, 31, 0.82));
 }
 
 @include md-min {
-    .IdentityMarketAccordion .ant-collapse-header,
-    .MarketAccordion .ant-collapse-header {
-        min-height: 84px;
-        padding: 14px 16px !important;
-    }
-
     .IdentityMarketAccordion__title.ant-typography,
     .MarketAccordion__title.ant-typography {
-        font-size: 21px !important;
-    }
-
-    .SplashEntityCard__stripItem {
-        flex-basis: calc(88% - 2px);
+        font-size: 24px !important;
     }
 
     .SplashEntityCard__itemCard .ant-card-body {
@@ -614,6 +714,11 @@
         }
 
         &__syndicationSection {
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        &__tribesSection {
             padding: 20px;
             border-radius: 24px;
         }
@@ -651,6 +756,10 @@
     }
 
     .SplashPage__syndicationCardTitle {
+        font-size: 20px !important;
+    }
+
+    .SplashPage__tribesTitle {
         font-size: 20px !important;
     }
 }

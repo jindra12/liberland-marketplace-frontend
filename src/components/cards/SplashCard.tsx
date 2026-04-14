@@ -1,10 +1,13 @@
 import * as React from "react";
 
-import { Flex, Spin, Typography } from "antd";
+import { Carousel, Grid, Spin, Typography } from "antd";
 
 import type { SplashCardProps } from "./types";
 
 export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<TItem>) => {
+    const screens = Grid.useBreakpoint();
+    const slidesToShow = screens.xl ? 3 : screens.md ? 2 : 1.15;
+
     return (
         <div className={`SplashEntityCard ${props.className}`}>
             <Spin spinning={Boolean(props.loading)} className="SplashEntityCard__spin">
@@ -13,13 +16,39 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                         {props.emptyText ?? "Coming soon!"}
                     </Typography.Text>
                 ) : (
-                    <Flex gap="16px" wrap={false} className="SplashEntityCard__strip">
+                    <Carousel
+                        dots={false}
+                        arrows={screens.md}
+                        infinite={false}
+                        draggable
+                        slidesToShow={slidesToShow}
+                        slidesToScroll={1}
+                        className="SplashEntityCard__carousel"
+                        responsive={[
+                            {
+                                breakpoint: 575,
+                                settings: {
+                                    slidesToShow: 1.15,
+                                    slidesToScroll: 1,
+                                    arrows: false,
+                                },
+                            },
+                            {
+                                breakpoint: 991,
+                                settings: {
+                                    slidesToShow: 2,
+                                    slidesToScroll: 1,
+                                    arrows: true,
+                                },
+                            },
+                        ]}
+                    >
                         {props.items.map((item) => (
-                            <div key={item.id} className="SplashEntityCard__stripItem">
+                            <div key={item.id} className="SplashEntityCard__carouselSlide">
                                 {props.renderItem(item)}
                             </div>
                         ))}
-                    </Flex>
+                    </Carousel>
                 )}
             </Spin>
         </div>

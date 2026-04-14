@@ -4,6 +4,7 @@ query ListIdentities($page: Int = 1, $limit: Int = 20) {
             id
             isSubscribed
             serverURL
+            hasLiked
             name
             description
             website

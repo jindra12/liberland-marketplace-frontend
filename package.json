@@ -80,6 +80,8 @@
         "test:ct:like:headed": "cypress run --component --browser electron --headed --spec cypress/component/Like.cy.tsx",
         "test:ct:search": "cypress run --component --browser electron --spec cypress/component/Search.cy.tsx",
         "test:ct:search:headed": "cypress run --component --browser electron --headed --spec cypress/component/Search.cy.tsx",
+        "test:ct:homepage": "cypress run --component --browser electron --spec cypress/component/Homepage.cy.tsx",
+        "test:ct:homepage:headed": "cypress run --component --browser electron --headed --spec cypress/component/Homepage.cy.tsx",
         "test:ct:profile": "cypress run --component --browser electron --spec cypress/component/Profile.cy.tsx",
         "test:ct:profile:headed": "cypress run --component --browser electron --headed --spec cypress/component/Profile.cy.tsx",
         "test:ct:company": "cypress run --component --browser electron --spec cypress/component/CompanyCreateEdit.cy.tsx",

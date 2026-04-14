@@ -36,7 +36,7 @@ export const SplashCardItem: React.FunctionComponent<SplashCardItemProps> = (pro
             <Flex
                 vertical={!md}
                 justify={md ? "flex-end" : undefined}
-                align={md ? "center" : "flex-end"}
+                align={md ? "center" : "flex-start"}
                 gap="12px"
                 className={`SplashEntityCard__actions${md ? "" : " SplashEntityCard__actions--stacked"}`}
             >

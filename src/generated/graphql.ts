@@ -59470,7 +59470,7 @@ export type ListIdentitiesQueryVariables = Exact<{
 }>;
 
 
-export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, likeCount?: number | null, itemCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListIdentitiesQuery = { __typename?: 'Query', Identities?: { __typename?: 'Identities', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, hasLiked?: boolean | null, name: string, description?: string | null, website?: string | null, likeCount?: number | null, itemCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchIdentitiesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -61490,6 +61490,7 @@ export const ListIdentitiesDocument = `
       id
       isSubscribed
       serverURL
+      hasLiked
       name
       description
       website

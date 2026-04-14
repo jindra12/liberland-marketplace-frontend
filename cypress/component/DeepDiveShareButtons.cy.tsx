@@ -14,6 +14,7 @@ describe("share buttons", () => {
         homepageQueries();
 
         cy.get(".MarketAccordion .NativeShareButton").its("length").should("be.greaterThan", 0);
+        cy.get(".SplashPage__tribesSection .NativeShareButton").its("length").should("be.greaterThan", 0);
         cy.get(".SplashPage__syndicationCardActions .NativeShareButton").its("length").should("be.greaterThan", 0);
 
         mountMainRoute("/companies");

@@ -105,7 +105,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                                 <Flex
                                     vertical={!md}
                                     justify={md ? "flex-end" : undefined}
-                                    align={md ? "center" : "flex-end"}
+                                    align={md ? "center" : "flex-start"}
                                     gap="12px"
                                     className={`AppList__actions${md ? "" : " AppList__actions--stacked"}`}
                                 >
