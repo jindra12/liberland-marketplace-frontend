@@ -72,11 +72,6 @@
     max-width: 100%;
 }
 
-.AddToCartButton__compact--noBuyNow.ant-space-compact {
-    width: fit-content;
-    max-width: 100%;
-}
-
 .AddToCartButton__compact .ant-input-number,
 .AddToCartButton__compact .ant-btn {
     border: 0 !important;
@@ -149,10 +144,6 @@
 
 .AddToCartButton__compact .AddToCartButton__submit {
     padding-inline: 0;
-}
-
-.AddToCartButton__compact--noBuyNow .AddToCartButton__buyNow {
-    display: none;
 }
 
 .CartPage {

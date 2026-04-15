@@ -1,3 +1,5 @@
+import { UserManager } from "oidc-client-ts";
+
 import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
@@ -33,7 +35,9 @@ const openBuyNow = () => {
 };
 
 describe("buy now", () => {
-    it("does not show Buy now to anonymous users", () => {
+    it("shows Buy now to anonymous users and redirects them to login", () => {
+        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+
         mountAnonymousRoute(guestProductRoute, [GUEST_SERVER_URL]);
         waitForDetailQuery(
             GUEST_SERVER_URL,
@@ -45,7 +49,10 @@ describe("buy now", () => {
         );
 
         cy.contains("h1", "Harbor Light").should("be.visible");
-        cy.get(".AddToCartButton__buyNow").should("not.exist");
+        cy.get(".AddToCartButton__buyNow").should("be.visible");
+
+        cy.contains(".AddToCartButton__buyNow", "Buy now").click();
+        cy.wrap(signinRedirect).should("have.been.calledOnce");
     });
 
     it("does not show Buy now on non-orderable products", () => {

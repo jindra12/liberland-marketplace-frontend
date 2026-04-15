@@ -49,13 +49,12 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
     const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(props.me), [props.me]);
-    const canBuyNow = props.isAuthenticated === true;
+    const candidateProfileAddressesForBuyNow = props.isAuthenticated === true ? candidateProfileAddresses : [];
     const usesSplitLayout = !hasItemInCart;
     const compactClassName = [
         "AddToCartButton__compact",
         usesSplitLayout ? "AddToCartButton__compact--split" : "",
         props.block ? "AddToCartButton__compact--block" : "",
-        !canBuyNow ? "AddToCartButton__compact--noBuyNow" : "",
         hasItemInCart ? "AddToCartButton__compact--hasRemove" : "",
     ]
         .filter(Boolean)
@@ -78,7 +77,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                 },
             }}
         >
-            <Space.Compact block={props.block && !canBuyNow} className={compactClassName}>
+            <Space.Compact block={props.block} className={compactClassName}>
                 <AddToCartIncrementForm
                     form={form}
                     productId={props.productId}
@@ -88,18 +87,16 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                     size={size}
                     variantId={props.variantId}
                 />
-                {canBuyNow && (
-                    <BuyNowButton
-                        block={props.block}
-                        candidateProfileAddresses={candidateProfileAddresses}
-                        disabled={isMutating}
-                        productId={props.productId}
-                        quantity={inputQuantity}
-                        serverURL={props.serverURL}
-                        size={size}
-                        variantId={props.variantId}
-                    />
-                )}
+                <BuyNowButton
+                    block={props.block}
+                    candidateProfileAddresses={candidateProfileAddressesForBuyNow}
+                    disabled={isMutating}
+                    productId={props.productId}
+                    quantity={inputQuantity}
+                    serverURL={props.serverURL}
+                    size={size}
+                    variantId={props.variantId}
+                />
             </Space.Compact>
         </ConfigProvider>
     );
