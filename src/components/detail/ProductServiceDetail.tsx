@@ -7,7 +7,6 @@ import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } 
 import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
-import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -15,14 +14,12 @@ import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
-import { DetailShareSection } from "../share/DetailShareSection";
-import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 
-import { DetailBackButton } from "./DetailBackButton";
+import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
@@ -80,10 +77,25 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 ) : null;
 
                 return (
-                    <AnimatedIn>
-                        <Flex flex={1} vertical gap={12} className="EntityDetail ProductDetail">
-                            <DetailPageTracker serverUrl={product?.serverURL} />
-                            <DetailBackButton to="/products-services" label="Back to products / services" />
+                    <CommonDetail
+                        className="ProductDetail"
+                        serverURL={product?.serverURL}
+                        backTo="/products-services"
+                        backLabel="Back to products / services"
+                        shareLabel="Share this product"
+                        shareTitle={shareTitle}
+                        shareText={shareText}
+                        subscriptionTarget={
+                            product
+                                ? {
+                                      collection: "products",
+                                      targetID: product.id,
+                                      serverURL: product.serverURL,
+                                      isSubscribed: product.isSubscribed,
+                                  }
+                                : undefined
+                        }
+                        header={
                             <Flex gap="32px" align="center" wrap className="EntityDetail__header">
                                 {imageSrc && <Avatar shape="circle" size={md ? 120 : 72} src={imageSrc} />}
                                 <Flex flex={1} vertical className="EntityDetail__headerBody">
@@ -131,74 +143,63 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     )}
                                 </Flex>
                             </Flex>
-                            {isOwner && (
-                                <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
-                                    Edit
-                                </RouteButton>
-                            )}
-                            <Divider />
-                            <Flex gap="32px" vertical>
-                                <Markdown>{product?.description}</Markdown>
-                                <IdentityGroups
-                                    allowedIdentities={allowedIdentities}
-                                    disallowedIdentities={disallowedIdentities}
-                                />
-                            </Flex>
-                            {properties.length > 0 && (
-                                <>
-                                    <Divider />
-                                    <Typography.Title level={4}>Properties</Typography.Title>
-                                    <Descriptions bordered column={1} size="small">
-                                        {properties.map((property, index) => (
-                                            <Descriptions.Item
-                                                key={property?.id ?? `${property?.key ?? "property"}-${index}`}
-                                                label={property?.key || "Property"}
-                                            >
-                                                {property?.value}
-                                            </Descriptions.Item>
-                                        ))}
-                                    </Descriptions>
-                                </>
-                            )}
-                            {(orderLink || product?.company?.id) && (
-                                <>
-                                    <Divider />
-                                    <Flex wrap gap="12px">
-                                        {orderLink && (
-                                            <Button type="primary" href={orderLink}>
-                                                Visit Website
-                                            </Button>
-                                        )}
-                                        {product?.company?.id && (
-                                            <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
-                                        )}
-                                    </Flex>
-                                </>
-                            )}
-                            <Divider />
-                            <DetailShareSection
-                                label="Share this product"
-                                title={shareTitle}
-                                text={shareText}
-                                subscriptionTarget={
-                                    product
-                                        ? {
-                                              collection: "products",
-                                              targetID: product.id,
-                                              serverURL: product.serverURL,
-                                              isSubscribed: product.isSubscribed,
-                                          }
-                                        : undefined
-                                }
-                            />
-                            <Divider />
+                        }
+                        beforeShare={
+                            <>
+                                {isOwner && (
+                                    <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
+                                        Edit
+                                    </RouteButton>
+                                )}
+                                <Divider />
+                                <Flex gap="32px" vertical>
+                                    <Markdown>{product?.description}</Markdown>
+                                    <IdentityGroups
+                                        allowedIdentities={allowedIdentities}
+                                        disallowedIdentities={disallowedIdentities}
+                                    />
+                                </Flex>
+                                {properties.length > 0 && (
+                                    <>
+                                        <Divider />
+                                        <Typography.Title level={4}>Properties</Typography.Title>
+                                        <Descriptions bordered column={1} size="small">
+                                            {properties.map((property, index) => (
+                                                <Descriptions.Item
+                                                    key={property?.id ?? `${property?.key ?? "property"}-${index}`}
+                                                    label={property?.key || "Property"}
+                                                >
+                                                    {property?.value}
+                                                </Descriptions.Item>
+                                            ))}
+                                        </Descriptions>
+                                    </>
+                                )}
+                                {(orderLink || product?.company?.id) && (
+                                    <>
+                                        <Divider />
+                                        <Flex wrap gap="12px">
+                                            {orderLink && (
+                                                <Button type="primary" href={orderLink}>
+                                                    Visit Website
+                                                </Button>
+                                            )}
+                                            {product?.company?.id && (
+                                                <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                            )}
+                                        </Flex>
+                                    </>
+                                )}
+                            </>
+                        }
+                        afterShare={
                             <EntityCommentsSection
                                 targetId={id!}
                                 relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
                                 serverURL={product?.serverURL}
                             />
-                        </Flex>
-                    </AnimatedIn>
+                        }
+                    />
                 );
             }}
         </Loader>
