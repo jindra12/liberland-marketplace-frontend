@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Flex } from "antd";
+import { Avatar, Flex } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -76,6 +76,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                 title={
                     submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Jobs"
                 }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -88,15 +89,9 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                 renderItem={{
                     title: (job) => (
                         <Flex justify="space-between" align="center" wrap>
-                            {props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(job)}>
-                                    {job.title}
-                                </Button>
-                            ) : (
-                                <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
-                                    {job.title}
-                                </Link>
-                            )}
+                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                {job.title}
+                            </Link>
                             {job.company?.identity?.name && (
                                 <IdentityTagLink identity={job.company.identity} color="success" />
                             )}
@@ -105,27 +100,15 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                     avatar: (job) => {
                         const imageSrc = getImage(job) || getImage(job.company);
                         return imageSrc ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(job)}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={imageSrc}
-                                        alt={job.title || ""}
-                                        className="EntityList__avatar"
-                                    />
-                                </Button>
-                            ) : (
-                                <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={imageSrc}
-                                        alt={job.title || ""}
-                                        className="EntityList__avatar"
-                                    />
-                                </Link>
-                            )
+                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={imageSrc}
+                                    alt={job.title || ""}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
                         ) : undefined;
                     },
                     body: (job) => {

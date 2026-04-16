@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Flex } from "antd";
+import { Avatar, Flex } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -76,6 +76,7 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
                         ? `Search results for "${submittedSearchValue}"`
                         : "Tribes"
                 }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -88,28 +89,16 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
                 renderItem={{
                     title: (identity) => (
                         <Flex align="center" gap={12}>
-                            {props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(identity)}>
-                                    {identity.name}
-                                </Button>
-                            ) : (
-                                <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
-                                    {identity.name}
-                                </Link>
-                            )}
+                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                {identity.name}
+                            </Link>
                         </Flex>
                     ),
                     avatar: (identity) =>
                         identity.image?.url ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(identity)}>
-                                    <Avatar src={getImage(identity)} size={88} />
-                                </Button>
-                            ) : (
-                                <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
-                                    <Avatar src={getImage(identity)} size={88} />
-                                </Link>
-                            )
+                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                <Avatar src={getImage(identity)} size={88} />
+                            </Link>
                         ) : undefined,
                     description: (identity) => (
                         <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Flex, Tag } from "antd";
+import { Avatar, Flex, Tag } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -78,6 +78,7 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                         ? `Search results for "${submittedSearchValue}"`
                         : "Products / Services"
                 }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -90,15 +91,9 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 renderItem={{
                     title: (product) => (
                         <Flex justify="space-between" align="center" wrap>
-                            {props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(product)}>
-                                    {product.name}
-                                </Button>
-                            ) : (
-                                <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
-                                    {product.name}
-                                </Link>
-                            )}
+                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                                {product.name}
+                            </Link>
                             {product.company?.identity?.name && (
                                 <IdentityTagLink identity={product.company.identity} color="success" />
                             )}
@@ -106,25 +101,14 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                     ),
                     avatar: (product) =>
                         product.image?.url ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(product)}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(product) || getImage(product.company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Button>
-                            ) : (
-                                <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(product) || getImage(product.company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Link>
-                            )
+                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(product) || getImage(product.company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
                         ) : undefined,
                     body: (product) => (
                         <div className="EntityList__body ProductList__body">

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Flex, Tag, Typography } from "antd";
+import { Avatar, Flex, Tag, Typography } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -71,6 +71,7 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
         >
             <SearchResultsList
                 title={submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Posts"}
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -87,29 +88,17 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                 renderItem={{
                     title: (post) => (
                         <Flex justify="space-between" align="center" wrap>
-                            {props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(post)}>
-                                    {post.title}
-                                </Button>
-                            ) : (
-                                <Link to={`/posts/${post.id}`} onClick={props.onClose}>
-                                    {post.title}
-                                </Link>
-                            )}
+                            <Link to={`/posts/${post.id}`} onClick={props.onClose}>
+                                {post.title}
+                            </Link>
                         </Flex>
                     ),
                     avatar: (post) => {
                         const imageSrc = getPostHeroImageUrl(post);
                         return imageSrc ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(post)}>
-                                    <Avatar shape="square" size={88} src={imageSrc} className="EntityList__avatar" />
-                                </Button>
-                            ) : (
-                                <Link to={`/posts/${post.id}`} onClick={props.onClose}>
-                                    <Avatar shape="square" size={88} src={imageSrc} className="EntityList__avatar" />
-                                </Link>
-                            )
+                            <Link to={`/posts/${post.id}`} onClick={props.onClose}>
+                                <Avatar shape="square" size={88} src={imageSrc} className="EntityList__avatar" />
+                            </Link>
                         ) : undefined;
                     },
                     description: (post) => (

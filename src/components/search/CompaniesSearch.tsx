@@ -3,7 +3,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
-import { Button } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -79,6 +78,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                         ? `Search results for "${submittedSearchValue}"`
                         : "Companies"
                 }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -91,15 +91,9 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                 renderItem={{
                     title: (company) => (
                         <Flex justify="space-between" align="center" wrap>
-                            {props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(company)}>
-                                    {company.name}
-                                </Button>
-                            ) : (
-                                <Link to={`/companies/${company.id}`} onClick={props.onClose}>
-                                    {company.name}
-                                </Link>
-                            )}
+                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                                {company.name}
+                            </Link>
                             {company.identity?.name && (
                                 <IdentityTagLink identity={company.identity} color="success" />
                             )}
@@ -107,25 +101,14 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                     ),
                     avatar: (company) =>
                         company.image?.url ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(company)}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Button>
-                            ) : (
-                                <Link to={`/companies/${company.id}`} onClick={props.onClose}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Link>
-                            )
+                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
                         ) : undefined,
                     body: (company) => (
                         <div className="EntityList__body CompanyList__body">

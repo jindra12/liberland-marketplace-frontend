@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Button, Flex, Tag } from "antd";
+import { Avatar, Flex, Tag } from "antd";
 
 import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -78,6 +78,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                         ? `Search results for "${submittedSearchValue}"`
                         : "Ventures"
                 }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
                 hasMore={hasMore}
@@ -91,15 +92,9 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     title: (startup) => (
                         <Flex justify="space-between" align="center" wrap>
                             <Flex align="center" gap={8}>
-                                {props.onSelect ? (
-                                    <Button type="link" onClick={() => handleSelect(startup)}>
-                                        {startup.title}
-                                    </Button>
-                                ) : (
-                                    <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
-                                        {startup.title}
-                                    </Link>
-                                )}
+                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                    {startup.title}
+                                </Link>
                             </Flex>
                             <Flex gap={4} wrap>
                                 <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -111,25 +106,14 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     ),
                     avatar: (startup) =>
                         startup.image?.url ? (
-                            props.onSelect ? (
-                                <Button type="link" onClick={() => handleSelect(startup)}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(startup) || getImage(startup?.company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Button>
-                            ) : (
-                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
-                                    <Avatar
-                                        shape="square"
-                                        size={80}
-                                        src={getImage(startup) || getImage(startup?.company)}
-                                        className="EntityList__avatar"
-                                    />
-                                </Link>
-                            )
+                            <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(startup) || getImage(startup?.company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
                         ) : undefined,
                     description: (startup) => (
                         <Flex gap={4} wrap className="StartupList__meta">
