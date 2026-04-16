@@ -19,6 +19,7 @@ import {
     normalizeCompanyData,
     normalizeJobData,
     normalizeOrderData,
+    normalizePostData,
     normalizeProductData,
     normalizeStartupData,
     normalizeUserData,
@@ -34,16 +35,20 @@ const matchesSearch = (value: string | undefined, term: string | undefined): boo
 };
 
 const resolveCollection = (items: MockNode[], args: { page?: number; limit?: number }): MockCollection => {
+    const limit = args.limit && args.limit > 0 ? args.limit : items.length > 0 ? items.length : 1;
+    const page = args.page && args.page > 0 ? args.page : 1;
+    const offset = (page - 1) * limit;
+
     return {
-        docs: items.slice(0, args.limit || items.length),
+        docs: items.slice(offset, offset + limit),
         totalDocs: items.length,
-        limit: args.limit || items.length,
-        totalPages: 1,
-        page: 1,
-        hasPrevPage: false,
-        hasNextPage: false,
-        prevPage: null,
-        nextPage: null,
+        limit,
+        totalPages: Math.max(1, Math.ceil(items.length / limit)),
+        page,
+        hasPrevPage: page > 1,
+        hasNextPage: page * limit < items.length,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page * limit < items.length ? page + 1 : null,
     };
 };
 
@@ -62,6 +67,10 @@ export const queryResolvers = {
     },
     Jobs: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
         const filtered = args.searchTerm ? activeFixtures.jobs.filter((job) => matchesSearch(job.title, args.searchTerm) || matchesSearch(job.description, args.searchTerm)) : activeFixtures.jobs;
+        return resolveCollection(filtered, args);
+    },
+    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
+        const filtered = args.searchTerm ? activeFixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm)) : activeFixtures.posts;
         return resolveCollection(filtered, args);
     },
     Products: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
@@ -91,6 +100,7 @@ export const queryResolvers = {
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
     Company: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.companies.find((item) => item.id === args.id) || activeFixtures.companies[0],
     Job: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.jobs.find((item) => item.id === args.id) || activeFixtures.jobs[0],
+    Post: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.posts.find((item) => item.id === args.id) || activeFixtures.posts[0],
     Product: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.products.find((item) => item.id === args.id) || activeFixtures.products[0],
     Startup: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.startups.find((item) => item.id === args.id) || activeFixtures.startups[0],
     Identity: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.identities.find((item) => item.id === args.id) || activeFixtures.identities[0],
@@ -148,6 +158,36 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         normalizeJobData(data);
         return updateNode(activeFixtures.jobs, args.id, data, "job");
+    },
+    createPost: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        normalizePostData(data);
+        if (data.serverURL === undefined) {
+            data.serverURL = activeFixtures.posts[0]?.serverURL;
+        }
+        if (data.hasLiked === undefined) {
+            data.hasLiked = false;
+        }
+        if (data.likeCount === undefined) {
+            data.likeCount = 0;
+        }
+        if (data.contentRankScore === undefined) {
+            data.contentRankScore = 0;
+        }
+        if (data.publishedAt === undefined && !args.draft) {
+            data.publishedAt = nowIso();
+        }
+
+        return createNode(activeFixtures.posts, "post", data, args.draft ? "draft" : "published");
+    },
+    deletePost: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.posts, args.id),
+    updatePost: (_parent: unknown, args: { id?: string; data?: Record<string, unknown>; draft?: boolean }): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        normalizePostData(data);
+        if (args.draft !== undefined && data._status === undefined && data.status === undefined) {
+            data._status = args.draft ? "draft" : "published";
+        }
+        return updateNode(activeFixtures.posts, args.id, data, "post");
     },
     createProduct: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
         const data = cloneValue(args.data ?? {});
@@ -293,6 +333,50 @@ export const mutationResolvers = {
         });
         mergeInto(updated, data);
         return updated;
+    },
+    setLikeState: (_parent: unknown, args: { collection?: string; id?: string; liked?: boolean }): MockNode => {
+        const collectionMap: Record<string, MockNode[] | undefined> = {
+            companies: activeFixtures.companies,
+            identities: activeFixtures.identities,
+            jobs: activeFixtures.jobs,
+            posts: activeFixtures.posts,
+            products: activeFixtures.products,
+            startups: activeFixtures.startups,
+        };
+        const items = collectionMap[args.collection || ""];
+        if (!items) {
+            return searchNode({
+                collection: args.collection,
+                hasLiked: args.liked,
+                id: args.id,
+                likeCount: 0,
+            });
+        }
+
+        const target = items.find((item) => item.id === args.id) || items[0];
+        if (!target) {
+            return searchNode({
+                collection: args.collection,
+                hasLiked: args.liked,
+                id: args.id,
+                likeCount: 0,
+            });
+        }
+
+        const liked = Boolean(args.liked);
+        const currentHasLiked = Boolean(target.hasLiked);
+        const currentLikeCount = typeof target.likeCount === "number" ? target.likeCount : 0;
+        const nextLikeCount = currentHasLiked === liked ? currentLikeCount : Math.max(0, currentLikeCount + (liked ? 1 : -1));
+        target.hasLiked = liked;
+        target.likeCount = nextLikeCount;
+        target.updatedAt = nowIso();
+
+        return searchNode({
+            collection: args.collection,
+            hasLiked: liked,
+            id: target.id,
+            likeCount: nextLikeCount,
+        });
     },
     trackAnalyticsEvent: (): MockNode => ({
         success: true,

@@ -730,6 +730,71 @@ export const startups = [
     }),
 ];
 
+export const posts = [
+    node({
+        id: "post-harbor-operations-digest",
+        title: "Harbor Operations Digest",
+        slug: "harbor-operations-digest",
+        description: "Weekly harbor operations update",
+        content: "Harbor operations improved this week with tighter handoffs and clearer status updates.",
+        serverURL: MAIN_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: true,
+        company: companies[0],
+        heroImage: image("post-harbor-operations-digest", "Harbor Operations Digest"),
+        meta: node({
+            title: "Harbor Operations Digest",
+            description: "Weekly harbor operations update",
+            image: image("post-harbor-operations-digest-meta", "Harbor Operations Digest meta"),
+        }),
+        categories: [node({ id: "category-announcements", title: "Announcements", slug: "announcements" })],
+        populatedAuthors: [
+            node({
+                id: identities[0].id,
+                nickname: identities[0].name,
+                image: identities[0].image,
+            }),
+        ],
+        hasLiked: true,
+        likeCount: 14,
+        publishedAt: "2025-03-01T09:00:00.000Z",
+        createdAt: "2025-02-28T09:00:00.000Z",
+        updatedAt: "2025-03-01T09:15:00.000Z",
+        contentRankScore: 200,
+    }),
+    node({
+        id: "post-reef-launch-notes",
+        title: "Reef Launch Notes",
+        slug: "reef-launch-notes",
+        description: "What shipped with the Reef Studio launch",
+        content: "Reef Studio launched with a cleaner product workflow, better visuals, and a shorter path to publishing.",
+        serverURL: MAIN_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: false,
+        company: companies[1],
+        heroImage: image("post-reef-launch-notes", "Reef Launch Notes"),
+        meta: node({
+            title: "Reef Launch Notes",
+            description: "What shipped with the Reef Studio launch",
+            image: image("post-reef-launch-notes-meta", "Reef Launch Notes meta"),
+        }),
+        categories: [node({ id: "category-updates", title: "Updates", slug: "updates" })],
+        populatedAuthors: [
+            node({
+                id: identities[1].id,
+                nickname: identities[1].name,
+                image: identities[1].image,
+            }),
+        ],
+        hasLiked: false,
+        likeCount: 8,
+        publishedAt: "2025-03-04T12:00:00.000Z",
+        createdAt: "2025-03-03T12:00:00.000Z",
+        updatedAt: "2025-03-04T12:05:00.000Z",
+        contentRankScore: 120,
+    }),
+];
+
 export const comments = [
     node({
         id: "comment-company-harbor-1",
@@ -1029,6 +1094,7 @@ export const mainFixtures: GraphQLFixtureBundle = {
     products,
     jobs,
     startups,
+    posts,
     comments,
     syndications,
     carts,

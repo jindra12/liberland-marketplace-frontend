@@ -171,6 +171,14 @@ export const searchResponseFor = (operationName: string | undefined, body: Graph
         return buildSearchCollection(docs, page, limit, filtered.length);
     }
 
+    if (operationName === "SearchPosts") {
+        const filtered = activeFixtures.posts.filter((post) => includes(post.title, term) || includes(post.content, term));
+        const docs = filtered
+            .slice(searchOffset, searchOffset + limit)
+            .map((post, index) => buildSearchDoc("posts", post, searchOffset + index));
+        return buildSearchCollection(docs, page, limit, filtered.length);
+    }
+
     if (operationName === "SearchIdentities") {
         const filtered = activeFixtures.identities.filter((identity) => includes(identity.name, term) || includes(identity.description, term));
         const docs = filtered

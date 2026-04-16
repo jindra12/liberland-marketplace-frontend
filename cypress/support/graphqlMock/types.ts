@@ -3,6 +3,7 @@ export type MockNode = {
     name?: string;
     title?: string;
     description?: string;
+    slug?: string;
     serverURL?: string;
     _status?: string;
     website?: string;
@@ -52,6 +53,8 @@ export type MockNode = {
     width?: number;
     height?: number;
     alt?: string;
+    publishedAt?: string;
+    contentRankScore?: number;
     isSubscribed?: boolean;
     isActive?: boolean;
     success?: boolean;
@@ -92,6 +95,8 @@ export type MockNode = {
     docs?: MockNode[];
     involvedUsers?: MockNode[];
     items?: MockNode[];
+    categories?: MockNode[];
+    populatedAuthors?: MockNode[];
     options?: MockNode[];
     properties?: MockNode[];
     transactions?: MockNode[];
@@ -100,6 +105,8 @@ export type MockNode = {
     variants?: MockCollection;
     wallets?: MockNode[];
     image?: MockNode | null;
+    heroImage?: MockNode | null;
+    meta?: MockNode | null;
     company?: MockNode | null;
     identity?: MockNode | null;
     createdBy?: MockNode | null;
@@ -138,6 +145,7 @@ export type GraphQLFixtureBundle = {
     products: MockNode[];
     jobs: MockNode[];
     startups: MockNode[];
+    posts: MockNode[];
     comments: MockNode[];
     syndications: MockNode[];
     carts: MockNode[];

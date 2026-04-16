@@ -110,6 +110,40 @@ const products = [
     }),
 ];
 
+const posts = [
+    node({
+        id: "guest-post-guest-market-notes",
+        title: "Guest Market Notes",
+        slug: "guest-market-notes",
+        description: "A small note from the guest server",
+        content: "Guest market notes focused on simpler publishing and a tighter product overview.",
+        serverURL: GUEST_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: false,
+        company: companies[0],
+        heroImage: image("guest-post-guest-market-notes", "Guest Market Notes"),
+        meta: node({
+            title: "Guest Market Notes",
+            description: "A small note from the guest server",
+            image: image("guest-post-guest-market-notes-meta", "Guest Market Notes meta"),
+        }),
+        categories: [node({ id: "guest-category-notes", title: "Notes", slug: "notes" })],
+        populatedAuthors: [
+            node({
+                id: identities[0].id,
+                nickname: identities[0].name,
+                image: identities[0].image,
+            }),
+        ],
+        hasLiked: false,
+        likeCount: 2,
+        publishedAt: "2025-03-07T09:00:00.000Z",
+        createdAt: "2025-03-06T09:00:00.000Z",
+        updatedAt: "2025-03-07T09:15:00.000Z",
+        contentRankScore: 60,
+    }),
+];
+
 const syndications = [
     node({
         id: "guest-syndication-main",
@@ -137,6 +171,7 @@ export const guestFixtures: GraphQLFixtureBundle = {
     products,
     jobs: [],
     startups: [],
+    posts,
     comments: [],
     syndications,
     carts: [],

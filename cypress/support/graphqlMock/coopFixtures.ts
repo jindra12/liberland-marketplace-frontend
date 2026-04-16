@@ -288,6 +288,71 @@ const startups = [
     }),
 ];
 
+const posts = [
+    node({
+        id: "coop-post-coop-logistics-roundup",
+        title: "Co-op Logistics Roundup",
+        slug: "coop-logistics-roundup",
+        description: "Weekly logistics changes from the co-op server",
+        content: "The co-op server shipped better handoffs, clearer routing, and a more visible publishing flow.",
+        serverURL: COOP_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: true,
+        company: companies[0],
+        heroImage: image("coop-post-coop-logistics-roundup", "Co-op Logistics Roundup"),
+        meta: node({
+            title: "Co-op Logistics Roundup",
+            description: "Weekly logistics changes from the co-op server",
+            image: image("coop-post-coop-logistics-roundup-meta", "Co-op Logistics Roundup meta"),
+        }),
+        categories: [node({ id: "coop-category-announcements", title: "Announcements", slug: "announcements" })],
+        populatedAuthors: [
+            node({
+                id: identities[0].id,
+                nickname: identities[0].name,
+                image: identities[0].image,
+            }),
+        ],
+        hasLiked: false,
+        likeCount: 9,
+        publishedAt: "2025-03-05T09:00:00.000Z",
+        createdAt: "2025-03-04T09:00:00.000Z",
+        updatedAt: "2025-03-05T09:15:00.000Z",
+        contentRankScore: 170,
+    }),
+    node({
+        id: "coop-post-field-notes",
+        title: "Field Notes",
+        slug: "field-notes",
+        description: "A lighter note from the field",
+        content: "Field notes focused on smaller operational improvements and a calmer publishing cadence.",
+        serverURL: COOP_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: false,
+        company: companies[1],
+        heroImage: image("coop-post-field-notes", "Field Notes"),
+        meta: node({
+            title: "Field Notes",
+            description: "A lighter note from the field",
+            image: image("coop-post-field-notes-meta", "Field Notes meta"),
+        }),
+        categories: [node({ id: "coop-category-field-notes", title: "Field Notes", slug: "field-notes" })],
+        populatedAuthors: [
+            node({
+                id: identities[1].id,
+                nickname: identities[1].name,
+                image: identities[1].image,
+            }),
+        ],
+        hasLiked: true,
+        likeCount: 4,
+        publishedAt: "2025-03-06T09:00:00.000Z",
+        createdAt: "2025-03-05T09:00:00.000Z",
+        updatedAt: "2025-03-06T09:15:00.000Z",
+        contentRankScore: 80,
+    }),
+];
+
 const comments = [
     node({
         id: "coop-comment-company-helix",
@@ -454,6 +519,7 @@ export const coopFixtures: GraphQLFixtureBundle = {
     products,
     jobs,
     startups,
+    posts,
     comments,
     syndications,
     carts,

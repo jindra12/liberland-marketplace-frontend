@@ -114,13 +114,16 @@ const JobDetail: React.FunctionComponent = () => {
                                 </Flex>
                             </>
                         }
-                        afterShare={
-                            <EntityCommentsSection
-                                targetId={id!}
-                                relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
-                                serverURL={job?.serverURL}
-                            />
-                        }
+                        sections={[{
+                            key: "comments",
+                            children: (
+                                <EntityCommentsSection
+                                    targetId={id!}
+                                    relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
+                                    serverURL={job?.serverURL}
+                                />
+                            )
+                        }]}
                     />
                 );
             }}

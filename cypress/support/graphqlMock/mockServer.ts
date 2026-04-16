@@ -27,6 +27,8 @@ const mockScalarMap = [
     "mutationCompanyUpdateInput",
     "mutationJobInput",
     "mutationJobUpdateInput",
+    "mutationPostInput",
+    "mutationPostUpdateInput",
     "mutationOrderInput",
     "mutationOrderUpdateInput",
     "mutationProductInput",

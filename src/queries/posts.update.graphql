@@ -26,19 +26,30 @@ mutation UpdatePost($id: String!, $data: mutationPostUpdateInput!, $draft: Boole
         mimeType
       }
     }
-    categories {
+    company {
       id
-      title
-      slug
-    }
-    authors {
-      id
+      serverURL
       name
-      email
-    }
-    populatedAuthors {
-      id
-      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
     }
     hasLiked
     likeCount

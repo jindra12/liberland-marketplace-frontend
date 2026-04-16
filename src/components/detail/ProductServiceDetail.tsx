@@ -192,13 +192,16 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 )}
                             </>
                         }
-                        afterShare={
-                            <EntityCommentsSection
-                                targetId={id!}
-                                relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                                serverURL={product?.serverURL}
-                            />
-                        }
+                        sections={[{
+                            key: "comments",
+                            children: (
+                                <EntityCommentsSection
+                                    targetId={id!}
+                                    relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                                    serverURL={product?.serverURL}
+                                />
+                            )
+                        }]}
                     />
                 );
             }}

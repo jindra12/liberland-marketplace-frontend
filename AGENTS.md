@@ -40,6 +40,7 @@ manager is `yarn`.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn codegen` requires the sibling backend dev server in `../liberland-marketplace` to be running on port `3001`; start it first and shut it down after codegen finishes.
+- Never hand-edit `src/generated/graphql.ts`; always regenerate it with `yarn codegen` when GraphQL documents or schema change. If codegen fails, stop and report the problem instead of patching the generated file.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 
 ## Architecture

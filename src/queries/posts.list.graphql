@@ -25,6 +25,31 @@ query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankS
           mimeType
         }
       }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
       categories {
         id
         title

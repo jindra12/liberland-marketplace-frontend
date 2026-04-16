@@ -127,6 +127,67 @@ export const normalizeStartupData = (data: Record<string, unknown>) => {
     }
 };
 
+export const normalizePostData = (data: Record<string, unknown>) => {
+    normalizeSharedRelations(data, "company");
+    if (typeof data.heroImage === "string") {
+        data.heroImage = createImageRef(data.heroImage);
+    }
+    if (isPlainObject(data.meta)) {
+        if (typeof data.meta.image === "string") {
+            data.meta.image = createImageRef(data.meta.image);
+        }
+        data.meta = searchNode({
+            title: data.meta.title,
+            description: data.meta.description,
+            image: data.meta.image,
+        });
+    }
+    if (Array.isArray(data.categories)) {
+        data.categories = data.categories
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: value,
+                        title: value,
+                        slug: value,
+                    });
+                }
+
+                const id = typeof value.id === "string" ? value.id : `post-category-${index + 1}`;
+                return searchNode({
+                    id,
+                    title: typeof value.title === "string" ? value.title : id,
+                    slug: typeof value.slug === "string" ? value.slug : id,
+                });
+            });
+    }
+    if (Array.isArray(data.populatedAuthors)) {
+        data.populatedAuthors = data.populatedAuthors
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: value,
+                        nickname: value,
+                        image: null,
+                    });
+                }
+
+                if (typeof value.image === "string") {
+                    value.image = createImageRef(value.image);
+                }
+
+                const id = typeof value.id === "string" ? value.id : `post-populated-author-${index + 1}`;
+                return searchNode({
+                    id,
+                    nickname: typeof value.nickname === "string" ? value.nickname : typeof value.name === "string" ? value.name : id,
+                    image: value.image,
+                });
+            });
+    }
+};
+
 const normalizeCartItems = (items: unknown, prefix: string): MockNode[] => {
     if (!Array.isArray(items)) {
         return [];
