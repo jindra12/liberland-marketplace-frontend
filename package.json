@@ -84,6 +84,8 @@
         "test:ct:homepage:headed": "cypress run --component --browser electron --headed --spec cypress/component/Homepage.cy.tsx",
         "test:ct:profile": "cypress run --component --browser electron --spec cypress/component/Profile.cy.tsx",
         "test:ct:profile:headed": "cypress run --component --browser electron --headed --spec cypress/component/Profile.cy.tsx",
+        "test:ct:drawer-sort": "cypress run --component --browser electron --spec cypress/component/DrawerSort.cy.tsx",
+        "test:ct:drawer-sort:headed": "cypress run --component --browser electron --headed --spec cypress/component/DrawerSort.cy.tsx",
         "test:ct:company": "cypress run --component --browser electron --spec cypress/component/CompanyCreateEdit.cy.tsx",
         "test:ct:company:headed": "cypress run --component --browser electron --headed --spec cypress/component/CompanyCreateEdit.cy.tsx",
         "test:ct:job": "cypress run --component --browser electron --spec cypress/component/JobCreateEdit.cy.tsx",

@@ -1,9 +1,10 @@
-query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
+query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Startups(
         draft: false
         where: { AND: [{ identity: { equals: $identityId } }, { _status: { equals: published } }] }
         page: $page
         limit: $limit
+        sort: $sort
     ) {
         docs {
             id

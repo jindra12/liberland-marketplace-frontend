@@ -3,7 +3,7 @@ query SearchJobsByCompany(
     $searchTerm: String!
     $page: Int = 1
     $limit: Int = 20
-    $sort: String = "-priority"
+    $sort: String = "-contentRankScore"
 ) {
     Searches(
         draft: false

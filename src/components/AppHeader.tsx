@@ -3,18 +3,17 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, Drawer, Button, Grid, Space, Flex } from "antd";
+import { Layout, Menu, Button, Grid, Space, Flex } from "antd";
 
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { useCartItems } from "./cart/useCartItems";
 import { DesktopDrawer } from "./DesktopDrawer";
 import { EndpointAuthAction } from "./EndpointAuthAction";
-import { useEndpointContext } from "./EndpointContext";
 import { LoginButton } from "./LoginButton";
-import { RouteButton } from "./RouteButton";
-import { SearchButton } from "./SearchButton";
+import { MobileDrawer } from "./MobileDrawer";
+import { getSelectedKeys } from "./MobileDrawer/utils";
 
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -27,17 +26,11 @@ const desktopBaseItems = [
     { key: "/tribes", label: "Tribes" },
 ];
 
-const getSelectedKeys = (pathname: string, items: { key: string; label: string }[]) => {
-    const found = items.find(({ key }) => pathname.startsWith(key))?.key;
-    return found ? [found] : [];
-};
-
 export const AppHeader: React.FunctionComponent = () => {
     const { xl } = useBreakpoint();
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
-    const { urls } = useEndpointContext();
     const { totalQuantity } = useCartItems();
     const authAction = auth.isAuthenticated ? "logout" : "login";
 
@@ -54,15 +47,7 @@ export const AppHeader: React.FunctionComponent = () => {
         return desktopBaseItems;
     }, [totalQuantity]);
 
-    const drawerItems = React.useMemo(() => {
-        if (totalQuantity > 0) {
-            return [...desktopBaseItems, { key: "/cart", label: "Cart" }];
-        }
-        return desktopBaseItems;
-    }, [totalQuantity]);
-
     const selectedDesktopKeys = getSelectedKeys(location.pathname, desktopItems);
-    const selectedDrawerKeys = getSelectedKeys(location.pathname, drawerItems);
     const desktopMenuItems: MenuProps["items"] = React.useMemo(
         () =>
             desktopItems.map((item) => ({
@@ -74,18 +59,6 @@ export const AppHeader: React.FunctionComponent = () => {
                 ),
             })),
         [desktopItems],
-    );
-    const drawerMenuItems: MenuProps["items"] = React.useMemo(
-        () =>
-            drawerItems.map((item) => ({
-                key: item.key,
-                label: (
-                    <Link to={item.key} className="AppHeader__drawerMenuLink" onClick={() => setDrawerOpen(false)}>
-                        {item.label}
-                    </Link>
-                ),
-            })),
-        [drawerItems],
     );
 
     return (
@@ -148,71 +121,10 @@ export const AppHeader: React.FunctionComponent = () => {
                             aria-label="Open navigation"
                             onClick={() => setDrawerOpen(true)}
                         />
-                        <Drawer
-                            className="AppHeader__drawer"
-                            placement="left"
+                        <MobileDrawer
                             open={drawerOpen}
                             onClose={() => setDrawerOpen(false)}
-                            title={
-                                <div className="AppHeader__drawerTitle">
-                                    <img className="AppHeader__logo" src="/logo.svg" alt="NSwap" />
-                                    <span className="AppHeader__name">NSwap</span>
-                                </div>
-                            }
-                        >
-                            <div className="AppHeader__drawerBody">
-                                <Menu
-                                    className="AppHeader__drawerMenu"
-                                    mode="inline"
-                                    items={drawerMenuItems}
-                                    selectedKeys={selectedDrawerKeys}
-                                />
-                                <div className="AppHeader__drawerNav">
-                                    <SearchButton type="default" block onScopeSelect={() => setDrawerOpen(false)}>
-                                        Search
-                                    </SearchButton>
-                                    {urls.length > 1 ? (
-                                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
-                                            Syndication
-                                        </RouteButton>
-                                    ) : null}
-                                    <EndpointAuthAction>
-                                        {({ runWithAuthOrLogin }) => (
-                                            <Button
-                                                block
-                                                type="primary"
-                                                icon={<PlusOutlined />}
-                                                onClick={(event) => {
-                                                    event.preventDefault();
-                                                    runWithAuthOrLogin(
-                                                        () => {
-                                                            navigate("/publish");
-                                                            setDrawerOpen(false);
-                                                        },
-                                                        { onUnauthorizedBeforeLogin: () => setDrawerOpen(false) },
-                                                    );
-                                                }}
-                                                className="AppHeader__drawerPublish"
-                                            >
-                                                Publish ad
-                                            </Button>
-                                        )}
-                                    </EndpointAuthAction>
-                                    {auth.isAuthenticated ? (
-                                        <Button
-                                            block
-                                            icon={<UserOutlined />}
-                                            onClick={() => {
-                                                navigate("/profile");
-                                                setDrawerOpen(false);
-                                            }}
-                                        >
-                                            Profile
-                                        </Button>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </Drawer>
+                        />
                     </Space>
                 )}
             </div>

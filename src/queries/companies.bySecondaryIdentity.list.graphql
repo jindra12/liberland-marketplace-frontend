@@ -1,9 +1,10 @@
-query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
+query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Companies(
         draft: false
         where: { AND: [{ allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }
         page: $page
         limit: $limit
+        sort: $sort
     ) {
         docs {
             id

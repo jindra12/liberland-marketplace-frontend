@@ -10,6 +10,7 @@ import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
 import { RouteButton } from "./RouteButton";
 import { SearchButton } from "./SearchButton";
+import { SortContentBySelect } from "./SortContentBySelect";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
     const location = useLocation();
@@ -84,6 +85,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                             Profile
                         </Button>
                     ) : null}
+                    <SortContentBySelect />
                 </div>
             </Drawer>
         </>

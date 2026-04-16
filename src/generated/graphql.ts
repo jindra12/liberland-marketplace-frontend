@@ -5940,6 +5940,7 @@ export type CompaniesDocAccessFields = {
   _status?: Maybe<CompaniesDocAccessFields__Status>;
   allowedIdentities?: Maybe<CompaniesDocAccessFields_AllowedIdentities>;
   completenessScore?: Maybe<CompaniesDocAccessFields_CompletenessScore>;
+  contentRankScore?: Maybe<CompaniesDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<CompaniesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CompaniesDocAccessFields_CreatedBy>;
   cryptoAddresses?: Maybe<CompaniesDocAccessFields_CryptoAddresses>;
@@ -5950,10 +5951,12 @@ export type CompaniesDocAccessFields = {
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
   image?: Maybe<CompaniesDocAccessFields_Image>;
   isSubscribed?: Maybe<CompaniesDocAccessFields_IsSubscribed>;
+  lastLikeAt?: Maybe<CompaniesDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesDocAccessFields_LikeCount>;
   name?: Maybe<CompaniesDocAccessFields_Name>;
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   serverURL?: Maybe<CompaniesDocAccessFields_ServerUrl>;
+  subscriberCount?: Maybe<CompaniesDocAccessFields_SubscriberCount>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
   website?: Maybe<CompaniesDocAccessFields_Website>;
 };
@@ -6039,6 +6042,34 @@ export type CompaniesDocAccessFields_CompletenessScore_Read = {
 
 export type CompaniesDocAccessFields_CompletenessScore_Update = {
   __typename?: 'CompaniesDocAccessFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_ContentRankScore = {
+  __typename?: 'CompaniesDocAccessFields_contentRankScore';
+  create?: Maybe<CompaniesDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<CompaniesDocAccessFields_ContentRankScore_Update>;
+};
+
+export type CompaniesDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'CompaniesDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'CompaniesDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'CompaniesDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'CompaniesDocAccessFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -6385,6 +6416,34 @@ export type CompaniesDocAccessFields_IsSubscribed_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_LastLikeAt = {
+  __typename?: 'CompaniesDocAccessFields_lastLikeAt';
+  create?: Maybe<CompaniesDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<CompaniesDocAccessFields_LastLikeAt_Update>;
+};
+
+export type CompaniesDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'CompaniesDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'CompaniesDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'CompaniesDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'CompaniesDocAccessFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_LikeCount = {
   __typename?: 'CompaniesDocAccessFields_likeCount';
   create?: Maybe<CompaniesDocAccessFields_LikeCount_Create>;
@@ -6497,6 +6556,34 @@ export type CompaniesDocAccessFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_SubscriberCount = {
+  __typename?: 'CompaniesDocAccessFields_subscriberCount';
+  create?: Maybe<CompaniesDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<CompaniesDocAccessFields_SubscriberCount_Update>;
+};
+
+export type CompaniesDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'CompaniesDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'CompaniesDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'CompaniesDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'CompaniesDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_UpdatedAt = {
   __typename?: 'CompaniesDocAccessFields_updatedAt';
   create?: Maybe<CompaniesDocAccessFields_UpdatedAt_Create>;
@@ -6558,6 +6645,7 @@ export type CompaniesFields = {
   _status?: Maybe<CompaniesFields__Status>;
   allowedIdentities?: Maybe<CompaniesFields_AllowedIdentities>;
   completenessScore?: Maybe<CompaniesFields_CompletenessScore>;
+  contentRankScore?: Maybe<CompaniesFields_ContentRankScore>;
   createdAt?: Maybe<CompaniesFields_CreatedAt>;
   createdBy?: Maybe<CompaniesFields_CreatedBy>;
   cryptoAddresses?: Maybe<CompaniesFields_CryptoAddresses>;
@@ -6568,10 +6656,12 @@ export type CompaniesFields = {
   identity?: Maybe<CompaniesFields_Identity>;
   image?: Maybe<CompaniesFields_Image>;
   isSubscribed?: Maybe<CompaniesFields_IsSubscribed>;
+  lastLikeAt?: Maybe<CompaniesFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesFields_LikeCount>;
   name?: Maybe<CompaniesFields_Name>;
   phone?: Maybe<CompaniesFields_Phone>;
   serverURL?: Maybe<CompaniesFields_ServerUrl>;
+  subscriberCount?: Maybe<CompaniesFields_SubscriberCount>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
   website?: Maybe<CompaniesFields_Website>;
 };
@@ -6657,6 +6747,34 @@ export type CompaniesFields_CompletenessScore_Read = {
 
 export type CompaniesFields_CompletenessScore_Update = {
   __typename?: 'CompaniesFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_ContentRankScore = {
+  __typename?: 'CompaniesFields_contentRankScore';
+  create?: Maybe<CompaniesFields_ContentRankScore_Create>;
+  delete?: Maybe<CompaniesFields_ContentRankScore_Delete>;
+  read?: Maybe<CompaniesFields_ContentRankScore_Read>;
+  update?: Maybe<CompaniesFields_ContentRankScore_Update>;
+};
+
+export type CompaniesFields_ContentRankScore_Create = {
+  __typename?: 'CompaniesFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_ContentRankScore_Delete = {
+  __typename?: 'CompaniesFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_ContentRankScore_Read = {
+  __typename?: 'CompaniesFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_ContentRankScore_Update = {
+  __typename?: 'CompaniesFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -7003,6 +7121,34 @@ export type CompaniesFields_IsSubscribed_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_LastLikeAt = {
+  __typename?: 'CompaniesFields_lastLikeAt';
+  create?: Maybe<CompaniesFields_LastLikeAt_Create>;
+  delete?: Maybe<CompaniesFields_LastLikeAt_Delete>;
+  read?: Maybe<CompaniesFields_LastLikeAt_Read>;
+  update?: Maybe<CompaniesFields_LastLikeAt_Update>;
+};
+
+export type CompaniesFields_LastLikeAt_Create = {
+  __typename?: 'CompaniesFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_LastLikeAt_Delete = {
+  __typename?: 'CompaniesFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_LastLikeAt_Read = {
+  __typename?: 'CompaniesFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_LastLikeAt_Update = {
+  __typename?: 'CompaniesFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_LikeCount = {
   __typename?: 'CompaniesFields_likeCount';
   create?: Maybe<CompaniesFields_LikeCount_Create>;
@@ -7115,6 +7261,34 @@ export type CompaniesFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_SubscriberCount = {
+  __typename?: 'CompaniesFields_subscriberCount';
+  create?: Maybe<CompaniesFields_SubscriberCount_Create>;
+  delete?: Maybe<CompaniesFields_SubscriberCount_Delete>;
+  read?: Maybe<CompaniesFields_SubscriberCount_Read>;
+  update?: Maybe<CompaniesFields_SubscriberCount_Update>;
+};
+
+export type CompaniesFields_SubscriberCount_Create = {
+  __typename?: 'CompaniesFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_SubscriberCount_Delete = {
+  __typename?: 'CompaniesFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_SubscriberCount_Read = {
+  __typename?: 'CompaniesFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_SubscriberCount_Update = {
+  __typename?: 'CompaniesFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_UpdatedAt = {
   __typename?: 'CompaniesFields_updatedAt';
   create?: Maybe<CompaniesFields_UpdatedAt_Create>;
@@ -7212,6 +7386,7 @@ export type Company = {
   _status?: Maybe<Company__Status>;
   allowedIdentities?: Maybe<Array<Identity>>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   cryptoAddresses?: Maybe<Company_CryptoAddresses>;
@@ -7223,10 +7398,12 @@ export type Company = {
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
 };
@@ -7657,6 +7834,7 @@ export type CompanyVersion_Version = {
   _status?: Maybe<CompanyVersion_Version__Status>;
   allowedIdentities?: Maybe<Array<Identity>>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   cryptoAddresses?: Maybe<CompanyVersion_Version_CryptoAddresses>;
@@ -7667,10 +7845,12 @@ export type CompanyVersion_Version = {
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
 };
@@ -7744,6 +7924,16 @@ export type Company_AllowedIdentities_Operator = {
 };
 
 export type Company_CompletenessScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Company_ContentRankScore_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   greater_than?: InputMaybe<Scalars['Float']['input']>;
@@ -7866,6 +8056,17 @@ export type Company_IsSubscribed_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Company_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type Company_LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7908,6 +8109,16 @@ export type Company_ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Company_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Company_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7936,6 +8147,7 @@ export type Company_Where = {
   _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   completenessScore?: InputMaybe<Company_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Company_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
@@ -7948,10 +8160,12 @@ export type Company_Where = {
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
@@ -7962,6 +8176,7 @@ export type Company_Where_And = {
   _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   completenessScore?: InputMaybe<Company_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Company_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
@@ -7974,10 +8189,12 @@ export type Company_Where_And = {
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
@@ -7988,6 +8205,7 @@ export type Company_Where_Or = {
   _status?: InputMaybe<Company__Status_Operator>;
   allowedIdentities?: InputMaybe<Company_AllowedIdentities_Operator>;
   completenessScore?: InputMaybe<Company_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Company_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Company_CreatedAt_Operator>;
   createdBy?: InputMaybe<Company_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Company_CryptoAddresses__Address_Operator>;
@@ -8000,10 +8218,12 @@ export type Company_Where_Or = {
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
@@ -11549,6 +11769,8 @@ export type IdentitiesDeleteDocAccess = {
 
 export type IdentitiesDocAccessFields = {
   __typename?: 'IdentitiesDocAccessFields';
+  completenessScore?: Maybe<IdentitiesDocAccessFields_CompletenessScore>;
+  contentRankScore?: Maybe<IdentitiesDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<IdentitiesDocAccessFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
   description?: Maybe<IdentitiesDocAccessFields_Description>;
@@ -11556,11 +11778,69 @@ export type IdentitiesDocAccessFields = {
   image?: Maybe<IdentitiesDocAccessFields_Image>;
   isSubscribed?: Maybe<IdentitiesDocAccessFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesDocAccessFields_ItemCount>;
+  lastLikeAt?: Maybe<IdentitiesDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<IdentitiesDocAccessFields_LikeCount>;
   name?: Maybe<IdentitiesDocAccessFields_Name>;
   serverURL?: Maybe<IdentitiesDocAccessFields_ServerUrl>;
+  subscriberCount?: Maybe<IdentitiesDocAccessFields_SubscriberCount>;
   updatedAt?: Maybe<IdentitiesDocAccessFields_UpdatedAt>;
   website?: Maybe<IdentitiesDocAccessFields_Website>;
+};
+
+export type IdentitiesDocAccessFields_CompletenessScore = {
+  __typename?: 'IdentitiesDocAccessFields_completenessScore';
+  create?: Maybe<IdentitiesDocAccessFields_CompletenessScore_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_CompletenessScore_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_CompletenessScore_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_CompletenessScore_Update>;
+};
+
+export type IdentitiesDocAccessFields_CompletenessScore_Create = {
+  __typename?: 'IdentitiesDocAccessFields_completenessScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_CompletenessScore_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_completenessScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_CompletenessScore_Read = {
+  __typename?: 'IdentitiesDocAccessFields_completenessScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_CompletenessScore_Update = {
+  __typename?: 'IdentitiesDocAccessFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ContentRankScore = {
+  __typename?: 'IdentitiesDocAccessFields_contentRankScore';
+  create?: Maybe<IdentitiesDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_ContentRankScore_Update>;
+};
+
+export type IdentitiesDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'IdentitiesDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'IdentitiesDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'IdentitiesDocAccessFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type IdentitiesDocAccessFields_CreatedAt = {
@@ -11759,6 +12039,34 @@ export type IdentitiesDocAccessFields_ItemCount_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type IdentitiesDocAccessFields_LastLikeAt = {
+  __typename?: 'IdentitiesDocAccessFields_lastLikeAt';
+  create?: Maybe<IdentitiesDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_LastLikeAt_Update>;
+};
+
+export type IdentitiesDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'IdentitiesDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'IdentitiesDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'IdentitiesDocAccessFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type IdentitiesDocAccessFields_LikeCount = {
   __typename?: 'IdentitiesDocAccessFields_likeCount';
   create?: Maybe<IdentitiesDocAccessFields_LikeCount_Create>;
@@ -11843,6 +12151,34 @@ export type IdentitiesDocAccessFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type IdentitiesDocAccessFields_SubscriberCount = {
+  __typename?: 'IdentitiesDocAccessFields_subscriberCount';
+  create?: Maybe<IdentitiesDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_SubscriberCount_Update>;
+};
+
+export type IdentitiesDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'IdentitiesDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'IdentitiesDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'IdentitiesDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type IdentitiesDocAccessFields_UpdatedAt = {
   __typename?: 'IdentitiesDocAccessFields_updatedAt';
   create?: Maybe<IdentitiesDocAccessFields_UpdatedAt_Create>;
@@ -11901,6 +12237,8 @@ export type IdentitiesDocAccessFields_Website_Update = {
 
 export type IdentitiesFields = {
   __typename?: 'IdentitiesFields';
+  completenessScore?: Maybe<IdentitiesFields_CompletenessScore>;
+  contentRankScore?: Maybe<IdentitiesFields_ContentRankScore>;
   createdAt?: Maybe<IdentitiesFields_CreatedAt>;
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
   description?: Maybe<IdentitiesFields_Description>;
@@ -11908,11 +12246,69 @@ export type IdentitiesFields = {
   image?: Maybe<IdentitiesFields_Image>;
   isSubscribed?: Maybe<IdentitiesFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesFields_ItemCount>;
+  lastLikeAt?: Maybe<IdentitiesFields_LastLikeAt>;
   likeCount?: Maybe<IdentitiesFields_LikeCount>;
   name?: Maybe<IdentitiesFields_Name>;
   serverURL?: Maybe<IdentitiesFields_ServerUrl>;
+  subscriberCount?: Maybe<IdentitiesFields_SubscriberCount>;
   updatedAt?: Maybe<IdentitiesFields_UpdatedAt>;
   website?: Maybe<IdentitiesFields_Website>;
+};
+
+export type IdentitiesFields_CompletenessScore = {
+  __typename?: 'IdentitiesFields_completenessScore';
+  create?: Maybe<IdentitiesFields_CompletenessScore_Create>;
+  delete?: Maybe<IdentitiesFields_CompletenessScore_Delete>;
+  read?: Maybe<IdentitiesFields_CompletenessScore_Read>;
+  update?: Maybe<IdentitiesFields_CompletenessScore_Update>;
+};
+
+export type IdentitiesFields_CompletenessScore_Create = {
+  __typename?: 'IdentitiesFields_completenessScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_CompletenessScore_Delete = {
+  __typename?: 'IdentitiesFields_completenessScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_CompletenessScore_Read = {
+  __typename?: 'IdentitiesFields_completenessScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_CompletenessScore_Update = {
+  __typename?: 'IdentitiesFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ContentRankScore = {
+  __typename?: 'IdentitiesFields_contentRankScore';
+  create?: Maybe<IdentitiesFields_ContentRankScore_Create>;
+  delete?: Maybe<IdentitiesFields_ContentRankScore_Delete>;
+  read?: Maybe<IdentitiesFields_ContentRankScore_Read>;
+  update?: Maybe<IdentitiesFields_ContentRankScore_Update>;
+};
+
+export type IdentitiesFields_ContentRankScore_Create = {
+  __typename?: 'IdentitiesFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ContentRankScore_Delete = {
+  __typename?: 'IdentitiesFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ContentRankScore_Read = {
+  __typename?: 'IdentitiesFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_ContentRankScore_Update = {
+  __typename?: 'IdentitiesFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type IdentitiesFields_CreatedAt = {
@@ -12111,6 +12507,34 @@ export type IdentitiesFields_ItemCount_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type IdentitiesFields_LastLikeAt = {
+  __typename?: 'IdentitiesFields_lastLikeAt';
+  create?: Maybe<IdentitiesFields_LastLikeAt_Create>;
+  delete?: Maybe<IdentitiesFields_LastLikeAt_Delete>;
+  read?: Maybe<IdentitiesFields_LastLikeAt_Read>;
+  update?: Maybe<IdentitiesFields_LastLikeAt_Update>;
+};
+
+export type IdentitiesFields_LastLikeAt_Create = {
+  __typename?: 'IdentitiesFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_LastLikeAt_Delete = {
+  __typename?: 'IdentitiesFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_LastLikeAt_Read = {
+  __typename?: 'IdentitiesFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_LastLikeAt_Update = {
+  __typename?: 'IdentitiesFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type IdentitiesFields_LikeCount = {
   __typename?: 'IdentitiesFields_likeCount';
   create?: Maybe<IdentitiesFields_LikeCount_Create>;
@@ -12192,6 +12616,34 @@ export type IdentitiesFields_ServerUrl_Read = {
 
 export type IdentitiesFields_ServerUrl_Update = {
   __typename?: 'IdentitiesFields_serverURL_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_SubscriberCount = {
+  __typename?: 'IdentitiesFields_subscriberCount';
+  create?: Maybe<IdentitiesFields_SubscriberCount_Create>;
+  delete?: Maybe<IdentitiesFields_SubscriberCount_Delete>;
+  read?: Maybe<IdentitiesFields_SubscriberCount_Read>;
+  update?: Maybe<IdentitiesFields_SubscriberCount_Update>;
+};
+
+export type IdentitiesFields_SubscriberCount_Create = {
+  __typename?: 'IdentitiesFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_SubscriberCount_Delete = {
+  __typename?: 'IdentitiesFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_SubscriberCount_Read = {
+  __typename?: 'IdentitiesFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_SubscriberCount_Update = {
+  __typename?: 'IdentitiesFields_subscriberCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -12277,6 +12729,8 @@ export type IdentitiesUpdateDocAccess = {
 
 export type Identity = {
   __typename?: 'Identity';
+  completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy: User;
   description?: Maybe<Scalars['String']['output']>;
@@ -12285,9 +12739,11 @@ export type Identity = {
   image?: Maybe<Media>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   itemCount?: Maybe<Scalars['Float']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   website?: Maybe<Scalars['String']['output']>;
 };
@@ -12687,6 +13143,26 @@ export type IdentityLikesUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Identity_CompletenessScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Identity_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Identity_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -12756,6 +13232,17 @@ export type Identity_ItemCount_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Identity_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type Identity_LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -12787,6 +13274,16 @@ export type Identity_ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Identity_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Identity_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -12812,6 +13309,8 @@ export type Identity_Website_Operator = {
 export type Identity_Where = {
   AND?: InputMaybe<Array<InputMaybe<Identity_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
+  completenessScore?: InputMaybe<Identity_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Identity_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   description?: InputMaybe<Identity_Description_Operator>;
@@ -12820,9 +13319,11 @@ export type Identity_Where = {
   image?: InputMaybe<Identity_Image_Operator>;
   isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
+  lastLikeAt?: InputMaybe<Identity_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Identity_LikeCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Identity_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
 };
@@ -12830,6 +13331,8 @@ export type Identity_Where = {
 export type Identity_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Identity_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
+  completenessScore?: InputMaybe<Identity_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Identity_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   description?: InputMaybe<Identity_Description_Operator>;
@@ -12838,9 +13341,11 @@ export type Identity_Where_And = {
   image?: InputMaybe<Identity_Image_Operator>;
   isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
+  lastLikeAt?: InputMaybe<Identity_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Identity_LikeCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Identity_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
 };
@@ -12848,6 +13353,8 @@ export type Identity_Where_And = {
 export type Identity_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Identity_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Identity_Where_Or>>>;
+  completenessScore?: InputMaybe<Identity_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Identity_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Identity_CreatedAt_Operator>;
   createdBy?: InputMaybe<Identity_CreatedBy_Operator>;
   description?: InputMaybe<Identity_Description_Operator>;
@@ -12856,9 +13363,11 @@ export type Identity_Where_Or = {
   image?: InputMaybe<Identity_Image_Operator>;
   isSubscribed?: InputMaybe<Identity_IsSubscribed_Operator>;
   itemCount?: InputMaybe<Identity_ItemCount_Operator>;
+  lastLikeAt?: InputMaybe<Identity_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Identity_LikeCount_Operator>;
   name?: InputMaybe<Identity_Name_Operator>;
   serverURL?: InputMaybe<Identity_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Identity_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Identity_UpdatedAt_Operator>;
   website?: InputMaybe<Identity_Website_Operator>;
 };
@@ -12872,6 +13381,7 @@ export type Job = {
   company?: Maybe<Company>;
   companyIdentityId?: Maybe<Scalars['String']['output']>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -12882,12 +13392,14 @@ export type Job = {
   image?: Maybe<Media>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<Job_SalaryRange>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -13357,6 +13869,7 @@ export type JobVersion_Version = {
   company?: Maybe<Company>;
   companyIdentityId?: Maybe<Scalars['String']['output']>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -13366,12 +13879,14 @@ export type JobVersion_Version = {
   image?: Maybe<Media>;
   isActive?: Maybe<Scalars['Boolean']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   positions?: Maybe<Scalars['Float']['output']>;
   postedAt?: Maybe<Scalars['DateTime']['output']>;
   salaryRange?: Maybe<JobVersion_Version_SalaryRange>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -13610,6 +14125,16 @@ export type Job_CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Job_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Job_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -13716,6 +14241,17 @@ export type Job_IsSubscribed_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Job_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type Job_LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -13810,6 +14346,16 @@ export type Job_ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Job_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Job_Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -13842,6 +14388,7 @@ export type Job_Where = {
   company?: InputMaybe<Job_Company_Operator>;
   companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Job_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Job_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -13852,6 +14399,7 @@ export type Job_Where = {
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
   isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Job_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Job_LikeCount_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
@@ -13860,6 +14408,7 @@ export type Job_Where = {
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
   salaryRange__min?: InputMaybe<Job_SalaryRange__Min_Operator>;
   serverURL?: InputMaybe<Job_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Job_SubscriberCount_Operator>;
   title?: InputMaybe<Job_Title_Operator>;
   updatedAt?: InputMaybe<Job_UpdatedAt_Operator>;
 };
@@ -13875,6 +14424,7 @@ export type Job_Where_And = {
   company?: InputMaybe<Job_Company_Operator>;
   companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Job_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Job_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -13885,6 +14435,7 @@ export type Job_Where_And = {
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
   isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Job_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Job_LikeCount_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
@@ -13893,6 +14444,7 @@ export type Job_Where_And = {
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
   salaryRange__min?: InputMaybe<Job_SalaryRange__Min_Operator>;
   serverURL?: InputMaybe<Job_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Job_SubscriberCount_Operator>;
   title?: InputMaybe<Job_Title_Operator>;
   updatedAt?: InputMaybe<Job_UpdatedAt_Operator>;
 };
@@ -13908,6 +14460,7 @@ export type Job_Where_Or = {
   company?: InputMaybe<Job_Company_Operator>;
   companyIdentityId?: InputMaybe<Job_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Job_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Job_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Job_CreatedAt_Operator>;
   createdBy?: InputMaybe<Job_CreatedBy_Operator>;
   description?: InputMaybe<Job_Description_Operator>;
@@ -13918,6 +14471,7 @@ export type Job_Where_Or = {
   image?: InputMaybe<Job_Image_Operator>;
   isActive?: InputMaybe<Job_IsActive_Operator>;
   isSubscribed?: InputMaybe<Job_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Job_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Job_LikeCount_Operator>;
   location?: InputMaybe<Job_Location_Operator>;
   positions?: InputMaybe<Job_Positions_Operator>;
@@ -13926,6 +14480,7 @@ export type Job_Where_Or = {
   salaryRange__max?: InputMaybe<Job_SalaryRange__Max_Operator>;
   salaryRange__min?: InputMaybe<Job_SalaryRange__Min_Operator>;
   serverURL?: InputMaybe<Job_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Job_SubscriberCount_Operator>;
   title?: InputMaybe<Job_Title_Operator>;
   updatedAt?: InputMaybe<Job_UpdatedAt_Operator>;
 };
@@ -13978,6 +14533,7 @@ export type JobsDocAccessFields = {
   company?: Maybe<JobsDocAccessFields_Company>;
   companyIdentityId?: Maybe<JobsDocAccessFields_CompanyIdentityId>;
   completenessScore?: Maybe<JobsDocAccessFields_CompletenessScore>;
+  contentRankScore?: Maybe<JobsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<JobsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<JobsDocAccessFields_CreatedBy>;
   description?: Maybe<JobsDocAccessFields_Description>;
@@ -13987,12 +14543,14 @@ export type JobsDocAccessFields = {
   image?: Maybe<JobsDocAccessFields_Image>;
   isActive?: Maybe<JobsDocAccessFields_IsActive>;
   isSubscribed?: Maybe<JobsDocAccessFields_IsSubscribed>;
+  lastLikeAt?: Maybe<JobsDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<JobsDocAccessFields_LikeCount>;
   location?: Maybe<JobsDocAccessFields_Location>;
   positions?: Maybe<JobsDocAccessFields_Positions>;
   postedAt?: Maybe<JobsDocAccessFields_PostedAt>;
   salaryRange?: Maybe<JobsDocAccessFields_SalaryRange>;
   serverURL?: Maybe<JobsDocAccessFields_ServerUrl>;
+  subscriberCount?: Maybe<JobsDocAccessFields_SubscriberCount>;
   title?: Maybe<JobsDocAccessFields_Title>;
   updatedAt?: Maybe<JobsDocAccessFields_UpdatedAt>;
 };
@@ -14256,6 +14814,34 @@ export type JobsDocAccessFields_CompletenessScore_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_ContentRankScore = {
+  __typename?: 'JobsDocAccessFields_contentRankScore';
+  create?: Maybe<JobsDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<JobsDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<JobsDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<JobsDocAccessFields_ContentRankScore_Update>;
+};
+
+export type JobsDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'JobsDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'JobsDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'JobsDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'JobsDocAccessFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_CreatedAt = {
   __typename?: 'JobsDocAccessFields_createdAt';
   create?: Maybe<JobsDocAccessFields_CreatedAt_Create>;
@@ -14505,6 +15091,34 @@ export type JobsDocAccessFields_IsSubscribed_Read = {
 
 export type JobsDocAccessFields_IsSubscribed_Update = {
   __typename?: 'JobsDocAccessFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_LastLikeAt = {
+  __typename?: 'JobsDocAccessFields_lastLikeAt';
+  create?: Maybe<JobsDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<JobsDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<JobsDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<JobsDocAccessFields_LastLikeAt_Update>;
+};
+
+export type JobsDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'JobsDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'JobsDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'JobsDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'JobsDocAccessFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -14768,6 +15382,34 @@ export type JobsDocAccessFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsDocAccessFields_SubscriberCount = {
+  __typename?: 'JobsDocAccessFields_subscriberCount';
+  create?: Maybe<JobsDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<JobsDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<JobsDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<JobsDocAccessFields_SubscriberCount_Update>;
+};
+
+export type JobsDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'JobsDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'JobsDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'JobsDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'JobsDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsDocAccessFields_Title = {
   __typename?: 'JobsDocAccessFields_title';
   create?: Maybe<JobsDocAccessFields_Title_Create>;
@@ -14833,6 +15475,7 @@ export type JobsFields = {
   company?: Maybe<JobsFields_Company>;
   companyIdentityId?: Maybe<JobsFields_CompanyIdentityId>;
   completenessScore?: Maybe<JobsFields_CompletenessScore>;
+  contentRankScore?: Maybe<JobsFields_ContentRankScore>;
   createdAt?: Maybe<JobsFields_CreatedAt>;
   createdBy?: Maybe<JobsFields_CreatedBy>;
   description?: Maybe<JobsFields_Description>;
@@ -14842,12 +15485,14 @@ export type JobsFields = {
   image?: Maybe<JobsFields_Image>;
   isActive?: Maybe<JobsFields_IsActive>;
   isSubscribed?: Maybe<JobsFields_IsSubscribed>;
+  lastLikeAt?: Maybe<JobsFields_LastLikeAt>;
   likeCount?: Maybe<JobsFields_LikeCount>;
   location?: Maybe<JobsFields_Location>;
   positions?: Maybe<JobsFields_Positions>;
   postedAt?: Maybe<JobsFields_PostedAt>;
   salaryRange?: Maybe<JobsFields_SalaryRange>;
   serverURL?: Maybe<JobsFields_ServerUrl>;
+  subscriberCount?: Maybe<JobsFields_SubscriberCount>;
   title?: Maybe<JobsFields_Title>;
   updatedAt?: Maybe<JobsFields_UpdatedAt>;
 };
@@ -15111,6 +15756,34 @@ export type JobsFields_CompletenessScore_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type JobsFields_ContentRankScore = {
+  __typename?: 'JobsFields_contentRankScore';
+  create?: Maybe<JobsFields_ContentRankScore_Create>;
+  delete?: Maybe<JobsFields_ContentRankScore_Delete>;
+  read?: Maybe<JobsFields_ContentRankScore_Read>;
+  update?: Maybe<JobsFields_ContentRankScore_Update>;
+};
+
+export type JobsFields_ContentRankScore_Create = {
+  __typename?: 'JobsFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_ContentRankScore_Delete = {
+  __typename?: 'JobsFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_ContentRankScore_Read = {
+  __typename?: 'JobsFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_ContentRankScore_Update = {
+  __typename?: 'JobsFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type JobsFields_CreatedAt = {
   __typename?: 'JobsFields_createdAt';
   create?: Maybe<JobsFields_CreatedAt_Create>;
@@ -15360,6 +16033,34 @@ export type JobsFields_IsSubscribed_Read = {
 
 export type JobsFields_IsSubscribed_Update = {
   __typename?: 'JobsFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_LastLikeAt = {
+  __typename?: 'JobsFields_lastLikeAt';
+  create?: Maybe<JobsFields_LastLikeAt_Create>;
+  delete?: Maybe<JobsFields_LastLikeAt_Delete>;
+  read?: Maybe<JobsFields_LastLikeAt_Read>;
+  update?: Maybe<JobsFields_LastLikeAt_Update>;
+};
+
+export type JobsFields_LastLikeAt_Create = {
+  __typename?: 'JobsFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_LastLikeAt_Delete = {
+  __typename?: 'JobsFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_LastLikeAt_Read = {
+  __typename?: 'JobsFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_LastLikeAt_Update = {
+  __typename?: 'JobsFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -15620,6 +16321,34 @@ export type JobsFields_ServerUrl_Read = {
 
 export type JobsFields_ServerUrl_Update = {
   __typename?: 'JobsFields_serverURL_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_SubscriberCount = {
+  __typename?: 'JobsFields_subscriberCount';
+  create?: Maybe<JobsFields_SubscriberCount_Create>;
+  delete?: Maybe<JobsFields_SubscriberCount_Delete>;
+  read?: Maybe<JobsFields_SubscriberCount_Read>;
+  update?: Maybe<JobsFields_SubscriberCount_Update>;
+};
+
+export type JobsFields_SubscriberCount_Create = {
+  __typename?: 'JobsFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_SubscriberCount_Delete = {
+  __typename?: 'JobsFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_SubscriberCount_Read = {
+  __typename?: 'JobsFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobsFields_SubscriberCount_Update = {
+  __typename?: 'JobsFields_subscriberCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -33731,19 +34460,23 @@ export type Post = {
   _status?: Maybe<Post__Status>;
   authors?: Maybe<Array<User>>;
   categories?: Maybe<Array<Category>>;
+  completenessScore?: Maybe<Scalars['Float']['output']>;
   content?: Maybe<Scalars['String']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   hasLiked?: Maybe<Scalars['Boolean']['output']>;
   heroImage?: Maybe<Media>;
   id: Scalars['String']['output'];
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   meta?: Maybe<Post_Meta>;
   populatedAuthors?: Maybe<Array<Post_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   relatedPosts?: Maybe<Array<Post_RelatedPosts_Relationship>>;
   slug?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -34188,18 +34921,22 @@ export type PostVersion_Version = {
   _status?: Maybe<PostVersion_Version__Status>;
   authors?: Maybe<Array<User>>;
   categories?: Maybe<Array<Category>>;
+  completenessScore?: Maybe<Scalars['Float']['output']>;
   content?: Maybe<Scalars['String']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   hasLiked?: Maybe<Scalars['Boolean']['output']>;
   heroImage?: Maybe<Media>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   meta?: Maybe<PostVersion_Version_Meta>;
   populatedAuthors?: Maybe<Array<PostVersion_Version_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   relatedPosts?: Maybe<Array<PostVersion_Version_RelatedPosts_Relationship>>;
   slug?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -34330,6 +35067,26 @@ export type Post_Categories_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Post_CompletenessScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Post_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Post_Content_Operator = {
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -34386,6 +35143,17 @@ export type Post_Id_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Post_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type Post_LikeCount_Operator = {
@@ -34483,6 +35251,16 @@ export type Post_Slug_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Post_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Post_Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -34510,13 +35288,16 @@ export type Post_Where = {
   _status?: InputMaybe<Post__Status_Operator>;
   authors?: InputMaybe<Post_Authors_Operator>;
   categories?: InputMaybe<Post_Categories_Operator>;
+  completenessScore?: InputMaybe<Post_CompletenessScore_Operator>;
   content?: InputMaybe<Post_Content_Operator>;
+  contentRankScore?: InputMaybe<Post_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Post_CreatedAt_Operator>;
   createdBy?: InputMaybe<Post_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Post_GenerateSlug_Operator>;
   hasLiked?: InputMaybe<Post_HasLiked_Operator>;
   heroImage?: InputMaybe<Post_HeroImage_Operator>;
   id?: InputMaybe<Post_Id_Operator>;
+  lastLikeAt?: InputMaybe<Post_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Post_LikeCount_Operator>;
   meta__description?: InputMaybe<Post_Meta__Description_Operator>;
   meta__image?: InputMaybe<Post_Meta__Image_Operator>;
@@ -34526,6 +35307,7 @@ export type Post_Where = {
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
+  subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
 };
@@ -34536,13 +35318,16 @@ export type Post_Where_And = {
   _status?: InputMaybe<Post__Status_Operator>;
   authors?: InputMaybe<Post_Authors_Operator>;
   categories?: InputMaybe<Post_Categories_Operator>;
+  completenessScore?: InputMaybe<Post_CompletenessScore_Operator>;
   content?: InputMaybe<Post_Content_Operator>;
+  contentRankScore?: InputMaybe<Post_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Post_CreatedAt_Operator>;
   createdBy?: InputMaybe<Post_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Post_GenerateSlug_Operator>;
   hasLiked?: InputMaybe<Post_HasLiked_Operator>;
   heroImage?: InputMaybe<Post_HeroImage_Operator>;
   id?: InputMaybe<Post_Id_Operator>;
+  lastLikeAt?: InputMaybe<Post_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Post_LikeCount_Operator>;
   meta__description?: InputMaybe<Post_Meta__Description_Operator>;
   meta__image?: InputMaybe<Post_Meta__Image_Operator>;
@@ -34552,6 +35337,7 @@ export type Post_Where_And = {
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
+  subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
 };
@@ -34562,13 +35348,16 @@ export type Post_Where_Or = {
   _status?: InputMaybe<Post__Status_Operator>;
   authors?: InputMaybe<Post_Authors_Operator>;
   categories?: InputMaybe<Post_Categories_Operator>;
+  completenessScore?: InputMaybe<Post_CompletenessScore_Operator>;
   content?: InputMaybe<Post_Content_Operator>;
+  contentRankScore?: InputMaybe<Post_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Post_CreatedAt_Operator>;
   createdBy?: InputMaybe<Post_CreatedBy_Operator>;
   generateSlug?: InputMaybe<Post_GenerateSlug_Operator>;
   hasLiked?: InputMaybe<Post_HasLiked_Operator>;
   heroImage?: InputMaybe<Post_HeroImage_Operator>;
   id?: InputMaybe<Post_Id_Operator>;
+  lastLikeAt?: InputMaybe<Post_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Post_LikeCount_Operator>;
   meta__description?: InputMaybe<Post_Meta__Description_Operator>;
   meta__image?: InputMaybe<Post_Meta__Image_Operator>;
@@ -34578,6 +35367,7 @@ export type Post_Where_Or = {
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
+  subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
 };
@@ -34626,18 +35416,22 @@ export type PostsDocAccessFields = {
   _status?: Maybe<PostsDocAccessFields__Status>;
   authors?: Maybe<PostsDocAccessFields_Authors>;
   categories?: Maybe<PostsDocAccessFields_Categories>;
+  completenessScore?: Maybe<PostsDocAccessFields_CompletenessScore>;
   content?: Maybe<PostsDocAccessFields_Content>;
+  contentRankScore?: Maybe<PostsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<PostsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<PostsDocAccessFields_CreatedBy>;
   generateSlug?: Maybe<PostsDocAccessFields_GenerateSlug>;
   hasLiked?: Maybe<PostsDocAccessFields_HasLiked>;
   heroImage?: Maybe<PostsDocAccessFields_HeroImage>;
+  lastLikeAt?: Maybe<PostsDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<PostsDocAccessFields_LikeCount>;
   meta?: Maybe<PostsDocAccessFields_Meta>;
   populatedAuthors?: Maybe<PostsDocAccessFields_PopulatedAuthors>;
   publishedAt?: Maybe<PostsDocAccessFields_PublishedAt>;
   relatedPosts?: Maybe<PostsDocAccessFields_RelatedPosts>;
   slug?: Maybe<PostsDocAccessFields_Slug>;
+  subscriberCount?: Maybe<PostsDocAccessFields_SubscriberCount>;
   title?: Maybe<PostsDocAccessFields_Title>;
   updatedAt?: Maybe<PostsDocAccessFields_UpdatedAt>;
 };
@@ -34726,12 +35520,68 @@ export type PostsDocAccessFields_Categories_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type PostsDocAccessFields_CompletenessScore = {
+  __typename?: 'PostsDocAccessFields_completenessScore';
+  create?: Maybe<PostsDocAccessFields_CompletenessScore_Create>;
+  delete?: Maybe<PostsDocAccessFields_CompletenessScore_Delete>;
+  read?: Maybe<PostsDocAccessFields_CompletenessScore_Read>;
+  update?: Maybe<PostsDocAccessFields_CompletenessScore_Update>;
+};
+
+export type PostsDocAccessFields_CompletenessScore_Create = {
+  __typename?: 'PostsDocAccessFields_completenessScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_CompletenessScore_Delete = {
+  __typename?: 'PostsDocAccessFields_completenessScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_CompletenessScore_Read = {
+  __typename?: 'PostsDocAccessFields_completenessScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_CompletenessScore_Update = {
+  __typename?: 'PostsDocAccessFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type PostsDocAccessFields_Content = {
   __typename?: 'PostsDocAccessFields_content';
   create?: Maybe<PostsDocAccessFields_Content_Create>;
   delete?: Maybe<PostsDocAccessFields_Content_Delete>;
   read?: Maybe<PostsDocAccessFields_Content_Read>;
   update?: Maybe<PostsDocAccessFields_Content_Update>;
+};
+
+export type PostsDocAccessFields_ContentRankScore = {
+  __typename?: 'PostsDocAccessFields_contentRankScore';
+  create?: Maybe<PostsDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<PostsDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<PostsDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<PostsDocAccessFields_ContentRankScore_Update>;
+};
+
+export type PostsDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'PostsDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'PostsDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'PostsDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'PostsDocAccessFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type PostsDocAccessFields_Content_Create = {
@@ -34891,6 +35741,34 @@ export type PostsDocAccessFields_HeroImage_Read = {
 
 export type PostsDocAccessFields_HeroImage_Update = {
   __typename?: 'PostsDocAccessFields_heroImage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_LastLikeAt = {
+  __typename?: 'PostsDocAccessFields_lastLikeAt';
+  create?: Maybe<PostsDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<PostsDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<PostsDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<PostsDocAccessFields_LastLikeAt_Update>;
+};
+
+export type PostsDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'PostsDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'PostsDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'PostsDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'PostsDocAccessFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -35188,6 +36066,34 @@ export type PostsDocAccessFields_Slug_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type PostsDocAccessFields_SubscriberCount = {
+  __typename?: 'PostsDocAccessFields_subscriberCount';
+  create?: Maybe<PostsDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<PostsDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<PostsDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<PostsDocAccessFields_SubscriberCount_Update>;
+};
+
+export type PostsDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'PostsDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'PostsDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'PostsDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'PostsDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type PostsDocAccessFields_Title = {
   __typename?: 'PostsDocAccessFields_title';
   create?: Maybe<PostsDocAccessFields_Title_Create>;
@@ -35249,18 +36155,22 @@ export type PostsFields = {
   _status?: Maybe<PostsFields__Status>;
   authors?: Maybe<PostsFields_Authors>;
   categories?: Maybe<PostsFields_Categories>;
+  completenessScore?: Maybe<PostsFields_CompletenessScore>;
   content?: Maybe<PostsFields_Content>;
+  contentRankScore?: Maybe<PostsFields_ContentRankScore>;
   createdAt?: Maybe<PostsFields_CreatedAt>;
   createdBy?: Maybe<PostsFields_CreatedBy>;
   generateSlug?: Maybe<PostsFields_GenerateSlug>;
   hasLiked?: Maybe<PostsFields_HasLiked>;
   heroImage?: Maybe<PostsFields_HeroImage>;
+  lastLikeAt?: Maybe<PostsFields_LastLikeAt>;
   likeCount?: Maybe<PostsFields_LikeCount>;
   meta?: Maybe<PostsFields_Meta>;
   populatedAuthors?: Maybe<PostsFields_PopulatedAuthors>;
   publishedAt?: Maybe<PostsFields_PublishedAt>;
   relatedPosts?: Maybe<PostsFields_RelatedPosts>;
   slug?: Maybe<PostsFields_Slug>;
+  subscriberCount?: Maybe<PostsFields_SubscriberCount>;
   title?: Maybe<PostsFields_Title>;
   updatedAt?: Maybe<PostsFields_UpdatedAt>;
 };
@@ -35349,12 +36259,68 @@ export type PostsFields_Categories_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type PostsFields_CompletenessScore = {
+  __typename?: 'PostsFields_completenessScore';
+  create?: Maybe<PostsFields_CompletenessScore_Create>;
+  delete?: Maybe<PostsFields_CompletenessScore_Delete>;
+  read?: Maybe<PostsFields_CompletenessScore_Read>;
+  update?: Maybe<PostsFields_CompletenessScore_Update>;
+};
+
+export type PostsFields_CompletenessScore_Create = {
+  __typename?: 'PostsFields_completenessScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_CompletenessScore_Delete = {
+  __typename?: 'PostsFields_completenessScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_CompletenessScore_Read = {
+  __typename?: 'PostsFields_completenessScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_CompletenessScore_Update = {
+  __typename?: 'PostsFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type PostsFields_Content = {
   __typename?: 'PostsFields_content';
   create?: Maybe<PostsFields_Content_Create>;
   delete?: Maybe<PostsFields_Content_Delete>;
   read?: Maybe<PostsFields_Content_Read>;
   update?: Maybe<PostsFields_Content_Update>;
+};
+
+export type PostsFields_ContentRankScore = {
+  __typename?: 'PostsFields_contentRankScore';
+  create?: Maybe<PostsFields_ContentRankScore_Create>;
+  delete?: Maybe<PostsFields_ContentRankScore_Delete>;
+  read?: Maybe<PostsFields_ContentRankScore_Read>;
+  update?: Maybe<PostsFields_ContentRankScore_Update>;
+};
+
+export type PostsFields_ContentRankScore_Create = {
+  __typename?: 'PostsFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_ContentRankScore_Delete = {
+  __typename?: 'PostsFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_ContentRankScore_Read = {
+  __typename?: 'PostsFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_ContentRankScore_Update = {
+  __typename?: 'PostsFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type PostsFields_Content_Create = {
@@ -35514,6 +36480,34 @@ export type PostsFields_HeroImage_Read = {
 
 export type PostsFields_HeroImage_Update = {
   __typename?: 'PostsFields_heroImage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_LastLikeAt = {
+  __typename?: 'PostsFields_lastLikeAt';
+  create?: Maybe<PostsFields_LastLikeAt_Create>;
+  delete?: Maybe<PostsFields_LastLikeAt_Delete>;
+  read?: Maybe<PostsFields_LastLikeAt_Read>;
+  update?: Maybe<PostsFields_LastLikeAt_Update>;
+};
+
+export type PostsFields_LastLikeAt_Create = {
+  __typename?: 'PostsFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_LastLikeAt_Delete = {
+  __typename?: 'PostsFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_LastLikeAt_Read = {
+  __typename?: 'PostsFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_LastLikeAt_Update = {
+  __typename?: 'PostsFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -35811,6 +36805,34 @@ export type PostsFields_Slug_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type PostsFields_SubscriberCount = {
+  __typename?: 'PostsFields_subscriberCount';
+  create?: Maybe<PostsFields_SubscriberCount_Create>;
+  delete?: Maybe<PostsFields_SubscriberCount_Delete>;
+  read?: Maybe<PostsFields_SubscriberCount_Read>;
+  update?: Maybe<PostsFields_SubscriberCount_Update>;
+};
+
+export type PostsFields_SubscriberCount_Create = {
+  __typename?: 'PostsFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_SubscriberCount_Delete = {
+  __typename?: 'PostsFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_SubscriberCount_Read = {
+  __typename?: 'PostsFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_SubscriberCount_Update = {
+  __typename?: 'PostsFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type PostsFields_Title = {
   __typename?: 'PostsFields_title';
   create?: Maybe<PostsFields_Title_Create>;
@@ -35909,6 +36931,7 @@ export type Product = {
   company?: Maybe<Company>;
   companyIdentityId?: Maybe<Scalars['String']['output']>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   cryptoAddresses?: Maybe<Product_CryptoAddresses>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -35919,6 +36942,7 @@ export type Product = {
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
@@ -35929,6 +36953,7 @@ export type Product = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
@@ -36378,6 +37403,7 @@ export type ProductVersion_Version = {
   company?: Maybe<Company>;
   companyIdentityId?: Maybe<Scalars['String']['output']>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   cryptoAddresses?: Maybe<ProductVersion_Version_CryptoAddresses>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -36387,6 +37413,7 @@ export type ProductVersion_Version = {
   image?: Maybe<Media>;
   inventory?: Maybe<Scalars['Float']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
@@ -36397,6 +37424,7 @@ export type ProductVersion_Version = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
   serverURL?: Maybe<Scalars['String']['output']>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
@@ -36534,6 +37562,16 @@ export type Product_CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Product_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Product_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -36636,6 +37674,17 @@ export type Product_IsSubscribed_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type Product_LikeCount_Operator = {
@@ -36756,6 +37805,16 @@ export type Product_ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Product_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Product_UnlimitedInventory_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -36800,6 +37859,7 @@ export type Product_Where = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
@@ -36811,6 +37871,7 @@ export type Product_Where = {
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Product_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
@@ -36823,6 +37884,7 @@ export type Product_Where = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
@@ -36836,6 +37898,7 @@ export type Product_Where_And = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
@@ -36847,6 +37910,7 @@ export type Product_Where_And = {
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Product_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
@@ -36859,6 +37923,7 @@ export type Product_Where_And = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
@@ -36872,6 +37937,7 @@ export type Product_Where_Or = {
   company?: InputMaybe<Product_Company_Operator>;
   companyIdentityId?: InputMaybe<Product_CompanyIdentityId_Operator>;
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
@@ -36883,6 +37949,7 @@ export type Product_Where_Or = {
   image?: InputMaybe<Product_Image_Operator>;
   inventory?: InputMaybe<Product_Inventory_Operator>;
   isSubscribed?: InputMaybe<Product_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Product_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
@@ -36895,6 +37962,7 @@ export type Product_Where_Or = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
+  subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
   updatedAt?: InputMaybe<Product_UpdatedAt_Operator>;
   url?: InputMaybe<Product_Url_Operator>;
@@ -36946,6 +38014,7 @@ export type ProductsDocAccessFields = {
   company?: Maybe<ProductsDocAccessFields_Company>;
   companyIdentityId?: Maybe<ProductsDocAccessFields_CompanyIdentityId>;
   completenessScore?: Maybe<ProductsDocAccessFields_CompletenessScore>;
+  contentRankScore?: Maybe<ProductsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
   cryptoAddresses?: Maybe<ProductsDocAccessFields_CryptoAddresses>;
   deletedAt?: Maybe<ProductsDocAccessFields_DeletedAt>;
@@ -36955,6 +38024,7 @@ export type ProductsDocAccessFields = {
   image?: Maybe<ProductsDocAccessFields_Image>;
   inventory?: Maybe<ProductsDocAccessFields_Inventory>;
   isSubscribed?: Maybe<ProductsDocAccessFields_IsSubscribed>;
+  lastLikeAt?: Maybe<ProductsDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<ProductsDocAccessFields_LikeCount>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   orderable?: Maybe<ProductsDocAccessFields_Orderable>;
@@ -36965,6 +38035,7 @@ export type ProductsDocAccessFields = {
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
   serverURL?: Maybe<ProductsDocAccessFields_ServerUrl>;
+  subscriberCount?: Maybe<ProductsDocAccessFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsDocAccessFields_UnlimitedInventory>;
   updatedAt?: Maybe<ProductsDocAccessFields_UpdatedAt>;
   url?: Maybe<ProductsDocAccessFields_Url>;
@@ -37081,6 +38152,34 @@ export type ProductsDocAccessFields_CompletenessScore_Read = {
 
 export type ProductsDocAccessFields_CompletenessScore_Update = {
   __typename?: 'ProductsDocAccessFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_ContentRankScore = {
+  __typename?: 'ProductsDocAccessFields_contentRankScore';
+  create?: Maybe<ProductsDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<ProductsDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<ProductsDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<ProductsDocAccessFields_ContentRankScore_Update>;
+};
+
+export type ProductsDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'ProductsDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'ProductsDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'ProductsDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'ProductsDocAccessFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -37396,6 +38495,34 @@ export type ProductsDocAccessFields_IsSubscribed_Read = {
 
 export type ProductsDocAccessFields_IsSubscribed_Update = {
   __typename?: 'ProductsDocAccessFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_LastLikeAt = {
+  __typename?: 'ProductsDocAccessFields_lastLikeAt';
+  create?: Maybe<ProductsDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<ProductsDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<ProductsDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<ProductsDocAccessFields_LastLikeAt_Update>;
+};
+
+export type ProductsDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'ProductsDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'ProductsDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'ProductsDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'ProductsDocAccessFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -37771,6 +38898,34 @@ export type ProductsDocAccessFields_ServerUrl_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_SubscriberCount = {
+  __typename?: 'ProductsDocAccessFields_subscriberCount';
+  create?: Maybe<ProductsDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<ProductsDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<ProductsDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<ProductsDocAccessFields_SubscriberCount_Update>;
+};
+
+export type ProductsDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'ProductsDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'ProductsDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'ProductsDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'ProductsDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_UnlimitedInventory = {
   __typename?: 'ProductsDocAccessFields_unlimitedInventory';
   create?: Maybe<ProductsDocAccessFields_UnlimitedInventory_Create>;
@@ -37917,6 +39072,7 @@ export type ProductsFields = {
   company?: Maybe<ProductsFields_Company>;
   companyIdentityId?: Maybe<ProductsFields_CompanyIdentityId>;
   completenessScore?: Maybe<ProductsFields_CompletenessScore>;
+  contentRankScore?: Maybe<ProductsFields_ContentRankScore>;
   createdAt?: Maybe<ProductsFields_CreatedAt>;
   cryptoAddresses?: Maybe<ProductsFields_CryptoAddresses>;
   deletedAt?: Maybe<ProductsFields_DeletedAt>;
@@ -37926,6 +39082,7 @@ export type ProductsFields = {
   image?: Maybe<ProductsFields_Image>;
   inventory?: Maybe<ProductsFields_Inventory>;
   isSubscribed?: Maybe<ProductsFields_IsSubscribed>;
+  lastLikeAt?: Maybe<ProductsFields_LastLikeAt>;
   likeCount?: Maybe<ProductsFields_LikeCount>;
   name?: Maybe<ProductsFields_Name>;
   orderable?: Maybe<ProductsFields_Orderable>;
@@ -37936,6 +39093,7 @@ export type ProductsFields = {
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
   serverURL?: Maybe<ProductsFields_ServerUrl>;
+  subscriberCount?: Maybe<ProductsFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsFields_UnlimitedInventory>;
   updatedAt?: Maybe<ProductsFields_UpdatedAt>;
   url?: Maybe<ProductsFields_Url>;
@@ -38052,6 +39210,34 @@ export type ProductsFields_CompletenessScore_Read = {
 
 export type ProductsFields_CompletenessScore_Update = {
   __typename?: 'ProductsFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_ContentRankScore = {
+  __typename?: 'ProductsFields_contentRankScore';
+  create?: Maybe<ProductsFields_ContentRankScore_Create>;
+  delete?: Maybe<ProductsFields_ContentRankScore_Delete>;
+  read?: Maybe<ProductsFields_ContentRankScore_Read>;
+  update?: Maybe<ProductsFields_ContentRankScore_Update>;
+};
+
+export type ProductsFields_ContentRankScore_Create = {
+  __typename?: 'ProductsFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_ContentRankScore_Delete = {
+  __typename?: 'ProductsFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_ContentRankScore_Read = {
+  __typename?: 'ProductsFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_ContentRankScore_Update = {
+  __typename?: 'ProductsFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -38367,6 +39553,34 @@ export type ProductsFields_IsSubscribed_Read = {
 
 export type ProductsFields_IsSubscribed_Update = {
   __typename?: 'ProductsFields_isSubscribed_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_LastLikeAt = {
+  __typename?: 'ProductsFields_lastLikeAt';
+  create?: Maybe<ProductsFields_LastLikeAt_Create>;
+  delete?: Maybe<ProductsFields_LastLikeAt_Delete>;
+  read?: Maybe<ProductsFields_LastLikeAt_Read>;
+  update?: Maybe<ProductsFields_LastLikeAt_Update>;
+};
+
+export type ProductsFields_LastLikeAt_Create = {
+  __typename?: 'ProductsFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_LastLikeAt_Delete = {
+  __typename?: 'ProductsFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_LastLikeAt_Read = {
+  __typename?: 'ProductsFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_LastLikeAt_Update = {
+  __typename?: 'ProductsFields_lastLikeAt_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -38739,6 +39953,34 @@ export type ProductsFields_ServerUrl_Read = {
 
 export type ProductsFields_ServerUrl_Update = {
   __typename?: 'ProductsFields_serverURL_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_SubscriberCount = {
+  __typename?: 'ProductsFields_subscriberCount';
+  create?: Maybe<ProductsFields_SubscriberCount_Create>;
+  delete?: Maybe<ProductsFields_SubscriberCount_Delete>;
+  read?: Maybe<ProductsFields_SubscriberCount_Read>;
+  update?: Maybe<ProductsFields_SubscriberCount_Update>;
+};
+
+export type ProductsFields_SubscriberCount_Create = {
+  __typename?: 'ProductsFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_SubscriberCount_Delete = {
+  __typename?: 'ProductsFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_SubscriberCount_Read = {
+  __typename?: 'ProductsFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_SubscriberCount_Update = {
+  __typename?: 'ProductsFields_subscriberCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -43198,6 +44440,7 @@ export type Startup = {
   alreadyHave?: Maybe<Array<Startup_AlreadyHave>>;
   company?: Maybe<Company>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -43208,10 +44451,12 @@ export type Startup = {
   image?: Maybe<Media>;
   involvedUsers?: Maybe<Array<User>>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   lookingFor?: Maybe<Array<Startup_LookingFor>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   stage?: Maybe<Startup_Stage>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -43297,6 +44542,7 @@ export type StartupVersion_Version = {
   alreadyHave?: Maybe<Array<StartupVersion_Version_AlreadyHave>>;
   company?: Maybe<Company>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -43306,10 +44552,12 @@ export type StartupVersion_Version = {
   image?: Maybe<Media>;
   involvedUsers?: Maybe<Array<User>>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   lookingFor?: Maybe<Array<StartupVersion_Version_LookingFor>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   stage?: Maybe<StartupVersion_Version_Stage>;
+  subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -43492,6 +44740,16 @@ export type Startup_CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Startup_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Startup_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -43601,6 +44859,17 @@ export type Startup_IsSubscribed_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Startup_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type Startup_LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -43696,6 +44965,16 @@ export type Startup_Stage_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Startup_Stage_Input>>>;
 };
 
+export type Startup_SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Startup_Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -43724,6 +45003,7 @@ export type Startup_Where = {
   alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -43735,10 +45015,12 @@ export type Startup_Where = {
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
   isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Startup_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Startup_LikeCount_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
+  subscriberCount?: InputMaybe<Startup_SubscriberCount_Operator>;
   title?: InputMaybe<Startup_Title_Operator>;
   updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
 };
@@ -43750,6 +45032,7 @@ export type Startup_Where_And = {
   alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -43761,10 +45044,12 @@ export type Startup_Where_And = {
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
   isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Startup_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Startup_LikeCount_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
+  subscriberCount?: InputMaybe<Startup_SubscriberCount_Operator>;
   title?: InputMaybe<Startup_Title_Operator>;
   updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
 };
@@ -43776,6 +45061,7 @@ export type Startup_Where_Or = {
   alreadyHave?: InputMaybe<Startup_AlreadyHave_Operator>;
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
+  contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -43787,10 +45073,12 @@ export type Startup_Where_Or = {
   image?: InputMaybe<Startup_Image_Operator>;
   involvedUsers?: InputMaybe<Startup_InvolvedUsers_Operator>;
   isSubscribed?: InputMaybe<Startup_IsSubscribed_Operator>;
+  lastLikeAt?: InputMaybe<Startup_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Startup_LikeCount_Operator>;
   lookingFor?: InputMaybe<Startup_LookingFor_Operator>;
   serverURL?: InputMaybe<Startup_ServerUrl_Operator>;
   stage?: InputMaybe<Startup_Stage_Operator>;
+  subscriberCount?: InputMaybe<Startup_SubscriberCount_Operator>;
   title?: InputMaybe<Startup_Title_Operator>;
   updatedAt?: InputMaybe<Startup_UpdatedAt_Operator>;
 };
@@ -43840,6 +45128,7 @@ export type StartupsDocAccessFields = {
   alreadyHave?: Maybe<StartupsDocAccessFields_AlreadyHave>;
   company?: Maybe<StartupsDocAccessFields_Company>;
   completenessScore?: Maybe<StartupsDocAccessFields_CompletenessScore>;
+  contentRankScore?: Maybe<StartupsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<StartupsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<StartupsDocAccessFields_CreatedBy>;
   description?: Maybe<StartupsDocAccessFields_Description>;
@@ -43849,10 +45138,12 @@ export type StartupsDocAccessFields = {
   image?: Maybe<StartupsDocAccessFields_Image>;
   involvedUsers?: Maybe<StartupsDocAccessFields_InvolvedUsers>;
   isSubscribed?: Maybe<StartupsDocAccessFields_IsSubscribed>;
+  lastLikeAt?: Maybe<StartupsDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<StartupsDocAccessFields_LikeCount>;
   lookingFor?: Maybe<StartupsDocAccessFields_LookingFor>;
   serverURL?: Maybe<StartupsDocAccessFields_ServerUrl>;
   stage?: Maybe<StartupsDocAccessFields_Stage>;
+  subscriberCount?: Maybe<StartupsDocAccessFields_SubscriberCount>;
   title?: Maybe<StartupsDocAccessFields_Title>;
   updatedAt?: Maybe<StartupsDocAccessFields_UpdatedAt>;
 };
@@ -43966,6 +45257,34 @@ export type StartupsDocAccessFields_CompletenessScore_Read = {
 
 export type StartupsDocAccessFields_CompletenessScore_Update = {
   __typename?: 'StartupsDocAccessFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContentRankScore = {
+  __typename?: 'StartupsDocAccessFields_contentRankScore';
+  create?: Maybe<StartupsDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContentRankScore_Update>;
+};
+
+export type StartupsDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'StartupsDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'StartupsDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'StartupsDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'StartupsDocAccessFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -44284,6 +45603,34 @@ export type StartupsDocAccessFields_IsSubscribed_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type StartupsDocAccessFields_LastLikeAt = {
+  __typename?: 'StartupsDocAccessFields_lastLikeAt';
+  create?: Maybe<StartupsDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<StartupsDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<StartupsDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<StartupsDocAccessFields_LastLikeAt_Update>;
+};
+
+export type StartupsDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'StartupsDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'StartupsDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'StartupsDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'StartupsDocAccessFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type StartupsDocAccessFields_LikeCount = {
   __typename?: 'StartupsDocAccessFields_likeCount';
   create?: Maybe<StartupsDocAccessFields_LikeCount_Create>;
@@ -44396,6 +45743,34 @@ export type StartupsDocAccessFields_Stage_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type StartupsDocAccessFields_SubscriberCount = {
+  __typename?: 'StartupsDocAccessFields_subscriberCount';
+  create?: Maybe<StartupsDocAccessFields_SubscriberCount_Create>;
+  delete?: Maybe<StartupsDocAccessFields_SubscriberCount_Delete>;
+  read?: Maybe<StartupsDocAccessFields_SubscriberCount_Read>;
+  update?: Maybe<StartupsDocAccessFields_SubscriberCount_Update>;
+};
+
+export type StartupsDocAccessFields_SubscriberCount_Create = {
+  __typename?: 'StartupsDocAccessFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_SubscriberCount_Delete = {
+  __typename?: 'StartupsDocAccessFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_SubscriberCount_Read = {
+  __typename?: 'StartupsDocAccessFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_SubscriberCount_Update = {
+  __typename?: 'StartupsDocAccessFields_subscriberCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type StartupsDocAccessFields_Title = {
   __typename?: 'StartupsDocAccessFields_title';
   create?: Maybe<StartupsDocAccessFields_Title_Create>;
@@ -44458,6 +45833,7 @@ export type StartupsFields = {
   alreadyHave?: Maybe<StartupsFields_AlreadyHave>;
   company?: Maybe<StartupsFields_Company>;
   completenessScore?: Maybe<StartupsFields_CompletenessScore>;
+  contentRankScore?: Maybe<StartupsFields_ContentRankScore>;
   createdAt?: Maybe<StartupsFields_CreatedAt>;
   createdBy?: Maybe<StartupsFields_CreatedBy>;
   description?: Maybe<StartupsFields_Description>;
@@ -44467,10 +45843,12 @@ export type StartupsFields = {
   image?: Maybe<StartupsFields_Image>;
   involvedUsers?: Maybe<StartupsFields_InvolvedUsers>;
   isSubscribed?: Maybe<StartupsFields_IsSubscribed>;
+  lastLikeAt?: Maybe<StartupsFields_LastLikeAt>;
   likeCount?: Maybe<StartupsFields_LikeCount>;
   lookingFor?: Maybe<StartupsFields_LookingFor>;
   serverURL?: Maybe<StartupsFields_ServerUrl>;
   stage?: Maybe<StartupsFields_Stage>;
+  subscriberCount?: Maybe<StartupsFields_SubscriberCount>;
   title?: Maybe<StartupsFields_Title>;
   updatedAt?: Maybe<StartupsFields_UpdatedAt>;
 };
@@ -44584,6 +45962,34 @@ export type StartupsFields_CompletenessScore_Read = {
 
 export type StartupsFields_CompletenessScore_Update = {
   __typename?: 'StartupsFields_completenessScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContentRankScore = {
+  __typename?: 'StartupsFields_contentRankScore';
+  create?: Maybe<StartupsFields_ContentRankScore_Create>;
+  delete?: Maybe<StartupsFields_ContentRankScore_Delete>;
+  read?: Maybe<StartupsFields_ContentRankScore_Read>;
+  update?: Maybe<StartupsFields_ContentRankScore_Update>;
+};
+
+export type StartupsFields_ContentRankScore_Create = {
+  __typename?: 'StartupsFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContentRankScore_Delete = {
+  __typename?: 'StartupsFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContentRankScore_Read = {
+  __typename?: 'StartupsFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContentRankScore_Update = {
+  __typename?: 'StartupsFields_contentRankScore_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -44902,6 +46308,34 @@ export type StartupsFields_IsSubscribed_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type StartupsFields_LastLikeAt = {
+  __typename?: 'StartupsFields_lastLikeAt';
+  create?: Maybe<StartupsFields_LastLikeAt_Create>;
+  delete?: Maybe<StartupsFields_LastLikeAt_Delete>;
+  read?: Maybe<StartupsFields_LastLikeAt_Read>;
+  update?: Maybe<StartupsFields_LastLikeAt_Update>;
+};
+
+export type StartupsFields_LastLikeAt_Create = {
+  __typename?: 'StartupsFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LastLikeAt_Delete = {
+  __typename?: 'StartupsFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LastLikeAt_Read = {
+  __typename?: 'StartupsFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_LastLikeAt_Update = {
+  __typename?: 'StartupsFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type StartupsFields_LikeCount = {
   __typename?: 'StartupsFields_likeCount';
   create?: Maybe<StartupsFields_LikeCount_Create>;
@@ -45011,6 +46445,34 @@ export type StartupsFields_Stage_Read = {
 
 export type StartupsFields_Stage_Update = {
   __typename?: 'StartupsFields_stage_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_SubscriberCount = {
+  __typename?: 'StartupsFields_subscriberCount';
+  create?: Maybe<StartupsFields_SubscriberCount_Create>;
+  delete?: Maybe<StartupsFields_SubscriberCount_Delete>;
+  read?: Maybe<StartupsFields_SubscriberCount_Read>;
+  update?: Maybe<StartupsFields_SubscriberCount_Update>;
+};
+
+export type StartupsFields_SubscriberCount_Create = {
+  __typename?: 'StartupsFields_subscriberCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_SubscriberCount_Delete = {
+  __typename?: 'StartupsFields_subscriberCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_SubscriberCount_Read = {
+  __typename?: 'StartupsFields_subscriberCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_SubscriberCount_Update = {
+  __typename?: 'StartupsFields_subscriberCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -54443,6 +55905,7 @@ export type MutationCompanyInput = {
   _status?: InputMaybe<Company__Status_MutationInput>;
   allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationCompany_CryptoAddressesInput>;
@@ -54453,10 +55916,12 @@ export type MutationCompanyInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
@@ -54479,6 +55944,7 @@ export type MutationCompanyUpdateInput = {
   _status?: InputMaybe<CompanyUpdate__Status_MutationInput>;
   allowedIdentities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationCompanyUpdate_CryptoAddressesInput>;
@@ -54489,10 +55955,12 @@ export type MutationCompanyUpdateInput = {
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
@@ -54626,6 +56094,8 @@ export type MutationHeader_NavItems_LinkInput = {
 };
 
 export type MutationIdentityInput = {
+  completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -54633,9 +56103,11 @@ export type MutationIdentityInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   itemCount?: InputMaybe<Scalars['Float']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
@@ -54655,6 +56127,8 @@ export type MutationIdentityLikeUpdateInput = {
 };
 
 export type MutationIdentityUpdateInput = {
+  completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -54662,9 +56136,11 @@ export type MutationIdentityUpdateInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   itemCount?: InputMaybe<Scalars['Float']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
@@ -54677,6 +56153,7 @@ export type MutationJobInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -54686,12 +56163,14 @@ export type MutationJobInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   positions: Scalars['Float']['input'];
   postedAt: Scalars['String']['input'];
   salaryRange?: InputMaybe<MutationJob_SalaryRangeInput>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -54718,6 +56197,7 @@ export type MutationJobUpdateInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -54727,12 +56207,14 @@ export type MutationJobUpdateInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   positions?: InputMaybe<Scalars['Float']['input']>;
   postedAt?: InputMaybe<Scalars['String']['input']>;
   salaryRange?: InputMaybe<MutationJobUpdate_SalaryRangeInput>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -55340,18 +56822,22 @@ export type MutationPostInput = {
   _status?: InputMaybe<Post__Status_MutationInput>;
   authors?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  completenessScore?: InputMaybe<Scalars['Float']['input']>;
   content: Scalars['String']['input'];
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   meta?: InputMaybe<MutationPost_MetaInput>;
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPost_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   relatedPosts?: InputMaybe<Array<InputMaybe<Post_RelatedPostsRelationshipInput>>>;
   slug: Scalars['String']['input'];
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -55374,18 +56860,22 @@ export type MutationPostUpdateInput = {
   _status?: InputMaybe<PostUpdate__Status_MutationInput>;
   authors?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  completenessScore?: InputMaybe<Scalars['Float']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
   hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   meta?: InputMaybe<MutationPostUpdate_MetaInput>;
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPostUpdate_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   relatedPosts?: InputMaybe<Array<InputMaybe<PostUpdate_RelatedPostsRelationshipInput>>>;
   slug?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -55417,6 +56907,7 @@ export type MutationProductInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationProduct_CryptoAddressesInput>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
@@ -55426,6 +56917,7 @@ export type MutationProductInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -55436,6 +56928,7 @@ export type MutationProductInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -55461,6 +56954,7 @@ export type MutationProductUpdateInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   companyIdentityId?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationProductUpdate_CryptoAddressesInput>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
@@ -55470,6 +56964,7 @@ export type MutationProductUpdateInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   inventory?: InputMaybe<Scalars['Float']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -55480,6 +56975,7 @@ export type MutationProductUpdateInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -55607,6 +57103,7 @@ export type MutationStartupInput = {
   alreadyHave?: InputMaybe<Array<InputMaybe<Startup_AlreadyHave_MutationInput>>>;
   company?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -55616,10 +57113,12 @@ export type MutationStartupInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   lookingFor?: InputMaybe<Array<InputMaybe<Startup_LookingFor_MutationInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   stage: Startup_Stage_MutationInput;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -55629,6 +57128,7 @@ export type MutationStartupUpdateInput = {
   alreadyHave?: InputMaybe<Array<InputMaybe<StartupUpdate_AlreadyHave_MutationInput>>>;
   company?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -55638,10 +57138,12 @@ export type MutationStartupUpdateInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   involvedUsers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   lookingFor?: InputMaybe<Array<InputMaybe<StartupUpdate_LookingFor_MutationInput>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   stage?: InputMaybe<StartupUpdate_Stage_MutationInput>;
+  subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -56582,6 +58084,16 @@ export type VersionsCompany_Version__CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsCompany_Version__ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsCompany_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -56684,6 +58196,17 @@ export type VersionsCompany_Version__IsSubscribed_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsCompany_Version__LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type VersionsCompany_Version__LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -56726,6 +58249,16 @@ export type VersionsCompany_Version__ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsCompany_Version__SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsCompany_Version__UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -56759,6 +58292,7 @@ export type VersionsCompany_Where = {
   version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__completenessScore?: InputMaybe<VersionsCompany_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsCompany_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
@@ -56770,10 +58304,12 @@ export type VersionsCompany_Where = {
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
@@ -56789,6 +58325,7 @@ export type VersionsCompany_Where_And = {
   version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__completenessScore?: InputMaybe<VersionsCompany_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsCompany_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
@@ -56800,10 +58337,12 @@ export type VersionsCompany_Where_And = {
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
@@ -56819,6 +58358,7 @@ export type VersionsCompany_Where_Or = {
   version___status?: InputMaybe<VersionsCompany_Version___Status_Operator>;
   version__allowedIdentities?: InputMaybe<VersionsCompany_Version__AllowedIdentities_Operator>;
   version__completenessScore?: InputMaybe<VersionsCompany_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsCompany_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsCompany_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsCompany_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsCompany_Version__CryptoAddresses__Address_Operator>;
@@ -56830,10 +58370,12 @@ export type VersionsCompany_Where_Or = {
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
@@ -56982,6 +58524,16 @@ export type VersionsJob_Version__CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsJob_Version__ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsJob_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -57059,6 +58611,17 @@ export type VersionsJob_Version__IsSubscribed_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsJob_Version__LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type VersionsJob_Version__LikeCount_Operator = {
@@ -57155,6 +58718,16 @@ export type VersionsJob_Version__ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsJob_Version__SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsJob_Version__Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -57192,6 +58765,7 @@ export type VersionsJob_Where = {
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsJob_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsJob_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -57201,6 +58775,7 @@ export type VersionsJob_Where = {
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsJob_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsJob_Version__LikeCount_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
@@ -57209,6 +58784,7 @@ export type VersionsJob_Where = {
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
   version__salaryRange__min?: InputMaybe<VersionsJob_Version__SalaryRange__Min_Operator>;
   version__serverURL?: InputMaybe<VersionsJob_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsJob_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsJob_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsJob_Version__UpdatedAt_Operator>;
 };
@@ -57229,6 +58805,7 @@ export type VersionsJob_Where_And = {
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsJob_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsJob_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -57238,6 +58815,7 @@ export type VersionsJob_Where_And = {
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsJob_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsJob_Version__LikeCount_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
@@ -57246,6 +58824,7 @@ export type VersionsJob_Where_And = {
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
   version__salaryRange__min?: InputMaybe<VersionsJob_Version__SalaryRange__Min_Operator>;
   version__serverURL?: InputMaybe<VersionsJob_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsJob_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsJob_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsJob_Version__UpdatedAt_Operator>;
 };
@@ -57266,6 +58845,7 @@ export type VersionsJob_Where_Or = {
   version__company?: InputMaybe<VersionsJob_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsJob_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsJob_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsJob_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsJob_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsJob_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsJob_Version__Description_Operator>;
@@ -57275,6 +58855,7 @@ export type VersionsJob_Where_Or = {
   version__image?: InputMaybe<VersionsJob_Version__Image_Operator>;
   version__isActive?: InputMaybe<VersionsJob_Version__IsActive_Operator>;
   version__isSubscribed?: InputMaybe<VersionsJob_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsJob_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsJob_Version__LikeCount_Operator>;
   version__location?: InputMaybe<VersionsJob_Version__Location_Operator>;
   version__positions?: InputMaybe<VersionsJob_Version__Positions_Operator>;
@@ -57283,6 +58864,7 @@ export type VersionsJob_Where_Or = {
   version__salaryRange__max?: InputMaybe<VersionsJob_Version__SalaryRange__Max_Operator>;
   version__salaryRange__min?: InputMaybe<VersionsJob_Version__SalaryRange__Min_Operator>;
   version__serverURL?: InputMaybe<VersionsJob_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsJob_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsJob_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsJob_Version__UpdatedAt_Operator>;
 };
@@ -57767,6 +59349,26 @@ export type VersionsPost_Version__Categories_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsPost_Version__CompletenessScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type VersionsPost_Version__ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsPost_Version__Content_Operator = {
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -57812,6 +59414,17 @@ export type VersionsPost_Version__HeroImage_Operator = {
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VersionsPost_Version__LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type VersionsPost_Version__LikeCount_Operator = {
@@ -57909,6 +59522,16 @@ export type VersionsPost_Version__Slug_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsPost_Version__SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsPost_Version__Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -57942,12 +59565,15 @@ export type VersionsPost_Where = {
   version___status?: InputMaybe<VersionsPost_Version___Status_Operator>;
   version__authors?: InputMaybe<VersionsPost_Version__Authors_Operator>;
   version__categories?: InputMaybe<VersionsPost_Version__Categories_Operator>;
+  version__completenessScore?: InputMaybe<VersionsPost_Version__CompletenessScore_Operator>;
   version__content?: InputMaybe<VersionsPost_Version__Content_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsPost_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsPost_Version__CreatedBy_Operator>;
   version__generateSlug?: InputMaybe<VersionsPost_Version__GenerateSlug_Operator>;
   version__hasLiked?: InputMaybe<VersionsPost_Version__HasLiked_Operator>;
   version__heroImage?: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsPost_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsPost_Version__LikeCount_Operator>;
   version__meta__description?: InputMaybe<VersionsPost_Version__Meta__Description_Operator>;
   version__meta__image?: InputMaybe<VersionsPost_Version__Meta__Image_Operator>;
@@ -57957,6 +59583,7 @@ export type VersionsPost_Where = {
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
 };
@@ -57973,12 +59600,15 @@ export type VersionsPost_Where_And = {
   version___status?: InputMaybe<VersionsPost_Version___Status_Operator>;
   version__authors?: InputMaybe<VersionsPost_Version__Authors_Operator>;
   version__categories?: InputMaybe<VersionsPost_Version__Categories_Operator>;
+  version__completenessScore?: InputMaybe<VersionsPost_Version__CompletenessScore_Operator>;
   version__content?: InputMaybe<VersionsPost_Version__Content_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsPost_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsPost_Version__CreatedBy_Operator>;
   version__generateSlug?: InputMaybe<VersionsPost_Version__GenerateSlug_Operator>;
   version__hasLiked?: InputMaybe<VersionsPost_Version__HasLiked_Operator>;
   version__heroImage?: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsPost_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsPost_Version__LikeCount_Operator>;
   version__meta__description?: InputMaybe<VersionsPost_Version__Meta__Description_Operator>;
   version__meta__image?: InputMaybe<VersionsPost_Version__Meta__Image_Operator>;
@@ -57988,6 +59618,7 @@ export type VersionsPost_Where_And = {
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
 };
@@ -58004,12 +59635,15 @@ export type VersionsPost_Where_Or = {
   version___status?: InputMaybe<VersionsPost_Version___Status_Operator>;
   version__authors?: InputMaybe<VersionsPost_Version__Authors_Operator>;
   version__categories?: InputMaybe<VersionsPost_Version__Categories_Operator>;
+  version__completenessScore?: InputMaybe<VersionsPost_Version__CompletenessScore_Operator>;
   version__content?: InputMaybe<VersionsPost_Version__Content_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsPost_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsPost_Version__CreatedBy_Operator>;
   version__generateSlug?: InputMaybe<VersionsPost_Version__GenerateSlug_Operator>;
   version__hasLiked?: InputMaybe<VersionsPost_Version__HasLiked_Operator>;
   version__heroImage?: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsPost_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsPost_Version__LikeCount_Operator>;
   version__meta__description?: InputMaybe<VersionsPost_Version__Meta__Description_Operator>;
   version__meta__image?: InputMaybe<VersionsPost_Version__Meta__Image_Operator>;
@@ -58019,6 +59653,7 @@ export type VersionsPost_Where_Or = {
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
 };
@@ -58135,6 +59770,16 @@ export type VersionsProduct_Version__CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsProduct_Version__ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsProduct_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -58226,6 +59871,17 @@ export type VersionsProduct_Version__IsSubscribed_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsProduct_Version__LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type VersionsProduct_Version__LikeCount_Operator = {
@@ -58346,6 +60002,16 @@ export type VersionsProduct_Version__ServerUrl_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsProduct_Version__SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsProduct_Version__UnlimitedInventory_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -58396,6 +60062,7 @@ export type VersionsProduct_Where = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
@@ -58406,6 +60073,7 @@ export type VersionsProduct_Where = {
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsProduct_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
@@ -58418,6 +60086,7 @@ export type VersionsProduct_Where = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
@@ -58437,6 +60106,7 @@ export type VersionsProduct_Where_And = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
@@ -58447,6 +60117,7 @@ export type VersionsProduct_Where_And = {
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsProduct_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
@@ -58459,6 +60130,7 @@ export type VersionsProduct_Where_And = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
@@ -58478,6 +60150,7 @@ export type VersionsProduct_Where_Or = {
   version__company?: InputMaybe<VersionsProduct_Version__Company_Operator>;
   version__companyIdentityId?: InputMaybe<VersionsProduct_Version__CompanyIdentityId_Operator>;
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
@@ -58488,6 +60161,7 @@ export type VersionsProduct_Where_Or = {
   version__image?: InputMaybe<VersionsProduct_Version__Image_Operator>;
   version__inventory?: InputMaybe<VersionsProduct_Version__Inventory_Operator>;
   version__isSubscribed?: InputMaybe<VersionsProduct_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsProduct_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
@@ -58500,6 +60174,7 @@ export type VersionsProduct_Where_Or = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
   version__updatedAt?: InputMaybe<VersionsProduct_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsProduct_Version__Url_Operator>;
@@ -58621,6 +60296,16 @@ export type VersionsStartup_Version__CompletenessScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsStartup_Version__ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsStartup_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -58719,6 +60404,17 @@ export type VersionsStartup_Version__IsSubscribed_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsStartup_Version__LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
 export type VersionsStartup_Version__LikeCount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -58776,6 +60472,16 @@ export type VersionsStartup_Version__Stage_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__Stage_Input>>>;
 };
 
+export type VersionsStartup_Version__SubscriberCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsStartup_Version__Title_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -58809,6 +60515,7 @@ export type VersionsStartup_Where = {
   version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -58819,10 +60526,12 @@ export type VersionsStartup_Where = {
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
   version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsStartup_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsStartup_Version__LikeCount_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsStartup_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
 };
@@ -58839,6 +60548,7 @@ export type VersionsStartup_Where_And = {
   version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -58849,10 +60559,12 @@ export type VersionsStartup_Where_And = {
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
   version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsStartup_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsStartup_Version__LikeCount_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsStartup_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
 };
@@ -58869,6 +60581,7 @@ export type VersionsStartup_Where_Or = {
   version__alreadyHave?: InputMaybe<VersionsStartup_Version__AlreadyHave_Operator>;
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
+  version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -58879,10 +60592,12 @@ export type VersionsStartup_Where_Or = {
   version__image?: InputMaybe<VersionsStartup_Version__Image_Operator>;
   version__involvedUsers?: InputMaybe<VersionsStartup_Version__InvolvedUsers_Operator>;
   version__isSubscribed?: InputMaybe<VersionsStartup_Version__IsSubscribed_Operator>;
+  version__lastLikeAt?: InputMaybe<VersionsStartup_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsStartup_Version__LikeCount_Operator>;
   version__lookingFor?: InputMaybe<VersionsStartup_Version__LookingFor_Operator>;
   version__serverURL?: InputMaybe<VersionsStartup_Version__ServerUrl_Operator>;
   version__stage?: InputMaybe<VersionsStartup_Version__Stage_Operator>;
+  version__subscriberCount?: InputMaybe<VersionsStartup_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsStartup_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsStartup_Version__UpdatedAt_Operator>;
 };
@@ -59356,6 +61071,7 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -59374,6 +61090,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59401,6 +61118,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59450,6 +61168,7 @@ export type LikeCompanyMutation = { __typename?: 'Mutation', setLikeState: { __t
 export type ListCompaniesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59535,6 +61254,7 @@ export type LikeIdentityMutation = { __typename?: 'Mutation', setLikeState: { __
 export type ListIdentitiesQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59561,6 +61281,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59588,6 +61309,7 @@ export type ListJobsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -59607,6 +61329,7 @@ export type ListJobsBySecondaryIdentityQueryVariables = Exact<{
   companyIds?: InputMaybe<Array<Scalars['JSON']['input']> | Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59657,6 +61380,7 @@ export type LikeJobMutation = { __typename?: 'Mutation', setLikeState: { __typen
 export type ListJobsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59702,6 +61426,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59711,6 +61436,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59838,6 +61564,7 @@ export type LikePostMutation = { __typename?: 'Mutation', setLikeState: { __type
 export type ListPostsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59873,6 +61600,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59900,6 +61628,7 @@ export type ListProductsByCreatorQueryVariables = Exact<{
   companyIds?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>> | InputMaybe<Scalars['JSON']['input']>>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -59947,6 +61676,7 @@ export type LikeProductMutation = { __typename?: 'Mutation', setLikeState: { __t
 export type ListProductsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -59996,6 +61726,7 @@ export type ListStartupsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -60005,6 +61736,7 @@ export type ListStartupsByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
@@ -60023,6 +61755,7 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -60046,6 +61779,7 @@ export type DeleteStartupMutation = { __typename?: 'Mutation', deleteStartup?: {
 export type ListStartupsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -60462,11 +62196,12 @@ export const useUpdateCartMutation = <
 useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
 
 export const ListCompaniesByCreatorDocument = `
-    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+    query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $sort: String = "-contentRankScore", $draft: Boolean = false) {
   Companies(
     draft: $draft
     page: $page
     limit: $limit
+    sort: $sort
     where: {createdBy: {equals: $userId}}
   ) {
     docs {
@@ -60590,12 +62325,13 @@ useCompanyByIdQuery.getKey = (variables: CompanyByIdQueryVariables) => ['Company
 useCompanyByIdQuery.fetcher = (variables: CompanyByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(CompanyByIdDocument, variables, options);
 
 export const ListCompaniesByIdentityDocument = `
-    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
     where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -60683,7 +62419,7 @@ useListCompaniesByIdentityQuery.getKey = (variables: ListCompaniesByIdentityQuer
 useListCompaniesByIdentityQuery.fetcher = (variables: ListCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesByIdentityQuery, ListCompaniesByIdentityQueryVariables>(ListCompaniesByIdentityDocument, variables, options);
 
 export const SearchCompaniesByIdentityDocument = `
-    query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
@@ -60786,12 +62522,13 @@ useSearchCompaniesByIdentityQuery.getKey = (variables: SearchCompaniesByIdentity
 useSearchCompaniesByIdentityQuery.fetcher = (variables: SearchCompaniesByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchCompaniesByIdentityQuery, SearchCompaniesByIdentityQueryVariables>(SearchCompaniesByIdentityDocument, variables, options);
 
 export const ListCompaniesBySecondaryIdentityDocument = `
-    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
     where: {AND: [{allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -60878,7 +62615,7 @@ useListCompaniesBySecondaryIdentityQuery.getKey = (variables: ListCompaniesBySec
 useListCompaniesBySecondaryIdentityQuery.fetcher = (variables: ListCompaniesBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesBySecondaryIdentityQuery, ListCompaniesBySecondaryIdentityQueryVariables>(ListCompaniesBySecondaryIdentityDocument, variables, options);
 
 export const SearchCompaniesBySecondaryIdentityDocument = `
-    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
     where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
@@ -61083,12 +62820,13 @@ export const useLikeCompanyMutation = <
 useLikeCompanyMutation.fetcher = (variables: LikeCompanyMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeCompanyMutation, LikeCompanyMutationVariables>(LikeCompanyDocument, variables, options);
 
 export const ListCompaniesDocument = `
-    query ListCompanies($page: Int = 1, $limit: Int = 20) {
+    query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
     where: {_status: {equals: published}}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -61176,7 +62914,7 @@ useListCompaniesQuery.getKey = (variables?: ListCompaniesQueryVariables) => vari
 useListCompaniesQuery.fetcher = (variables?: ListCompaniesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCompaniesQuery, ListCompaniesQueryVariables>(ListCompaniesDocument, variables, options);
 
 export const SearchCompaniesDocument = `
-    query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
@@ -61565,8 +63303,8 @@ export const useLikeIdentityMutation = <
 useLikeIdentityMutation.fetcher = (variables: LikeIdentityMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeIdentityMutation, LikeIdentityMutationVariables>(LikeIdentityDocument, variables, options);
 
 export const ListIdentitiesDocument = `
-    query ListIdentities($page: Int = 1, $limit: Int = 20) {
-  Identities(draft: false, page: $page, limit: $limit) {
+    query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+  Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       isSubscribed
@@ -61621,7 +63359,7 @@ useListIdentitiesQuery.getKey = (variables?: ListIdentitiesQueryVariables) => va
 useListIdentitiesQuery.fetcher = (variables?: ListIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListIdentitiesQuery, ListIdentitiesQueryVariables>(ListIdentitiesDocument, variables, options);
 
 export const SearchIdentitiesDocument = `
-    query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchIdentities($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: identities}}]}
@@ -61692,12 +63430,13 @@ useSearchIdentitiesQuery.getKey = (variables: SearchIdentitiesQueryVariables) =>
 useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables, options);
 
 export const ListJobsByCompanyDocument = `
-    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Jobs(
     draft: false
     where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -61795,7 +63534,7 @@ useListJobsByCompanyQuery.getKey = (variables: ListJobsByCompanyQueryVariables) 
 useListJobsByCompanyQuery.fetcher = (variables: ListJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(ListJobsByCompanyDocument, variables, options);
 
 export const SearchJobsByCompanyDocument = `
-    query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchJobsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
@@ -61910,11 +63649,12 @@ useSearchJobsByCompanyQuery.getKey = (variables: SearchJobsByCompanyQueryVariabl
 useSearchJobsByCompanyQuery.fetcher = (variables: SearchJobsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchJobsByCompanyQuery, SearchJobsByCompanyQueryVariables>(SearchJobsByCompanyDocument, variables, options);
 
 export const ListJobsByCreatorDocument = `
-    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+    query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $sort: String = "-contentRankScore", $draft: Boolean = false) {
   Jobs(
     draft: $draft
     page: $page
     limit: $limit
+    sort: $sort
     where: {createdBy: {equals: $userId}}
   ) {
     docs {
@@ -62063,12 +63803,13 @@ useJobByIdQuery.getKey = (variables: JobByIdQueryVariables) => ['JobById', varia
 useJobByIdQuery.fetcher = (variables: JobByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument, variables, options);
 
 export const ListJobsBySecondaryIdentityDocument = `
-    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20) {
+    query ListJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Jobs(
     draft: false
     where: {AND: [{OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -62184,7 +63925,7 @@ useListJobsBySecondaryIdentityQuery.getKey = (variables: ListJobsBySecondaryIden
 useListJobsBySecondaryIdentityQuery.fetcher = (variables: ListJobsBySecondaryIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsBySecondaryIdentityQuery, ListJobsBySecondaryIdentityQueryVariables>(ListJobsBySecondaryIdentityDocument, variables, options);
 
 export const SearchJobsBySecondaryIdentityDocument = `
-    query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String) {
+    query SearchJobsBySecondaryIdentity($identityId: JSON!, $companyIds: [JSON!] = [], $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Jobs(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {OR: [{allowedIdentities: {in: [$identityId]}}, {company: {in: $companyIds}}]}, {_status: {equals: published}}]}
@@ -62417,12 +64158,13 @@ export const useLikeJobMutation = <
 useLikeJobMutation.fetcher = (variables: LikeJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeJobMutation, LikeJobMutationVariables>(LikeJobDocument, variables, options);
 
 export const ListJobsDocument = `
-    query ListJobs($page: Int = 1, $limit: Int = 20) {
+    query ListJobs($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Jobs(
     draft: false
     where: {_status: {equals: published}}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -62540,7 +64282,7 @@ useListJobsQuery.getKey = (variables?: ListJobsQueryVariables) => variables === 
 useListJobsQuery.fetcher = (variables?: ListJobsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsQuery, ListJobsQueryVariables>(ListJobsDocument, variables, options);
 
 export const SearchJobsDocument = `
-    query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchJobs($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: jobs}}]}
@@ -62754,12 +64496,13 @@ useListCommentsByTargetQuery.getKey = (variables: ListCommentsByTargetQueryVaria
 useListCommentsByTargetQuery.fetcher = (variables: ListCommentsByTargetQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentsByTargetQuery, ListCommentsByTargetQueryVariables>(ListCommentsByTargetDocument, variables, options);
 
 export const ListJobsByIdentityDocument = `
-    query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+    query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1, $sort: String = "-contentRankScore") {
   Jobs(
     draft: false
     where: {AND: [{companyIdentityId: {equals: $identityId}}, {_status: {equals: published}}]}
     limit: $limit
     page: $page
+    sort: $sort
   ) {
     docs {
       id
@@ -62825,12 +64568,13 @@ useListJobsByIdentityQuery.getKey = (variables: ListJobsByIdentityQueryVariables
 useListJobsByIdentityQuery.fetcher = (variables: ListJobsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(ListJobsByIdentityDocument, variables, options);
 
 export const ListProductsByIdentityDocument = `
-    query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+    query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1, $sort: String = "-contentRankScore") {
   Products(
     draft: false
     where: {AND: [{companyIdentityId: {equals: $identityId}}, {_status: {equals: published}}]}
     limit: $limit
     page: $page
+    sort: $sort
   ) {
     docs {
       id
@@ -63624,8 +65368,8 @@ export const useLikePostMutation = <
 useLikePostMutation.fetcher = (variables: LikePostMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikePostMutation, LikePostMutationVariables>(LikePostDocument, variables, options);
 
 export const ListPostsDocument = `
-    query ListPosts($page: Int = 1, $limit: Int = 20) {
-  Posts(draft: false, page: $page, limit: $limit) {
+    query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+  Posts(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
       title
@@ -63693,7 +65437,7 @@ useListPostsQuery.getKey = (variables?: ListPostsQueryVariables) => variables ==
 useListPostsQuery.fetcher = (variables?: ListPostsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, variables, options);
 
 export const SearchPostsDocument = `
-    query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: posts}}]}
@@ -63847,12 +65591,13 @@ export const useUpdatePostMutation = <
 useUpdatePostMutation.fetcher = (variables: UpdatePostMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, variables, options);
 
 export const ListProductsByCompanyDocument = `
-    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Products(
     draft: false
     where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -63938,7 +65683,7 @@ useListProductsByCompanyQuery.getKey = (variables: ListProductsByCompanyQueryVar
 useListProductsByCompanyQuery.fetcher = (variables: ListProductsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByCompanyQuery, ListProductsByCompanyQueryVariables>(ListProductsByCompanyDocument, variables, options);
 
 export const SearchProductsByCompanyDocument = `
-    query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchProductsByCompany($companyId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
@@ -64035,11 +65780,12 @@ useSearchProductsByCompanyQuery.getKey = (variables: SearchProductsByCompanyQuer
 useSearchProductsByCompanyQuery.fetcher = (variables: SearchProductsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchProductsByCompanyQuery, SearchProductsByCompanyQueryVariables>(SearchProductsByCompanyDocument, variables, options);
 
 export const ListProductsByCreatorDocument = `
-    query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+    query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $sort: String = "-contentRankScore", $draft: Boolean = false) {
   Products(
     draft: $draft
     page: $page
     limit: $limit
+    sort: $sort
     where: {company: {in: $companyIds}}
   ) {
     docs {
@@ -64318,12 +66064,13 @@ export const useLikeProductMutation = <
 useLikeProductMutation.fetcher = (variables: LikeProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeProductMutation, LikeProductMutationVariables>(LikeProductDocument, variables, options);
 
 export const ListProductsDocument = `
-    query ListProducts($page: Int = 1, $limit: Int = 20) {
+    query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Products(
     draft: false
     where: {_status: {equals: published}}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -64419,7 +66166,7 @@ useListProductsQuery.getKey = (variables?: ListProductsQueryVariables) => variab
 useListProductsQuery.fetcher = (variables?: ListProductsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsQuery, ListProductsQueryVariables>(ListProductsDocument, variables, options);
 
 export const SearchProductsDocument = `
-    query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: products}}]}
@@ -64630,12 +66377,13 @@ export const useLeaveStartupMutation = <
 useLeaveStartupMutation.fetcher = (variables: LeaveStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LeaveStartupMutation, LeaveStartupMutationVariables>(LeaveStartupDocument, variables, options);
 
 export const ListStartupsByCompanyDocument = `
-    query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Startups(
     draft: false
     where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -64722,11 +66470,12 @@ useListStartupsByCompanyQuery.getKey = (variables: ListStartupsByCompanyQueryVar
 useListStartupsByCompanyQuery.fetcher = (variables: ListStartupsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByCompanyQuery, ListStartupsByCompanyQueryVariables>(ListStartupsByCompanyDocument, variables, options);
 
 export const ListStartupsByCreatorDocument = `
-    query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
+    query ListStartupsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $sort: String = "-contentRankScore", $draft: Boolean = false) {
   Startups(
     draft: $draft
     page: $page
     limit: $limit
+    sort: $sort
     where: {createdBy: {equals: $userId}}
   ) {
     docs {
@@ -64850,12 +66599,13 @@ useStartupByIdQuery.getKey = (variables: StartupByIdQueryVariables) => ['Startup
 useStartupByIdQuery.fetcher = (variables: StartupByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<StartupByIdQuery, StartupByIdQueryVariables>(StartupByIdDocument, variables, options);
 
 export const ListStartupsByIdentityDocument = `
-    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20) {
+    query ListStartupsByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Startups(
     draft: false
     where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}]}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -64976,12 +66726,13 @@ export const useDeleteStartupMutation = <
 useDeleteStartupMutation.fetcher = (variables: DeleteStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeleteStartupMutation, DeleteStartupMutationVariables>(DeleteStartupDocument, variables, options);
 
 export const ListStartupsDocument = `
-    query ListStartups($page: Int = 1, $limit: Int = 20) {
+    query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Startups(
     draft: false
     where: {_status: {equals: published}}
     page: $page
     limit: $limit
+    sort: $sort
   ) {
     docs {
       id
@@ -65072,7 +66823,7 @@ useListStartupsQuery.getKey = (variables?: ListStartupsQueryVariables) => variab
 useListStartupsQuery.fetcher = (variables?: ListStartupsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsQuery, ListStartupsQueryVariables>(ListStartupsDocument, variables, options);
 
 export const SearchStartupsDocument = `
-    query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+    query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
     where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: startups}}]}
