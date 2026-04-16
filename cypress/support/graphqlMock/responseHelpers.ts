@@ -73,6 +73,33 @@ export const createProductRef = (productId: string | undefined): MockNode | null
     return product ? cloneValue(product) : createNodeRef(productId);
 };
 
+export const createPostRef = (postId: string | undefined): MockNode | null => {
+    if (!postId) {
+        return null;
+    }
+
+    const post = activeFixtures.posts.find((item) => item.id === postId);
+    return post ? cloneValue(post) : createNodeRef(postId);
+};
+
+export const createJobRef = (jobId: string | undefined): MockNode | null => {
+    if (!jobId) {
+        return null;
+    }
+
+    const job = activeFixtures.jobs.find((item) => item.id === jobId);
+    return job ? cloneValue(job) : createNodeRef(jobId);
+};
+
+export const createStartupRef = (startupId: string | undefined): MockNode | null => {
+    if (!startupId) {
+        return null;
+    }
+
+    const startup = activeFixtures.startups.find((item) => item.id === startupId);
+    return startup ? cloneValue(startup) : createNodeRef(startupId);
+};
+
 export const createVariantRef = (variantId: string | undefined): MockNode | null => {
     if (!variantId) {
         return null;

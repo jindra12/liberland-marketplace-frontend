@@ -28,11 +28,13 @@ const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
 const Identities = React.lazy(() => import("./components/Identities"));
 const ProductsServices = React.lazy(() => import("./components/ProductsServices"));
+const Posts = React.lazy(() => import("./components/Posts"));
 const Syndication = React.lazy(() => import("./components/Syndication"));
 const Job = React.lazy(() => import("./components/detail/JobDetail"));
 const Company = React.lazy(() => import("./components/detail/CompanyDetail"));
 const Identity = React.lazy(() => import("./components/detail/IdentityDetail"));
 const ProductService = React.lazy(() => import("./components/detail/ProductServiceDetail"));
+const Post = React.lazy(() => import("./components/detail/PostDetail"));
 const SyndicationDetail = React.lazy(() => import("./components/detail/SyndicationDetail"));
 const AppLayout = React.lazy(() => import("./components/AppLayout"));
 const Profile = React.lazy(() => import("./components/Profile"));
@@ -40,6 +42,7 @@ const Publish = React.lazy(() => import("./components/Publish"));
 const EditJob = React.lazy(() => import("./components/edit/EditJob"));
 const EditCompany = React.lazy(() => import("./components/edit/EditCompany"));
 const EditProduct = React.lazy(() => import("./components/edit/EditProduct"));
+const EditPost = React.lazy(() => import("./components/edit/EditPost"));
 const Startups = React.lazy(() => import("./components/Startups"));
 const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
@@ -107,6 +110,7 @@ const Main: React.FunctionComponent = () => (
                                                                         Component={suspense(ProductsServices)}
                                                                         path="/products-services"
                                                                     />
+                                                                    <Route Component={suspense(Posts)} path="/posts" />
                                                                     <Route
                                                                         Component={suspense(Syndication)}
                                                                         path="/syndication"
@@ -132,6 +136,12 @@ const Main: React.FunctionComponent = () => (
                                                                             trackPage: false,
                                                                         })}
                                                                         path="/products-services/:id"
+                                                                    />
+                                                                    <Route
+                                                                        Component={suspense(Post, {
+                                                                            trackPage: false,
+                                                                        })}
+                                                                        path="/posts/:id"
                                                                     />
                                                                     <Route
                                                                         Component={suspense(SyndicationDetail, {
@@ -164,6 +174,12 @@ const Main: React.FunctionComponent = () => (
                                                                             trackPage: false,
                                                                         })}
                                                                         path="/products-services/edit/:id"
+                                                                    />
+                                                                    <Route
+                                                                        Component={suspense(EditPost, {
+                                                                            trackPage: false,
+                                                                        })}
+                                                                        path="/posts/edit/:id"
                                                                     />
                                                                     <Route Component={suspense(Cart)} path="/cart" />
                                                                     <Route Component={suspense(Order)} path="/order" />

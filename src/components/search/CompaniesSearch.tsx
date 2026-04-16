@@ -3,13 +3,16 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
+import { Button } from "antd";
 
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListCompaniesQuery, useSearchCompaniesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -18,6 +21,7 @@ import { mapSearchCompanies } from "./utils";
 
 export interface CompaniesSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (props) => {
@@ -48,6 +52,14 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
             ? searchedCompanies.isLoading && searchDocs.length === 0
             : defaultCompanies.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedCompanies.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (company: NonNullable<NonNullable<typeof defaultCompanies.data>["Companies"]>["docs"][number]) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Companies,
+            value: company.id,
+            label: company.name || "Company",
+        });
+        props.onClose();
+    };
 
     return (
         <SearchDrawer
@@ -79,9 +91,15 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                 renderItem={{
                     title: (company) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
-                                {company.name}
-                            </Link>
+                            {props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(company)}>
+                                    {company.name}
+                                </Button>
+                            ) : (
+                                <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                                    {company.name}
+                                </Link>
+                            )}
                             {company.identity?.name && (
                                 <IdentityTagLink identity={company.identity} color="success" />
                             )}
@@ -89,14 +107,25 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                     ),
                     avatar: (company) =>
                         company.image?.url ? (
-                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
-                                <Avatar
-                                    shape="square"
-                                    size={80}
-                                    src={getImage(company)}
-                                    className="EntityList__avatar"
-                                />
-                            </Link>
+                            props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(company)}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Button>
+                            ) : (
+                                <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Link>
+                            )
                         ) : undefined,
                     body: (company) => (
                         <div className="EntityList__body CompanyList__body">

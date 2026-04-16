@@ -123,6 +123,25 @@
     width: 100%;
 }
 
+.PostList__body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.PostList__meta {
+    width: 100%;
+}
+
+.PostList__description {
+    margin-bottom: 0;
+}
+
+.PostList__actionsRow {
+    width: 100%;
+}
+
 @include md-min {
     .JobDetail__header {
         flex-direction: column;
@@ -283,5 +302,14 @@
     .ProductList__purchaseControl .ant-btn {
         width: 100%;
         justify-content: center;
+    }
+
+    .PostList__actionsRow {
+        align-items: stretch;
+    }
+
+    .PostList__body {
+        gap: 12px;
+        margin-top: 14px;
     }
 }

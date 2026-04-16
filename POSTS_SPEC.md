@@ -140,7 +140,7 @@ Requirements:
 
 - use `marked` for markdown parsing; among the parser candidates reviewed it has the highest current NPM weekly downloads and ships built-in TypeScript declarations
 - extract the first link present in the post markdown
-- if the user did not add a hero image, derive a preview image from that link before submit
+- if the user did not add a hero image, the post can still be submitted without one; hero image remains optional
 - auto-fill the SEO description field with the first 100 characters of the post content, stripped of markdown formatting
 - keep the implementation aligned with the repo's existing patterns instead of introducing a separate markdown pipeline
 
@@ -155,9 +155,9 @@ Suggested flow:
 
 1. parse the markdown when the form is submitted or when preview data is needed
 2. locate the first markdown link
-3. if no explicit hero image was provided, attempt to resolve a preview image from that linked URL
+3. if no explicit hero image was provided, continue without one
 4. strip markdown formatting from the content and populate the SEO description with the first 100 characters
-5. upload the resolved hero image, if any, before submitting the form
+5. upload the hero image only when the user explicitly selected one
 
 ### Delete flow
 

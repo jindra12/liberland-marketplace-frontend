@@ -7,6 +7,8 @@ import type { ButtonProps, MenuProps } from "antd";
 import { SearchScope } from "../types";
 
 import { SearchContainer } from "./SearchContainer";
+import type { RelatedTargetSelection } from "./shared/post/types";
+
 
 type SearchButtonProps = {
     type?: ButtonProps["type"];
@@ -14,6 +16,7 @@ type SearchButtonProps = {
     className?: string;
     children?: React.ReactNode;
     onScopeSelect?: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 };
 export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) => {
     const type = props.type === undefined ? "text" : props.type;
@@ -33,6 +36,10 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) 
         {
             key: "startups",
             label: "Ventures",
+        },
+        {
+            key: "posts",
+            label: "Posts",
         },
         {
             key: "identities",
@@ -76,7 +83,14 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) 
                     {props.children}
                 </Button>
             </Dropdown>
-            {scope && <SearchContainer key={scope} onClose={() => setScope(undefined)} scope={scope} />}
+            {scope && (
+                <SearchContainer
+                    key={scope}
+                    onClose={() => setScope(undefined)}
+                    onSelect={props.onSelect}
+                    scope={scope}
+                />
+            )}
         </>
     );
 };

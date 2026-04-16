@@ -10,6 +10,7 @@ import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/gr
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
+import { CompanyPostsList } from "../lists/CompanyPostsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
 import { CompanyStartupsList } from "../lists/CompanyStartupsList";
 import { Loader } from "../Loader";
@@ -144,6 +145,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 children: (
                                     <CompanyStartupsList companyId={id!} serverUrl={companyData?.serverURL} />
                                 ),
+                            },
+                            {
+                                key: "posts",
+                                label: `Posts (${counts.posts})`,
+                                children: <CompanyPostsList companyId={id!} serverUrl={companyData?.serverURL} />,
                             },
                             {
                                 key: "comments",

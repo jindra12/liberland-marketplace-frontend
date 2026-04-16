@@ -2,13 +2,15 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Flex, Tag } from "antd";
+import { Avatar, Button, Flex, Tag } from "antd";
 
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListProductsQuery, useSearchProductsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
 import { formatUsdFromCents } from "../shared/product/utils";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
@@ -18,6 +20,7 @@ import { mapSearchProducts } from "./utils";
 
 export interface ProductsServicesSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSearchProps> = (props) => {
@@ -48,6 +51,14 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             ? searchedProducts.isLoading && searchDocs.length === 0
             : defaultProducts.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedProducts.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (product: { id: string; name?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Products,
+            value: product.id,
+            label: product.name || "Product",
+        });
+        props.onClose();
+    };
 
     return (
         <SearchDrawer
@@ -79,9 +90,15 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 renderItem={{
                     title: (product) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
-                                {product.name}
-                            </Link>
+                            {props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(product)}>
+                                    {product.name}
+                                </Button>
+                            ) : (
+                                <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                                    {product.name}
+                                </Link>
+                            )}
                             {product.company?.identity?.name && (
                                 <IdentityTagLink identity={product.company.identity} color="success" />
                             )}
@@ -89,14 +106,25 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                     ),
                     avatar: (product) =>
                         product.image?.url ? (
-                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
-                                <Avatar
-                                    shape="square"
-                                    size={80}
-                                    src={getImage(product) || getImage(product.company)}
-                                    className="EntityList__avatar"
-                                />
-                            </Link>
+                            props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(product)}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(product) || getImage(product.company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Button>
+                            ) : (
+                                <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(product) || getImage(product.company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Link>
+                            )
                         ) : undefined,
                     body: (product) => (
                         <div className="EntityList__body ProductList__body">

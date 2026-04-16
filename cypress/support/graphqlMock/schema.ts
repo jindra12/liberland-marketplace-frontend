@@ -272,6 +272,7 @@ export const graphqlSchema = buildSchema(`
         items: [MockNode!]
         categories: [MockNode!]
         populatedAuthors: [MockNode!]
+        relatedPosts: [MockNode!]
         options: [MockNode!]
         properties: [MockNode!]
         transactions: [MockNode!]

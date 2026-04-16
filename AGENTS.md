@@ -76,6 +76,7 @@ manager is `yarn`.
 
 - Do not use `.trim()` unless it adds clear, necessary value to the behavior
 - Never use `==` or `!=`. Use `===`, `!==`, `??`, or explicit `value === null || value === undefined` checks.
+- Never use `Object.prototype` for anything whatsoever.
 - Do not use `for...of`. Use array methods like `map`, `reduce`, `find`, `some`, and `every` instead.
 - Do not add new `.js` or `.mjs` files, or `.js`/`.mjs` import paths, unless it is absolutely necessary. Prefer TypeScript files and TypeScript-native imports for new code.
 - Do not add `.ts` or `.tsx` extensions to local import paths. Prefer extensionless internal imports unless a file truly needs an explicit extension for runtime resolution.

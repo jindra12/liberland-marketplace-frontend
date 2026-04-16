@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { AppList } from "../AppList";
+import type { DislikeMutation, LikeMutation } from "../shared/Like/types";
 
 type SearchResultsListProps<TItem> = {
     title: React.ReactNode;
@@ -14,6 +15,10 @@ type SearchResultsListProps<TItem> = {
         Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode>
     >;
     emptyText?: React.ReactNode;
+    likeActions?: {
+        likeMutation: LikeMutation;
+        dislikeMutation: DislikeMutation;
+    };
 };
 
 export const SearchResultsList = <TItem,>(props: SearchResultsListProps<TItem>) => {
@@ -28,6 +33,7 @@ export const SearchResultsList = <TItem,>(props: SearchResultsListProps<TItem>) 
             loading={props.loading}
             emptyText={props.emptyText}
             renderItem={props.renderItem}
+            likeActions={props.likeActions}
         />
     );
 };

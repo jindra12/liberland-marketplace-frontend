@@ -2,8 +2,9 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Flex } from "antd";
+import { Avatar, Button, Flex } from "antd";
 
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListJobsQuery, useSearchJobsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
@@ -12,6 +13,7 @@ import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 import { getJobMeta } from "../shared/jobDerived";
 import { JobDetailsSummary } from "../shared/JobDetailsSummary";
+import type { RelatedTargetSelection } from "../shared/post/types";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -20,6 +22,7 @@ import { mapSearchJobs } from "./utils";
 
 export interface JobSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
@@ -48,6 +51,14 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
     const loading =
         submittedSearchValue.length > 0 ? searchedJobs.isLoading && searchDocs.length === 0 : defaultJobs.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedJobs.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (job: { id: string; title?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Jobs,
+            value: job.id,
+            label: job.title || "Job",
+        });
+        props.onClose();
+    };
 
     return (
         <SearchDrawer
@@ -77,9 +88,15 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                 renderItem={{
                     title: (job) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
-                                {job.title}
-                            </Link>
+                            {props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(job)}>
+                                    {job.title}
+                                </Button>
+                            ) : (
+                                <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                    {job.title}
+                                </Link>
+                            )}
                             {job.company?.identity?.name && (
                                 <IdentityTagLink identity={job.company.identity} color="success" />
                             )}
@@ -88,15 +105,27 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                     avatar: (job) => {
                         const imageSrc = getImage(job) || getImage(job.company);
                         return imageSrc ? (
-                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
-                                <Avatar
-                                    shape="square"
-                                    size={80}
-                                    src={imageSrc}
-                                    alt={job.title || ""}
-                                    className="EntityList__avatar"
-                                />
-                            </Link>
+                            props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(job)}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={imageSrc}
+                                        alt={job.title || ""}
+                                        className="EntityList__avatar"
+                                    />
+                                </Button>
+                            ) : (
+                                <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={imageSrc}
+                                        alt={job.title || ""}
+                                        className="EntityList__avatar"
+                                    />
+                                </Link>
+                            )
                         ) : undefined;
                     },
                     body: (job) => {

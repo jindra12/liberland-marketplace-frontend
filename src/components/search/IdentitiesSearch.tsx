@@ -2,12 +2,14 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Flex } from "antd";
+import { Avatar, Button, Flex } from "antd";
 
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useListIdentitiesQuery, useSearchIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -16,6 +18,7 @@ import { mapSearchIdentities } from "./utils";
 
 export interface IdentitiesSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = (props) => {
@@ -46,6 +49,14 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
             ? searchedIdentities.isLoading && searchDocs.length === 0
             : defaultIdentities.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedIdentities.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (identity: { id: string; name?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Identities,
+            value: identity.id,
+            label: identity.name || "Tribe",
+        });
+        props.onClose();
+    };
 
     return (
         <SearchDrawer
@@ -77,16 +88,28 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
                 renderItem={{
                     title: (identity) => (
                         <Flex align="center" gap={12}>
-                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
-                                {identity.name}
-                            </Link>
+                            {props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(identity)}>
+                                    {identity.name}
+                                </Button>
+                            ) : (
+                                <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                    {identity.name}
+                                </Link>
+                            )}
                         </Flex>
                     ),
                     avatar: (identity) =>
                         identity.image?.url ? (
-                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
-                                <Avatar src={getImage(identity)} size={88} />
-                            </Link>
+                            props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(identity)}>
+                                    <Avatar src={getImage(identity)} size={88} />
+                                </Button>
+                            ) : (
+                                <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                                    <Avatar src={getImage(identity)} size={88} />
+                                </Link>
+                            )
                         ) : undefined,
                     description: (identity) => (
                         <Markdown className="Markdown--clamp2 EntityList__description">{identity.description}</Markdown>

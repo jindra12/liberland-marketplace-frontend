@@ -1,4 +1,4 @@
-import { createCompanyRef, createCryptoPriceNode, createImageRef, createIdentityRef, createNodeRef, createProductRef, createTransactionHashNode, createTransactionRef, createUserRef, createVariantRef } from "./responseHelpers";
+import { createCompanyRef, createCryptoPriceNode, createImageRef, createIdentityRef, createJobRef, createNodeRef, createPostRef, createProductRef, createStartupRef, createTransactionHashNode, createTransactionRef, createUserRef, createVariantRef } from "./responseHelpers";
 import { isPlainObject, searchNode } from "./runtimeState";
 import type { MockNode } from "./types";
 
@@ -129,6 +129,7 @@ export const normalizeStartupData = (data: Record<string, unknown>) => {
 
 export const normalizePostData = (data: Record<string, unknown>) => {
     normalizeSharedRelations(data, "company");
+    normalizeSharedRelations(data, "createdBy");
     if (typeof data.heroImage === "string") {
         data.heroImage = createImageRef(data.heroImage);
     }
@@ -183,6 +184,41 @@ export const normalizePostData = (data: Record<string, unknown>) => {
                     id,
                     nickname: typeof value.nickname === "string" ? value.nickname : typeof value.name === "string" ? value.name : id,
                     image: value.image,
+                });
+            });
+    }
+    if (Array.isArray(data.relatedPosts)) {
+        data.relatedPosts = data.relatedPosts
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: `post-related-${index + 1}`,
+                        relationTo: "posts",
+                        value: createPostRef(value),
+                    });
+                }
+
+                const relationTo = typeof value.relationTo === "string" ? value.relationTo : "posts";
+                const refValue =
+                    relationTo === "companies"
+                        ? createCompanyRef(typeof value.value === "string" ? value.value : undefined)
+                        : relationTo === "identities"
+                          ? createIdentityRef(typeof value.value === "string" ? value.value : undefined)
+                        : relationTo === "jobs"
+                          ? createJobRef(typeof value.value === "string" ? value.value : undefined)
+                          : relationTo === "products"
+                            ? createProductRef(typeof value.value === "string" ? value.value : undefined)
+                            : relationTo === "startups"
+                              ? createStartupRef(typeof value.value === "string" ? value.value : undefined)
+                              : relationTo === "posts"
+                                ? createPostRef(typeof value.value === "string" ? value.value : undefined)
+                                : createNodeRef(typeof value.value === "string" ? value.value : "");
+
+                return searchNode({
+                    id: typeof value.id === "string" ? value.id : `post-related-${index + 1}`,
+                    relationTo,
+                    value: refValue,
                 });
             });
     }

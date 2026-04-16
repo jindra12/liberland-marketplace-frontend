@@ -165,6 +165,9 @@ export const mutationResolvers = {
         if (data.serverURL === undefined) {
             data.serverURL = activeFixtures.posts[0]?.serverURL;
         }
+        if (data.createdBy === undefined) {
+            data.createdBy = cloneValue(activeFixtures.meUser.user);
+        }
         if (data.hasLiked === undefined) {
             data.hasLiked = false;
         }

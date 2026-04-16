@@ -2,17 +2,21 @@ import {
     ListCompaniesQuery,
     ListIdentitiesQuery,
     ListJobsQuery,
+    ListPostsQuery,
     ListProductsQuery,
     ListStartupsQuery,
     SearchCompaniesQuery,
     SearchIdentitiesQuery,
     SearchJobsQuery,
+    SearchPostsQuery,
     SearchProductsQuery,
     SearchStartupsQuery,
 } from "../../generated/graphql";
 
 type JobDoc = NonNullable<NonNullable<ListJobsQuery["Jobs"]>["docs"]>[number];
 type SearchJobDoc = NonNullable<NonNullable<NonNullable<SearchJobsQuery["Searches"]>["docs"]>[number]>;
+type PostDoc = NonNullable<NonNullable<ListPostsQuery["Posts"]>["docs"]>[number];
+type SearchPostDoc = NonNullable<NonNullable<NonNullable<SearchPostsQuery["Searches"]>["docs"]>[number]>;
 
 type CompanyDoc = NonNullable<NonNullable<ListCompaniesQuery["Companies"]>["docs"]>[number];
 type SearchCompanyDoc = NonNullable<NonNullable<NonNullable<SearchCompaniesQuery["Searches"]>["docs"]>[number]>;
@@ -57,3 +61,5 @@ export const mapSearchStartups = (docs: SearchStartupDoc[] | undefined): Startup
 
 export const mapSearchIdentities = (docs: SearchIdentityDoc[] | undefined): IdentityDoc[] =>
     mapSearchDocs(docs, "identities");
+
+export const mapSearchPosts = (docs: SearchPostDoc[] | undefined): PostDoc[] => mapSearchDocs(docs, "posts");

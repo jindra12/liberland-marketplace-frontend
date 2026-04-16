@@ -61170,7 +61170,7 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -61568,13 +61568,37 @@ export type UpdateOrderMutationVariables = Exact<{
 
 export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
+export type ListPostsByCompanyQueryVariables = Exact<{
+  companyId: Scalars['JSON']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ListPostsByCompanyQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+          | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+         | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
+
 export type PostByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null } | null };
+export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+        | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+       | null }> | null } | null };
 
 export type CreatePostCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -61631,7 +61655,14 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+        | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+       | null }> | null } | null };
 
 export type DeletePostMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -61662,7 +61693,14 @@ export type ListPostsQueryVariables = Exact<{
 }>;
 
 
-export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
+export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+          | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+         | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
 
 export type SearchPostsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -61676,7 +61714,14 @@ export type SearchPostsQuery = { __typename?: 'Query', Searches?: { __typename?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+                | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+                | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+                | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+                | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+                | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+                | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+               | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -61688,7 +61733,14 @@ export type UpdatePostMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null } | null };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+        | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+        | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+       | null }> | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -62307,6 +62359,15 @@ export const ListCompaniesByCreatorDocument = `
       cryptoAddresses {
         chain
         address
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
       _status
     }
@@ -65012,6 +65073,252 @@ export const useUpdateOrderMutation = <
 
 useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables, options);
 
+export const ListPostsByCompanyDocument = `
+    query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+  Posts(
+    draft: false
+    where: {AND: [{company: {equals: $companyId}}, {_status: {equals: published}}]}
+    page: $page
+    limit: $limit
+    sort: $sort
+  ) {
+    docs {
+      id
+      title
+      slug
+      heroImage {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      meta {
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      createdBy {
+        id
+        name
+      }
+      relatedPosts {
+        relationTo
+        value {
+          ... on Post {
+            __typename
+            id
+            title
+            slug
+            heroImage {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Company {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Identity {
+            __typename
+            id
+            identityName: name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Job {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Product {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Startup {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+        }
+      }
+      categories {
+        id
+        title
+        slug
+      }
+      hasLiked
+      likeCount
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
+  }
+}
+    `;
+
+export const useListPostsByCompanyQuery = <
+      TData = ListPostsByCompanyQuery,
+      TError = unknown
+    >(
+      variables: ListPostsByCompanyQueryVariables,
+      options?: Omit<UseQueryOptions<ListPostsByCompanyQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListPostsByCompanyQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListPostsByCompanyQuery, TError, TData>(
+      {
+    queryKey: ['ListPostsByCompany', variables],
+    queryFn: gqlFetcher<ListPostsByCompanyQuery, ListPostsByCompanyQueryVariables>(ListPostsByCompanyDocument, variables),
+    ...options
+  }
+    )};
+
+useListPostsByCompanyQuery.getKey = (variables: ListPostsByCompanyQueryVariables) => ['ListPostsByCompany', variables];
+
+
+useListPostsByCompanyQuery.fetcher = (variables: ListPostsByCompanyQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostsByCompanyQuery, ListPostsByCompanyQueryVariables>(ListPostsByCompanyDocument, variables, options);
+
 export const PostByIdDocument = `
     query PostById($id: String!, $draft: Boolean = false) {
   Post(id: $id, draft: $draft) {
@@ -65064,6 +65371,152 @@ export const PostByIdDocument = `
         width
         height
         mimeType
+      }
+    }
+    createdBy {
+      id
+      name
+    }
+    relatedPosts {
+      relationTo
+      value {
+        ... on Post {
+          __typename
+          id
+          title
+          slug
+          heroImage {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Company {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Identity {
+          __typename
+          id
+          identityName: name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Job {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Product {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Startup {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
       }
     }
     hasLiked
@@ -65379,6 +65832,152 @@ export const CreatePostDocument = `
         mimeType
       }
     }
+    createdBy {
+      id
+      name
+    }
+    relatedPosts {
+      relationTo
+      value {
+        ... on Post {
+          __typename
+          id
+          title
+          slug
+          heroImage {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Company {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Identity {
+          __typename
+          id
+          identityName: name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Job {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Product {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Startup {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+      }
+    }
     hasLiked
     likeCount
     publishedAt
@@ -65536,6 +66135,152 @@ export const ListPostsDocument = `
           mimeType
         }
       }
+      createdBy {
+        id
+        name
+      }
+      relatedPosts {
+        relationTo
+        value {
+          ... on Post {
+            __typename
+            id
+            title
+            slug
+            heroImage {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Company {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Identity {
+            __typename
+            id
+            identityName: name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Job {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Product {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Startup {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+        }
+      }
       categories {
         id
         title
@@ -65643,6 +66388,152 @@ export const SearchPostsDocument = `
                 mimeType
               }
             }
+            createdBy {
+              id
+              name
+            }
+            relatedPosts {
+              relationTo
+              value {
+                ... on Post {
+                  __typename
+                  id
+                  title
+                  slug
+                  heroImage {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                  company {
+                    id
+                    name
+                    image {
+                      id
+                      url
+                      alt
+                      filename
+                      width
+                      height
+                      mimeType
+                    }
+                  }
+                }
+                ... on Company {
+                  __typename
+                  id
+                  name
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                }
+                ... on Identity {
+                  __typename
+                  id
+                  identityName: name
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                }
+                ... on Job {
+                  __typename
+                  id
+                  title
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                  company {
+                    id
+                    name
+                    image {
+                      id
+                      url
+                      alt
+                      filename
+                      width
+                      height
+                      mimeType
+                    }
+                  }
+                }
+                ... on Product {
+                  __typename
+                  id
+                  name
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                  company {
+                    id
+                    name
+                    image {
+                      id
+                      url
+                      alt
+                      filename
+                      width
+                      height
+                      mimeType
+                    }
+                  }
+                }
+                ... on Startup {
+                  __typename
+                  id
+                  title
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
+                  company {
+                    id
+                    name
+                    image {
+                      id
+                      url
+                      alt
+                      filename
+                      width
+                      height
+                      mimeType
+                    }
+                  }
+                }
+              }
+            }
             categories {
               id
               title
@@ -65739,6 +66630,152 @@ export const UpdatePostDocument = `
         width
         height
         mimeType
+      }
+    }
+    createdBy {
+      id
+      name
+    }
+    relatedPosts {
+      relationTo
+      value {
+        ... on Post {
+          __typename
+          id
+          title
+          slug
+          heroImage {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Company {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Identity {
+          __typename
+          id
+          identityName: name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Job {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Product {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Startup {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
       }
     }
     hasLiked

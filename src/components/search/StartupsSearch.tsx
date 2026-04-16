@@ -2,14 +2,16 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Avatar, Flex, Tag } from "antd";
+import { Avatar, Button, Flex, Tag } from "antd";
 
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useListStartupsQuery, useSearchStartupsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -18,6 +20,7 @@ import { mapSearchStartups } from "./utils";
 
 export interface StartupsSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (props) => {
@@ -48,6 +51,14 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
             ? searchedStartups.isLoading && searchDocs.length === 0
             : defaultStartups.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedStartups.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (startup: { id: string; title?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Startups,
+            value: startup.id,
+            label: startup.title || "Venture",
+        });
+        props.onClose();
+    };
 
     return (
         <SearchDrawer
@@ -80,9 +91,15 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     title: (startup) => (
                         <Flex justify="space-between" align="center" wrap>
                             <Flex align="center" gap={8}>
-                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
-                                    {startup.title}
-                                </Link>
+                                {props.onSelect ? (
+                                    <Button type="link" onClick={() => handleSelect(startup)}>
+                                        {startup.title}
+                                    </Button>
+                                ) : (
+                                    <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                        {startup.title}
+                                    </Link>
+                                )}
                             </Flex>
                             <Flex gap={4} wrap>
                                 <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -94,14 +111,25 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     ),
                     avatar: (startup) =>
                         startup.image?.url ? (
-                            <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
-                                <Avatar
-                                    shape="square"
-                                    size={80}
-                                    src={getImage(startup) || getImage(startup?.company)}
-                                    className="EntityList__avatar"
-                                />
-                            </Link>
+                            props.onSelect ? (
+                                <Button type="link" onClick={() => handleSelect(startup)}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(startup) || getImage(startup?.company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Button>
+                            ) : (
+                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={getImage(startup) || getImage(startup?.company)}
+                                        className="EntityList__avatar"
+                                    />
+                                </Link>
+                            )
                         ) : undefined,
                     description: (startup) => (
                         <Flex gap={4} wrap className="StartupList__meta">

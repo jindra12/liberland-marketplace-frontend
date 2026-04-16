@@ -97,6 +97,7 @@ export type MockNode = {
     items?: MockNode[];
     categories?: MockNode[];
     populatedAuthors?: MockNode[];
+    relatedPosts?: MockNode[];
     options?: MockNode[];
     properties?: MockNode[];
     transactions?: MockNode[];

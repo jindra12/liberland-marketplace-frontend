@@ -317,6 +317,21 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         description: "Internal editor for updating a product/service listing.",
         noIndex: true,
     },
+    "/posts": {
+        title: "Posts | NSwap",
+        description: "Browse published posts shared through syndicated marketplace endpoints.",
+        buildJsonLd: buildCollectionJsonLd("Posts", "/posts", "Published posts from syndicated marketplace sources."),
+    },
+    "/posts/[id]": {
+        title: "Post | NSwap",
+        description: "View a published post and its related content.",
+        buildJsonLd: buildDetailJsonLd("Posts", "/posts", "Post detail", "Detail page for one published post."),
+    },
+    "/posts/edit/[id]": {
+        title: "Edit post | NSwap",
+        description: "Internal editor for updating a published post.",
+        noIndex: true,
+    },
     "/ventures": {
         title: "Ventures | NSwap",
         description: "Explore startup and venture profiles shared through the marketplace network.",

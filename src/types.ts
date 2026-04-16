@@ -31,7 +31,7 @@ export type SyndicationDoc = {
     description?: string | null;
 };
 
-export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups";
+export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups" | "posts";
 export type SearchOption = { key: string; value: string; id: string; label?: ReactNode; image?: string | null };
 export type DocType = Partial<Identity | Company | Job | Product | Startup>;
 export type ImageDoc = {

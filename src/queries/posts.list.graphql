@@ -50,6 +50,152 @@ query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankS
           mimeType
         }
       }
+      createdBy {
+        id
+        name
+      }
+      relatedPosts {
+        relationTo
+        value {
+          ... on Post {
+            __typename
+            id
+            title
+            slug
+            heroImage {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Company {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Identity {
+            __typename
+            id
+            identityName: name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+          ... on Job {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Product {
+            __typename
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+          ... on Startup {
+            __typename
+            id
+            title
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            company {
+              id
+              name
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+          }
+        }
+      }
       categories {
         id
         title

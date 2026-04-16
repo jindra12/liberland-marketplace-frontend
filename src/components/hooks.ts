@@ -112,6 +112,8 @@ import {
     useLikePostMutation as useLikePostMutationSingle,
     ListPostsDocument,
     useListPostsQuery as useListPostsQuerySingle,
+    ListPostsByCompanyDocument,
+    useListPostsByCompanyQuery as useListPostsByCompanyQuerySingle,
     SearchPostsDocument,
     useSearchPostsQuery as useSearchPostsQuerySingle,
     UpdatePostDocument,
@@ -461,6 +463,11 @@ export const useListPostCommentRepliesQuery = enhancedQueryFactory(
     false,
 );
 export const useListPostsQuery = enhancedQueryFactory(useListPostsQuerySingle, ListPostsDocument, true);
+export const useListPostsByCompanyQuery = enhancedQueryFactory(
+    useListPostsByCompanyQuerySingle,
+    ListPostsByCompanyDocument,
+    true,
+);
 export const useSearchPostsQuery = enhancedQueryFactory(useSearchPostsQuerySingle, SearchPostsDocument, true);
 export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, false, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
     const leftEntries = Array.isArray(left) ? left : [left];
