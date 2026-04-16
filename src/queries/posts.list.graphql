@@ -4,6 +4,32 @@ query ListPosts($page: Int = 1, $limit: Int = 20) {
       id
       title
       slug
+      heroImage {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      meta {
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      categories {
+        id
+        title
+        slug
+      }
       hasLiked
       likeCount
     }

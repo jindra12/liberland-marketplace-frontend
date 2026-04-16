@@ -33731,7 +33731,7 @@ export type Post = {
   _status?: Maybe<Post__Status>;
   authors?: Maybe<Array<User>>;
   categories?: Maybe<Array<Category>>;
-  content?: Maybe<Scalars['JSON']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
@@ -33742,15 +33742,10 @@ export type Post = {
   meta?: Maybe<Post_Meta>;
   populatedAuthors?: Maybe<Array<Post_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  relatedPosts?: Maybe<Array<Post>>;
+  relatedPosts?: Maybe<Array<Post_RelatedPosts_Relationship>>;
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-export type PostContentArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -34153,6 +34148,20 @@ export type PostLikesUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type PostUpdate_RelatedPostsRelationshipInput = {
+  relationTo?: InputMaybe<PostUpdate_RelatedPostsRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export enum PostUpdate_RelatedPostsRelationshipInputRelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
+
 export enum PostUpdate__Status_MutationInput {
   Draft = 'draft',
   Published = 'published'
@@ -34179,7 +34188,7 @@ export type PostVersion_Version = {
   _status?: Maybe<PostVersion_Version__Status>;
   authors?: Maybe<Array<User>>;
   categories?: Maybe<Array<Category>>;
-  content?: Maybe<Scalars['JSON']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
@@ -34189,15 +34198,10 @@ export type PostVersion_Version = {
   meta?: Maybe<PostVersion_Version_Meta>;
   populatedAuthors?: Maybe<Array<PostVersion_Version_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  relatedPosts?: Maybe<Array<Post>>;
+  relatedPosts?: Maybe<Array<PostVersion_Version_RelatedPosts_Relationship>>;
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-export type PostVersion_VersionContentArgs = {
-  depth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -34218,6 +34222,23 @@ export type PostVersion_Version_PopulatedAuthors = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type PostVersion_Version_RelatedPosts = Company | Identity | Job | Post | Product | Startup;
+
+export enum PostVersion_Version_RelatedPosts_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export type PostVersion_Version_RelatedPosts_Relationship = {
+  __typename?: 'PostVersion_Version_RelatedPosts_Relationship';
+  relationTo?: Maybe<PostVersion_Version_RelatedPosts_RelationTo>;
+  value?: Maybe<PostVersion_Version_RelatedPosts>;
+};
+
 export enum PostVersion_Version__Status {
   Draft = 'draft',
   Published = 'published'
@@ -34234,6 +34255,37 @@ export type Post_PopulatedAuthors = {
   __typename?: 'Post_PopulatedAuthors';
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+};
+
+export type Post_RelatedPosts = Company | Identity | Job | Post | Product | Startup;
+
+export type Post_RelatedPostsRelationshipInput = {
+  relationTo?: InputMaybe<Post_RelatedPostsRelationshipInputRelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export enum Post_RelatedPostsRelationshipInputRelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export enum Post_RelatedPosts_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
+
+export type Post_RelatedPosts_Relationship = {
+  __typename?: 'Post_RelatedPosts_Relationship';
+  relationTo?: Maybe<Post_RelatedPosts_RelationTo>;
+  value?: Maybe<Post_RelatedPosts>;
 };
 
 export enum Post__Status {
@@ -34279,10 +34331,10 @@ export type Post_Categories_Operator = {
 };
 
 export type Post_Content_Operator = {
-  contains?: InputMaybe<Scalars['JSON']['input']>;
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Post_CreatedAt_Operator = {
@@ -34407,14 +34459,19 @@ export type Post_PublishedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type Post_RelatedPosts_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+export type Post_RelatedPosts_Relation = {
+  relationTo?: InputMaybe<Post_RelatedPosts_Relation_RelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
 };
+
+export enum Post_RelatedPosts_Relation_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
 
 export type Post_Slug_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -34467,7 +34524,7 @@ export type Post_Where = {
   populatedAuthors__id?: InputMaybe<Post_PopulatedAuthors__Id_Operator>;
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
-  relatedPosts?: InputMaybe<Post_RelatedPosts_Operator>;
+  relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
@@ -34493,7 +34550,7 @@ export type Post_Where_And = {
   populatedAuthors__id?: InputMaybe<Post_PopulatedAuthors__Id_Operator>;
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
-  relatedPosts?: InputMaybe<Post_RelatedPosts_Operator>;
+  relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
@@ -34519,7 +34576,7 @@ export type Post_Where_Or = {
   populatedAuthors__id?: InputMaybe<Post_PopulatedAuthors__Id_Operator>;
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
-  relatedPosts?: InputMaybe<Post_RelatedPosts_Operator>;
+  relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
   slug?: InputMaybe<Post_Slug_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
   updatedAt?: InputMaybe<Post_UpdatedAt_Operator>;
@@ -42228,6 +42285,7 @@ export enum SearchUpdate_DocRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
+  Posts = 'posts',
   Products = 'products',
   Startups = 'startups'
 }
@@ -42240,7 +42298,7 @@ export type Search_Categories = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export type Search_Doc = Company | Identity | Job | Product | Startup;
+export type Search_Doc = Company | Identity | Job | Post | Product | Startup;
 
 export type Search_DocRelationshipInput = {
   relationTo?: InputMaybe<Search_DocRelationshipInputRelationTo>;
@@ -42251,6 +42309,7 @@ export enum Search_DocRelationshipInputRelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
+  Posts = 'posts',
   Products = 'products',
   Startups = 'startups'
 }
@@ -42259,6 +42318,7 @@ export enum Search_Doc_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
+  Posts = 'posts',
   Products = 'products',
   Startups = 'startups'
 }
@@ -42340,6 +42400,7 @@ export enum Search_Doc_Relation_RelationTo {
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
+  Posts = 'posts',
   Products = 'products',
   Startups = 'startups'
 }
@@ -55279,7 +55340,7 @@ export type MutationPostInput = {
   _status?: InputMaybe<Post__Status_MutationInput>;
   authors?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  content: Scalars['JSON']['input'];
+  content: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
@@ -55289,7 +55350,7 @@ export type MutationPostInput = {
   meta?: InputMaybe<MutationPost_MetaInput>;
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPost_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
-  relatedPosts?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  relatedPosts?: InputMaybe<Array<InputMaybe<Post_RelatedPostsRelationshipInput>>>;
   slug: Scalars['String']['input'];
   title: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -55313,7 +55374,7 @@ export type MutationPostUpdateInput = {
   _status?: InputMaybe<PostUpdate__Status_MutationInput>;
   authors?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   categories?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  content?: InputMaybe<Scalars['JSON']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   generateSlug?: InputMaybe<Scalars['Boolean']['input']>;
@@ -55323,7 +55384,7 @@ export type MutationPostUpdateInput = {
   meta?: InputMaybe<MutationPostUpdate_MetaInput>;
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPostUpdate_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
-  relatedPosts?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  relatedPosts?: InputMaybe<Array<InputMaybe<PostUpdate_RelatedPostsRelationshipInput>>>;
   slug?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -57707,10 +57768,10 @@ export type VersionsPost_Version__Categories_Operator = {
 };
 
 export type VersionsPost_Version__Content_Operator = {
-  contains?: InputMaybe<Scalars['JSON']['input']>;
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  like?: InputMaybe<Scalars['JSON']['input']>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type VersionsPost_Version__CreatedAt_Operator = {
@@ -57824,14 +57885,19 @@ export type VersionsPost_Version__PublishedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type VersionsPost_Version__RelatedPosts_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+export type VersionsPost_Version__RelatedPosts_Relation = {
+  relationTo?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation_RelationTo>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
 };
+
+export enum VersionsPost_Version__RelatedPosts_Relation_RelationTo {
+  Companies = 'companies',
+  Identities = 'identities',
+  Jobs = 'jobs',
+  Posts = 'posts',
+  Products = 'products',
+  Startups = 'startups'
+}
 
 export type VersionsPost_Version__Slug_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -57889,7 +57955,7 @@ export type VersionsPost_Where = {
   version__populatedAuthors__id?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Id_Operator>;
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
-  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
+  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
@@ -57920,7 +57986,7 @@ export type VersionsPost_Where_And = {
   version__populatedAuthors__id?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Id_Operator>;
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
-  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
+  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
@@ -57951,7 +58017,7 @@ export type VersionsPost_Where_Or = {
   version__populatedAuthors__id?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Id_Operator>;
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
-  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
+  version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
   version__updatedAt?: InputMaybe<VersionsPost_Version__UpdatedAt_Operator>;
@@ -59326,6 +59392,7 @@ export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: 
           | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59400,6 +59467,7 @@ export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typena
           | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59484,6 +59552,7 @@ export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typen
           | { __typename?: 'Company' }
           | { __typename: 'Identity', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name: string, description?: string | null, website?: string | null, likeCount?: number | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59510,6 +59579,7 @@ export type SearchJobsByCompanyQuery = { __typename?: 'Query', Searches?: { __ty
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59604,6 +59674,7 @@ export type SearchJobsQuery = { __typename?: 'Query', Searches?: { __typename?: 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59683,7 +59754,7 @@ export type PostByIdQueryVariables = Exact<{
 }>;
 
 
-export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null } | null };
+export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null, authors?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null, populatedAuthors?: Array<{ __typename?: 'Post_PopulatedAuthors', id?: string | null, name?: string | null }> | null } | null };
 
 export type CreatePostCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -59740,7 +59811,7 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null, authors?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null, populatedAuthors?: Array<{ __typename?: 'Post_PopulatedAuthors', id?: string | null, name?: string | null }> | null } | null };
 
 export type DeletePostMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -59770,7 +59841,7 @@ export type ListPostsQueryVariables = Exact<{
 }>;
 
 
-export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null }> } | null };
+export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
 
 export type SearchPostsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -59780,7 +59851,14 @@ export type SearchPostsQueryVariables = Exact<{
 }>;
 
 
-export type SearchPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null }> } | null };
+export type SearchPostsQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
+          | { __typename?: 'Company' }
+          | { __typename?: 'Identity' }
+          | { __typename?: 'Job' }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }
+          | { __typename?: 'Product' }
+          | { __typename?: 'Startup' }
+         | null } }> } | null };
 
 export type UpdatePostMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -59789,7 +59867,7 @@ export type UpdatePostMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null } | null };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null, authors?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null, populatedAuthors?: Array<{ __typename?: 'Post_PopulatedAuthors', id?: string | null, name?: string | null }> | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -59813,6 +59891,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59885,6 +59964,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
@@ -59983,6 +60063,7 @@ export type SearchStartupsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
+          | { __typename?: 'Post' }
           | { __typename?: 'Product' }
           | { __typename: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
          | null } }> } | null };
@@ -63099,8 +63180,49 @@ export const PostByIdDocument = `
     id
     title
     slug
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    categories {
+      id
+      title
+      slug
+    }
+    authors {
+      id
+      name
+      email
+    }
+    populatedAuthors {
+      id
+      name
+    }
     hasLiked
     likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
   }
 }
     `;
@@ -63360,8 +63482,49 @@ export const CreatePostDocument = `
     id
     title
     slug
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    categories {
+      id
+      title
+      slug
+    }
+    authors {
+      id
+      name
+      email
+    }
+    populatedAuthors {
+      id
+      name
+    }
     hasLiked
     likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
   }
 }
     `;
@@ -63467,6 +63630,32 @@ export const ListPostsDocument = `
       id
       title
       slug
+      heroImage {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      meta {
+        description
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      categories {
+        id
+        title
+        slug
+      }
       hasLiked
       likeCount
     }
@@ -63504,20 +63693,56 @@ useListPostsQuery.getKey = (variables?: ListPostsQueryVariables) => variables ==
 useListPostsQuery.fetcher = (variables?: ListPostsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostsQuery, ListPostsQueryVariables>(ListPostsDocument, variables, options);
 
 export const SearchPostsDocument = `
-    query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-createdAt") {
-  Posts(
+    query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
     draft: false
-    where: {title: {contains: $searchTerm}}
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: posts}}]}
     page: $page
     limit: $limit
     sort: $sort
   ) {
     docs {
-      id
       title
-      slug
-      hasLiked
-      likeCount
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Post {
+            __typename
+            id
+            title
+            slug
+            heroImage {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            meta {
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+            categories {
+              id
+              title
+              slug
+            }
+            hasLiked
+            likeCount
+          }
+        }
+      }
     }
     totalDocs
     limit
@@ -63558,8 +63783,49 @@ export const UpdatePostDocument = `
     id
     title
     slug
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    categories {
+      id
+      title
+      slug
+    }
+    authors {
+      id
+      name
+      email
+    }
+    populatedAuthors {
+      id
+      name
+    }
     hasLiked
     likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
   }
 }
     `;

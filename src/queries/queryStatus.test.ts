@@ -12,8 +12,10 @@ import {
     ListJobsByIdentityDocument,
     ListJobsBySecondaryIdentityDocument,
     ListJobsDocument,
+    ListPostsDocument,
     ListProductsByCompanyDocument,
     ListProductsDocument,
+    PostByIdDocument,
     ProductByIdDocument,
     SearchCompaniesByIdentityDocument,
     SearchCompaniesBySecondaryIdentityDocument,
@@ -22,6 +24,7 @@ import {
     SearchJobsByCompanyDocument,
     SearchJobsBySecondaryIdentityDocument,
     SearchJobsDocument,
+    SearchPostsDocument,
     SearchProductsByCompanyDocument,
     SearchProductsDocument,
 } from "../generated/graphql";
@@ -61,6 +64,9 @@ const cases: QueryCase[] = [
     { name: "IdentityById", document: IdentityByIdDocument, variables: { id: "identity-id" } },
     { name: "ListIdentities", document: ListIdentitiesDocument },
     { name: "SearchIdentities", document: SearchIdentitiesDocument, variables: { searchTerm: "term" } },
+    { name: "PostById", document: PostByIdDocument, variables: { id: "post-id" } },
+    { name: "ListPosts", document: ListPostsDocument },
+    { name: "SearchPosts", document: SearchPostsDocument, variables: { searchTerm: "term" } },
     { name: "ListJobsByCompany", document: ListJobsByCompanyDocument, variables: { companyId: "company-id" } },
     { name: "ListJobsByIdentity", document: ListJobsByIdentityDocument, variables: { identityId: "identity-id" } },
     {

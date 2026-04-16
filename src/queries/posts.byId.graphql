@@ -3,7 +3,48 @@ query PostById($id: String!, $draft: Boolean = false) {
     id
     title
     slug
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    categories {
+      id
+      title
+      slug
+    }
+    authors {
+      id
+      name
+      email
+    }
+    populatedAuthors {
+      id
+      name
+    }
     hasLiked
     likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
   }
 }

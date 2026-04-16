@@ -1,17 +1,53 @@
-query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-createdAt") {
-  Posts(
+query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+  Searches(
     draft: false
-    where: { title: { contains: $searchTerm } }
+    where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: posts } }] }
     page: $page
     limit: $limit
     sort: $sort
   ) {
     docs {
-      id
       title
-      slug
-      hasLiked
-      likeCount
+      priority
+      doc(draft: false) {
+        relationTo
+        value {
+          ... on Post {
+            __typename
+            id
+            title
+            slug
+            heroImage {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+            meta {
+              description
+              image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+              }
+            }
+            categories {
+              id
+              title
+              slug
+            }
+            hasLiked
+            likeCount
+          }
+        }
+      }
     }
     totalDocs
     limit
