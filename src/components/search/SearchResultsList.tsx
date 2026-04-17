@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, Flex } from "antd";
+import { Button } from "antd";
 
 import { AppList } from "../AppList";
 import type { DislikeMutation, LikeMutation } from "../shared/Like/types";

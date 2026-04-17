@@ -732,6 +732,42 @@ export const startups = [
 
 export const posts = [
     node({
+        id: "post-1",
+        title: "Harbor Launch Notes",
+        slug: "harbor-launch-notes",
+        description: "Harbor launch notes with markdown and a link",
+        content: "Harbor launch notes with **markdown** and a [link](https://harbor.example).",
+        serverURL: MAIN_SYNDICATION_URL,
+        _status: "published",
+        isSubscribed: false,
+        createdBy: node({
+            id: "user-nova",
+            name: "Nova Rivers",
+            email: "nova@example.test",
+        }),
+        company: companies[0],
+        heroImage: image("post-harbor-launch-notes", "Harbor Launch Notes"),
+        meta: node({
+            title: "Harbor Launch Notes",
+            description: "Harbor launch notes with markdown and a link",
+            image: image("post-harbor-launch-notes-meta", "Harbor Launch Notes meta"),
+        }),
+        categories: [node({ id: "category-updates", title: "Updates", slug: "updates" })],
+        populatedAuthors: [
+            node({
+                id: identities[0].id,
+                nickname: identities[0].name,
+                image: identities[0].image,
+            }),
+        ],
+        hasLiked: false,
+        likeCount: 0,
+        publishedAt: "2025-02-24T09:00:00.000Z",
+        createdAt: "2025-02-24T09:00:00.000Z",
+        updatedAt: "2025-02-24T09:00:00.000Z",
+        contentRankScore: 0,
+    }),
+    node({
         id: "post-harbor-operations-digest",
         title: "Harbor Operations Digest",
         slug: "harbor-operations-digest",

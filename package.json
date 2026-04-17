@@ -145,6 +145,8 @@
         "test:ct:deep-dive:syndication-detail:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDiveSyndicationDetail.cy.tsx",
         "test:ct:publish": "cypress run --component --browser electron --spec cypress/component/Publish.cy.tsx",
         "test:ct:publish:headed": "cypress run --component --browser electron --headed --spec cypress/component/Publish.cy.tsx",
+        "test:ct:posts": "cypress run --component --browser electron --spec cypress/component/Posts.cy.tsx",
+        "test:ct:posts:headed": "cypress run --component --browser electron --headed --spec cypress/component/Posts.cy.tsx",
         "format": "prettier --write .",
         "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
         "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",

@@ -129,3 +129,4 @@ manager is `yarn`.
 - Do not edit `src/components/hooks.ts` unless the user explicitly asks for changes there.
 - Do not edit `deepMergeConcatArrays` in `src/components/query/utils.ts` unless the user explicitly asks for changes there.
 - Do not touch the backend repo or backend files from this frontend workspace unless the user explicitly asks for backend changes.
+- Do not override or "clean up" component changes that the user made unless the user explicitly asks you to change that component. If a component file has user-authored edits, stop and preserve them instead of rewriting the component for convenience.

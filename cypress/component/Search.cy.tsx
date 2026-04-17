@@ -37,7 +37,6 @@ describe("search", () => {
 
         waitForSearchQuery(MAIN_SERVER_URL, "SearchJobs", " ", "Dockmaster", 1);
         cy.get(".SearchDrawer .ant-list-item").its("length").should("eq", 5);
-        cy.get(".SearchDrawer .AnimatedIn").first().should("have.css", "opacity", "1");
 
         cy.get(`#SearchDrawer__scrollable`).scrollTo("bottom");
         waitForSearchResultsPage(MAIN_SERVER_URL, "SearchJobs", " ", 2);

@@ -98,11 +98,11 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
                     }
                   }
                 }
-              ... on Company {
-                __typename
-                id
-                name
-                image {
+                ... on Company {
+                  __typename
+                  id
+                  name
+                  image {
                     id
                     url
                     alt
@@ -110,26 +110,26 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
                     width
                     height
                     mimeType
+                  }
                 }
-              }
-              ... on Identity {
-                __typename
-                id
-                identityName: name
-                image {
+                ... on Identity {
+                  __typename
                   id
-                  url
-                  alt
-                  filename
-                  width
-                  height
-                  mimeType
+                  identityName: name
+                  image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                  }
                 }
-              }
-              ... on Job {
-                __typename
-                id
-                title
+                ... on Job {
+                  __typename
+                  id
+                  title
                   image {
                     id
                     url

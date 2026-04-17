@@ -31,7 +31,7 @@ export const createIdentityRef = (identityId: string | undefined): MockNode | nu
     }
 
     const identity = activeFixtures.identities.find((item) => item.id === identityId);
-    return identity ? cloneValue(identity) : createNodeRef(identityId);
+    return identity ? { ...cloneValue(identity), __typename: "Identity" } : searchNode({ __typename: "Identity", id: identityId });
 };
 
 export const createUserRef = (userId: string | undefined): MockNode | null => {
@@ -46,13 +46,14 @@ export const createUserRef = (userId: string | undefined): MockNode | null => {
     const identity = activeFixtures.identities.find((item) => item.id === userId);
     if (identity) {
         return searchNode({
+            __typename: "Identity",
             id: identity.id,
             name: identity.name,
             email: identity.email,
         });
     }
 
-    return createNodeRef(userId);
+    return searchNode({ __typename: "Identity", id: userId });
 };
 
 export const createCompanyRef = (companyId: string | undefined): MockNode | null => {
@@ -61,7 +62,7 @@ export const createCompanyRef = (companyId: string | undefined): MockNode | null
     }
 
     const company = activeFixtures.companies.find((item) => item.id === companyId);
-    return company ? cloneValue(company) : createNodeRef(companyId);
+    return company ? { ...cloneValue(company), __typename: "Company" } : searchNode({ __typename: "Company", id: companyId });
 };
 
 export const createProductRef = (productId: string | undefined): MockNode | null => {
@@ -70,7 +71,7 @@ export const createProductRef = (productId: string | undefined): MockNode | null
     }
 
     const product = activeFixtures.products.find((item) => item.id === productId);
-    return product ? cloneValue(product) : createNodeRef(productId);
+    return product ? { ...cloneValue(product), __typename: "Product" } : searchNode({ __typename: "Product", id: productId });
 };
 
 export const createPostRef = (postId: string | undefined): MockNode | null => {
@@ -79,7 +80,7 @@ export const createPostRef = (postId: string | undefined): MockNode | null => {
     }
 
     const post = activeFixtures.posts.find((item) => item.id === postId);
-    return post ? cloneValue(post) : createNodeRef(postId);
+    return post ? { ...cloneValue(post), __typename: "Post" } : searchNode({ __typename: "Post", id: postId });
 };
 
 export const createJobRef = (jobId: string | undefined): MockNode | null => {
@@ -88,7 +89,7 @@ export const createJobRef = (jobId: string | undefined): MockNode | null => {
     }
 
     const job = activeFixtures.jobs.find((item) => item.id === jobId);
-    return job ? cloneValue(job) : createNodeRef(jobId);
+    return job ? { ...cloneValue(job), __typename: "Job" } : searchNode({ __typename: "Job", id: jobId });
 };
 
 export const createStartupRef = (startupId: string | undefined): MockNode | null => {
@@ -97,7 +98,7 @@ export const createStartupRef = (startupId: string | undefined): MockNode | null
     }
 
     const startup = activeFixtures.startups.find((item) => item.id === startupId);
-    return startup ? cloneValue(startup) : createNodeRef(startupId);
+    return startup ? { ...cloneValue(startup), __typename: "Startup" } : searchNode({ __typename: "Startup", id: startupId });
 };
 
 export const createVariantRef = (variantId: string | undefined): MockNode | null => {

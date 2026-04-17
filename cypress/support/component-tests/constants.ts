@@ -6,6 +6,16 @@ export const GUEST_SERVER_URL = "http://127.0.0.1:3012";
 
 export const LIST_GOALS: ListGoal[] = [
     {
+        trigger: "Posts",
+        route: "/posts",
+        title: "Posts",
+        operationName: "ListPosts",
+        responseKey: "Posts",
+        expectedVariables: { limit: 20, page: 1 },
+        expectedResultTitle: "Harbor Operations Digest",
+        minimumDocs: 0,
+    },
+    {
         trigger: "Jobs",
         route: "/jobs",
         title: "Jobs",
@@ -81,9 +91,36 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
             expectedVariables: { id: "job-dockmaster" },
         },
     },
+    {
+        selector: ".SplashEntityCard__itemLink",
+        label: "Harbor Operations Digest",
+        route: "/posts/post-harbor-operations-digest",
+        title: "Harbor Operations Digest",
+        detailTitleSelector: ".EntityDetail__title",
+        query: {
+            operationName: "PostById",
+            responseKey: "Post",
+            expectedId: "post-harbor-operations-digest",
+            expectedVariables: { id: "post-harbor-operations-digest" },
+        },
+    },
 ];
 
 export const SEARCH_GOALS: SearchGoal[] = [
+    {
+        scopeLabel: "Posts",
+        searchTitle: "Post search",
+        term: "Harbor Operations",
+        resultLabel: "Harbor Operations Digest",
+        route: "/posts/post-harbor-operations-digest",
+        title: "Harbor Operations Digest",
+        searchOperationName: "SearchPosts",
+        detailOperationName: "PostById",
+        expectedId: "post-harbor-operations-digest",
+        responseKey: "Post",
+        searchExpectedTitle: "Harbor Operations Digest",
+        detailExpectedVariables: { id: "post-harbor-operations-digest" },
+    },
     {
         scopeLabel: "Jobs",
         searchTitle: "Job search",

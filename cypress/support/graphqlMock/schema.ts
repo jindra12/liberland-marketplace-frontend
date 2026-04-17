@@ -170,6 +170,74 @@ export const graphqlSchema = buildSchema(`
         nextPage: Int
     }
 
+    enum Post_RelatedPosts_RelationTo {
+        posts
+        companies
+        jobs
+        products
+        startups
+        identities
+    }
+
+    type Post_RelatedPosts_Relationship {
+        relationTo: Post_RelatedPosts_RelationTo
+        value: Post_RelatedPosts
+    }
+
+    union Post_RelatedPosts = Post | Company | Identity | Job | Product | Startup
+
+    type Media {
+        id: String
+        url: String
+        alt: String
+        filename: String
+        width: Float
+        height: Float
+        mimeType: String
+    }
+
+    type Post {
+        id: String
+        title: String
+        slug: String
+        heroImage: Media
+        company: Company
+    }
+
+    type Company {
+        id: String
+        name: String
+        image: Media
+    }
+
+    type Identity {
+        id: String
+        name: String
+        identityName: String
+        image: Media
+    }
+
+    type Job {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
+    type Product {
+        id: String
+        name: String
+        image: Media
+        company: Company
+    }
+
+    type Startup {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
     type MockNode {
         id: JSON
         name: JSON
@@ -272,7 +340,7 @@ export const graphqlSchema = buildSchema(`
         items: [MockNode!]
         categories: [MockNode!]
         populatedAuthors: [MockNode!]
-        relatedPosts: [MockNode!]
+        relatedPosts: [Post_RelatedPosts_Relationship!]
         options: [MockNode!]
         properties: [MockNode!]
         transactions: [MockNode!]

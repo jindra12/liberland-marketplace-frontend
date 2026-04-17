@@ -3,14 +3,6 @@
     animation: AnimatedInFade 1s ease-out forwards;
 }
 
-html[data-cypress="true"] {
-    --default-opacity: 1;
-}
-
-html[data-cypress="true"] .AnimatedIn {
-    animation: none;
-}
-
 @keyframes AnimatedInFade {
     from { opacity: 0; }
     to { opacity: 1; }

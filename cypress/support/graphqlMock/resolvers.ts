@@ -180,8 +180,11 @@ export const mutationResolvers = {
         if (data.publishedAt === undefined && !args.draft) {
             data.publishedAt = nowIso();
         }
+        if (data._status === undefined) {
+            data._status = args.draft ? "draft" : "published";
+        }
 
-        return createNode(activeFixtures.posts, "post", data, args.draft ? "draft" : "published");
+        return updateNode(activeFixtures.posts, "post-1", data, "post");
     },
     deletePost: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.posts, args.id),
     updatePost: (_parent: unknown, args: { id?: string; data?: Record<string, unknown>; draft?: boolean }): MockNode => {

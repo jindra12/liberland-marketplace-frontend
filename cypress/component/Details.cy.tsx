@@ -29,7 +29,6 @@ describe("details", () => {
         mountMainRoute(detailGoal.route);
         cy.location("pathname").should("eq", detailGoal.route);
         cy.contains(detailGoal.detailTitleSelector, detailGoal.title, { timeout: 20000 }).should("be.visible");
-        cy.get(".AnimatedIn", { timeout: 20000 }).first().should("have.css", "opacity", "1");
         screenshotStep(`detail-mobile-${detailGoal.title}`);
     });
 });

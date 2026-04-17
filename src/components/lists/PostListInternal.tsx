@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { Avatar, Flex, Grid, Typography } from "antd";
+import { Avatar, Flex, Grid, Tag, Typography } from "antd";
 
 import { ListPostsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -53,13 +53,14 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         <Typography.Paragraph className="EntityList__description PostList__description">
                             {post.meta?.description}
                         </Typography.Paragraph>
+                        {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
                         {post.relatedPosts?.[0] && (
                             <Typography.Link href={getPostRelatedTargetHref(post.relatedPosts[0])}>
                                 Related: {getPostRelatedTargetText(post.relatedPosts[0])}
                             </Typography.Link>
                         )}
-                    </Flex>
-                ),
+                            </Flex>
+                        ),
                 actions: (post) =>
                     md ? (
                         <Flex gap="12px" wrap justify="flex-end" className="EntityList__actionsRow PostList__actionsRow">

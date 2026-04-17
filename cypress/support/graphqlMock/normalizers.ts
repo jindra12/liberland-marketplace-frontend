@@ -191,29 +191,35 @@ export const normalizePostData = (data: Record<string, unknown>) => {
         data.relatedPosts = data.relatedPosts
             .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
             .map((value, index) => {
+                const buildValue = (relationTo: string, id: string | undefined): MockNode | null => {
+                    switch (relationTo) {
+                        case "companies":
+                            return createCompanyRef(id);
+                        case "identities":
+                            return createIdentityRef(id);
+                        case "jobs":
+                            return createJobRef(id);
+                        case "products":
+                            return createProductRef(id);
+                        case "startups":
+                            return createStartupRef(id);
+                        case "posts":
+                            return createPostRef(id);
+                        default:
+                            return id ? searchNode({ __typename: "Post", id }) : null;
+                    }
+                };
+
                 if (typeof value === "string") {
                     return searchNode({
                         id: `post-related-${index + 1}`,
                         relationTo: "posts",
-                        value: createPostRef(value),
+                        value: buildValue("posts", value),
                     });
                 }
 
                 const relationTo = typeof value.relationTo === "string" ? value.relationTo : "posts";
-                const refValue =
-                    relationTo === "companies"
-                        ? createCompanyRef(typeof value.value === "string" ? value.value : undefined)
-                        : relationTo === "identities"
-                          ? createIdentityRef(typeof value.value === "string" ? value.value : undefined)
-                        : relationTo === "jobs"
-                          ? createJobRef(typeof value.value === "string" ? value.value : undefined)
-                          : relationTo === "products"
-                            ? createProductRef(typeof value.value === "string" ? value.value : undefined)
-                            : relationTo === "startups"
-                              ? createStartupRef(typeof value.value === "string" ? value.value : undefined)
-                              : relationTo === "posts"
-                                ? createPostRef(typeof value.value === "string" ? value.value : undefined)
-                                : createNodeRef(typeof value.value === "string" ? value.value : "");
+                const refValue = buildValue(relationTo, typeof value.value === "string" ? value.value : undefined);
 
                 return searchNode({
                     id: typeof value.id === "string" ? value.id : `post-related-${index + 1}`,
