@@ -1,6 +1,7 @@
 import { activeFixtures, cloneValue, searchNode } from "./runtimeState";
 import type { GraphQLRequestBody } from "./runtimeState";
 import type { MockCollection, MockNode } from "./types";
+import { buildMockImageNode } from "./imageAssets";
 
 const includes = (value: string | undefined, term: string | undefined): boolean => {
     if (!term) {
@@ -13,15 +14,7 @@ const includes = (value: string | undefined, term: string | undefined): boolean 
 const getSearchTerm = (body: GraphQLRequestBody): string | undefined => body.variables?.searchTerm;
 
 export const createImageRef = (id: string): MockNode =>
-    searchNode({
-        id,
-        url: `/images/${id}.png`,
-        alt: id,
-        filename: `${id}.png`,
-        mimeType: "image/png",
-        width: 1200,
-        height: 800,
-    });
+    buildMockImageNode(id, id, id.startsWith("post-") ? "hero" : "avatar");
 
 export const createNodeRef = (id: string): MockNode => searchNode({ id });
 

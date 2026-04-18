@@ -69,6 +69,10 @@ export const getPostHeroImageUrl = (post?: PostDoc | null): string => {
     return relatedImage || "";
 };
 
+export const getPostCompanyImageUrl = (post?: PostDoc | null): string => {
+    return getCompanyImageUrl(post?.company);
+};
+
 export const getRelatedTargetImageUrl = (related?: PostRelatedTarget | null): string => {
     if (!related?.value || !related.relationTo) {
         return "";

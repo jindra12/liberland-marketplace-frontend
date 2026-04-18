@@ -4,14 +4,19 @@ import { Link } from "react-router-dom";
 
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { Avatar, Flex, Grid, Tag, Typography } from "antd";
+import { Avatar, Flex, Grid, Image, Tag, Typography } from "antd";
 
 import { ListPostsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
-import { getPostHeroImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
+import {
+    getPostCompanyImageUrl,
+    getPostHeroImageUrl,
+    getPostRelatedTargetHref,
+    getPostRelatedTargetText,
+} from "../shared/post/utils";
 
 export interface PostListInternalProps {
     query: UseQueryResult<ListPostsQuery, unknown>;
@@ -40,11 +45,25 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
             renderItem={{
                 title: (post) => <Link to={`/posts/${post.id}`}>{post.title}</Link>,
                 avatar: (post) => {
-                    const imageSrc = getPostHeroImageUrl(post);
+                    const imageSrc = getPostCompanyImageUrl(post);
 
                     return imageSrc ? (
-                        <Link to={`/posts/${post.id}`}>
-                            <Avatar shape="square" size={112} src={imageSrc} className="EntityList__avatar" />
+                        <Link to={`/posts/${post.id}`} className="PostList__companyAvatarLink">
+                            <Avatar shape="square" size={112} src={imageSrc} className="EntityList__avatar PostList__companyAvatar" />
+                        </Link>
+                    ) : undefined;
+                },
+                cover: (post) => {
+                    const imageSrc = getPostHeroImageUrl(post);
+                    return imageSrc ? (
+                        <Link to={`/posts/${post.id}`} className="PostList__coverLink" aria-label={post.title ?? "Post"}>
+                            <Image
+                                preview={false}
+                                src={imageSrc}
+                                alt={post.title ?? "Post hero image"}
+                                width="100%"
+                                className="PostList__coverImage"
+                            />
                         </Link>
                     ) : undefined;
                 },

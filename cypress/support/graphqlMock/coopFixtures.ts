@@ -1,19 +1,11 @@
 import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
+import { buildMockImageNode } from "./imageAssets";
 
 const COOP_SYNDICATION_URL = "http://127.0.0.1:3011";
 
 const node = (value: Record<string, unknown>): MockNode => value as MockNode;
 
-const image = (id: string, alt: string): MockNode =>
-    node({
-        id,
-        url: `/images/${id}.png`,
-        alt,
-        filename: `${id}.png`,
-        mimeType: "image/png",
-        width: 1200,
-        height: 800,
-    });
+const image = (id: string, alt: string): MockNode => buildMockImageNode(id, alt, id.startsWith("coop-post-") ? "hero" : "avatar");
 
 const collection = (docs: MockNode[]): MockCollection => ({
     docs,

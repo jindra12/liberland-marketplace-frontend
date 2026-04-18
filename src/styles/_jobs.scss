@@ -130,6 +130,52 @@
     margin-top: 16px;
 }
 
+.AppList__card .ant-card-cover {
+    margin: 0;
+}
+
+.AppList__cardCover {
+    height: 260px;
+    overflow: hidden;
+}
+
+.AppList__cardCover .PostList__coverLink,
+.AppList__cardCover .PostList__coverImage,
+.AppList__cardCover .PostList__coverImage .ant-image-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.AppList__cardCover .PostList__coverImage .ant-image-img {
+    object-fit: cover;
+    object-position: center;
+}
+
+.PostList__companyAvatarLink {
+    display: block;
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.PostList__companyAvatarLink--search {
+    width: 88px;
+    height: 88px;
+}
+
+.PostList__companyAvatar {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.PostList__companyAvatar .ant-image-img {
+    object-fit: contain;
+    object-position: center;
+}
+
 .PostList__meta {
     width: 100%;
 }

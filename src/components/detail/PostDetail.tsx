@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useQueryClient } from "@tanstack/react-query";
 
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Divider, Flex, Image, Popconfirm, Typography, message } from "antd";
+import { Avatar, Button, Divider, Flex, Popconfirm, Typography, message } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -15,9 +15,10 @@ import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { Like } from "../shared/Like/Like";
-import { getPostHeroImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
+import { getPostCompanyImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
 
 import { CommonDetail } from "./CommonDetail";
+import { PostHeroSplash } from "./PostHeroSplash";
 
 const PostDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -49,7 +50,7 @@ const PostDetail: React.FunctionComponent = () => {
                     return null;
                 }
 
-                const imageSrc = getPostHeroImageUrl(post);
+                const companyImageSrc = getPostCompanyImageUrl(post);
                 const shareTitle = post.title ?? "Post";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
                 const isOwner = auth.user?.profile?.sub && post.createdBy?.id === auth.user.profile.sub;
@@ -66,15 +67,7 @@ const PostDetail: React.FunctionComponent = () => {
                         shareText={shareText}
                         header={
                             <Flex vertical gap={20} className="PostDetail__header">
-                                {imageSrc && (
-                                    <Image
-                                        preview={false}
-                                        src={imageSrc}
-                                        alt={post.title ?? "Post hero image"}
-                                        width="100%"
-                                        className="PostDetail__heroImage"
-                                    />
-                                )}
+                                <PostHeroSplash post={post} />
                                 <Flex vertical gap={14} className="EntityDetail__headerBody PostDetail__headerBody">
                                     <div className="EntityDetail__titleBlock">
                                         <Typography.Text className="EntityDetail__eyebrow">Post</Typography.Text>
@@ -83,6 +76,21 @@ const PostDetail: React.FunctionComponent = () => {
                                                 {post.title}
                                             </Typography.Title>
                                         </div>
+                                        {post.company?.id && post.company?.name && (
+                                            <Link to={`/companies/${post.company.id}`} className="PostDetail__companyLink">
+                                                <Flex gap={12} align="center" className="PostDetail__companyRow">
+                                                    <Avatar
+                                                        shape="square"
+                                                        size={52}
+                                                        src={companyImageSrc}
+                                                        className="EntityList__avatar PostDetail__companyAvatar"
+                                                    />
+                                                    <Typography.Text className="PostDetail__companyName">
+                                                        {post.company.name}
+                                                    </Typography.Text>
+                                                </Flex>
+                                            </Link>
+                                        )}
                                         {post.createdBy?.name && (
                                             <div className="PostDetail__creatorRow">
                                                 <Typography.Text type="secondary">

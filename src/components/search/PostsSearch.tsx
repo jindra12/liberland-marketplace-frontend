@@ -8,7 +8,7 @@ import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useDislikePostMutation, useLikePostMutation, useListPostsQuery, useSearchPostsQuery } from "../hooks";
 import type { RelatedTargetSelection } from "../shared/post/types";
-import { getPostHeroImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
+import { getPostCompanyImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -94,10 +94,15 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                         </Flex>
                     ),
                     avatar: (post) => {
-                        const imageSrc = getPostHeroImageUrl(post);
+                        const imageSrc = getPostCompanyImageUrl(post);
                         return imageSrc ? (
-                            <Link to={`/posts/${post.id}`} onClick={props.onClose}>
-                                <Avatar shape="square" size={88} src={imageSrc} className="EntityList__avatar" />
+                            <Link to={`/posts/${post.id}`} onClick={props.onClose} className="PostList__companyAvatarLink PostList__companyAvatarLink--search">
+                                <Avatar
+                                    shape="square"
+                                    size={88}
+                                    src={imageSrc}
+                                    className="EntityList__avatar PostList__companyAvatar"
+                                />
                             </Link>
                         ) : undefined;
                     },

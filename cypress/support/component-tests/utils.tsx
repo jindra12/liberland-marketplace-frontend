@@ -504,11 +504,23 @@ export const goToList = (goal: ListGoal) => {
     cy.get("body").then(($body) => {
         if ($body.find(".LikeButton").length > 0) {
             cy.get(".LikeButton").should("exist");
-            return;
+        } else {
+            cy.get(".LikeButton").should("not.exist");
         }
-
-        cy.get(".LikeButton").should("not.exist");
     });
+    if (goal.trigger === "Posts") {
+        cy.get("body").then(($body) => {
+            const avatarImgs = $body.find(".AppList .PostList__companyAvatar img");
+            if (avatarImgs.length > 0) {
+                expect(avatarImgs[0].getAttribute("src") || "").to.contain("preview-image.png");
+            }
+
+            const coverImgs = $body.find(".AppList .PostList__coverImage img");
+            if (coverImgs.length > 0) {
+                expect(coverImgs[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+            }
+        });
+    }
     screenshotStep(`list-${goal.title}`);
 };
 
@@ -529,6 +541,12 @@ export const goToDetailFromHome = (goal: DetailGoal) => {
         );
     }
     cy.contains(goal.detailTitleSelector, goal.title, { timeout: 20000 }).should("be.visible");
+    if (goal.route.startsWith("/posts/")) {
+        cy.get(".PostDetail__companyAvatar").should("be.visible");
+        cy.get(".PostDetail__heroSplash img").should(($img) => {
+            expect($img[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+        });
+    }
     screenshotDetailStep(`detail-${goal.title}`);
 };
 
@@ -549,12 +567,19 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
         cy.get(".SearchDrawer .PostList__companyTag").first().should(($tag) => {
             expect($tag[0].getBoundingClientRect().width).to.be.lessThan(250);
         });
+        cy.get(".SearchDrawer .PostList__companyAvatar").first().should("be.visible");
     }
     cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 }).first().should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     cy.get(".SearchDrawer").should("not.exist");
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
+    if (goal.scopeLabel === "Posts") {
+        cy.get(".PostDetail__companyAvatar").should("be.visible");
+        cy.get(".PostDetail__heroSplash img").should(($img) => {
+            expect($img[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+        });
+    }
 };
 
 export const goToSyndicationList = () => {

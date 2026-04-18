@@ -2,7 +2,7 @@ import * as React from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Divider, Flex, Grid, List, Spin, Typography } from "antd";
+import { Card, Divider, Flex, Grid, List, Spin, Typography } from "antd";
 
 import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton";
 import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
@@ -19,7 +19,7 @@ interface AppListLikeItem {
 export interface AppListProps<TItem> {
     items: TItem[];
     renderItem: Partial<
-        Record<"title" | "extra" | "avatar" | "description" | "body" | "actions", (item: TItem) => React.ReactNode> & {
+        Record<"title" | "extra" | "avatar" | "cover" | "description" | "body" | "actions", (item: TItem) => React.ReactNode> & {
             like?: (item: TItem) => React.ReactNode;
         }
     >;
@@ -113,6 +113,35 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                                     {actionContent}
                                 </Flex>
                             ) : undefined;
+                        const cover = props.renderItem["cover"]?.(item);
+                        const itemContent = (
+                            <>
+                                {props.renderItem["extra"]?.(item)}
+                                <List.Item.Meta
+                                    title={props.renderItem["title"]?.(item)}
+                                    description={props.renderItem["description"]?.(item)}
+                                    avatar={props.renderItem["avatar"]?.(item)}
+                                />
+                                {props.renderItem["body"]?.(item)}
+                                {wrappedActions}
+                            </>
+                        );
+
+                        if (cover) {
+                            return (
+                                <List.Item className="AppList__cardItem">
+                                    <AnimatedIn className="AppList__itemReveal">
+                                        <Card
+                                            className="AppList__card"
+                                            cover={<div className="AppList__cardCover">{cover}</div>}
+                                        >
+                                            {itemContent}
+                                        </Card>
+                                    </AnimatedIn>
+                                </List.Item>
+                            );
+                        }
+
                         return (
                             <List.Item
                                 extra={props.renderItem["extra"]?.(item)}

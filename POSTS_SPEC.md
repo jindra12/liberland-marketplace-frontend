@@ -90,7 +90,12 @@ The list view should support:
 - `likeCount`
 - `hasLiked`
 - click-through to detail pages
+- the avatar image should be the publishing company image
 - a large hero image, title, SEO description as the snippet, and related-post link layout
+- extend `AppList` props with a cover renderer so card-based list items can render `cover={...}` when present
+- if `cover={...}` is present, render the hero inside a Card cover and keep the cover height consistent across cards
+- if the hero image is too small for a true cover crop, center it nicely instead of stretching it
+- use a single reasonable fixed cover height across the list cards
 
 ### Detail surface
 
@@ -102,7 +107,9 @@ Add the Posts detail page and supporting components:
 
 The detail view should support:
 
+- the avatar image should be the publishing company image
 - a large hero image splashed at the top
+- render the hero splash above `props.header` for Posts detail, not inside a Card
 - title
 - full markdown content rendering
 - related-post link underneath the content
@@ -186,6 +193,7 @@ Posts search should match the existing search pattern:
 Search needs to return:
 
 - title
+- the avatar image should be the publishing company image
 - SEO description as the snippet
 - click-through to the post detail page
 - SEO description if available
@@ -207,6 +215,13 @@ Hero image fallback rules when the user selected a related target but did not up
 3. If the related item is a Job, Product, or Venture, use that item's image, falling back to the company image if needed.
 
 The list and detail components should use the same fallback image logic so the UI stays consistent.
+
+Image rendering rules:
+
+- list avatars, detail avatars, and search avatars should use the publishing company image
+- the card cover height should be fixed and consistent across the list
+- if the image is too small for a cover crop, center it instead of forcing a bad crop
+- detail hero banners should be large, centered, and visually polished rather than treated like a small thumbnail
 
 ### Comments
 
