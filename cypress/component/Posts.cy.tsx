@@ -85,6 +85,8 @@ describe("posts", () => {
                 expect(detailInterception.response?.body?.data?.Post?.title).to.equal(initialTitle);
             });
             cy.contains("h3", "Edit Post", { timeout: 20000 }).should("be.visible");
+            cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
+            cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", initialTitle);
             assertFormFieldValue("Content", initialContent);
             assertFormFieldValue("SEO Description", initialSeoDescription);
@@ -110,6 +112,8 @@ describe("posts", () => {
 
             cy.routerNavigate(`/posts/edit/${createdId}`);
             cy.contains("h3", "Edit Post", { timeout: 20000 }).should("be.visible");
+            cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
+            cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", updatedTitle);
             assertFormFieldValue("Content", updatedContent);
             assertFormFieldValue("SEO Description", updatedSeoDescription);
