@@ -40,6 +40,7 @@ manager is `yarn`.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
 - `yarn codegen` requires the sibling backend dev server in `../liberland-marketplace` to be running on port `3001`; start it first and shut it down after codegen finishes.
+- When Codex is told to run codegen, that includes starting the sibling backend repo at `../liberland-marketplace` on port `3001` first and shutting it down after codegen finishes.
 - Never hand-edit `src/generated/graphql.ts`; always regenerate it with `yarn codegen` when GraphQL documents or schema change. If codegen fails, stop and report the problem instead of patching the generated file.
 - `yarn lint` and `yarn lint:fix` run ESLint.
 
@@ -85,6 +86,7 @@ manager is `yarn`.
 - In tests, do not use `unknown` for request bodies, fixtures, window mocks, or handler inputs. Use concrete test payload types, `JsonValue`, or small named interfaces instead.
 - Do not use `|| undefined` to coerce values. If a value can really be `null`, reflect that in the type. If a prop specifically needs `undefined`, use an explicit `!value ? undefined : value` check instead.
 - Do not use `?? undefined`. If a value can be absent, model it as `null` in the type or use a deliberate `!` assertion when the contract guarantees it.
+- Do not use `?? null` for any reason.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Do not use inline `style={{ ... }}` props. Prefer SCSS classes or component props unless a one-off runtime value genuinely cannot be expressed otherwise.
 - Do not use bare `<img>` tags in UI code. Use Ant `Image` with `preview={false}` or `Avatar` instead.
@@ -96,6 +98,7 @@ manager is `yarn`.
 - Do not use `React.useCallback` or `useCallback` unless it is absolutely necessary for correctness or there is a demonstrated performance need. Stable handlers are not a default requirement.
 - Never use `useEffect` defensively. Do not mirror props, query data, or other derived values into local state with an effect just to "keep them in sync". Derive the value directly or update state at the actual event source instead.
 - Do not use remount keys to reset forms or child state. If a stateful library such as Ant Form needs to reflect changed inputs, update it explicitly with its own setter API instead of forcing an unmount/remount cycle.
+- When using `useState`, prefer an atomic state type such as `string`, `number`, or `boolean`. Avoid object state unless you must update the whole object atomically, and do not rely on callback-style partial object merges inside `setState`.
 - Prefer existing utility hooks already in the repo, such as `usehooks-ts`, over hand-rolled timer/effect plumbing for things like `setTimeout`.
 - Do not duplicate defensive invariant checks in child components when a parent component already guarantees the contract. Trust validated props and parent-owned form constraints instead of re-checking values like `quantity <= 0` in leaf UI components.
 - Do not add impossible-state guards when the surrounding UI flow already prevents that state. If a screen, button state, or parent guard guarantees the condition, trust it instead of adding extra branches like empty-cart submit checks.

@@ -1,4 +1,4 @@
-query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
     Comments(draft: false, where: { replyComment: { equals: $parentCommentId } }, sort: "createdAt", limit: $limit, page: $page) {
         docs {
             id

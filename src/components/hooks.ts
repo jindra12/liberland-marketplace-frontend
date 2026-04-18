@@ -82,10 +82,18 @@ import {
     useListJobsQuery as useListJobsQuerySingle,
     SearchJobsDocument,
     useSearchJobsQuery as useSearchJobsQuerySingle,
+    CommentByIdDocument,
+    useCommentByIdQuery as useCommentByIdQuerySingle,
     ListCommentsByTargetDocument,
     useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle,
     CreateCommentDocument,
     useCreateCommentMutation as useCreateCommentMutationSingle,
+    DislikeCommentDocument,
+    useDislikeCommentMutation as useDislikeCommentMutationSingle,
+    LikeCommentDocument,
+    useLikeCommentMutation as useLikeCommentMutationSingle,
+    ListCommentRepliesDocument,
+    useListCommentRepliesQuery as useListCommentRepliesQuerySingle,
     CreateOrderDocument,
     useCreateOrderMutation as useCreateOrderMutationSingle,
     PostByIdDocument,
@@ -390,10 +398,16 @@ export const useSearchJobsBySecondaryIdentityQuery = enhancedQueryFactory(
 );
 export const useListJobsQuery = enhancedQueryFactory(useListJobsQuerySingle, ListJobsDocument, true);
 export const useSearchJobsQuery = enhancedQueryFactory(useSearchJobsQuerySingle, SearchJobsDocument, true);
+export const useCommentByIdQuery = enhancedQueryFactory(useCommentByIdQuerySingle, CommentByIdDocument, false);
 export const useListCommentsByTargetQuery = enhancedQueryFactory(
     useListCommentsByTargetQuerySingle,
     ListCommentsByTargetDocument,
     false,
+);
+export const useListCommentRepliesQuery = enhancedQueryFactory(
+    useListCommentRepliesQuerySingle,
+    ListCommentRepliesDocument,
+    true,
 );
 export const useListJobsByIdentityQuery = enhancedQueryFactory(
     useListJobsByIdentityQuerySingle,
@@ -486,6 +500,11 @@ export const useDislikeCompanyMutation = enhancedMutationFactory(
 );
 export const useLikeCompanyMutation = enhancedMutationFactory(useLikeCompanyMutationSingle, LikeCompanyDocument);
 export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
+export const useDislikeCommentMutation = enhancedMutationFactory(
+    useDislikeCommentMutationSingle,
+    DislikeCommentDocument,
+);
+export const useLikeCommentMutation = enhancedMutationFactory(useLikeCommentMutationSingle, LikeCommentDocument);
 export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
 export const useUpdateOrderMutation = enhancedMutationFactory(useUpdateOrderMutationSingle, UpdateOrderDocument);
 export const useCreatePostCommentMutation = enhancedMutationFactory(

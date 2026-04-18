@@ -29,6 +29,7 @@ export type Access = {
   canAccessAdmin: Scalars['Boolean']['output'];
   carts?: Maybe<CartsAccess>;
   categories?: Maybe<CategoriesAccess>;
+  comment_likes?: Maybe<Comment_LikesAccess>;
   comments?: Maybe<CommentsAccess>;
   companies?: Maybe<CompaniesAccess>;
   company_likes?: Maybe<Company_LikesAccess>;
@@ -5093,19 +5094,489 @@ export type Comment = {
   __typename?: 'Comment';
   anonymousHash?: Maybe<Scalars['String']['output']>;
   content: Scalars['String']['output'];
+  contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
+  hasLiked?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
+  lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
+  likeCount?: Maybe<Scalars['Float']['output']>;
   replyComment?: Maybe<Comment>;
   replyPost: Comment_ReplyPost_Relationship;
   replyPostRelationTo?: Maybe<Scalars['String']['output']>;
   replyPostValue?: Maybe<Scalars['String']['output']>;
+  serverUrl?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
 
 export type CommentReplyPostArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CommentLike = {
+  __typename?: 'CommentLike';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy: User;
+  id: Scalars['String']['output'];
+  targetID: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId: Scalars['String']['output'];
+};
+
+export type CommentLike_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type CommentLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type CommentLike_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CommentLike_TargetId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CommentLike_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type CommentLike_UserId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CommentLike_Where = {
+  AND?: InputMaybe<Array<InputMaybe<CommentLike_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<CommentLike_Where_Or>>>;
+  createdAt?: InputMaybe<CommentLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CommentLike_CreatedBy_Operator>;
+  id?: InputMaybe<CommentLike_Id_Operator>;
+  targetID?: InputMaybe<CommentLike_TargetId_Operator>;
+  updatedAt?: InputMaybe<CommentLike_UpdatedAt_Operator>;
+  userId?: InputMaybe<CommentLike_UserId_Operator>;
+};
+
+export type CommentLike_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<CommentLike_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<CommentLike_Where_Or>>>;
+  createdAt?: InputMaybe<CommentLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CommentLike_CreatedBy_Operator>;
+  id?: InputMaybe<CommentLike_Id_Operator>;
+  targetID?: InputMaybe<CommentLike_TargetId_Operator>;
+  updatedAt?: InputMaybe<CommentLike_UpdatedAt_Operator>;
+  userId?: InputMaybe<CommentLike_UserId_Operator>;
+};
+
+export type CommentLike_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<CommentLike_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<CommentLike_Where_Or>>>;
+  createdAt?: InputMaybe<CommentLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CommentLike_CreatedBy_Operator>;
+  id?: InputMaybe<CommentLike_Id_Operator>;
+  targetID?: InputMaybe<CommentLike_TargetId_Operator>;
+  updatedAt?: InputMaybe<CommentLike_UpdatedAt_Operator>;
+  userId?: InputMaybe<CommentLike_UserId_Operator>;
+};
+
+export type CommentLikes = {
+  __typename?: 'CommentLikes';
+  docs: Array<CommentLike>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type CommentLikesCreateAccess = {
+  __typename?: 'CommentLikesCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesCreateDocAccess = {
+  __typename?: 'CommentLikesCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesDeleteAccess = {
+  __typename?: 'CommentLikesDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesDeleteDocAccess = {
+  __typename?: 'CommentLikesDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesDocAccessFields = {
+  __typename?: 'CommentLikesDocAccessFields';
+  createdAt?: Maybe<CommentLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<CommentLikesDocAccessFields_CreatedBy>;
+  targetID?: Maybe<CommentLikesDocAccessFields_TargetId>;
+  updatedAt?: Maybe<CommentLikesDocAccessFields_UpdatedAt>;
+  userId?: Maybe<CommentLikesDocAccessFields_UserId>;
+};
+
+export type CommentLikesDocAccessFields_CreatedAt = {
+  __typename?: 'CommentLikesDocAccessFields_createdAt';
+  create?: Maybe<CommentLikesDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<CommentLikesDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<CommentLikesDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<CommentLikesDocAccessFields_CreatedAt_Update>;
+};
+
+export type CommentLikesDocAccessFields_CreatedAt_Create = {
+  __typename?: 'CommentLikesDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'CommentLikesDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedAt_Read = {
+  __typename?: 'CommentLikesDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedAt_Update = {
+  __typename?: 'CommentLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedBy = {
+  __typename?: 'CommentLikesDocAccessFields_createdBy';
+  create?: Maybe<CommentLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<CommentLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<CommentLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<CommentLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type CommentLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'CommentLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'CommentLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'CommentLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'CommentLikesDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_TargetId = {
+  __typename?: 'CommentLikesDocAccessFields_targetID';
+  create?: Maybe<CommentLikesDocAccessFields_TargetId_Create>;
+  delete?: Maybe<CommentLikesDocAccessFields_TargetId_Delete>;
+  read?: Maybe<CommentLikesDocAccessFields_TargetId_Read>;
+  update?: Maybe<CommentLikesDocAccessFields_TargetId_Update>;
+};
+
+export type CommentLikesDocAccessFields_TargetId_Create = {
+  __typename?: 'CommentLikesDocAccessFields_targetID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_TargetId_Delete = {
+  __typename?: 'CommentLikesDocAccessFields_targetID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_TargetId_Read = {
+  __typename?: 'CommentLikesDocAccessFields_targetID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_TargetId_Update = {
+  __typename?: 'CommentLikesDocAccessFields_targetID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UpdatedAt = {
+  __typename?: 'CommentLikesDocAccessFields_updatedAt';
+  create?: Maybe<CommentLikesDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<CommentLikesDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<CommentLikesDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<CommentLikesDocAccessFields_UpdatedAt_Update>;
+};
+
+export type CommentLikesDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'CommentLikesDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'CommentLikesDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'CommentLikesDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'CommentLikesDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UserId = {
+  __typename?: 'CommentLikesDocAccessFields_userId';
+  create?: Maybe<CommentLikesDocAccessFields_UserId_Create>;
+  delete?: Maybe<CommentLikesDocAccessFields_UserId_Delete>;
+  read?: Maybe<CommentLikesDocAccessFields_UserId_Read>;
+  update?: Maybe<CommentLikesDocAccessFields_UserId_Update>;
+};
+
+export type CommentLikesDocAccessFields_UserId_Create = {
+  __typename?: 'CommentLikesDocAccessFields_userId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UserId_Delete = {
+  __typename?: 'CommentLikesDocAccessFields_userId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UserId_Read = {
+  __typename?: 'CommentLikesDocAccessFields_userId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesDocAccessFields_UserId_Update = {
+  __typename?: 'CommentLikesDocAccessFields_userId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields = {
+  __typename?: 'CommentLikesFields';
+  createdAt?: Maybe<CommentLikesFields_CreatedAt>;
+  createdBy?: Maybe<CommentLikesFields_CreatedBy>;
+  targetID?: Maybe<CommentLikesFields_TargetId>;
+  updatedAt?: Maybe<CommentLikesFields_UpdatedAt>;
+  userId?: Maybe<CommentLikesFields_UserId>;
+};
+
+export type CommentLikesFields_CreatedAt = {
+  __typename?: 'CommentLikesFields_createdAt';
+  create?: Maybe<CommentLikesFields_CreatedAt_Create>;
+  delete?: Maybe<CommentLikesFields_CreatedAt_Delete>;
+  read?: Maybe<CommentLikesFields_CreatedAt_Read>;
+  update?: Maybe<CommentLikesFields_CreatedAt_Update>;
+};
+
+export type CommentLikesFields_CreatedAt_Create = {
+  __typename?: 'CommentLikesFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedAt_Delete = {
+  __typename?: 'CommentLikesFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedAt_Read = {
+  __typename?: 'CommentLikesFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedAt_Update = {
+  __typename?: 'CommentLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedBy = {
+  __typename?: 'CommentLikesFields_createdBy';
+  create?: Maybe<CommentLikesFields_CreatedBy_Create>;
+  delete?: Maybe<CommentLikesFields_CreatedBy_Delete>;
+  read?: Maybe<CommentLikesFields_CreatedBy_Read>;
+  update?: Maybe<CommentLikesFields_CreatedBy_Update>;
+};
+
+export type CommentLikesFields_CreatedBy_Create = {
+  __typename?: 'CommentLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedBy_Delete = {
+  __typename?: 'CommentLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedBy_Read = {
+  __typename?: 'CommentLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_CreatedBy_Update = {
+  __typename?: 'CommentLikesFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_TargetId = {
+  __typename?: 'CommentLikesFields_targetID';
+  create?: Maybe<CommentLikesFields_TargetId_Create>;
+  delete?: Maybe<CommentLikesFields_TargetId_Delete>;
+  read?: Maybe<CommentLikesFields_TargetId_Read>;
+  update?: Maybe<CommentLikesFields_TargetId_Update>;
+};
+
+export type CommentLikesFields_TargetId_Create = {
+  __typename?: 'CommentLikesFields_targetID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_TargetId_Delete = {
+  __typename?: 'CommentLikesFields_targetID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_TargetId_Read = {
+  __typename?: 'CommentLikesFields_targetID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_TargetId_Update = {
+  __typename?: 'CommentLikesFields_targetID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UpdatedAt = {
+  __typename?: 'CommentLikesFields_updatedAt';
+  create?: Maybe<CommentLikesFields_UpdatedAt_Create>;
+  delete?: Maybe<CommentLikesFields_UpdatedAt_Delete>;
+  read?: Maybe<CommentLikesFields_UpdatedAt_Read>;
+  update?: Maybe<CommentLikesFields_UpdatedAt_Update>;
+};
+
+export type CommentLikesFields_UpdatedAt_Create = {
+  __typename?: 'CommentLikesFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UpdatedAt_Delete = {
+  __typename?: 'CommentLikesFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UpdatedAt_Read = {
+  __typename?: 'CommentLikesFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UpdatedAt_Update = {
+  __typename?: 'CommentLikesFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UserId = {
+  __typename?: 'CommentLikesFields_userId';
+  create?: Maybe<CommentLikesFields_UserId_Create>;
+  delete?: Maybe<CommentLikesFields_UserId_Delete>;
+  read?: Maybe<CommentLikesFields_UserId_Read>;
+  update?: Maybe<CommentLikesFields_UserId_Update>;
+};
+
+export type CommentLikesFields_UserId_Create = {
+  __typename?: 'CommentLikesFields_userId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UserId_Delete = {
+  __typename?: 'CommentLikesFields_userId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UserId_Read = {
+  __typename?: 'CommentLikesFields_userId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesFields_UserId_Update = {
+  __typename?: 'CommentLikesFields_userId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentLikesReadAccess = {
+  __typename?: 'CommentLikesReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesReadDocAccess = {
+  __typename?: 'CommentLikesReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesUpdateAccess = {
+  __typename?: 'CommentLikesUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type CommentLikesUpdateDocAccess = {
+  __typename?: 'CommentLikesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type CommentUpdate_ReplyPostRelationshipInput = {
@@ -5164,6 +5635,16 @@ export type Comment_AnonymousHash_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Comment_ContentRankScore_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Comment_Content_Operator = {
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -5191,6 +5672,12 @@ export type Comment_CreatedBy_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Comment_HasLiked_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Comment_Id_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -5200,6 +5687,27 @@ export type Comment_Id_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Comment_LastLikeAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Comment_LikeCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Comment_ReplyComment_Operator = {
@@ -5247,6 +5755,17 @@ export enum Comment_ReplyPost_Relation_RelationTo {
   Startups = 'startups'
 }
 
+export type Comment_ServerUrl_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Comment_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5263,13 +5782,18 @@ export type Comment_Where = {
   OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
   anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
   content?: InputMaybe<Comment_Content_Operator>;
+  contentRankScore?: InputMaybe<Comment_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
   createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  hasLiked?: InputMaybe<Comment_HasLiked_Operator>;
   id?: InputMaybe<Comment_Id_Operator>;
+  lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
+  likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
+  serverUrl?: InputMaybe<Comment_ServerUrl_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5278,13 +5802,18 @@ export type Comment_Where_And = {
   OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
   anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
   content?: InputMaybe<Comment_Content_Operator>;
+  contentRankScore?: InputMaybe<Comment_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
   createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  hasLiked?: InputMaybe<Comment_HasLiked_Operator>;
   id?: InputMaybe<Comment_Id_Operator>;
+  lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
+  likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
+  serverUrl?: InputMaybe<Comment_ServerUrl_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5293,13 +5822,18 @@ export type Comment_Where_Or = {
   OR?: InputMaybe<Array<InputMaybe<Comment_Where_Or>>>;
   anonymousHash?: InputMaybe<Comment_AnonymousHash_Operator>;
   content?: InputMaybe<Comment_Content_Operator>;
+  contentRankScore?: InputMaybe<Comment_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Comment_CreatedAt_Operator>;
   createdBy?: InputMaybe<Comment_CreatedBy_Operator>;
+  hasLiked?: InputMaybe<Comment_HasLiked_Operator>;
   id?: InputMaybe<Comment_Id_Operator>;
+  lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
+  likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
+  serverUrl?: InputMaybe<Comment_ServerUrl_Operator>;
   updatedAt?: InputMaybe<Comment_UpdatedAt_Operator>;
 };
 
@@ -5346,12 +5880,17 @@ export type CommentsDocAccessFields = {
   __typename?: 'CommentsDocAccessFields';
   anonymousHash?: Maybe<CommentsDocAccessFields_AnonymousHash>;
   content?: Maybe<CommentsDocAccessFields_Content>;
+  contentRankScore?: Maybe<CommentsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<CommentsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<CommentsDocAccessFields_CreatedBy>;
+  hasLiked?: Maybe<CommentsDocAccessFields_HasLiked>;
+  lastLikeAt?: Maybe<CommentsDocAccessFields_LastLikeAt>;
+  likeCount?: Maybe<CommentsDocAccessFields_LikeCount>;
   replyComment?: Maybe<CommentsDocAccessFields_ReplyComment>;
   replyPost?: Maybe<CommentsDocAccessFields_ReplyPost>;
   replyPostRelationTo?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo>;
   replyPostValue?: Maybe<CommentsDocAccessFields_ReplyPostValue>;
+  serverUrl?: Maybe<CommentsDocAccessFields_ServerUrl>;
   updatedAt?: Maybe<CommentsDocAccessFields_UpdatedAt>;
 };
 
@@ -5389,6 +5928,34 @@ export type CommentsDocAccessFields_Content = {
   delete?: Maybe<CommentsDocAccessFields_Content_Delete>;
   read?: Maybe<CommentsDocAccessFields_Content_Read>;
   update?: Maybe<CommentsDocAccessFields_Content_Update>;
+};
+
+export type CommentsDocAccessFields_ContentRankScore = {
+  __typename?: 'CommentsDocAccessFields_contentRankScore';
+  create?: Maybe<CommentsDocAccessFields_ContentRankScore_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ContentRankScore_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ContentRankScore_Read>;
+  update?: Maybe<CommentsDocAccessFields_ContentRankScore_Update>;
+};
+
+export type CommentsDocAccessFields_ContentRankScore_Create = {
+  __typename?: 'CommentsDocAccessFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ContentRankScore_Delete = {
+  __typename?: 'CommentsDocAccessFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ContentRankScore_Read = {
+  __typename?: 'CommentsDocAccessFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ContentRankScore_Update = {
+  __typename?: 'CommentsDocAccessFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CommentsDocAccessFields_Content_Create = {
@@ -5464,6 +6031,90 @@ export type CommentsDocAccessFields_CreatedBy_Read = {
 
 export type CommentsDocAccessFields_CreatedBy_Update = {
   __typename?: 'CommentsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_HasLiked = {
+  __typename?: 'CommentsDocAccessFields_hasLiked';
+  create?: Maybe<CommentsDocAccessFields_HasLiked_Create>;
+  delete?: Maybe<CommentsDocAccessFields_HasLiked_Delete>;
+  read?: Maybe<CommentsDocAccessFields_HasLiked_Read>;
+  update?: Maybe<CommentsDocAccessFields_HasLiked_Update>;
+};
+
+export type CommentsDocAccessFields_HasLiked_Create = {
+  __typename?: 'CommentsDocAccessFields_hasLiked_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_HasLiked_Delete = {
+  __typename?: 'CommentsDocAccessFields_hasLiked_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_HasLiked_Read = {
+  __typename?: 'CommentsDocAccessFields_hasLiked_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_HasLiked_Update = {
+  __typename?: 'CommentsDocAccessFields_hasLiked_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LastLikeAt = {
+  __typename?: 'CommentsDocAccessFields_lastLikeAt';
+  create?: Maybe<CommentsDocAccessFields_LastLikeAt_Create>;
+  delete?: Maybe<CommentsDocAccessFields_LastLikeAt_Delete>;
+  read?: Maybe<CommentsDocAccessFields_LastLikeAt_Read>;
+  update?: Maybe<CommentsDocAccessFields_LastLikeAt_Update>;
+};
+
+export type CommentsDocAccessFields_LastLikeAt_Create = {
+  __typename?: 'CommentsDocAccessFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LastLikeAt_Delete = {
+  __typename?: 'CommentsDocAccessFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LastLikeAt_Read = {
+  __typename?: 'CommentsDocAccessFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LastLikeAt_Update = {
+  __typename?: 'CommentsDocAccessFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LikeCount = {
+  __typename?: 'CommentsDocAccessFields_likeCount';
+  create?: Maybe<CommentsDocAccessFields_LikeCount_Create>;
+  delete?: Maybe<CommentsDocAccessFields_LikeCount_Delete>;
+  read?: Maybe<CommentsDocAccessFields_LikeCount_Read>;
+  update?: Maybe<CommentsDocAccessFields_LikeCount_Update>;
+};
+
+export type CommentsDocAccessFields_LikeCount_Create = {
+  __typename?: 'CommentsDocAccessFields_likeCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LikeCount_Delete = {
+  __typename?: 'CommentsDocAccessFields_likeCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LikeCount_Read = {
+  __typename?: 'CommentsDocAccessFields_likeCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_LikeCount_Update = {
+  __typename?: 'CommentsDocAccessFields_likeCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -5579,6 +6230,34 @@ export type CommentsDocAccessFields_ReplyPost_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CommentsDocAccessFields_ServerUrl = {
+  __typename?: 'CommentsDocAccessFields_serverUrl';
+  create?: Maybe<CommentsDocAccessFields_ServerUrl_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ServerUrl_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ServerUrl_Read>;
+  update?: Maybe<CommentsDocAccessFields_ServerUrl_Update>;
+};
+
+export type CommentsDocAccessFields_ServerUrl_Create = {
+  __typename?: 'CommentsDocAccessFields_serverUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ServerUrl_Delete = {
+  __typename?: 'CommentsDocAccessFields_serverUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ServerUrl_Read = {
+  __typename?: 'CommentsDocAccessFields_serverUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ServerUrl_Update = {
+  __typename?: 'CommentsDocAccessFields_serverUrl_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CommentsDocAccessFields_UpdatedAt = {
   __typename?: 'CommentsDocAccessFields_updatedAt';
   create?: Maybe<CommentsDocAccessFields_UpdatedAt_Create>;
@@ -5611,12 +6290,17 @@ export type CommentsFields = {
   __typename?: 'CommentsFields';
   anonymousHash?: Maybe<CommentsFields_AnonymousHash>;
   content?: Maybe<CommentsFields_Content>;
+  contentRankScore?: Maybe<CommentsFields_ContentRankScore>;
   createdAt?: Maybe<CommentsFields_CreatedAt>;
   createdBy?: Maybe<CommentsFields_CreatedBy>;
+  hasLiked?: Maybe<CommentsFields_HasLiked>;
+  lastLikeAt?: Maybe<CommentsFields_LastLikeAt>;
+  likeCount?: Maybe<CommentsFields_LikeCount>;
   replyComment?: Maybe<CommentsFields_ReplyComment>;
   replyPost?: Maybe<CommentsFields_ReplyPost>;
   replyPostRelationTo?: Maybe<CommentsFields_ReplyPostRelationTo>;
   replyPostValue?: Maybe<CommentsFields_ReplyPostValue>;
+  serverUrl?: Maybe<CommentsFields_ServerUrl>;
   updatedAt?: Maybe<CommentsFields_UpdatedAt>;
 };
 
@@ -5654,6 +6338,34 @@ export type CommentsFields_Content = {
   delete?: Maybe<CommentsFields_Content_Delete>;
   read?: Maybe<CommentsFields_Content_Read>;
   update?: Maybe<CommentsFields_Content_Update>;
+};
+
+export type CommentsFields_ContentRankScore = {
+  __typename?: 'CommentsFields_contentRankScore';
+  create?: Maybe<CommentsFields_ContentRankScore_Create>;
+  delete?: Maybe<CommentsFields_ContentRankScore_Delete>;
+  read?: Maybe<CommentsFields_ContentRankScore_Read>;
+  update?: Maybe<CommentsFields_ContentRankScore_Update>;
+};
+
+export type CommentsFields_ContentRankScore_Create = {
+  __typename?: 'CommentsFields_contentRankScore_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ContentRankScore_Delete = {
+  __typename?: 'CommentsFields_contentRankScore_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ContentRankScore_Read = {
+  __typename?: 'CommentsFields_contentRankScore_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ContentRankScore_Update = {
+  __typename?: 'CommentsFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
 };
 
 export type CommentsFields_Content_Create = {
@@ -5729,6 +6441,90 @@ export type CommentsFields_CreatedBy_Read = {
 
 export type CommentsFields_CreatedBy_Update = {
   __typename?: 'CommentsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_HasLiked = {
+  __typename?: 'CommentsFields_hasLiked';
+  create?: Maybe<CommentsFields_HasLiked_Create>;
+  delete?: Maybe<CommentsFields_HasLiked_Delete>;
+  read?: Maybe<CommentsFields_HasLiked_Read>;
+  update?: Maybe<CommentsFields_HasLiked_Update>;
+};
+
+export type CommentsFields_HasLiked_Create = {
+  __typename?: 'CommentsFields_hasLiked_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_HasLiked_Delete = {
+  __typename?: 'CommentsFields_hasLiked_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_HasLiked_Read = {
+  __typename?: 'CommentsFields_hasLiked_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_HasLiked_Update = {
+  __typename?: 'CommentsFields_hasLiked_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LastLikeAt = {
+  __typename?: 'CommentsFields_lastLikeAt';
+  create?: Maybe<CommentsFields_LastLikeAt_Create>;
+  delete?: Maybe<CommentsFields_LastLikeAt_Delete>;
+  read?: Maybe<CommentsFields_LastLikeAt_Read>;
+  update?: Maybe<CommentsFields_LastLikeAt_Update>;
+};
+
+export type CommentsFields_LastLikeAt_Create = {
+  __typename?: 'CommentsFields_lastLikeAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LastLikeAt_Delete = {
+  __typename?: 'CommentsFields_lastLikeAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LastLikeAt_Read = {
+  __typename?: 'CommentsFields_lastLikeAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LastLikeAt_Update = {
+  __typename?: 'CommentsFields_lastLikeAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LikeCount = {
+  __typename?: 'CommentsFields_likeCount';
+  create?: Maybe<CommentsFields_LikeCount_Create>;
+  delete?: Maybe<CommentsFields_LikeCount_Delete>;
+  read?: Maybe<CommentsFields_LikeCount_Read>;
+  update?: Maybe<CommentsFields_LikeCount_Update>;
+};
+
+export type CommentsFields_LikeCount_Create = {
+  __typename?: 'CommentsFields_likeCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LikeCount_Delete = {
+  __typename?: 'CommentsFields_likeCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LikeCount_Read = {
+  __typename?: 'CommentsFields_likeCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_LikeCount_Update = {
+  __typename?: 'CommentsFields_likeCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -5841,6 +6637,34 @@ export type CommentsFields_ReplyPost_Read = {
 
 export type CommentsFields_ReplyPost_Update = {
   __typename?: 'CommentsFields_replyPost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ServerUrl = {
+  __typename?: 'CommentsFields_serverUrl';
+  create?: Maybe<CommentsFields_ServerUrl_Create>;
+  delete?: Maybe<CommentsFields_ServerUrl_Delete>;
+  read?: Maybe<CommentsFields_ServerUrl_Read>;
+  update?: Maybe<CommentsFields_ServerUrl_Update>;
+};
+
+export type CommentsFields_ServerUrl_Create = {
+  __typename?: 'CommentsFields_serverUrl_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ServerUrl_Delete = {
+  __typename?: 'CommentsFields_serverUrl_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ServerUrl_Read = {
+  __typename?: 'CommentsFields_serverUrl_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ServerUrl_Update = {
+  __typename?: 'CommentsFields_serverUrl_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -16461,6 +17285,7 @@ export type LikeStatus = {
 };
 
 export enum LikeableCollection {
+  Comments = 'comments',
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
@@ -16470,6 +17295,7 @@ export enum LikeableCollection {
 }
 
 export enum LikeableCollectionMutation {
+  Comments = 'comments',
   Companies = 'companies',
   Identities = 'identities',
   Jobs = 'jobs',
@@ -21313,6 +22139,7 @@ export type Mutation = {
   createCart?: Maybe<Cart>;
   createCategory?: Maybe<Category>;
   createComment?: Maybe<Comment>;
+  createCommentLike?: Maybe<CommentLike>;
   createCompany?: Maybe<Company>;
   createCompanyLike?: Maybe<CompanyLike>;
   createForm?: Maybe<Form>;
@@ -21356,6 +22183,7 @@ export type Mutation = {
   deleteCart?: Maybe<Cart>;
   deleteCategory?: Maybe<Category>;
   deleteComment?: Maybe<Comment>;
+  deleteCommentLike?: Maybe<CommentLike>;
   deleteCompany?: Maybe<Company>;
   deleteCompanyLike?: Maybe<CompanyLike>;
   deleteForm?: Maybe<Form>;
@@ -21399,6 +22227,7 @@ export type Mutation = {
   duplicateCart?: Maybe<Cart>;
   duplicateCategory?: Maybe<Category>;
   duplicateComment?: Maybe<Comment>;
+  duplicateCommentLike?: Maybe<CommentLike>;
   duplicateCompany?: Maybe<Company>;
   duplicateCompanyLike?: Maybe<CompanyLike>;
   duplicateForm?: Maybe<Form>;
@@ -21455,6 +22284,7 @@ export type Mutation = {
   updateCart?: Maybe<Cart>;
   updateCategory?: Maybe<Category>;
   updateComment?: Maybe<Comment>;
+  updateCommentLike?: Maybe<CommentLike>;
   updateCompany?: Maybe<Company>;
   updateCompanyLike?: Maybe<CompanyLike>;
   updateFooter?: Maybe<Footer>;
@@ -21530,6 +22360,12 @@ export type MutationCreateCategoryArgs = {
 
 export type MutationCreateCommentArgs = {
   data: MutationCommentInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateCommentLikeArgs = {
+  data: MutationCommentLikeInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -21792,6 +22628,12 @@ export type MutationDeleteCommentArgs = {
 };
 
 
+export type MutationDeleteCommentLikeArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteCompanyArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -22046,6 +22888,12 @@ export type MutationDuplicateCategoryArgs = {
 
 export type MutationDuplicateCommentArgs = {
   data: MutationCommentInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateCommentLikeArgs = {
+  data: MutationCommentLikeInput;
   id: Scalars['String']['input'];
 };
 
@@ -22389,6 +23237,15 @@ export type MutationUpdateCategoryArgs = {
 export type MutationUpdateCommentArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationCommentUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateCommentLikeArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationCommentLikeUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -33301,6 +34158,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  CommentLikes = 'comment_likes',
   Comments = 'comments',
   Companies = 'companies',
   CompanyLikes = 'company_likes',
@@ -33346,7 +34204,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -33359,6 +34217,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  CommentLikes = 'comment_likes',
   Comments = 'comments',
   Companies = 'companies',
   CompanyLikes = 'company_likes',
@@ -33401,6 +34260,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  CommentLikes = 'comment_likes',
   Comments = 'comments',
   Companies = 'companies',
   CompanyLikes = 'company_likes',
@@ -33486,6 +34346,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   AdminInvitations = 'admin_invitations',
   Carts = 'carts',
   Categories = 'categories',
+  CommentLikes = 'comment_likes',
   Comments = 'comments',
   Companies = 'companies',
   CompanyLikes = 'company_likes',
@@ -37033,6 +37894,7 @@ export type Product = {
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
+  purchaseCount?: Maybe<Scalars['Float']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
@@ -37504,6 +38366,7 @@ export type ProductVersion_Version = {
   priceInUSD?: Maybe<Scalars['Float']['output']>;
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
+  purchaseCount?: Maybe<Scalars['Float']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
@@ -37875,6 +38738,16 @@ export type Product_Properties__Value_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Product_PurchaseCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Product_ServerUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -37964,6 +38837,7 @@ export type Product_Where = {
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
+  purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -38003,6 +38877,7 @@ export type Product_Where_And = {
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
+  purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -38042,6 +38917,7 @@ export type Product_Where_Or = {
   properties__id?: InputMaybe<Product_Properties__Id_Operator>;
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
+  purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -38115,6 +38991,7 @@ export type ProductsDocAccessFields = {
   priceInUSD?: Maybe<ProductsDocAccessFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
+  purchaseCount?: Maybe<ProductsDocAccessFields_PurchaseCount>;
   serverURL?: Maybe<ProductsDocAccessFields_ServerUrl>;
   subscriberCount?: Maybe<ProductsDocAccessFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsDocAccessFields_UnlimitedInventory>;
@@ -38951,6 +39828,34 @@ export type ProductsDocAccessFields_Properties_Value_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_PurchaseCount = {
+  __typename?: 'ProductsDocAccessFields_purchaseCount';
+  create?: Maybe<ProductsDocAccessFields_PurchaseCount_Create>;
+  delete?: Maybe<ProductsDocAccessFields_PurchaseCount_Delete>;
+  read?: Maybe<ProductsDocAccessFields_PurchaseCount_Read>;
+  update?: Maybe<ProductsDocAccessFields_PurchaseCount_Update>;
+};
+
+export type ProductsDocAccessFields_PurchaseCount_Create = {
+  __typename?: 'ProductsDocAccessFields_purchaseCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PurchaseCount_Delete = {
+  __typename?: 'ProductsDocAccessFields_purchaseCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PurchaseCount_Read = {
+  __typename?: 'ProductsDocAccessFields_purchaseCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_PurchaseCount_Update = {
+  __typename?: 'ProductsDocAccessFields_purchaseCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_ServerUrl = {
   __typename?: 'ProductsDocAccessFields_serverURL';
   create?: Maybe<ProductsDocAccessFields_ServerUrl_Create>;
@@ -39173,6 +40078,7 @@ export type ProductsFields = {
   priceInUSD?: Maybe<ProductsFields_PriceInUsd>;
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
+  purchaseCount?: Maybe<ProductsFields_PurchaseCount>;
   serverURL?: Maybe<ProductsFields_ServerUrl>;
   subscriberCount?: Maybe<ProductsFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsFields_UnlimitedInventory>;
@@ -40009,6 +40915,34 @@ export type ProductsFields_Properties_Value_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsFields_PurchaseCount = {
+  __typename?: 'ProductsFields_purchaseCount';
+  create?: Maybe<ProductsFields_PurchaseCount_Create>;
+  delete?: Maybe<ProductsFields_PurchaseCount_Delete>;
+  read?: Maybe<ProductsFields_PurchaseCount_Read>;
+  update?: Maybe<ProductsFields_PurchaseCount_Update>;
+};
+
+export type ProductsFields_PurchaseCount_Create = {
+  __typename?: 'ProductsFields_purchaseCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PurchaseCount_Delete = {
+  __typename?: 'ProductsFields_purchaseCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PurchaseCount_Read = {
+  __typename?: 'ProductsFields_purchaseCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_PurchaseCount_Update = {
+  __typename?: 'ProductsFields_purchaseCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsFields_ServerUrl = {
   __typename?: 'ProductsFields_serverURL';
   create?: Maybe<ProductsFields_ServerUrl_Create>;
@@ -40255,6 +41189,8 @@ export type Query = {
   Categories?: Maybe<Categories>;
   Category?: Maybe<Category>;
   Comment?: Maybe<Comment>;
+  CommentLike?: Maybe<CommentLike>;
+  CommentLikes?: Maybe<CommentLikes>;
   Comments?: Maybe<Comments>;
   Companies?: Maybe<Companies>;
   Company?: Maybe<Company>;
@@ -40337,6 +41273,7 @@ export type Query = {
   countAdminInvitations?: Maybe<CountAdminInvitations>;
   countCarts?: Maybe<CountCarts>;
   countCategories?: Maybe<CountCategories>;
+  countCommentLikes?: Maybe<CountCommentLikes>;
   countComments?: Maybe<CountComments>;
   countCompanies?: Maybe<CountCompanies>;
   countCompanyLikes?: Maybe<CountCompanyLikes>;
@@ -40381,6 +41318,7 @@ export type Query = {
   docAccessCart?: Maybe<CartsDocAccess>;
   docAccessCategory?: Maybe<CategoriesDocAccess>;
   docAccessComment?: Maybe<CommentsDocAccess>;
+  docAccessCommentLike?: Maybe<Comment_LikesDocAccess>;
   docAccessCompany?: Maybe<CompaniesDocAccess>;
   docAccessCompanyLike?: Maybe<Company_LikesDocAccess>;
   docAccessFooter?: Maybe<FooterDocAccess>;
@@ -40548,6 +41486,26 @@ export type QueryCommentArgs = {
   id: Scalars['String']['input'];
   select?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCommentLikeArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCommentLikesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<CommentLike_Where>;
 };
 
 
@@ -41350,6 +42308,13 @@ export type QueryCountCategoriesArgs = {
 };
 
 
+export type QueryCountCommentLikesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<CommentLike_Where>;
+};
+
+
 export type QueryCountCommentsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -41642,6 +42607,11 @@ export type QueryDocAccessCategoryArgs = {
 
 
 export type QueryDocAccessCommentArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessCommentLikeArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -55375,6 +56345,24 @@ export type CategoriesDocAccess = {
   update?: Maybe<CategoriesUpdateDocAccess>;
 };
 
+export type Comment_LikesAccess = {
+  __typename?: 'comment_likesAccess';
+  create?: Maybe<CommentLikesCreateAccess>;
+  delete?: Maybe<CommentLikesDeleteAccess>;
+  fields?: Maybe<CommentLikesFields>;
+  read?: Maybe<CommentLikesReadAccess>;
+  update?: Maybe<CommentLikesUpdateAccess>;
+};
+
+export type Comment_LikesDocAccess = {
+  __typename?: 'comment_likesDocAccess';
+  create?: Maybe<CommentLikesCreateDocAccess>;
+  delete?: Maybe<CommentLikesDeleteDocAccess>;
+  fields?: Maybe<CommentLikesDocAccessFields>;
+  read?: Maybe<CommentLikesReadDocAccess>;
+  update?: Maybe<CommentLikesUpdateDocAccess>;
+};
+
 export type CommentsAccess = {
   __typename?: 'commentsAccess';
   create?: Maybe<CommentsCreateAccess>;
@@ -55453,6 +56441,11 @@ export type CountCarts = {
 
 export type CountCategories = {
   __typename?: 'countCategories';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountCommentLikes = {
+  __typename?: 'countCommentLikes';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -55961,24 +56954,50 @@ export type MutationCategory_BreadcrumbsInput = {
 export type MutationCommentInput = {
   anonymousHash?: InputMaybe<Scalars['String']['input']>;
   content: Scalars['String']['input'];
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
+  likeCount?: InputMaybe<Scalars['Float']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
   replyPost?: InputMaybe<Comment_ReplyPostRelationshipInput>;
   replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
   replyPostValue?: InputMaybe<Scalars['String']['input']>;
+  serverUrl?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationCommentLikeInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  targetID: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  userId: Scalars['String']['input'];
+};
+
+export type MutationCommentLikeUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  targetID?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationCommentUpdateInput = {
   anonymousHash?: InputMaybe<Scalars['String']['input']>;
   content?: InputMaybe<Scalars['String']['input']>;
+  contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
+  hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
+  lastLikeAt?: InputMaybe<Scalars['String']['input']>;
+  likeCount?: InputMaybe<Scalars['Float']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
   replyPost?: InputMaybe<CommentUpdate_ReplyPostRelationshipInput>;
   replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
   replyPostValue?: InputMaybe<Scalars['String']['input']>;
+  serverUrl?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -57010,6 +58029,7 @@ export type MutationProductInput = {
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
+  purchaseCount?: InputMaybe<Scalars['Float']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
@@ -57057,6 +58077,7 @@ export type MutationProductUpdateInput = {
   priceInUSD?: InputMaybe<Scalars['Float']['input']>;
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
+  purchaseCount?: InputMaybe<Scalars['Float']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
@@ -60085,6 +61106,16 @@ export type VersionsProduct_Version__Properties__Value_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsProduct_Version__PurchaseCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsProduct_Version__ServerUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -60179,6 +61210,7 @@ export type VersionsProduct_Where = {
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
+  version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -60223,6 +61255,7 @@ export type VersionsProduct_Where_And = {
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
+  version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -60267,6 +61300,7 @@ export type VersionsProduct_Where_Or = {
   version__properties__id?: InputMaybe<VersionsProduct_Version__Properties__Id_Operator>;
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
+  version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -61161,6 +62195,44 @@ export type UpdateCartMutationVariables = Exact<{
 
 export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
+export type CommentDetailQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type CommentDetailQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
+
+export type CommentByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type CommentByIdQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
+
+export type DislikeCommentMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DislikeCommentMutation = { __typename?: 'Mutation', setLikeState: { __typename?: 'LikeStateMutationResult', collection: LikeableCollectionMutation, hasLiked: boolean, id: string, likeCount: number } };
+
+export type LikeCommentMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  liked: Scalars['Boolean']['input'];
+}>;
+
+
+export type LikeCommentMutation = { __typename?: 'Mutation', setLikeState: { __typename?: 'LikeStateMutationResult', collection: LikeableCollectionMutation, hasLiked: boolean, id: string, likeCount: number } };
+
+export type ListCommentRepliesQueryVariables = Exact<{
+  parentCommentId: Scalars['JSON']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ListCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -61514,7 +62586,7 @@ export type ListCommentsByTargetQueryVariables = Exact<{
 }>;
 
 
-export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListJobsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -61539,10 +62611,11 @@ export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { _
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListRepliesToCommentQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type TrackAnalyticsEventMutationVariables = Exact<{
   input: AnalyticsTrackInput;
@@ -61622,15 +62695,16 @@ export type ListPostCommentsQueryVariables = Exact<{
 }>;
 
 
-export type ListPostCommentsQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListPostCommentsQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListPostCommentRepliesQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
   limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type ListPostCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListPostCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, anonymousHash?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type CreatePostReplyCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -62326,6 +63400,216 @@ export const useUpdateCartMutation = <
 
 
 useUpdateCartMutation.fetcher = (variables: UpdateCartMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateCartMutation, UpdateCartMutationVariables>(UpdateCartDocument, variables, options);
+
+export const CommentDetailDocument = `
+    query CommentDetail($id: String!) {
+  Comment(id: $id) {
+    id
+    content
+    serverUrl
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    replyPostRelationTo
+    replyPostValue
+    createdAt
+    updatedAt
+    likeCount
+    hasLiked
+    replyComment {
+      id
+    }
+    replyPost {
+      relationTo
+    }
+  }
+}
+    `;
+
+export const useCommentDetailQuery = <
+      TData = CommentDetailQuery,
+      TError = unknown
+    >(
+      variables: CommentDetailQueryVariables,
+      options?: Omit<UseQueryOptions<CommentDetailQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CommentDetailQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CommentDetailQuery, TError, TData>(
+      {
+    queryKey: ['CommentDetail', variables],
+    queryFn: gqlFetcher<CommentDetailQuery, CommentDetailQueryVariables>(CommentDetailDocument, variables),
+    ...options
+  }
+    )};
+
+useCommentDetailQuery.getKey = (variables: CommentDetailQueryVariables) => ['CommentDetail', variables];
+
+
+useCommentDetailQuery.fetcher = (variables: CommentDetailQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CommentDetailQuery, CommentDetailQueryVariables>(CommentDetailDocument, variables, options);
+
+export const CommentByIdDocument = `
+    query CommentById($id: String!) {
+  Comment(id: $id) {
+    id
+    content
+    serverUrl
+    createdBy {
+      id
+      name
+      email
+    }
+    anonymousHash
+    replyPostRelationTo
+    replyPostValue
+    createdAt
+    updatedAt
+    likeCount
+    hasLiked
+    replyComment {
+      id
+    }
+    replyPost {
+      relationTo
+    }
+  }
+}
+    `;
+
+export const useCommentByIdQuery = <
+      TData = CommentByIdQuery,
+      TError = unknown
+    >(
+      variables: CommentByIdQueryVariables,
+      options?: Omit<UseQueryOptions<CommentByIdQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<CommentByIdQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<CommentByIdQuery, TError, TData>(
+      {
+    queryKey: ['CommentById', variables],
+    queryFn: gqlFetcher<CommentByIdQuery, CommentByIdQueryVariables>(CommentByIdDocument, variables),
+    ...options
+  }
+    )};
+
+useCommentByIdQuery.getKey = (variables: CommentByIdQueryVariables) => ['CommentById', variables];
+
+
+useCommentByIdQuery.fetcher = (variables: CommentByIdQueryVariables, options?: RequestInit['headers']) => gqlFetcher<CommentByIdQuery, CommentByIdQueryVariables>(CommentByIdDocument, variables, options);
+
+export const DislikeCommentDocument = `
+    mutation DislikeComment($id: String!) {
+  setLikeState(collection: comments, id: $id, liked: false) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}
+    `;
+
+export const useDislikeCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<DislikeCommentMutation, TError, DislikeCommentMutationVariables, TContext>) => {
+    
+    return useMutation<DislikeCommentMutation, TError, DislikeCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['DislikeComment'],
+    mutationFn: (variables?: DislikeCommentMutationVariables) => gqlFetcher<DislikeCommentMutation, DislikeCommentMutationVariables>(DislikeCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useDislikeCommentMutation.fetcher = (variables: DislikeCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DislikeCommentMutation, DislikeCommentMutationVariables>(DislikeCommentDocument, variables, options);
+
+export const LikeCommentDocument = `
+    mutation LikeComment($id: String!, $liked: Boolean!) {
+  setLikeState(collection: comments, id: $id, liked: $liked) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}
+    `;
+
+export const useLikeCommentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<LikeCommentMutation, TError, LikeCommentMutationVariables, TContext>) => {
+    
+    return useMutation<LikeCommentMutation, TError, LikeCommentMutationVariables, TContext>(
+      {
+    mutationKey: ['LikeComment'],
+    mutationFn: (variables?: LikeCommentMutationVariables) => gqlFetcher<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useLikeCommentMutation.fetcher = (variables: LikeCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, variables, options);
+
+export const ListCommentRepliesDocument = `
+    query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+  Comments(
+    draft: false
+    where: {replyComment: {equals: $parentCommentId}}
+    sort: "createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      content
+      serverUrl
+      createdBy {
+        id
+        name
+        email
+      }
+      anonymousHash
+      createdAt
+      updatedAt
+      likeCount
+      hasLiked
+      replyComment {
+        id
+      }
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}
+    `;
+
+export const useListCommentRepliesQuery = <
+      TData = ListCommentRepliesQuery,
+      TError = unknown
+    >(
+      variables: ListCommentRepliesQueryVariables,
+      options?: Omit<UseQueryOptions<ListCommentRepliesQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ListCommentRepliesQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ListCommentRepliesQuery, TError, TData>(
+      {
+    queryKey: ['ListCommentReplies', variables],
+    queryFn: gqlFetcher<ListCommentRepliesQuery, ListCommentRepliesQueryVariables>(ListCommentRepliesDocument, variables),
+    ...options
+  }
+    )};
+
+useListCommentRepliesQuery.getKey = (variables: ListCommentRepliesQueryVariables) => ['ListCommentReplies', variables];
+
+
+useListCommentRepliesQuery.fetcher = (variables: ListCommentRepliesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListCommentRepliesQuery, ListCommentRepliesQueryVariables>(ListCommentRepliesDocument, variables, options);
 
 export const ListCompaniesByCreatorDocument = `
     query ListCompaniesByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $sort: String = "-contentRankScore", $draft: Boolean = false) {
@@ -64583,7 +65867,7 @@ export const ListCommentsByTargetDocument = `
     query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
     draft: false
-    where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}]}
+    where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}, {replyComment: {exists: false}}]}
     sort: "createdAt"
     limit: $limit
     page: $page
@@ -64591,6 +65875,7 @@ export const ListCommentsByTargetDocument = `
     docs {
       id
       content
+      serverUrl
       createdBy {
         id
         name
@@ -64601,9 +65886,8 @@ export const ListCommentsByTargetDocument = `
       replyPostValue
       createdAt
       updatedAt
-      replyComment {
-        id
-      }
+      likeCount
+      hasLiked
       replyPost {
         relationTo
       }
@@ -64793,16 +66077,18 @@ useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryV
 useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
 
 export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100) {
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
     sort: "createdAt"
     limit: $limit
+    page: $page
   ) {
     docs {
       id
       content
+      serverUrl
       createdBy {
         id
         name
@@ -64811,6 +66097,8 @@ export const ListRepliesToCommentDocument = `
       anonymousHash
       createdAt
       updatedAt
+      likeCount
+      hasLiked
       replyComment {
         id
       }
@@ -64819,6 +66107,8 @@ export const ListRepliesToCommentDocument = `
       }
     }
     totalDocs
+    hasNextPage
+    nextPage
   }
 }
     `;
@@ -65596,7 +66886,7 @@ export const ListPostCommentsDocument = `
     query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
     draft: false
-    where: {AND: [{replyPostRelationTo: {equals: "posts"}}, {replyPostValue: {equals: $postId}}]}
+    where: {AND: [{replyPostRelationTo: {equals: "posts"}}, {replyPostValue: {equals: $postId}}, {replyComment: {exists: false}}]}
     sort: "createdAt"
     limit: $limit
     page: $page
@@ -65614,9 +66904,8 @@ export const ListPostCommentsDocument = `
       replyPostValue
       createdAt
       updatedAt
-      replyComment {
-        id
-      }
+      likeCount
+      hasLiked
       replyPost {
         relationTo
       }
@@ -65650,12 +66939,13 @@ useListPostCommentsQuery.getKey = (variables: ListPostCommentsQueryVariables) =>
 useListPostCommentsQuery.fetcher = (variables: ListPostCommentsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostCommentsQuery, ListPostCommentsQueryVariables>(ListPostCommentsDocument, variables, options);
 
 export const ListPostCommentRepliesDocument = `
-    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100) {
+    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
     sort: "createdAt"
     limit: $limit
+    page: $page
   ) {
     docs {
       id
@@ -65668,6 +66958,8 @@ export const ListPostCommentRepliesDocument = `
       anonymousHash
       createdAt
       updatedAt
+      likeCount
+      hasLiked
       replyComment {
         id
       }
@@ -65676,6 +66968,8 @@ export const ListPostCommentRepliesDocument = `
       }
     }
     totalDocs
+    hasNextPage
+    nextPage
   }
 }
     `;

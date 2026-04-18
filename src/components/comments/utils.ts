@@ -4,78 +4,37 @@ import {
     ENTITY_COMMENTS_AUTHORIZED_FALLBACK_ID,
     ENTITY_COMMENTS_AUTHORIZED_FALLBACK_NAME,
     ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
-    ENTITY_COMMENTS_USER_FALLBACK_NAME,
 } from "../../constants";
-import type {
-    AuthProfile,
-    CommentCurrentUser,
-    CommentDataItem,
-    CommentDoc,
-    CommentGrouping,
-    CommentSectionStyles,
-    CommentThemeVars,
-    EntityCommentsThemeToken,
-} from "../../types";
+import type { AuthProfile } from "../../types";
+import type { CommentCurrentUser, CommentThread } from "./types";
 
-const getCommentTimestamp = (comment: CommentDoc): string | undefined => {
+const getCommentTimestamp = (comment: Pick<CommentThread, "updatedAt" | "createdAt">): string | undefined => {
     const value = comment.updatedAt ?? comment.createdAt;
     return value ? String(value) : undefined;
 };
 
-const toCommentItem = (comment: CommentDoc): CommentDataItem => {
+export const getCommentDisplayName = (comment: CommentThread): string => {
     if (comment.createdBy) {
-        return {
-            userId: `user:${comment.createdBy.email ?? comment.createdBy.id}`,
-            comId: comment.id,
-            fullName: comment.createdBy.name || comment.createdBy.email || ENTITY_COMMENTS_USER_FALLBACK_NAME,
-            avatarUrl: ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
-            userProfile: "",
-            text: comment.content,
-            timestamp: getCommentTimestamp(comment),
-            replies: [],
-        };
+        return comment.createdBy.name || comment.createdBy.email || comment.createdBy.id;
     }
 
-    return {
-        userId: `anon:${comment.anonymousHash ?? comment.id}`,
-        comId: comment.id,
-        fullName: ENTITY_COMMENTS_ANONYMOUS_NAME,
-        avatarUrl: ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
-        userProfile: "",
-        text: comment.content,
-        timestamp: getCommentTimestamp(comment),
-        replies: [],
-    };
+    return ENTITY_COMMENTS_ANONYMOUS_NAME;
 };
 
-export const buildCommentData = (docs: CommentDoc[]): CommentDataItem[] => {
-    const groupedComments = docs.reduce<CommentGrouping>(
-        (result, comment) => {
-            const parentId = comment.replyComment?.id;
+export const getCommentAvatarUrl = (): string => ENTITY_COMMENTS_DEFAULT_AVATAR_URL;
 
-            if (!parentId) {
-                result.roots.push(comment);
-                return result;
-            }
+export const getCommentShareUrl = (commentId: string): string => `/comments/${commentId}`;
 
-            const replies = result.repliesByParent.get(parentId) ?? [];
-            replies.push(toCommentItem(comment));
-            result.repliesByParent.set(parentId, replies);
-            return result;
-        },
-        {
-            roots: [],
-            repliesByParent: new Map<string, CommentDataItem[]>(),
-        },
-    );
+export const copyCommentLink = async (commentId: string): Promise<void> => {
+    await navigator.clipboard.writeText(`${window.location.origin}${getCommentShareUrl(commentId)}`);
+};
 
-    return groupedComments.roots.map((comment) => {
-        const root = toCommentItem(comment);
-        return {
-            ...root,
-            replies: groupedComments.repliesByParent.get(comment.id) ?? [],
-        };
-    });
+export const isCommentOwnedByCurrentUser = (comment: CommentThread, currentUserId: string): boolean => {
+    if (!comment.createdBy) {
+        return false;
+    }
+
+    return comment.createdBy.email === currentUserId || comment.createdBy.id === currentUserId;
 };
 
 export const getCommentCurrentUser = (isAuthenticated: boolean, profile?: AuthProfile): CommentCurrentUser => {
@@ -96,64 +55,4 @@ export const getCommentCurrentUser = (isAuthenticated: boolean, profile?: AuthPr
     };
 };
 
-export const getCommentThemeVars = (token: EntityCommentsThemeToken): CommentThemeVars => ({
-    "--ecs-bg-overlay": token.colorBgContainer,
-    "--ecs-bg-form": token.colorFillAlter,
-    "--ecs-bg-elevated": token.colorBgElevated,
-    "--ecs-text-primary": token.colorText,
-    "--ecs-text-secondary": token.colorTextSecondary,
-    "--ecs-text-placeholder": token.colorTextPlaceholder,
-    "--ecs-border": token.colorBorder,
-    "--ecs-border-secondary": token.colorBorderSecondary,
-    "--ecs-primary": token.colorPrimary,
-    "--ecs-primary-hover": token.colorPrimaryHover,
-    "--ecs-font-family": token.fontFamily,
-    "--ecs-radius": `${token.borderRadiusLG}px`,
-});
-
-export const getCommentSectionStyles = (token: EntityCommentsThemeToken): CommentSectionStyles => ({
-    overlayStyle: {
-        backgroundColor: token.colorBgContainer,
-        color: token.colorText,
-        fontFamily: token.fontFamily,
-        borderRadius: token.borderRadiusLG,
-    },
-    formStyle: {
-        backgroundColor: token.colorFillAlter,
-        border: `1px solid ${token.colorBorderSecondary}`,
-        borderRadius: token.borderRadiusLG,
-        padding: token.padding,
-    },
-    inputStyle: {
-        color: token.colorText,
-        borderBottom: `1px solid ${token.colorBorder}`,
-        fontFamily: token.fontFamily,
-    },
-    replyInputStyle: {
-        color: token.colorText,
-        borderBottom: `1px solid ${token.colorBorder}`,
-        fontFamily: token.fontFamily,
-    },
-    submitBtnStyle: {
-        border: `1px solid ${token.colorPrimary}`,
-        borderRadius: token.borderRadius,
-        backgroundColor: token.colorPrimary,
-        color: token.colorTextLightSolid,
-    },
-    cancelBtnStyle: {
-        border: `1px solid ${token.colorFillSecondary}`,
-        borderRadius: token.borderRadius,
-        backgroundColor: token.colorFillSecondary,
-        color: token.colorTextSecondary,
-    },
-    hrStyle: {
-        borderTopColor: token.colorBorderSecondary,
-    },
-    titleStyle: {
-        color: token.colorTextHeading,
-        fontFamily: token.fontFamily,
-        fontSize: token.fontSizeHeading5,
-        fontWeight: 800,
-        lineHeight: token.lineHeightHeading5,
-    },
-});
+export const getCommentTimestampText = (comment: Pick<CommentThread, "updatedAt" | "createdAt">): string | undefined => getCommentTimestamp(comment);

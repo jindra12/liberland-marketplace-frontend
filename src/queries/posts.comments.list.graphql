@@ -1,7 +1,13 @@
 query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
     draft: false
-    where: { AND: [{ replyPostRelationTo: { equals: "posts" } }, { replyPostValue: { equals: $postId } }] }
+    where: {
+      AND: [
+        { replyPostRelationTo: { equals: "posts" } }
+        { replyPostValue: { equals: $postId } }
+        { replyComment: { exists: false } }
+      ]
+    }
     sort: "createdAt"
     limit: $limit
     page: $page
@@ -19,9 +25,8 @@ query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
       replyPostValue
       createdAt
       updatedAt
-      replyComment {
-        id
-      }
+      likeCount
+      hasLiked
       replyPost {
         relationTo
       }

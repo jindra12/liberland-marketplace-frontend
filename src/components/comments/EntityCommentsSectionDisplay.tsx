@@ -1,14 +1,31 @@
 import * as React from "react";
 
-import { CommentSection } from "react-comments-section";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Alert, Divider, Flex, Spin, Typography } from "antd";
+import { Button, Divider, Flex, Space, Spin, Typography, message } from "antd";
 
-import { ENTITY_COMMENTS_DEFAULT_PLACEHOLDER } from "../../constants";
-import type { EntityCommentsSectionDisplayProps } from "../../types";
+import {
+    ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
+    ENTITY_COMMENTS_EDIT_PLACEHOLDER,
+    ENTITY_COMMENTS_REPLY_PLACEHOLDER,
+} from "../../constants";
+
+import { CommentCard } from "./CommentCard";
+import { CommentComposer } from "./CommentComposer";
+import { CommentRepliesList } from "./CommentRepliesList";
+import type { EntityCommentsSectionDisplayProps } from "./types";
+import { copyCommentLink } from "./utils";
 
 export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityCommentsSectionDisplayProps> = (props) => {
+    const handleShare = async (commentId: string) => {
+        try {
+            await copyCommentLink(commentId);
+            message.success("Comment link copied");
+        } catch (error) {
+            console.error("Failed to copy comment link", error);
+        }
+    };
+
     if (props.isLoading) {
         return (
             <Flex justify="center" align="center" className="EntityCommentsSection">
@@ -19,25 +36,44 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
 
     if (props.isError) {
         return (
-            <Alert
-                type="error"
-                showIcon
-                message="Failed to load comments"
-                description="Try refreshing the page."
-                className="EntityCommentsSection"
-            />
+            <Typography.Text type="danger" className="EntityCommentsSection">
+                Failed to load comments. Try refreshing the page.
+            </Typography.Text>
         );
     }
 
     return (
-        <div
+        <Flex
+            vertical
+            gap={16}
             className={["EntityCommentsSection", props.isAnonymous && "EntityCommentsSection--anonymous", props.className]
                 .filter(Boolean)
                 .join(" ")}
-            style={props.commentThemeVars}
         >
+            <Flex vertical gap={12} className="EntityCommentsSection__header">
+                <Flex align="center" justify="space-between" gap={12} wrap>
+                    <Typography.Title level={4} className="EntityCommentsSection__title">
+                        Comments{props.commentsCount !== undefined ? ` (${props.commentsCount})` : ""}
+                    </Typography.Title>
+                    {props.isAnonymous && (
+                        <Space wrap className="EntityCommentsSection__authActions">
+                            <Button onClick={props.onLogin}>Log in</Button>
+                            <Button type="primary" onClick={props.onSignUp}>
+                                Sign up
+                            </Button>
+                        </Space>
+                    )}
+                </Flex>
+                <CommentComposer
+                    placeholder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
+                    submitLabel="Comment"
+                    onSubmit={async (text) => {
+                        await props.onSubmitAction({ text });
+                    }}
+                />
+            </Flex>
             <InfiniteScroll
-                dataLength={props.commentData.length}
+                dataLength={props.rootComments.length}
                 next={props.onLoadMore}
                 hasMore={props.hasMore}
                 loader={
@@ -54,31 +90,40 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                 scrollThreshold={0.75}
                 className="InfinityScroll"
             >
-                <CommentSection
-                    key={`${props.className ?? "comments"}-${props.isAnonymous ? "anonymous" : "auth"}`}
-                    currentUser={props.currentUser}
-                    logIn={{
-                        onLogin: props.onLogin,
-                        onSignUp: props.onSignUp,
-                    }}
-                    commentData={props.commentData}
-                    placeHolder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
-                    showTimestamp
-                    overlayStyle={props.commentSectionStyles.overlayStyle}
-                    formStyle={props.commentSectionStyles.formStyle}
-                    inputStyle={props.commentSectionStyles.inputStyle}
-                    replyInputStyle={props.commentSectionStyles.replyInputStyle}
-                    submitBtnStyle={props.commentSectionStyles.submitBtnStyle}
-                    cancelBtnStyle={props.commentSectionStyles.cancelBtnStyle}
-                    hrStyle={props.commentSectionStyles.hrStyle}
-                    titleStyle={props.commentSectionStyles.titleStyle}
-                    onSubmitAction={props.onSubmitAction}
-                    onReplyAction={props.onReplyAction}
-                    onEditAction={props.onEditAction}
-                    onDeleteAction={props.onDeleteAction}
-                    commentsCount={props.commentsCount}
-                />
+                <Flex vertical gap={16} className="EntityCommentsSection__list">
+                    {props.rootComments.map((comment) => (
+                        <CommentCard
+                            key={comment.id}
+                            comment={comment}
+                            currentUser={props.currentUser}
+                            isAnonymous={props.isAnonymous}
+                            commentEditPlaceholder={ENTITY_COMMENTS_EDIT_PLACEHOLDER}
+                            commentReplyPlaceholder={ENTITY_COMMENTS_REPLY_PLACEHOLDER}
+                            dislikeMutation={props.dislikeMutation}
+                            likeMutation={props.likeMutation}
+                            onDeleteAction={props.onDeleteAction}
+                            onEditAction={props.onEditAction}
+                            onReplyAction={props.onReplyAction}
+                            onShare={handleShare}
+                        >
+                        <CommentRepliesList
+                            parentCommentId={comment.id}
+                            serverURL={comment.serverUrl}
+                            currentUser={props.currentUser}
+                            isAnonymous={props.isAnonymous}
+                            commentEditPlaceholder={ENTITY_COMMENTS_EDIT_PLACEHOLDER}
+                                commentReplyPlaceholder={ENTITY_COMMENTS_REPLY_PLACEHOLDER}
+                                dislikeMutation={props.dislikeMutation}
+                                likeMutation={props.likeMutation}
+                                onDeleteAction={props.onDeleteAction}
+                                onEditAction={props.onEditAction}
+                                onReplyAction={props.onReplyAction}
+                                onShare={handleShare}
+                            />
+                        </CommentCard>
+                    ))}
+                </Flex>
             </InfiniteScroll>
-        </div>
+        </Flex>
     );
 };

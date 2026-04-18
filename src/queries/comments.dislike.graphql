@@ -1,0 +1,8 @@
+mutation DislikeComment($id: String!) {
+  setLikeState(collection: comments, id: $id, liked: false) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}

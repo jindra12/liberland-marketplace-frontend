@@ -1,7 +1,13 @@
 query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
     Comments(
         draft: false
-        where: { AND: [{ replyPostRelationTo: { equals: $relationTo } }, { replyPostValue: { equals: $targetId } }] }
+        where: {
+            AND: [
+                { replyPostRelationTo: { equals: $relationTo } }
+                { replyPostValue: { equals: $targetId } }
+                { replyComment: { exists: false } }
+            ]
+        }
         sort: "createdAt"
         limit: $limit
         page: $page
@@ -9,6 +15,7 @@ query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int
         docs {
             id
             content
+            serverUrl
             createdBy {
                 id
                 name
@@ -19,9 +26,8 @@ query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int
             replyPostValue
             createdAt
             updatedAt
-            replyComment {
-                id
-            }
+            likeCount
+            hasLiked
             replyPost {
                 relationTo
             }

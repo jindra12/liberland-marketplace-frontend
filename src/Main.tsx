@@ -35,6 +35,7 @@ const Company = React.lazy(() => import("./components/detail/CompanyDetail"));
 const Identity = React.lazy(() => import("./components/detail/IdentityDetail"));
 const ProductService = React.lazy(() => import("./components/detail/ProductServiceDetail"));
 const Post = React.lazy(() => import("./components/detail/PostDetail"));
+const CommentDetail = React.lazy(() => import("./components/comments/CommentDetail"));
 const SyndicationDetail = React.lazy(() => import("./components/detail/SyndicationDetail"));
 const AppLayout = React.lazy(() => import("./components/AppLayout"));
 const Profile = React.lazy(() => import("./components/Profile"));
@@ -148,6 +149,12 @@ const Main: React.FunctionComponent = () => {
                                                                                 trackPage: false,
                                                                             })}
                                                                             path="/posts/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(CommentDetail, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/comments/:id"
                                                                         />
                                                                         <Route
                                                                             Component={suspense(SyndicationDetail, {

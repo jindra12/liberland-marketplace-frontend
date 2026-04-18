@@ -11,6 +11,8 @@ export type MockNode = {
     email?: string;
     content?: string;
     anonymousHash?: string;
+    hasLiked?: boolean;
+    likeCount?: number;
     replyPostRelationTo?: string;
     replyPostValue?: string;
     currency?: string;

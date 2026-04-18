@@ -5,6 +5,8 @@ import {
 
 export const ENTITY_COMMENTS_DEFAULT_LIMIT = 100;
 export const ENTITY_COMMENTS_DEFAULT_PLACEHOLDER = "Write your comment...";
+export const ENTITY_COMMENTS_REPLY_PLACEHOLDER = "Write a reply...";
+export const ENTITY_COMMENTS_EDIT_PLACEHOLDER = "Edit your comment...";
 
 export const ENTITY_COMMENTS_DEFAULT_AVATAR_URL = "/logo192.png";
 export const ENTITY_COMMENTS_ANONYMOUS_USER_ID = "__anonymous_writer__";

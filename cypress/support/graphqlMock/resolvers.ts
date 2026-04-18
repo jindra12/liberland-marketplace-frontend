@@ -34,6 +34,16 @@ const matchesSearch = (value: string | undefined, term: string | undefined): boo
     return String(value || "").toLowerCase().includes(term.toLowerCase());
 };
 
+const ensureCommentState = (comment: MockNode): MockNode => {
+    if (comment.hasLiked === undefined) {
+        comment.hasLiked = false;
+    }
+    if (comment.likeCount === undefined) {
+        comment.likeCount = 0;
+    }
+    return comment;
+};
+
 const resolveCollection = (items: MockNode[], args: { page?: number; limit?: number }): MockCollection => {
     const limit = args.limit && args.limit > 0 ? args.limit : items.length > 0 ? items.length : 1;
     const page = args.page && args.page > 0 ? args.page : 1;
@@ -85,10 +95,14 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.identities.filter((identity) => matchesSearch(identity.name, args.searchTerm) || matchesSearch(identity.description, args.searchTerm)) : activeFixtures.identities;
         return resolveCollection(filtered, args);
     },
-    Comments: (_parent: unknown, args: { limit?: number; where?: { replyPostRelationTo?: { equals?: string }; replyPostValue?: { equals?: string }; replyComment?: { equals?: string } } }): MockCollection => {
+    Comments: (_parent: unknown, args: { limit?: number; where?: { replyPostRelationTo?: { equals?: string }; replyPostValue?: { equals?: string }; replyComment?: { equals?: string; exists?: boolean } } }): MockCollection => {
         const filtered = activeFixtures.comments.filter((comment) => {
+            ensureCommentState(comment);
             if (args.where?.replyComment?.equals) {
                 return comment.replyComment?.id === args.where.replyComment.equals;
+            }
+            if (args.where?.replyComment?.exists === false) {
+                return !comment.replyComment?.id;
             }
             if (args.where?.replyPostRelationTo?.equals && args.where.replyPostValue?.equals) {
                 return comment.replyPostRelationTo === args.where.replyPostRelationTo.equals && comment.replyPostValue === args.where.replyPostValue.equals;
@@ -98,6 +112,7 @@ export const queryResolvers = {
         return resolveCollection(filtered, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
+    Comment: (_parent: unknown, args: { id?: string }): MockNode => ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]),
     Company: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.companies.find((item) => item.id === args.id) || activeFixtures.companies[0],
     Job: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.jobs.find((item) => item.id === args.id) || activeFixtures.jobs[0],
     Post: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.posts.find((item) => item.id === args.id) || activeFixtures.posts[0],
@@ -259,8 +274,14 @@ export const mutationResolvers = {
         if (data.anonymousHash === undefined) {
             data.anonymousHash = `anon-${nextNodeId("comment")}`;
         }
+        if (data.hasLiked === undefined) {
+            data.hasLiked = false;
+        }
+        if (data.likeCount === undefined) {
+            data.likeCount = 0;
+        }
 
-        return createNode(activeFixtures.comments, "comment", data);
+        return ensureCommentState(createNode(activeFixtures.comments, "comment", data));
     },
     deleteComment: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.comments, args.id),
     updateComment: (_parent: unknown, args: { id?: string; content?: string; data?: Record<string, unknown> }): MockNode => {
@@ -269,11 +290,11 @@ export const mutationResolvers = {
             data.content = args.content;
         }
         normalizeCommentData(data);
-        return updateNode(activeFixtures.comments, args.id, data, "comment");
+        return ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
     },
     updateCommentContent: (_parent: unknown, args: { id?: string; content?: string }): MockNode => {
         const data = cloneValue({ content: args.content });
-        return updateNode(activeFixtures.comments, args.id, data, "comment");
+        return ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
     },
     createNotificationSubscription: (
         _parent: unknown,
@@ -345,6 +366,7 @@ export const mutationResolvers = {
             companies: activeFixtures.companies,
             identities: activeFixtures.identities,
             jobs: activeFixtures.jobs,
+            comments: activeFixtures.comments,
             posts: activeFixtures.posts,
             products: activeFixtures.products,
             startups: activeFixtures.startups,

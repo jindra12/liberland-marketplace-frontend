@@ -1,0 +1,25 @@
+query CommentById($id: String!) {
+    Comment(id: $id) {
+        id
+        content
+        serverUrl
+        createdBy {
+            id
+            name
+            email
+        }
+        anonymousHash
+        replyPostRelationTo
+        replyPostValue
+        createdAt
+        updatedAt
+        likeCount
+        hasLiked
+        replyComment {
+            id
+        }
+        replyPost {
+            relationTo
+        }
+    }
+}

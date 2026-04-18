@@ -1,5 +1,5 @@
-query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100) {
-  Comments(draft: false, where: { replyComment: { equals: $parentCommentId } }, sort: "createdAt", limit: $limit) {
+query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+  Comments(draft: false, where: { replyComment: { equals: $parentCommentId } }, sort: "createdAt", limit: $limit, page: $page) {
     docs {
       id
       content
@@ -11,6 +11,8 @@ query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100) {
       anonymousHash
       createdAt
       updatedAt
+      likeCount
+      hasLiked
       replyComment {
         id
       }
@@ -19,5 +21,7 @@ query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100) {
       }
     }
     totalDocs
+    hasNextPage
+    nextPage
   }
 }

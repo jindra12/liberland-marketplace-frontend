@@ -1,17 +1,14 @@
-import type { CSSProperties, ComponentProps, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import type { OidcStandardClaims } from "oidc-client-ts";
-import type { CommentSection } from "react-comments-section";
 import type { Space, Tag } from "antd";
 import type {
     CartBySecretQuery,
-    Comment_ReplyPostRelationshipInputRelationTo,
     Company,
     CreateOrderMutation,
     Identity,
     Job,
     ListProductsByCompanyQuery,
     ListProductsByIdentityQuery,
-    ListCommentsByTargetQuery,
     ListProductsQuery,
     ProductByIdQuery,
     Product,
@@ -132,92 +129,7 @@ export type JobDetailsSummaryProps = {
     metaSize?: ComponentProps<typeof Space>["size"];
 };
 
-export type EntityCommentsSectionProps = {
-    targetId: string;
-    relationTo: Comment_ReplyPostRelationshipInputRelationTo;
-    className?: string;
-    serverURL?: string | null;
-};
-
-export type EntityCommentsSectionDisplayProps = {
-    className?: string;
-    commentData: CommentDataItem[];
-    commentSectionStyles: CommentSectionStyles;
-    commentThemeVars: CommentThemeVars;
-    commentsCount?: number;
-    currentUser: CommentCurrentUser;
-    hasMore: boolean;
-    isAnonymous: boolean;
-    isError: boolean;
-    isLoading: boolean;
-    onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
-    onEditAction: (payload: CommentEditPayload) => Promise<void>;
-    onLoadMore: () => void;
-    onLogin: () => void;
-    onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
-    onSignUp: () => void;
-    onSubmitAction: (payload: CommentSubmitPayload) => Promise<void>;
-    placeholder: string;
-};
-
-export type CommentDoc = NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number];
-export type CommentDataItem = ComponentProps<typeof CommentSection>["commentData"][number];
-export type CommentCurrentUser = NonNullable<ComponentProps<typeof CommentSection>["currentUser"]>;
 export type AuthProfile = OidcStandardClaims;
-export type CommentSubmitPayload = { text: string };
-export type CommentReplyPayload = { text: string; repliedToCommentId: string };
-export type CommentEditPayload = { text: string; comId: string };
-export type CommentDeletePayload = { comIdToDelete: string };
-export type CommentGrouping = {
-    roots: CommentDoc[];
-    repliesByParent: Map<string, CommentDataItem[]>;
-};
-export type CommentThemeVars = CSSProperties & {
-    "--ecs-bg-overlay": string;
-    "--ecs-bg-form": string;
-    "--ecs-bg-elevated": string;
-    "--ecs-text-primary": string;
-    "--ecs-text-secondary": string;
-    "--ecs-text-placeholder": string;
-    "--ecs-border": string;
-    "--ecs-border-secondary": string;
-    "--ecs-primary": string;
-    "--ecs-primary-hover": string;
-    "--ecs-font-family": string;
-    "--ecs-radius": string;
-};
-export type EntityCommentsThemeToken = {
-    colorBgContainer: string;
-    colorFillAlter: string;
-    colorBgElevated: string;
-    colorText: string;
-    colorTextSecondary: string;
-    colorTextPlaceholder: string;
-    colorBorder: string;
-    colorBorderSecondary: string;
-    colorPrimary: string;
-    colorPrimaryHover: string;
-    colorFillSecondary: string;
-    colorTextLightSolid: string;
-    colorTextHeading: string;
-    fontFamily: string;
-    borderRadiusLG: number;
-    borderRadius: number;
-    padding: number;
-    fontSizeHeading4: number;
-    fontSizeHeading5: number;
-    lineHeightHeading5: number;
-};
-export type CommentSectionStyles = {
-    overlayStyle: CSSProperties;
-    formStyle: CSSProperties;
-    inputStyle: CSSProperties;
-    replyInputStyle: CSSProperties;
-    submitBtnStyle: CSSProperties;
-    cancelBtnStyle: CSSProperties;
-    hrStyle: CSSProperties;
-    titleStyle: CSSProperties;
-};
 
 export type JobDerivedInput = {
     bounty?: {
