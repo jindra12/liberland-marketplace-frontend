@@ -10,6 +10,9 @@ import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../../src/components/orde
 import type { AddressWithEmail } from "../../../src/components/order/types";
 
 import { COOP_SERVER_URL, MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
+import {
+    MARKET_ACCORDION_POSTS_QUERY_LIMIT,
+} from "../../../src/components/splash/constants";
 import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
@@ -300,6 +303,22 @@ export const homepageQueries = () => {
     waitForCollectionQuery(MAIN_SERVER_URL, "ListCompanies", { limit: 7, page: 1 }, "Companies", "Harbor Labs", 0);
     waitForCollectionQuery(MAIN_SERVER_URL, "ListStartups", { limit: 7, page: 1 }, "Startups", "Sky Relay", 0);
     waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 7, page: 1 }, "Identities", "Nova Rivers", 0);
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: 20, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
     waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main", 0);
     screenshotStep("homepage-queries-loaded");
 };
@@ -307,6 +326,22 @@ export const homepageQueries = () => {
 export const homepageMobileQueries = () => {
     waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 3, page: 1 }, "Products", "Solar Widget", 0);
     waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 3, page: 1 }, "Jobs", "Dockmaster", 0);
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: 20, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
     screenshotStep("homepage-mobile-queries-loaded");
 };
 

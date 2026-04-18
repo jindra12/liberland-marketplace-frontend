@@ -65,6 +65,36 @@ Posts should be reachable from the existing entity navigation patterns, but do n
 - `src/components/Splash.tsx`
 - `src/components/splash/MarketAccordion.tsx`
 
+### Main page split feed
+
+The main page should present Posts as a distributed feed instead of a single standalone block.
+
+The feed should be composed roughly as follows:
+
+1. 2 most popular Posts, rendered as large hero list components
+2. Products accordion
+3. 3 most popular Posts
+4. Companies card section
+5. 3 most popular Posts
+6. Ventures card section
+7. 4 most popular Posts
+8. Tribes card section
+9. the rest of the Posts as an `InfiniteScroll` list
+
+This should be implemented as a splitting method on `MarketAccordion.tsx`, with the final Posts section using the existing infinite-scroll list behavior.
+
+Empty-state rule:
+
+- the interleaved mini Post sections should render nothing if there are not enough posts for that slice
+- do not show messages like `No more posts found` for the mini sections
+- the final `rest` Posts list may keep the normal `InfiniteScroll` end message behavior
+
+Important:
+
+- reuse the existing components as much as possible
+- prefer composing the current list/card/detail building blocks instead of introducing one-off feed widgets
+- keep the implementation aligned with the current entity patterns already in the app
+
 ### GraphQL wiring
 
 After the query documents are finalized, regenerate generated artifacts and add wrapper hooks:
@@ -80,11 +110,13 @@ Create the same list-layer structure used by Jobs, Companies, Products, and Vent
 
 - `src/components/cards/PostCard.tsx`
 - `src/components/lists/PostListInternal.tsx`
+- `src/components/lists/SlicePostList.tsx`
 - `src/components/detail/` post list helpers if a shared internal list pattern is needed
 
 The list view should support:
 
 - pagination
+- an optional `offset` prop on `PostList`
 - loading state
 - empty state
 - `likeCount`
@@ -222,6 +254,14 @@ Image rendering rules:
 - the card cover height should be fixed and consistent across the list
 - if the image is too small for a cover crop, center it instead of forcing a bad crop
 - detail hero banners should be large, centered, and visually polished rather than treated like a small thumbnail
+
+`SlicePostList` requirements:
+
+- render a limited number of Posts
+- use `AppList`
+- do not expose pagination controls or infinite scrolling
+- use the same item rendering and styling patterns as `PostList`
+- support the main-page split feed slices described above
 
 ### Comments
 

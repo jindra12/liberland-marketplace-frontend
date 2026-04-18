@@ -1,5 +1,6 @@
 import {
     homepageQueries,
+    homepageMobileQueries,
     mountMainRoute,
     screenshotStep,
     waitForPageShell,
@@ -11,13 +12,18 @@ describe("homepage", () => {
         mountMainRoute("/");
         waitForPageShell();
         homepageQueries();
-    
+
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
         cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
         cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
         cy.get(".MarketAccordion").should("be.visible");
+        cy.get(".MarketAccordion__postSection--top .AppList__cardItem", { timeout: 20000 }).should("have.length", 2);
+        cy.get(".MarketAccordion__postSection--firstMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
+        cy.get(".MarketAccordion__postSection--secondMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
+        cy.get(".MarketAccordion__postSection--thirdMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 4);
+        cy.get(".MarketAccordion__postSection--rest .AppList__cardItem", { timeout: 20000 }).should("have.length.at.least", 1);
         cy.get(".MarketAccordion .SplashEntityCard--tribes").should("be.visible");
         cy.get(".SplashPage__syndicationSection").should("be.visible");
 
@@ -34,7 +40,13 @@ describe("homepage", () => {
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
         cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
         cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
+        homepageMobileQueries();
         cy.get(".MarketAccordionMobile").should("be.visible");
+        cy.get(".MarketAccordionMobile__postSection--top .AppList__cardItem", { timeout: 20000 }).should("have.length", 2);
+        cy.get(".MarketAccordionMobile__postSection--firstMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
+        cy.get(".MarketAccordionMobile__postSection--secondMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
+        cy.get(".MarketAccordionMobile__postSection--thirdMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 4);
+        cy.get(".MarketAccordionMobile__postSection--rest .AppList__cardItem", { timeout: 20000 }).should("have.length.at.least", 1);
         cy.contains(".MarketAccordionMobile__section", "Products")
             .find(".SplashEntityCard__itemCard")
             .should("have.length", 3);

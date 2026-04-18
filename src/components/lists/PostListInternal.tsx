@@ -2,15 +2,12 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { UseQueryResult } from "@tanstack/react-query";
-
 import { Avatar, Flex, Grid, Image, Tag, Typography } from "antd";
 
-import { ListPostsQuery } from "../../generated/graphql";
-import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { PostDoc } from "../shared/post/types";
 import {
     getPostCompanyImageUrl,
     getPostHeroImageUrl,
@@ -19,29 +16,37 @@ import {
 } from "../shared/post/utils";
 
 export interface PostListInternalProps {
-    query: UseQueryResult<ListPostsQuery, unknown>;
-    setPage: (page: number) => void;
-    page: number;
+    items: PostDoc[];
+    hasMore: boolean;
+    loading?: boolean;
+    next: () => void;
+    refetch: () => void;
+    title?: React.ReactNode;
+    endMessage?: React.ReactNode;
+    emptyText?: React.ReactNode;
+    scrollableTarget?: string;
 }
 
 export const PostListInternal: React.FunctionComponent<PostListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
     const likeMutation = useLikePostMutation();
     const dislikeMutation = useDislikePostMutation();
-    const allItems = useAccumulatedDocs(props.query.data?.Posts?.docs, props.page);
 
     return (
         <AppList
-            hasMore={Boolean(props.query.data?.Posts?.hasNextPage)}
-            items={allItems}
-            next={() => props.setPage(props.page + 1)}
-            refetch={props.query.refetch}
-            loading={props.query.isLoading && allItems.length === 0}
-            title="Posts"
+            hasMore={props.hasMore}
+            items={props.items}
+            next={props.next}
+            refetch={props.refetch}
+            loading={Boolean(props.loading) && props.items.length === 0}
+            title={props.title || "Posts"}
             likeActions={{
                 likeMutation,
                 dislikeMutation,
             }}
+            emptyText={props.emptyText}
+            endMessage={props.endMessage}
+            scrollableTarget={props.scrollableTarget}
             renderItem={{
                 title: (post) => <Link to={`/posts/${post.id}`}>{post.title}</Link>,
                 avatar: (post) => {

@@ -13,10 +13,15 @@ import {
     useListIdentitiesQuery,
     useListCompaniesQuery,
     useListJobsQuery,
+    useListPostsQuery,
     useListProductsQuery,
     useListStartupsQuery,
 } from "../hooks";
+import { PostList } from "../lists/PostList";
+import { SlicePostList } from "../lists/SlicePostList";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
+
+import { MARKET_ACCORDION_POSTS_QUERY_LIMIT, MARKET_ACCORDION_POSTS_REST_OFFSET, MARKET_ACCORDION_POST_SLICES } from "./constants";
 
 export const MarketAccordion: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
@@ -40,8 +45,29 @@ export const MarketAccordion: React.FunctionComponent = () => {
         page: 1,
         limit: 7,
     });
+    const postsQuery = useListPostsQuery({
+        page: 1,
+        limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT,
+    });
+    const postItems = postsQuery.data?.Posts?.docs || [];
 
     const items = [
+        {
+            key: "posts-top",
+            title: "Posts",
+            route: "/posts",
+            titleClassName: "MarketAccordion__titleLink--posts",
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[0].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[0].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--top"
+                />
+            ),
+            isMobile: true,
+        },
         {
             key: "products",
             title: "Products",
@@ -64,11 +90,43 @@ export const MarketAccordion: React.FunctionComponent = () => {
             isMobile: true,
         },
         {
+            key: "posts-first-middle",
+            title: "Posts",
+            route: "/posts",
+            titleClassName: "MarketAccordion__titleLink--posts",
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[1].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[1].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--firstMiddle"
+                />
+            ),
+            isMobile: true,
+        },
+        {
             key: "companies",
             title: "Companies",
             route: "/companies",
             titleClassName: "MarketAccordion__titleLink--companies",
             body: <CompanyCard items={companiesQuery.data?.Companies?.docs || []} loading={companiesQuery.isLoading} />,
+        },
+        {
+            key: "posts-second-middle",
+            title: "Posts",
+            route: "/posts",
+            titleClassName: "MarketAccordion__titleLink--posts",
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[2].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[2].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--secondMiddle"
+                />
+            ),
+            isMobile: true,
         },
         {
             key: "ventures",
@@ -89,6 +147,30 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     loading={identitiesQuery.isLoading}
                 />
             ),
+        },
+        {
+            key: "posts-third-middle",
+            title: "Posts",
+            route: "/posts",
+            titleClassName: "MarketAccordion__titleLink--posts",
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[3].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[3].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--thirdMiddle"
+                />
+            ),
+            isMobile: true,
+        },
+        {
+            key: "posts-rest",
+            title: "Posts",
+            route: "/posts",
+            titleClassName: "MarketAccordion__titleLink--posts",
+            body: <PostList offset={MARKET_ACCORDION_POSTS_REST_OFFSET} className="MarketAccordion__postSection--rest" />,
+            isMobile: true,
         },
     ];
 
