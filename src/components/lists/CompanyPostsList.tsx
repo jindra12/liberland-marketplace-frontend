@@ -21,12 +21,14 @@ export const CompanyPostsList: React.FunctionComponent<CompanyPostsListProps> = 
     const allItems = useAccumulatedDocs(query.data?.Posts?.docs, page);
 
     return (
-        <PostListInternal
-            items={allItems}
-            hasMore={Boolean(query.data?.Posts?.hasNextPage)}
-            loading={query.isLoading}
-            next={() => setPage(page + 1)}
-            refetch={query.refetch}
-        />
+        <div className="PostList">
+            <PostListInternal
+                items={allItems}
+                hasMore={Boolean(query.data?.Posts?.hasNextPage)}
+                loading={query.isLoading}
+                next={() => setPage(page + 1)}
+                refetch={query.refetch}
+            />
+        </div>
     );
 };

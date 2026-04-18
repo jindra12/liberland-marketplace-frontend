@@ -22,7 +22,7 @@ export const PostList: React.FunctionComponent<PostListProps> = (props) => {
     const visibleItems = props.offset === undefined ? allItems : allItems.slice(props.offset);
 
     return (
-        <div className={props.className}>
+        <div className={`PostList${props.className ? ` ${props.className}` : ""}`}>
             <PostListInternal
                 items={visibleItems}
                 hasMore={Boolean(query.data?.Posts?.hasNextPage)}

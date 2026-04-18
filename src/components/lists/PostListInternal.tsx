@@ -28,7 +28,7 @@ export interface PostListInternalProps {
 }
 
 export const PostListInternal: React.FunctionComponent<PostListInternalProps> = (props) => {
-    const { md } = Grid.useBreakpoint();
+    const { md, xl } = Grid.useBreakpoint();
     const likeMutation = useLikePostMutation();
     const dislikeMutation = useDislikePostMutation();
 
@@ -51,6 +51,10 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
             renderItem={{
                 title: (post) => <Link to={`/posts/${post.id}`}>{post.title}</Link>,
                 avatar: (post) => {
+                    if (!xl) {
+                        return undefined;
+                    }
+
                     const imageSrc = getPostCompanyImageUrl(post);
 
                     return imageSrc ? (
@@ -78,7 +82,20 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         <Typography.Paragraph className="EntityList__description PostList__description">
                             {post.meta?.description}
                         </Typography.Paragraph>
-                        {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
+                        {!xl && getPostCompanyImageUrl(post) && post.company?.name && (
+                            <Link to={`/posts/${post.id}`} className="PostList__companyInlineLink PostList__companyInlineLink--mobile">
+                                <Avatar
+                                    shape="square"
+                                    size={32}
+                                    src={getPostCompanyImageUrl(post)}
+                                    className="EntityList__avatar PostList__companyAvatar PostList__companyAvatar--mobile"
+                                />
+                                <Typography.Text className="PostList__companyName PostList__companyName--mobile">
+                                    {post.company.name}
+                                </Typography.Text>
+                            </Link>
+                        )}
+                        {xl && post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
                         {post.relatedPosts?.[0] && (
                             <Typography.Link href={getPostRelatedTargetHref(post.relatedPosts[0])}>
                                 Related: {getPostRelatedTargetText(post.relatedPosts[0])}

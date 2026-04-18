@@ -181,7 +181,10 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     <section className="MarketAccordion__section">
                         <Flex vertical gap={24} className="MarketAccordion__header">
                             <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                                <Typography.Title level={2} className="MarketAccordion__title">
+                                <Typography.Title
+                                    level={2}
+                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
+                                >
                                     {item.title}
                                 </Typography.Title>
                             </Link>
@@ -198,7 +201,10 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     <section className="MarketAccordionMobile__section">
                         <Flex vertical gap={18} className="MarketAccordionMobile__header">
                             <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                                <Typography.Title level={2} className="MarketAccordion__title">
+                                <Typography.Title
+                                    level={2}
+                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
+                                >
                                     {item.title}
                                 </Typography.Title>
                             </Link>

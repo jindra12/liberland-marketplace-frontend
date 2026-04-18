@@ -22,7 +22,7 @@ export const SlicePostList: React.FunctionComponent<SlicePostListProps> = (props
 
     return (
         <AnimatedIn>
-            <div className={props.className}>
+            <div className={`PostList${props.className ? ` ${props.className}` : ""}`}>
                 <PostListInternal
                     items={visibleItems}
                     hasMore={false}
