@@ -1,13 +1,14 @@
 import * as React from "react";
 
+import { useListPostsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
-import { useListPostsQuery } from "../hooks";
 
 import { PostListInternal } from "./PostListInternal";
 
 export interface PostListProps {
     offset?: number;
     className?: string;
+    titleHidden?: boolean;
 }
 
 export const PostList: React.FunctionComponent<PostListProps> = (props) => {
@@ -15,6 +16,7 @@ export const PostList: React.FunctionComponent<PostListProps> = (props) => {
     const query = useListPostsQuery({
         limit: 20,
         page,
+        sort: "-contentRankScore",
     });
     const allItems = useAccumulatedDocs(query.data?.Posts?.docs, page);
     const visibleItems = props.offset === undefined ? allItems : allItems.slice(props.offset);
@@ -27,6 +29,7 @@ export const PostList: React.FunctionComponent<PostListProps> = (props) => {
                 loading={query.isLoading}
                 next={() => setPage(page + 1)}
                 refetch={query.refetch}
+                titleHidden={props.titleHidden}
             />
         </div>
     );

@@ -311,33 +311,15 @@ export const homepageQueries = () => {
         "Harbor Operations Digest",
         0,
     );
-    waitForCollectionQuery(
-        MAIN_SERVER_URL,
-        "ListPosts",
-        { limit: 20, page: 1 },
-        "Posts",
-        "Harbor Operations Digest",
-        0,
-    );
     waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main", 0);
     screenshotStep("homepage-queries-loaded");
 };
 
 export const homepageMobileQueries = () => {
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 3, page: 1 }, "Products", "Solar Widget", 0);
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 3, page: 1 }, "Jobs", "Dockmaster", 0);
     waitForCollectionQuery(
         MAIN_SERVER_URL,
         "ListPosts",
         { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
-        "Posts",
-        "Harbor Operations Digest",
-        0,
-    );
-    waitForCollectionQuery(
-        MAIN_SERVER_URL,
-        "ListPosts",
-        { limit: 20, page: 1 },
         "Posts",
         "Harbor Operations Digest",
         0,
@@ -357,6 +339,18 @@ export const openSearchScope = (scopeLabel: string) => {
 
 export const waitForPageShell = () => {
     cy.get(".LoadingSkeleton--surface").should("not.exist");
+};
+
+export const assertImageLoaded = (selector: string) => {
+    cy.get(selector, { timeout: 20000 })
+        .should("be.visible")
+        .should(($img) => {
+            const node = $img[0];
+            const image = node instanceof HTMLImageElement ? node : node.querySelector("img");
+            expect(image).to.exist;
+            expect((image as HTMLImageElement).complete).to.equal(true);
+            expect((image as HTMLImageElement).naturalWidth).to.be.greaterThan(0);
+        });
 };
 
 export const waitForRouteLoad = (pageSkeletonSelector: string) => {

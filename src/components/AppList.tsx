@@ -32,6 +32,7 @@ export interface AppListProps<TItem> {
     loading?: boolean;
     endMessage?: React.ReactNode;
     scrollableTarget?: string;
+    titleHidden?: boolean;
     likeActions?: {
         likeMutation: LikeMutation;
         dislikeMutation: DislikeMutation;
@@ -76,7 +77,10 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                 header={
                     <Flex justify="space-between" gap="16px" wrap align="center" className="AppList__header">
                         <Flex className="AppList__titleSlot">
-                            <Typography.Title level={2} className="AppList__title">
+                            <Typography.Title
+                                level={2}
+                                className={`AppList__title${props.titleHidden ? " screen-reader-only" : ""}`}
+                            >
                                 {props.title}
                             </Typography.Title>
                         </Flex>

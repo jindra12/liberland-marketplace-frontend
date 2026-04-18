@@ -9,7 +9,6 @@ export interface SlicePostListProps {
     items: PostDoc[];
     offset: number;
     limit: number;
-    title?: React.ReactNode;
     loading?: boolean;
     className?: string;
 }
@@ -30,8 +29,8 @@ export const SlicePostList: React.FunctionComponent<SlicePostListProps> = (props
                     loading={props.loading}
                     next={() => undefined}
                     refetch={() => undefined}
-                    title={props.title}
                     endMessage={<></>}
+                    titleHidden
                 />
             </div>
         </AnimatedIn>

@@ -21,10 +21,10 @@ export interface PostListInternalProps {
     loading?: boolean;
     next: () => void;
     refetch: () => void;
-    title?: React.ReactNode;
     endMessage?: React.ReactNode;
     emptyText?: React.ReactNode;
     scrollableTarget?: string;
+    titleHidden?: boolean;
 }
 
 export const PostListInternal: React.FunctionComponent<PostListInternalProps> = (props) => {
@@ -39,7 +39,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
             next={props.next}
             refetch={props.refetch}
             loading={Boolean(props.loading) && props.items.length === 0}
-            title={props.title || "Posts"}
+            title="Posts"
             likeActions={{
                 likeMutation,
                 dislikeMutation,
@@ -47,6 +47,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
             emptyText={props.emptyText}
             endMessage={props.endMessage}
             scrollableTarget={props.scrollableTarget}
+            titleHidden={props.titleHidden}
             renderItem={{
                 title: (post) => <Link to={`/posts/${post.id}`}>{post.title}</Link>,
                 avatar: (post) => {

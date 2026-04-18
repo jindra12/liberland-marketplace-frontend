@@ -26,7 +26,11 @@ type RelatedTargetEntity = {
 
 const toAbsoluteImageUrl = (url: string | null | undefined, serverURL: string | null | undefined): string => {
     if (!url || !serverURL) {
-        return "";
+        return url && /^https?:\/\//.test(url) ? url : "";
+    }
+
+    if (/^https?:\/\//.test(url)) {
+        return url;
     }
 
     return new URL(url, serverURL).toString();

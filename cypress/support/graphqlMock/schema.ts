@@ -84,6 +84,18 @@ export const graphqlSchema = buildSchema(`
         Company(id: String!, draft: Boolean): MockNode
         Job(id: String!, draft: Boolean): MockNode
         Post(id: String!, draft: Boolean): MockNode
+        Posts(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+            companyIds: [JSON!]
+        ): MockCollection!
         Product(id: String!, draft: Boolean): MockNode
         Startup(id: String!, draft: Boolean): MockNode
         Identity(id: String!, draft: Boolean): MockNode

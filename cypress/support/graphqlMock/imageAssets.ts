@@ -1,6 +1,6 @@
 import type { MockNode } from "./types";
 
-const IMAGE_ORIGIN = "http://127.0.0.1:8080";
+const IMAGE_ORIGIN = "http://localhost:8080";
 
 export type MockImageKind = "avatar" | "hero";
 
