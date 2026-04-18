@@ -545,6 +545,11 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
             cy.get(".SearchDrawer__footerForm").submit();
         });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
+    if (goal.scopeLabel === "Posts") {
+        cy.get(".SearchDrawer .PostList__companyTag").first().should(($tag) => {
+            expect($tag[0].getBoundingClientRect().width).to.be.lessThan(250);
+        });
+    }
     cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 }).first().should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     cy.get(".SearchDrawer").should("not.exist");

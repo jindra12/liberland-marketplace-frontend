@@ -49,7 +49,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                     ) : undefined;
                 },
                 description: (post) => (
-                    <Flex vertical gap={8} className="PostList__meta">
+                    <Flex vertical gap={8} align="start" className="PostList__meta">
                         <Typography.Paragraph className="EntityList__description PostList__description">
                             {post.meta?.description}
                         </Typography.Paragraph>
@@ -59,8 +59,8 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                                 Related: {getPostRelatedTargetText(post.relatedPosts[0])}
                             </Typography.Link>
                         )}
-                            </Flex>
-                        ),
+                    </Flex>
+                ),
                 actions: (post) =>
                     md ? (
                         <Flex gap="12px" wrap justify="flex-end" className="EntityList__actionsRow PostList__actionsRow">

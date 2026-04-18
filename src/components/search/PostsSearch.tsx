@@ -102,8 +102,8 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                         ) : undefined;
                     },
                     description: (post) => (
-                        <Flex vertical gap={8} className="PostList__meta">
-                            {post.company?.name && <Tag>{post.company.name}</Tag>}
+                        <Flex vertical gap={8} align="start" className="PostList__meta">
+                            {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
                             {post.meta?.description && (
                                 <Typography.Paragraph className="EntityList__description PostList__description">
                                     {post.meta.description}
