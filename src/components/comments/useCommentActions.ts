@@ -76,10 +76,12 @@ export const useCommentActions = (args: UseCommentActionsArgs): CommentActions =
             ? {
                   url: args.url,
                   id: payload.comId,
+                  company: payload.company,
                   content,
               }
             : {
                   id: payload.comId,
+                  company: payload.company,
                   content,
               };
 

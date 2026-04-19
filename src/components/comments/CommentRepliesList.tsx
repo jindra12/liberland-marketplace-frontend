@@ -2,15 +2,17 @@ import * as React from "react";
 
 import { Flex, Spin, Typography } from "antd";
 
+import { ENTITY_COMMENTS_DEFAULT_LIMIT } from "../../constants";
 import { useListCommentRepliesQuery } from "../hooks";
 
 import { CommentCard } from "./CommentCard";
 import type { CommentRepliesListProps } from "./types";
 
 export const CommentRepliesList: React.FunctionComponent<CommentRepliesListProps> = (props) => {
+    const nextDepth = (props.depth ?? 0) + 1;
     const repliesQuery = useListCommentRepliesQuery({
         parentCommentId: props.parentCommentId,
-        limit: 20,
+        limit: ENTITY_COMMENTS_DEFAULT_LIMIT,
         page: 1,
         url: props.serverURL,
     });
@@ -40,7 +42,7 @@ export const CommentRepliesList: React.FunctionComponent<CommentRepliesListProps
                         key={reply.id}
                         comment={reply}
                         currentUser={props.currentUser}
-                        depth={1}
+                        depth={nextDepth}
                         commentEditPlaceholder={props.commentEditPlaceholder}
                         commentReplyPlaceholder={props.commentReplyPlaceholder}
                         dislikeMutation={props.dislikeMutation}
@@ -49,7 +51,22 @@ export const CommentRepliesList: React.FunctionComponent<CommentRepliesListProps
                         onEditAction={props.onEditAction}
                         onReplyAction={props.onReplyAction}
                         onShare={props.onShare}
-                    />
+                    >
+                        <CommentRepliesList
+                            parentCommentId={reply.id}
+                            serverURL={reply.serverUrl}
+                            currentUser={props.currentUser}
+                            depth={nextDepth}
+                            commentEditPlaceholder={props.commentEditPlaceholder}
+                            commentReplyPlaceholder={props.commentReplyPlaceholder}
+                            dislikeMutation={props.dislikeMutation}
+                            likeMutation={props.likeMutation}
+                            onDeleteAction={props.onDeleteAction}
+                            onEditAction={props.onEditAction}
+                            onReplyAction={props.onReplyAction}
+                            onShare={props.onShare}
+                        />
+                    </CommentCard>
                 ))}
             </Flex>
         </Flex>

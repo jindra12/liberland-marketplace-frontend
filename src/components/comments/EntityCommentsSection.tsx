@@ -88,7 +88,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             hasMore={comments.data?.Comments?.hasNextPage || false}
             isAnonymous={!auth.isAuthenticated}
             isError={comments.isError}
-            isLoading={comments.isLoading}
+            isLoading={comments.isLoading && accumulatedDocs.length === 0}
             dislikeMutation={dislikeMutation}
             likeMutation={likeMutation}
             rootComments={accumulatedDocs}

@@ -30,7 +30,7 @@ export type CommentSectionStyles = {
 
 export type CommentSubmitPayload = { text: string; company: string };
 export type CommentReplyPayload = { text: string; repliedToCommentId: string; company: string };
-export type CommentEditPayload = { text: string; comId: string };
+export type CommentEditPayload = { text: string; comId: string; company: string };
 export type CommentDeletePayload = { comIdToDelete: string };
 
 export type EntityCommentsThemeToken = {
@@ -89,6 +89,7 @@ export type CommentRepliesListProps = {
     parentCommentId: string;
     serverURL?: string | null;
     currentUser: CommentCurrentUser;
+    depth?: number;
     commentEditPlaceholder: string;
     commentReplyPlaceholder: string;
     onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;

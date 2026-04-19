@@ -92,6 +92,7 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                 <CommentEditComposer
                     commentId={props.comment.id}
                     initialValue={props.comment.content || ""}
+                    initialCompany={props.comment.company?.id}
                     placeholder={props.commentEditPlaceholder}
                     onCancel={resetForm}
                     onEditAction={props.onEditAction}

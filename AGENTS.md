@@ -27,6 +27,7 @@ manager is `yarn`.
 - `yarn build` creates a production build.
 - `yarn start` runs the built app.
 - `yarn test` runs the Jest/Testing Library suite.
+- When the user says "tests", they mean Cypress tests. Do not reach for Jest unless the user explicitly asks for Jest.
 - To verify Cypress tests, actually run them instead of only typechecking or inspecting files.
 - When the user asks for a test, treat that as a Cypress component test. Do not switch to Jest unless the user explicitly asks for Jest or another runner.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.

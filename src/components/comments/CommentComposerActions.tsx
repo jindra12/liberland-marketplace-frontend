@@ -14,6 +14,7 @@ type CommentComposerActionsProps = {
     submitLabel: string;
     serverURL?: string | null;
     initialValue?: string;
+    initialCompany?: string;
     showCompanyField?: boolean;
     cancelLabel?: string;
     allowCancel?: boolean;
@@ -48,6 +49,7 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
             className="CommentComposer"
             initialValues={{
                 text: props.initialValue ?? "",
+                company: props.initialCompany,
             }}
             onFinish={handleFinish}
         >

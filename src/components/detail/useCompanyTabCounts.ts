@@ -6,7 +6,7 @@ import {
     useListStartupsByCompanyQuery,
     useListCommentsByTargetQuery,
 } from "../../generated/graphql";
-import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../constants";
+import { COMMENT_RELATION_TO_QUERY_RELATION, ENTITY_COMMENTS_DEFAULT_LIMIT } from "../../constants";
 
 export const useCompanyTabCounts = (companyId: string | undefined) => {
     const enabled = !!companyId;
@@ -18,7 +18,7 @@ export const useCompanyTabCounts = (companyId: string | undefined) => {
 
     const commentsRelation = COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Companies];
     const commentsQuery = useListCommentsByTargetQuery(
-        { targetId: companyId!, relationTo: commentsRelation, limit: 1 },
+        { targetId: companyId!, relationTo: commentsRelation, limit: ENTITY_COMMENTS_DEFAULT_LIMIT },
         { enabled },
     );
 

@@ -6,6 +6,7 @@ import type { CommentComposerValues, CommentEditPayload } from "./types";
 type CommentEditComposerProps = {
     commentId: string;
     initialValue: string;
+    initialCompany?: string | null;
     placeholder: string;
     onCancel: () => void;
     onEditAction: (payload: CommentEditPayload) => Promise<void>;
@@ -17,6 +18,8 @@ export const CommentEditComposer: React.FunctionComponent<CommentEditComposerPro
             placeholder={props.placeholder}
             submitLabel="Save"
             initialValue={props.initialValue}
+            initialCompany={props.initialCompany === null ? undefined : props.initialCompany}
+            showCompanyField
             allowCancel
             cancelLabel="Cancel"
             onCancel={props.onCancel}
@@ -24,6 +27,7 @@ export const CommentEditComposer: React.FunctionComponent<CommentEditComposerPro
                 await props.onEditAction({
                     text: values.text,
                     comId: props.commentId,
+                    company: values.company!,
                 });
                 props.onCancel();
             }}

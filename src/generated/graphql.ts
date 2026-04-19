@@ -63105,11 +63105,12 @@ export type UnsubscribeFromVentureUpdatesMutation = { __typename?: 'Mutation', d
 
 export type UpdateCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
+  company: Scalars['String']['input'];
   content: Scalars['String']['input'];
 }>;
 
 
-export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
+export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } } | null };
 
 export type MeUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -63586,7 +63587,7 @@ export const useLikeCommentMutation = <
 useLikeCommentMutation.fetcher = (variables: LikeCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, variables, options);
 
 export const ListCommentRepliesDocument = `
-    query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+    query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -65937,7 +65938,7 @@ export const useUpdateJobMutation = <
 useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
 
 export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
+    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 20, $page: Int = 1) {
   Comments(
     draft: false
     where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}, {replyComment: {exists: false}}]}
@@ -66163,7 +66164,7 @@ useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryV
 useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
 
 export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -66997,7 +66998,7 @@ export const useDeletePostCommentMutation = <
 useDeletePostCommentMutation.fetcher = (variables: DeletePostCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeletePostCommentMutation, DeletePostCommentMutationVariables>(DeletePostCommentDocument, variables, options);
 
 export const ListPostCommentsDocument = `
-    query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
+    query ListPostComments($postId: String!, $limit: Int = 20, $page: Int = 1) {
   Comments(
     draft: false
     where: {AND: [{replyPostRelationTo: {equals: "posts"}}, {replyPostValue: {equals: $postId}}, {replyComment: {exists: false}}]}
@@ -67066,7 +67067,7 @@ useListPostCommentsQuery.getKey = (variables: ListPostCommentsQueryVariables) =>
 useListPostCommentsQuery.fetcher = (variables: ListPostCommentsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostCommentsQuery, ListPostCommentsQueryVariables>(ListPostCommentsDocument, variables, options);
 
 export const ListPostCommentRepliesDocument = `
-    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
+    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -69606,11 +69607,25 @@ export const useUnsubscribeFromVentureUpdatesMutation = <
 useUnsubscribeFromVentureUpdatesMutation.fetcher = (variables: UnsubscribeFromVentureUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UnsubscribeFromVentureUpdatesMutation, UnsubscribeFromVentureUpdatesMutationVariables>(UnsubscribeFromVentureUpdatesDocument, variables, options);
 
 export const UpdateCommentContentDocument = `
-    mutation UpdateCommentContent($id: String!, $content: String!) {
-  updateComment(id: $id, data: {content: $content}) {
+    mutation UpdateCommentContent($id: String!, $company: String!, $content: String!) {
+  updateComment(id: $id, data: {content: $content, company: $company}) {
     id
     content
     updatedAt
+    company {
+      id
+      serverURL
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
   }
 }
     `;
