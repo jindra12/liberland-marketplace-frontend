@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { CommentComposer } from "./CommentComposer";
-import type { CommentEditPayload } from "./types";
+import { CommentComposerActions } from "./CommentComposerActions";
+import type { CommentComposerValues, CommentEditPayload } from "./types";
 
 type CommentEditComposerProps = {
     commentId: string;
@@ -12,23 +12,21 @@ type CommentEditComposerProps = {
 };
 
 export const CommentEditComposer: React.FunctionComponent<CommentEditComposerProps> = (props) => {
-    const handleSubmit = async (text: string) => {
-        await props.onEditAction({
-            text,
-            comId: props.commentId,
-        });
-        props.onCancel();
-    };
-
     return (
-        <CommentComposer
-            initialValue={props.initialValue}
+        <CommentComposerActions
             placeholder={props.placeholder}
             submitLabel="Save"
+            initialValue={props.initialValue}
             allowCancel
             cancelLabel="Cancel"
             onCancel={props.onCancel}
-            onSubmit={handleSubmit}
+            onSubmit={async (values: CommentComposerValues) => {
+                await props.onEditAction({
+                    text: values.text,
+                    comId: props.commentId,
+                });
+                props.onCancel();
+            }}
         />
     );
 };

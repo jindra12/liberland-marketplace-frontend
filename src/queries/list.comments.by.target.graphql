@@ -21,7 +21,20 @@ query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int
                 name
                 email
             }
-            anonymousHash
+            company {
+                id
+                serverURL
+                name
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
             replyPostRelationTo
             replyPostValue
             createdAt

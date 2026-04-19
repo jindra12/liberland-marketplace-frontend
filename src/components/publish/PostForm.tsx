@@ -48,6 +48,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
     const companiesQuery = useListCompaniesByCreatorQuery({
         userId,
         draft: true,
+        url: props.url,
     });
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const initialSeoDescription = props.initialValues?.seoDescription ?? buildSeoDescription(props.initialValues?.content ?? "");

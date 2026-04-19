@@ -89,6 +89,10 @@ manager is `yarn`.
 - Do not use `?? null` for any reason.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Do not use inline `style={{ ... }}` props. Prefer SCSS classes or component props unless a one-off runtime value genuinely cannot be expressed otherwise.
+- Do not thread simple local form fields through pass-through JSX props or render-slot props like `companyField`. Put the field JSX directly inside the owning component.
+- Do not use `children` or `ReactNode` slots for simple form composition. If a shared form needs conditional fields, give it explicit boolean/data props and render the fields directly inside the shared component.
+- Do not add `enabled` or `refetchOnMount` to creator/query hooks unless the query truly must wait on a separate prerequisite. If the component already owns the interaction, call the hook directly and scope it with `url:`.
+- Do not define helper components inside another component file when they can stand on their own. If a field or subcomponent is reusable, put it in its own file instead of nesting it.
 - Do not use bare `<img>` tags in UI code. Use Ant `Image` with `preview={false}` or `Avatar` instead.
 - Use `Skeleton` for page-level loading states and `Spin` for localized/action loading states.
 - In browser-only frontend code, do not add `typeof window` or similar environment guards unless there is a concrete SSR/build-time requirement already present in the repo.

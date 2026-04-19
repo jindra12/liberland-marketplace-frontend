@@ -31,7 +31,13 @@ export const useCommentActions = (args: UseCommentActionsArgs): CommentActions =
     const onReplyAction = async (payload: CommentReplyPayload) => {
         const content = payload.text.trim();
         const repliedToCommentId = payload.repliedToCommentId;
-        if (!content || !repliedToCommentId || !args.replyToPost.relationTo || !args.replyToPost.value) {
+        if (
+            !content ||
+            !payload.company ||
+            !repliedToCommentId ||
+            !args.replyToPost.relationTo ||
+            !args.replyToPost.value
+        ) {
             return;
         }
 
@@ -43,6 +49,7 @@ export const useCommentActions = (args: UseCommentActionsArgs): CommentActions =
                       value: args.replyToPost.value,
                   },
                   parentCommentId: repliedToCommentId,
+                  company: payload.company,
                   content,
               }
             : {
@@ -51,6 +58,7 @@ export const useCommentActions = (args: UseCommentActionsArgs): CommentActions =
                       value: args.replyToPost.value,
                   },
                   parentCommentId: repliedToCommentId,
+                  company: payload.company,
                   content,
               };
 

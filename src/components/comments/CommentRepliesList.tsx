@@ -40,7 +40,6 @@ export const CommentRepliesList: React.FunctionComponent<CommentRepliesListProps
                         key={reply.id}
                         comment={reply}
                         currentUser={props.currentUser}
-                        isAnonymous={props.isAnonymous}
                         depth={1}
                         commentEditPlaceholder={props.commentEditPlaceholder}
                         commentReplyPlaceholder={props.commentReplyPlaceholder}

@@ -74,11 +74,12 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
                 relationTo: props.relationTo,
                 value: props.targetId,
             },
+            company: payload.company,
             content,
         });
         await refresh();
     };
-    
+
     return (
         <EntityCommentsSectionDisplay
             className={props.className}
@@ -91,6 +92,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             dislikeMutation={dislikeMutation}
             likeMutation={likeMutation}
             rootComments={accumulatedDocs}
+            serverURL={props.serverURL}
             onDeleteAction={commentActions.onDeleteAction}
             onEditAction={commentActions.onEditAction}
             onLoadMore={() => {

@@ -1,32 +1,38 @@
 import * as React from "react";
 
-import { CommentComposer } from "./CommentComposer";
+import { CommentComposerActions } from "./CommentComposerActions";
 import type { CommentReplyPayload } from "./types";
 
 type CommentReplyComposerProps = {
     commentId: string;
+    serverURL?: string | null;
     placeholder: string;
     onCancel: () => void;
     onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
 };
 
 export const CommentReplyComposer: React.FunctionComponent<CommentReplyComposerProps> = (props) => {
-    const handleSubmit = async (text: string) => {
-        await props.onReplyAction({
-            text,
-            repliedToCommentId: props.commentId,
-        });
-        props.onCancel();
-    };
-
     return (
-        <CommentComposer
+        <CommentComposerActions
             placeholder={props.placeholder}
             submitLabel="Reply"
+            serverURL={props.serverURL}
+            showCompanyField
             allowCancel
             cancelLabel="Cancel"
             onCancel={props.onCancel}
-            onSubmit={handleSubmit}
+            onSubmit={async (values) => {
+                if (!values.company) {
+                    return;
+                }
+
+                await props.onReplyAction({
+                    text: values.text,
+                    company: values.company,
+                    repliedToCommentId: props.commentId,
+                });
+                props.onCancel();
+            }}
         />
     );
 };

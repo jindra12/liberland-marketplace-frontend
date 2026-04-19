@@ -20,7 +20,20 @@ query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
         name
         email
       }
-      anonymousHash
+      company {
+        id
+        serverURL
+        name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
       replyPostRelationTo
       replyPostValue
       createdAt

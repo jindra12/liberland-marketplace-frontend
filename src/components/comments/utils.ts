@@ -14,6 +14,10 @@ const getCommentTimestamp = (comment: Pick<CommentThread, "updatedAt" | "created
 };
 
 export const getCommentDisplayName = (comment: CommentThread): string => {
+    if (comment.company?.name) {
+        return comment.company.name;
+    }
+
     if (comment.createdBy) {
         return comment.createdBy.name || comment.createdBy.email || comment.createdBy.id;
     }
@@ -21,7 +25,15 @@ export const getCommentDisplayName = (comment: CommentThread): string => {
     return ENTITY_COMMENTS_ANONYMOUS_NAME;
 };
 
-export const getCommentAvatarUrl = (): string => ENTITY_COMMENTS_DEFAULT_AVATAR_URL;
+const getCompanyAvatarUrl = (company: CommentThread["company"]): string => {
+    if (!company?.image?.url || !company.serverURL) {
+        return ENTITY_COMMENTS_DEFAULT_AVATAR_URL;
+    }
+
+    return new URL(company.image.url, company.serverURL).toString();
+};
+
+export const getCommentAvatarUrl = (comment: CommentThread): string => getCompanyAvatarUrl(comment.company);
 
 export const getCommentShareUrl = (commentId: string): string => `/comments/${commentId}`;
 

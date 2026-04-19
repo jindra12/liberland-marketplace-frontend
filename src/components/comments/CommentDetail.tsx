@@ -54,7 +54,6 @@ const CommentDetail: React.FunctionComponent = () => {
                     <CommentCard
                         comment={commentDetailState.comment}
                         currentUser={commentDetailState.currentUser}
-                        isAnonymous={commentDetailState.isAnonymous}
                         commentEditPlaceholder="Edit your comment..."
                         commentReplyPlaceholder="Write a reply..."
                         dislikeMutation={commentDetailState.dislikeMutation}
@@ -68,7 +67,6 @@ const CommentDetail: React.FunctionComponent = () => {
                             parentCommentId={commentDetailState.comment.id}
                             serverURL={commentDetailState.comment.serverUrl}
                             currentUser={commentDetailState.currentUser}
-                            isAnonymous={commentDetailState.isAnonymous}
                             commentEditPlaceholder="Edit your comment..."
                             commentReplyPlaceholder="Write a reply..."
                             dislikeMutation={commentDetailState.dislikeMutation}

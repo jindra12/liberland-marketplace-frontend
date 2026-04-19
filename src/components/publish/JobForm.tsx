@@ -70,6 +70,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
     const companiesQuery = useListCompaniesByCreatorQuery({
         userId,
         draft: true,
+        url: props.url,
     });
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<JobFormValues> = {

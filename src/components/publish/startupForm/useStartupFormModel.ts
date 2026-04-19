@@ -18,6 +18,7 @@ export const useStartupFormModel = (props: StartupFormProps) => {
     const companiesQuery = useListCompaniesByCreatorQuery({
         userId: auth.user?.profile?.sub,
         draft: true,
+        url: props.url,
     });
     const identitiesQuery = useListIdentitiesQuery({
         limit: 100,

@@ -40,6 +40,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
     const companiesQuery = useListCompaniesByCreatorQuery({
         userId,
         draft: true,
+        url: props.url,
     });
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<ProductFormValues> = {

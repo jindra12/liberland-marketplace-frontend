@@ -9,7 +9,20 @@ query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100, $page: In
                 name
                 email
             }
-            anonymousHash
+            company {
+                id
+                serverURL
+                name
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
             createdAt
             updatedAt
             likeCount

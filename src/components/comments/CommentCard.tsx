@@ -16,9 +16,9 @@ import {
 
 type CommentCardFormState = "idle" | "reply" | "edit";
 
-export const CommentCard: React.FunctionComponent<CommentCardProps & { children?: React.ReactNode }> = (props) => {
+export const CommentCard: React.FunctionComponent<React.PropsWithChildren<CommentCardProps>> = (props) => {
     const [formState, setFormState] = React.useState<CommentCardFormState>("idle");
-    const isOwned = isCommentOwnedByCurrentUser(props.comment, props.currentUser.currentUserId);
+    const canManageComment = isCommentOwnedByCurrentUser(props.comment, props.currentUser.currentUserId);
 
     const startReply = () => {
         setFormState("reply");
@@ -35,7 +35,12 @@ export const CommentCard: React.FunctionComponent<CommentCardProps & { children?
     return (
         <Flex vertical gap={12} className={["CommentCard", props.depth ? "CommentCard--reply" : undefined].filter(Boolean).join(" ")}>
             <Flex gap={12} align="start" className="CommentCard__header">
-                <Avatar shape="square" size={props.depth ? 36 : 48} src={getCommentAvatarUrl()} className="CommentCard__avatar" />
+                <Avatar
+                    shape="square"
+                    size={props.depth ? 36 : 48}
+                    src={getCommentAvatarUrl(props.comment)}
+                    className="CommentCard__avatar"
+                />
                 <Flex vertical gap={4} className="CommentCard__meta">
                     <Typography.Text className="CommentCard__author">{getCommentDisplayName(props.comment)}</Typography.Text>
                     {getCommentTimestampText(props.comment) && (
@@ -63,12 +68,12 @@ export const CommentCard: React.FunctionComponent<CommentCardProps & { children?
                 <Button type="text" onClick={() => props.onShare(props.comment.id)} className="CommentCard__actionBtn">
                     Share
                 </Button>
-                {isOwned && (
+                {canManageComment && (
                     <Button type="text" onClick={startEdit} className="CommentCard__actionBtn">
                         Edit
                     </Button>
                 )}
-                {isOwned && (
+                {canManageComment && (
                     <Button type="text" danger onClick={() => props.onDeleteAction({ comIdToDelete: props.comment.id })} className="CommentCard__actionBtn">
                         Delete
                     </Button>
@@ -77,6 +82,7 @@ export const CommentCard: React.FunctionComponent<CommentCardProps & { children?
             {formState === "reply" && (
                 <CommentReplyComposer
                     commentId={props.comment.id}
+                    serverURL={props.comment.serverUrl}
                     placeholder={props.commentReplyPlaceholder}
                     onCancel={resetForm}
                     onReplyAction={props.onReplyAction}

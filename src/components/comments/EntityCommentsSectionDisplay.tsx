@@ -11,7 +11,7 @@ import {
 } from "../../constants";
 
 import { CommentCard } from "./CommentCard";
-import { CommentComposer } from "./CommentComposer";
+import { CommentCreateComposer } from "./CommentCreateComposer";
 import { CommentRepliesList } from "./CommentRepliesList";
 import type { EntityCommentsSectionDisplayProps } from "./types";
 import { copyCommentLink } from "./utils";
@@ -64,12 +64,11 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                         </Space>
                     )}
                 </Flex>
-                <CommentComposer
+                <CommentCreateComposer
+                    serverURL={props.serverURL}
                     placeholder={ENTITY_COMMENTS_DEFAULT_PLACEHOLDER}
                     submitLabel="Comment"
-                    onSubmit={async (text) => {
-                        await props.onSubmitAction({ text });
-                    }}
+                    onSubmitAction={props.onSubmitAction}
                 />
             </Flex>
             <InfiniteScroll
@@ -96,7 +95,6 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                             key={comment.id}
                             comment={comment}
                             currentUser={props.currentUser}
-                            isAnonymous={props.isAnonymous}
                             commentEditPlaceholder={ENTITY_COMMENTS_EDIT_PLACEHOLDER}
                             commentReplyPlaceholder={ENTITY_COMMENTS_REPLY_PLACEHOLDER}
                             dislikeMutation={props.dislikeMutation}
@@ -106,12 +104,11 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                             onReplyAction={props.onReplyAction}
                             onShare={handleShare}
                         >
-                        <CommentRepliesList
-                            parentCommentId={comment.id}
-                            serverURL={comment.serverUrl}
-                            currentUser={props.currentUser}
-                            isAnonymous={props.isAnonymous}
-                            commentEditPlaceholder={ENTITY_COMMENTS_EDIT_PLACEHOLDER}
+                            <CommentRepliesList
+                                parentCommentId={comment.id}
+                                serverURL={comment.serverUrl}
+                                currentUser={props.currentUser}
+                                commentEditPlaceholder={ENTITY_COMMENTS_EDIT_PLACEHOLDER}
                                 commentReplyPlaceholder={ENTITY_COMMENTS_REPLY_PLACEHOLDER}
                                 dislikeMutation={props.dislikeMutation}
                                 likeMutation={props.likeMutation}

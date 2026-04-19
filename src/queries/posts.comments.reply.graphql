@@ -1,11 +1,26 @@
 mutation CreatePostReplyComment(
   $replyToPost: Comment_ReplyPostRelationshipInput!
+  $company: String!
   $parentCommentId: String!
   $content: String!
 ) {
-  createComment(data: { content: $content, replyPost: $replyToPost, replyComment: $parentCommentId }) {
+  createComment(data: { content: $content, company: $company, replyPost: $replyToPost, replyComment: $parentCommentId }) {
     id
     content
+    company {
+      id
+      serverURL
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
     replyComment {
       id
     }
@@ -14,7 +29,6 @@ mutation CreatePostReplyComment(
       name
       email
     }
-    anonymousHash
     createdAt
   }
 }
