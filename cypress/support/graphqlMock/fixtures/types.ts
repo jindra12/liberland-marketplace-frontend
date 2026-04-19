@@ -1,4 +1,4 @@
-import type { Cart, Comment, Company, Identity, Job, MeUserQuery, Order, Post, Product, Startup, Syndication } from "../../../../src/generated/graphql";
+import type { Cart, Comment, Company, Identity, Job, Order, Post, Product, Startup, Syndication, User } from "../../../../src/generated/graphql";
 
 export type GraphQLFixtureBundle = {
     identities: Identity[];
@@ -11,5 +11,5 @@ export type GraphQLFixtureBundle = {
     syndications: Syndication[];
     carts: Cart[];
     orders: Order[];
-    meUser: NonNullable<MeUserQuery["meUser"]>;
+    meUser: { user: User };
 };

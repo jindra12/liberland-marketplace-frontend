@@ -3,7 +3,7 @@ import type { GraphQLRequestBody } from "./runtimeState";
 import type { MockCollection, MockNode } from "./types";
 import { buildMockImageNode } from "./imageAssets";
 
-const includes = (value: string | undefined, term: string | undefined): boolean => {
+const includes = (value: string | null | undefined, term: string | null | undefined): boolean => {
     if (!term) {
         return true;
     }
@@ -33,20 +33,21 @@ export const createUserRef = (userId: string | undefined): MockNode | null => {
     }
 
     if (activeFixtures.meUser.user?.id === userId) {
-        return cloneValue(activeFixtures.meUser.user);
+        return { ...cloneValue(activeFixtures.meUser.user), __typename: "User" };
     }
 
     const identity = activeFixtures.identities.find((item) => item.id === userId);
     if (identity) {
         return searchNode({
-            __typename: "Identity",
+            __typename: "User",
             id: identity.id,
             name: identity.name,
-            email: identity.email,
+            email: `${identity.id}@example.test`,
+            emailVerified: true,
         });
     }
 
-    return searchNode({ __typename: "Identity", id: userId });
+    return searchNode({ __typename: "User", id: userId, name: userId, email: `${userId}@example.test`, emailVerified: true });
 };
 
 export const createCompanyRef = (companyId: string | undefined): MockNode | null => {

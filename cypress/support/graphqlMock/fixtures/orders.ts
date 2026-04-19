@@ -1,21 +1,21 @@
-import { identities } from "./identities";
-import { companies } from "./companies";
 import { products } from "./catalog";
+import { meUser } from "./meUser";
+import { Order_CryptoPrices_Chain, Order_Currency, Order_Status, Order_TransactionHashes_Chain, Transaction_Status } from "../../../../src/generated/graphql";
 import type { Order } from "../../../../src/generated/graphql";
 
 export const orders: Order[] = [
     {
         id: "order-alpha",
-        status: "awaiting-payment",
+        status: Order_Status.Processing,
         payerAddress: "SoOrderAlpha1515",
-        customer: { id: identities[2].id },
-        transactions: [{ id: "tx-alpha-1" }, { id: "tx-alpha-2" }],
+        customer: meUser.user!,
+        transactions: [{ id: "tx-alpha-1", status: Transaction_Status.Pending }, { id: "tx-alpha-2", status: Transaction_Status.Pending }],
         cryptoPrices: [
             {
                 id: "crypto-price-1",
-                chain: "solana",
+                chain: Order_CryptoPrices_Chain.Solana,
                 stablePerNative: 19,
-                nativePerStable: 0.0526315,
+                nativePerStable: "0.0526315",
                 expectedNativeAmount: "4.250000000",
                 fetchedAt: "2025-02-10T12:00:00.000Z",
             },
@@ -23,31 +23,22 @@ export const orders: Order[] = [
         transactionHashes: [
             {
                 id: "hash-alpha-1",
-                chain: "solana",
+                chain: Order_TransactionHashes_Chain.Solana,
                 transactionHash: "solana-tx-alpha-1",
-                product: { id: products[0].id },
+                product: products[0],
             },
         ],
-        currency: "USD",
+        currency: Order_Currency.Usd,
         amount: 267,
-        customerEmail: identities[2].email,
+        customerEmail: meUser.user!.email,
         createdAt: "2025-02-10T12:00:00.000Z",
         updatedAt: "2025-02-10T12:05:00.000Z",
         items: [
             {
                 id: "order-alpha-item-1",
                 quantity: 2,
-                product: {
-                    id: products[0].id,
-                    serverURL: products[0].serverURL,
-                    name: products[0].name,
-                    priceInETH: products[0].priceInETH,
-                    priceInSOL: products[0].priceInSOL,
-                    priceInTRX: products[0].priceInTRX,
-                    cryptoAddresses: products[0].cryptoAddresses,
-                    company: { id: companies[0].id, cryptoAddresses: companies[0].cryptoAddresses },
-                },
-                variant: { id: products[0].variants?.docs[0]?.id, title: products[0].variants?.docs[0]?.title },
+                product: products[0],
+                variant: products[0].variants?.docs[0]!,
             },
         ],
         shippingAddress: {
@@ -66,16 +57,16 @@ export const orders: Order[] = [
     },
     {
         id: "order-beta",
-        status: "paid",
+        status: Order_Status.Completed,
         payerAddress: "0xOrderBeta1616",
-        customer: { id: identities[0].id },
-        transactions: [{ id: "tx-beta-1" }],
+        customer: meUser.user!,
+        transactions: [{ id: "tx-beta-1", status: Transaction_Status.Succeeded }],
         cryptoPrices: [
             {
                 id: "crypto-price-2",
-                chain: "ethereum",
+                chain: Order_CryptoPrices_Chain.Ethereum,
                 stablePerNative: 2050,
-                nativePerStable: 0.0004878,
+                nativePerStable: "0.0004878",
                 expectedNativeAmount: "0.160000000",
                 fetchedAt: "2025-02-11T12:00:00.000Z",
             },
@@ -83,30 +74,21 @@ export const orders: Order[] = [
         transactionHashes: [
             {
                 id: "hash-beta-1",
-                chain: "ethereum",
+                chain: Order_TransactionHashes_Chain.Ethereum,
                 transactionHash: "eth-tx-beta-1",
-                product: { id: products[3].id },
+                product: products[3],
             },
         ],
-        currency: "USD",
+        currency: Order_Currency.Usd,
         amount: 84,
-        customerEmail: identities[0].email,
+        customerEmail: meUser.user!.email,
         createdAt: "2025-02-11T12:00:00.000Z",
         updatedAt: "2025-02-11T12:05:00.000Z",
         items: [
             {
                 id: "order-beta-item-1",
                 quantity: 4,
-                product: {
-                    id: products[3].id,
-                    serverURL: products[3].serverURL,
-                    name: products[3].name,
-                    priceInETH: products[3].priceInETH,
-                    priceInSOL: products[3].priceInSOL,
-                    priceInTRX: products[3].priceInTRX,
-                    cryptoAddresses: products[3].cryptoAddresses,
-                    company: { id: companies[3].id, cryptoAddresses: companies[3].cryptoAddresses },
-                },
+                product: products[3],
             },
         ],
         shippingAddress: {

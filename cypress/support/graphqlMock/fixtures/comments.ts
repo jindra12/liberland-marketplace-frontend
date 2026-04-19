@@ -1,15 +1,18 @@
 import { companies } from "./companies";
 import { identities } from "./identities";
 import { startups } from "./startups";
+import { meUser } from "./meUser";
+import { Comment_ReplyPost_RelationTo } from "../../../../src/generated/graphql";
 import type { Comment } from "../../../../src/generated/graphql";
 
 export const comments: Comment[] = [
     {
         id: "comment-post-harbor-1",
         content: "Harbor Operations Digest keeps the team aligned.",
-        createdBy: identities[0],
-        anonymousHash: "anon-harbor-post-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[0].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Posts, value: null },
         replyPostRelationTo: "posts",
         replyPostValue: "post-harbor-operations-digest",
         createdAt: "2025-03-01T10:00:00.000Z",
@@ -18,9 +21,10 @@ export const comments: Comment[] = [
     {
         id: "comment-company-harbor-1",
         content: "Harbor Labs has strong logistics.",
-        createdBy: identities[2],
-        anonymousHash: "anon-harbor-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[2].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Companies, value: companies[0] },
         replyPostRelationTo: "companies",
         replyPostValue: companies[0].id,
         createdAt: "2025-01-03T10:00:00.000Z",
@@ -29,9 +33,10 @@ export const comments: Comment[] = [
     {
         id: "comment-company-reef-1",
         content: "Reef Studio looks premium.",
-        createdBy: identities[0],
-        anonymousHash: "anon-reef-1",
+        company: companies[1],
+        createdBy: meUser.user!,
         serverUrl: identities[0].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Companies, value: companies[1] },
         replyPostRelationTo: "companies",
         replyPostValue: companies[1].id,
         createdAt: "2025-01-04T10:00:00.000Z",
@@ -40,9 +45,10 @@ export const comments: Comment[] = [
     {
         id: "comment-job-dockmaster-1",
         content: "Dockmaster keeps Harbor Labs moving.",
-        createdBy: identities[1],
-        anonymousHash: "anon-dockmaster-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[1].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Jobs, value: null },
         replyPostRelationTo: "jobs",
         replyPostValue: "job-dockmaster",
         createdAt: "2025-01-04T11:00:00.000Z",
@@ -51,9 +57,10 @@ export const comments: Comment[] = [
     {
         id: "comment-product-solar-1",
         content: "Keep the Solar Widget unlimited.",
-        createdBy: identities[3],
-        anonymousHash: "anon-solar-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[3].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Products, value: null },
         replyPostRelationTo: "products",
         replyPostValue: "product-solar-widget",
         createdAt: "2025-01-05T10:00:00.000Z",
@@ -62,9 +69,10 @@ export const comments: Comment[] = [
     {
         id: "comment-product-moon-1",
         content: "Moon Lamp looks sharp on the shelf.",
-        createdBy: identities[1],
-        anonymousHash: "anon-moon-1",
+        company: companies[1],
+        createdBy: meUser.user!,
         serverUrl: identities[1].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Products, value: null },
         replyPostRelationTo: "products",
         replyPostValue: "product-moon-lamp",
         createdAt: "2025-01-06T10:00:00.000Z",
@@ -73,9 +81,10 @@ export const comments: Comment[] = [
     {
         id: "comment-startup-sky-1",
         content: "Sky Relay could use more testers.",
-        createdBy: identities[4],
-        anonymousHash: "anon-startup-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[4].serverURL,
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Startups, value: startups[0] },
         replyPostRelationTo: "startups",
         replyPostValue: startups[0].id,
         createdAt: "2025-01-07T10:00:00.000Z",
@@ -84,11 +93,17 @@ export const comments: Comment[] = [
     {
         id: "comment-reply-1",
         content: "Replying to the Sky Relay thread.",
-        createdBy: identities[0],
-        anonymousHash: "anon-reply-1",
+        company: companies[0],
+        createdBy: meUser.user!,
         serverUrl: identities[0].serverURL,
-        replyComment: { id: "comment-startup-sky-1" },
-        replyPost: { relationTo: "startups" },
+        replyComment: {
+            id: "comment-startup-sky-1",
+            company: companies[0],
+            content: "Sky Relay could use more testers.",
+            createdBy: meUser.user!,
+            replyPost: { relationTo: Comment_ReplyPost_RelationTo.Startups, value: startups[0] },
+        },
+        replyPost: { relationTo: Comment_ReplyPost_RelationTo.Startups, value: startups[0] },
         createdAt: "2025-01-07T11:00:00.000Z",
         updatedAt: "2025-01-07T11:00:00.000Z",
     },

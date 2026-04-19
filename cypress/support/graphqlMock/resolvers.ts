@@ -45,7 +45,7 @@ const getFixturesForContext = (context: unknown) => {
     return getGraphQLFixturesForHost(host);
 };
 
-const matchesSearch = (value: string | undefined, term: string | undefined): boolean => {
+const matchesSearch = (value: string | null | undefined, term: string | null | undefined): boolean => {
     if (!term) {
         return true;
     }
@@ -219,9 +219,6 @@ export const mutationResolvers = {
     createPost: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizePostData(data);
-        if (data.serverURL === undefined) {
-            data.serverURL = activeFixtures.posts[0]?.serverURL;
-        }
         if (data.createdBy === undefined) {
             data.createdBy = cloneValue(activeFixtures.meUser.user);
         }
@@ -292,12 +289,12 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         normalizeOrderData(data);
         if (data.status === undefined) {
-            data.status = "awaiting-payment";
+            data.status = "processing";
         }
 
         const order = createNode(activeFixtures.orders, "order", data);
         const orderWithCustomerEmail = order as MockNode & { customerEmail?: string };
-        if (orderWithCustomerEmail.customerEmail === undefined && order.customer?.email !== undefined) {
+        if (orderWithCustomerEmail.customerEmail === undefined && typeof order.customer?.email === "string") {
             orderWithCustomerEmail.customerEmail = order.customer.email;
         }
         return order;

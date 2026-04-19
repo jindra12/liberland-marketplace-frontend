@@ -1,4 +1,5 @@
 import { image, MAIN_SYNDICATION_URL } from "./shared";
+import { meUser } from "./meUser";
 import type { Identity } from "../../../../src/generated/graphql";
 
 export const identities: Identity[] = [
@@ -7,7 +8,7 @@ export const identities: Identity[] = [
         name: "Nova Rivers",
         description: "Harbor logistics lead",
         website: "https://nova.example",
-        email: "nova@example.test",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         image: image("identity-nova", "Nova Rivers"),
     },
@@ -16,7 +17,7 @@ export const identities: Identity[] = [
         name: "Atlas Pike",
         description: "Product explorer",
         website: "https://atlas.example",
-        email: "atlas@example.test",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         image: image("identity-atlas", "Atlas Pike"),
     },
@@ -25,7 +26,7 @@ export const identities: Identity[] = [
         name: "Mira Vale",
         description: "Community operator",
         website: "https://mira.example",
-        email: "mira@example.test",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         image: image("identity-mira", "Mira Vale"),
     },
@@ -34,7 +35,7 @@ export const identities: Identity[] = [
         name: "Orion Swift",
         description: "Shipwright",
         website: "https://orion.example",
-        email: "orion@example.test",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         image: image("identity-orion", "Orion Swift"),
     },
@@ -43,7 +44,7 @@ export const identities: Identity[] = [
         name: "Sage Bloom",
         description: "Independent maker",
         website: "https://sage.example",
-        email: "sage@example.test",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         image: image("identity-sage", "Sage Bloom"),
     },
@@ -52,7 +53,7 @@ export const identities: Identity[] = [
         name: "Fourfold Harbor",
         description: "Identity with four companies",
         website: "https://fourfold.example",
-        email: "hello@fourfold.example",
+        createdBy: meUser.user!,
         serverURL: MAIN_SYNDICATION_URL,
         itemCount: 4,
         image: image("identity-fourfold", "Fourfold Harbor"),
