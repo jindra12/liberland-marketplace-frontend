@@ -109,12 +109,14 @@ manager is `yarn`.
 - Do not add impossible-state guards when the surrounding UI flow already prevents that state. If a screen, button state, or parent guard guarantees the condition, trust it instead of adding extra branches like empty-cart submit checks.
 - Never hand-write local module declarations for third-party packages until you have checked whether the package ships its own types or has an `@types/*` package. Prefer the published types over local `.d.ts` shims.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
+- When the user asks you to add types to something, use the most concrete domain types the code can support. Do not satisfy the request with the broadest generic type that happens to compile.
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
 - Do not introduce boolean constants that are always `true` or `false`, and do not add CSS modifier classes for dead branches. Use the actual condition or remove the branch entirely.
+- If you do not know how to solve a problem, or the fix is becoming speculative, stop and tell the user instead of guessing, making broad changes, or altering unrelated app code.
 - Payment wallet preferences are advisory only. In Solana, Thirdweb, and Tron payment components, never block or hide payment solely because the connected wallet does not match `preferredWallet`; users must be able to complete payment with any connected wallet.
 - If a component has three conditional branches for rendering or behavior, replace the chain with `switch` instead of a triple `if`; if the logic is getting bulky, split out a small component instead of piling more branches into one file.
-- Only do what the user explicitly asked for. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
+- Only do what the user explicitly asked. Do not add extra behavior, side effects, refactors, or "improvements" unless they were requested too. If an existing rule already covers the request, restate or adapt that rule instead of inventing a new approach that changes the task.
 - Never duplicate helper methods. If a helper is needed in more than one place, extract it to a single shared utility and import it from there.
 - If the user tells you not to do something, do not work around it with an indirect command or alternate path; follow the instruction directly or stop and explain the blocker.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
@@ -138,3 +140,4 @@ manager is `yarn`.
 - Do not edit `deepMergeConcatArrays` in `src/components/query/utils.ts` unless the user explicitly asks for changes there.
 - Do not touch the backend repo or backend files from this frontend workspace unless the user explicitly asks for backend changes.
 - Do not override or "clean up" component changes that the user made unless the user explicitly asks you to change that component. If a component file has user-authored edits, stop and preserve them instead of rewriting the component for convenience.
+- If something consumes too much RAM memory, treat it first as a likely implementation bug or a bug in the tests, not as a signal to allocate more memory.

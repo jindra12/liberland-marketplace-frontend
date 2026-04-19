@@ -4,6 +4,7 @@ import {
     activeFixtures,
     cloneValue,
     createNode,
+    getGraphQLFixturesForHost,
     mergeInto,
     nextNodeId,
     notificationSubscriptions,
@@ -25,6 +26,24 @@ import {
     normalizeUserData,
 } from "./normalizers";
 import type { MockCollection, MockNode } from "./types";
+
+type GraphQLRequestContext = {
+    cypress?: {
+        request?: {
+            url?: string;
+        };
+    };
+};
+
+const getFixturesForContext = (context: unknown) => {
+    const requestUrl = (context as GraphQLRequestContext | undefined)?.cypress?.request?.url;
+    if (!requestUrl) {
+        return activeFixtures;
+    }
+
+    const host = new URL(requestUrl).host;
+    return getGraphQLFixturesForHost(host);
+};
 
 const matchesSearch = (value: string | undefined, term: string | undefined): boolean => {
     if (!term) {
@@ -95,19 +114,42 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.identities.filter((identity) => matchesSearch(identity.name, args.searchTerm) || matchesSearch(identity.description, args.searchTerm)) : activeFixtures.identities;
         return resolveCollection(filtered, args);
     },
-    Comments: (_parent: unknown, args: { limit?: number; where?: { replyPostRelationTo?: { equals?: string }; replyPostValue?: { equals?: string }; replyComment?: { equals?: string; exists?: boolean } } }): MockCollection => {
-        const filtered = activeFixtures.comments.filter((comment) => {
+    Comments: (
+        _parent: unknown,
+        args: {
+            limit?: number;
+            where?: {
+                AND?: Array<{
+                    replyPostRelationTo?: { equals?: string };
+                    replyPostValue?: { equals?: string };
+                    replyComment?: { equals?: string; exists?: boolean };
+                }>;
+                replyPostRelationTo?: { equals?: string };
+                replyPostValue?: { equals?: string };
+                replyComment?: { equals?: string; exists?: boolean };
+            };
+        },
+        context: unknown,
+    ): MockCollection => {
+        const fixtures = getFixturesForContext(context);
+        const conditions = Array.isArray(args.where?.AND) ? args.where.AND : [args.where];
+        const filtered = fixtures.comments.filter((comment) => {
             ensureCommentState(comment);
-            if (args.where?.replyComment?.equals) {
-                return comment.replyComment?.id === args.where.replyComment.equals;
-            }
-            if (args.where?.replyComment?.exists === false) {
-                return !comment.replyComment?.id;
-            }
-            if (args.where?.replyPostRelationTo?.equals && args.where.replyPostValue?.equals) {
-                return comment.replyPostRelationTo === args.where.replyPostRelationTo.equals && comment.replyPostValue === args.where.replyPostValue.equals;
-            }
-            return true;
+            return conditions.every((condition) => {
+                if (!condition) {
+                    return true;
+                }
+                if (condition.replyComment?.equals) {
+                    return comment.replyComment?.id === condition.replyComment.equals;
+                }
+                if (condition.replyComment?.exists === false) {
+                    return !comment.replyComment?.id;
+                }
+                if (condition.replyPostRelationTo?.equals && condition.replyPostValue?.equals) {
+                    return comment.replyPostRelationTo === condition.replyPostRelationTo.equals && comment.replyPostValue === condition.replyPostValue.equals;
+                }
+                return true;
+            });
         });
         return resolveCollection(filtered, args);
     },
@@ -268,6 +310,9 @@ export const mutationResolvers = {
     createComment: (_parent: unknown, args: { data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeCommentData(data);
+        if (data.serverUrl === undefined) {
+            data.serverUrl = activeFixtures.comments[0]?.serverUrl;
+        }
         if (data.createdBy === undefined) {
             data.createdBy = cloneValue(activeFixtures.meUser.user);
         }

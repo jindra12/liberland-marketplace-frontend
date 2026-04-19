@@ -258,6 +258,7 @@ export const graphqlSchema = buildSchema(`
         description: JSON
         slug: JSON
         serverURL: JSON
+        serverUrl: JSON
         _status: JSON
         website: JSON
         phone: JSON

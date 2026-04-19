@@ -1,10 +1,10 @@
-import type { MockNode } from "./types";
+import type { FixtureMedia } from "./fixtures/types";
 
 const IMAGE_ORIGIN = "http://localhost:8080";
 
 export type MockImageKind = "avatar" | "hero";
 
-export const buildMockImageNode = (id: string, alt: string, kind: MockImageKind = "avatar"): MockNode => {
+export const buildMockImageNode = (id: string, alt: string, kind: MockImageKind = "avatar"): FixtureMedia => {
     const isHero = kind === "hero";
 
     return {

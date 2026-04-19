@@ -1,13 +1,26 @@
-import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
+import type { MockCollection } from "./types";
+import type {
+    FixtureCart,
+    FixtureComment,
+    FixtureCompany,
+    FixtureIdentity,
+    FixtureJob,
+    FixtureMeUser,
+    FixtureMedia,
+    FixtureOrder,
+    FixturePost,
+    FixtureProduct,
+    FixtureStartup,
+    FixtureSyndication,
+    GraphQLFixtureBundle,
+} from "./fixtures/types";
 import { buildMockImageNode } from "./imageAssets";
 
 const COOP_SYNDICATION_URL = "http://127.0.0.1:3011";
 
-const node = (value: Record<string, unknown>): MockNode => value as MockNode;
+const image = (id: string, alt: string): FixtureMedia => buildMockImageNode(id, alt, id.startsWith("coop-post-") ? "hero" : "avatar");
 
-const image = (id: string, alt: string): MockNode => buildMockImageNode(id, alt, id.startsWith("coop-post-") ? "hero" : "avatar");
-
-const collection = (docs: MockNode[]): MockCollection => ({
+const collection = <T>(docs: T[]): MockCollection<T> => ({
     docs,
     totalDocs: docs.length,
     limit: docs.length,
@@ -20,7 +33,7 @@ const collection = (docs: MockNode[]): MockCollection => ({
 });
 
 const identities = [
-    node({
+    {
         id: "coop-identity-iris",
         name: "Iris Shore",
         description: "Shipping coordinator",
@@ -28,8 +41,8 @@ const identities = [
         email: "iris@example.test",
         serverURL: COOP_SYNDICATION_URL,
         image: image("coop-identity-iris", "Iris Shore"),
-    }),
-    node({
+    },
+    {
         id: "coop-identity-luca",
         name: "Luca Vale",
         description: "Community builder",
@@ -37,8 +50,8 @@ const identities = [
         email: "luca@example.test",
         serverURL: COOP_SYNDICATION_URL,
         image: image("coop-identity-luca", "Luca Vale"),
-    }),
-    node({
+    },
+    {
         id: "coop-identity-rhea",
         name: "Rhea Moss",
         description: "Operations lead",
@@ -46,11 +59,11 @@ const identities = [
         email: "rhea@example.test",
         serverURL: COOP_SYNDICATION_URL,
         image: image("coop-identity-rhea", "Rhea Moss"),
-    }),
-];
+    },
+] satisfies FixtureIdentity[];
 
 const companies = [
-    node({
+    {
         id: "coop-company-helix-harbor",
         name: "Helix Harbor",
         description: "Cooperative logistics and export tools",
@@ -64,10 +77,10 @@ const companies = [
         identity: identities[0],
         allowedIdentities: [identities[0], identities[2]],
         disallowedIdentities: [identities[1]],
-        cryptoAddresses: [node({ chain: "solana", address: "SoHelix510" })],
+        cryptoAddresses: [{ chain: "solana", address: "SoHelix510" }],
         image: image("coop-company-helix-harbor", "Helix Harbor"),
-    }),
-    node({
+    },
+    {
         id: "coop-company-salt-works",
         name: "Salt Works",
         description: "Lightweight design and production",
@@ -81,10 +94,10 @@ const companies = [
         identity: identities[1],
         allowedIdentities: [identities[1]],
         disallowedIdentities: [identities[2]],
-        cryptoAddresses: [node({ chain: "ethereum", address: "0xSalt520" })],
+        cryptoAddresses: [{ chain: "ethereum", address: "0xSalt520" }],
         image: image("coop-company-salt-works", "Salt Works"),
-    }),
-    node({
+    },
+    {
         id: "coop-company-harbor-ether",
         name: "Harbor Ether",
         description: "Co-op vendor with the shared Ethereum address",
@@ -98,13 +111,13 @@ const companies = [
         identity: identities[0],
         allowedIdentities: [identities[0]],
         disallowedIdentities: [identities[1]],
-        cryptoAddresses: [node({ chain: "ethereum", address: "0xHarbor111" })],
+        cryptoAddresses: [{ chain: "ethereum", address: "0xHarbor111" }],
         image: image("coop-company-harbor-ether", "Harbor Ether"),
-    }),
-];
+    },
+] satisfies FixtureCompany[];
 
 const products = [
-    node({
+    {
         id: "coop-product-lighthouse-kit",
         name: "Lighthouse Kit",
         description: "Unlimited navigation hardware",
@@ -121,14 +134,14 @@ const products = [
         priceInETH: 0.027,
         priceInSOL: 1.1,
         priceInTRX: 141,
-        cryptoAddresses: [node({ chain: "solana", address: "SoLight620" })],
+        cryptoAddresses: [{ chain: "solana", address: "SoLight620" }],
         variantTypes: [],
         variants: collection([]),
-        properties: [node({ id: "coop-product-prop-1", key: "finish", value: "matte" })],
+        properties: [{ id: "coop-product-prop-1", key: "finish", value: "matte" }],
         image: image("coop-product-lighthouse-kit", "Lighthouse Kit"),
         company: companies[0],
-    }),
-    node({
+    },
+    {
         id: "coop-product-tide-lamp",
         name: "Tide Lamp",
         description: "Limited batch desk lamp",
@@ -145,30 +158,30 @@ const products = [
         priceInETH: 0.041,
         priceInSOL: 1.7,
         priceInTRX: 208,
-        cryptoAddresses: [node({ chain: "tron", address: "TTide630" })],
-        variantTypes: [node({ id: "coop-variant-size", name: "size", label: "Size" })],
+        cryptoAddresses: [{ chain: "tron", address: "TTide630" }],
+        variantTypes: [{ id: "coop-variant-size", name: "size", label: "Size" }],
         variants: collection([
-            node({
+            {
                 id: "coop-tide-lamp-mini",
                 title: "Mini",
                 inventory: 2,
                 priceInUSDEnabled: true,
                 priceInUSD: 89,
                 options: [
-                    node({
+                    {
                         id: "coop-tide-lamp-mini-size",
                         label: "Size",
                         value: "Mini",
-                        variantType: node({ id: "coop-variant-size", name: "size" }),
-                    }),
+                        variantType: { id: "coop-variant-size", name: "size", label: "Size" },
+                    },
                 ],
-            }),
+            },
         ]),
-        properties: [node({ id: "coop-product-prop-2", key: "theme", value: "dawn" })],
+        properties: [{ id: "coop-product-prop-2", key: "theme", value: "dawn" }],
         image: image("coop-product-tide-lamp", "Tide Lamp"),
         company: companies[1],
-    }),
-    node({
+    },
+    {
         id: "coop-product-harbor-ether-lantern",
         name: "Harbor Ether Lantern",
         description: "Ethereum product from the co-op server",
@@ -188,14 +201,14 @@ const products = [
         cryptoAddresses: null,
         variantTypes: [],
         variants: collection([]),
-        properties: [node({ id: "coop-harbor-ether-lantern-prop", key: "mount", value: "desktop" })],
+        properties: [{ id: "coop-harbor-ether-lantern-prop", key: "mount", value: "desktop" }],
         image: image("coop-product-harbor-ether-lantern", "Harbor Ether Lantern"),
         company: companies[2],
-    }),
-];
+    },
+] satisfies FixtureProduct[];
 
 const jobs = [
-    node({
+    {
         id: "coop-job-dock-foreman",
         title: "Dock Foreman",
         description: "Coordinate cooperative freight and loading",
@@ -204,19 +217,19 @@ const jobs = [
         isSubscribed: true,
         url: "/jobs/dock-foreman",
         positions: 1,
-        salaryRange: node({ min: 3400, max: 4200, currency: "USD" }),
+        salaryRange: { min: 3400, max: 4200, currency: "USD" },
         employmentType: "full_time",
         applyUrl: "https://helix.example/apply/dock-foreman",
         location: "North Port",
-        bounty: node({ amount: 1600, currency: "USD" }),
+        bounty: { amount: 1600, currency: "USD" },
         company: companies[0],
         createdBy: identities[0],
         allowedIdentities: [identities[0], identities[2]],
         disallowedIdentities: [identities[1]],
-        cryptoAddresses: [node({ chain: "solana", address: "SoDockForeman630" })],
+        cryptoAddresses: [{ chain: "solana", address: "SoDockForeman630" }],
         image: image("coop-job-dock-foreman", "Dock Foreman"),
-    }),
-    node({
+    },
+    {
         id: "coop-job-product-steward",
         title: "Product Steward",
         description: "Shape the cooperative product line",
@@ -225,22 +238,22 @@ const jobs = [
         isSubscribed: false,
         url: "/jobs/product-steward",
         positions: 2,
-        salaryRange: node({ min: 4700, max: 5400, currency: "USD" }),
+        salaryRange: { min: 4700, max: 5400, currency: "USD" },
         employmentType: "contract",
         applyUrl: "https://salt.example/apply/product-steward",
         location: "Remote",
-        bounty: node({ amount: 1900, currency: "USD" }),
+        bounty: { amount: 1900, currency: "USD" },
         company: companies[1],
         createdBy: identities[1],
         allowedIdentities: [identities[1]],
         disallowedIdentities: [identities[0]],
-        cryptoAddresses: [node({ chain: "ethereum", address: "0xSteward640" })],
+        cryptoAddresses: [{ chain: "ethereum", address: "0xSteward640" }],
         image: image("coop-job-product-steward", "Product Steward"),
-    }),
-];
+    },
+] satisfies FixtureJob[];
 
 const startups = [
-    node({
+    {
         id: "coop-startup-reef-signal",
         title: "Reef Signal",
         description: "Signals for better shipment handoff",
@@ -251,15 +264,15 @@ const startups = [
         location: "Harbor",
         lookingFor: ["founders"],
         alreadyHave: ["product"],
-        fundsNeeded: node({ amount: 30000, currency: "USD" }),
+        fundsNeeded: { amount: 30000, currency: "USD" },
         applyUrl: "https://reef.example/apply",
         company: companies[0],
         createdBy: identities[0],
         involvedUsers: [identities[0], identities[2]],
-        cryptoAddresses: [node({ chain: "solana", address: "SoReefSignal650" })],
+        cryptoAddresses: [{ chain: "solana", address: "SoReefSignal650" }],
         image: image("coop-startup-reef-signal", "Reef Signal"),
-    }),
-    node({
+    },
+    {
         id: "coop-startup-salt-bridge",
         title: "Salt Bridge",
         description: "Bridge software for the co-op",
@@ -270,18 +283,18 @@ const startups = [
         location: "Distributed",
         lookingFor: ["distribution"],
         alreadyHave: ["team"],
-        fundsNeeded: node({ amount: 18000, currency: "USD" }),
+        fundsNeeded: { amount: 18000, currency: "USD" },
         applyUrl: "https://salt.example/apply",
         company: companies[1],
         createdBy: identities[1],
         involvedUsers: [identities[1]],
-        cryptoAddresses: [node({ chain: "tron", address: "TSaltBridge660" })],
+        cryptoAddresses: [{ chain: "tron", address: "TSaltBridge660" }],
         image: image("coop-startup-salt-bridge", "Salt Bridge"),
-    }),
-];
+    },
+] satisfies FixtureStartup[];
 
 const posts = [
-    node({
+    {
         id: "coop-post-coop-logistics-roundup",
         title: "Co-op Logistics Roundup",
         slug: "coop-logistics-roundup",
@@ -292,27 +305,28 @@ const posts = [
         isSubscribed: true,
         company: companies[0],
         heroImage: image("coop-post-coop-logistics-roundup", "Co-op Logistics Roundup"),
-        meta: node({
+        meta: {
             title: "Co-op Logistics Roundup",
             description: "Weekly logistics changes from the co-op server",
             image: image("coop-post-coop-logistics-roundup-meta", "Co-op Logistics Roundup meta"),
-        }),
-        categories: [node({ id: "coop-category-announcements", title: "Announcements", slug: "announcements" })],
+        },
+        categories: [{ id: "coop-category-announcements", title: "Announcements", slug: "announcements" }],
         populatedAuthors: [
-            node({
+            {
                 id: identities[0].id,
                 nickname: identities[0].name,
                 image: identities[0].image,
-            }),
+            },
         ],
+        createdBy: { id: identities[0].id, name: identities[0].name, email: identities[0].email },
         hasLiked: false,
         likeCount: 9,
         publishedAt: "2025-03-05T09:00:00.000Z",
         createdAt: "2025-03-04T09:00:00.000Z",
         updatedAt: "2025-03-05T09:15:00.000Z",
         contentRankScore: 170,
-    }),
-    node({
+    },
+    {
         id: "coop-post-field-notes",
         title: "Field Notes",
         slug: "field-notes",
@@ -323,72 +337,80 @@ const posts = [
         isSubscribed: false,
         company: companies[1],
         heroImage: image("coop-post-field-notes", "Field Notes"),
-        meta: node({
+        meta: {
             title: "Field Notes",
             description: "A lighter note from the field",
             image: image("coop-post-field-notes-meta", "Field Notes meta"),
-        }),
-        categories: [node({ id: "coop-category-field-notes", title: "Field Notes", slug: "field-notes" })],
+        },
+        categories: [{ id: "coop-category-field-notes", title: "Field Notes", slug: "field-notes" }],
         populatedAuthors: [
-            node({
+            {
                 id: identities[1].id,
                 nickname: identities[1].name,
                 image: identities[1].image,
-            }),
+            },
         ],
+        createdBy: { id: identities[1].id, name: identities[1].name, email: identities[1].email },
         hasLiked: true,
         likeCount: 4,
         publishedAt: "2025-03-06T09:00:00.000Z",
         createdAt: "2025-03-05T09:00:00.000Z",
         updatedAt: "2025-03-06T09:15:00.000Z",
         contentRankScore: 80,
-    }),
-];
+    },
+] satisfies FixturePost[];
 
 const comments = [
-    node({
+    {
         id: "coop-comment-company-helix",
         content: "Helix Harbor keeps things moving.",
+        company: companies[0],
         createdBy: identities[2],
         anonymousHash: "coop-anon-helix",
         replyPostRelationTo: "companies",
         replyPostValue: companies[0].id,
+        serverUrl: COOP_SYNDICATION_URL,
         createdAt: "2025-03-03T10:00:00.000Z",
         updatedAt: "2025-03-03T10:00:00.000Z",
-    }),
-    node({
+    },
+    {
         id: "coop-comment-job-dock-foreman",
         content: "Dock Foreman keeps Helix Harbor moving.",
+        company: companies[0],
         createdBy: identities[1],
         anonymousHash: "coop-anon-dock-foreman",
         replyPostRelationTo: "jobs",
         replyPostValue: jobs[0].id,
+        serverUrl: COOP_SYNDICATION_URL,
         createdAt: "2025-03-03T11:00:00.000Z",
         updatedAt: "2025-03-03T11:00:00.000Z",
-    }),
-    node({
+    },
+    {
         id: "coop-comment-startup-reef",
         content: "Reef Signal is worth watching.",
+        company: companies[0],
         createdBy: identities[0],
         anonymousHash: "coop-anon-reef",
         replyPostRelationTo: "startups",
         replyPostValue: startups[0].id,
+        serverUrl: COOP_SYNDICATION_URL,
         createdAt: "2025-03-04T10:00:00.000Z",
         updatedAt: "2025-03-04T10:00:00.000Z",
-    }),
-];
+    },
+] satisfies FixtureComment[];
 
 const syndications = [
-    node({
+    {
         id: "coop-syndication-main",
         name: "Co-op Main",
         description: "Primary cooperative syndicated content source",
         url: COOP_SYNDICATION_URL,
-    }),
-];
+        enabled: true,
+    },
+] satisfies FixtureSyndication[];
 
 const carts = [
-    node({
+    {
         id: "coop-cart-alpha",
         secret: "coop-alpha-secret",
         status: "pending",
@@ -397,13 +419,13 @@ const carts = [
         createdAt: "2025-03-01T09:00:00.000Z",
         updatedAt: "2025-03-01T10:00:00.000Z",
         purchasedAt: null,
-        customer: node({ id: identities[1].id, name: identities[1].name, email: identities[1].email }),
+        customer: { id: identities[1].id, name: identities[1].name, email: identities[1].email },
         items: [
-            node({ id: "coop-cart-alpha-item-1", quantity: 3, product: products[2] }),
-            node({ id: "coop-cart-alpha-item-2", quantity: 1, product: products[1] }),
+            { id: "coop-cart-alpha-item-1", quantity: 3, product: products[2] },
+            { id: "coop-cart-alpha-item-2", quantity: 1, product: products[1] },
         ],
-    }),
-    node({
+    },
+    {
         id: "coop-cart-anon-shopping",
         secret: "anon-shopping-coop-secret",
         status: "pending",
@@ -414,36 +436,36 @@ const carts = [
         purchasedAt: null,
         customer: null,
         items: [
-            node({ id: "coop-cart-anon-shopping-item-1", quantity: 3, product: products[2] }),
-            node({ id: "coop-cart-anon-shopping-item-2", quantity: 1, product: products[1] }),
+            { id: "coop-cart-anon-shopping-item-1", quantity: 3, product: products[2] },
+            { id: "coop-cart-anon-shopping-item-2", quantity: 1, product: products[1] },
         ],
-    }),
-];
+    },
+] satisfies FixtureCart[];
 
 const orders = [
-    node({
+    {
         id: "coop-order-alpha",
         status: "paid",
         payerAddress: "SoCoopOrder1717",
-        customer: node({ id: identities[1].id }),
-        transactions: [node({ id: "coop-tx-1" })],
+        customer: { id: identities[1].id },
+        transactions: [{ id: "coop-tx-1" }],
         cryptoPrices: [
-            node({
+            {
                 id: "coop-crypto-price-1",
                 chain: "solana",
                 stablePerNative: 25,
                 nativePerStable: 0.04,
                 expectedNativeAmount: "3.200000000",
                 fetchedAt: "2025-03-10T12:00:00.000Z",
-            }),
+            },
         ],
         transactionHashes: [
-            node({
+            {
                 id: "coop-hash-1",
                 chain: "solana",
                 transactionHash: "coop-solana-tx-1",
-                product: node({ id: products[0].id }),
-            }),
+                product: { id: products[0].id },
+            },
         ],
         currency: "USD",
         amount: 164,
@@ -451,10 +473,10 @@ const orders = [
         createdAt: "2025-03-10T12:00:00.000Z",
         updatedAt: "2025-03-10T12:05:00.000Z",
         items: [
-            node({
+            {
                 id: "coop-order-item-1",
                 quantity: 2,
-                product: node({
+                product: {
                     id: products[0].id,
                     serverURL: products[0].serverURL,
                     name: products[0].name,
@@ -462,11 +484,11 @@ const orders = [
                     priceInSOL: products[0].priceInSOL,
                     priceInTRX: products[0].priceInTRX,
                     cryptoAddresses: products[0].cryptoAddresses,
-                    company: node({ id: companies[0].id, cryptoAddresses: companies[0].cryptoAddresses }),
-                }),
-            }),
+                    company: { id: companies[0].id, cryptoAddresses: companies[0].cryptoAddresses },
+                },
+            },
         ],
-        shippingAddress: node({
+        shippingAddress: {
             title: "Depot",
             firstName: "Luca",
             lastName: "Vale",
@@ -478,17 +500,17 @@ const orders = [
             state: "Coast",
             country: "Liberland",
             phone: "+1 555 0606",
-        }),
-    }),
-];
+        },
+    },
+] satisfies FixtureOrder[];
 
-const meUser = node({
-    user: node({
+const meUser = {
+    user: {
         id: "coop-user-iris",
         name: "Iris Shore",
         email: "iris@example.test",
         phone: "+1 555 0600",
-        shippingAddress: node({
+        shippingAddress: {
             title: "Depot",
             firstName: "Iris",
             lastName: "Shore",
@@ -500,10 +522,10 @@ const meUser = node({
             postalCode: "22001",
             country: "Liberland",
             phone: "+1 555 0601",
-        }),
-        wallets: [node({ chain: "solana", provider: "phantom", address: "SoCoopWallet606" })],
-    }),
-});
+        },
+        wallets: [{ chain: "solana", provider: "phantom", address: "SoCoopWallet606" }],
+    },
+} satisfies FixtureMeUser;
 
 export const coopFixtures: GraphQLFixtureBundle = {
     identities,
