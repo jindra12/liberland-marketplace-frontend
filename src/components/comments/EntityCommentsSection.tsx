@@ -35,8 +35,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
         profile: auth.user?.profile as AuthProfile | undefined,
     });
     const refresh = async () => {
-        await comments.refetch();
-        await queryClient.invalidateQueries({
+        await queryClient.resetQueries({
             predicate: (query) => {
                 const [type] = useListCommentsByTargetQuerySingle.getKey({
                     targetId: props.targetId,
@@ -48,7 +47,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
                 );
             },
         });
-        await queryClient.invalidateQueries({
+        await queryClient.resetQueries({
             predicate: (query) => query.queryKey[0] === "ListCommentReplies",
         });
     }

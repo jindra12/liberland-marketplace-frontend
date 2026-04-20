@@ -122,6 +122,7 @@ manager is `yarn`.
 - Keep analytics and routing code especially small. For page tracking, prefer a tiny `useLocation`-driven effect unless there is a concrete, unavoidable requirement that truly needs more structure.
 - If a user asks you to fix a failing test, keep running the relevant targeted test until it passes or you have a concrete app bug to report back.
 - After changing test code or test config, run the smallest relevant targeted test or spec to confirm the change, not the full Cypress suite unless the user explicitly asks for it.
+- If cache invalidation is involved, reset the relevant cache so the UI reloads the correct data. Do not paper over stale data with arbitrary cache writes, upserts, or other one-off overrides.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

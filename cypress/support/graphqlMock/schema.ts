@@ -126,6 +126,7 @@ export const graphqlSchema = buildSchema(`
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode
+        updateComment(id: String!, data: JSON): MockNode
         updateCommentContent(id: String!, content: String!): MockNode
         createNotificationSubscription(data: JSON): MockNode
         deleteNotificationSubscription(id: String!): MockNode

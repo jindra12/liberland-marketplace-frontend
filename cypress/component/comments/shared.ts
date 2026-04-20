@@ -38,10 +38,15 @@ export const selectCommentCompany = (containerSelector: string, companyName: str
     cy.contains(containerSelector, "Author company").find("input").click({ force: true });
     cy.contains(".ant-drawer-title", "Select company", { timeout: 20000 }).should("be.visible");
     cy.contains(".Publish__companyFieldItem", companyName, { timeout: 20000 }).click();
+    cy.contains(".ant-drawer-title", "Select company", { timeout: 20000 }).should("not.exist");
 };
 
 export const assertCommentCompanyValue = (containerSelector: string, companyName: string) => {
     cy.contains(containerSelector, "Author company").find("input").should("have.value", companyName);
+};
+
+export const assertCommentTextValue = (containerSelector: string, text: string) => {
+    cy.get(containerSelector).find("textarea").first().should("have.value", text);
 };
 
 export const fillCommentText = (containerSelector: string, text: string) => {
@@ -190,33 +195,102 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
     mountPostDetail();
     cy.get(".EntityCommentsSection").should("be.visible");
     waitForPostComments("Harbor Operations Digest keeps the team aligned.");
+    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+        if (typeof req.body.query === "string" && req.body.query.includes("CreateComment")) {
+            req.alias = "createComment";
+        }
+
+        if (typeof req.body.query === "string" && req.body.query.includes("UpdateCommentContent")) {
+            req.alias = "updateComment";
+        }
+    });
 
     const createdText = `Company comment ${viewport.name}`;
     const editedText = `Edited company comment ${viewport.name}`;
     const editedCompany = "Bazaar Foundry";
+    const listCommentsVariables = {
+        limit: ENTITY_COMMENTS_DEFAULT_LIMIT,
+        page: 1,
+        relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Posts],
+        targetId: "post-harbor-operations-digest",
+        url: MAIN_SERVER_URL,
+    };
 
+    fillCommentText(".EntityCommentsSection__header .CommentComposer", createdText);
+    assertCommentTextValue(".EntityCommentsSection__header .CommentComposer", createdText);
     selectCommentCompany(".EntityCommentsSection__header .CommentComposer", "Harbor Labs");
     assertCommentCompanyValue(".EntityCommentsSection__header .CommentComposer", "Harbor Labs");
-    fillCommentText(".EntityCommentsSection__header .CommentComposer", createdText);
     cy.get(".EntityCommentsSection__header .CommentComposer").contains("button", "Comment").click();
 
-    waitForPostComments(createdText, 2);
-    cy.contains(".CommentCard", createdText).should("be.visible");
-    cy.contains(".CommentCard", createdText).within(() => {
-        cy.get(".CommentCard__repliesToggle").should("not.exist");
+    cy.wait("@createComment", { timeout: 20000 }).then((interception) => {
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+        expect(interception.request.body.variables.content).to.equal(createdText);
+        expect(interception.request.body.variables.company).to.equal("company-harbor-labs");
+
+        const createdCommentId = interception.response?.body?.data?.createComment?.id;
+        if (createdCommentId === undefined) {
+            throw new Error("Missing created comment id");
+        }
+
+        cy.wrap(createdCommentId).as("createdCommentId");
+    });
+    cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`, { timeout: 20000 }).then((interception) => {
+        const response = interception.response?.body as {
+            data?: {
+                Comments?: {
+                    docs?: Array<{
+                        content?: string;
+                        id?: string;
+                    }>;
+                };
+            };
+        } | undefined;
+        const createdComment = response?.data?.Comments?.docs?.[0];
+
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+        expect(createdComment?.id).to.be.a("string");
+        cy.wrap(createdComment?.id as string).as("createdCommentId");
     });
 
-    openCommentCardAction(createdText, "Edit");
+    cy.get("@createdCommentId").then((createdCommentId) => {
+        cy.get(`.CommentCard[data-comment-id="${createdCommentId}"]`).within(() => {
+            cy.contains("button", "Edit").click();
+        });
+    });
+    fillCommentText(".CommentCard .CommentComposer", editedText);
+    assertCommentTextValue(".CommentCard .CommentComposer", editedText);
     selectCommentCompany(".CommentCard .CommentComposer", editedCompany);
     assertCommentCompanyValue(".CommentCard .CommentComposer", editedCompany);
-    fillCommentText(".CommentCard .CommentComposer", editedText);
     cy.get(".CommentCard .CommentComposer").contains("button", "Save").click();
 
-    waitForPostComments(editedText, 2);
-    cy.contains(".CommentCard", editedText).should("be.visible");
-    cy.contains(".CommentCard", editedText).within(() => {
-        cy.contains(".CommentCard__author", editedCompany).should("be.visible");
-        cy.get(".CommentCard__repliesToggle").should("not.exist");
+    cy.get("@createdCommentId").then((createdCommentId) => {
+        cy.wait("@updateComment", { timeout: 20000 }).then((interception) => {
+            expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(interception.request.body.variables.id).to.equal(createdCommentId);
+            expect(interception.request.body.variables.company).to.equal("company-bazaar-foundry");
+            expect(interception.request.body.variables.content).to.equal(editedText);
+        });
+        cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`, { timeout: 20000 }).then((interception) => {
+            const response = interception.response?.body as {
+                data?: {
+                    Comments?: {
+                        docs?: Array<{
+                            content?: string;
+                            id?: string;
+                        }>;
+                    };
+                };
+            } | undefined;
+            const updatedComment = response?.data?.Comments?.docs?.[0];
+
+            expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(updatedComment?.id).to.equal(createdCommentId);
+        });
+        cy.get(`.CommentCard[data-comment-id="${createdCommentId}"]`).should("be.visible");
     });
 };
 
