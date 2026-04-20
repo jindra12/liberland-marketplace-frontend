@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Avatar, Button, Flex, Typography } from "antd";
 
+import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { Like } from "../shared/Like/Like";
 
 import { CommentEditComposer } from "./CommentEditComposer";
@@ -18,7 +19,10 @@ type CommentCardFormState = "idle" | "reply" | "edit";
 
 export const CommentCard: React.FunctionComponent<React.PropsWithChildren<CommentCardProps>> = (props) => {
     const [formState, setFormState] = React.useState<CommentCardFormState>("idle");
+    const [areRepliesVisible, setAreRepliesVisible] = React.useState(false);
     const canManageComment = isCommentOwnedByCurrentUser(props.comment, props.currentUser.currentUserId);
+    const replyCount = props.comment.replyCount ?? 0;
+    const hasReplies = replyCount > 0;
 
     const startReply = () => {
         setFormState("reply");
@@ -32,8 +36,17 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
         setFormState("idle");
     };
 
+    const toggleReplies = () => {
+        setAreRepliesVisible((currentValue) => !currentValue);
+    };
+
     return (
-        <Flex vertical gap={12} className={["CommentCard", props.depth ? "CommentCard--reply" : undefined].filter(Boolean).join(" ")}>
+        <Flex
+            vertical
+            gap={12}
+            className={["CommentCard", props.depth ? "CommentCard--reply" : undefined].filter(Boolean).join(" ")}
+            data-comment-id={props.comment.id}
+        >
             <Flex gap={12} align="start" className="CommentCard__header">
                 <Avatar
                     shape="square"
@@ -68,6 +81,11 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                 <Button type="text" onClick={() => props.onShare(props.comment.id)} className="CommentCard__actionBtn">
                     Share
                 </Button>
+                {hasReplies && (
+                    <Button type="text" onClick={toggleReplies} className="CommentCard__actionBtn CommentCard__repliesToggle">
+                        {areRepliesVisible ? "Hide replies" : `Show replies (${replyCount})`}
+                    </Button>
+                )}
                 {canManageComment && (
                     <Button type="text" onClick={startEdit} className="CommentCard__actionBtn">
                         Edit
@@ -98,7 +116,9 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     onEditAction={props.onEditAction}
                 />
             )}
-            {props.children}
+            {hasReplies && areRepliesVisible && (
+                <AnimatedIn className="CommentCard__children">{props.children}</AnimatedIn>
+            )}
         </Flex>
     );
 };

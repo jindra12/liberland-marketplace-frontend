@@ -22,5 +22,6 @@ mutation CreatePostComment($replyToPost: Comment_ReplyPostRelationshipInput!, $c
       email
     }
     createdAt
+    replyCount
   }
 }

@@ -60,7 +60,17 @@ const ensureCommentState = (comment: MockNode): MockNode => {
     if (comment.likeCount === undefined) {
         comment.likeCount = 0;
     }
+    if (comment.replyCount === undefined) {
+        comment.replyCount = 0;
+    }
     return comment;
+};
+
+const syncCommentReplyCounts = (comments: MockNode[]): void => {
+    comments.forEach((comment) => {
+        comment.replyCount = comments.filter((candidate) => candidate.replyComment?.id === comment.id).length;
+        ensureCommentState(comment);
+    });
 };
 
 const resolveCollection = (items: MockNode[], args: { page?: number; limit?: number }): MockCollection => {
@@ -132,6 +142,7 @@ export const queryResolvers = {
         context: unknown,
     ): MockCollection => {
         const fixtures = getFixturesForContext(context);
+        syncCommentReplyCounts(fixtures.comments);
         const conditions = Array.isArray(args.where?.AND) ? args.where.AND : [args.where];
         const filtered = fixtures.comments.filter((comment) => {
             ensureCommentState(comment);
@@ -154,7 +165,10 @@ export const queryResolvers = {
         return resolveCollection(filtered, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
-    Comment: (_parent: unknown, args: { id?: string }): MockNode => ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]),
+    Comment: (_parent: unknown, args: { id?: string }): MockNode => {
+        syncCommentReplyCounts(activeFixtures.comments);
+        return ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]);
+    },
     Company: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.companies.find((item) => item.id === args.id) || activeFixtures.companies[0],
     Job: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.jobs.find((item) => item.id === args.id) || activeFixtures.jobs[0],
     Post: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.posts.find((item) => item.id === args.id) || activeFixtures.posts[0],
@@ -323,20 +337,30 @@ export const mutationResolvers = {
             data.likeCount = 0;
         }
 
-        return ensureCommentState(createNode(activeFixtures.comments, "comment", data));
+        const created = ensureCommentState(createNode(activeFixtures.comments, "comment", data));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return created;
     },
-    deleteComment: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.comments, args.id),
+    deleteComment: (_parent: unknown, args: { id?: string }): MockNode => {
+        const removed = removeNode(activeFixtures.comments, args.id);
+        syncCommentReplyCounts(activeFixtures.comments);
+        return removed;
+    },
     updateComment: (_parent: unknown, args: { id?: string; content?: string; data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         if (args.content !== undefined) {
             data.content = args.content;
         }
         normalizeCommentData(data);
-        return ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        const updated = ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return updated;
     },
     updateCommentContent: (_parent: unknown, args: { id?: string; content?: string }): MockNode => {
         const data = cloneValue({ content: args.content });
-        return ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        const updated = ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return updated;
     },
     createNotificationSubscription: (
         _parent: unknown,

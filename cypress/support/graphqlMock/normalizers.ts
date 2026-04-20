@@ -314,6 +314,7 @@ export const normalizeCartData = (data: Record<string, unknown>) => {
 };
 
 export const normalizeCommentData = (data: Record<string, unknown>) => {
+    normalizeSharedRelations(data, "company");
     if (isPlainObject(data.replyPost)) {
         const relationTo = typeof data.replyPost.relationTo === "string" ? data.replyPost.relationTo : undefined;
         const value = typeof data.replyPost.value === "string" ? data.replyPost.value : undefined;

@@ -16,11 +16,12 @@ mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $compa
                 mimeType
             }
         }
-        createdBy {
-            id
-            name
-            email
-        }
-        createdAt
+    createdBy {
+      id
+      name
+      email
     }
+    createdAt
+    replyCount
+  }
 }

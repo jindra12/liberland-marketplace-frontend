@@ -3,5 +3,6 @@ mutation UpdatePostCommentContent($id: String!, $content: String!) {
     id
     content
     updatedAt
+    replyCount
   }
 }

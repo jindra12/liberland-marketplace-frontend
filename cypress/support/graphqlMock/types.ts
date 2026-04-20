@@ -17,6 +17,7 @@ export type MockNode = {
     anonymousHash?: string | null;
     hasLiked?: boolean | null;
     likeCount?: number | null;
+    replyCount?: number | null;
     replyPostRelationTo?: string | null;
     replyPostValue?: string | null;
     currency?: string | null;

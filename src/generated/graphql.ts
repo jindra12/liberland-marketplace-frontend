@@ -5102,6 +5102,7 @@ export type Comment = {
   lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   replyComment?: Maybe<Comment>;
+  replyCount?: Maybe<Scalars['Float']['output']>;
   replyPost: Comment_ReplyPost_Relationship;
   replyPostRelationTo?: Maybe<Scalars['String']['output']>;
   replyPostValue?: Maybe<Scalars['String']['output']>;
@@ -5721,6 +5722,16 @@ export type Comment_ReplyComment_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Comment_ReplyCount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Comment_ReplyPostRelationTo_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -5792,6 +5803,7 @@ export type Comment_Where = {
   lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyCount?: InputMaybe<Comment_ReplyCount_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
@@ -5812,6 +5824,7 @@ export type Comment_Where_And = {
   lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyCount?: InputMaybe<Comment_ReplyCount_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
@@ -5832,6 +5845,7 @@ export type Comment_Where_Or = {
   lastLikeAt?: InputMaybe<Comment_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Comment_LikeCount_Operator>;
   replyComment?: InputMaybe<Comment_ReplyComment_Operator>;
+  replyCount?: InputMaybe<Comment_ReplyCount_Operator>;
   replyPost?: InputMaybe<Comment_ReplyPost_Relation>;
   replyPostRelationTo?: InputMaybe<Comment_ReplyPostRelationTo_Operator>;
   replyPostValue?: InputMaybe<Comment_ReplyPostValue_Operator>;
@@ -5889,6 +5903,7 @@ export type CommentsDocAccessFields = {
   lastLikeAt?: Maybe<CommentsDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<CommentsDocAccessFields_LikeCount>;
   replyComment?: Maybe<CommentsDocAccessFields_ReplyComment>;
+  replyCount?: Maybe<CommentsDocAccessFields_ReplyCount>;
   replyPost?: Maybe<CommentsDocAccessFields_ReplyPost>;
   replyPostRelationTo?: Maybe<CommentsDocAccessFields_ReplyPostRelationTo>;
   replyPostValue?: Maybe<CommentsDocAccessFields_ReplyPostValue>;
@@ -6148,6 +6163,34 @@ export type CommentsDocAccessFields_ReplyComment_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CommentsDocAccessFields_ReplyCount = {
+  __typename?: 'CommentsDocAccessFields_replyCount';
+  create?: Maybe<CommentsDocAccessFields_ReplyCount_Create>;
+  delete?: Maybe<CommentsDocAccessFields_ReplyCount_Delete>;
+  read?: Maybe<CommentsDocAccessFields_ReplyCount_Read>;
+  update?: Maybe<CommentsDocAccessFields_ReplyCount_Update>;
+};
+
+export type CommentsDocAccessFields_ReplyCount_Create = {
+  __typename?: 'CommentsDocAccessFields_replyCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyCount_Delete = {
+  __typename?: 'CommentsDocAccessFields_replyCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyCount_Read = {
+  __typename?: 'CommentsDocAccessFields_replyCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsDocAccessFields_ReplyCount_Update = {
+  __typename?: 'CommentsDocAccessFields_replyCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CommentsDocAccessFields_ReplyPost = {
   __typename?: 'CommentsDocAccessFields_replyPost';
   create?: Maybe<CommentsDocAccessFields_ReplyPost_Create>;
@@ -6299,6 +6342,7 @@ export type CommentsFields = {
   lastLikeAt?: Maybe<CommentsFields_LastLikeAt>;
   likeCount?: Maybe<CommentsFields_LikeCount>;
   replyComment?: Maybe<CommentsFields_ReplyComment>;
+  replyCount?: Maybe<CommentsFields_ReplyCount>;
   replyPost?: Maybe<CommentsFields_ReplyPost>;
   replyPostRelationTo?: Maybe<CommentsFields_ReplyPostRelationTo>;
   replyPostValue?: Maybe<CommentsFields_ReplyPostValue>;
@@ -6555,6 +6599,34 @@ export type CommentsFields_ReplyComment_Read = {
 
 export type CommentsFields_ReplyComment_Update = {
   __typename?: 'CommentsFields_replyComment_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyCount = {
+  __typename?: 'CommentsFields_replyCount';
+  create?: Maybe<CommentsFields_ReplyCount_Create>;
+  delete?: Maybe<CommentsFields_ReplyCount_Delete>;
+  read?: Maybe<CommentsFields_ReplyCount_Read>;
+  update?: Maybe<CommentsFields_ReplyCount_Update>;
+};
+
+export type CommentsFields_ReplyCount_Create = {
+  __typename?: 'CommentsFields_replyCount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyCount_Delete = {
+  __typename?: 'CommentsFields_replyCount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyCount_Read = {
+  __typename?: 'CommentsFields_replyCount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CommentsFields_ReplyCount_Update = {
+  __typename?: 'CommentsFields_replyCount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -56963,6 +57035,7 @@ export type MutationCommentInput = {
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
+  replyCount?: InputMaybe<Scalars['Float']['input']>;
   replyPost?: InputMaybe<Comment_ReplyPostRelationshipInput>;
   replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
   replyPostValue?: InputMaybe<Scalars['String']['input']>;
@@ -56996,6 +57069,7 @@ export type MutationCommentUpdateInput = {
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   replyComment?: InputMaybe<Scalars['String']['input']>;
+  replyCount?: InputMaybe<Scalars['Float']['input']>;
   replyPost?: InputMaybe<CommentUpdate_ReplyPostRelationshipInput>;
   replyPostRelationTo?: InputMaybe<Scalars['String']['input']>;
   replyPostValue?: InputMaybe<Scalars['String']['input']>;
@@ -62202,14 +62276,14 @@ export type CommentDetailQueryVariables = Exact<{
 }>;
 
 
-export type CommentDetailQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
+export type CommentDetailQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
 
 export type CommentByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type CommentByIdQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
+export type CommentByIdQuery = { __typename?: 'Query', Comment?: { __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } } | null };
 
 export type DislikeCommentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -62233,7 +62307,7 @@ export type ListCommentRepliesQueryVariables = Exact<{
 }>;
 
 
-export type ListCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListCompaniesByCreatorQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['JSON']['input']>;
@@ -62375,7 +62449,7 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, replyCount?: number | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
 
 export type CreateReplyToCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -62385,7 +62459,7 @@ export type CreateReplyToCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateReplyToCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+export type CreateReplyToCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, replyCount?: number | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
 
 export type DeleteCommentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -62590,7 +62664,7 @@ export type ListCommentsByTargetQueryVariables = Exact<{
 }>;
 
 
-export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListCommentsByTargetQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, serverUrl?: string | null, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListJobsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -62684,7 +62758,7 @@ export type CreatePostCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+export type CreatePostCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, replyCount?: number | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
 
 export type DeletePostCommentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -62700,7 +62774,7 @@ export type ListPostCommentsQueryVariables = Exact<{
 }>;
 
 
-export type ListPostCommentsQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListPostCommentsQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, replyPostRelationTo?: string | null, replyPostValue?: string | null, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type ListPostCommentRepliesQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -62709,7 +62783,7 @@ export type ListPostCommentRepliesQueryVariables = Exact<{
 }>;
 
 
-export type ListPostCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
+export type ListPostCommentRepliesQuery = { __typename?: 'Query', Comments?: { __typename?: 'Comments', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Comment', id: string, content: string, createdAt?: any | null, updatedAt?: any | null, likeCount?: number | null, hasLiked?: boolean | null, replyCount?: number | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, replyPost: { __typename?: 'Comment_ReplyPost_Relationship', relationTo?: Comment_ReplyPost_RelationTo | null } }> } | null };
 
 export type CreatePostReplyCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -62719,7 +62793,7 @@ export type CreatePostReplyCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostReplyCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
+export type CreatePostReplyCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'Comment', id: string, content: string, createdAt?: any | null, replyCount?: number | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }, replyComment?: { __typename?: 'Comment', id: string } | null, createdBy?: { __typename?: 'User', id: string, name: string, email: string } | null } | null };
 
 export type UpdatePostCommentContentMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -62727,7 +62801,7 @@ export type UpdatePostCommentContentMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePostCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null } | null };
+export type UpdatePostCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null, replyCount?: number | null } | null };
 
 export type CreatePostMutationVariables = Exact<{
   data: MutationPostInput;
@@ -63110,7 +63184,7 @@ export type UpdateCommentContentMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } } | null };
+export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComment?: { __typename?: 'Comment', id: string, content: string, updatedAt?: any | null, replyCount?: number | null, company: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } } | null };
 
 export type MeUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -63439,6 +63513,7 @@ export const CommentDetailDocument = `
     updatedAt
     likeCount
     hasLiked
+    replyCount
     replyComment {
       id
     }
@@ -63501,6 +63576,7 @@ export const CommentByIdDocument = `
     updatedAt
     likeCount
     hasLiked
+    replyCount
     replyComment {
       id
     }
@@ -63587,7 +63663,7 @@ export const useLikeCommentMutation = <
 useLikeCommentMutation.fetcher = (variables: LikeCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<LikeCommentMutation, LikeCommentMutationVariables>(LikeCommentDocument, variables, options);
 
 export const ListCommentRepliesDocument = `
-    query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
+    query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -63622,6 +63698,7 @@ export const ListCommentRepliesDocument = `
       updatedAt
       likeCount
       hasLiked
+      replyCount
       replyComment {
         id
       }
@@ -64540,6 +64617,7 @@ export const CreateCommentDocument = `
       email
     }
     createdAt
+    replyCount
   }
 }
     `;
@@ -64590,6 +64668,7 @@ export const CreateReplyToCommentDocument = `
       email
     }
     createdAt
+    replyCount
   }
 }
     `;
@@ -65938,7 +66017,7 @@ export const useUpdateJobMutation = <
 useUpdateJobMutation.fetcher = (variables: UpdateJobMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, variables, options);
 
 export const ListCommentsByTargetDocument = `
-    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 20, $page: Int = 1) {
+    query ListCommentsByTarget($targetId: String!, $relationTo: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
     draft: false
     where: {AND: [{replyPostRelationTo: {equals: $relationTo}}, {replyPostValue: {equals: $targetId}}, {replyComment: {exists: false}}]}
@@ -65975,6 +66054,7 @@ export const ListCommentsByTargetDocument = `
       updatedAt
       likeCount
       hasLiked
+      replyCount
       replyPost {
         relationTo
       }
@@ -66164,7 +66244,7 @@ useListProductsByIdentityQuery.getKey = (variables: ListProductsByIdentityQueryV
 useListProductsByIdentityQuery.fetcher = (variables: ListProductsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListProductsByIdentityQuery, ListProductsByIdentityQueryVariables>(ListProductsByIdentityDocument, variables, options);
 
 export const ListRepliesToCommentDocument = `
-    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
+    query ListRepliesToComment($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -66953,6 +67033,7 @@ export const CreatePostCommentDocument = `
       email
     }
     createdAt
+    replyCount
   }
 }
     `;
@@ -66998,7 +67079,7 @@ export const useDeletePostCommentMutation = <
 useDeletePostCommentMutation.fetcher = (variables: DeletePostCommentMutationVariables, options?: RequestInit['headers']) => gqlFetcher<DeletePostCommentMutation, DeletePostCommentMutationVariables>(DeletePostCommentDocument, variables, options);
 
 export const ListPostCommentsDocument = `
-    query ListPostComments($postId: String!, $limit: Int = 20, $page: Int = 1) {
+    query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
   Comments(
     draft: false
     where: {AND: [{replyPostRelationTo: {equals: "posts"}}, {replyPostValue: {equals: $postId}}, {replyComment: {exists: false}}]}
@@ -67034,6 +67115,7 @@ export const ListPostCommentsDocument = `
       updatedAt
       likeCount
       hasLiked
+      replyCount
       replyPost {
         relationTo
       }
@@ -67067,7 +67149,7 @@ useListPostCommentsQuery.getKey = (variables: ListPostCommentsQueryVariables) =>
 useListPostCommentsQuery.fetcher = (variables: ListPostCommentsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListPostCommentsQuery, ListPostCommentsQueryVariables>(ListPostCommentsDocument, variables, options);
 
 export const ListPostCommentRepliesDocument = `
-    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 20, $page: Int = 1) {
+    query ListPostCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int = 1) {
   Comments(
     draft: false
     where: {replyComment: {equals: $parentCommentId}}
@@ -67101,6 +67183,7 @@ export const ListPostCommentRepliesDocument = `
       updatedAt
       likeCount
       hasLiked
+      replyCount
       replyComment {
         id
       }
@@ -67166,6 +67249,7 @@ export const CreatePostReplyCommentDocument = `
       email
     }
     createdAt
+    replyCount
   }
 }
     `;
@@ -67192,6 +67276,7 @@ export const UpdatePostCommentContentDocument = `
     id
     content
     updatedAt
+    replyCount
   }
 }
     `;
@@ -69612,6 +69697,7 @@ export const UpdateCommentContentDocument = `
     id
     content
     updatedAt
+    replyCount
     company {
       id
       serverURL

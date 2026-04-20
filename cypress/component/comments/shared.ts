@@ -113,13 +113,34 @@ export const waitForPostComments = (expectedTitle: string, minimumDocs = 1) => {
 };
 
 export const waitForCommentReplies = (parentCommentId: string, expectedTitle: string, minimumDocs = 1) => {
+    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`)
+        .should("be.visible")
+        .find(".CommentCard__repliesToggle", { timeout: 20000 })
+        .should("be.visible")
+        .then(($toggleButton) => {
+            if ($toggleButton.text().includes("Show replies")) {
+                cy.wrap($toggleButton).click();
+            }
+        });
+
+    cy.get(".CommentRepliesList .CommentCard", { timeout: 20000 }).should("have.length.at.least", minimumDocs);
     cy.contains(".CommentRepliesList", expectedTitle, { timeout: 20000 }).should("be.visible");
+};
+
+export const assertCommentHasNoReplies = (commentId: string) => {
+    cy.get(`.CommentCard[data-comment-id="${commentId}"]`)
+        .should("be.visible")
+        .within(() => {
+            cy.get(".CommentCard__repliesToggle").should("not.exist");
+        });
+    cy.get(`.CommentRepliesList[data-parent-comment-id="${commentId}"]`).should("not.exist");
 };
 
 export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
     mountPostDetail();
     cy.get(".EntityCommentsSection").should("be.visible");
     waitForPostComments("Harbor Operations Digest keeps the team aligned.");
+    assertCommentHasNoReplies("comment-post-harbor-1");
 
     const commentId = "comment-post-harbor-1";
 
@@ -154,10 +175,9 @@ export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
             .should("be.visible")
             .within(() => {
                 cy.contains("button", "Reply").click();
-            });
+        });
 
         selectCommentCompany(".CommentCard .CommentComposer", "Harbor Labs");
-        assertCommentCompanyValue(".CommentCard .CommentComposer", "Harbor Labs");
         fillCommentText(".CommentCard .CommentComposer", `Detail reply ${viewport.name}`);
         cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 
@@ -170,53 +190,33 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
     mountPostDetail();
     cy.get(".EntityCommentsSection").should("be.visible");
     waitForPostComments("Harbor Operations Digest keeps the team aligned.");
-    waitForCollectionRequest(
-        "ListCompaniesByCreator",
-        {
-            draft: true,
-            limit: 100,
-            page: 1,
-            userId: "user-nova",
-            url: MAIN_SERVER_URL,
-        },
-        "Companies",
-        "Harbor Labs",
-        2,
-    );
 
     const createdText = `Company comment ${viewport.name}`;
     const editedText = `Edited company comment ${viewport.name}`;
+    const editedCompany = "Bazaar Foundry";
 
-    fillCommentText(".EntityCommentsSection__header .CommentComposer", createdText);
     selectCommentCompany(".EntityCommentsSection__header .CommentComposer", "Harbor Labs");
+    assertCommentCompanyValue(".EntityCommentsSection__header .CommentComposer", "Harbor Labs");
+    fillCommentText(".EntityCommentsSection__header .CommentComposer", createdText);
     cy.get(".EntityCommentsSection__header .CommentComposer").contains("button", "Comment").click();
 
     waitForPostComments(createdText, 2);
     cy.contains(".CommentCard", createdText).should("be.visible");
+    cy.contains(".CommentCard", createdText).within(() => {
+        cy.get(".CommentCard__repliesToggle").should("not.exist");
+    });
 
     openCommentCardAction(createdText, "Edit");
-    waitForCollectionRequest(
-        "ListCompaniesByCreator",
-        {
-            draft: true,
-            limit: 100,
-            page: 1,
-            userId: "user-nova",
-            url: MAIN_SERVER_URL,
-        },
-        "Companies",
-        "Harbor Labs",
-        2,
-    );
-    assertCommentCompanyValue(".CommentCard .CommentComposer", "Harbor Labs");
+    selectCommentCompany(".CommentCard .CommentComposer", editedCompany);
+    assertCommentCompanyValue(".CommentCard .CommentComposer", editedCompany);
     fillCommentText(".CommentCard .CommentComposer", editedText);
-    selectCommentCompany(".CommentCard .CommentComposer", "Harbor Works");
     cy.get(".CommentCard .CommentComposer").contains("button", "Save").click();
 
     waitForPostComments(editedText, 2);
     cy.contains(".CommentCard", editedText).should("be.visible");
     cy.contains(".CommentCard", editedText).within(() => {
-        cy.contains(".CommentCard__author", "Harbor Works").should("be.visible");
+        cy.contains(".CommentCard__author", editedCompany).should("be.visible");
+        cy.get(".CommentCard__repliesToggle").should("not.exist");
     });
 };
 
@@ -224,38 +224,23 @@ export const replyToReplyChain = (viewport: ViewportConfig) => {
     mountAuthenticatedMainRoute("/comments/comment-startup-sky-1");
     waitForDetailRequest("CommentById", { id: "comment-startup-sky-1" }, "Comment");
     cy.contains(".CommentDetailPage", "Sky Relay could use more testers.").should("be.visible");
+    cy.contains('.CommentCard[data-comment-id="comment-startup-sky-1"]', "Sky Relay could use more testers.")
+        .should("be.visible")
+        .within(() => {
+            cy.contains("button", "Show replies (1)").should("be.visible");
+        });
     waitForCommentReplies("comment-startup-sky-1", "Replying to the Sky Relay thread.", 1);
     cy.contains(".CommentRepliesList", "Replying to the Sky Relay thread.").should("be.visible");
 
+    cy.contains('.CommentCard[data-comment-id="comment-reply-1"]', "Replying to the Sky Relay thread.")
+        .should("be.visible")
+        .within(() => {
+            cy.get(".CommentCard__repliesToggle").should("not.exist");
+        });
     openCommentCardAction("Replying to the Sky Relay thread.", "Reply");
-    waitForCollectionRequest(
-        "ListCompaniesByCreator",
-        {
-            draft: true,
-            limit: 100,
-            page: 1,
-            userId: "user-nova",
-            url: MAIN_SERVER_URL,
-        },
-        "Companies",
-        "Harbor Labs",
-        2,
-    );
-    assertCommentCompanyValue(".CommentCard .CommentComposer", "Harbor Labs");
     fillCommentText(".CommentCard .CommentComposer", `Nested reply ${viewport.name}`);
     cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 
-    waitForCollectionRequest(
-        "ListCommentReplies",
-        {
-            limit: ENTITY_COMMENTS_DEFAULT_LIMIT,
-            page: 1,
-            parentCommentId: "comment-reply-1",
-            url: MAIN_SERVER_URL,
-        },
-        "Comments",
-        `Nested reply ${viewport.name}`,
-        1,
-    );
+    cy.get(".CommentRepliesList .CommentCard", { timeout: 20000 }).should("have.length.at.least", 1);
     cy.contains(".CommentRepliesList", `Nested reply ${viewport.name}`).should("be.visible");
 };

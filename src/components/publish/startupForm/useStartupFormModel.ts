@@ -22,6 +22,7 @@ export const useStartupFormModel = (props: StartupFormProps) => {
     });
     const identitiesQuery = useListIdentitiesQuery({
         limit: 100,
+        url: props.url,
     });
     const companies = companiesQuery.data?.Companies?.docs ?? [];
     const identities = identitiesQuery.data?.Identities?.docs ?? [];

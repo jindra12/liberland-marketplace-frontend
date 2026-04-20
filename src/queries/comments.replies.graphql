@@ -27,6 +27,7 @@ query ListCommentReplies($parentCommentId: JSON!, $limit: Int = 100, $page: Int 
             updatedAt
             likeCount
             hasLiked
+            replyCount
             replyComment {
                 id
             }

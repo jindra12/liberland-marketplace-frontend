@@ -347,9 +347,8 @@ export const assertImageLoaded = (selector: string) => {
         .should(($img) => {
             const node = $img[0];
             const image = node instanceof HTMLImageElement ? node : node.querySelector("img");
-            expect(image).to.exist;
-            expect((image as HTMLImageElement).complete).to.equal(true);
-            expect((image as HTMLImageElement).naturalWidth).to.be.greaterThan(0);
+            expect((image as HTMLImageElement)?.complete).to.equal(true);
+            expect((image as HTMLImageElement)?.naturalWidth).to.be.greaterThan(0);
         });
 };
 

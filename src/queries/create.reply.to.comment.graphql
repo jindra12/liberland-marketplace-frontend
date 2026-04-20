@@ -24,11 +24,12 @@ mutation CreateReplyToComment(
         replyComment {
             id
         }
-        createdBy {
-            id
-            name
-            email
-        }
-        createdAt
+    createdBy {
+      id
+      name
+      email
     }
+    createdAt
+    replyCount
+  }
 }

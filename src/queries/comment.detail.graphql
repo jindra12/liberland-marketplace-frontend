@@ -28,6 +28,7 @@ query CommentDetail($id: String!) {
     updatedAt
     likeCount
     hasLiked
+    replyCount
     replyComment {
       id
     }

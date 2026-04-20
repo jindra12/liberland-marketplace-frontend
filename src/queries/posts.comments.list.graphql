@@ -40,6 +40,7 @@ query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
       updatedAt
       likeCount
       hasLiked
+      replyCount
       replyPost {
         relationTo
       }

@@ -269,6 +269,7 @@ export const graphqlSchema = buildSchema(`
         replyPostValue: JSON
         likeCount: JSON
         hasLiked: JSON
+        replyCount: JSON
         currency: JSON
         secret: JSON
         subtotal: JSON
@@ -348,7 +349,7 @@ export const graphqlSchema = buildSchema(`
         message: JSON
         allowedIdentities: [MockNode!]
         disallowedIdentities: [MockNode!]
-        cryptoAddresses: [MockNode!]
+        cryptoAddresses: MockNode
         docs: [MockNode!]
         involvedUsers: [MockNode!]
         items: [MockNode!]

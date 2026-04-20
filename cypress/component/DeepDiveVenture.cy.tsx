@@ -39,7 +39,7 @@ describe("venture deep dive", () => {
             MAIN_SERVER_URL,
             "ListCommentsByTarget",
             {
-                limit: 100,
+                limit: 20,
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Startups],
                 targetId: "startup-sky-relay",
