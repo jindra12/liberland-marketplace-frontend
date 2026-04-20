@@ -1,5 +1,13 @@
 import * as React from "react";
 
+import {
+    DeleteOutlined,
+    DownOutlined,
+    EditOutlined,
+    MessageOutlined,
+    ShareAltOutlined,
+    UpOutlined,
+} from "@ant-design/icons";
 import { Avatar, Button, Flex, Typography } from "antd";
 
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
@@ -75,25 +83,45 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     className="CommentCard__like"
                     aria-label={`Like comment from ${getCommentDisplayName(props.comment)}`}
                 />
-                <Button type="text" onClick={startReply} className="CommentCard__actionBtn">
-                    Reply
+                <Button type="text" onClick={startReply} className="CommentCard__actionBtn" aria-label="Reply">
+                    <MessageOutlined className="CommentCard__actionIcon" />
+                    <span className="CommentCard__actionLabel">Reply</span>
                 </Button>
-                <Button type="text" onClick={() => props.onShare(props.comment.id)} className="CommentCard__actionBtn">
-                    Share
+                <Button type="text" onClick={() => props.onShare(props.comment.id)} className="CommentCard__actionBtn" aria-label="Share">
+                    <ShareAltOutlined className="CommentCard__actionIcon" />
+                    <span className="CommentCard__actionLabel">Share</span>
                 </Button>
                 {hasReplies && (
-                    <Button type="text" onClick={toggleReplies} className="CommentCard__actionBtn CommentCard__repliesToggle">
-                        {areRepliesVisible ? "Hide replies" : `Show replies (${replyCount})`}
+                    <Button
+                        type="text"
+                        onClick={toggleReplies}
+                        className="CommentCard__actionBtn CommentCard__repliesToggle"
+                        aria-label={areRepliesVisible ? "Hide replies" : `Show replies (${replyCount})`}
+                    >
+                        <span className="CommentCard__actionLabel">
+                            {areRepliesVisible ? "Hide replies" : `Show replies (${replyCount})`}
+                        </span>
+                        <span className="CommentCard__repliesToggleMeta">
+                            {areRepliesVisible ? <UpOutlined /> : <DownOutlined />} ({replyCount})
+                        </span>
                     </Button>
                 )}
                 {canManageComment && (
-                    <Button type="text" onClick={startEdit} className="CommentCard__actionBtn">
-                        Edit
+                    <Button type="text" onClick={startEdit} className="CommentCard__actionBtn" aria-label="Edit">
+                        <EditOutlined className="CommentCard__actionIcon" />
+                        <span className="CommentCard__actionLabel">Edit</span>
                     </Button>
                 )}
                 {canManageComment && (
-                    <Button type="text" danger onClick={() => props.onDeleteAction({ comIdToDelete: props.comment.id })} className="CommentCard__actionBtn">
-                        Delete
+                    <Button
+                        type="text"
+                        danger
+                        onClick={() => props.onDeleteAction({ comIdToDelete: props.comment.id })}
+                        className="CommentCard__actionBtn"
+                        aria-label="Delete"
+                    >
+                        <DeleteOutlined className="CommentCard__actionIcon" />
+                        <span className="CommentCard__actionLabel">Delete</span>
                     </Button>
                 )}
             </Flex>

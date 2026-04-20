@@ -69,11 +69,54 @@
 }
 
 .CommentCard__actionBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding-inline: 0;
+}
+
+.CommentCard__actionIcon {
+    display: none;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.CommentCard__actionLabel {
+    display: inline;
+}
+
+.CommentCard__repliesToggleMeta {
+    display: none;
 }
 
 .CommentCard__repliesToggle {
     padding-inline: 0;
+}
+
+@media (max-width: 575px) {
+    .CommentCard__actions {
+        gap: 4px;
+    }
+
+    .CommentCard__actionBtn {
+        min-width: 40px;
+        padding-inline: 10px;
+    }
+
+    .CommentCard__actionIcon {
+        display: inline-flex;
+    }
+
+    .CommentCard__actionLabel {
+        display: none;
+    }
+
+    .CommentCard__repliesToggleMeta {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: normal;
+    }
 }
 
 .CommentCard__children {

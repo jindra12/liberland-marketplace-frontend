@@ -6,11 +6,12 @@ import {
     ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
 } from "../../constants";
 import type { AuthProfile } from "../../types";
+import { formatPrettyDate } from "../../utils/date";
 import type { CommentCurrentUser, CommentThread } from "./types";
 
 const getCommentTimestamp = (comment: Pick<CommentThread, "updatedAt" | "createdAt">): string | undefined => {
     const value = comment.updatedAt ?? comment.createdAt;
-    return value ? String(value) : undefined;
+    return formatPrettyDate(value);
 };
 
 export const getCommentDisplayName = (comment: CommentThread): string => {

@@ -39,8 +39,7 @@ export const useCommentDetailState = (args: UseCommentDetailStateArgs): CommentD
         profile: auth.user?.profile as AuthProfile | undefined,
     });
     const refresh = async () => {
-        await commentQuery.refetch();
-        await queryClient.invalidateQueries({
+        await queryClient.resetQueries({
             predicate: (query) => {
                 const key = query.queryKey[0];
                 return key === "ListCommentReplies" || key === "CommentById";

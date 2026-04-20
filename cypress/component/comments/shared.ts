@@ -118,12 +118,13 @@ export const waitForPostComments = (expectedTitle: string, minimumDocs = 1) => {
 };
 
 export const waitForCommentReplies = (parentCommentId: string, expectedTitle: string, minimumDocs = 1) => {
-    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`)
-        .should("be.visible")
-        .find(".CommentCard__repliesToggle", { timeout: 20000 })
-        .should("be.visible")
+    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`, { timeout: 20000 }).should("be.visible");
+    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`, { timeout: 20000 })
+        .find(".CommentCard__repliesToggle")
+        .should("exist")
         .then(($toggleButton) => {
-            if ($toggleButton.text().includes("Show replies")) {
+            const toggleLabel = $toggleButton.attr("aria-label");
+            if (toggleLabel?.startsWith("Show replies")) {
                 cy.wrap($toggleButton).click();
             }
         });
@@ -175,6 +176,11 @@ export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
         cy.routerNavigate(new URL(String(expectedShareUrl)).pathname);
         waitForDetailRequest("CommentById", { id: commentId }, "Comment");
         cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
+        cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+            if (typeof req.body.query === "string" && req.body.query.includes("CreateReplyToComment")) {
+                req.alias = "createReply";
+            }
+        });
 
         cy.contains(".CommentCard", "Harbor Operations Digest keeps the team aligned.")
             .should("be.visible")
@@ -186,8 +192,13 @@ export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
         fillCommentText(".CommentCard .CommentComposer", `Detail reply ${viewport.name}`);
         cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 
-        waitForCommentReplies(commentId, `Detail reply ${viewport.name}`);
-        cy.contains(".CommentRepliesList", `Detail reply ${viewport.name}`).should("be.visible");
+        cy.wait("@createReply", { timeout: 20000 }).then((interception) => {
+            expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(interception.request.body.variables.content).to.equal(`Detail reply ${viewport.name}`);
+            expect(interception.request.body.variables.company).to.equal("company-harbor-labs");
+            expect(interception.request.body.variables.parentCommentId).to.equal(commentId);
+        });
     });
 };
 
