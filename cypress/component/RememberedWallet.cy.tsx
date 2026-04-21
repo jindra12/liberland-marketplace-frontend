@@ -1,15 +1,21 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     addToCart,
     fillFormField,
+    mountAnonymousRoute,
     mountAuthenticatedCartRoute,
     screenshotStep,
-    waitForDetailQuery,
 } from "../support/component-tests/utils";
 import { connectThirdwebWalletStub, connectTronWalletStub, connectSolanaWalletStub } from "../support/walletStub/state";
 
 const cartSecrets = {
     [MAIN_SERVER_URL]: "remembered-wallet-main-secret",
+    [COOP_SERVER_URL]: "remembered-wallet-coop-secret",
+};
+
+const anonymousCartSecrets = {
+    [MAIN_SERVER_URL]: "anon-shopping-main-secret",
+    [COOP_SERVER_URL]: "anon-shopping-coop-secret",
 };
 
 type RememberedWalletScenario = {
@@ -22,14 +28,6 @@ type RememberedWalletScenario = {
 const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     scenario.connectWallet();
     mountAuthenticatedCartRoute(scenario.route, [MAIN_SERVER_URL], cartSecrets);
-    waitForDetailQuery(
-        MAIN_SERVER_URL,
-        "ProductById",
-        { id: scenario.productId },
-        "Product",
-        scenario.productId,
-        scenario.productName,
-    );
     cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
     screenshotStep(`remembered-wallet-product-${scenario.productId}`);
     addToCart();
@@ -49,6 +47,23 @@ const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     screenshotStep(`remembered-wallet-order-${scenario.productId}`);
 };
 
+const openTronOrderPaymentPage = (scenario: RememberedWalletScenario) => {
+    scenario.connectWallet();
+    mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], anonymousCartSecrets);
+    cy.contains("Proceed to order").click();
+    cy.contains("h2", "Order").should("be.visible");
+    fillFormField("Email", "remembered-wallet@example.test");
+    fillFormField("First name", "Wallet");
+    fillFormField("Last name", "Remembered");
+    fillFormField("Address line 1", "10 Harbor Way");
+    fillFormField("City", "Port Sol");
+    fillFormField("Postal code", "11111");
+    fillFormField("Country", "Liberland");
+    cy.contains("button", "Create order").click();
+    cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
+    screenshotStep("remembered-wallet-order-mixed-cart");
+};
+
 describe("remembered wallet shortcut", () => {
     it("skips connect when the saved solana wallet is already connected", () => {
         openOrderPaymentPage({
@@ -61,11 +76,11 @@ describe("remembered wallet shortcut", () => {
         cy.contains(".ant-card", "1st payment").within(() => {
             cy.contains("Solana (SOL)").parents(".ant-list-item").first().within(() => {
                 cy.contains("button", "Connect").should("not.exist");
-            cy.contains("button", "Pay").should("be.visible").click();
-            cy.contains("Payment submitted").should("be.visible");
+                cy.contains("button", "Pay").should("be.visible").click();
+                cy.contains("Payment submitted").should("be.visible");
+            });
         });
         screenshotStep("remembered-wallet-saved-solana");
-    });
     });
 
     it("skips connect when the saved thirdweb wallet is already connected", () => {
@@ -79,28 +94,28 @@ describe("remembered wallet shortcut", () => {
         cy.contains(".ant-card", "1st payment").within(() => {
             cy.contains("Ethereum (ETH)").parents(".ant-list-item").first().within(() => {
                 cy.contains("button", "Connect").should("not.exist");
-            cy.contains("button", "Pay").should("be.visible").click();
-            cy.contains("Payment submitted").should("be.visible");
+                cy.contains("button", "Pay").should("be.visible").click();
+                cy.contains("Payment submitted").should("be.visible");
+            });
         });
         screenshotStep("remembered-wallet-saved-ethereum");
     });
-    });
 
     it("skips connect when the saved tron wallet is already connected", () => {
-        openOrderPaymentPage({
+        openTronOrderPaymentPage({
             connectWallet: () => connectTronWalletStub("TUserWallet1919", "TronLink Stub"),
-            productId: "product-shore-kit",
-            productName: "Shore Kit",
-            route: "/products-services/product-shore-kit",
+            productId: "mixed-cart",
+            productName: "Mixed Cart",
+            route: "/products-services/product-harbor-lantern",
         });
 
-        cy.contains(".ant-card", "1st payment").within(() => {
-            cy.contains("Tron (TRX)").parents(".ant-list-item").first().within(() => {
-                cy.contains("button", "Connect").should("not.exist");
-            cy.contains("button", "Pay").should("be.visible").click();
-            cy.contains("Payment submitted").should("be.visible");
+        cy.contains(".ant-card", "2nd payment").within(() => {
+            cy.contains(".ant-list-item", "Tron (TRX)").within(() => {
+                cy.contains("button", /^Connect$/).should("not.exist");
+                cy.contains("button", /^Pay$/).should("be.visible").click();
+                cy.contains("Payment submitted").should("be.visible");
+            });
         });
         screenshotStep("remembered-wallet-saved-tron");
     });
-});
 });

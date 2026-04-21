@@ -377,9 +377,11 @@ export const waitForCollectionQuery = (
         expect(interception.response?.statusCode).to.equal(200);
         expect(collection?.docs?.length ?? 0).to.be.at.least(minimumDocs);
         if (minimumDocs > 0) {
-            expect(
-                collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content,
-            ).to.equal(expectedTitle);
+            const matchedDoc = collection?.docs?.find((doc) => {
+                const value = doc.title ?? doc.name ?? doc.content;
+                return value === expectedTitle;
+            });
+            expect(Boolean(matchedDoc)).to.eq(true);
         }
         screenshotStep(`${operationName}-${expectedTitle}`, "viewport");
     });

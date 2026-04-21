@@ -35,11 +35,11 @@ export const formatFundsNeeded = (amount?: number | null, currency?: string | nu
 
 export const invalidateStartupQueries = async (queryClient: QueryClient) => {
     await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["StartupById"] }),
-        queryClient.invalidateQueries({ queryKey: ["ListStartups"] }),
-        queryClient.invalidateQueries({ queryKey: ["ListStartupsByCompany"] }),
-        queryClient.invalidateQueries({ queryKey: ["ListStartupsByCreator"] }),
-        queryClient.invalidateQueries({ queryKey: ["ListStartupsByIdentity"] }),
-        queryClient.invalidateQueries({ queryKey: ["SearchStartups"] }),
+        queryClient.resetQueries({ queryKey: ["StartupById"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartups"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByCompany"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByCreator"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByIdentity"] }),
+        queryClient.resetQueries({ queryKey: ["SearchStartups"] }),
     ]);
 };

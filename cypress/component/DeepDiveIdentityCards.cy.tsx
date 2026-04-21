@@ -14,7 +14,7 @@ describe("identity tabs", () => {
         cy.viewport(1440, 1200);
         loadIdentityTabs();
 
-        cy.get(".IdentityDetail__tabs", { timeout: 20000 }).should("be.visible");
+        cy.get(".EntityDetail__tabs", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__title", "Nova Rivers", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Products").should("be.visible").click();
         waitForCollectionQuery(
@@ -67,7 +67,7 @@ describe("identity tabs", () => {
         cy.viewport(390, 844);
         loadIdentityTabs();
 
-        cy.get(".IdentityDetail__tabs", { timeout: 20000 }).should("be.visible");
+        cy.get(".EntityDetail__tabs", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__title", "Nova Rivers", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Products").click();
         cy.contains(".ant-list-item-meta-title", "Solar Widget").should("be.visible");
