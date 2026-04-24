@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Form, Input, Select } from "antd";
 
+import { CompanyField } from "../../CompanyField";
 import { ImageUploadField } from "../ImageUploadField";
 import { MarkdownEditor } from "../MarkdownEditor";
 
@@ -35,11 +36,7 @@ export const StartupFormBasicsFields: React.FunctionComponent<StartupFormBasicsF
                     },
                 ]}
             >
-                <Select
-                    loading={props.isCompaniesLoading}
-                    placeholder="Select a company"
-                    options={props.companyOptions}
-                />
+                <CompanyField serverURL={props.url} userId={props.userId} />
             </Form.Item>
             <Form.Item
                 name="identity"
@@ -51,11 +48,7 @@ export const StartupFormBasicsFields: React.FunctionComponent<StartupFormBasicsF
                     },
                 ]}
             >
-                <Select
-                    loading={props.isIdentitiesLoading}
-                    placeholder="Select a tribe"
-                    options={props.identityOptions}
-                />
+                <Select loading={props.isIdentitiesLoading} placeholder="Select a tribe" options={props.identityOptions} />
             </Form.Item>
         </>
     );

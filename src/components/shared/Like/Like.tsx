@@ -18,8 +18,8 @@ export type LikeProps = {
 };
 
 export const Like: React.FunctionComponent<LikeProps> = (props) => {
-    const isLiked = props.liked === true;
-    const isPending = props.likeMutation.isPending === true || props.dislikeMutation.isPending === true;
+    const isLiked = Boolean(props.liked);
+    const isPending = props.likeMutation.isPending || props.dislikeMutation.isPending;
     const buttonClassName = getLikeButtonClassName(props.className, props.liked, isPending);
     const icon = isLiked ? (
         <HeartFilled className="LikeButton__heart LikeButton__heart--filled" />

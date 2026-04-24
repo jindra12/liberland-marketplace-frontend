@@ -19,9 +19,7 @@ interface AppListLikeItem {
 export interface AppListProps<TItem> {
     items: TItem[];
     renderItem: Partial<
-        Record<"title" | "extra" | "avatar" | "cover" | "description" | "body" | "actions", (item: TItem) => React.ReactNode> & {
-            like?: (item: TItem) => React.ReactNode;
-        }
+        Record<"title" | "extra" | "avatar" | "cover" | "description" | "body" | "actions" | "like", (item: TItem) => React.ReactNode>
     >;
     hasMore: boolean;
     refetch: () => void;

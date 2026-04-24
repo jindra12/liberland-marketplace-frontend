@@ -153,7 +153,7 @@ export const queryResolvers = {
                 if (condition.replyComment?.equals) {
                     return comment.replyComment?.id === condition.replyComment.equals;
                 }
-                if (condition.replyComment?.exists === false) {
+                if (!condition.replyComment?.exists) {
                     return !comment.replyComment?.id;
                 }
                 if (condition.replyPostRelationTo?.equals && condition.replyPostValue?.equals) {

@@ -7,7 +7,8 @@ import type { UploadFile } from "antd/es/upload/interface";
 import dayjs from "dayjs";
 
 import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
-import { useCreateJobMutation, useListCompaniesByCreatorQuery, useUpdateJobMutation } from "../hooks";
+import { CompanyField } from "../CompanyField";
+import { useCreateJobMutation, useUpdateJobMutation } from "../hooks";
 
 import { currencyOptions } from "./constants";
 import { FormSubmitButtons } from "./FormSubmitButtons";
@@ -67,12 +68,6 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
     const createMutation = useCreateJobMutation();
     const updateMutation = useUpdateJobMutation();
     const userId = auth.user?.profile?.sub;
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId,
-        draft: true,
-        url: props.url,
-    });
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<JobFormValues> = {
         ...props.initialValues,
         positions: typeof props.initialValues?.positions === "number" ? props.initialValues.positions : 1,
@@ -150,26 +145,18 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
             >
                 <Select options={employmentOptions} />
             </Form.Item>
-            {companies.length > 0 && (
-                <Form.Item
-                    name="company"
-                    label="Company"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please select a company",
-                        },
-                    ]}
-                >
-                    <Select
-                        placeholder="Select a company"
-                        options={companies.map((c) => ({
-                            value: c.id,
-                            label: c.name,
-                        }))}
-                    />
-                </Form.Item>
-            )}
+            <Form.Item
+                name="company"
+                label="Company"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please select a company",
+                    },
+                ]}
+            >
+                <CompanyField serverURL={props.url} userId={userId} />
+            </Form.Item>
             <Form.Item
                 name="positions"
                 label="Positions"

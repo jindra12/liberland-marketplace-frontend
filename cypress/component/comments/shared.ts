@@ -35,14 +35,17 @@ export const installCommentSpecExceptionGuard = () => {
 };
 
 export const selectCommentCompany = (containerSelector: string, companyName: string) => {
-    cy.contains(containerSelector, "Author company").find("input").click({ force: true });
-    cy.contains(".ant-drawer-title", "Select company", { timeout: 20000 }).should("be.visible");
-    cy.contains(".Publish__companyFieldItem", companyName, { timeout: 20000 }).click();
-    cy.contains(".ant-drawer-title", "Select company", { timeout: 20000 }).should("not.exist");
+    cy.contains(containerSelector, "Author company").find(".ant-select").first().click();
+    cy.get(".ant-select-dropdown", { timeout: 20000 }).should("be.visible");
+    cy.contains(".ant-select-dropdown .ant-select-item-option-content", companyName, { timeout: 20000 }).click({
+        force: true,
+    });
 };
 
 export const assertCommentCompanyValue = (containerSelector: string, companyName: string) => {
-    cy.contains(containerSelector, "Author company").find("input").should("have.value", companyName);
+    cy.contains(containerSelector, "Author company")
+        .find(".ant-select")
+        .should("contain.text", companyName);
 };
 
 export const assertCommentTextValue = (containerSelector: string, text: string) => {

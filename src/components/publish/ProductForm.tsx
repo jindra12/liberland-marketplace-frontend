@@ -3,10 +3,11 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 
 import { DollarOutlined } from "@ant-design/icons";
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
-import { useCreateProductMutation, useListCompaniesByCreatorQuery, useUpdateProductMutation } from "../hooks";
+import { CompanyField } from "../CompanyField";
+import { useCreateProductMutation, useUpdateProductMutation } from "../hooks";
 import { toCents } from "../shared/product/utils";
 
 import { FormSubmitButtons } from "./FormSubmitButtons";
@@ -17,7 +18,7 @@ import { useEntityForm } from "./useEntityForm";
 interface ProductFormValues {
     name: string | null;
     description?: string | null;
-    priceInUSD?: number | null;
+    priceInUSD?: string | number | null;
     url?: string | null;
     inventory?: number | null;
     company?: string | null;
@@ -37,12 +38,6 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
     const userId = auth.user?.profile?.sub;
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId,
-        draft: true,
-        url: props.url,
-    });
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
     const defaults: Partial<ProductFormValues> = {
         ...props.initialValues,
     };
@@ -61,7 +56,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
             url: values.url,
             company: values.company,
             priceInUSDEnabled: true,
-            priceInUSD: toCents(values.priceInUSD),
+            priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
             inventory: values.inventory,
             ...(imageId !== undefined && {
                 image: imageId,
@@ -97,11 +92,11 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     },
                 ]}
             >
-                <InputNumber
+                <Input
                     suffix={<DollarOutlined />}
                     placeholder="USD amount"
-                    min={0}
-                    className="Publish__amountInput"
+                    inputMode="decimal"
+                    className="Publish__fullWidth Publish__priceField"
                 />
             </Form.Item>
             <Form.Item name="url" label="Product URL">
@@ -119,13 +114,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     },
                 ]}
             >
-                <Select
-                    placeholder="Select a company"
-                    options={companies.map((c) => ({
-                        value: c.id,
-                        label: c.name,
-                    }))}
-                />
+                <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>
             <Form.Item>
                 <FormSubmitButtons mode={props.mode} entityName="Product" loading={loading} draftRef={draftRef} />

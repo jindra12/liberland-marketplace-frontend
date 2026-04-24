@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 import type { Comment_ReplyPostRelationshipInputRelationTo, CommentByIdQuery, ListCommentRepliesQuery, ListCommentsByTargetQuery } from "../../generated/graphql";
 import type { DislikeMutation, LikeMutation } from "../shared/Like/types";
 
@@ -17,44 +15,10 @@ export type CommentCurrentUser = {
     currentUserFullName: string;
 };
 
-export type CommentSectionStyles = {
-    overlayStyle: CSSProperties;
-    formStyle: CSSProperties;
-    inputStyle: CSSProperties;
-    replyInputStyle: CSSProperties;
-    submitBtnStyle: CSSProperties;
-    cancelBtnStyle: CSSProperties;
-    hrStyle: CSSProperties;
-    titleStyle: CSSProperties;
-};
-
 export type CommentSubmitPayload = { text: string; company: string };
 export type CommentReplyPayload = { text: string; repliedToCommentId: string; company: string };
 export type CommentEditPayload = { text: string; comId: string; company: string };
 export type CommentDeletePayload = { comIdToDelete: string };
-
-export type EntityCommentsThemeToken = {
-    colorBgContainer: string;
-    colorFillAlter: string;
-    colorBgElevated: string;
-    colorText: string;
-    colorTextSecondary: string;
-    colorTextPlaceholder: string;
-    colorBorder: string;
-    colorBorderSecondary: string;
-    colorPrimary: string;
-    colorPrimaryHover: string;
-    colorFillSecondary: string;
-    colorTextLightSolid: string;
-    colorTextHeading: string;
-    fontFamily: string;
-    borderRadiusLG: number;
-    borderRadius: number;
-    padding: number;
-    fontSizeHeading4: number;
-    fontSizeHeading5: number;
-    lineHeightHeading5: number;
-};
 
 export type CommentThread =
     | NonNullable<NonNullable<ListCommentsByTargetQuery["Comments"]>["docs"]>[number]
@@ -70,7 +34,7 @@ export type CommentComposerMode = "create" | "reply" | "edit";
 
 export type CommentComposerValues = {
     text: string;
-    company?: string | null;
+    company: string;
 };
 
 export type CommentCardProps = {
@@ -100,7 +64,6 @@ export type CommentRepliesListProps = {
 
 export type EntityCommentsSectionDisplayProps = {
     className?: string;
-    commentSectionStyles?: CommentSectionStyles;
     commentsCount?: number;
     currentUser: CommentCurrentUser;
     hasMore: boolean;

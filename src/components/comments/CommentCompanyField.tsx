@@ -2,8 +2,7 @@ import * as React from "react";
 
 import { Form } from "antd";
 
-import { useListCompaniesByCreatorQuery } from "../hooks";
-import { CompanyField } from "../publish/postForm/CompanyField";
+import { CompanyField } from "../CompanyField";
 
 type CommentCompanyFieldProps = {
     serverURL?: string | null;
@@ -11,13 +10,6 @@ type CommentCompanyFieldProps = {
 };
 
 export const CommentCompanyField: React.FunctionComponent<CommentCompanyFieldProps> = (props) => {
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId: props.userId,
-        draft: true,
-        url: props.serverURL,
-    });
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
-
     return (
         <Form.Item
             name="company"
@@ -29,7 +21,7 @@ export const CommentCompanyField: React.FunctionComponent<CommentCompanyFieldPro
                 },
             ]}
         >
-            <CompanyField companies={companies} />
+            <CompanyField serverURL={props.serverURL} userId={props.userId} />
         </Form.Item>
     );
 };

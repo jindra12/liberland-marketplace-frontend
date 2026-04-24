@@ -35,10 +35,9 @@ export type StartupFormSelectOption = {
 };
 
 export type StartupFormBasicsFieldsProps = {
-    companyOptions: StartupFormSelectOption[];
     existingImageUrl?: string | null;
     identityOptions: StartupFormSelectOption[];
-    isCompaniesLoading: boolean;
     isIdentitiesLoading: boolean;
+    userId?: string | null;
     url: string;
 };

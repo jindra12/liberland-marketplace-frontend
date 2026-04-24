@@ -1,11 +1,6 @@
 import { useAuth } from "react-oidc-context";
 
-import {
-    useCreateStartupMutation,
-    useListCompaniesByCreatorQuery,
-    useListIdentitiesQuery,
-    useUpdateStartupMutation,
-} from "../../hooks";
+import { useCreateStartupMutation, useListIdentitiesQuery, useUpdateStartupMutation } from "../../hooks";
 import { useEntityForm } from "../useEntityForm";
 
 import { buildStartupFormDefaults, buildStartupMutationData, toStartupSelectOptions } from "./utils";
@@ -15,16 +10,10 @@ export const useStartupFormModel = (props: StartupFormProps) => {
     const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId: auth.user?.profile?.sub,
-        draft: true,
-        url: props.url,
-    });
     const identitiesQuery = useListIdentitiesQuery({
         limit: 100,
         url: props.url,
     });
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
     const entityForm = useEntityForm({
         entityName: "Startup",
@@ -43,14 +32,13 @@ export const useStartupFormModel = (props: StartupFormProps) => {
     });
 
     return {
-        companyOptions: toStartupSelectOptions(companies),
         defaults: buildStartupFormDefaults(props),
         draftRef: entityForm.draftRef,
         form: entityForm.form,
         identityOptions: toStartupSelectOptions(identities),
-        isCompaniesLoading: companiesQuery.isLoading,
         isIdentitiesLoading: identitiesQuery.isLoading,
         loading: entityForm.loading,
         onFinish: entityForm.onFinish,
+        userId: auth.user?.profile?.sub,
     };
 };

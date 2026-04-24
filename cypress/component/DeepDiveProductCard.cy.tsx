@@ -22,7 +22,7 @@ describe("product card", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListProductsByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
+            { identityId: "identity-nova", page: 1, limit: 20, url: MAIN_SERVER_URL },
             "Products",
             "Solar Widget",
         );

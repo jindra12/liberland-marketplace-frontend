@@ -1,8 +1,8 @@
 export const getLikeButtonClassName = (className?: string, liked?: boolean | null, loading?: boolean) =>
     [
         "LikeButton",
-        liked === true ? "LikeButton--liked" : "LikeButton--unliked",
-        loading === true ? "LikeButton--loading" : undefined,
+        liked ? "LikeButton--liked" : "LikeButton--unliked",
+        loading ? "LikeButton--loading" : undefined,
         className,
     ]
         .filter(Boolean)
@@ -16,4 +16,4 @@ export const getLikeButtonVariables = (
 ): {
     id: string;
     url?: string | null;
-} => (serverURL === null || serverURL === undefined ? { id } : { id, url: serverURL });
+} => (serverURL ? { id, url: serverURL } : { id });

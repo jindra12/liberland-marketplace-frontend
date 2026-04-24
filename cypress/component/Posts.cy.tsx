@@ -3,16 +3,16 @@ import { buildSeoDescription } from "../../src/components/publish/postForm/utils
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
+    assertSelectValue,
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    selectFormOption,
     screenshotStep,
 } from "../support/component-tests/utils";
 
 const selectOwnedCompany = (companyName: string) => {
-    cy.contains(".ant-form-item", "Company").find("input").click({ force: true });
-    cy.contains(".ant-drawer-title", "Select company", { timeout: 20000 }).should("be.visible");
-    cy.contains(".Publish__companyFieldItem", companyName, { timeout: 20000 }).click();
+    selectFormOption("Company", companyName);
 };
 
 const openPostPublishForm = () => {
@@ -90,7 +90,7 @@ describe("posts", () => {
             assertFormFieldValue("Title", initialTitle);
             assertFormFieldValue("Content", initialContent);
             assertFormFieldValue("SEO Description", initialSeoDescription);
-            assertFormFieldValue("Company", "Harbor Labs");
+            assertSelectValue("Company", "Harbor Labs");
 
             fillFormField("Title", updatedTitle);
             fillFormField("Content", updatedContent);

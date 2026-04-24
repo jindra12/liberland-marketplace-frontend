@@ -49,7 +49,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
     const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(props.me), [props.me]);
-    const candidateProfileAddressesForBuyNow = props.isAuthenticated === true ? candidateProfileAddresses : [];
+    const candidateProfileAddressesForBuyNow = props.isAuthenticated ? candidateProfileAddresses : [];
     const usesSplitLayout = !hasItemInCart;
     const compactClassName = [
         "AddToCartButton__compact",

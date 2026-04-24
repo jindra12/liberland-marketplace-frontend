@@ -22,10 +22,6 @@ export const CommentReplyComposer: React.FunctionComponent<CommentReplyComposerP
             cancelLabel="Cancel"
             onCancel={props.onCancel}
             onSubmit={async (values) => {
-                if (!values.company) {
-                    return;
-                }
-
                 await props.onReplyAction({
                     text: values.text,
                     company: values.company,

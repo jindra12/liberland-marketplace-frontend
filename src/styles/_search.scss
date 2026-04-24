@@ -24,9 +24,11 @@
 
 
 .SearchDrawer__footerForm {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    width: 100%;
+}
+
+.SearchDrawer__footerCompact {
+    width: 100%;
 }
 
 .SearchDrawer__footerInput {
@@ -34,14 +36,19 @@
     min-width: 0;
 }
 
-.SearchDrawer__footerForm .ant-input-affix-wrapper,
-.SearchDrawer__footerForm .ant-input {
-    min-height: 52px;
-    border-radius: 16px;
+.SearchDrawer__footerInputItem {
+    flex: 1;
+    margin-bottom: 0;
 }
 
-.SearchDrawer__footerForm .ant-btn {
-    min-height: 52px;
-    border-radius: 16px;
+.SearchDrawer__footerCompact .ant-input-affix-wrapper,
+.SearchDrawer__footerCompact .ant-input {
+    height: 100px;
+    border-radius: 16px 0 0 16px;
+}
+
+.SearchDrawer__footerButton {
+    height: 100px;
+    border-radius: 0 16px 16px 0;
     font-weight: 800;
 }

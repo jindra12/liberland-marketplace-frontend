@@ -4,7 +4,6 @@ import {
     mountMainRoute,
     waitForCollectionQuery,
     waitForPageShell,
-    waitForRouteLoad,
 } from "../support/component-tests/utils";
 
 describe("share buttons", () => {
@@ -17,7 +16,6 @@ describe("share buttons", () => {
         cy.get(".SplashPage__syndicationCardActions .NativeShareButton").its("length").should("be.greaterThan", 0);
 
         mountMainRoute("/companies");
-        waitForRouteLoad(".LoadingSkeleton--collection");
         waitForCollectionQuery(MAIN_SERVER_URL, "ListCompanies", { limit: 20, page: 1 }, "Companies", "Harbor Labs");
 
         cy.get(".ListShareDetailButtons").should("be.visible");

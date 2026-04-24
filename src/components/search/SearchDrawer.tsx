@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, Drawer, Form, Input, InputRef } from "antd";
+import { Button, Drawer, Form, Input, InputRef, Space } from "antd";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 
@@ -16,6 +16,7 @@ type SearchDrawerProps = {
 
 export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) => {
     const inputRef = React.useRef<InputRef>(null);
+    const [form] = Form.useForm<{ searchValue?: string }>();
 
     return (
         <Drawer
@@ -33,26 +34,41 @@ export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) 
             className="SearchDrawer"
             footer={
                 <Form
+                    form={form}
                     className="SearchDrawer__footerForm"
                     onFinish={props.onSubmit}
+                    onValuesChange={(_, allValues: { searchValue?: string }) => {
+                        props.onSearchValueChange(allValues.searchValue ?? "");
+                    }}
+                    initialValues={{
+                        searchValue: props.searchValue,
+                    }}
                 >
-                    <Form.Item className="SearchDrawer__footerInputItem" noStyle>
-                        <Input
-                            ref={inputRef}
-                            size="large"
-                            placeholder={props.placeholder}
-                            value={props.searchValue}
-                            onChange={(event) => props.onSearchValueChange(event.target.value)}
-                            className="SearchDrawer__footerInput"
-                        />
-                    </Form.Item>
-                    <Button size="large" type="primary" htmlType="submit">
-                        Search
-                    </Button>
+                    <Space.Compact block className="SearchDrawer__footerCompact">
+                        <Form.Item
+                            name="searchValue"
+                            className="SearchDrawer__footerInputItem"
+                            rules={[{ required: true, whitespace: true, message: "Search is required" }]}
+                            noStyle={false}
+                        >
+                            <Input
+                                ref={inputRef}
+                                size="large"
+                                placeholder={props.placeholder}
+                                className="SearchDrawer__footerInput"
+                            />
+                        </Form.Item>
+                        <Button size="large" type="primary" htmlType="submit" className="SearchDrawer__footerButton">
+                            Search
+                        </Button>
+                    </Space.Compact>
                 </Form>
             }
         >
-            <div id={SEARCH_DRAWER_SCROLLABLE_ID} className="SearchDrawer__scrollable">
+            <div
+                id={SEARCH_DRAWER_SCROLLABLE_ID}
+                className="SearchDrawer__scrollable"
+            >
                 {props.children}
             </div>
         </Drawer>

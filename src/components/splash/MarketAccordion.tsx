@@ -27,23 +27,23 @@ export const MarketAccordion: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const companiesQuery = useListCompaniesQuery({
         page: 1,
-        limit: 7,
+        limit: 20,
     });
     const jobsQuery = useListJobsQuery({
         page: 1,
-        limit: 7,
+        limit: 20,
     });
     const productsQuery = useListProductsQuery({
         page: 1,
-        limit: 7,
+        limit: 20,
     });
     const startupsQuery = useListStartupsQuery({
         page: 1,
-        limit: 7,
+        limit: 20,
     });
     const identitiesQuery = useListIdentitiesQuery({
         page: 1,
-        limit: 7,
+        limit: 20,
     });
     const postsQuery = useListPostsQuery({
         page: 1,

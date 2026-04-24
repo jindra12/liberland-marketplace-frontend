@@ -5,9 +5,9 @@ import { useAuth } from "react-oidc-context";
 import { Form, Input } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
+import { CompanyField } from "../CompanyField";
 import {
     useCreatePostMutation,
-    useListCompaniesByCreatorQuery,
     useUpdatePostMutation,
 } from "../hooks";
 import type { RelatedTargetSelection } from "../shared/post/types";
@@ -15,7 +15,6 @@ import type { RelatedTargetSelection } from "../shared/post/types";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { CompanyField } from "./postForm/CompanyField";
 import { RelatedTargetField } from "./postForm/RelatedTargetField";
 import { buildRelatedTargetSelection, buildSeoDescription, resolvePostSeoDescription, slugifyPostTitle } from "./postForm/utils";
 import { useEntityForm } from "./useEntityForm";
@@ -45,12 +44,6 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
     const createMutation = useCreatePostMutation();
     const updateMutation = useUpdatePostMutation();
     const userId = auth.user?.profile?.sub;
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId,
-        draft: true,
-        url: props.url,
-    });
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
     const initialSeoDescription = props.initialValues?.seoDescription ?? buildSeoDescription(props.initialValues?.content ?? "");
     const defaults: Partial<PostFormValues> = {
         ...props.initialValues,
@@ -128,24 +121,22 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
             </Form.Item>
             <Form.Item
                 name="seoDescription"
-                label="SEO Description"
+                label="Description"
             >
                 <Input.TextArea rows={3} placeholder="Used as the snippet in lists and search" />
             </Form.Item>
-            {companies.length > 0 && (
-                <Form.Item
-                    name="company"
-                    label="Company"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please select a company",
-                        },
-                    ]}
-                >
-                    <CompanyField companies={companies} />
-                </Form.Item>
-            )}
+            <Form.Item
+                name="company"
+                label="Company"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please select a company",
+                    },
+                ]}
+            >
+                <CompanyField serverURL={props.url} userId={userId} />
+            </Form.Item>
             <Form.Item name="relatedTarget" label="Related content">
                 <RelatedTargetField />
             </Form.Item>

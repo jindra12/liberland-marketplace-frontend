@@ -20,7 +20,7 @@ describe("company card", () => {
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListCompaniesByIdentity",
-            { identityId: "identity-nova", page: 1, limit: 7, url: MAIN_SERVER_URL },
+            { identityId: "identity-nova", page: 1, limit: 20, url: MAIN_SERVER_URL },
             "Companies",
             "Harbor Labs",
         );

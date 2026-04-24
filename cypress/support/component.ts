@@ -109,7 +109,7 @@ afterEach(function (this: Mocha.Context) {
         });
     }
 
-    if (this.currentTest?.state === "failed" && Cypress.browser.isHeaded !== true) {
+    if (this.currentTest?.state === "failed" && !Cypress.browser.isHeaded) {
         const cypress = Cypress as CypressWithStop;
         cypress.stop?.();
         return;

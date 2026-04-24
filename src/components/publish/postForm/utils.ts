@@ -9,7 +9,7 @@ import type { RelatedTargetSelection } from "../../shared/post/types";
 
 export const stripMarkdownToText = (markdown: string): string => {
     const html = marked.parse(markdown, { async: false }) as string;
-    return html.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ");
+    return html.replace(/&nbsp;/g, " ");
 };
 
 export const buildSeoDescription = (markdown: string): string => {

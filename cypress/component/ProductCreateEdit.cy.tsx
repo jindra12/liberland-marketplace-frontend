@@ -118,6 +118,17 @@ describe("product create/edit", () => {
             assertSelectValue("Company", ownedCompanyName);
             assertFormFieldValue("Product URL", "https://editable.signal.example");
             assertFormFieldValue("Inventory", "7");
+            cy.contains(".ant-form-item", "Price (USD)")
+                .find(".ant-form-item-control-input-content")
+                .invoke("outerWidth")
+                .then((priceWidth) => {
+                    cy.contains(".ant-form-item", "Product URL")
+                        .find(".ant-form-item-control-input-content")
+                        .invoke("outerWidth")
+                        .then((urlWidth) => {
+                            expect(priceWidth).to.equal(urlWidth);
+                        });
+                });
 
             fillFormField("Product Name", updatedProductName);
             fillFormField("Price (USD)", "89");

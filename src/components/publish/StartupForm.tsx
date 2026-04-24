@@ -22,11 +22,10 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = (props) =>
             className="Publish__form"
         >
             <StartupFormBasicsFields
-                companyOptions={startupFormModel.companyOptions}
                 existingImageUrl={props.initialValues?.existingImageUrl}
                 identityOptions={startupFormModel.identityOptions}
-                isCompaniesLoading={startupFormModel.isCompaniesLoading}
                 isIdentitiesLoading={startupFormModel.isIdentitiesLoading}
+                userId={startupFormModel.userId}
                 url={props.url}
             />
             <StartupFormResourcesFields />
