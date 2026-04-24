@@ -1,15 +1,18 @@
-query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1, $sort: String = "-contentRankScore") {
     Jobs(
         draft: false
         where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }
         limit: $limit
         page: $page
+        sort: $sort
     ) {
         docs {
             id
             isSubscribed
             serverURL
             title
+            hasLiked
+            likeCount
             companyIdentityId
             company {
                 id

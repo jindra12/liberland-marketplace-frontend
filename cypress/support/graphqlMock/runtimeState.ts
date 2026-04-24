@@ -1,26 +1,31 @@
 import { mainFixtures } from "./fixtures";
 import { coopFixtures } from "./coopFixtures";
 import { guestFixtures } from "./guestFixtures";
-import type { GraphQLFixtureBundle, MockCollection, MockNode } from "./types";
+import type { MockCollection, MockNode } from "./types";
+import type { GraphQLFixtureBundle as FixtureGraphQLFixtureBundle } from "./fixtures/types";
 
 export type GraphQLRequestBody = {
     operationName?: string;
     variables?: {
         searchTerm?: string;
+        limit?: number;
+        page?: number;
     };
     query?: string;
 };
 
 export const nowIso = (): string => new Date().toISOString();
 
-export const cloneFixtureBundle = (bundle: GraphQLFixtureBundle): GraphQLFixtureBundle => structuredClone(bundle);
+export const cloneFixtureBundle = (bundle: FixtureGraphQLFixtureBundle): FixtureGraphQLFixtureBundle => structuredClone(bundle);
 
 export const isPlainObject = (value: unknown): value is Record<string, unknown> =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
 export const cloneValue = <T>(value: T): T => structuredClone(value);
 
-export const searchNode = (value: Record<string, unknown>): MockNode => value as MockNode;
+export const searchNode = (value: Record<string, unknown>): MockNode => {
+    return value as MockNode;
+};
 
 export const collection = (docs: MockNode[]): MockCollection => ({
     docs,
@@ -68,6 +73,7 @@ let nextIds = {
     comment: 1,
     company: 1,
     job: 1,
+    post: 1,
     order: 1,
     product: 1,
     startup: 1,
@@ -80,6 +86,7 @@ const resetIdCounters = () => {
         comment: 1,
         company: 1,
         job: 1,
+        post: 1,
         order: 1,
         product: 1,
         startup: 1,
@@ -108,6 +115,18 @@ export const useGraphQLFixturesForHost = (host: string): void => {
     }
 
     activeFixtures = mainFixturesState;
+};
+
+export const getGraphQLFixturesForHost = (host: string) => {
+    if (host === "127.0.0.1:3011") {
+        return coopFixturesState;
+    }
+
+    if (host === "127.0.0.1:3012") {
+        return guestFixturesState;
+    }
+
+    return mainFixturesState;
 };
 
 export const nextNodeId = (prefix: keyof typeof nextIds): string => {

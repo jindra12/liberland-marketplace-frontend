@@ -1,14 +1,18 @@
 @import "@solana/wallet-adapter-react-ui/styles.css";
 @import "@tronweb3/tronwallet-adapter-react-ui/style.css";
-@import "react-comments-section/dist/index.css";
+@import "@uiw/react-md-editor/markdown-editor.css";
+@import "@uiw/react-markdown-preview/markdown.css";
 @import "./styles/queries";
 @import "./styles/buttons";
+@import "./styles/utilities";
 @import "./styles/header";
 @import "./styles/layout";
 @import "./styles/loading";
+@import "./styles/animations";
 @import "./styles/splash";
 @import "./styles/jobs";
 @import "./styles/entities";
+@import "./styles/comments";
 @import "./styles/infinity-scroll";
 @import "./styles/filters";
 @import "./styles/markdown";
@@ -19,6 +23,8 @@
 @import "./styles/endpoints";
 @import "./styles/share";
 @import "./styles/unsubscribe";
+@import "./styles/search";
+@import "./styles/scrollbars";
 @import "./styles/crypto";
 @import "./styles/errors";
 

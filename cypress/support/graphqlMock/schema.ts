@@ -10,6 +10,8 @@ export const graphqlSchema = buildSchema(`
     scalar mutationCompanyUpdateInput
     scalar mutationJobInput
     scalar mutationJobUpdateInput
+    scalar mutationPostInput
+    scalar mutationPostUpdateInput
     scalar mutationOrderInput
     scalar mutationOrderUpdateInput
     scalar mutationProductInput
@@ -17,6 +19,16 @@ export const graphqlSchema = buildSchema(`
     scalar mutationStartupInput
     scalar mutationStartupUpdateInput
     scalar mutationUserUpdateInput
+
+    enum LikeableCollectionMutation {
+        companies
+        identities
+        jobs
+        posts
+        products
+        startups
+        ventures
+    }
 
     type Query {
         Carts(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
@@ -69,8 +81,22 @@ export const graphqlSchema = buildSchema(`
         Identities(draft: Boolean, limit: Int, page: Int, sort: String, searchTerm: String, where: JSON): MockCollection!
         Comments(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
         Syndications(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
+        Comment(id: String!, draft: Boolean): MockNode
         Company(id: String!, draft: Boolean): MockNode
         Job(id: String!, draft: Boolean): MockNode
+        Post(id: String!, draft: Boolean): MockNode
+        Posts(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+            companyIds: [JSON!]
+        ): MockCollection!
         Product(id: String!, draft: Boolean): MockNode
         Startup(id: String!, draft: Boolean): MockNode
         Identity(id: String!, draft: Boolean): MockNode
@@ -87,6 +113,9 @@ export const graphqlSchema = buildSchema(`
         createJob(data: mutationJobInput, draft: Boolean): MockNode
         deleteJob(id: String!): MockNode
         updateJob(id: String!, data: mutationJobUpdateInput, draft: Boolean): MockNode
+        createPost(data: mutationPostInput, draft: Boolean): MockNode
+        deletePost(id: String!): MockNode
+        updatePost(id: String!, data: mutationPostUpdateInput, draft: Boolean): MockNode
         createProduct(data: mutationProductInput, draft: Boolean): MockNode
         deleteProduct(id: String!): MockNode
         updateProduct(id: String!, data: mutationProductUpdateInput, draft: Boolean): MockNode
@@ -97,13 +126,22 @@ export const graphqlSchema = buildSchema(`
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode
+        updateComment(id: String!, data: JSON): MockNode
         updateCommentContent(id: String!, content: String!): MockNode
         createNotificationSubscription(data: JSON): MockNode
         deleteNotificationSubscription(id: String!): MockNode
         joinStartup(id: String!): MockNode
         leaveStartup(id: String!): MockNode
         updateUser(id: String!, data: mutationUserUpdateInput): MockNode
+        setLikeState(collection: LikeableCollectionMutation!, id: String!, liked: Boolean!): LikeStateMutationResult
         trackAnalyticsEvent(input: AnalyticsTrackInput): MockNode
+    }
+
+    type LikeStateMutationResult {
+        collection: LikeableCollectionMutation
+        hasLiked: Boolean
+        id: String
+        likeCount: Int
     }
 
     type SalaryRange {
@@ -146,12 +184,82 @@ export const graphqlSchema = buildSchema(`
         nextPage: Int
     }
 
+    enum Post_RelatedPosts_RelationTo {
+        posts
+        companies
+        jobs
+        products
+        startups
+        identities
+    }
+
+    type Post_RelatedPosts_Relationship {
+        relationTo: Post_RelatedPosts_RelationTo
+        value: Post_RelatedPosts
+    }
+
+    union Post_RelatedPosts = Post | Company | Identity | Job | Product | Startup
+
+    type Media {
+        id: String
+        url: String
+        alt: String
+        filename: String
+        width: Float
+        height: Float
+        mimeType: String
+    }
+
+    type Post {
+        id: String
+        title: String
+        slug: String
+        heroImage: Media
+        company: Company
+    }
+
+    type Company {
+        id: String
+        name: String
+        image: Media
+    }
+
+    type Identity {
+        id: String
+        name: String
+        identityName: String
+        image: Media
+    }
+
+    type Job {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
+    type Product {
+        id: String
+        name: String
+        image: Media
+        company: Company
+    }
+
+    type Startup {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
     type MockNode {
         id: JSON
         name: JSON
         title: JSON
         description: JSON
+        slug: JSON
         serverURL: JSON
+        serverUrl: JSON
         _status: JSON
         website: JSON
         phone: JSON
@@ -160,6 +268,9 @@ export const graphqlSchema = buildSchema(`
         anonymousHash: JSON
         replyPostRelationTo: JSON
         replyPostValue: JSON
+        likeCount: JSON
+        hasLiked: JSON
+        replyCount: JSON
         currency: JSON
         secret: JSON
         subtotal: JSON
@@ -201,6 +312,8 @@ export const graphqlSchema = buildSchema(`
         width: JSON
         height: JSON
         alt: JSON
+        publishedAt: JSON
+        contentRankScore: JSON
         isSubscribed: JSON
         isActive: JSON
         success: JSON
@@ -237,10 +350,13 @@ export const graphqlSchema = buildSchema(`
         message: JSON
         allowedIdentities: [MockNode!]
         disallowedIdentities: [MockNode!]
-        cryptoAddresses: [MockNode!]
+        cryptoAddresses: MockNode
         docs: [MockNode!]
         involvedUsers: [MockNode!]
         items: [MockNode!]
+        categories: [MockNode!]
+        populatedAuthors: [MockNode!]
+        relatedPosts: [Post_RelatedPosts_Relationship!]
         options: [MockNode!]
         properties: [MockNode!]
         transactions: [MockNode!]
@@ -249,6 +365,8 @@ export const graphqlSchema = buildSchema(`
         wallets: [MockNode!]
         cryptoPrices: [MockNode!]
         image: MockNode
+        heroImage: MockNode
+        meta: MockNode
         company: MockNode
         identity: MockNode
         createdBy: MockNode

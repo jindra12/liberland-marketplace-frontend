@@ -101,7 +101,7 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <ProfileListingsSection userId={userId} />
+            <ProfileListingsSection userId={userId} serverURL={selectedServerUrl} />
         </div>
     );
 };

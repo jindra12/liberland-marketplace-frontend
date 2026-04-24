@@ -1,0 +1,152 @@
+.EntityCommentsSection {
+    width: 100%;
+}
+
+.EntityCommentsSection__title {
+    margin-bottom: 0 !important;
+}
+
+.EntityCommentsSection__list {
+    width: 100%;
+}
+
+.EntityCommentsSection__loader {
+    min-height: 72px;
+}
+
+.CommentComposer {
+    padding: 16px;
+    border: 1px solid var(--ant-color-border-secondary);
+    border-radius: 20px;
+    background: var(--ant-color-fill-alter);
+}
+
+.CommentComposer__actions {
+    width: 100%;
+}
+
+.CommentCard {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--ant-color-border-secondary);
+    border-radius: 20px;
+    background: var(--ant-color-bg-elevated);
+}
+
+.CommentCard--reply {
+    margin-left: 18px;
+    padding-left: 14px;
+    background: color-mix(in srgb, var(--ant-color-bg-elevated) 92%, var(--ant-color-fill-alter));
+}
+
+.CommentCard__header {
+    width: 100%;
+}
+
+.CommentCard__avatar {
+    flex-shrink: 0;
+}
+
+.CommentCard__meta {
+    min-width: 0;
+}
+
+.CommentCard__author {
+    font-weight: 700;
+}
+
+.CommentCard__timestamp {
+    font-size: 12px;
+}
+
+.CommentCard__content {
+    margin-bottom: 0 !important;
+    white-space: pre-wrap;
+}
+
+.CommentCard__actions {
+    width: 100%;
+}
+
+.CommentCard__actionBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0;
+}
+
+.CommentCard__actionIcon {
+    display: none;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.CommentCard__actionLabel {
+    display: inline;
+}
+
+.CommentCard__repliesToggleMeta {
+    display: none;
+}
+
+.CommentCard__repliesToggle {
+    padding-inline: 0;
+}
+
+@media (max-width: 575px) {
+    .CommentCard__actions {
+        gap: 4px;
+    }
+
+    .CommentCard__actionBtn {
+        min-width: 40px;
+        padding-inline: 10px;
+    }
+
+    .CommentCard__actionIcon {
+        display: inline-flex;
+    }
+
+    .CommentCard__actionLabel {
+        display: none;
+    }
+
+    .CommentCard__repliesToggleMeta {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: normal;
+    }
+}
+
+.CommentCard__children {
+    width: 100%;
+}
+
+.CommentRepliesList {
+    width: 100%;
+    padding-left: 18px;
+    border-left: 1px solid var(--ant-color-border-secondary);
+}
+
+.CommentRepliesList__title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.CommentRepliesList__items {
+    width: 100%;
+}
+
+.CommentDetailPage {
+    width: 100%;
+}
+
+.CommentDetailPage__header {
+    width: 100%;
+}
+
+.CommentDetailPage__detail {
+    width: 100%;
+}

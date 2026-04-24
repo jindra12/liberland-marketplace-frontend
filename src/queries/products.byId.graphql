@@ -3,6 +3,7 @@ query ProductById($id: String!, $draft: Boolean = false) {
         id
         isSubscribed
         inventory
+        likeCount
         enableVariants
         variantTypes {
             id

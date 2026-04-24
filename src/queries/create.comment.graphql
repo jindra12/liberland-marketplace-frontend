@@ -1,13 +1,27 @@
-mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $content: String!) {
-    createComment(data: { content: $content, replyPost: $replyToPost }) {
+mutation CreateComment($replyToPost: Comment_ReplyPostRelationshipInput!, $company: String!, $content: String!) {
+    createComment(data: { content: $content, company: $company, replyPost: $replyToPost }) {
         id
         content
-        createdBy {
+        company {
             id
+            serverURL
             name
-            email
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
         }
-        anonymousHash
-        createdAt
+    createdBy {
+      id
+      name
+      email
     }
+    createdAt
+    replyCount
+  }
 }

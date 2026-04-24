@@ -1,5 +1,5 @@
-query ListProducts($page: Int = 1, $limit: Int = 20) {
-    Products(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit) {
+query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Products(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit, sort: $sort) {
         docs {
             id
             isSubscribed
@@ -7,6 +7,8 @@ query ListProducts($page: Int = 1, $limit: Int = 20) {
             name
             inventory
             description
+            hasLiked
+            likeCount
             cryptoAddresses {
                 chain
                 address

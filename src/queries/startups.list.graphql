@@ -1,11 +1,13 @@
-query ListStartups($page: Int = 1, $limit: Int = 20) {
-    Startups(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit) {
+query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Startups(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit, sort: $sort) {
         docs {
             id
             isSubscribed
             serverURL
             title
             description
+            hasLiked
+            likeCount
             stage
             lookingFor
             alreadyHave

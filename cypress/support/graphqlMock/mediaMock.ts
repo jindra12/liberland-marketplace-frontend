@@ -1,4 +1,5 @@
 import { BACKEND_URL } from "../../../src/gqlFetcher";
+import { buildMockImageNode } from "./imageAssets";
 
 let mediaUploadCount = 0;
 
@@ -6,15 +7,7 @@ const nextMediaDoc = () => {
     mediaUploadCount += 1;
     const id = `media-upload-${mediaUploadCount}`;
 
-    return {
-        id,
-        url: `/images/${id}.png`,
-        alt: "Uploaded image",
-        filename: `${id}.png`,
-        mimeType: "image/png",
-        width: 1,
-        height: 1,
-    };
+    return buildMockImageNode(id, "Uploaded image", "avatar");
 };
 
 export const resetMediaUploadMock = () => {

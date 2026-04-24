@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { Divider, Flex, Grid } from "antd";
+import { TeamOutlined } from "@ant-design/icons";
+import { Divider, Flex, Grid, Tag, Typography } from "antd";
 
-import { DetailPageTracker } from "../../analytics/DetailPageTracker";
+import { Comment_ReplyPostRelationshipInputRelationTo } from "../../../generated/graphql";
+import { EntityCommentsSection } from "../../comments/EntityCommentsSection";
 import { Markdown } from "../../Markdown";
-import { DetailShareSection } from "../../share/DetailShareSection";
-import { DetailBackButton } from "../DetailBackButton";
+import { CommonDetail } from "../CommonDetail";
 
 import { StartupDetailHeader } from "./StartupDetailHeader";
 import { StartupDetailResourcesSection } from "./StartupDetailResourcesSection";
-import { StartupDetailTabs } from "./StartupDetailTabs";
 import type { StartupDetailContentProps } from "./types";
 import { getStartupDetailImage, getStartupShareText } from "./utils";
 
@@ -18,42 +18,70 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
     const shareTitle = props.startup.title || "Venture";
 
     return (
-        <Flex
-            flex={1}
-            vertical
+        <CommonDetail
+            className="StartupDetail"
+            serverURL={props.startup.serverURL || undefined}
+            backTo="/ventures"
+            backLabel="Back to ventures"
+            shareLabel="Share this venture"
+            shareTitle={shareTitle}
+            shareText={getStartupShareText(props.startup)}
+            subscriptionTarget={{
+                collection: "startups",
+                targetID: props.startup.id,
+                serverURL: props.startup.serverURL,
+                isSubscribed: props.startup.isSubscribed,
+            }}
             gap={md ? 18 : 16}
-            className="EntityDetail StartupDetail"
-        >
-            <DetailPageTracker serverUrl={props.startup.serverURL || undefined} />
-            <DetailBackButton to="/ventures" label="Back to ventures" />
-            <StartupDetailHeader
-                avatarSize={md ? 120 : 72}
-                imageSrc={getStartupDetailImage(props.startup)}
-                startup={props.startup}
-                startupId={props.startupId}
-            />
+            header={
+                <StartupDetailHeader
+                    avatarSize={md ? 120 : 72}
+                    imageSrc={getStartupDetailImage(props.startup)}
+                    startup={props.startup}
+                    startupId={props.startupId}
+                />
+            }
+            beforeShare={
+                <>
+                    <Divider className="StartupDetail__divider" />
+                    <div className="StartupDetail__section StartupDetail__section--description">
+                        <Markdown>{props.startup.description}</Markdown>
+                    </div>
 
-            <Divider className="StartupDetail__divider" />
-            <div className="StartupDetail__section StartupDetail__section--description">
-                <Markdown>{props.startup.description}</Markdown>
-            </div>
-
-            <StartupDetailResourcesSection startup={props.startup} />
-
-            <Divider className="StartupDetail__divider" />
-            <DetailShareSection
-                label="Share this venture"
-                title={shareTitle}
-                text={getStartupShareText(props.startup)}
-                subscriptionTarget={{
-                    collection: "startups",
-                    targetID: props.startup.id,
-                    serverURL: props.startup.serverURL,
-                    isSubscribed: props.startup.isSubscribed,
-                }}
-            />
-            <Divider className="StartupDetail__divider" />
-            <StartupDetailTabs startup={props.startup} startupId={props.startupId} serverURL={props.serverURL} />
-        </Flex>
+                    <StartupDetailResourcesSection startup={props.startup} />
+                </>
+            }
+            sections={[
+                {
+                    key: "team",
+                    label: `Team (${props.startup.involvedUsers?.length || 0})`,
+                    children:
+                        (props.startup.involvedUsers || []).length > 0 ? (
+                            <Flex gap={8} wrap>
+                                {(props.startup.involvedUsers || []).map((user) => (
+                                    <Tag key={user.id} icon={<TeamOutlined />}>
+                                        {user.name || user.email || "User"}
+                                    </Tag>
+                                ))}
+                            </Flex>
+                        ) : (
+                            <Typography.Text type="secondary">
+                                No team members yet. Be the first to join!
+                            </Typography.Text>
+                        ),
+                },
+                {
+                    key: "comments",
+                    label: "Discussion",
+                    children: (
+                        <EntityCommentsSection
+                            targetId={props.startupId}
+                            relationTo={Comment_ReplyPostRelationshipInputRelationTo.Startups}
+                            serverURL={props.serverURL}
+                        />
+                    ),
+                },
+            ]}
+        />
     );
 };

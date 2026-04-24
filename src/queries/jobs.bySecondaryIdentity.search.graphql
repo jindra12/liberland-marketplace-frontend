@@ -4,7 +4,7 @@ query SearchJobsBySecondaryIdentity(
     $searchTerm: String!
     $page: Int = 1
     $limit: Int = 20
-    $sort: String
+    $sort: String = "-contentRankScore"
 ) {
     Jobs(
         draft: false

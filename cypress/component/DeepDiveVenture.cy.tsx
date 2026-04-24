@@ -32,14 +32,14 @@ describe("venture deep dive", () => {
             cy.contains("Distribution").should("be.visible");
         });
         cy.get(".ShareSection").should("be.visible").contains("Share this venture");
-        cy.get(".StartupDetail__tabs").contains("Team (2)").should("be.visible");
+        cy.get(".EntityDetail__tabs").contains("Team (2)").should("be.visible");
 
-        cy.contains(".StartupDetail__tabs .ant-tabs-tab", "Discussion").click();
+        cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Discussion").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
             "ListCommentsByTarget",
             {
-                limit: 100,
+                limit: 20,
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Startups],
                 targetId: "startup-sky-relay",

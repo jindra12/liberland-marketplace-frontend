@@ -1,0 +1,222 @@
+query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Posts(
+        draft: false
+        where: { AND: [{ company: { equals: $companyId } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
+        docs {
+            id
+            title
+            slug
+            heroImage {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            meta {
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            createdBy {
+                id
+                name
+            }
+            relatedPosts {
+                relationTo
+                value {
+                    ... on Post {
+                        __typename
+                        id
+                        title
+                        slug
+                        heroImage {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            name
+                            image {
+                                id
+                                url
+                                alt
+                                filename
+                                width
+                                height
+                                mimeType
+                            }
+                        }
+                    }
+                    ... on Company {
+                        __typename
+                        id
+                        name
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                    }
+                    ... on Identity {
+                        __typename
+                        id
+                        identityName: name
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                    }
+                    ... on Job {
+                        __typename
+                        id
+                        title
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            name
+                            image {
+                                id
+                                url
+                                alt
+                                filename
+                                width
+                                height
+                                mimeType
+                            }
+                        }
+                    }
+                    ... on Product {
+                        __typename
+                        id
+                        name
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            name
+                            image {
+                                id
+                                url
+                                alt
+                                filename
+                                width
+                                height
+                                mimeType
+                            }
+                        }
+                    }
+                    ... on Startup {
+                        __typename
+                        id
+                        title
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        company {
+                            id
+                            name
+                            image {
+                                id
+                                url
+                                alt
+                                filename
+                                width
+                                height
+                                mimeType
+                            }
+                        }
+                    }
+                }
+            }
+            categories {
+                id
+                title
+                slug
+            }
+            hasLiked
+            likeCount
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
+    }
+}

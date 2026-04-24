@@ -3,7 +3,7 @@ query SearchCompaniesBySecondaryIdentity(
     $searchTerm: String!
     $page: Int = 1
     $limit: Int = 20
-    $sort: String
+    $sort: String = "-contentRankScore"
 ) {
     Companies(
         draft: false
@@ -24,6 +24,7 @@ query SearchCompaniesBySecondaryIdentity(
             serverURL
             name
             description
+            likeCount
             cryptoAddresses {
                 chain
                 address

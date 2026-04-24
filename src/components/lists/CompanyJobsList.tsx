@@ -6,6 +6,7 @@ import { JobListInternal } from "./JobListInternal";
 
 export interface CompanyJobsListProps {
     companyId: string;
+    serverUrl?: string | null;
 }
 
 export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (props) => {
@@ -14,6 +15,7 @@ export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (p
         companyId: props.companyId,
         page,
         limit: 20,
+        url: props.serverUrl,
     });
 
     return <JobListInternal page={page} query={query} setPage={setPage} />;

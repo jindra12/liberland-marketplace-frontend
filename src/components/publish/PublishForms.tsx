@@ -1,14 +1,22 @@
 import * as React from "react";
 
-import { ArrowLeftOutlined, RocketOutlined, ShopOutlined, TeamOutlined, ToolOutlined } from "@ant-design/icons";
+import {
+    ArrowLeftOutlined,
+    FileTextOutlined,
+    RocketOutlined,
+    ShopOutlined,
+    TeamOutlined,
+    ToolOutlined,
+} from "@ant-design/icons";
 import { Button, Card, Space, Typography } from "antd";
 
 import { CompanyForm } from "./CompanyForm";
 import { JobForm } from "./JobForm";
+import { PostForm } from "./PostForm";
 import { ProductForm } from "./ProductForm";
 import { StartupForm } from "./StartupForm";
 
-type Category = "job" | "company" | "product" | "startup";
+type Category = "job" | "company" | "product" | "post" | "startup";
 export interface PublishFormsProps {
     url: string;
 }
@@ -44,6 +52,17 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                 </Button>
                 <Typography.Title level={3}>List a Product</Typography.Title>
                 <ProductForm mode="create" url={props.url} />
+            </div>
+        );
+    }
+    if (category === "post") {
+        return (
+            <div className="Publish">
+                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
+                    Back
+                </Button>
+                <Typography.Title level={3}>Write a Post</Typography.Title>
+                <PostForm mode="create" url={props.url} />
             </div>
         );
     }
@@ -93,6 +112,17 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                                 Product
                             </Typography.Title>
                             <Typography.Text type="secondary">List a product or service</Typography.Text>
+                        </div>
+                    </Space>
+                </Card>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("post")}>
+                    <Space size={16}>
+                        <FileTextOutlined className="Publish__categoryIcon" />
+                        <div>
+                            <Typography.Title level={4} className="Publish__categoryTitle">
+                                Post
+                            </Typography.Title>
+                            <Typography.Text type="secondary">Write a post</Typography.Text>
                         </div>
                     </Space>
                 </Card>

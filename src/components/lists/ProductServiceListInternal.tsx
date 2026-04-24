@@ -7,19 +7,20 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
 
-import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
+import { ListProductsByCompanyQuery, ListProductsByIdentityQuery, ListProductsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
+import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
-type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
+type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery | ListProductsByIdentityQuery;
 type ProductListItem =
     | NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number]
     | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
@@ -48,6 +49,8 @@ type ProductServiceListInternalProps = {
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const screens = Grid.useBreakpoint();
+    const likeMutation = useLikeProductMutation();
+    const dislikeMutation = useDislikeProductMutation();
     const addToCartSize = screens.lg ? "large" : "middle";
     const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
@@ -83,6 +86,10 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             title={props.title || "Products / Services"}
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
@@ -119,9 +126,12 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         <Tag color="success" icon={<DollarOutlined />}>
                                             {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                         </Tag>
-                                    )}
+                                )}
                                 <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
+                            ) : null}
                             <ListShareDetailButtons
                                 compact
                                 detailPath={detailHref}
@@ -135,9 +145,6 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     isSubscribed: product.isSubscribed,
                                 }}
                             />
-                            {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
-                            ) : null}
                         </Flex>
                     ) : (
                         <Flex

@@ -1,15 +1,20 @@
-query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
+query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1, $sort: String = "-contentRankScore") {
     Products(
         draft: false
         where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }
         limit: $limit
         page: $page
+        sort: $sort
     ) {
         docs {
             id
             isSubscribed
             serverURL
             name
+            description
+            inventory
+            hasLiked
+            likeCount
             cryptoAddresses {
                 chain
                 address
@@ -29,6 +34,12 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
                 cryptoAddresses {
                     chain
                     address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
                 }
                 image {
                     id

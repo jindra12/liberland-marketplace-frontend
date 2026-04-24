@@ -30,3 +30,81 @@
         0 12px 24px rgba(47, 140, 255, 0.16),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+
+.LikeButton.ant-btn {
+    height: auto;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 999px;
+    outline: none;
+    background: transparent;
+    color: #78ffe6;
+    box-shadow: none;
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.32),
+        0 0 8px rgba(35, 255, 214, 0.36),
+        0 0 18px rgba(35, 255, 214, 0.24);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background 180ms ease,
+        color 180ms ease;
+}
+
+.LikeButton.ant-btn::before {
+    display: none;
+}
+
+.LikeButton.ant-btn:hover,
+.LikeButton.ant-btn:focus-visible {
+    outline: none;
+    color: #b1fff3;
+    transform: translateY(-1px);
+    box-shadow: none;
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.4),
+        0 0 10px rgba(105, 255, 226, 0.42),
+        0 0 24px rgba(105, 255, 226, 0.28);
+}
+
+.LikeButton--liked.ant-btn {
+    border: 0;
+    background: transparent;
+    color: #a8fff0;
+}
+
+.LikeButton--liked.ant-btn:hover,
+.LikeButton--liked.ant-btn:focus-visible {
+    outline: none;
+    color: #d5fffa;
+    box-shadow: none;
+}
+
+.LikeButton--loading.ant-btn {
+    cursor: progress;
+}
+
+.LikeButton__heart {
+    font-size: 16px;
+    line-height: 1;
+    filter:
+        drop-shadow(0 0 2px rgba(255, 255, 255, 0.3))
+        drop-shadow(0 0 8px rgba(35, 255, 214, 0.28))
+        drop-shadow(0 0 14px rgba(35, 255, 214, 0.18));
+    transition:
+        transform 180ms ease,
+        opacity 180ms ease,
+        color 180ms ease;
+}
+
+.LikeButton--liked .LikeButton__heart {
+    transform: scale(1.08);
+}
+
+.LikeButton__count {
+    color: inherit !important;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-shadow: inherit;
+}

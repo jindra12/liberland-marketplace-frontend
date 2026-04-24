@@ -7,10 +7,11 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Grid } from "antd";
 
-import { ListCompaniesQuery } from "../../generated/graphql";
+import { ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { AppList } from "../AppList";
+import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
@@ -18,13 +19,15 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 export interface CompanyListInternalProps {
-    query: UseQueryResult<ListCompaniesQuery, unknown>;
+    query: UseQueryResult<ListCompaniesQuery | ListCompaniesByIdentityQuery, unknown>;
     setPage: (page: number) => void;
     page: number;
 }
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
     const { md } = Grid.useBreakpoint();
+    const likeMutation = useLikeCompanyMutation();
+    const dislikeMutation = useDislikeCompanyMutation();
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -49,6 +52,10 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             title="Companies"
             filters={filterNode}
             endMessage={endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>

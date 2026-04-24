@@ -122,7 +122,7 @@ describe("profile", () => {
     });
 
     it("refreshes the form defaults when the selected server changes to COOP", () => {
-        selectProfileServer("Co-op Main (127.0.0.1)");
+        selectProfileServer("Co-op (127.0.0.1)");
 
         screenshotStep("profile-coop-selected");
         assertCoopDefaults();

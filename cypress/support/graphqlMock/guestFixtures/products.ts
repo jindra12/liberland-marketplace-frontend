@@ -1,0 +1,56 @@
+import { image, collection, GUEST_SYNDICATION_URL } from "../fixtures/shared";
+import { companies } from "./companies";
+import { identities } from "./identities";
+import { Product__Status } from "../../../../src/generated/graphql";
+import type { Product } from "../../../../src/generated/graphql";
+
+export const products: Product[] = [
+    {
+        id: "guest-product-harbor-light",
+        name: "Harbor Light",
+        description: "Orderable guest product with company-level Ethereum payments",
+        serverURL: GUEST_SYNDICATION_URL,
+        _status: Product__Status.Published,
+        isSubscribed: false,
+        url: "/products/harbor-light",
+        inventory: 8,
+        orderable: true,
+        enableVariants: false,
+        companyIdentityId: identities[0].id,
+        priceInUSDEnabled: true,
+        priceInUSD: 42,
+        priceInETH: "0.017",
+        priceInSOL: "0.44",
+        priceInTRX: "61",
+        cryptoAddresses: null,
+        variantTypes: [],
+        variants: collection([]),
+        properties: [{ id: "guest-product-prop-1", key: "finish", value: "matte" }],
+        image: image("guest-product-harbor-light", "Harbor Light"),
+        company: companies[0],
+    },
+    {
+        id: "guest-product-harbor-brochure",
+        name: "Harbor Brochure",
+        description: "Non-orderable guest product",
+        serverURL: GUEST_SYNDICATION_URL,
+        _status: Product__Status.Published,
+        isSubscribed: false,
+        url: "https://harbor-craft.example/products/harbor-brochure",
+        inventory: 2,
+        orderable: false,
+        enableVariants: false,
+        companyIdentityId: identities[0].id,
+        priceInUSDEnabled: true,
+        priceInUSD: 9,
+        priceInETH: "0.002",
+        priceInSOL: "0.06",
+        priceInTRX: "8",
+        cryptoAddresses: null,
+        variantTypes: [],
+        variants: collection([]),
+        properties: [{ id: "guest-product-prop-2", key: "format", value: "digital" }],
+        image: image("guest-product-harbor-brochure", "Harbor Brochure"),
+        company: companies[0],
+    },
+];

@@ -1,15 +1,17 @@
-query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
+query ListStartupsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Startups(
         draft: false
         where: { AND: [{ company: { equals: $companyId } }, { _status: { equals: published } }] }
         page: $page
         limit: $limit
+        sort: $sort
     ) {
         docs {
             id
             isSubscribed
             title
             description
+            likeCount
             stage
             lookingFor
             alreadyHave

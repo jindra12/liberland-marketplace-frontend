@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Button, Empty, Modal } from "antd";
 
+import { EndpointAuthAction } from "../../EndpointAuthAction";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { RouteButton } from "../../RouteButton";
 
@@ -34,16 +35,23 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
     };
     return (
         <>
-            <Button
-                block={props.block}
-                type="primary"
-                size={size}
-                disabled={isBusy}
-                onClick={handleBuyNow}
-                className="AddToCartButton__buyNow"
-            >
-                Buy now
-            </Button>
+            <EndpointAuthAction>
+                {({ runWithAuthOrLogin }) => (
+                    <Button
+                        block={props.block}
+                        type="primary"
+                        size={size}
+                        disabled={isBusy}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            runWithAuthOrLogin(handleBuyNow);
+                        }}
+                        className="AddToCartButton__buyNow"
+                    >
+                        Buy now
+                    </Button>
+                )}
+            </EndpointAuthAction>
             {preparedPurchase && (
                 <>
                     {preparedPurchase.candidateProfileAddresses.length === 0 ? (

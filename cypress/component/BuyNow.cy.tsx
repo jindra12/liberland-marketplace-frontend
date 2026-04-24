@@ -1,7 +1,10 @@
+import { UserManager } from "oidc-client-ts";
+
 import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
+    screenshotStep,
     waitForDetailQuery,
     waitForMeUserQuery,
 } from "../support/component-tests/utils";
@@ -32,7 +35,9 @@ const openBuyNow = () => {
 };
 
 describe("buy now", () => {
-    it("does not show Buy now to anonymous users", () => {
+    it("shows Buy now to anonymous users and redirects them to login", () => {
+        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+
         mountAnonymousRoute(guestProductRoute, [GUEST_SERVER_URL]);
         waitForDetailQuery(
             GUEST_SERVER_URL,
@@ -44,7 +49,10 @@ describe("buy now", () => {
         );
 
         cy.contains("h1", "Harbor Light").should("be.visible");
-        cy.get(".AddToCartButton__buyNow").should("not.exist");
+        cy.get(".AddToCartButton__buyNow").should("be.visible");
+
+        cy.contains(".AddToCartButton__buyNow", "Buy now").click();
+        cy.wrap(signinRedirect).should("have.been.calledOnce");
     });
 
     it("does not show Buy now on non-orderable products", () => {
@@ -69,9 +77,7 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".BuyNowCreateOrderStep", "No default shipping addresses found").should("be.visible");
-        cy.screenshot("buy-now-no-default-shipping-addresses", {
-            capture: "fullPage",
-        });
+        screenshotStep("buy-now-no-default-shipping-addresses");
         cy.contains(".BuyNowCreateOrderStep .ant-modal-footer .ant-btn", "Go to profile")
             .should("be.visible")
             .click({ force: true });
@@ -87,16 +93,12 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
-        cy.screenshot("buy-now-shipping-address-picker", {
-            capture: "fullPage",
-        });
+        screenshotStep("buy-now-shipping-address-picker");
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
-        cy.screenshot("buy-now-payment-modal-after-address-choice", {
-            capture: "fullPage",
-        });
+        screenshotStep("buy-now-payment-modal-after-address-choice");
         cy.get(".BuyNowPaymentModal .ant-modal-close").click();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
@@ -109,9 +111,7 @@ describe("buy now", () => {
         openBuyNow();
 
         cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
-        cy.screenshot("buy-now-saved-shipping-address-payment-modal", {
-            capture: "fullPage",
-        });
+        screenshotStep("buy-now-saved-shipping-address-payment-modal");
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
 
@@ -132,8 +132,6 @@ describe("buy now", () => {
                     });
             });
 
-        cy.screenshot("buy-now-compact-purchase-control", {
-            capture: "fullPage",
-        });
+        screenshotStep("buy-now-compact-purchase-control");
     });
 });

@@ -1,5 +1,5 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { fillFormField, mountAnonymousRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
+import { fillFormField, mountAnonymousRoute, screenshotStep } from "../support/component-tests/utils";
 
 const anonymousCartSecrets = {
     [MAIN_SERVER_URL]: "anon-shopping-main-secret",
@@ -22,14 +22,17 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
         serverUrl === MAIN_SERVER_URL ? [MAIN_SERVER_URL, COOP_SERVER_URL] : [COOP_SERVER_URL, MAIN_SERVER_URL],
         anonymousCartSecrets,
     );
-    waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail").should("be.visible");
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
     screenshotStep(`wallet-stub-product-${id}`);
 };
 
 const openOrderPaymentPage = () => {
-    openProduct(MAIN_SERVER_URL, "/products-services/product-harbor-lantern", "product-harbor-lantern", "Harbor Lantern");
-    openProduct(MAIN_SERVER_URL, "/products-services/product-solar-widget", "product-solar-widget", "Solar Widget");
+    openProduct(
+        COOP_SERVER_URL,
+        "/products-services/coop-product-lighthouse-kit",
+        "coop-product-lighthouse-kit",
+        "Lighthouse Kit",
+    );
     openProduct(MAIN_SERVER_URL, "/products-services/product-solar-rig", "product-solar-rig", "Solar Rig");
     openProduct(MAIN_SERVER_URL, "/products-services/product-shore-kit", "product-shore-kit", "Shore Kit");
     openProduct(
@@ -50,43 +53,25 @@ const openOrderPaymentPage = () => {
     screenshotStep("wallet-stub-payment-page");
 };
 
+const payWallet = (paymentCard: string, chainLabel: string, screenshotName: string) => {
+    cy.contains(".ant-card", paymentCard).within(() => {
+        cy.contains(chainLabel)
+            .parents(".ant-list-item")
+            .first()
+            .within(() => {
+                cy.contains("button", "Connect").click();
+                cy.contains("button", "Pay").should("be.visible").click();
+                cy.contains("Payment submitted").should("be.visible");
+                screenshotStep(screenshotName);
+            });
+    });
+};
+
 describe("wallet stubs", () => {
     it("connects wallets and completes the fake payment flow", () => {
         openOrderPaymentPage();
-
-        cy.contains(".ant-card", "1st payment").within(() => {
-            cy.contains("Ethereum (ETH)")
-                .parents(".ant-list-item")
-                .first()
-                .within(() => {
-                    cy.contains("button", "Connect").click();
-                    cy.contains("button", "Pay").should("be.visible").click();
-                    cy.pause();
-                    cy.contains("Payment submitted").should("be.visible");
-                    screenshotStep("wallet-stub-ethereum-paid");
-                });
-
-            cy.contains("Solana (SOL)")
-                .parents(".ant-list-item")
-                .first()
-                .within(() => {
-                    cy.contains("button", "Connect").click();
-                    cy.contains("button", "Pay").should("be.visible").click();
-                    cy.pause();
-                    cy.contains("Payment submitted").should("be.visible");
-                    screenshotStep("wallet-stub-solana-paid");
-                });
-
-            cy.contains("Tron (TRX)")
-                .parents(".ant-list-item")
-                .first()
-                .within(() => {
-                    cy.contains("button", "Connect").click();
-                    cy.contains("button", "Pay").should("be.visible").click();
-                    cy.pause();
-                    cy.contains("Payment submitted").should("be.visible");
-                    screenshotStep("wallet-stub-tron-paid");
-                });
-        });
+        payWallet("1st payment", "Ethereum (ETH)", "wallet-stub-ethereum-paid");
+        payWallet("1st payment", "Solana (SOL)", "wallet-stub-solana-paid");
+        payWallet("2nd payment", "Tron (TRX)", "wallet-stub-tron-paid");
     });
 });

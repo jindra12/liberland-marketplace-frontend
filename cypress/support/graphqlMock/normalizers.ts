@@ -1,4 +1,4 @@
-import { createCompanyRef, createCryptoPriceNode, createImageRef, createIdentityRef, createNodeRef, createProductRef, createTransactionHashNode, createTransactionRef, createUserRef, createVariantRef } from "./responseHelpers";
+import { createCompanyRef, createCryptoPriceNode, createImageRef, createIdentityRef, createJobRef, createNodeRef, createPostRef, createProductRef, createStartupRef, createTransactionHashNode, createTransactionRef, createUserRef, createVariantRef } from "./responseHelpers";
 import { isPlainObject, searchNode } from "./runtimeState";
 import type { MockNode } from "./types";
 
@@ -127,6 +127,109 @@ export const normalizeStartupData = (data: Record<string, unknown>) => {
     }
 };
 
+export const normalizePostData = (data: Record<string, unknown>) => {
+    normalizeSharedRelations(data, "company");
+    normalizeSharedRelations(data, "createdBy");
+    if (typeof data.heroImage === "string") {
+        data.heroImage = createImageRef(data.heroImage);
+    }
+    if (isPlainObject(data.meta)) {
+        if (typeof data.meta.image === "string") {
+            data.meta.image = createImageRef(data.meta.image);
+        }
+        data.meta = searchNode({
+            title: data.meta.title,
+            description: data.meta.description,
+            image: data.meta.image,
+        });
+    }
+    if (Array.isArray(data.categories)) {
+        data.categories = data.categories
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: value,
+                        title: value,
+                        slug: value,
+                    });
+                }
+
+                const id = typeof value.id === "string" ? value.id : `post-category-${index + 1}`;
+                return searchNode({
+                    id,
+                    title: typeof value.title === "string" ? value.title : id,
+                    slug: typeof value.slug === "string" ? value.slug : id,
+                });
+            });
+    }
+    if (Array.isArray(data.populatedAuthors)) {
+        data.populatedAuthors = data.populatedAuthors
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: value,
+                        nickname: value,
+                        image: null,
+                    });
+                }
+
+                if (typeof value.image === "string") {
+                    value.image = createImageRef(value.image);
+                }
+
+                const id = typeof value.id === "string" ? value.id : `post-populated-author-${index + 1}`;
+                return searchNode({
+                    id,
+                    nickname: typeof value.nickname === "string" ? value.nickname : typeof value.name === "string" ? value.name : id,
+                    image: value.image,
+                });
+            });
+    }
+    if (Array.isArray(data.relatedPosts)) {
+        data.relatedPosts = data.relatedPosts
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value, index) => {
+                const buildValue = (relationTo: string, id: string | undefined): MockNode | null => {
+                    switch (relationTo) {
+                        case "companies":
+                            return createCompanyRef(id);
+                        case "identities":
+                            return createIdentityRef(id);
+                        case "jobs":
+                            return createJobRef(id);
+                        case "products":
+                            return createProductRef(id);
+                        case "startups":
+                            return createStartupRef(id);
+                        case "posts":
+                            return createPostRef(id);
+                        default:
+                            return id ? searchNode({ __typename: "Post", id }) : null;
+                    }
+                };
+
+                if (typeof value === "string") {
+                    return searchNode({
+                        id: `post-related-${index + 1}`,
+                        relationTo: "posts",
+                        value: buildValue("posts", value),
+                    });
+                }
+
+                const relationTo = typeof value.relationTo === "string" ? value.relationTo : "posts";
+                const refValue = buildValue(relationTo, typeof value.value === "string" ? value.value : undefined);
+
+                return searchNode({
+                    id: typeof value.id === "string" ? value.id : `post-related-${index + 1}`,
+                    relationTo,
+                    value: refValue,
+                });
+            });
+    }
+};
+
 const normalizeCartItems = (items: unknown, prefix: string): MockNode[] => {
     if (!Array.isArray(items)) {
         return [];
@@ -211,6 +314,7 @@ export const normalizeCartData = (data: Record<string, unknown>) => {
 };
 
 export const normalizeCommentData = (data: Record<string, unknown>) => {
+    normalizeSharedRelations(data, "company");
     if (isPlainObject(data.replyPost)) {
         const relationTo = typeof data.replyPost.relationTo === "string" ? data.replyPost.relationTo : undefined;
         const value = typeof data.replyPost.value === "string" ? data.replyPost.value : undefined;

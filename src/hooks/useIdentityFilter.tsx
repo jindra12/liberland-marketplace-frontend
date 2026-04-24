@@ -13,7 +13,7 @@ interface UseTribeFilterOptions<TItem> {
     setPage?: (page: number) => void;
 }
 
-export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) {
+export const useIdentityFilter = <TItem,>(options: UseTribeFilterOptions<TItem>) => {
     const { allItems, hasNextPage, getIdentityIds, isLoading, isFetching, page, setPage } = options;
 
     const [searchParams] = useSearchParams();
@@ -49,7 +49,7 @@ export function useIdentityFilter<TItem>(options: UseTribeFilterOptions<TItem>) 
             </div>
         ) : undefined;
 
-    const filterNode = <IdentityFilter selectedIds={selectedIdentityIds} onChange={setSelectedIdentityIds} />;
+    const filterNode = <IdentityFilter onChange={setSelectedIdentityIds} />;
 
     return { items, hasMore: hasNextPage, endMessage, filterNode };
 }

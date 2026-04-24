@@ -1,12 +1,14 @@
-query ListIdentities($page: Int = 1, $limit: Int = 20) {
-    Identities(draft: false, page: $page, limit: $limit) {
+query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
         docs {
             id
             isSubscribed
             serverURL
+            hasLiked
             name
             description
             website
+            likeCount
             itemCount
             image {
                 id

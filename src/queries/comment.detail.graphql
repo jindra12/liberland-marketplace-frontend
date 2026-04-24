@@ -1,0 +1,39 @@
+query CommentDetail($id: String!) {
+  Comment(id: $id) {
+    id
+    content
+    serverUrl
+    createdBy {
+      id
+      name
+      email
+    }
+    company {
+      id
+      serverURL
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    replyPostRelationTo
+    replyPostValue
+    createdAt
+    updatedAt
+    likeCount
+    hasLiked
+    replyCount
+    replyComment {
+      id
+    }
+    replyPost {
+      relationTo
+    }
+  }
+}

@@ -1,0 +1,27 @@
+mutation CreatePostComment($replyToPost: Comment_ReplyPostRelationshipInput!, $company: String!, $content: String!) {
+  createComment(data: { content: $content, company: $company, replyPost: $replyToPost }) {
+    id
+    content
+    company {
+      id
+      serverURL
+      name
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    createdBy {
+      id
+      name
+      email
+    }
+    createdAt
+    replyCount
+  }
+}

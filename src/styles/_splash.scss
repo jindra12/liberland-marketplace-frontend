@@ -20,48 +20,57 @@
     &__heroInner {
         position: relative;
         isolation: isolate;
-        padding: clamp(38px, 5vw, 62px) clamp(24px, 4vw, 44px);
-        border-radius: 38px;
-        background:
-            radial-gradient(circle at 50% 18%, rgba(121, 230, 177, 0.12), transparent 20%),
-            radial-gradient(circle at 0% 28%, rgba(47, 140, 255, 0.2), transparent 22%),
-            radial-gradient(circle at 100% 30%, rgba(47, 140, 255, 0.2), transparent 24%),
-            linear-gradient(180deg, rgba(3, 15, 27, 0.94), rgba(4, 16, 29, 0.96));
-        box-shadow:
-            0 28px 68px rgba(0, 0, 0, 0.28),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        width: min(1360px, 100%);
+        min-height: 150px;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
 
         &::before {
             content: "";
             position: absolute;
             inset: 0;
             z-index: 0;
-            background:
-                linear-gradient(rgba(76, 143, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(76, 143, 255, 0.05) 1px, transparent 1px);
-            background-size: 56px 56px;
-            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 100%);
+            background: radial-gradient(circle at 50% 34%, rgba(0, 167, 216, 0.18), transparent 28%);
             pointer-events: none;
         }
     }
 
-    &__eyebrow {
-        position: relative;
+    &__heroBackdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: min(300px, 36vw);
+        height: auto;
+        margin: auto;
+        opacity: 0.22;
+        transform: translateY(2px) scale(1);
+        filter:
+            brightness(0.42)
+            saturate(0.7)
+            drop-shadow(0 0 28px rgba(0, 167, 216, 0.16))
+            drop-shadow(0 0 58px rgba(121, 230, 177, 0.08));
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &__heroOverlay {
+        position: absolute;
+        inset: 0;
         z-index: 1;
-        display: inline-flex;
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        min-height: 32px;
-        margin: 0;
-        padding: 0 14px;
-        width: fit-content;
-        border-radius: 999px;
-        background: rgba(8, 25, 39, 0.82);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
-        color: #79e6b1;
-        font-size: 11px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
+        justify-content: center;
+        min-height: 100%;
+        max-width: 100%;
+        text-align: center;
+        padding: clamp(6px, 1vw, 14px) clamp(10px, 1.5vw, 24px);
+    }
+
+    &__heroOverlayInner {
+        width: 100%;
     }
 
     &__heroTitle {
@@ -74,18 +83,10 @@
         line-height: 0.98 !important;
         letter-spacing: -0.055em;
         text-wrap: balance;
-        font-size: 86px !important;
+        font-size: 46px !important;
 
-        @include lg-min {
-            font-size: 72px !important;
-        }
-
-        @include md-min {
-            font-size: 58px !important;
-        }
-
-        @include sm-min {
-            font-size: 46px !important;
+        @media (min-width: 1200px) {
+            font-size: 86px !important;
         }
     }
 
@@ -103,20 +104,70 @@
         margin: 0 !important;
         position: relative;
         z-index: 1;
-        max-width: 44rem;
+        max-width: 36rem;
         text-align: center;
         color: rgba(188, 217, 203, 0.84);
-        font-size: 20px;
-        line-height: 1.6;
+        font-size: 14px;
+        line-height: 1.5;
 
-        @include md-min {
-            font-size: 17px;
+        @media (min-width: 1200px) {
+            font-size: 18px;
+            max-width: 44rem;
         }
     }
 
     &__heroActions {
         position: relative;
         z-index: 1;
+        margin-top: 8px;
+    }
+
+    &__heroWordmark.ant-typography {
+        margin: 0 !important;
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(135deg, #f6fbff 0%, #8ef6d2 42%, #7edfff 68%, #5aa6ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent !important;
+        font-size: 46px !important;
+        line-height: 0.94 !important;
+        letter-spacing: -0.025em;
+        text-align: center;
+        text-shadow:
+            0 0 18px rgba(121, 230, 177, 0.24),
+            0 0 42px rgba(90, 166, 255, 0.18);
+
+        @media (min-width: 1200px) {
+            font-size: 86px !important;
+        }
+    }
+
+    &__heroPrimaryBtn.ant-btn {
+        position: relative;
+        z-index: 1;
+        min-width: 142px;
+        min-height: 36px;
+        border-radius: 999px;
+        font-weight: 800;
+        box-shadow:
+            0 14px 32px rgba(90, 166, 255, 0.22),
+            0 0 0 1px rgba(121, 230, 177, 0.14);
+    }
+
+    &__heroSecondaryBtn.ant-btn {
+        position: relative;
+        z-index: 1;
+        min-width: 142px;
+        min-height: 36px;
+        border-radius: 999px;
+        font-weight: 800;
+        color: #79e6b1;
+        border-color: rgba(121, 230, 177, 0.3);
+        background: rgba(6, 23, 37, 0.72);
+        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
     }
 
     &__sections {
@@ -354,122 +405,296 @@
     }
 }
 
-.SplashEntityCard {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(6, 20, 35, 0.94), rgba(4, 16, 29, 0.92));
-    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    overflow: hidden;
+.IdentityMarketAccordion,
+.MarketAccordion {
+    width: 100%;
+}
 
-    .ant-card-head {
-        border-bottom: 0;
-        min-height: 64px;
-        padding-inline: 18px;
-        background: rgba(8, 25, 39, 0.72);
-        box-shadow: inset 0 -1px 0 rgba(28, 61, 86, 0.34);
-    }
+.IdentityMarketAccordion__label,
+.MarketAccordion__label {
+    min-width: 0;
+}
 
-    .ant-card-body {
-        padding: 18px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-    }
+.IdentityMarketAccordion__titleLink,
+.MarketAccordion__titleLink {
+    display: inline-flex;
+    width: fit-content;
+    color: inherit;
+    text-decoration: none;
+    transition:
+        transform 0.22s ease,
+        text-shadow 0.22s ease,
+        color 0.22s ease;
 
-    .ant-list {
-        flex: 1;
-    }
-
-    .ant-list-item {
-        padding: 16px 0;
-        align-items: flex-start;
-    }
-
-    .ant-btn {
-        font-weight: 800;
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-1px);
+        text-decoration: none;
     }
 }
 
-.SplashEntityCard__title {
+.IdentityMarketAccordion__title.ant-typography,
+.MarketAccordion__title.ant-typography {
     margin: 0 !important;
-    font-size: 32px !important;
+    color: inherit;
+    font-size: 36px !important;
     line-height: 1 !important;
 }
 
-.SplashEntityCard__titleLink {
+.MarketAccordion__titleLink--products,
+.MarketAccordion__titleLink--jobs,
+.MarketAccordion__titleLink--companies,
+.MarketAccordion__titleLink--ventures,
+.MarketAccordion__titleLink--tribes,
+.SplashPage__tribesTitleLink {
+    text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
+}
+
+.MarketAccordion__titleLink--products {
+    color: #7ee3df;
+
+    &:hover,
+    &:focus-visible {
+        color: #b7faf6;
+        text-shadow:
+            0 0 10px rgba(126, 227, 223, 0.5),
+            0 0 24px rgba(126, 227, 223, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--jobs {
+    color: #79e6b1;
+
+    &:hover,
+    &:focus-visible {
+        color: #bbffd8;
+        text-shadow:
+            0 0 10px rgba(121, 230, 177, 0.48),
+            0 0 24px rgba(121, 230, 177, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--companies {
+    color: #8ab8ff;
+
+    &:hover,
+    &:focus-visible {
+        color: #d0e2ff;
+        text-shadow:
+            0 0 10px rgba(138, 184, 255, 0.5),
+            0 0 24px rgba(138, 184, 255, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--ventures {
+    color: #ffd166;
+
+    &:hover,
+    &:focus-visible {
+        color: #ffe9b3;
+        text-shadow:
+            0 0 10px rgba(255, 209, 102, 0.52),
+            0 0 24px rgba(255, 209, 102, 0.24);
+    }
+}
+
+.SplashPage__tribesTitleLink {
+    color: #c49bff;
+
+    &:hover,
+    &:focus-visible {
+        color: #ecdcff;
+        text-shadow:
+            0 0 10px rgba(196, 155, 255, 0.5),
+            0 0 24px rgba(196, 155, 255, 0.24);
+    }
+}
+
+.MarketAccordion__titleLink--tribes {
+    color: #c49bff;
+
+    &:hover,
+    &:focus-visible {
+        color: #ecdcff;
+        text-shadow:
+            0 0 10px rgba(196, 155, 255, 0.5),
+            0 0 24px rgba(196, 155, 255, 0.24);
+    }
+}
+
+.IdentityMarketAccordion__identityLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    color: rgba(188, 217, 203, 0.88);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.IdentityMarketAccordion__identityAvatar {
+    flex-shrink: 0;
+    border-radius: 999px;
+    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
+}
+
+.IdentityMarketAccordion__identityName {
+    min-width: 0;
     color: inherit;
+}
+
+.MarketAccordion__section {
+    width: 100%;
+}
+
+.MarketAccordion__header {
+    min-width: 0;
+    margin-bottom: 40px;
+}
+
+.SplashPage__tribesSection {
+    padding: 28px;
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
+    box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(147, 214, 255, 0.06);
+}
+
+.SplashPage__tribesHeader {
+    margin-bottom: 18px;
+}
+
+.SplashPage__tribesEyebrow {
+    color: #c49bff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.SplashPage__tribesTitle {
+    margin: 0 !important;
+    color: #eef8f3 !important;
+    line-height: 1.02 !important;
+}
+
+.SplashPage__tribesDescription {
+    margin: 0 !important;
+    color: rgba(188, 217, 203, 0.82);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.SplashPage__tribesMeta {
+    color: rgba(188, 217, 203, 0.76);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.SplashEntityCard__carousel {
+    width: 100%;
+
+    .slick-list {
+        overflow: hidden;
+    }
+
+    .slick-slide {
+        height: auto;
+    }
+
+    .slick-slide > div {
+        height: 100%;
+    }
+}
+
+.SplashEntityCard__carouselSlide {
+    height: 100%;
+    padding-inline: 8px;
+}
+
+.SplashEntityCard__stack {
+    width: 100%;
+}
+
+.SplashEntityCard__stackItem {
+    width: 100%;
+}
+
+.SplashEntityCard {
+    width: 100%;
+}
+
+.SplashEntityCard__spin {
+    width: 100%;
+}
+
+.SplashEntityCard__empty {
+    display: block;
+    padding: 16px 4px;
+    color: rgba(188, 217, 203, 0.72);
+    font-weight: 700;
+}
+
+.SplashEntityCard__itemCard.ant-card {
+    height: 100%;
+    border: 0;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(7, 20, 35, 0.96), rgba(4, 16, 29, 0.96));
+    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
+}
+
+.SplashEntityCard__itemCard .ant-card-body {
+    height: 100%;
+    padding: 20px;
+}
+
+.SplashEntityCard__itemBody {
+    height: 100%;
+    min-width: 0;
+}
+
+.SplashEntityCard__itemHeader {
+    min-width: 0;
+}
+
+.SplashEntityCard__itemHeading {
+    min-width: 0;
+    flex: 1;
+}
+
+.SplashEntityCard__itemTitle.ant-typography {
+    margin: 0 !important;
+    color: inherit;
+    font-size: 24px !important;
+    line-height: 1.1 !important;
 }
 
 .SplashEntityCard__itemLink {
     color: #eef8f3;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 800;
+    font-size: 24px;
 }
 
 .SplashEntityCard__meta {
-    margin-top: 10px;
+    margin-top: 4px;
 
     .ant-tag {
         margin-inline-end: 0;
     }
 }
 
-.SplashEntityCard__itemBody {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-    min-width: 0;
-}
-
-.SplashEntityCard .ant-list-item-meta {
-    margin-bottom: 0;
-}
-
-.SplashEntityCard .ant-list-item-action {
-    margin-inline-start: 12px;
-}
-
 .SplashEntityCard__avatar {
-    border-radius: 12px;
+    flex-shrink: 0;
+    border-radius: 16px;
     box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
 
     img {
         object-fit: contain;
     }
-}
-
-.SplashEntityCard__moreLink.ant-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(100% + 36px);
-    height: auto;
-    margin: auto -18px -18px;
-    padding: 18px 20px;
-    border: 0;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 800;
-    color: #eef8f3;
-    background: rgba(8, 25, 39, 0.82);
-    box-shadow: inset 0 1px 0 rgba(28, 61, 86, 0.34);
-    border-radius: 0 0 24px 24px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: background 0.15s;
-
-    &:hover,
-    &:focus-visible {
-        color: #eef8f3;
-        background: rgba(10, 31, 49, 0.94);
-    }
-}
-
-.SplashEntityCard__moreLink.ant-btn.ant-btn-link {
-    color: #eef8f3;
 }
 
 @include lg-min {
@@ -487,59 +712,72 @@
 }
 
 @include xl-min {
-    .SplashEntityCard {
-        border-radius: 20px;
-
-        .ant-card-head {
-            padding-inline: 16px;
-        }
-
-        .ant-card-body {
-            padding: 16px;
-        }
-
-        .ant-list-item {
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .ant-list-item-action {
-            width: 100%;
-            margin-top: 0;
-            margin-inline-start: 0;
-        }
-
-        .ant-list-item-action > li {
-            width: 100%;
-            padding: 0;
-        }
+    .IdentityMarketAccordion__title.ant-typography,
+    .MarketAccordion__title.ant-typography {
+        font-size: 34px !important;
     }
 
-    .SplashEntityCard__title {
-        font-size: 28px !important;
+    .SplashPage__heroInner {
+        min-height: 180px;
+    }
+
+    .SplashEntityCard__itemCard .ant-card-body {
+        padding: 18px;
     }
 
     .SplashEntityCard__itemLink {
         font-size: 17px;
     }
 
-    .SplashEntityCard__itemBody {
-        width: 100%;
-    }
-
-    .SplashEntityCard__moreLink.ant-btn {
-        width: calc(100% + 32px);
-        margin: auto -16px -16px;
-        padding: 16px 18px;
-        border-radius: 0 0 20px 20px;
+    .SplashEntityCard__itemTitle.ant-typography {
+        font-size: 20px !important;
     }
 }
 
+.SplashPage__identitySection .IdentityMarketAccordion {
+    margin-top: 20px;
+}
+
+.SplashPage__marketAccordion {
+    margin-top: 20px;
+}
+
+.SplashPage__tribesCarousel {
+    margin-top: 20px;
+}
+
+.SplashPage__marketNote.ant-alert {
+    border: 0;
+    background: linear-gradient(180deg, rgba(8, 25, 39, 0.82), rgba(5, 18, 31, 0.82));
+}
+
 @include md-min {
+    .IdentityMarketAccordion__title.ant-typography,
+    .MarketAccordion__title.ant-typography {
+        font-size: 30px !important;
+    }
+
+    .SplashEntityCard__itemCard .ant-card-body {
+        padding: 16px;
+    }
+
+    .SplashEntityCard__itemLink {
+        font-size: 16px;
+    }
+
     .SplashPage {
         &__heroInner {
-            border-radius: 28px;
-            padding: 28px 18px;
+            min-height: 180px;
+        }
+
+        &__heroBackdrop {
+            width: min(220px, 48vw);
+            opacity: 0.2;
+            transform: translateY(2px) scale(1);
+        }
+
+        &__heroOverlay {
+            padding: 12px 12px 18px;
         }
 
         &__identitySection {
@@ -548,6 +786,11 @@
         }
 
         &__syndicationSection {
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        &__tribesSection {
             padding: 20px;
             border-radius: 24px;
         }
@@ -582,9 +825,33 @@
         &__identityHeading {
             font-size: 24px !important;
         }
+
+        &__heroWordmark.ant-typography {
+            font-size: 40px !important;
+            letter-spacing: -0.02em;
+        }
+
+        &__heroDescription {
+            max-width: 16rem;
+            font-size: 11px;
+        }
+
+        &__heroPrimaryBtn.ant-btn {
+            min-width: 124px;
+            min-height: 38px;
+        }
+
+        &__heroSecondaryBtn.ant-btn {
+            min-width: 124px;
+            min-height: 38px;
+        }
     }
 
     .SplashPage__syndicationCardTitle {
+        font-size: 20px !important;
+    }
+
+    .SplashPage__tribesTitle {
         font-size: 20px !important;
     }
 }

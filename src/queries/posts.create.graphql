@@ -1,0 +1,65 @@
+mutation CreatePost($data: mutationPostInput!, $draft: Boolean) {
+  createPost(data: $data, draft: $draft) {
+    id
+    title
+    slug
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    company {
+      id
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    createdBy {
+      id
+      name
+    }
+    hasLiked
+    likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
+  }
+}

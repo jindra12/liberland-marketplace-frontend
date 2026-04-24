@@ -33,6 +33,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
     const updateMutation = useUpdateCompanyMutation();
     const identitiesQuery = useListIdentitiesQuery({
         limit: 100,
+        url: props.url,
     });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
     const { form, draftRef, loading, onFinish } = useEntityForm({

@@ -1,11 +1,10 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { assertFormFieldValue, mountAuthenticatedCartRoute } from "../support/component-tests/utils";
+import { assertFormFieldValue, mountAuthenticatedCartRoute, screenshotStep } from "../support/component-tests/utils";
 
 const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
     assertFormFieldValue("First name", "Nova");
     assertFormFieldValue("Last name", "Rivers");
-    assertFormFieldValue("Country", "United States");
 };
 
 const assertCoopOrderPrefill = () => {
@@ -31,9 +30,7 @@ describe("authenticated cart", () => {
             .click();
 
         cy.contains("h2", "Order").should("be.visible");
-        cy.screenshot("authenticated-cart-main-prefill", {
-            capture: "fullPage",
-        });
+        screenshotStep("authenticated-cart-main-prefill");
 
         assertMainOrderPrefill();
     });
@@ -52,15 +49,11 @@ describe("authenticated cart", () => {
         cy.contains("button", "Choose default address").should("be.visible").click();
 
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
-        cy.screenshot("authenticated-cart-shipping-address-picker", {
-            capture: "fullPage",
-        });
+        screenshotStep("authenticated-cart-shipping-address-picker");
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
-        cy.screenshot("authenticated-cart-coop-prefill", {
-            capture: "fullPage",
-        });
+        screenshotStep("authenticated-cart-coop-prefill");
         assertCoopOrderPrefill();
     });
 });

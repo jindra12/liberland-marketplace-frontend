@@ -1,5 +1,11 @@
-query ListJobsByCreator($userId: JSON, $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
-    Jobs(draft: $draft, page: $page, limit: $limit, where: { createdBy: { equals: $userId } }) {
+query ListJobsByCreator(
+    $userId: JSON,
+    $page: Int = 1,
+    $limit: Int = 100,
+    $sort: String = "-contentRankScore",
+    $draft: Boolean = false,
+) {
+    Jobs(draft: $draft, page: $page, limit: $limit, sort: $sort, where: { createdBy: { equals: $userId } }) {
         docs {
             id
             isSubscribed

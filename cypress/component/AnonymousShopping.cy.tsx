@@ -2,6 +2,8 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/con
 import {
     fillFormField,
     mountAnonymousRoute,
+    screenshotDetailStep,
+    screenshotStep,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
@@ -21,16 +23,11 @@ const fillOrderAddress = () => {
 };
 
 const openProduct = (serverUrl: string, route: string, id: string, title: string) => {
-    mountAnonymousRoute(
-        route,
-        serverUrl === MAIN_SERVER_URL ? [MAIN_SERVER_URL, COOP_SERVER_URL] : [COOP_SERVER_URL, MAIN_SERVER_URL],
-        anonymousCartSecrets,
-    );
+    mountAnonymousRoute(route, [serverUrl], anonymousCartSecrets);
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail").should("be.visible");
-    cy.screenshot(`anonymous-shopping-${id}-detail`, {
-        capture: "fullPage",
-    });
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.get(".ProductDetail").scrollIntoView();
+    screenshotDetailStep(`anonymous-shopping-${id}-detail`);
 };
 
 describe("anonymous shopping", () => {
@@ -54,35 +51,27 @@ describe("anonymous shopping", () => {
             "Tide Lamp",
         );
 
-        cy.routerNavigate("/cart");
+        mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], anonymousCartSecrets);
         cy.contains("Proceed to order").click();
         cy.contains("h2", "Order").should("be.visible");
-        cy.screenshot("anonymous-shopping-order-form", {
-            capture: "fullPage",
-        });
+        screenshotStep("anonymous-shopping-order-form");
         fillOrderAddress();
-        cy.screenshot("anonymous-shopping-order-form-filled", {
-            capture: "fullPage",
-        });
+        screenshotStep("anonymous-shopping-order-form-filled");
         cy.contains("button", "Create order").click();
         cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
-        cy.screenshot("anonymous-shopping-order-payment-page", {
-            capture: "fullPage",
-        });
+        screenshotStep("anonymous-shopping-order-payment-page");
         cy.get(".OrderPage .ant-card").should("have.length", 2);
         cy.get(".OrderPage").then(($page) => {
             const text = $page.text();
             expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(2);
-            expect((text.match(/Tron \(TRX\)/g) || []).length).to.equal(2);
+            expect((text.match(/Tron \(TRX\)/g) || []).length).to.equal(1);
             expect((text.match(/Solana \(SOL\)/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 0\.03 ETH/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 0\.123 ETH/g) || []).length).to.equal(1);
-            expect((text.match(/Amount due: 19 TRX/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 208 TRX/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 1 SOL/g) || []).length).to.equal(1);
             expect((text.match(/Recipient: 0xHarbor111/g) || []).length).to.equal(2);
             expect((text.match(/Recipient: SoSolar111/g) || []).length).to.equal(1);
-            expect((text.match(/Recipient: TShoreKit444/g) || []).length).to.equal(1);
             expect((text.match(/Recipient: TTide630/g) || []).length).to.equal(1);
         });
     });

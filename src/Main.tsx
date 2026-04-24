@@ -28,11 +28,14 @@ const Jobs = React.lazy(() => import("./components/Jobs"));
 const Companies = React.lazy(() => import("./components/Companies"));
 const Identities = React.lazy(() => import("./components/Identities"));
 const ProductsServices = React.lazy(() => import("./components/ProductsServices"));
+const Posts = React.lazy(() => import("./components/Posts"));
 const Syndication = React.lazy(() => import("./components/Syndication"));
 const Job = React.lazy(() => import("./components/detail/JobDetail"));
 const Company = React.lazy(() => import("./components/detail/CompanyDetail"));
 const Identity = React.lazy(() => import("./components/detail/IdentityDetail"));
 const ProductService = React.lazy(() => import("./components/detail/ProductServiceDetail"));
+const Post = React.lazy(() => import("./components/detail/PostDetail"));
+const CommentDetail = React.lazy(() => import("./components/comments/CommentDetail"));
 const SyndicationDetail = React.lazy(() => import("./components/detail/SyndicationDetail"));
 const AppLayout = React.lazy(() => import("./components/AppLayout"));
 const Profile = React.lazy(() => import("./components/Profile"));
@@ -40,6 +43,7 @@ const Publish = React.lazy(() => import("./components/Publish"));
 const EditJob = React.lazy(() => import("./components/edit/EditJob"));
 const EditCompany = React.lazy(() => import("./components/edit/EditCompany"));
 const EditProduct = React.lazy(() => import("./components/edit/EditProduct"));
+const EditPost = React.lazy(() => import("./components/edit/EditPost"));
 const Startups = React.lazy(() => import("./components/Startups"));
 const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
@@ -64,150 +68,164 @@ const suspense =
         </RouteErrorBoundary>
     );
 
-const config = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            refetchOnWindowFocus: false,
-        },
-    },
-});
+const Main: React.FunctionComponent = () => {
+    const [config] = React.useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        refetchOnMount: false,
+                        refetchOnReconnect: false,
+                        refetchOnWindowFocus: false,
+                    },
+                },
+            }),
+    );
 
-const Main: React.FunctionComponent = () => (
-    <QueryClientProvider client={config}>
-        <HelmetProvider>
-            <EndpointContextProvider>
-                <TronContext>
-                    <SolanaContext>
-                        <ThirdwebProvider>
-                            <AuthContextProvider>
-                                <BrowserRouter>
-                                    <CypressHistorySupport />
-                                    <AppAnalyticsProvider>
-                                        <AntProvider>
-                                            <AppErrorBoundary>
-                                                <AppRouteTitle />
-                                                <RouteScrollToTop>
-                                                    <CartMutationProvider>
-                                                        <React.Suspense fallback={<AppBootSkeleton />}>
-                                                            <AppLayout>
-                                                                <Routes>
-                                                                    <Route Component={suspense(Splash)} path="/" />
-                                                                    <Route Component={suspense(Jobs)} path="/jobs" />
-                                                                    <Route
-                                                                        Component={suspense(Companies)}
-                                                                        path="/companies"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Identities)}
-                                                                        path="/tribes"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(ProductsServices)}
-                                                                        path="/products-services"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Syndication)}
-                                                                        path="/syndication"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Job, { trackPage: false })}
-                                                                        path="/jobs/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Company, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/companies/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Identity, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/tribes/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(ProductService, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/products-services/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(SyndicationDetail, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/syndication/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Profile)}
-                                                                        path="/profile"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Publish)}
-                                                                        path="/publish"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(EditJob, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/jobs/edit/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(EditCompany, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/companies/edit/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(EditProduct, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/products-services/edit/:id"
-                                                                    />
-                                                                    <Route Component={suspense(Cart)} path="/cart" />
-                                                                    <Route Component={suspense(Order)} path="/order" />
-                                                                    <Route
-                                                                        Component={suspense(Startups)}
-                                                                        path="/ventures"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Startup, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/ventures/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(EditStartup, {
-                                                                            trackPage: false,
-                                                                        })}
-                                                                        path="/ventures/edit/:id"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(Unsubscribe)}
-                                                                        path="/unsubscribe"
-                                                                    />
-                                                                    <Route
-                                                                        Component={suspense(AuthCallback)}
-                                                                        path="/auth/callback"
-                                                                    />
-                                                                    <Route Component={suspense(NotFound)} path="*" />
-                                                                </Routes>
-                                                            </AppLayout>
-                                                        </React.Suspense>
-                                                    </CartMutationProvider>
-                                                </RouteScrollToTop>
-                                            </AppErrorBoundary>
-                                        </AntProvider>
-                                    </AppAnalyticsProvider>
-                                </BrowserRouter>
-                            </AuthContextProvider>
-                        </ThirdwebProvider>
-                    </SolanaContext>
-                </TronContext>
-            </EndpointContextProvider>
-        </HelmetProvider>
-    </QueryClientProvider>
-);
+    return (
+        <QueryClientProvider client={config}>
+            <HelmetProvider>
+                <EndpointContextProvider>
+                    <TronContext>
+                        <SolanaContext>
+                            <ThirdwebProvider>
+                                <AuthContextProvider>
+                                    <BrowserRouter>
+                                        <CypressHistorySupport />
+                                        <AppAnalyticsProvider>
+                                            <AntProvider>
+                                                <AppErrorBoundary>
+                                                    <AppRouteTitle />
+                                                    <RouteScrollToTop>
+                                                        <CartMutationProvider>
+                                                            <React.Suspense fallback={<AppBootSkeleton />}>
+                                                                <AppLayout>
+                                                                    <Routes>
+                                                                        <Route Component={suspense(Splash)} path="/" />
+                                                                        <Route Component={suspense(Jobs)} path="/jobs" />
+                                                                        <Route
+                                                                            Component={suspense(Companies)}
+                                                                            path="/companies"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(Identities)}
+                                                                            path="/tribes"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(ProductsServices)}
+                                                                            path="/products-services"
+                                                                        />
+                                                                        <Route Component={suspense(Posts)} path="/posts" />
+                                                                        <Route
+                                                                            Component={suspense(Syndication)}
+                                                                            path="/syndication"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(Job, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/jobs/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(Company, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/companies/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(Identity, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/tribes/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(ProductService, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/products-services/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(Post, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/posts/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(CommentDetail, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/comments/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(SyndicationDetail, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/syndication/:id"
+                                                                        />
+                                                                        <Route Component={suspense(Profile)} path="/profile" />
+                                                                        <Route Component={suspense(Publish)} path="/publish" />
+                                                                        <Route
+                                                                            Component={suspense(EditJob, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/jobs/edit/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(EditCompany, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/companies/edit/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(EditProduct, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/products-services/edit/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(EditPost, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/posts/edit/:id"
+                                                                        />
+                                                                        <Route Component={suspense(Cart)} path="/cart" />
+                                                                        <Route Component={suspense(Order)} path="/order" />
+                                                                        <Route Component={suspense(Startups)} path="/ventures" />
+                                                                        <Route
+                                                                            Component={suspense(Startup, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/ventures/:id"
+                                                                        />
+                                                                        <Route
+                                                                            Component={suspense(EditStartup, {
+                                                                                trackPage: false,
+                                                                            })}
+                                                                            path="/ventures/edit/:id"
+                                                                        />
+                                                                        <Route Component={suspense(Unsubscribe)} path="/unsubscribe" />
+                                                                        <Route
+                                                                            Component={suspense(AuthCallback)}
+                                                                            path="/auth/callback"
+                                                                        />
+                                                                        <Route Component={suspense(NotFound)} path="*" />
+                                                                    </Routes>
+                                                                </AppLayout>
+                                                            </React.Suspense>
+                                                        </CartMutationProvider>
+                                                    </RouteScrollToTop>
+                                                </AppErrorBoundary>
+                                            </AntProvider>
+                                        </AppAnalyticsProvider>
+                                    </BrowserRouter>
+                                </AuthContextProvider>
+                            </ThirdwebProvider>
+                        </SolanaContext>
+                    </TronContext>
+                </EndpointContextProvider>
+            </HelmetProvider>
+        </QueryClientProvider>
+    );
+};
 
 export default Main;

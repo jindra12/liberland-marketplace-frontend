@@ -19,6 +19,7 @@ import { formatEmploymentType } from "../shared/job/utils";
 
 type ProfileListingsSectionProps = {
     userId?: string;
+    serverURL?: string | null;
 };
 export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSectionProps> = (props) => {
     const deleteJobMutation = useDeleteJobMutation();
@@ -29,6 +30,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
         {
             userId: props.userId,
             draft: true,
+            url: props.serverURL,
         },
         {
             enabled: !!props.userId,
@@ -39,6 +41,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
         {
             userId: props.userId,
             draft: true,
+            url: props.serverURL,
         },
         {
             enabled: !!props.userId,
@@ -49,6 +52,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
         {
             userId: props.userId,
             draft: true,
+            url: props.serverURL,
         },
         {
             enabled: !!props.userId,
@@ -60,6 +64,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
         {
             companyIds,
             draft: true,
+            url: props.serverURL,
         },
         {
             enabled: companyIds.length > 0,

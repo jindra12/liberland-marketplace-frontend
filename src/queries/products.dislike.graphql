@@ -1,0 +1,8 @@
+mutation DislikeProduct($id: String!) {
+  setLikeState(collection: products, id: $id, liked: false) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}

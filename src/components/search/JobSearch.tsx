@@ -1,61 +1,148 @@
 import * as React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { DocType, SearchOption } from "../../types";
-import { AutoSuggest } from "../AutoSuggest";
-import { useSearchJobsQuery } from "../hooks";
+import { Avatar, Flex } from "antd";
+
+import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useListJobsQuery, useSearchJobsQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
+import { formatEmploymentType, formatSalary } from "../shared/job/utils";
+import { getJobMeta } from "../shared/jobDerived";
+import { JobDetailsSummary } from "../shared/JobDetailsSummary";
+import type { RelatedTargetSelection } from "../shared/post/types";
+
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchJobs } from "./utils";
 
 export interface JobSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
-    const navigate = useNavigate();
-    const [term, setTerm] = React.useState("");
-    const jobs = useSearchJobsQuery(
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
+    const defaultJobs = useListJobsQuery({
+        limit: 5,
+        page: 1,
+    });
+    const searchedJobs = useSearchJobsQuery(
         {
-            searchTerm: term,
+            searchTerm: submittedSearchValue,
             limit: 5,
-            page: 1,
+            page,
         },
         {
-            enabled: term.length > 0,
+            enabled: submittedSearchValue.length > 0,
         },
     );
-    const options: SearchOption[] =
-        !term || !jobs.isFetched || !jobs.data
-            ? []
-            : (jobs.data.Searches?.docs ?? [])
-                  .filter((searchDoc) => searchDoc.doc?.relationTo === "jobs")
-                  .map((searchDoc, index) => {
-                      const doc = searchDoc.doc!.value as DocType;
-                      const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                      return {
-                          key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                          value,
-                          id: doc.id!,
-                          label: searchDoc.title,
-                          image: getImage(doc),
-                      };
-                  });
+    const searchDocs = useAccumulatedDocs(searchedJobs.data?.Searches?.docs, page);
+    const items =
+        submittedSearchValue.length > 0
+            ? mapSearchJobs(searchDocs)
+            : defaultJobs.data?.Jobs?.docs ?? [];
+    const loading =
+        submittedSearchValue.length > 0 ? searchedJobs.isLoading && searchDocs.length === 0 : defaultJobs.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedJobs.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (job: { id: string; title?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Jobs,
+            value: job.id,
+            label: job.title || "Job",
+        });
+        props.onClose();
+    };
 
     return (
-        <AutoSuggest
-            onClose={props.onClose}
-            onSelect={(_, option) => {
-                navigate(`/jobs/${option.id}`);
-                props.onClose();
-            }}
-            options={options}
+        <SearchDrawer
             title="Job search"
-            runSearch={setTerm}
-            setOptions={() => {
-                setTerm("");
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
+                setPage(1);
             }}
-            isLoading={jobs.isLoading}
-        />
+            placeholder="Search jobs"
+        >
+            <SearchResultsList
+                title={
+                    submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Jobs"
+                }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
+                items={items}
+                loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
+                refetch={submittedSearchValue.length > 0 ? searchedJobs.refetch : defaultJobs.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
+                emptyText="No matching jobs"
+                renderItem={{
+                    title: (job) => (
+                        <Flex justify="space-between" align="center" wrap>
+                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                {job.title}
+                            </Link>
+                            {job.company?.identity?.name && (
+                                <IdentityTagLink identity={job.company.identity} color="success" />
+                            )}
+                        </Flex>
+                    ),
+                    avatar: (job) => {
+                        const imageSrc = getImage(job) || getImage(job.company);
+                        return imageSrc ? (
+                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={imageSrc}
+                                    alt={job.title || ""}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
+                        ) : undefined;
+                    },
+                    body: (job) => {
+                        const salary = formatSalary(
+                            job.salaryRange?.min,
+                            job.salaryRange?.max,
+                            job.salaryRange?.currency,
+                        );
+                        const { bounty, positions } = getJobMeta(job);
+                        const isInactive = job.isActive === false;
+                        const employmentType = formatEmploymentType(job.employmentType);
+                        const postedAt = typeof job.postedAt === "string" ? job.postedAt : undefined;
+
+                        return (
+                            <div className="EntityList__body JobList__body">
+                                <JobDetailsSummary
+                                    companyName={job.company?.name}
+                                    companyId={job.company?.id}
+                                    location={job.location}
+                                    employmentType={employmentType}
+                                    salary={salary}
+                                    bounty={bounty}
+                                    positions={positions}
+                                    postedAt={postedAt}
+                                    isInactive={isInactive}
+                                    showCompanyIcon
+                                    metaSize={[8, 4]}
+                                />
+                                <Markdown className="Markdown--clamp3 EntityList__description">{job.description}</Markdown>
+                            </div>
+                        );
+                    },
+                }}
+            />
+        </SearchDrawer>
     );
 };

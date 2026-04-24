@@ -2,6 +2,10 @@
     width: min(960px, 100%);
     margin: 0 auto;
     padding: clamp(8px, 1.5vw, 18px) 0 clamp(28px, 4vw, 56px);
+
+    &__skeletonInput {
+        width: 220px;
+    }
 }
 
 .UnsubscribePage__card {

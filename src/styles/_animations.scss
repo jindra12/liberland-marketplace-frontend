@@ -1,0 +1,16 @@
+.AnimatedIn {
+    opacity: var(--default-opacity, 0);
+    animation: AnimatedInFade 1s ease-out forwards;
+}
+
+@keyframes AnimatedInFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .AnimatedIn {
+        opacity: 1;
+        animation: none;
+    }
+}

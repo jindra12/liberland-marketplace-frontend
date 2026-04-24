@@ -4,6 +4,7 @@ import {
     activeFixtures,
     cloneValue,
     createNode,
+    getGraphQLFixturesForHost,
     mergeInto,
     nextNodeId,
     notificationSubscriptions,
@@ -19,13 +20,32 @@ import {
     normalizeCompanyData,
     normalizeJobData,
     normalizeOrderData,
+    normalizePostData,
     normalizeProductData,
     normalizeStartupData,
     normalizeUserData,
 } from "./normalizers";
 import type { MockCollection, MockNode } from "./types";
 
-const matchesSearch = (value: string | undefined, term: string | undefined): boolean => {
+type GraphQLRequestContext = {
+    cypress?: {
+        request?: {
+            url?: string;
+        };
+    };
+};
+
+const getFixturesForContext = (context: unknown) => {
+    const requestUrl = (context as GraphQLRequestContext | undefined)?.cypress?.request?.url;
+    if (!requestUrl) {
+        return activeFixtures;
+    }
+
+    const host = new URL(requestUrl).host;
+    return getGraphQLFixturesForHost(host);
+};
+
+const matchesSearch = (value: string | null | undefined, term: string | null | undefined): boolean => {
     if (!term) {
         return true;
     }
@@ -33,17 +53,41 @@ const matchesSearch = (value: string | undefined, term: string | undefined): boo
     return String(value || "").toLowerCase().includes(term.toLowerCase());
 };
 
+const ensureCommentState = (comment: MockNode): MockNode => {
+    if (comment.hasLiked === undefined) {
+        comment.hasLiked = false;
+    }
+    if (comment.likeCount === undefined) {
+        comment.likeCount = 0;
+    }
+    if (comment.replyCount === undefined) {
+        comment.replyCount = 0;
+    }
+    return comment;
+};
+
+const syncCommentReplyCounts = (comments: MockNode[]): void => {
+    comments.forEach((comment) => {
+        comment.replyCount = comments.filter((candidate) => candidate.replyComment?.id === comment.id).length;
+        ensureCommentState(comment);
+    });
+};
+
 const resolveCollection = (items: MockNode[], args: { page?: number; limit?: number }): MockCollection => {
+    const limit = args.limit && args.limit > 0 ? args.limit : items.length > 0 ? items.length : 1;
+    const page = args.page && args.page > 0 ? args.page : 1;
+    const offset = (page - 1) * limit;
+
     return {
-        docs: items.slice(0, args.limit || items.length),
+        docs: items.slice(offset, offset + limit),
         totalDocs: items.length,
-        limit: args.limit || items.length,
-        totalPages: 1,
-        page: 1,
-        hasPrevPage: false,
-        hasNextPage: false,
-        prevPage: null,
-        nextPage: null,
+        limit,
+        totalPages: Math.max(1, Math.ceil(items.length / limit)),
+        page,
+        hasPrevPage: page > 1,
+        hasNextPage: page * limit < items.length,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page * limit < items.length ? page + 1 : null,
     };
 };
 
@@ -64,6 +108,10 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.jobs.filter((job) => matchesSearch(job.title, args.searchTerm) || matchesSearch(job.description, args.searchTerm)) : activeFixtures.jobs;
         return resolveCollection(filtered, args);
     },
+    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
+        const filtered = args.searchTerm ? activeFixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm)) : activeFixtures.posts;
+        return resolveCollection(filtered, args);
+    },
     Products: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
         const filtered = args.searchTerm ? activeFixtures.products.filter((product) => matchesSearch(product.name, args.searchTerm) || matchesSearch(product.description, args.searchTerm)) : activeFixtures.products;
         return resolveCollection(filtered, args);
@@ -76,21 +124,54 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.identities.filter((identity) => matchesSearch(identity.name, args.searchTerm) || matchesSearch(identity.description, args.searchTerm)) : activeFixtures.identities;
         return resolveCollection(filtered, args);
     },
-    Comments: (_parent: unknown, args: { limit?: number; where?: { replyPostRelationTo?: { equals?: string }; replyPostValue?: { equals?: string }; replyComment?: { equals?: string } } }): MockCollection => {
-        const filtered = activeFixtures.comments.filter((comment) => {
-            if (args.where?.replyComment?.equals) {
-                return comment.replyComment?.id === args.where.replyComment.equals;
-            }
-            if (args.where?.replyPostRelationTo?.equals && args.where.replyPostValue?.equals) {
-                return comment.replyPostRelationTo === args.where.replyPostRelationTo.equals && comment.replyPostValue === args.where.replyPostValue.equals;
-            }
-            return true;
+    Comments: (
+        _parent: unknown,
+        args: {
+            limit?: number;
+            where?: {
+                AND?: Array<{
+                    replyPostRelationTo?: { equals?: string };
+                    replyPostValue?: { equals?: string };
+                    replyComment?: { equals?: string; exists?: boolean };
+                }>;
+                replyPostRelationTo?: { equals?: string };
+                replyPostValue?: { equals?: string };
+                replyComment?: { equals?: string; exists?: boolean };
+            };
+        },
+        context: unknown,
+    ): MockCollection => {
+        const fixtures = getFixturesForContext(context);
+        syncCommentReplyCounts(fixtures.comments);
+        const conditions = Array.isArray(args.where?.AND) ? args.where.AND : [args.where];
+        const filtered = fixtures.comments.filter((comment) => {
+            ensureCommentState(comment);
+            return conditions.every((condition) => {
+                if (!condition) {
+                    return true;
+                }
+                if (condition.replyComment?.equals) {
+                    return comment.replyComment?.id === condition.replyComment.equals;
+                }
+                if (!condition.replyComment?.exists) {
+                    return !comment.replyComment?.id;
+                }
+                if (condition.replyPostRelationTo?.equals && condition.replyPostValue?.equals) {
+                    return comment.replyPostRelationTo === condition.replyPostRelationTo.equals && comment.replyPostValue === condition.replyPostValue.equals;
+                }
+                return true;
+            });
         });
         return resolveCollection(filtered, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
+    Comment: (_parent: unknown, args: { id?: string }): MockNode => {
+        syncCommentReplyCounts(activeFixtures.comments);
+        return ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]);
+    },
     Company: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.companies.find((item) => item.id === args.id) || activeFixtures.companies[0],
     Job: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.jobs.find((item) => item.id === args.id) || activeFixtures.jobs[0],
+    Post: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.posts.find((item) => item.id === args.id) || activeFixtures.posts[0],
     Product: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.products.find((item) => item.id === args.id) || activeFixtures.products[0],
     Startup: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.startups.find((item) => item.id === args.id) || activeFixtures.startups[0],
     Identity: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.identities.find((item) => item.id === args.id) || activeFixtures.identities[0],
@@ -149,6 +230,39 @@ export const mutationResolvers = {
         normalizeJobData(data);
         return updateNode(activeFixtures.jobs, args.id, data, "job");
     },
+    createPost: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        normalizePostData(data);
+        if (data.createdBy === undefined) {
+            data.createdBy = cloneValue(activeFixtures.meUser.user);
+        }
+        if (data.hasLiked === undefined) {
+            data.hasLiked = false;
+        }
+        if (data.likeCount === undefined) {
+            data.likeCount = 0;
+        }
+        if (data.contentRankScore === undefined) {
+            data.contentRankScore = 0;
+        }
+        if (data.publishedAt === undefined && !args.draft) {
+            data.publishedAt = nowIso();
+        }
+        if (data._status === undefined) {
+            data._status = args.draft ? "draft" : "published";
+        }
+
+        return updateNode(activeFixtures.posts, "post-1", data, "post");
+    },
+    deletePost: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.posts, args.id),
+    updatePost: (_parent: unknown, args: { id?: string; data?: Record<string, unknown>; draft?: boolean }): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        normalizePostData(data);
+        if (args.draft !== undefined && data._status === undefined && data.status === undefined) {
+            data._status = args.draft ? "draft" : "published";
+        }
+        return updateNode(activeFixtures.posts, args.id, data, "post");
+    },
     createProduct: (_parent: unknown, args: { data?: Record<string, unknown>; draft?: boolean }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeProductData(data);
@@ -189,12 +303,12 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         normalizeOrderData(data);
         if (data.status === undefined) {
-            data.status = "awaiting-payment";
+            data.status = "processing";
         }
 
         const order = createNode(activeFixtures.orders, "order", data);
         const orderWithCustomerEmail = order as MockNode & { customerEmail?: string };
-        if (orderWithCustomerEmail.customerEmail === undefined && order.customer?.email !== undefined) {
+        if (orderWithCustomerEmail.customerEmail === undefined && typeof order.customer?.email === "string") {
             orderWithCustomerEmail.customerEmail = order.customer.email;
         }
         return order;
@@ -207,27 +321,46 @@ export const mutationResolvers = {
     createComment: (_parent: unknown, args: { data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeCommentData(data);
+        if (data.serverUrl === undefined) {
+            data.serverUrl = activeFixtures.comments[0]?.serverUrl;
+        }
         if (data.createdBy === undefined) {
             data.createdBy = cloneValue(activeFixtures.meUser.user);
         }
         if (data.anonymousHash === undefined) {
             data.anonymousHash = `anon-${nextNodeId("comment")}`;
         }
+        if (data.hasLiked === undefined) {
+            data.hasLiked = false;
+        }
+        if (data.likeCount === undefined) {
+            data.likeCount = 0;
+        }
 
-        return createNode(activeFixtures.comments, "comment", data);
+        const created = ensureCommentState(createNode(activeFixtures.comments, "comment", data));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return created;
     },
-    deleteComment: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.comments, args.id),
+    deleteComment: (_parent: unknown, args: { id?: string }): MockNode => {
+        const removed = removeNode(activeFixtures.comments, args.id);
+        syncCommentReplyCounts(activeFixtures.comments);
+        return removed;
+    },
     updateComment: (_parent: unknown, args: { id?: string; content?: string; data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         if (args.content !== undefined) {
             data.content = args.content;
         }
         normalizeCommentData(data);
-        return updateNode(activeFixtures.comments, args.id, data, "comment");
+        const updated = ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return updated;
     },
     updateCommentContent: (_parent: unknown, args: { id?: string; content?: string }): MockNode => {
         const data = cloneValue({ content: args.content });
-        return updateNode(activeFixtures.comments, args.id, data, "comment");
+        const updated = ensureCommentState(updateNode(activeFixtures.comments, args.id, data, "comment"));
+        syncCommentReplyCounts(activeFixtures.comments);
+        return updated;
     },
     createNotificationSubscription: (
         _parent: unknown,
@@ -293,6 +426,51 @@ export const mutationResolvers = {
         });
         mergeInto(updated, data);
         return updated;
+    },
+    setLikeState: (_parent: unknown, args: { collection?: string; id?: string; liked?: boolean }): MockNode => {
+        const collectionMap: Record<string, MockNode[] | undefined> = {
+            companies: activeFixtures.companies,
+            identities: activeFixtures.identities,
+            jobs: activeFixtures.jobs,
+            comments: activeFixtures.comments,
+            posts: activeFixtures.posts,
+            products: activeFixtures.products,
+            startups: activeFixtures.startups,
+        };
+        const items = collectionMap[args.collection || ""];
+        if (!items) {
+            return searchNode({
+                collection: args.collection,
+                hasLiked: args.liked,
+                id: args.id,
+                likeCount: 0,
+            });
+        }
+
+        const target = items.find((item) => item.id === args.id) || items[0];
+        if (!target) {
+            return searchNode({
+                collection: args.collection,
+                hasLiked: args.liked,
+                id: args.id,
+                likeCount: 0,
+            });
+        }
+
+        const liked = Boolean(args.liked);
+        const currentHasLiked = Boolean(target.hasLiked);
+        const currentLikeCount = typeof target.likeCount === "number" ? target.likeCount : 0;
+        const nextLikeCount = currentHasLiked === liked ? currentLikeCount : Math.max(0, currentLikeCount + (liked ? 1 : -1));
+        target.hasLiked = liked;
+        target.likeCount = nextLikeCount;
+        target.updatedAt = nowIso();
+
+        return searchNode({
+            collection: args.collection,
+            hasLiked: liked,
+            id: target.id,
+            likeCount: nextLikeCount,
+        });
     },
     trackAnalyticsEvent: (): MockNode => ({
         success: true,

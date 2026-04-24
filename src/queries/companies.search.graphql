@@ -1,4 +1,4 @@
-query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
+query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Searches(
         draft: false
         where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: companies } }] }
@@ -20,6 +20,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
                         serverURL
                         name
                         description
+                        likeCount
                         cryptoAddresses {
                             chain
                             address

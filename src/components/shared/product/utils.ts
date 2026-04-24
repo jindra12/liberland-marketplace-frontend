@@ -88,5 +88,5 @@ export const hasCryptoWallet = (entity?: CryptoWalletOwner | null): boolean => {
 };
 
 export const isProductPurchasable = (product?: PurchasableProduct | null): boolean => {
-    return product?.orderable === true && (hasCryptoWallet(product) || hasCryptoWallet(product.company));
+    return Boolean(product?.orderable) && (hasCryptoWallet(product) || hasCryptoWallet(product.company));
 };

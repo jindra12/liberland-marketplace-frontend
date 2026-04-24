@@ -29,7 +29,7 @@ describe("product/service detail", () => {
             MAIN_SERVER_URL,
             "ListCommentsByTarget",
             {
-                limit: 100,
+                limit: 20,
                 page: 1,
                 relationTo: COMMENT_RELATION_TO_QUERY_RELATION[Comment_ReplyPostRelationshipInputRelationTo.Products],
                 targetId: "product-moon-lamp",
@@ -39,7 +39,7 @@ describe("product/service detail", () => {
             "Harbor Labs has strong logistics.",
         );
 
-        cy.get(".ProductDetail").should("be.visible");
+        cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__title", "Moon Lamp").should("be.visible");
         cy.get(".ProductDetail__identityRow").should("be.visible");
         cy.get(".ProductDetail__purchaseMeta").contains("Price: 1.25").should("be.visible");

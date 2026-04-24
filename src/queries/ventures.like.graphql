@@ -1,0 +1,8 @@
+mutation LikeVenture($id: String!, $liked: Boolean!) {
+  setLikeState(collection: ventures, id: $id, liked: $liked) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}

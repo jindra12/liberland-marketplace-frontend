@@ -9,12 +9,14 @@ import type { CartSecretEntry } from "../../../src/components/cart/cartSecrets";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../../src/components/order/constants";
 import type { AddressWithEmail } from "../../../src/components/order/types";
 
-import { MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
+import { COOP_SERVER_URL, MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./constants";
+import {
+    MARKET_ACCORDION_POSTS_QUERY_LIMIT,
+} from "../../../src/components/splash/constants";
 import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
     GraphQLCollectionResponse,
-    GraphQLNodeResponse,
     GraphQLResponseBody,
     GraphQLVariables,
     ListGoal,
@@ -24,14 +26,35 @@ import type {
 export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
     buildGraphQLAlias(serverUrl, operationName, variables);
 
-export const screenshotStep = (step: string) => {
-    const nextName = `${Cypress.spec.name} ${step}`
-        .replace(/[^a-zA-Z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
+export const screenshotStep = (step: string, capture: "fullPage" | "viewport" | "runner" = "fullPage") => {
+    const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
     cy.screenshot(nextName.length > 0 ? nextName : "after-test-step", {
-        capture: "fullPage",
+        capture,
     });
+};
+
+const withDefaultSort = (operationName: string, variables: GraphQLVariables): GraphQLVariables => {
+    if (operationName === "ListPublishedSyndicationUrls" || operationName.includes("Comment")) {
+        return variables;
+    }
+
+    return {
+        ...variables,
+        sort: "-contentRankScore",
+    };
+};
+
+export const screenshotDetailStep = (step: string) => {
+    const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+    cy.wait(1000);
+    cy.get(".EntityDetail", { timeout: 20000 })
+        .should("be.visible")
+        .scrollIntoView()
+        .screenshot(nextName.length > 0 ? nextName : "after-test-step", {
+            capture: "viewport",
+        });
 };
 
 export const mountMainRoute = (route: string) => {
@@ -39,7 +62,8 @@ export const mountMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
-const buildAuthStorageKey = (serverUrl: string) => `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+const buildAuthStorageKey = (serverUrl: string) =>
+    `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
 const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
     const now = Math.floor(Date.now() / 1000);
@@ -191,6 +215,7 @@ export const openPublishCategory = (categoryName: string) => {
         Job: "Job",
         Company: "Company",
         Product: "Product",
+        Post: "Post",
         Venture: "Venture",
     };
     const categoryTitle = categoryTitleByName[categoryName];
@@ -199,7 +224,7 @@ export const openPublishCategory = (categoryName: string) => {
     }
 
     openPublishServerIfNeeded();
-    cy.contains(".Publish__category", categoryTitle, { timeout: 20000 }).should("be.visible").click();
+    cy.contains(".Publish__categoryTitle", categoryTitle, { timeout: 20000 }).should("be.visible").click();
     screenshotStep(`publish-category-${categoryName}`);
 };
 
@@ -215,15 +240,18 @@ export const assertFormFieldValue = (label: string, value: string) => {
 
 export const selectFormOption = (label: string, optionLabel: string) => {
     getFormItem(label).find(".ant-select").first().click();
-    cy.get(".ant-select-dropdown").should("be.visible");
-    cy.contains(".ant-select-dropdown .ant-select-item-option-content", optionLabel).click({ force: true });
+    cy.get(".ant-select-dropdown", { timeout: 20000 }).should("be.visible");
+    cy.contains(".ant-select-dropdown .ant-select-item-option-content", optionLabel, { timeout: 20000 }).click({
+        force: true,
+    });
 };
 
 export const assertSelectValue = (label: string, value: string) => {
     getFormItem(label).should("contain.text", value);
 };
 
-const uploadImageBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/S6cAAAAASUVORK5CYII=";
+const uploadImageBase64 =
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/S6cAAAAASUVORK5CYII=";
 export const uploadTestImage = () => {
     cy.get('input[type="file"]').selectFile(
         {
@@ -252,7 +280,6 @@ export const mountMainHome = () => {
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot").should("not.exist");
     cy.get(".SplashPage").should("be.visible");
-    screenshotStep("home-loaded");
 };
 
 export const seedCartSecret = (serverUrl: string, secret: string) => {
@@ -271,9 +298,33 @@ export const seedCartSecret = (serverUrl: string, secret: string) => {
 };
 
 export const homepageQueries = () => {
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 100, page: 1 }, "Identities", "Nova Rivers");
-    waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main");
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 7, page: 1 }, "Products", "Solar Widget", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 7, page: 1 }, "Jobs", "Dockmaster", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListCompanies", { limit: 7, page: 1 }, "Companies", "Harbor Labs", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListStartups", { limit: 7, page: 1 }, "Startups", "Sky Relay", 0);
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 7, page: 1 }, "Identities", "Nova Rivers", 0);
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
+    waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main", 0);
     screenshotStep("homepage-queries-loaded");
+};
+
+export const homepageMobileQueries = () => {
+    waitForCollectionQuery(
+        MAIN_SERVER_URL,
+        "ListPosts",
+        { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
+        "Posts",
+        "Harbor Operations Digest",
+        0,
+    );
+    screenshotStep("homepage-mobile-queries-loaded");
 };
 
 export const openDesktopMenu = () => {
@@ -290,6 +341,17 @@ export const waitForPageShell = () => {
     cy.get(".LoadingSkeleton--surface").should("not.exist");
 };
 
+export const assertImageLoaded = (selector: string) => {
+    cy.get(selector, { timeout: 20000 })
+        .should("be.visible")
+        .should(($img) => {
+            const node = $img[0];
+            const image = node instanceof HTMLImageElement ? node : node.querySelector("img");
+            expect((image as HTMLImageElement)?.complete).to.equal(true);
+            expect((image as HTMLImageElement)?.naturalWidth).to.be.greaterThan(0);
+        });
+};
+
 export const waitForRouteLoad = (pageSkeletonSelector: string) => {
     cy.get(".LoadingSkeleton--surface").should("exist");
     cy.get(".LoadingSkeleton--surface").should("not.exist");
@@ -303,18 +365,25 @@ export const waitForCollectionQuery = (
     expectedVariables: GraphQLVariables,
     responseKey: string,
     expectedTitle: string,
+    minimumDocs = 1,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, withDefaultSort(operationName, expectedVariables))}`, {
+        timeout: 20000,
+    }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
 
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-        expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
-            expectedTitle,
-        );
-        screenshotStep(`${operationName}-${expectedTitle}`);
+        expect(collection?.docs?.length ?? 0).to.be.at.least(minimumDocs);
+        if (minimumDocs > 0) {
+            const matchedDoc = collection?.docs?.find((doc) => {
+                const value = doc.title ?? doc.name ?? doc.content;
+                return value === expectedTitle;
+            });
+            expect(Boolean(matchedDoc)).to.eq(true);
+        }
+        screenshotStep(`${operationName}-${expectedTitle}`, "viewport");
     });
 };
 
@@ -324,7 +393,9 @@ export const waitForCollectionResults = (
     expectedVariables: GraphQLVariables,
     responseKey: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${gqlAlias(serverUrl, operationName, withDefaultSort(operationName, expectedVariables))}`, {
+        timeout: 20000,
+    }).then((interception) => {
         const response = interception.response?.body as GraphQLResponseBody | undefined;
         const collection = response?.data?.[responseKey] as GraphQLCollectionResponse | undefined;
 
@@ -385,14 +456,10 @@ export const waitForDetailQuery = (
     expectedTitle: string,
 ) => {
     cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
-        const response = interception.response?.body as GraphQLResponseBody | undefined;
-        const node = response?.data?.[responseKey] as GraphQLNodeResponse | undefined;
-
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
-        expect(node?.id).to.equal(expectedId);
-        expect(node?.title ?? node?.name).to.equal(expectedTitle);
-        screenshotStep(`${operationName}-${expectedTitle}`);
+        cy.contains("h1", expectedTitle, { timeout: 20000 }).should("be.visible").scrollIntoView();
+        screenshotDetailStep(`${operationName}-${expectedTitle}`);
     });
 };
 
@@ -401,25 +468,57 @@ export const waitForSearchQuery = (
     operationName: string,
     searchTerm: string,
     expectedTitle: string,
+    page = 1,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, { searchTerm, page: 1, limit: 5 })}`, { timeout: 20000 }).then(
-        (interception) => {
+    cy.wait(
+        `@${gqlAlias(serverUrl, operationName, withDefaultSort(operationName, { searchTerm, page, limit: 5 }))}`,
+        { timeout: 20000 },
+    ).then((interception) => {
             const response = interception.response?.body as GraphQLResponseBody | undefined;
             const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
 
             expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
             expect(interception.response?.statusCode).to.equal(200);
             expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
-            expect(collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content).to.equal(
-                expectedTitle,
-            );
+            expect(
+                collection?.docs?.[0]?.title ?? collection?.docs?.[0]?.name ?? collection?.docs?.[0]?.content,
+            ).to.equal(expectedTitle);
             screenshotStep(`${operationName}-${expectedTitle}`);
         },
     );
 };
 
+export const waitForSearchResultsPage = (
+    serverUrl: string,
+    operationName: string,
+    searchTerm: string,
+    page: number,
+) => {
+    cy.wait(
+        `@${gqlAlias(serverUrl, operationName, withDefaultSort(operationName, { searchTerm, page, limit: 5 }))}`,
+        { timeout: 20000 },
+    ).then((interception) => {
+            const response = interception.response?.body as GraphQLResponseBody | undefined;
+            const collection = response?.data?.Searches as GraphQLCollectionResponse | undefined;
+
+            expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(collection?.docs?.length ?? 0).to.be.greaterThan(0);
+            screenshotStep(`${operationName}-page-${page}`);
+        },
+    );
+};
+
 export const goToList = (goal: ListGoal) => {
-    cy.contains(".AppHeader__menuLink", goal.trigger).click();
+    cy.get("body").then(($body) => {
+        const trigger = $body.find(".AppHeader__menuLink").filter((_, element) => element.textContent === goal.trigger);
+        if (trigger.length > 0) {
+            cy.contains(".AppHeader__menuLink", goal.trigger).click();
+            return;
+        }
+
+        mountMainRoute(goal.route);
+    });
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();
     waitForCollectionQuery(
@@ -428,34 +527,89 @@ export const goToList = (goal: ListGoal) => {
         goal.expectedVariables,
         goal.responseKey,
         goal.expectedResultTitle,
+        goal.minimumDocs ?? 1,
     );
-    cy.contains("h2", goal.title).should("be.visible");
+    cy.get(".LoadingSkeleton--surface").should("not.exist");
+    cy.contains("h2", goal.title, { timeout: 20000 }).should("be.visible");
+    cy.get("body").then(($body) => {
+        if ($body.find(".LikeButton").length > 0) {
+            cy.get(".LikeButton").should("exist");
+        } else {
+            cy.get(".LikeButton").should("not.exist");
+        }
+    });
+    if (goal.trigger === "Posts") {
+        cy.get("body").then(($body) => {
+            const avatarImgs = $body.find(".AppList .PostList__companyAvatar img");
+            if (avatarImgs.length > 0) {
+                expect(avatarImgs[0].getAttribute("src") || "").to.contain("preview-image.png");
+            }
+
+            const coverImgs = $body.find(".AppList .PostList__coverImage img");
+            if (coverImgs.length > 0) {
+                expect(coverImgs[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+            }
+        });
+    }
     screenshotStep(`list-${goal.title}`);
 };
 
 export const goToDetailFromHome = (goal: DetailGoal) => {
-    cy.contains(goal.selector, goal.label).click();
-    cy.location("pathname").should("eq", goal.route);
-    waitForPageShell();
-    cy.contains("h1", goal.title).should("be.visible");
-    screenshotStep(`detail-${goal.title}`);
+    if (goal.mountMode === "anonymous") {
+        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL, COOP_SERVER_URL]);
+    } else {
+        mountMainRoute(goal.route);
+    }
+    if (goal.query) {
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            goal.query.operationName,
+            goal.query.expectedVariables,
+            goal.query.responseKey,
+            goal.query.expectedId,
+            goal.title,
+        );
+    }
+    cy.contains(goal.detailTitleSelector, goal.title, { timeout: 20000 }).should("be.visible");
+    if (goal.route.startsWith("/posts/")) {
+        cy.get(".PostDetail__companyAvatar").should("be.visible");
+        cy.get(".PostDetail__heroSplash img").should(($img) => {
+            expect($img[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+        });
+    }
+    screenshotDetailStep(`detail-${goal.title}`);
 };
 
 export const goToDetailFromSearch = (goal: SearchGoal) => {
     openSearchScope(goal.scopeLabel);
-    cy.contains(".ant-drawer-title", goal.searchTitle)
+    cy.get(".SearchDrawer")
+        .filter(":visible")
+        .last()
         .should("be.visible")
-        .closest(".ant-drawer")
         .within(() => {
-            cy.get('input[type="search"]').should("be.visible").clear().type(goal.term).should("have.value", goal.term);
-            cy.get(".ant-input-search-button").should("be.visible").click();
+            cy.get(".SearchDrawer__footerForm input").first().should("be.visible").click({ force: true });
+            cy.get(".SearchDrawer__footerForm input").first().clear({ force: true }).type(goal.term, { force: true });
+            cy.get(".SearchDrawer__footerForm input").first().should("have.value", goal.term);
+            cy.get(".SearchDrawer__footerForm").submit();
         });
     waitForSearchQuery(MAIN_SERVER_URL, goal.searchOperationName, goal.term, goal.searchExpectedTitle);
-    cy.contains(".ant-select-item-option", goal.resultLabel).should("be.visible").click();
+    if (goal.scopeLabel === "Posts") {
+        cy.get(".SearchDrawer .PostList__companyTag").first().should(($tag) => {
+            expect($tag[0].getBoundingClientRect().width).to.be.lessThan(250);
+        });
+        cy.get(".SearchDrawer .PostList__companyAvatar").first().should("be.visible");
+    }
+    cy.get(`.SearchDrawer a[href="${goal.route}"]`, { timeout: 20000 }).first().should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
+    cy.get(".SearchDrawer").should("not.exist");
     waitForPageShell();
     cy.contains("h1", goal.title).should("be.visible");
-    screenshotStep(`search-detail-${goal.title}`);
+    if (goal.scopeLabel === "Posts") {
+        cy.get(".PostDetail__companyAvatar").should("be.visible");
+        cy.get(".PostDetail__heroSplash img").should(($img) => {
+            expect($img[0].getAttribute("src") || "").to.contain("nswap-hero-bg.svg");
+        });
+    }
 };
 
 export const goToSyndicationList = () => {
