@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Space, Tag } from "antd";
 
-import { ListStartupsQuery } from "../../generated/graphql";
+import { ListStartupsQuery, Startup } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { routes } from "../../routes";
 import { useDislikeVentureMutation, useLikeVentureMutation } from "../hooks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 
@@ -30,15 +31,16 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) =>
             loading={props.loading}
             renderItem={(startup) => {
                 const imageUrl = startup.image?.url;
+                const detailPath = routes.ventures.detail.getLink(startup as Startup);
 
                 return (
                     <SplashCardItem
                         id={startup.id}
-                        detailPath={`/ventures/${startup.id}`}
+                        detailPath={detailPath}
                         title={startup.title || "Venture"}
                         avatar={
                             imageUrl ? (
-                                <Link to={`/ventures/${startup.id}`}>
+                                <Link to={detailPath}>
                                     <Avatar
                                         shape="square"
                                         size={80}
@@ -58,7 +60,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) =>
                         actions={[
                             <SplashShareDetailActionRow
                                 key={`startup-actions-${startup.id}`}
-                                detailPath={`/ventures/${startup.id}`}
+                                detailPath={detailPath}
                                 title={startup.title || "Venture"}
                                 text={`Check out ${startup.title} on NSwap.`}
                             />,

@@ -21,7 +21,14 @@ interface ProfileListingListProps<TItem extends ProfileListingItem> {
         description?: React.ReactNode;
         title: React.ReactNode;
     };
-    urlPrefix: string;
+    routePrefix: {
+        detail: {
+            getLink: (item: TItem) => string;
+        };
+        edit: {
+            getLink: (item: TItem) => string;
+        };
+    };
 }
 
 export const ProfileListingList = <TItem extends ProfileListingItem>(props: ProfileListingListProps<TItem>) => {
@@ -59,19 +66,19 @@ export const ProfileListingList = <TItem extends ProfileListingItem>(props: Prof
                         actions={[
                             <RouteButton
                                 key="edit"
-                                to={`${props.urlPrefix}/edit/${item.id}`}
+                                to={props.routePrefix.edit.getLink(item)}
                                 size="small"
                                 icon={<EditOutlined />}
                             >
                                 Edit
                             </RouteButton>,
                             canView ? (
-                                <RouteButton
-                                    key="view"
-                                    to={`${props.urlPrefix}/${item.id}`}
-                                    size="small"
-                                    type="link"
-                                    icon={<EyeOutlined />}
+                            <RouteButton
+                                key="view"
+                                to={props.routePrefix.detail.getLink(item)}
+                                size="small"
+                                type="link"
+                                icon={<EyeOutlined />}
                                 >
                                     View
                                 </RouteButton>

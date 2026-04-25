@@ -5,6 +5,8 @@ import { Navigate } from "react-router-dom";
 
 import { Spin } from "antd";
 
+import { routes } from "../routes";
+
 interface AuthGuardProps {
     redirect?: boolean;
     fallback?: React.ReactNode;
@@ -18,7 +20,7 @@ export const AuthGuard: React.FunctionComponent<AuthGuardProps> = (props) => {
             auth.signinRedirect();
             return <Spin />;
         }
-        return props.fallback || <Navigate to="/" replace />;
+        return props.fallback || <Navigate to={routes.home.route} replace />;
     }
     return <>{props.children}</>;
 };

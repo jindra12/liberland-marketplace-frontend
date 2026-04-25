@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Space, Tag } from "antd";
 
-import { ListJobsQuery } from "../../generated/graphql";
+import { Job, ListJobsQuery } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
@@ -34,15 +35,16 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                 const employmentType = formatEmploymentType(job.employmentType);
                 const salary = formatSalary(job.salaryRange?.min, job.salaryRange?.max, job.salaryRange?.currency);
                 const imageSrc = getImage(job) || getImage(job.company);
+                const detailPath = routes.jobs.detail.getLink(job as Job);
 
                 return (
                     <SplashCardItem
                         id={job.id}
-                        detailPath={`/jobs/${job.id}`}
+                        detailPath={detailPath}
                         title={job.title || "Job"}
                         avatar={
                             imageSrc ? (
-                                <Link to={`/jobs/${job.id}`}>
+                                <Link to={detailPath}>
                                     <Avatar
                                         shape="square"
                                         size={80}
@@ -62,7 +64,7 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                         actions={[
                             <SplashShareDetailActionRow
                                 key={`job-actions-${job.id}`}
-                                detailPath={`/jobs/${job.id}`}
+                                detailPath={detailPath}
                                 title={job.title || "Job"}
                                 text={`Check out ${job.title} on NSwap.`}
                             />,

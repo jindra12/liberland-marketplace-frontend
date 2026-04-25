@@ -3,6 +3,7 @@ import * as React from "react";
 import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "antd";
 
 import type { ListProductsQuery } from "../../generated/graphql";
+import { routes } from "../../routes";
 import type { CryptoChain } from "../../types";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
 import { RouteButton } from "../RouteButton";
@@ -149,7 +150,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
             />
 
             <Flex justify="space-between" wrap gap={12}>
-                <RouteButton to="/cart">Back to cart</RouteButton>
+                <RouteButton to={routes.cart.route}>Back to cart</RouteButton>
                 <Button
                     type="primary"
                     htmlType="submit"

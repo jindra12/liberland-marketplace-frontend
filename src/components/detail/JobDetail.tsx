@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Job } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { ApplyButton } from "../ApplyButton";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
@@ -47,7 +48,7 @@ const JobDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="JobDetail"
                         serverURL={job?.serverURL}
-                        backTo="/jobs"
+                        backTo={routes.jobs.route}
                         backLabel="Back to jobs"
                         shareLabel="Share this job"
                         shareTitle={shareTitle}
@@ -97,7 +98,7 @@ const JobDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={`/jobs/edit/${id}`} icon={<EditOutlined />}>
+                                    <RouteButton to={routes.jobs.edit.getLink(job as Job)} icon={<EditOutlined />}>
                                         Edit
                                     </RouteButton>
                                 )}

@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Identity, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { useListIdentitiesQuery, useSearchIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { getImage } from "../shared/image/utils";
@@ -89,14 +90,14 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
                 renderItem={{
                     title: (identity) => (
                         <Flex align="center" gap={12}>
-                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                            <Link to={routes.tribes.detail.getLink(identity as Identity)} onClick={props.onClose}>
                                 {identity.name}
                             </Link>
                         </Flex>
                     ),
                     avatar: (identity) =>
                         identity.image?.url ? (
-                            <Link to={`/tribes/${identity.id}`} onClick={props.onClose}>
+                            <Link to={routes.tribes.detail.getLink(identity as Identity)} onClick={props.onClose}>
                                 <Avatar src={getImage(identity)} size={88} />
                             </Link>
                         ) : undefined,

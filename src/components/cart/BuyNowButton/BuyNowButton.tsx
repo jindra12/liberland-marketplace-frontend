@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Button, Empty, Modal } from "antd";
 
+import { routes } from "../../../routes";
 import { EndpointAuthAction } from "../../EndpointAuthAction";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { RouteButton } from "../../RouteButton";
@@ -64,7 +65,7 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                                 <Button key="cancel" danger onClick={onCancel}>
                                     Cancel
                                 </Button>,
-                                <RouteButton key="profile" type="primary" to="/profile">
+                                <RouteButton key="profile" type="primary" to={routes.profile.route}>
                                     Go to profile
                                 </RouteButton>,
                             ]}

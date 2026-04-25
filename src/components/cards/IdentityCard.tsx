@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Space, Tag, Typography } from "antd";
 
-import { ListIdentitiesQuery } from "../../generated/graphql";
+import { Identity, ListIdentitiesQuery } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { useDislikeIdentityMutation, useLikeIdentityMutation } from "../hooks";
 import { Markdown } from "../Markdown";
 import { getImage } from "../shared/image/utils";
@@ -30,7 +31,7 @@ export const IdentityCard: React.FunctionComponent<IdentityCardProps> = (props) 
             loading={props.loading}
             renderItem={(identity) => {
                 const imageSrc = getImage(identity);
-                const detailPath = `/tribes/${identity.id}`;
+                const detailPath = routes.tribes.detail.getLink(identity as Identity);
                 const shareTitle = identity.name;
                 const shareText = `Check out ${identity.name} on NSwap.`;
 

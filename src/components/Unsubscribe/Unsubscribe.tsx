@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { HomeOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
 import { Button, Flex, Space, Tag, Typography } from "antd";
 
+import { routes } from "../../routes";
 import type { NotificationTargetCollection } from "../share/SubscribeButton/types";
 
 import type { ParsedUnsubscribeParams } from "./types";
@@ -62,7 +63,7 @@ const Unsubscribe: React.FunctionComponent = () => {
                             type="primary"
                             icon={<HomeOutlined />}
                             className="UnsubscribePage__primaryAction"
-                            onClick={() => navigate("/")}
+                            onClick={() => navigate(routes.home.route)}
                         >
                             Back to homepage
                         </Button>

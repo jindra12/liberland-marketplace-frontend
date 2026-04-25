@@ -6,6 +6,7 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Space, Typography } from "antd";
 
 import { BACKEND_URL } from "../../gqlFetcher";
+import { routes } from "../../routes";
 import { useIdentityByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
@@ -31,7 +32,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="IdentityDetail"
                         serverURL={data.Identity?.serverURL}
-                        backTo="/tribes"
+                        backTo={routes.tribes.route}
                         backLabel="Back to tribes"
                         shareLabel="Share this tribe"
                         shareTitle={shareTitle}

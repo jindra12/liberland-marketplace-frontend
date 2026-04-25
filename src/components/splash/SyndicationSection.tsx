@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Card, Flex, Space, Tag, Typography } from "antd";
 
 import { BACKEND_URL } from "../../gqlFetcher";
+import { routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 import { RouteButton } from "../RouteButton";
@@ -47,7 +48,7 @@ export const SyndicationSection: React.FunctionComponent = () => {
                         list to add new URLs, and use any card to review or toggle a specific syndicated source.
                     </Typography.Paragraph>
                 </Flex>
-                <RouteButton to="/syndication" type="primary" className="SplashPage__syndicationManageBtn">
+                <RouteButton to={routes.syndication.route} type="primary" className="SplashPage__syndicationManageBtn">
                     Manage endpoints
                 </RouteButton>
             </Flex>
@@ -57,7 +58,6 @@ export const SyndicationSection: React.FunctionComponent = () => {
                     const host = getSyndicationHost(endpoint.value);
                     const isDefault = endpoint.value === BACKEND_URL;
                     const eyebrow = endpoint.enabled ? "Enabled" : "Available";
-                    const detailHref = `/syndication/${encodeURIComponent(endpoint.value)}`;
                     const description = endpoint.description || "Configured marketplace endpoint.";
 
                     return (
@@ -68,7 +68,10 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                     <Flex vertical gap={4} className="SplashPage__syndicationCardHeader">
                                         <span className="SplashPage__syndicationCardEyebrow">{eyebrow}</span>
                                         <Typography.Title level={4} className="SplashPage__syndicationCardTitle">
-                                            <Link to={detailHref} className="SplashPage__syndicationCardTitleLink">
+                                            <Link
+                                                to={routes.syndication.detail.getLink(endpoint)}
+                                                className="SplashPage__syndicationCardTitleLink"
+                                            >
                                                 {getSyndicationName(endpoint)}
                                             </Link>
                                         </Typography.Title>
@@ -103,12 +106,12 @@ export const SyndicationSection: React.FunctionComponent = () => {
                                         </Typography.Text>
                                         <Space.Compact className="SplashPage__syndicationCardCompactActions">
                                             <NativeShareButton
-                                                path={detailHref}
+                                                path={routes.syndication.detail.getLink(endpoint)}
                                                 title={getSyndicationName(endpoint)}
                                                 text={`Check out ${getSyndicationName(endpoint)} on NSwap.`}
                                                 className="NativeShareButton"
                                             />
-                                            <RouteButton to={detailHref} type="primary">
+                                            <RouteButton to={routes.syndication.detail.getLink(endpoint)} type="primary">
                                                 Details
                                             </RouteButton>
                                         </Space.Compact>

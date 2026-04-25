@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Image, Flex, Typography, Grid } from "antd";
 
+import { routes } from "../routes";
+
 import { RouteButton } from "./RouteButton";
 import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
 import { MarketAccordion } from "./splash/MarketAccordion";
@@ -32,10 +34,10 @@ const Splash: React.FunctionComponent = () => {
                                 Decentralized marketplace across tribes
                             </Typography.Paragraph>
                             <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
-                                <RouteButton to="/products-services" type="primary" size="large" className="SplashPage__heroPrimaryBtn">
+                                <RouteButton to={routes.productsServices.route} type="primary" size="large" className="SplashPage__heroPrimaryBtn">
                                     Explore market
                                 </RouteButton>
-                                <RouteButton to="/tribes" size="large" className="SplashPage__heroSecondaryBtn">
+                                <RouteButton to={routes.tribes.route} size="large" className="SplashPage__heroSecondaryBtn">
                                     Explore Tribes
                                 </RouteButton>
                             </Flex>

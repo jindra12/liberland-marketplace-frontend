@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 
+import { routes } from "../routes";
+
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
 import { RouteButton } from "./RouteButton";
@@ -47,7 +49,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                         Search
                     </SearchButton>
                     {urls.length > 1 ? (
-                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
+                        <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                             Syndication
                         </RouteButton>
                     ) : null}
@@ -61,7 +63,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                                     event.preventDefault();
                                     runWithAuthOrLogin(
                                         () => {
-                                            navigate("/publish");
+                                            navigate(routes.publish.route);
                                             setDesktopActionsOpen(false);
                                         },
                                         { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
@@ -78,7 +80,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                             block
                             icon={<UserOutlined />}
                             onClick={() => {
-                                navigate("/profile");
+                                navigate(routes.profile.route);
                                 setDesktopActionsOpen(false);
                             }}
                         >

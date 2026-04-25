@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Company } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
@@ -23,9 +24,6 @@ import { getImage } from "../shared/image/utils";
 import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
-
-
-
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -57,7 +55,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="CompanyDetail"
                         serverURL={companyData?.serverURL}
-                        backTo="/companies"
+                        backTo={routes.companies.route}
                         backLabel="Back to companies"
                         shareLabel="Share this company"
                         shareTitle={shareTitle}
@@ -100,7 +98,10 @@ const CompanyDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={`/companies/edit/${id}`} icon={<EditOutlined />}>
+                                    <RouteButton
+                                        to={routes.companies.edit.getLink(companyData as Company)}
+                                        icon={<EditOutlined />}
+                                    >
                                         Edit
                                     </RouteButton>
                                 )}

@@ -4,6 +4,7 @@ import { TeamOutlined } from "@ant-design/icons";
 import { Divider, Flex, Grid, Tag, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../../generated/graphql";
+import { routes } from "../../../routes";
 import { EntityCommentsSection } from "../../comments/EntityCommentsSection";
 import { Markdown } from "../../Markdown";
 import { CommonDetail } from "../CommonDetail";
@@ -21,7 +22,7 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
         <CommonDetail
             className="StartupDetail"
             serverURL={props.startup.serverURL || undefined}
-            backTo="/ventures"
+            backTo={routes.ventures.route}
             backLabel="Back to ventures"
             shareLabel="Share this venture"
             shareTitle={shareTitle}

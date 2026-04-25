@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Space, Typography } from "antd";
 
-import { ListCompaniesQuery } from "../../generated/graphql";
+import { Company, ListCompaniesQuery } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
@@ -31,15 +32,16 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = (props) =>
             loading={props.loading}
             renderItem={(company) => {
                 const imageSrc = getImage(company);
+                const detailPath = routes.companies.detail.getLink(company as Company);
 
                 return (
                     <SplashCardItem
                         id={company.id}
-                        detailPath={`/companies/${company.id}`}
+                        detailPath={detailPath}
                         title={company.name || "Company"}
                         avatar={
                             imageSrc ? (
-                                <Link to={`/companies/${company.id}`}>
+                                <Link to={detailPath}>
                                     <Avatar
                                         shape="square"
                                         size={80}
@@ -59,7 +61,7 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = (props) =>
                         actions={[
                             <SplashShareDetailActionRow
                                 key={`company-actions-${company.id}`}
-                                detailPath={`/companies/${company.id}`}
+                                detailPath={detailPath}
                                 title={company.name || "Company"}
                                 text={`Check out ${company.name} on NSwap.`}
                             />,

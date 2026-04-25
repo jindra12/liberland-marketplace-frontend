@@ -3,6 +3,7 @@ import * as React from "react";
 import { GlobalOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 
+import { routes } from "../../routes";
 import { EndpointAuthAction } from "../EndpointAuthAction";
 import type { MobileDrawerModel } from "../MobileDrawer/types";
 import { RouteButton } from "../RouteButton";
@@ -27,7 +28,7 @@ export const MobileDrawerContent: React.FunctionComponent<MobileDrawerContentPro
                     Search
                 </SearchButton>
                 {props.model.showSyndication ? (
-                    <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
+                    <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                         Syndication
                     </RouteButton>
                 ) : null}

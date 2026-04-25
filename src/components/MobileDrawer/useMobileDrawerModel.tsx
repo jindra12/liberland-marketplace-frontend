@@ -3,6 +3,7 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import { routes } from "../../routes";
 import { useCartItems } from "../cart/useCartItems";
 import { useEndpointContext } from "../EndpointContext";
 
@@ -17,7 +18,7 @@ export const useMobileDrawerModel = (onClose: () => void): MobileDrawerModel => 
     const { urls } = useEndpointContext();
     const { totalQuantity } = useCartItems();
 
-    const drawerItems = totalQuantity > 0 ? [...mobileDrawerBaseItems, { key: "/cart", label: "Cart" }] : mobileDrawerBaseItems;
+    const drawerItems = totalQuantity > 0 ? [...mobileDrawerBaseItems, { key: routes.cart.route, label: "Cart" }] : mobileDrawerBaseItems;
     const selectedKeys = getSelectedKeys(location.pathname, drawerItems);
     const menuItems = drawerItems.map((item) => ({
         key: item.key,
@@ -35,12 +36,12 @@ export const useMobileDrawerModel = (onClose: () => void): MobileDrawerModel => 
         isAuthenticated: auth.isAuthenticated,
         onSearchScopeSelect: onClose,
         onPublish: () => {
-            navigate("/publish");
+            navigate(routes.publish.route);
             onClose();
         },
         onUnauthorizedBeforeLogin: onClose,
         onProfile: () => {
-            navigate("/profile");
+            navigate(routes.profile.route);
             onClose();
         },
     };

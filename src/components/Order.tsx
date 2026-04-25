@@ -10,6 +10,7 @@ import useLocalStorage from "use-local-storage";
 import { useTimeout } from "usehooks-ts";
 
 import type { Order as OrderType } from "../generated/graphql";
+import { routes } from "../routes";
 
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
@@ -61,7 +62,7 @@ const Order: React.FunctionComponent = () => {
 
     useTimeout(
         () => {
-            navigate("/");
+            navigate(routes.home.route);
         },
         showPaymentSuccess ? 4000 : null,
     );
@@ -196,7 +197,7 @@ const Order: React.FunctionComponent = () => {
                     title="All payments completed"
                     subTitle="Thank you for shopping with us. You will be redirected to the homepage shortly."
                     extra={[
-                        <RouteButton key="go-home" to="/" type="primary">
+                        <RouteButton key="go-home" to={routes.home.route} type="primary">
                             Go to homepage
                         </RouteButton>,
                     ]}

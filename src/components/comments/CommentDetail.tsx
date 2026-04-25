@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { Alert, Flex, Skeleton, Typography } from "antd";
 
+import { routes } from "../../routes";
 import { CommonDetail } from "../detail/CommonDetail";
 
 import { CommentCard } from "./CommentCard";
@@ -31,7 +32,7 @@ const CommentDetail: React.FunctionComponent = () => {
                     type="error"
                     showIcon
                     message="Comment not found"
-                    description={<Link to="/">Return home</Link>}
+                    description={<Link to={routes.home.route}>Return home</Link>}
                 />
             </Flex>
         );
@@ -41,7 +42,7 @@ const CommentDetail: React.FunctionComponent = () => {
         <Flex vertical gap={16} className="CommentDetailPage">
             <CommonDetail
                 className="CommentDetailPage__detail"
-                backTo="/"
+                backTo={routes.home.route}
                 backLabel="Back home"
                 header={
                     <Flex vertical gap={12} className="CommentDetailPage__header">

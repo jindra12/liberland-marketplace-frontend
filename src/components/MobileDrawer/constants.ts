@@ -1,7 +1,9 @@
+import { routes } from "../../routes";
+
 export const mobileDrawerBaseItems = [
-    { key: "/jobs", label: "Jobs" },
-    { key: "/products-services", label: "Market" },
-    { key: "/companies", label: "Companies" },
-    { key: "/ventures", label: "Ventures" },
-    { key: "/tribes", label: "Tribes" },
+    { key: routes.jobs.route, label: "Jobs" },
+    { key: routes.productsServices.route, label: "Market" },
+    { key: routes.companies.route, label: "Companies" },
+    { key: routes.ventures.route, label: "Ventures" },
+    { key: routes.tribes.route, label: "Tribes" },
 ];

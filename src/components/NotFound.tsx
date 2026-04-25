@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Result } from "antd";
 
+import { routes } from "../routes";
+
 import { RouteButton } from "./RouteButton";
 
 const NotFound: React.FunctionComponent = () => (
@@ -10,7 +12,7 @@ const NotFound: React.FunctionComponent = () => (
         title="Page not found"
         subTitle="The page you requested does not exist."
         extra={
-            <RouteButton to="/" type="primary">
+            <RouteButton to={routes.home.route} type="primary">
                 Back to homepage
             </RouteButton>
         }

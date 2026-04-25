@@ -6,9 +6,10 @@ import { UseQueryResult } from "@tanstack/react-query";
 
 import { Avatar, Flex, Grid } from "antd";
 
-import { ListJobsByIdentityQuery, ListJobsQuery } from "../../generated/graphql";
+import { Job, ListJobsByIdentityQuery, ListJobsQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { ApplyButton } from "../ApplyButton";
 import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
@@ -63,7 +64,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
             renderItem={{
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
-                        <Link to={`/jobs/${job.id}`}>{job.title}</Link>
+                        <Link to={routes.jobs.detail.getLink(job as Job)}>{job.title}</Link>
                         {job.company?.identity?.name && (
                             <IdentityTagLink identity={job.company.identity} color="success" />
                         )}
@@ -72,7 +73,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 avatar: (job) => {
                     const imageSrc = getImage(job) || getImage(job.company);
                     return imageSrc ? (
-                        <Link to={`/jobs/${job.id}`}>
+                            <Link to={routes.jobs.detail.getLink(job as Job)}>
                             <Avatar
                                 shape="square"
                                 size={80}
@@ -113,7 +114,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     md ? (
                         <Flex wrap gap="32px" align="center" justify="flex-end" className="EntityList__actionsRow">
                             <ListShareDetailButtons
-                                detailPath={`/jobs/${job.id}`}
+                                detailPath={routes.jobs.detail.getLink(job as Job)}
                                 title={job.title}
                                 text={`Check out ${job.title} on NSwap.`}
                                 subscriptionTarget={{
@@ -129,7 +130,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                         <Flex vertical gap="12px" className="EntityList__actionsRow JobList__actionsRow">
                             <ListShareDetailButtons
                                 compact
-                                detailPath={`/jobs/${job.id}`}
+                                detailPath={routes.jobs.detail.getLink(job as Job)}
                                 title={job.title}
                                 text={`Check out ${job.title} on NSwap.`}
                                 subscriptionTarget={{

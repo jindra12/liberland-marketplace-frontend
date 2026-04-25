@@ -3,6 +3,7 @@ import * as React from "react";
 import { HomeOutlined, ReloadOutlined, StopFilled } from "@ant-design/icons";
 import { Button, Flex, Space, Tag, Typography } from "antd";
 
+import { routes } from "../../routes";
 import { RouteButton } from "../RouteButton";
 
 import type { UnsubscribeLookupErrorStateProps } from "./types";
@@ -41,7 +42,7 @@ export const UnsubscribeEntityLookupErrorState: React.FunctionComponent<
                             Retry lookup
                         </Button>
                         <RouteButton
-                            to="/"
+                            to={routes.home.route}
                             icon={<HomeOutlined />}
                             className="UnsubscribePage__secondaryAction"
                         >

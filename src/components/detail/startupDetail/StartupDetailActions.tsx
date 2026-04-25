@@ -3,6 +3,8 @@ import * as React from "react";
 import { EditOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
+import { Startup } from "../../../generated/graphql";
+import { routes } from "../../../routes";
 import { RouteButton } from "../../RouteButton";
 
 import type { StartupDetailContentProps } from "./types";
@@ -38,7 +40,7 @@ export const StartupDetailActions: React.FunctionComponent<StartupDetailContentP
                 </div>
             )}
             {startupInvolvement.isOwner && (
-                <RouteButton to={`/ventures/edit/${props.startupId}`} icon={<EditOutlined />}>
+                <RouteButton to={routes.ventures.edit.getLink(props.startup as Startup)} icon={<EditOutlined />}>
                     Edit
                 </RouteButton>
             )}

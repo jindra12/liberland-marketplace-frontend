@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Company, Product } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -80,7 +81,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="ProductDetail"
                         serverURL={product?.serverURL}
-                        backTo="/products-services"
+                        backTo={routes.productsServices.route}
                         backLabel="Back to products / services"
                         shareLabel="Share this product"
                         shareTitle={shareTitle}
@@ -147,7 +148,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
+                                    <RouteButton
+                                        to={routes.productsServices.edit.getLink(product as Product)}
+                                        icon={<EditOutlined />}
+                                    >
                                         Edit
                                     </RouteButton>
                                 )}
@@ -185,7 +189,11 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 </Button>
                                             )}
                                             {product?.company?.id && (
-                                                <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                                <RouteButton
+                                                    to={routes.companies.detail.getLink(product.company as Company)}
+                                                >
+                                                    View company
+                                                </RouteButton>
                                             )}
                                         </Flex>
                                     </>

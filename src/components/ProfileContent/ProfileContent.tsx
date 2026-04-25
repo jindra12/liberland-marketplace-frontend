@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Divider, Flex, Typography, message } from "antd";
 
+import { routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
 import { LoginButton } from "../LoginButton";
@@ -96,7 +97,7 @@ export const ProfileContent: React.FunctionComponent = () => {
             <Divider />
 
             <div className="Profile__actions">
-                <LoginButton action="logout" danger onAfterAction={() => navigate("/")} />
+                <LoginButton action="logout" danger onAfterAction={() => navigate(routes.home.route)} />
             </div>
 
             <Divider />

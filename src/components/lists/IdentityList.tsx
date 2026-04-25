@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Grid, Typography } from "antd";
 
+import { Identity } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikeIdentityMutation, useLikeIdentityMutation, useListIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
@@ -36,7 +38,7 @@ export const IdentityList: React.FunctionComponent = () => {
             renderItem={{
                 title: (identity) => (
                     <Flex align="center" gap={12}>
-                        <Link to={`/tribes/${identity.id}`}>
+                        <Link to={routes.tribes.detail.getLink(identity as Identity)}>
                             <Typography.Title level={3} className="IdentityList__title">
                                 {identity.name}
                             </Typography.Title>
@@ -47,7 +49,7 @@ export const IdentityList: React.FunctionComponent = () => {
                     md ? (
                         <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
                             <ListShareDetailButtons
-                                detailPath={`/tribes/${identity.id}`}
+                                detailPath={routes.tribes.detail.getLink(identity as Identity)}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
                                 subscriptionTarget={{
@@ -62,7 +64,7 @@ export const IdentityList: React.FunctionComponent = () => {
                         <Flex vertical gap="12px" className="EntityList__actionsRow IdentityList__actionsRow">
                             <ListShareDetailButtons
                                 compact
-                                detailPath={`/tribes/${identity.id}`}
+                                detailPath={routes.tribes.detail.getLink(identity as Identity)}
                                 title={identity.name}
                                 text={`Check out ${identity.name} on NSwap.`}
                                 subscriptionTarget={{
@@ -76,7 +78,7 @@ export const IdentityList: React.FunctionComponent = () => {
                     ),
                 avatar: (identity) =>
                     identity.image?.url ? (
-                        <Link to={`/tribes/${identity.id}`}>
+                        <Link to={routes.tribes.detail.getLink(identity as Identity)}>
                             <Avatar src={getImage(identity)} size={md ? 120 : 88} />
                         </Link>
                     ) : undefined,

@@ -7,9 +7,10 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Grid } from "antd";
 
-import { ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
+import { Company, ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
 import { Markdown } from "../Markdown";
@@ -59,7 +60,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
             renderItem={{
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
-                        <Link to={`/companies/${company.id}`}>{company.name}</Link>
+                        <Link to={routes.companies.detail.getLink(company as Company)}>{company.name}</Link>
                         {company.identity?.name && (
                             <IdentityTagLink
                                 identity={company.identity}
@@ -73,7 +74,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     md ? (
                         <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
                             <ListShareDetailButtons
-                                detailPath={`/companies/${company.id}`}
+                                detailPath={routes.companies.detail.getLink(company as Company)}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
                                 subscriptionTarget={{
@@ -88,7 +89,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         <Flex vertical gap="12px" className="EntityList__actionsRow CompanyList__actionsRow">
                             <ListShareDetailButtons
                                 compact
-                                detailPath={`/companies/${company.id}`}
+                                detailPath={routes.companies.detail.getLink(company as Company)}
                                 title={company.name}
                                 text={`Check out ${company.name} on NSwap.`}
                                 subscriptionTarget={{
@@ -102,7 +103,7 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     ),
                 avatar: (company) =>
                     company.image?.url ? (
-                        <Link to={`/companies/${company.id}`}>
+                        <Link to={routes.companies.detail.getLink(company as Company)}>
                             <Avatar shape="square" size={80} src={getImage(company)} className="EntityList__avatar" />
                         </Link>
                     ) : undefined,

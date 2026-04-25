@@ -8,14 +8,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Popconfirm, Typography, message } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Post, Company } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useDeletePostMutation, useDislikePostMutation, useLikePostMutation, usePostByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { Like } from "../shared/Like/Like";
-import { getPostCompanyImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
+import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
 import { CommonDetail } from "./CommonDetail";
 import { PostHeroSplash } from "./PostHeroSplash";
@@ -35,7 +36,7 @@ const PostDetail: React.FunctionComponent = () => {
             await deleteMutation.mutateAsync({ id: postId });
             await queryClient.invalidateQueries({ queryKey: ["ListPosts"] });
             message.success("Post deleted");
-            navigate("/posts");
+            navigate(routes.posts.route);
         } catch (error) {
             console.error("Failed to delete post", error);
             message.error("Failed to delete post");
@@ -60,7 +61,7 @@ const PostDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="PostDetail"
                         serverURL={post.company?.serverURL}
-                        backTo="/posts"
+                        backTo={routes.posts.route}
                         backLabel="Back to posts"
                         shareLabel="Share this post"
                         shareTitle={shareTitle}
@@ -77,7 +78,10 @@ const PostDetail: React.FunctionComponent = () => {
                                             </Typography.Title>
                                         </div>
                                         {post.company?.id && post.company?.name && (
-                                            <Link to={`/companies/${post.company.id}`} className="PostDetail__companyLink">
+                                            <Link
+                                                to={routes.companies.detail.getLink(post.company as Company)}
+                                                className="PostDetail__companyLink"
+                                            >
                                                 <Flex gap={12} align="center" className="PostDetail__companyRow">
                                                     <Avatar
                                                         shape="square"
@@ -116,7 +120,10 @@ const PostDetail: React.FunctionComponent = () => {
                                     />
                                     {isOwner && (
                                         <>
-                                            <RouteButton to={`/posts/edit/${id}`} icon={<EditOutlined />}>
+                                            <RouteButton
+                                                to={routes.posts.edit.getLink(post as Post)}
+                                                icon={<EditOutlined />}
+                                            >
                                                 Edit
                                             </RouteButton>
                                             <Popconfirm
@@ -137,7 +144,7 @@ const PostDetail: React.FunctionComponent = () => {
                                 {relatedTarget && (
                                     <>
                                         <Divider />
-                                        <Typography.Link href={getPostRelatedTargetHref(relatedTarget)}>
+                                        <Typography.Link href={routes.posts.relatedTarget.getLink(relatedTarget)}>
                                             Related: {getPostRelatedTargetText(relatedTarget)}
                                         </Typography.Link>
                                     </>

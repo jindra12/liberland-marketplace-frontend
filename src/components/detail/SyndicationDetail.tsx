@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
 
+import { routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
@@ -37,7 +38,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 title="Syndicated URL not found"
                 subTitle="This syndicated URL is not available in your current marketplace context."
                 extra={
-                    <RouteButton to="/syndication" type="primary">
+                    <RouteButton to={routes.syndication.route} type="primary">
                         Back to syndication
                     </RouteButton>
                 }
@@ -53,7 +54,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
         <CommonDetail
             className="SyndicationDetail"
             serverURL={entry.value}
-            backTo="/syndication"
+            backTo={routes.syndication.route}
             backLabel="Back to syndication"
             shareLabel="Share this endpoint"
             shareTitle={title}
@@ -93,7 +94,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         <Button type="primary" size="large" href={entry.value} target="_blank" rel="noreferrer">
                             Visit URL
                         </Button>
-                        <RouteButton to="/syndication" size="large">
+                        <RouteButton to={routes.syndication.route} size="large">
                             Back to list
                         </RouteButton>
                     </Flex>

@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Job, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { useListJobsQuery, useSearchJobsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -89,7 +90,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                 renderItem={{
                     title: (job) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                            <Link to={routes.jobs.detail.getLink(job as Job)} onClick={props.onClose}>
                                 {job.title}
                             </Link>
                             {job.company?.identity?.name && (
@@ -100,7 +101,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                     avatar: (job) => {
                         const imageSrc = getImage(job) || getImage(job.company);
                         return imageSrc ? (
-                            <Link to={`/jobs/${job.id}`} onClick={props.onClose}>
+                            <Link to={routes.jobs.detail.getLink(job as Job)} onClick={props.onClose}>
                                 <Avatar
                                     shape="square"
                                     size={80}

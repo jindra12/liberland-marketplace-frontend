@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
 
+import { routes } from "../../routes";
 import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
@@ -18,8 +19,6 @@ import {
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { NativeShareButton } from "../share/NativeShareButton";
-
-const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
 
 const byPriority = (entry: URL) => {
     if (entry.name === "Main") {
@@ -102,14 +101,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 renderItem={{
                     title: (entry) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={buildSyndicationHref(entry.value)}>{getSyndicationName(entry)}</Link>
+                            <Link to={routes.syndication.detail.getLink(entry)}>{getSyndicationName(entry)}</Link>
                             <Tag color={entry.enabled ? "success" : "default"}>
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
                         </Flex>
                     ),
                     avatar: (entry) => (
-                        <Link to={buildSyndicationHref(entry.value)}>
+                        <Link to={routes.syndication.detail.getLink(entry)}>
                             <Avatar
                                 shape="square"
                                 size={80}
@@ -140,7 +139,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                         md ? (
                             <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
                                 <NativeShareButton
-                                    path={buildSyndicationHref(entry.value)}
+                                    path={routes.syndication.detail.getLink(entry)}
                                     title={getSyndicationName(entry)}
                                     text={`Check out ${getSyndicationName(entry)} on NSwap.`}
                                     size="large"
@@ -156,7 +155,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                                 <RouteButton
-                                    to={buildSyndicationHref(entry.value)}
+                                    to={routes.syndication.detail.getLink(entry)}
                                     type="primary"
                                     variant="filled"
                                     className="ActionBtn"
@@ -169,14 +168,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             <Flex vertical gap="12px" className="EntityList__actionsRow SyndicationList__actionsRow">
                                 <Space.Compact block className="SyndicationList__compactActions">
                                     <NativeShareButton
-                                        path={buildSyndicationHref(entry.value)}
+                                        path={routes.syndication.detail.getLink(entry)}
                                         title={getSyndicationName(entry)}
                                         text={`Check out ${getSyndicationName(entry)} on NSwap.`}
                                         size="large"
                                         className="NativeShareButton"
                                     />
                                     <RouteButton
-                                        to={buildSyndicationHref(entry.value)}
+                                        to={routes.syndication.detail.getLink(entry)}
                                         size="large"
                                         className="ActionBtn"
                                     >
