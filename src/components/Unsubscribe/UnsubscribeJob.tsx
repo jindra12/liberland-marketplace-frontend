@@ -16,6 +16,7 @@ const UnsubscribeJob: React.FunctionComponent<UnsubscribeJobProps> = (props) => 
     const query = useJobByIdQuery(
         {
             id: props.params.id,
+            url: props.params.serverURL,
         },
         {
             enabled: Boolean(props.params.id),
@@ -38,7 +39,11 @@ const UnsubscribeJob: React.FunctionComponent<UnsubscribeJobProps> = (props) => 
                     summary: job.company?.name ? `Company: ${job.company.name}` : job.description,
                     imageURL: getImage(job) || getImage(job.company),
                     serverURL: job.serverURL,
-                    detailPath: getNotificationDetailPath(props.params.collection, job.id),
+                    detailPath: getNotificationDetailPath(
+                        props.params.collection,
+                        job.id,
+                        job.serverURL ?? props.params.serverURL,
+                    ),
                 };
             }}
         />

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
 
-import { routes } from "../../routes";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
@@ -14,22 +14,21 @@ import { RouteButton } from "../RouteButton";
 import { CommonDetail } from "./CommonDetail";
 
 const SyndicationDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const { urls, setUrls } = useEndpointContext();
 
-    const decodedUrl = React.useMemo(() => {
-        if (!id) {
+    const decodedServerURL = React.useMemo(() => {
+        if (!serverUrl) {
             return "";
         }
 
-        try {
-            return decodeURIComponent(id);
-        } catch {
-            return "";
-        }
-    }, [id]);
+        return decodeServerUrlSegment(serverUrl);
+    }, [serverUrl]);
 
-    const entry = React.useMemo(() => urls.find((current) => current.value === decodedUrl), [decodedUrl, urls]);
+    const entry = React.useMemo(
+        () => urls.find((current) => current.value === decodedServerURL),
+        [decodedServerURL, urls],
+    );
 
     if (!entry) {
         return (

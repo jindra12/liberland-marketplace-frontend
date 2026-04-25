@@ -18,6 +18,7 @@ const routeTitles: Array<{ path: string; title: string }> = [
     { path: routes.posts.detail.route, title: "Post" },
     { path: routes.tribes.detail.route, title: "Tribe" },
     { path: routes.productsServices.detail.route, title: "Product / Service" },
+    { path: routes.comments.detail.route, title: "Comment" },
     { path: routes.syndication.detail.route, title: "Syndication Detail" },
     { path: routes.ventures.detail.route, title: "Venture" },
     { path: routes.jobs.route, title: "Jobs" },

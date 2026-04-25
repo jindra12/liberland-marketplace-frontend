@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { Typography } from "antd";
 
+import { decodeServerUrlSegment } from "../../routes";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { AuthGuard } from "../AuthGuard";
 import { usePostByIdQuery } from "../hooks";
@@ -13,8 +14,9 @@ import { PostForm } from "../publish/PostForm";
 import { getRelatedTargetSelection } from "../shared/post/utils";
 
 const EditPost: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const query = usePostByIdQuery({ id: id!, draft: true });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const query = usePostByIdQuery({ id: id!, draft: true, url: routeServerURL });
 
     return (
         <AuthGuard>
@@ -26,7 +28,7 @@ const EditPost: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={post?.company?.serverURL} />
+                                <DetailPageTracker serverUrl={post?.company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Post</Typography.Title>
                                 <PostForm
                                     mode="edit"
@@ -41,7 +43,7 @@ const EditPost: React.FunctionComponent = () => {
                                         existingImageUrl: post?.heroImage?.url,
                                         existingImageId: post?.heroImage?.id,
                                     }}
-                                    url={post?.company?.serverURL!}
+                                    url={post?.company?.serverURL ?? routeServerURL}
                                 />
                             </OwnerGuard>
                         );

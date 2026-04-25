@@ -5,7 +5,9 @@ import {
     ENTITY_COMMENTS_AUTHORIZED_FALLBACK_NAME,
     ENTITY_COMMENTS_DEFAULT_AVATAR_URL,
 } from "../../constants";
+import type { Comment } from "../../generated/graphql";
 import type { AuthProfile } from "../../types";
+import { routes } from "../../routes";
 import { formatPrettyDate } from "../../utils/date";
 import type { CommentCurrentUser, CommentThread } from "./types";
 
@@ -36,10 +38,10 @@ const getCompanyAvatarUrl = (company: CommentThread["company"]): string => {
 
 export const getCommentAvatarUrl = (comment: CommentThread): string => getCompanyAvatarUrl(comment.company);
 
-export const getCommentShareUrl = (commentId: string): string => `/comments/${commentId}`;
+export const getCommentShareUrl = (comment: Comment): string => routes.comments.detail.getLink(comment);
 
-export const copyCommentLink = async (commentId: string): Promise<void> => {
-    await navigator.clipboard.writeText(`${window.location.origin}${getCommentShareUrl(commentId)}`);
+export const copyCommentLink = async (comment: Comment): Promise<void> => {
+    await navigator.clipboard.writeText(`${window.location.origin}${getCommentShareUrl(comment)}`);
 };
 
 export const isCommentOwnedByCurrentUser = (comment: CommentThread, currentUserId: string): boolean => {

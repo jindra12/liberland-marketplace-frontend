@@ -55,7 +55,7 @@ const Unsubscribe: React.FunctionComponent = () => {
                                 </Typography.Title>
                                 <Typography.Paragraph className="UnsubscribePage__description">
                                     {parsed.reason} For your safety, we only accept recognized notification types, safe
-                                    item IDs, and valid email addresses.
+                                    item IDs, valid server URLs, and valid email addresses.
                                 </Typography.Paragraph>
                             </div>
                         </Flex>

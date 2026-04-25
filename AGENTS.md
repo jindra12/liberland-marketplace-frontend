@@ -112,6 +112,7 @@ manager is `yarn`.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When the user asks you to add types to something, use the most concrete domain types the code can support. Do not satisfy the request with the broadest generic type that happens to compile.
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
+- Never use `as never` as an acceptable type coercion. If the type is wrong, fix the type or the data shape instead of forcing it through `never`.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
 - Do not introduce boolean constants that are always `true` or `false`, and do not add CSS modifier classes for dead branches. Use the actual condition or remove the branch entirely.
 - If you do not know how to solve a problem, or the fix is becoming speculative, stop and tell the user instead of guessing, making broad changes, or altering unrelated app code.

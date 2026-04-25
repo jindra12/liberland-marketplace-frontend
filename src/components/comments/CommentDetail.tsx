@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { Alert, Flex, Skeleton, Typography } from "antd";
 
-import { routes } from "../../routes";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { CommonDetail } from "../detail/CommonDetail";
 
 import { CommentCard } from "./CommentCard";
@@ -12,9 +12,11 @@ import { CommentRepliesList } from "./CommentRepliesList";
 import { useCommentDetailState } from "./useCommentDetailState";
 
 const CommentDetail: React.FunctionComponent = () => {
-    const params = useParams();
+    const params = useParams<{ id: string; serverUrl: string }>();
+    const serverURL = decodeServerUrlSegment(params.serverUrl ?? "");
     const commentDetailState = useCommentDetailState({
         commentId: params.id ?? "",
+        serverURL,
     });
 
     if (commentDetailState.isLoading) {
@@ -42,6 +44,7 @@ const CommentDetail: React.FunctionComponent = () => {
         <Flex vertical gap={16} className="CommentDetailPage">
             <CommonDetail
                 className="CommentDetailPage__detail"
+                serverURL={commentDetailState.comment?.serverUrl ?? serverURL}
                 backTo={routes.home.route}
                 backLabel="Back home"
                 header={
@@ -66,7 +69,7 @@ const CommentDetail: React.FunctionComponent = () => {
                     >
                         <CommentRepliesList
                             parentCommentId={commentDetailState.comment.id}
-                            serverURL={commentDetailState.comment.serverUrl}
+                            serverURL={commentDetailState.comment.serverUrl ?? serverURL}
                             currentUser={commentDetailState.currentUser}
                             commentEditPlaceholder="Edit your comment..."
                             commentReplyPlaceholder="Write a reply..."

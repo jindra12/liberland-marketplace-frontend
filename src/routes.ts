@@ -4,6 +4,18 @@ import type { URL } from "./types";
 import type { PostRelatedTarget } from "./components/shared/post/types";
 import { Post_RelatedPosts_RelationTo } from "./generated/graphql";
 
+export const encodeServerUrlSegment = (value: string) => {
+    return Buffer.from(value, "utf8").toString("hex");
+};
+
+export const decodeServerUrlSegment = (value: string) => {
+    if (!value || value.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(value)) {
+        return "";
+    }
+
+    return Buffer.from(value, "hex").toString("utf8");
+};
+
 const home = {
     route: "/" as const,
     getLink: () => "/" as const,
@@ -13,8 +25,8 @@ const jobs = {
     route: "/jobs" as const,
     getLink: () => "/jobs" as const,
     detail: {
-        route: "/jobs/:id" as const,
-        getLink: (job: Job) => `/jobs/${job.id}`,
+        route: "/jobs/:id/:serverUrl" as const,
+        getLink: (job: Job) => `/jobs/${job.id}/${encodeServerUrlSegment(job.serverURL ?? "")}`,
     },
     edit: {
         route: "/jobs/edit/:id" as const,
@@ -26,8 +38,8 @@ const companies = {
     route: "/companies" as const,
     getLink: () => "/companies" as const,
     detail: {
-        route: "/companies/:id" as const,
-        getLink: (company: Company) => `/companies/${company.id}`,
+        route: "/companies/:id/:serverUrl" as const,
+        getLink: (company: Company) => `/companies/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
     edit: {
         route: "/companies/edit/:id" as const,
@@ -39,8 +51,8 @@ const tribes = {
     route: "/tribes" as const,
     getLink: () => "/tribes" as const,
     detail: {
-        route: "/tribes/:id" as const,
-        getLink: (identity: Identity) => `/tribes/${identity.id}`,
+        route: "/tribes/:id/:serverUrl" as const,
+        getLink: (identity: Identity) => `/tribes/${identity.id}/${encodeServerUrlSegment(identity.serverURL ?? "")}`,
     },
 };
 
@@ -48,8 +60,9 @@ const productsServices = {
     route: "/products-services" as const,
     getLink: () => "/products-services" as const,
     detail: {
-        route: "/products-services/:id" as const,
-        getLink: (product: Product) => `/products-services/${product.id}`,
+        route: "/products-services/:id/:serverUrl" as const,
+        getLink: (product: Product) =>
+            `/products-services/${product.id}/${encodeServerUrlSegment(product.serverURL ?? "")}`,
     },
     edit: {
         route: "/products-services/edit/:id" as const,
@@ -61,8 +74,8 @@ const posts = {
     route: "/posts" as const,
     getLink: () => "/posts" as const,
     detail: {
-        route: "/posts/:id" as const,
-        getLink: (post: Post) => `/posts/${post.id}`,
+        route: "/posts/:id/:serverUrl" as const,
+        getLink: (post: Post) => `/posts/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
     },
     edit: {
         route: "/posts/edit/:id" as const,
@@ -100,8 +113,8 @@ const syndication = {
     route: "/syndication" as const,
     getLink: () => "/syndication" as const,
     detail: {
-        route: "/syndication/:id" as const,
-        getLink: (entry: URL) => `/syndication/${encodeURIComponent(entry.value)}`,
+        route: "/syndication/:id/:serverUrl" as const,
+        getLink: (entry: URL) => `/syndication/${encodeURIComponent(entry.value)}/${encodeServerUrlSegment(entry.value)}`,
     },
 };
 
@@ -129,8 +142,8 @@ const ventures = {
     route: "/ventures" as const,
     getLink: () => "/ventures" as const,
     detail: {
-        route: "/ventures/:id" as const,
-        getLink: (startup: Startup) => `/ventures/${startup.id}`,
+        route: "/ventures/:id/:serverUrl" as const,
+        getLink: (startup: Startup) => `/ventures/${startup.id}/${encodeServerUrlSegment(startup.serverURL ?? "")}`,
     },
     edit: {
         route: "/ventures/edit/:id" as const,
@@ -150,8 +163,8 @@ const authCallback = {
 
 const comments = {
     detail: {
-        route: "/comments/:id" as const,
-        getLink: (comment: Comment) => `/comments/${comment.id}`,
+        route: "/comments/:id/:serverUrl" as const,
+        getLink: (comment: Comment) => `/comments/${comment.id}/${encodeServerUrlSegment(comment.serverUrl ?? "")}`,
     },
 };
 

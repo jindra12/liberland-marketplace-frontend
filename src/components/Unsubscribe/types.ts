@@ -8,6 +8,7 @@ export type ParsedUnsubscribeParams = {
     queryType: string;
     id: string;
     email: string;
+    serverURL: string;
 };
 
 export type UnsubscribeParseResult =

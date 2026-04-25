@@ -7,7 +7,7 @@ import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Company } from "../../generated/graphql";
-import { routes } from "../../routes";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery } from "../hooks";
 import { CompanyJobsList } from "../lists/CompanyJobsList";
@@ -26,8 +26,9 @@ import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 
 const CompanyDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const company = useCompanyByIdQuery({ id: id! });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const company = useCompanyByIdQuery({ id: id!, url: routeServerURL });
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
 
@@ -54,7 +55,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                 return (
                     <CommonDetail
                         className="CompanyDetail"
-                        serverURL={companyData?.serverURL}
+                        serverURL={companyData?.serverURL ?? routeServerURL}
                         backTo={routes.companies.route}
                         backLabel="Back to companies"
                         shareLabel="Share this company"
@@ -65,7 +66,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 ? {
                                       collection: "companies",
                                       targetID: companyData.id,
-                                      serverURL: companyData.serverURL,
+                                      serverURL: companyData.serverURL ?? routeServerURL,
                                       isSubscribed: companyData.isSubscribed,
                                   }
                                 : undefined
@@ -127,7 +128,10 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 key: "jobs",
                                 label: `Jobs (${counts.jobs})`,
                                 children: (
-                                    <CompanyJobsList companyId={id!} serverUrl={companyData?.serverURL} />
+                                    <CompanyJobsList
+                                        companyId={id!}
+                                        serverUrl={companyData?.serverURL ?? routeServerURL}
+                                    />
                                 ),
                             },
                             {
@@ -136,7 +140,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 children: (
                                     <CompanyProductsServicesList
                                         companyId={id!}
-                                        serverUrl={companyData?.serverURL}
+                                        serverUrl={companyData?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },
@@ -144,13 +148,21 @@ const CompanyDetail: React.FunctionComponent = () => {
                                 key: "startups",
                                 label: `Ventures (${counts.startups})`,
                                 children: (
-                                    <CompanyStartupsList companyId={id!} serverUrl={companyData?.serverURL} />
+                                    <CompanyStartupsList
+                                        companyId={id!}
+                                        serverUrl={companyData?.serverURL ?? routeServerURL}
+                                    />
                                 ),
                             },
                             {
                                 key: "posts",
                                 label: `Posts (${counts.posts})`,
-                                children: <CompanyPostsList companyId={id!} serverUrl={companyData?.serverURL} />,
+                                children: (
+                                    <CompanyPostsList
+                                        companyId={id!}
+                                        serverUrl={companyData?.serverURL ?? routeServerURL}
+                                    />
+                                ),
                             },
                             {
                                 key: "comments",
@@ -159,7 +171,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     <EntityCommentsSection
                                         targetId={id!}
                                         relationTo={Comment_ReplyPostRelationshipInputRelationTo.Companies}
-                                        serverURL={companyData?.serverURL}
+                                        serverURL={companyData?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },

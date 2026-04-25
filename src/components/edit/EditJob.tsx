@@ -6,6 +6,7 @@ import { Typography } from "antd";
 import dayjs from "dayjs";
 
 import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
+import { decodeServerUrlSegment } from "../../routes";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { AuthGuard } from "../AuthGuard";
 import { useJobByIdQuery } from "../hooks";
@@ -14,8 +15,9 @@ import { OwnerGuard } from "../OwnerGuard";
 import { JobForm } from "../publish/JobForm";
 
 const EditJob: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const query = useJobByIdQuery({ id: id!, draft: true });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const query = useJobByIdQuery({ id: id!, draft: true, url: routeServerURL });
 
     return (
         <AuthGuard>
@@ -27,7 +29,7 @@ const EditJob: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={job?.serverURL} />
+                                <DetailPageTracker serverUrl={job?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Job</Typography.Title>
                                 <JobForm
                                     mode="edit"
@@ -50,7 +52,7 @@ const EditJob: React.FunctionComponent = () => {
                                         existingImageUrl: job?.image?.url,
                                         existingImageId: job?.image?.id,
                                     }}
-                                    url={job?.serverURL!}
+                                    url={job?.serverURL ?? routeServerURL}
                                 />
                             </OwnerGuard>
                         );

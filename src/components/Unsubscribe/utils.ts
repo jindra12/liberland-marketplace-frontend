@@ -1,4 +1,5 @@
 import { NOTIFICATION_TARGET_FRONTEND_PATHS, NOTIFICATION_TARGET_QUERY_TYPE_TO_COLLECTION } from "./constants";
+import { decodeServerUrlSegment, encodeServerUrlSegment } from "../../routes";
 import type { NotificationTargetCollection } from "../share/SubscribeButton/types";
 import type { UnsubscribeParseResult } from "./types";
 
@@ -10,8 +11,9 @@ export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): Uns
     const queryType = searchParams.get("type");
     const id = searchParams.get("id");
     const email = searchParams.get("email");
+    const serverUrl = searchParams.get("serverUrl");
 
-    if (!queryType || !id || !email) {
+    if (!queryType || !id || !email || !serverUrl) {
         return {
             isValid: false,
             reason: "This unsubscribe link is missing required details.",
@@ -33,6 +35,14 @@ export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): Uns
         };
     }
 
+    const decodedServerURL = decodeServerUrlSegment(serverUrl);
+    if (!decodedServerURL) {
+        return {
+            isValid: false,
+            reason: "This unsubscribe link contains an invalid server URL.",
+        };
+    }
+
     if (email.length > 254 || !SAFE_EMAIL_PATTERN.test(email)) {
         return {
             isValid: false,
@@ -47,12 +57,16 @@ export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): Uns
             queryType,
             id,
             email,
+            serverURL: decodedServerURL,
         },
     };
 };
 
-export const getNotificationDetailPath = (collection: NotificationTargetCollection, id: string) =>
-    `/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}`;
+export const getNotificationDetailPath = (
+    collection: NotificationTargetCollection,
+    id: string,
+    serverURL: string | null | undefined,
+) => `/${NOTIFICATION_TARGET_FRONTEND_PATHS[collection]}/${id}/${encodeServerUrlSegment(serverURL ?? "")}`;
 
 export const isAlreadyUnsubscribedError = (error: unknown) =>
     error instanceof Error && MISSING_SUBSCRIPTION_PATTERN.test(error.message);

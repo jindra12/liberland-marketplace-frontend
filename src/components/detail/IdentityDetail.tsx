@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 import { GlobalOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Space, Typography } from "antd";
 
-import { BACKEND_URL } from "../../gqlFetcher";
-import { routes } from "../../routes";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { useIdentityByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
@@ -19,8 +18,9 @@ import { IdentityProductsTab } from "./identityDetail/IdentityProductsTab";
 import { IdentityVenturesTab } from "./identityDetail/IdentityVenturesTab";
 
 const IdentityDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const identity = useIdentityByIdQuery({ id: id!, url: BACKEND_URL });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const identity = useIdentityByIdQuery({ id: id!, url: routeServerURL });
 
     return (
         <Loader query={identity}>
@@ -31,7 +31,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                 return (
                     <CommonDetail
                         className="IdentityDetail"
-                        serverURL={data.Identity?.serverURL}
+                        serverURL={data.Identity?.serverURL ?? routeServerURL}
                         backTo={routes.tribes.route}
                         backLabel="Back to tribes"
                         shareLabel="Share this tribe"
@@ -40,7 +40,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                         subscriptionTarget={{
                             collection: "identities",
                             targetID: data.Identity?.id ?? id!,
-                            serverURL: data.Identity?.serverURL,
+                            serverURL: data.Identity?.serverURL ?? routeServerURL,
                             isSubscribed: data.Identity?.isSubscribed,
                         }}
                         header={
@@ -73,7 +73,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 children: (
                                     <IdentityProductsTab
                                         identityId={data.Identity?.id ?? id!}
-                                        serverURL={data.Identity?.serverURL}
+                                        serverURL={data.Identity?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },
@@ -83,7 +83,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 children: (
                                     <IdentityJobsTab
                                         identityId={data.Identity?.id ?? id!}
-                                        serverURL={data.Identity?.serverURL}
+                                        serverURL={data.Identity?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },
@@ -93,7 +93,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 children: (
                                     <IdentityCompaniesTab
                                         identityId={data.Identity?.id ?? id!}
-                                        serverURL={data.Identity?.serverURL}
+                                        serverURL={data.Identity?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },
@@ -103,7 +103,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                                 children: (
                                     <IdentityVenturesTab
                                         identityId={data.Identity?.id ?? id!}
-                                        serverURL={data.Identity?.serverURL}
+                                        serverURL={data.Identity?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },

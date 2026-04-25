@@ -9,7 +9,7 @@ import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Popconfirm, Typography, message } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Post, Company } from "../../generated/graphql";
-import { routes } from "../../routes";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useDeletePostMutation, useDislikePostMutation, useLikePostMutation, usePostByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
@@ -22,11 +22,12 @@ import { CommonDetail } from "./CommonDetail";
 import { PostHeroSplash } from "./PostHeroSplash";
 
 const PostDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const auth = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const query = usePostByIdQuery({ id: id! });
+    const query = usePostByIdQuery({ id: id!, url: routeServerURL });
     const likeMutation = useLikePostMutation();
     const dislikeMutation = useDislikePostMutation();
     const deleteMutation = useDeletePostMutation();
@@ -60,7 +61,7 @@ const PostDetail: React.FunctionComponent = () => {
                 return (
                     <CommonDetail
                         className="PostDetail"
-                        serverURL={post.company?.serverURL}
+                        serverURL={post.company?.serverURL ?? routeServerURL}
                         backTo={routes.posts.route}
                         backLabel="Back to posts"
                         shareLabel="Share this post"
@@ -113,7 +114,7 @@ const PostDetail: React.FunctionComponent = () => {
                                         id={post.id}
                                         liked={post.hasLiked}
                                         likeCount={post.likeCount ?? 0}
-                                        serverURL={post.company?.serverURL}
+                                        serverURL={post.company?.serverURL ?? routeServerURL}
                                         likeMutation={likeMutation}
                                         dislikeMutation={dislikeMutation}
                                         aria-label="Like post"
@@ -158,7 +159,7 @@ const PostDetail: React.FunctionComponent = () => {
                                     <EntityCommentsSection
                                         targetId={id!}
                                         relationTo={Comment_ReplyPostRelationshipInputRelationTo.Posts}
-                                        serverURL={post.company?.serverURL}
+                                        serverURL={post.company?.serverURL ?? routeServerURL}
                                     />
                                 ),
                             },

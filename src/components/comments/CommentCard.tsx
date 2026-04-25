@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Button, Flex, Typography } from "antd";
 
+import { Comment } from "../../generated/graphql";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { Like } from "../shared/Like/Like";
 
@@ -87,7 +88,12 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     <MessageOutlined className="CommentCard__actionIcon" />
                     <span className="CommentCard__actionLabel">Reply</span>
                 </Button>
-                <Button type="text" onClick={() => props.onShare(props.comment.id)} className="CommentCard__actionBtn" aria-label="Share">
+                <Button
+                    type="text"
+                    onClick={() => props.onShare(props.comment as Comment)}
+                    className="CommentCard__actionBtn"
+                    aria-label="Share"
+                >
                     <ShareAltOutlined className="CommentCard__actionIcon" />
                     <span className="CommentCard__actionLabel">Share</span>
                 </Button>

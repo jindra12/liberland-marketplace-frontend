@@ -9,6 +9,7 @@ import {
     ENTITY_COMMENTS_EDIT_PLACEHOLDER,
     ENTITY_COMMENTS_REPLY_PLACEHOLDER,
 } from "../../constants";
+import { Comment } from "../../generated/graphql";
 
 import { CommentCard } from "./CommentCard";
 import { CommentCreateComposer } from "./CommentCreateComposer";
@@ -17,9 +18,9 @@ import type { EntityCommentsSectionDisplayProps } from "./types";
 import { copyCommentLink } from "./utils";
 
 export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityCommentsSectionDisplayProps> = (props) => {
-    const handleShare = async (commentId: string) => {
+    const handleShare = async (comment: Comment) => {
         try {
-            await copyCommentLink(commentId);
+            await copyCommentLink(comment);
             message.success("Comment link copied");
         } catch (error) {
             console.error("Failed to copy comment link", error);
