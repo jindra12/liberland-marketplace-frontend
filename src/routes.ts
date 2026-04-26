@@ -119,6 +119,11 @@ const syndication = {
     },
 };
 
+const syndicate = {
+    route: "/syndicate" as const,
+    getLink: () => "/syndicate" as const,
+};
+
 const profile = {
     route: "/profile" as const,
     getLink: () => "/profile" as const,
@@ -178,6 +183,7 @@ export const routes = {
     productsServices,
     posts,
     syndication,
+    syndicate,
     profile,
     publish,
     cart,

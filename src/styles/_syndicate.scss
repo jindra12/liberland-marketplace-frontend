@@ -1,0 +1,197 @@
+.SyndicateModal {
+    .ant-modal-content {
+        overflow: hidden;
+        border: 1px solid rgba(90, 166, 255, 0.18);
+        background:
+            radial-gradient(circle at top left, rgba(90, 166, 255, 0.14), transparent 32%),
+            linear-gradient(180deg, rgba(7, 21, 36, 0.98), rgba(4, 15, 27, 0.98));
+        box-shadow:
+            0 28px 72px rgba(0, 0, 0, 0.36),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .ant-modal-header {
+        background: transparent;
+        border-bottom-color: rgba(147, 214, 255, 0.12);
+    }
+
+    .ant-modal-title {
+        color: #eef8f3;
+    }
+
+    .ant-modal-body {
+        padding: 28px 28px 24px;
+    }
+}
+
+.SyndicateModal__content {
+    width: 100%;
+}
+
+.SyndicateModal__eyebrow {
+    width: fit-content;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.SyndicateModal__title {
+    margin: 0 !important;
+    color: #eef8f3 !important;
+}
+
+.SyndicateModal__description {
+    margin-bottom: 0 !important;
+    color: rgba(188, 217, 203, 0.82);
+    line-height: 1.7;
+}
+
+.SyndicateModal__pageCard {
+    border: 1px solid rgba(147, 214, 255, 0.12);
+    background: rgba(6, 18, 29, 0.86);
+
+    .ant-card-body {
+        padding: 24px;
+    }
+}
+
+.SyndicateModal__pageCardContent {
+    width: 100%;
+}
+
+.SyndicateModal__highlights {
+    width: 100%;
+}
+
+.SyndicateModal__highlight {
+    padding-inline: 0 !important;
+    border-bottom: 0 !important;
+    color: #eef8f3;
+}
+
+.SyndicateModal__commandBlock {
+    width: 100%;
+}
+
+.SyndicateModal__linkRow {
+    width: 100%;
+}
+
+.SyndicateModal__commandLine {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(3, 13, 23, 0.78);
+    color: #eef8f3;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.SyndicateModal__link.ant-typography {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #7fd7ff;
+}
+
+.SyndicateModal__linkIcon {
+    font-size: 14px;
+}
+
+.SyndicateModal__footer {
+    width: 100%;
+}
+
+.SyndicateModal__footerRow {
+    width: 100%;
+}
+
+.SyndicateModal__pagerControls {
+    flex-wrap: wrap;
+}
+
+.SyndicateModal__pagination {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.SyndicateModal__pageMeta {
+    color: rgba(188, 217, 203, 0.78);
+}
+
+.SyndicateModal__browserButton.ant-btn {
+    min-width: 180px;
+    font-weight: 800;
+}
+
+.SyndicateModal__footerDivider.ant-divider {
+    margin: 0;
+    border-block-start-color: rgba(147, 214, 255, 0.16);
+}
+
+@include md-min {
+    .SyndicateModal {
+        .ant-modal-body {
+            padding: 32px 32px 28px;
+        }
+    }
+
+    .SyndicateModal__pageCard {
+        .ant-card-body {
+            padding: 28px;
+        }
+    }
+
+    .SyndicateModal__content {
+        gap: 28px;
+    }
+}
+
+@media (max-width: 767px) {
+    .SyndicateModal {
+        .ant-modal {
+            top: 12px;
+            transform: none !important;
+            max-width: calc(100vw - 16px);
+            margin: 0 auto;
+        }
+
+        .ant-modal-body {
+            padding: 20px 18px 18px;
+        }
+    }
+
+    .SyndicateModal__pageCard {
+        .ant-card-body {
+            padding: 18px;
+        }
+    }
+
+    .SyndicateModal__content {
+        gap: 20px;
+    }
+
+    .SyndicateModal__intro {
+        gap: 12px;
+    }
+
+    .SyndicateModal__pageCardContent {
+        gap: 16px;
+    }
+
+    .SyndicateModal__footer {
+        gap: 14px;
+    }
+
+    .SyndicateModal__footerRow {
+        gap: 10px;
+    }
+
+    .SyndicateModal__browserButton.ant-btn {
+        min-width: 0;
+        width: 100%;
+    }
+}

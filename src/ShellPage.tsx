@@ -366,6 +366,11 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
             "Locally managed syndicated marketplace URLs.",
         ),
     },
+    "/syndicate": {
+        title: "Syndicate | NSwap",
+        description: "A friendly guided tour for new users who want to learn how to set up and browse the network.",
+        noIndex: true,
+    },
     "/syndication/[id]": {
         title: "Syndicated URL detail | NSwap",
         description: "Review one syndicated marketplace URL and control whether it is enabled locally.",

@@ -145,6 +145,8 @@
         "test:ct:deep-dive:syndication-detail:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDiveSyndicationDetail.cy.tsx",
         "test:ct:syndication-guard": "cypress run --component --browser electron --spec cypress/component/SyndicationGuard.cy.tsx",
         "test:ct:syndication-guard:headed": "cypress run --component --browser electron --headed --spec cypress/component/SyndicationGuard.cy.tsx",
+        "test:ct:syndicate": "cypress run --component --browser electron --spec cypress/component/Syndicate.cy.tsx",
+        "test:ct:syndicate:headed": "cypress run --component --browser electron --headed --spec cypress/component/Syndicate.cy.tsx",
         "test:ct:publish": "cypress run --component --browser electron --spec cypress/component/Publish.cy.tsx",
         "test:ct:publish:headed": "cypress run --component --browser electron --headed --spec cypress/component/Publish.cy.tsx",
         "test:ct:posts": "cypress run --component --browser electron --spec cypress/component/Posts.cy.tsx",
