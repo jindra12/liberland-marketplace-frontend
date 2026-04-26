@@ -29,8 +29,8 @@ const jobs = {
         getLink: (job: Job) => `/jobs/${job.id}/${encodeServerUrlSegment(job.serverURL ?? "")}`,
     },
     edit: {
-        route: "/jobs/edit/:id" as const,
-        getLink: (job: Job) => `/jobs/edit/${job.id}`,
+        route: "/jobs/edit/:id/:serverUrl" as const,
+        getLink: (job: Job) => `/jobs/edit/${job.id}/${encodeServerUrlSegment(job.serverURL ?? "")}`,
     },
 };
 
@@ -42,8 +42,8 @@ const companies = {
         getLink: (company: Company) => `/companies/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
     edit: {
-        route: "/companies/edit/:id" as const,
-        getLink: (company: Company) => `/companies/edit/${company.id}`,
+        route: "/companies/edit/:id/:serverUrl" as const,
+        getLink: (company: Company) => `/companies/edit/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
 };
 
@@ -65,8 +65,9 @@ const productsServices = {
             `/products-services/${product.id}/${encodeServerUrlSegment(product.serverURL ?? "")}`,
     },
     edit: {
-        route: "/products-services/edit/:id" as const,
-        getLink: (product: Product) => `/products-services/edit/${product.id}`,
+        route: "/products-services/edit/:id/:serverUrl" as const,
+        getLink: (product: Product) =>
+            `/products-services/edit/${product.id}/${encodeServerUrlSegment(product.serverURL ?? "")}`,
     },
 };
 
@@ -78,8 +79,8 @@ const posts = {
         getLink: (post: Post) => `/posts/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
     },
     edit: {
-        route: "/posts/edit/:id" as const,
-        getLink: (post: Post) => `/posts/edit/${post.id}`,
+        route: "/posts/edit/:id/:serverUrl" as const,
+        getLink: (post: Post) => `/posts/edit/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
     },
     relatedTarget: {
         getLink: (related: PostRelatedTarget) => {
@@ -146,8 +147,9 @@ const ventures = {
         getLink: (startup: Startup) => `/ventures/${startup.id}/${encodeServerUrlSegment(startup.serverURL ?? "")}`,
     },
     edit: {
-        route: "/ventures/edit/:id" as const,
-        getLink: (startup: Startup) => `/ventures/edit/${startup.id}`,
+        route: "/ventures/edit/:id/:serverUrl" as const,
+        getLink: (startup: Startup) =>
+            `/ventures/edit/${startup.id}/${encodeServerUrlSegment(startup.serverURL ?? "")}`,
     },
 };
 

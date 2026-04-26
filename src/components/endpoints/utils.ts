@@ -66,6 +66,16 @@ export const setEndpointEnabled = (
     });
 };
 
+export const enableOrInsertEndpoint = (current: EndpointUrl[] | undefined, value: string): EndpointUrl[] => {
+    const entries = current ?? [];
+
+    if (entries.some((entry) => entry.value === value)) {
+        return setEndpointEnabled(entries, value, true);
+    }
+
+    return insertUniqueEndpoint(entries, createEndpointEntry(value, { enabled: true }));
+};
+
 export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: SyndicationDoc[]): EndpointUrl[] => {
     const entries = current ?? [];
     const discoveredEntries = docs.flatMap((doc) => {

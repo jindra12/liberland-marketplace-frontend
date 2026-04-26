@@ -1,4 +1,4 @@
-import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { fillFormField, mountAnonymousRoute } from "../support/component-tests/utils";
 
 const anonymousCartSecrets = {
@@ -28,20 +28,20 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
 const openOrderPaymentPage = () => {
     openProduct(
         COOP_SERVER_URL,
-        "/products-services/coop-product-lighthouse-kit",
+        detailRoute("/products-services", "coop-product-lighthouse-kit", COOP_SERVER_URL),
         "coop-product-lighthouse-kit",
         "Lighthouse Kit",
     );
-    openProduct(MAIN_SERVER_URL, "/products-services/product-solar-widget", "product-solar-widget", "Solar Widget");
-    openProduct(MAIN_SERVER_URL, "/products-services/product-solar-rig", "product-solar-rig", "Solar Rig");
-    openProduct(MAIN_SERVER_URL, "/products-services/product-shore-kit", "product-shore-kit", "Shore Kit");
+    openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-solar-widget"), "product-solar-widget", "Solar Widget");
+    openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-solar-rig"), "product-solar-rig", "Solar Rig");
+    openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-shore-kit"), "product-shore-kit", "Shore Kit");
     openProduct(
         COOP_SERVER_URL,
-        "/products-services/coop-product-harbor-ether-lantern",
+        detailRoute("/products-services", "coop-product-harbor-ether-lantern", COOP_SERVER_URL),
         "coop-product-harbor-ether-lantern",
         "Harbor Ether Lantern",
     );
-    openProduct(COOP_SERVER_URL, "/products-services/coop-product-tide-lamp", "coop-product-tide-lamp", "Tide Lamp");
+    openProduct(COOP_SERVER_URL, detailRoute("/products-services", "coop-product-tide-lamp", COOP_SERVER_URL), "coop-product-tide-lamp", "Tide Lamp");
 
     cy.routerNavigate("/cart");
     cy.contains("Proceed to order").click();

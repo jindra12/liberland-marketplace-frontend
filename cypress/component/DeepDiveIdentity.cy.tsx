@@ -1,9 +1,9 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountAnonymousRoute, waitForCollectionQuery } from "../support/component-tests/utils";
 
 describe("identity deep dive", () => {
     beforeEach(() => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
     });
 
     it("shows the tabs and related market cards", () => {

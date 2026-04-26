@@ -1,8 +1,9 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
     fillFormField,
+    getRouteEntityId,
     mountAuthenticatedMainRoute,
     openPublishCategory,
     screenshotStep,
@@ -60,13 +61,9 @@ describe("job create/edit", () => {
 
         cy.contains("button", "Publish Job").click();
         cy.wait("@mediaUpload");
-        cy.location("pathname").should("match", /\/jobs\/job-/);
+        cy.location("pathname").should("match", /\/jobs\/job-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created job id");
-            }
-
+            const createdId = getRouteEntityId(pathname);
             waitForDetailQuery(MAIN_SERVER_URL, "JobById", { id: createdId }, "Job", createdId, jobTitle);
             cy.contains("h1", jobTitle).should("be.visible");
             screenshotStep("job-created-page");
@@ -88,14 +85,10 @@ describe("job create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Job").click();
-        cy.location("pathname").should("match", /\/jobs\/job-/);
+        cy.location("pathname").should("match", /\/jobs\/job-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created job id");
-            }
-
-            cy.routerNavigate(`/jobs/edit/${createdId}`);
+            const createdId = getRouteEntityId(pathname);
+            cy.routerNavigate(editRoute("/jobs", createdId));
             cy.contains("h3", "Edit Job").should("be.visible");
             assertFormFieldValue("Title", jobTitle);
             assertSelectValue("Employment Type", "Contract");
@@ -110,7 +103,7 @@ describe("job create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", `/jobs/${createdId}`);
+            cy.location("pathname").should("eq", detailRoute("/jobs", createdId));
             assertJobTitle(createdId, updatedJobTitle);
             screenshotStep("job-updated-page");
         });

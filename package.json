@@ -143,6 +143,8 @@
         "test:ct:deep-dive:job-card:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDiveJobCard.cy.tsx",
         "test:ct:deep-dive:syndication-detail": "cypress run --component --browser electron --spec cypress/component/DeepDiveSyndicationDetail.cy.tsx",
         "test:ct:deep-dive:syndication-detail:headed": "cypress run --component --browser electron --headed --spec cypress/component/DeepDiveSyndicationDetail.cy.tsx",
+        "test:ct:syndication-guard": "cypress run --component --browser electron --spec cypress/component/SyndicationGuard.cy.tsx",
+        "test:ct:syndication-guard:headed": "cypress run --component --browser electron --headed --spec cypress/component/SyndicationGuard.cy.tsx",
         "test:ct:publish": "cypress run --component --browser electron --spec cypress/component/Publish.cy.tsx",
         "test:ct:publish:headed": "cypress run --component --browser electron --headed --spec cypress/component/Publish.cy.tsx",
         "test:ct:posts": "cypress run --component --browser electron --spec cypress/component/Posts.cy.tsx",

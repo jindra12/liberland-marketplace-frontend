@@ -1,6 +1,6 @@
 import { buildSeoDescription } from "../../src/components/publish/postForm/utils";
 
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
@@ -69,7 +69,7 @@ describe("posts", () => {
                 }
             });
 
-            cy.routerNavigate(`/posts/${createdId}`);
+            cy.routerNavigate(detailRoute("/posts", createdId));
             cy.wait("@detailPost").then((detailInterception) => {
                 expect(detailInterception.response?.statusCode).to.equal(200);
                 expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
@@ -78,7 +78,7 @@ describe("posts", () => {
             cy.contains("h1", initialTitle).should("be.visible");
             cy.contains(".PostDetail__content", "Harbor launch notes with markdown and a link.").should("be.visible");
 
-            cy.routerNavigate(`/posts/edit/${createdId}`);
+            cy.routerNavigate(editRoute("/posts", createdId));
             cy.wait("@detailPost").then((detailInterception) => {
                 expect(detailInterception.response?.statusCode).to.equal(200);
                 expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
@@ -89,7 +89,7 @@ describe("posts", () => {
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", initialTitle);
             assertFormFieldValue("Content", initialContent);
-            assertFormFieldValue("SEO Description", initialSeoDescription);
+            assertFormFieldValue("Description", initialSeoDescription);
             assertSelectValue("Company", "Harbor Labs");
 
             fillFormField("Title", updatedTitle);
@@ -103,26 +103,26 @@ describe("posts", () => {
                 expect(updateInterception.request.body.variables.data.content).to.equal(updatedContent);
             });
 
-            cy.routerNavigate(`/posts/${createdId}`);
+            cy.routerNavigate(detailRoute("/posts", createdId));
             cy.wait("@detailPost").then((detailInterception) => {
                 expect(detailInterception.response?.statusCode).to.equal(200);
                 expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
                 expect(detailInterception.response?.body?.data?.Post?.title).to.equal(updatedTitle);
             });
 
-            cy.routerNavigate(`/posts/edit/${createdId}`);
+            cy.routerNavigate(editRoute("/posts", createdId));
             cy.contains("h3", "Edit Post", { timeout: 20000 }).should("be.visible");
             cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", updatedTitle);
             assertFormFieldValue("Content", updatedContent);
-            assertFormFieldValue("SEO Description", updatedSeoDescription);
+            assertFormFieldValue("Description", updatedSeoDescription);
             screenshotStep("posts-created-and-updated");
         });
     });
 
     it("deletes a post", () => {
-        mountAuthenticatedMainRoute("/posts/post-1");
+        mountAuthenticatedMainRoute(detailRoute("/posts", "post-1"));
         cy.contains("h1", "Harbor Launch Notes", { timeout: 20000 }).should("be.visible");
         cy.contains(".PostDetail button", "Delete", { timeout: 20000 }).should("be.visible").click();
         cy.contains(".ant-popconfirm", "Delete this post?", { timeout: 20000 }).within(() => {

@@ -62,6 +62,17 @@ export const mountMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
+export const getRouteEntityId = (pathname: string): string => {
+    const segments = pathname.split("/").filter(Boolean);
+    const id = segments[segments.length - 2];
+
+    if (id === undefined) {
+        throw new Error(`Missing route entity id in pathname: ${pathname}`);
+    }
+
+    return id;
+};
+
 const buildAuthStorageKey = (serverUrl: string) =>
     `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
@@ -455,7 +466,12 @@ export const waitForDetailQuery = (
     expectedId: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
+    const variables = {
+        ...expectedVariables,
+        url: expectedVariables.url ?? serverUrl,
+    };
+
+    cy.wait(`@${gqlAlias(serverUrl, operationName, variables)}`, { timeout: 20000 }).then((interception) => {
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         cy.contains("h1", expectedTitle, { timeout: 20000 }).should("be.visible").scrollIntoView();

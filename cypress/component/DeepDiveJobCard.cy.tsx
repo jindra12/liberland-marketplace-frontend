@@ -1,13 +1,12 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
-    screenshotStep,
     waitForCollectionQuery,
 } from "../support/component-tests/utils";
 
 describe("job card", () => {
     const loadJobCard = () => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
     };
 
     it("shows employment type, salary, share controls, and overflow link", () => {

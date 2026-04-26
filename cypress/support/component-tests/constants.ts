@@ -1,8 +1,19 @@
+import { encodeServerUrlSegment } from "../../../src/routes";
+
 import type { DetailGoal, ListGoal, SearchGoal } from "./types";
 
 export const MAIN_SERVER_URL = "http://127.0.0.1:3010";
 export const COOP_SERVER_URL = "http://127.0.0.1:3011";
 export const GUEST_SERVER_URL = "http://127.0.0.1:3012";
+
+export const detailRoute = (baseRoute: string, id: string, serverUrl: string = MAIN_SERVER_URL): string =>
+    `${baseRoute}/${id}/${encodeServerUrlSegment(serverUrl)}`;
+
+export const editRoute = (baseRoute: string, id: string, serverUrl: string = MAIN_SERVER_URL): string =>
+    `${baseRoute}/edit/${id}/${encodeServerUrlSegment(serverUrl)}`;
+
+export const syndicationDetailRoute = (serverUrl: string): string =>
+    `/syndication/${encodeURIComponent(serverUrl)}/${encodeServerUrlSegment(serverUrl)}`;
 
 export const LIST_GOALS: ListGoal[] = [
     {
@@ -81,7 +92,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
     {
         selector: ".SplashEntityCard__itemLink",
         label: "Dockmaster",
-        route: "/jobs/job-dockmaster",
+        route: detailRoute("/jobs", "job-dockmaster"),
         title: "Dockmaster",
         detailTitleSelector: ".JobDetail__title",
         query: {
@@ -94,7 +105,7 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
     {
         selector: ".SplashEntityCard__itemLink",
         label: "Harbor Operations Digest",
-        route: "/posts/post-harbor-operations-digest",
+        route: detailRoute("/posts", "post-harbor-operations-digest"),
         title: "Harbor Operations Digest",
         detailTitleSelector: ".EntityDetail__title",
         query: {
@@ -112,7 +123,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Post search",
         term: "Harbor Operations",
         resultLabel: "Harbor Operations Digest",
-        route: "/posts/post-harbor-operations-digest",
+        route: detailRoute("/posts", "post-harbor-operations-digest"),
         title: "Harbor Operations Digest",
         searchOperationName: "SearchPosts",
         detailOperationName: "PostById",
@@ -126,7 +137,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Job search",
         term: "Dockmaster",
         resultLabel: "Dockmaster",
-        route: "/jobs/job-dockmaster",
+        route: detailRoute("/jobs", "job-dockmaster"),
         title: "Dockmaster",
         searchOperationName: "SearchJobs",
         detailOperationName: "JobById",
@@ -140,7 +151,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Product / Service search",
         term: "Solar Widget",
         resultLabel: "Solar Widget",
-        route: "/products-services/product-solar-widget",
+        route: detailRoute("/products-services", "product-solar-widget"),
         title: "Solar Widget",
         searchOperationName: "SearchProducts",
         detailOperationName: "ProductById",
@@ -154,7 +165,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Company search",
         term: "Harbor Labs",
         resultLabel: "Harbor Labs",
-        route: "/companies/company-harbor-labs",
+        route: detailRoute("/companies", "company-harbor-labs"),
         title: "Harbor Labs",
         searchOperationName: "SearchCompanies",
         detailOperationName: "CompanyById",
@@ -168,7 +179,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Tribe search",
         term: "Nova Rivers",
         resultLabel: "Nova Rivers",
-        route: "/tribes/identity-nova",
+        route: detailRoute("/tribes", "identity-nova"),
         title: "Nova Rivers",
         searchOperationName: "SearchIdentities",
         detailOperationName: "IdentityById",
@@ -182,7 +193,7 @@ export const SEARCH_GOALS: SearchGoal[] = [
         searchTitle: "Startup search",
         term: "Sky Relay",
         resultLabel: "Sky Relay",
-        route: "/ventures/startup-sky-relay",
+        route: detailRoute("/ventures", "startup-sky-relay"),
         title: "Sky Relay",
         searchOperationName: "SearchStartups",
         detailOperationName: "StartupById",
@@ -196,9 +207,9 @@ export const SEARCH_GOALS: SearchGoal[] = [
 export const DEEP_DIVE_ROUTES = {
     home: "/",
     companies: "/companies",
-    company: "/companies/company-harbor-labs",
-    job: "/jobs/job-dockmaster",
-    inactiveJob: "/jobs/job-harbor-watch",
-    venture: "/ventures/startup-sky-relay",
-    identity: "/tribes/identity-nova",
+    company: detailRoute("/companies", "company-harbor-labs"),
+    job: detailRoute("/jobs", "job-dockmaster"),
+    inactiveJob: detailRoute("/jobs", "job-harbor-watch"),
+    venture: detailRoute("/ventures", "startup-sky-relay"),
+    identity: detailRoute("/tribes", "identity-nova"),
 } as const;

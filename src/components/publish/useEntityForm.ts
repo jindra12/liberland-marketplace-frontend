@@ -3,6 +3,7 @@ import { Form, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { resolveImageId } from "./useImageUpload";
+import { encodeServerUrlSegment } from "../../routes";
 
 interface UseEntityFormConfig<TValues, TCreate, TUpdate> {
     entityName: string;
@@ -56,7 +57,9 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                         queryClient.invalidateQueries({ queryKey: [byIdQueryKey] }),
                     ]);
                     message.success(`${config.entityName} ${label}!`);
-                    navigate(`${config.routePrefix}/${config.getUpdateId(result)}`);
+                    navigate(
+                        `${config.routePrefix}/${config.getUpdateId(result)}/${encodeServerUrlSegment(config.url)}`,
+                    );
                 } else {
                     const result = await config.createMutation.mutateAsync({
                         data,
@@ -64,7 +67,9 @@ export const useEntityForm = <TValues extends { imageFile?: unknown }, TCreate, 
                     });
                     await queryClient.invalidateQueries({ queryKey: [listQueryKey] });
                     message.success(`${config.entityName} ${label}!`);
-                    navigate(`${config.routePrefix}/${config.getCreateId(result)}`);
+                    navigate(
+                        `${config.routePrefix}/${config.getCreateId(result)}/${encodeServerUrlSegment(config.url)}`,
+                    );
                 }
             } catch (e: unknown) {
                 message.error(e instanceof Error ? e.message : "Something went wrong");

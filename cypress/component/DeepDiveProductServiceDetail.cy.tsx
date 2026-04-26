@@ -1,7 +1,7 @@
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generated/graphql";
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountMainRoute,
     waitForCollectionQuery,
@@ -12,7 +12,7 @@ import {
 describe("product/service detail", () => {
     beforeEach(() => {
         cy.viewport(1200, 1200);
-        mountMainRoute("/products-services/product-moon-lamp");
+        mountMainRoute(detailRoute("/products-services", "product-moon-lamp"));
         waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,
