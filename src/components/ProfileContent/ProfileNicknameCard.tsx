@@ -51,7 +51,7 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
         }
     };
     return (
-        <Card title="Change Nickname" size="small" className="Profile__card">
+        <Card title="Change Nickname" size="small" className="Profile__card Profile__nicknameCard">
             <Form form={form} layout="vertical" onFinish={handleFinish}>
                 <Form.Item
                     name="name"

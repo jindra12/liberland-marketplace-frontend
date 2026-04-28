@@ -104,6 +104,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                         required: true,
                     },
                 ]}
+                className="Publish__postTitleField"
             >
                 <Input />
             </Form.Item>
@@ -116,12 +117,14 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                         message: "Please add post content",
                     },
                 ]}
+                className="Publish__postContentField"
             >
                 <MarkdownEditor rows={10} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <Form.Item
                 name="seoDescription"
                 label="Description"
+                className="Publish__postDescriptionField"
             >
                 <Input.TextArea rows={3} placeholder="Used as the snippet in lists and search" />
             </Form.Item>
@@ -134,10 +137,11 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                         message: "Please select a company",
                     },
                 ]}
+                className="Publish__postCompanyField"
             >
                 <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>
-            <Form.Item name="relatedTarget" label="Related content">
+            <Form.Item name="relatedTarget" label="Related content" className="Publish__postRelatedField">
                 <RelatedTargetField />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />

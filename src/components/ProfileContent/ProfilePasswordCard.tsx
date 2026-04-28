@@ -35,7 +35,7 @@ export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardPro
         }
     };
     return (
-        <Card title="Change Password" size="small" className="Profile__card">
+        <Card title="Change Password" size="small" className="Profile__card Profile__passwordCard">
             <Form form={form} layout="vertical" onFinish={handleFinish}>
                 <Form.Item
                     name="currentPassword"

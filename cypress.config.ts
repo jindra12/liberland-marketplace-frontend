@@ -57,6 +57,10 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: false,
+    retries: {
+        runMode: 2,
+        openMode: 2,
+    },
     screenshotsFolder: "cypress/artifacts/screenshots",
     videosFolder: "cypress/artifacts/videos",
     viewportWidth: 1200,
@@ -70,10 +74,6 @@ export default defineConfig({
         specPattern: "cypress/component/**/*.cy.tsx",
         supportFile: "cypress/support/component.ts",
         setupNodeEvents(on) {
-            on("before:run", () => {
-                fs.rmSync(path.resolve("cypress/artifacts"), { recursive: true, force: true });
-            });
-
             on("task", {
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {

@@ -23,6 +23,7 @@ import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
 import { RouteScrollToTop } from "./components/RouteScrollToTop";
 import { ServerUrlGuard } from "./components/ServerUrlGuard";
+import { TourService } from "./components/tour/TourService";
 import { routes } from "./routes";
 
 const Splash = React.lazy(() => import("./components/Splash"));
@@ -69,11 +70,13 @@ const suspense =
                 {options.serverUrlGuard ? (
                     <ServerUrlGuard>
                         {options.trackPage && <AnalyticsPageTracker />}
+                        <TourService />
                         <Component />
                     </ServerUrlGuard>
                 ) : (
                     <>
                         {options.trackPage && <AnalyticsPageTracker />}
+                        <TourService />
                         <Component />
                     </>
                 )}
@@ -102,8 +105,8 @@ const Main: React.FunctionComponent = () => {
                     <TronContext>
                         <SolanaContext>
                             <ThirdwebProvider>
-                                <AuthContextProvider>
-                                    <BrowserRouter>
+                                <BrowserRouter>
+                                    <AuthContextProvider>
                                         <CypressHistorySupport />
                                         <AppAnalyticsProvider>
                                             <AntProvider>
@@ -308,8 +311,8 @@ const Main: React.FunctionComponent = () => {
                                                 </AppErrorBoundary>
                                             </AntProvider>
                                         </AppAnalyticsProvider>
-                                    </BrowserRouter>
-                                </AuthContextProvider>
+                                    </AuthContextProvider>
+                                </BrowserRouter>
                             </ThirdwebProvider>
                         </SolanaContext>
                     </TronContext>

@@ -81,7 +81,9 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                     <Input placeholder="Phone number" />
                 </Form.Item>
                 <Divider />
-                <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required />
+                <div className="Profile__addressField">
+                    <GeoapifyAddressFormItem name={["shippingAddress"]} label="Address" required />
+                </div>
                 <Divider />
                 <ProfileWalletsField form={form} disabled={props.selectedServerUserLoading} />
 
