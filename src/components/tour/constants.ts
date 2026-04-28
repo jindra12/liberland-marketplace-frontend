@@ -454,12 +454,12 @@ const syndication: TourDefinition = {
     requiresAuth: false,
     targetRoute: routes.syndication.route,
     desktop: [
-        buildTourDescriptor("Syndication list", "See which backend URLs are available in this marketplace.", ".SyndicationList__addCompact"),
-        buildTourDescriptor("Open a source", "Use the details link to inspect a single source.", ".EntityList__actionsRow", "right"),
+        buildTourDescriptor("Syndication list", "See which backend servers are available in this marketplace.", ".SyndicationList__addCompact"),
+        buildTourDescriptor("Open a source", "Use the details link to inspect one server entry.", ".EntityList__actionsRow", "right"),
     ],
     mobile: [
-        buildTourDescriptor("Syndication list", "See which backend URLs are available in this marketplace.", ".SyndicationList__addCompact"),
-        buildTourDescriptor("Open a source", "Use the details link to inspect a single source.", ".SyndicationList__compactActions", "top"),
+        buildTourDescriptor("Syndication list", "See which backend servers are available in this marketplace.", ".SyndicationList__addCompact"),
+        buildTourDescriptor("Open a source", "Use the details link to inspect one server entry.", ".SyndicationList__compactActions", "top"),
     ],
 };
 
@@ -468,12 +468,12 @@ const syndicationDetail: TourDefinition = {
     route: routes.syndication.detail.route,
     requiresAuth: false,
     desktop: [
-        buildTourDescriptor("Syndication detail", "Check whether the source is enabled and what URL it points to.", ".SyndicationDetail__meta"),
-        buildTourDescriptor("Toggle or visit", "Use the action buttons to enable, disable, or open the source.", ".SyndicationDetail__headerCopy", "left"),
+        buildTourDescriptor("Syndication detail", "Check whether the source is enabled and what backend URL it uses.", ".SyndicationDetail__meta"),
+        buildTourDescriptor("Toggle source", "Use the action buttons to enable or disable this server.", ".SyndicationDetail__headerCopy", "left"),
     ],
     mobile: [
-        buildTourDescriptor("Syndication detail", "Check whether the source is enabled and what URL it points to.", ".SyndicationDetail__meta"),
-        buildTourDescriptor("Toggle or visit", "The action buttons live below the main header on mobile.", ".SyndicationDetail__headerCopy", "top"),
+        buildTourDescriptor("Syndication detail", "Check whether the source is enabled and what backend URL it uses.", ".SyndicationDetail__meta"),
+        buildTourDescriptor("Toggle source", "The action buttons live below the main header on mobile.", ".SyndicationDetail__headerCopy", "top"),
     ],
 };
 

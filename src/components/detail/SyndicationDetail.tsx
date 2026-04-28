@@ -90,9 +90,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         >
                             {entry.enabled ? "Disable URL" : "Enable URL"}
                         </Button>
-                        <Button type="primary" size="large" href={entry.value} target="_blank" rel="noreferrer">
-                            Visit URL
-                        </Button>
                         <RouteButton to={routes.syndication.route} size="large">
                             Back to list
                         </RouteButton>
@@ -113,7 +110,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         <Descriptions bordered column={1} size="small" className="SyndicationDetail__meta">
                             <Descriptions.Item label="Name">{title}</Descriptions.Item>
                             <Descriptions.Item label="Host">{host}</Descriptions.Item>
-                            <Descriptions.Item label="URL">
+                            <Descriptions.Item label="Backend URL">
                                 <Typography.Link href={entry.value} target="_blank" rel="noreferrer">
                                     {entry.value}
                                 </Typography.Link>

@@ -19,6 +19,7 @@ describe("syndication detail", () => {
         cy.get(".SyndicationDetail__meta").contains("Main").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains("127.0.0.1:3010").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains(MAIN_SERVER_URL).should("be.visible");
+        cy.contains("Visit URL").should("not.exist");
         cy.get(".ShareSection").should("be.visible").contains("Share this endpoint");
         cy.get(".ShareSection__nativeButton").should("be.visible");
         cy.get(".SubscribeButton").should("not.exist");

@@ -1,6 +1,6 @@
 import { defineConfig } from "cypress";
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 import { format } from "prettier";
 import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
