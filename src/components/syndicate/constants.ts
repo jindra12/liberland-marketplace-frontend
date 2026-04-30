@@ -1,10 +1,9 @@
-import { BACKEND_URL } from "../../gqlFetcher";
-
 export type SyndicatePage = {
     eyebrow: string;
     title: string;
     description: string;
     highlights: string[];
+    downloadLabel?: string;
     command?: string[];
     links?: {
         label: string;
@@ -23,13 +22,7 @@ export const SYNDICATE_PAGES: SyndicatePage[] = [
             "Download the setup script.",
             "Run it and finish the last step in your browser.",
         ],
-        links: [
-            {
-                label: "Download the setup script",
-                href: `${BACKEND_URL}/deploy-space`,
-                download: "deploy-space",
-            },
-        ],
+        downloadLabel: "Download the setup script",
     },
     {
         eyebrow: "Recommended Server",
@@ -58,13 +51,7 @@ export const SYNDICATE_PAGES: SyndicatePage[] = [
             "The script is also available at /deploy-space.",
             "If you already know the app address, you can use it directly.",
         ],
-        links: [
-            {
-                label: "Open the script download",
-                href: `${BACKEND_URL}/deploy-space`,
-                download: "deploy-space",
-            },
-        ],
+        downloadLabel: "Open the script download",
     },
     {
         eyebrow: "What The Installer Does",

@@ -4,6 +4,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Card, Flex, List, Space, Tag, Typography } from "antd";
 
 import type { SyndicatePage } from "./constants";
+import { SyndicateDownloadAction } from "./SyndicateDownloadAction";
 
 type SyndicatePageContentProps = {
     page: SyndicatePage;
@@ -43,6 +44,7 @@ export const SyndicatePageContent: React.FunctionComponent<SyndicatePageContentP
                             ))}
                         </Space>
                     )}
+                    {props.page.downloadLabel && <SyndicateDownloadAction label={props.page.downloadLabel} />}
                     {props.page.links && (
                         <Flex wrap gap={12} className="SyndicateModal__linkRow">
                             {props.page.links.map((link) => (
