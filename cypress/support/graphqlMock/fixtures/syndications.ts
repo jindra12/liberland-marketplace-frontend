@@ -6,11 +6,15 @@ export const syndications: Syndication[] = [
         name: "Main",
         description: "Primary syndicated content source",
         url: "http://127.0.0.1:3010",
+        nsfw: true,
+        autoEnable: true,
     },
     {
         id: "syndication-coop",
         name: "Co-op",
         description: "Cooperative marketplace server",
         url: "http://127.0.0.1:3011",
+        nsfw: false,
+        autoEnable: false,
     },
 ];

@@ -114,6 +114,7 @@ manager is `yarn`.
 - Do not duplicate defensive invariant checks in child components when a parent component already guarantees the contract. Trust validated props and parent-owned form constraints instead of re-checking values like `quantity <= 0` in leaf UI components.
 - Do not add impossible-state guards when the surrounding UI flow already prevents that state. If a screen, button state, or parent guard guarantees the condition, trust it instead of adding extra branches like empty-cart submit checks.
 - Never hand-write local module declarations for third-party packages until you have checked whether the package ships its own types or has an `@types/*` package. Prefer the published types over local `.d.ts` shims.
+- Do not invent or import fake typing packages just to satisfy TypeScript. Use the package's published types, Cypress's built-in globals, or the repo's existing domain types instead of ad-hoc `declare module` shims or guessed imports.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When the user asks you to add types to something, use the most concrete domain types the code can support. Do not satisfy the request with the broadest generic type that happens to compile.
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.

@@ -13,6 +13,7 @@ import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { useCartItems } from "./cart/useCartItems";
 import { DesktopDrawer } from "./DesktopDrawer";
 import { EndpointAuthAction } from "./EndpointAuthAction";
+import { useEndpointContext } from "./EndpointContext";
 import { LoginButton } from "./LoginButton";
 import { MobileDrawer } from "./MobileDrawer";
 import { getSelectedKeys } from "./MobileDrawer/utils";
@@ -33,8 +34,10 @@ export const AppHeader: React.FunctionComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+    const { urls } = useEndpointContext();
     const { totalQuantity } = useCartItems();
     const authAction = auth.isAuthenticated ? "logout" : "login";
+    const singlePublishEndpoint = urls.length === 1 ? urls[0] : undefined;
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -83,21 +86,34 @@ export const AppHeader: React.FunctionComponent = () => {
                             />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
-                            <EndpointAuthAction>
-                                {({ runWithAuthOrLogin }) => (
-                                    <Button
-                                        type="primary"
-                                        icon={<PlusOutlined />}
-                                        className="AppHeader__publishBtn"
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            runWithAuthOrLogin(() => navigate(routes.publish.route));
-                                        }}
-                                    >
-                                        Publish ad
-                                    </Button>
-                                )}
-                            </EndpointAuthAction>
+                            {singlePublishEndpoint ? (
+                                <EndpointAuthAction defaultAuthUrl={singlePublishEndpoint.value}>
+                                    {({ runWithAuthOrLogin }) => (
+                                        <Button
+                                            type="primary"
+                                            icon={<PlusOutlined />}
+                                            className="AppHeader__publishBtn"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                runWithAuthOrLogin(() => navigate(routes.publish.route));
+                                            }}
+                                        >
+                                            Publish ad
+                                        </Button>
+                                    )}
+                                </EndpointAuthAction>
+                            ) : (
+                                <Button
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    className="AppHeader__publishBtn"
+                                    onClick={() => {
+                                        navigate(routes.publish.route);
+                                    }}
+                                >
+                                    Publish ad
+                                </Button>
+                            )}
                             <LoginButton
                                 action={authAction}
                                 type="default"

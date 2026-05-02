@@ -22,6 +22,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 import { CommonDetail } from "./CommonDetail";
+import { CompanyVerificationTag } from "./companyDetail/CompanyVerificationTag";
 import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 
@@ -84,14 +85,22 @@ const CompanyDetail: React.FunctionComponent = () => {
                                                 {companyData?.name}
                                             </Typography.Title>
                                         </div>
-                                        {companyIdentity && (
-                                            <div className="CompanyDetail__identityRow">
-                                                <IdentityTagLink
-                                                    identity={companyIdentity}
-                                                    color="success"
-                                                    icon={<UsergroupAddOutlined />}
-                                                />
-                                            </div>
+                                        {(companyIdentity || companyData?.verification) && (
+                                            <Flex
+                                                gap={8}
+                                                wrap
+                                                align="center"
+                                                className="CompanyDetail__identityRow"
+                                            >
+                                                {companyIdentity && (
+                                                    <IdentityTagLink
+                                                        identity={companyIdentity}
+                                                        color="success"
+                                                        icon={<UsergroupAddOutlined />}
+                                                    />
+                                                )}
+                                                <CompanyVerificationTag verification={companyData?.verification} />
+                                            </Flex>
                                         )}
                                     </div>
                                 </Flex>

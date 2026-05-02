@@ -19,6 +19,7 @@ import {
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { NativeShareButton } from "../share/NativeShareButton";
+import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
 
 const byPriority = (entry: URL) => {
     if (entry.name === "Main") {
@@ -127,6 +128,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                 <Tag color={entry.enabled ? "success" : "default"}>
                                     {entry.enabled ? "Visible in search" : "Hidden from search"}
                                 </Tag>
+                                {entry.nsfw ? <SyndicationNsfwTag className="SyndicationList__nsfwTag" /> : null}
                             </Flex>
                         </Flex>
                     ),

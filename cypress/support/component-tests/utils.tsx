@@ -633,5 +633,6 @@ export const goToSyndicationList = () => {
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
     cy.contains("h2", SYNDICATION_LIST_GOAL.title).should("be.visible");
+    cy.contains(".SyndicationList__nsfwTag", "NSFW").should("be.visible");
     screenshotStep("syndication-list");
 };

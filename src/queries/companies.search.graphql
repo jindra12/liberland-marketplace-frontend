@@ -19,6 +19,7 @@ query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $s
                         isSubscribed
                         serverURL
                         name
+                        verification
                         description
                         likeCount
                         cryptoAddresses {

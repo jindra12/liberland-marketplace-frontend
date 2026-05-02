@@ -23,6 +23,7 @@ query SearchCompaniesBySecondaryIdentity(
             isSubscribed
             serverURL
             name
+            verification
             description
             likeCount
             cryptoAddresses {

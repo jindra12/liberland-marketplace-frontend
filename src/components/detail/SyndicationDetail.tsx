@@ -10,6 +10,7 @@ import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
+import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
 
 import { CommonDetail } from "./CommonDetail";
 
@@ -74,7 +75,13 @@ const SyndicationDetail: React.FunctionComponent = () => {
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
                             <Tag>{entry.name === "Main" ? "Primary endpoint" : "Syndicated endpoint"}</Tag>
+                            {entry.nsfw ? <SyndicationNsfwTag className="SyndicationDetail__nsfwTag" /> : null}
                         </Flex>
+                        {entry.nsfw ? (
+                            <Typography.Text type="secondary" className="SyndicationDetail__nsfwNote">
+                                You must be 18+ to see this content.
+                            </Typography.Text>
+                        ) : null}
                     </Flex>
                 </Flex>
             }

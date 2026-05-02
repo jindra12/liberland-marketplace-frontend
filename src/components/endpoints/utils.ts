@@ -34,7 +34,7 @@ export const getSyndicationName = (entry: Pick<EndpointUrl, "name" | "value">): 
 
 export const createEndpointEntry = (
     value: string,
-    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description">> = {},
+    options: Partial<Pick<EndpointUrl, "enabled" | "name" | "description" | "nsfw" | "autoEnable">> = {},
 ): EndpointUrl => {
     const normalizedValue = normalizeSyndicationUrl(value);
 
@@ -43,6 +43,8 @@ export const createEndpointEntry = (
         value: normalizedValue,
         name: options.name ?? getSyndicationHost(normalizedValue),
         description: options.description,
+        nsfw: options.nsfw,
+        autoEnable: options.autoEnable,
     };
 };
 
@@ -90,6 +92,8 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
                 enabled: false,
                 name: doc.name,
                 description: doc.description,
+                nsfw: doc.nsfw,
+                autoEnable: doc.autoEnable,
             }),
         ];
     });
@@ -108,6 +112,8 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
                 ...entry,
                 name: discoveredEntry.name || entry.name,
                 description: discoveredEntry.description ?? entry.description,
+                nsfw: discoveredEntry.nsfw ?? entry.nsfw,
+                autoEnable: discoveredEntry.autoEnable ?? entry.autoEnable,
             };
         });
     }, entries);

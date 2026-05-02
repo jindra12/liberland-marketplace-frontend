@@ -1,7 +1,7 @@
 import { image, GUEST_SYNDICATION_URL } from "../fixtures/shared";
 import { identities } from "./identities";
 import { meUser } from "./meUser";
-import { Company__Status, Company_CryptoAddresses_Chain } from "../../../../src/generated/graphql";
+import { Company__Status, Company_CryptoAddresses_Chain, Company_Verification } from "../../../../src/generated/graphql";
 import type { Company } from "../../../../src/generated/graphql";
 
 export const companies: Company[] = [
@@ -13,6 +13,7 @@ export const companies: Company[] = [
         phone: "+1 555 7700",
         email: "hello@harbor-craft.example",
         serverURL: GUEST_SYNDICATION_URL,
+        verification: Company_Verification.PrivateSeller,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user,

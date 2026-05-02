@@ -6858,6 +6858,7 @@ export type CompaniesDocAccessFields = {
   serverURL?: Maybe<CompaniesDocAccessFields_ServerUrl>;
   subscriberCount?: Maybe<CompaniesDocAccessFields_SubscriberCount>;
   updatedAt?: Maybe<CompaniesDocAccessFields_UpdatedAt>;
+  verification?: Maybe<CompaniesDocAccessFields_Verification>;
   website?: Maybe<CompaniesDocAccessFields_Website>;
 };
 
@@ -7540,6 +7541,34 @@ export type CompaniesDocAccessFields_UpdatedAt_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_Verification = {
+  __typename?: 'CompaniesDocAccessFields_verification';
+  create?: Maybe<CompaniesDocAccessFields_Verification_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_Verification_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_Verification_Read>;
+  update?: Maybe<CompaniesDocAccessFields_Verification_Update>;
+};
+
+export type CompaniesDocAccessFields_Verification_Create = {
+  __typename?: 'CompaniesDocAccessFields_verification_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Verification_Delete = {
+  __typename?: 'CompaniesDocAccessFields_verification_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Verification_Read = {
+  __typename?: 'CompaniesDocAccessFields_verification_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_Verification_Update = {
+  __typename?: 'CompaniesDocAccessFields_verification_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_Website = {
   __typename?: 'CompaniesDocAccessFields_website';
   create?: Maybe<CompaniesDocAccessFields_Website_Create>;
@@ -7592,6 +7621,7 @@ export type CompaniesFields = {
   serverURL?: Maybe<CompaniesFields_ServerUrl>;
   subscriberCount?: Maybe<CompaniesFields_SubscriberCount>;
   updatedAt?: Maybe<CompaniesFields_UpdatedAt>;
+  verification?: Maybe<CompaniesFields_Verification>;
   website?: Maybe<CompaniesFields_Website>;
 };
 
@@ -8274,6 +8304,34 @@ export type CompaniesFields_UpdatedAt_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_Verification = {
+  __typename?: 'CompaniesFields_verification';
+  create?: Maybe<CompaniesFields_Verification_Create>;
+  delete?: Maybe<CompaniesFields_Verification_Delete>;
+  read?: Maybe<CompaniesFields_Verification_Read>;
+  update?: Maybe<CompaniesFields_Verification_Update>;
+};
+
+export type CompaniesFields_Verification_Create = {
+  __typename?: 'CompaniesFields_verification_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Verification_Delete = {
+  __typename?: 'CompaniesFields_verification_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Verification_Read = {
+  __typename?: 'CompaniesFields_verification_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_Verification_Update = {
+  __typename?: 'CompaniesFields_verification_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_Website = {
   __typename?: 'CompaniesFields_website';
   create?: Maybe<CompaniesFields_Website_Create>;
@@ -8363,6 +8421,7 @@ export type Company = {
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  verification?: Maybe<Company_Verification>;
   website?: Maybe<Scalars['String']['output']>;
 };
 
@@ -8772,6 +8831,12 @@ export enum CompanyUpdate__Status_MutationInput {
   Published = 'published'
 }
 
+export enum CompanyUpdate_Verification_MutationInput {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
+}
+
 export type CompanyVersion = {
   __typename?: 'CompanyVersion';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -8811,6 +8876,7 @@ export type CompanyVersion_Version = {
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  verification?: Maybe<CompanyVersion_Version_Verification>;
   website?: Maybe<Scalars['String']['output']>;
 };
 
@@ -8829,6 +8895,12 @@ export enum CompanyVersion_Version_CryptoAddresses_Chain {
 export enum CompanyVersion_Version__Status {
   Draft = 'draft',
   Published = 'published'
+}
+
+export enum CompanyVersion_Version_Verification {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
 }
 
 export type Company_CryptoAddresses = {
@@ -9095,6 +9167,33 @@ export type Company_UpdatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export enum Company_Verification {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
+}
+
+export enum Company_Verification_Input {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
+}
+
+export enum Company_Verification_MutationInput {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
+}
+
+export type Company_Verification_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Company_Verification_Input>>>;
+  equals?: InputMaybe<Company_Verification_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Company_Verification_Input>>>;
+  not_equals?: InputMaybe<Company_Verification_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Company_Verification_Input>>>;
+};
+
 export type Company_Website_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -9133,6 +9232,7 @@ export type Company_Where = {
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
+  verification?: InputMaybe<Company_Verification_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
 
@@ -9163,6 +9263,7 @@ export type Company_Where_And = {
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
+  verification?: InputMaybe<Company_Verification_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
 
@@ -9193,6 +9294,7 @@ export type Company_Where_Or = {
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
   updatedAt?: InputMaybe<Company_UpdatedAt_Operator>;
+  verification?: InputMaybe<Company_Verification_Operator>;
   website?: InputMaybe<Company_Website_Operator>;
 };
 
@@ -58135,6 +58237,7 @@ export type MutationCompanyInput = {
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+  verification?: InputMaybe<Company_Verification_MutationInput>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -58175,6 +58278,7 @@ export type MutationCompanyUpdateInput = {
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+  verification?: InputMaybe<CompanyUpdate_Verification_MutationInput>;
   website?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -60539,6 +60643,21 @@ export type VersionsCompany_Version__UpdatedAt_Operator = {
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export enum VersionsCompany_Version__Verification_Input {
+  PrivateSeller = 'private_seller',
+  Trader = 'trader',
+  Unverified = 'unverified'
+}
+
+export type VersionsCompany_Version__Verification_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__Verification_Input>>>;
+  equals?: InputMaybe<VersionsCompany_Version__Verification_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__Verification_Input>>>;
+  not_equals?: InputMaybe<VersionsCompany_Version__Verification_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsCompany_Version__Verification_Input>>>;
+};
+
 export type VersionsCompany_Version__Website_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -60581,6 +60700,7 @@ export type VersionsCompany_Where = {
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__verification?: InputMaybe<VersionsCompany_Version__Verification_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
 
@@ -60615,6 +60735,7 @@ export type VersionsCompany_Where_And = {
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__verification?: InputMaybe<VersionsCompany_Version__Verification_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
 
@@ -60649,6 +60770,7 @@ export type VersionsCompany_Where_Or = {
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
   version__updatedAt?: InputMaybe<VersionsCompany_Version__UpdatedAt_Operator>;
+  version__verification?: InputMaybe<VersionsCompany_Version__Verification_Operator>;
   version__website?: InputMaybe<VersionsCompany_Version__Website_Operator>;
 };
 
@@ -63443,7 +63565,7 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -63451,7 +63573,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, _status?: Company__Status | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -63461,7 +63583,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -63473,7 +63595,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
@@ -63489,7 +63611,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -63500,7 +63622,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
@@ -63508,7 +63630,7 @@ export type CreateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -63539,7 +63661,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -63550,7 +63672,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
@@ -63565,7 +63687,7 @@ export type UpdateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -64880,6 +65002,7 @@ export const ListCompaniesByCreatorDocument = `
       isSubscribed
       serverURL
       name
+      verification
       likeCount
       cryptoAddresses {
         chain
@@ -64929,6 +65052,7 @@ export const CompanyByIdDocument = `
     isSubscribed
     serverURL
     name
+    verification
     _status
     description
     likeCount
@@ -65018,6 +65142,7 @@ export const ListCompaniesByIdentityDocument = `
       isSubscribed
       serverURL
       name
+      verification
       description
       hasLiked
       likeCount
@@ -65120,6 +65245,7 @@ export const SearchCompaniesByIdentityDocument = `
             isSubscribed
             serverURL
             name
+            verification
             description
             cryptoAddresses {
               chain
@@ -65215,6 +65341,7 @@ export const ListCompaniesBySecondaryIdentityDocument = `
       isSubscribed
       serverURL
       name
+      verification
       description
       likeCount
       cryptoAddresses {
@@ -65308,6 +65435,7 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
       isSubscribed
       serverURL
       name
+      verification
       description
       likeCount
       cryptoAddresses {
@@ -65392,6 +65520,7 @@ export const CreateCompanyDocument = `
   createCompany(data: $data, draft: $draft) {
     id
     name
+    verification
     cryptoAddresses {
       chain
       address
@@ -65513,6 +65642,7 @@ export const ListCompaniesDocument = `
       isSubscribed
       serverURL
       name
+      verification
       description
       hasLiked
       likeCount
@@ -65615,6 +65745,7 @@ export const SearchCompaniesDocument = `
             isSubscribed
             serverURL
             name
+            verification
             description
             likeCount
             cryptoAddresses {
@@ -65693,6 +65824,7 @@ export const UpdateCompanyDocument = `
   updateCompany(id: $id, data: $data, draft: $draft) {
     id
     name
+    verification
     cryptoAddresses {
       chain
       address

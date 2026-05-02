@@ -1,5 +1,4 @@
 import { UserManager } from "oidc-client-ts";
-import type { SinonStub } from "sinon";
 
 import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountAnonymousRoute, mountAuthenticatedDetailRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
@@ -161,7 +160,7 @@ const runDisabledMobileFlow = () => {
     screenshotStep("report-disabled-mobile");
 };
 
-const runAnonymousDesktopFlow = (signinRedirect: SinonStub) => {
+const runAnonymousDesktopFlow = (signinRedirect: sinon.SinonStub) => {
     cy.viewport(VIEWPORTS.desktop.width, VIEWPORTS.desktop.height);
     cy.resetQL();
     cy.clearLocalStorage();
@@ -179,7 +178,7 @@ const runAnonymousDesktopFlow = (signinRedirect: SinonStub) => {
     cy.get(".ant-modal").should("not.exist");
 };
 
-const runAnonymousMobileFlow = (signinRedirect: SinonStub) => {
+const runAnonymousMobileFlow = (signinRedirect: sinon.SinonStub) => {
     cy.viewport(VIEWPORTS.mobile.width, VIEWPORTS.mobile.height);
     cy.resetQL();
     cy.clearLocalStorage();

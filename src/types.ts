@@ -20,12 +20,16 @@ export type URL = {
     value: string;
     name: string | null;
     description?: string | null;
+    nsfw?: boolean | null;
+    autoEnable?: boolean | null;
 };
 
 export type SyndicationDoc = {
     url?: string | null;
     name?: string | null;
     description?: string | null;
+    nsfw?: boolean | null;
+    autoEnable?: boolean | null;
 };
 
 export type SearchScope = "jobs" | "companies" | "identities" | "products" | "startups" | "posts";

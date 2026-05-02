@@ -11,6 +11,7 @@ query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limi
             isSubscribed
             serverURL
             name
+            verification
             description
             likeCount
             cryptoAddresses {

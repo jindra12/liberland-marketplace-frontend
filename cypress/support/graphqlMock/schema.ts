@@ -223,6 +223,7 @@ export const graphqlSchema = buildSchema(`
     type Company {
         id: String
         name: String
+        verification: String
         image: Media
     }
 
@@ -257,6 +258,7 @@ export const graphqlSchema = buildSchema(`
     type MockNode {
         id: JSON
         name: JSON
+        verification: JSON
         title: JSON
         description: JSON
         slug: JSON
@@ -319,6 +321,8 @@ export const graphqlSchema = buildSchema(`
         alt: JSON
         publishedAt: JSON
         contentRankScore: JSON
+        nsfw: JSON
+        autoEnable: JSON
         isSubscribed: JSON
         isActive: JSON
         success: JSON

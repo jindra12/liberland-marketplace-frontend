@@ -25,6 +25,7 @@ query SearchCompaniesByIdentity(
                         isSubscribed
                         serverURL
                         name
+                        verification
                         description
                         cryptoAddresses {
                             chain
