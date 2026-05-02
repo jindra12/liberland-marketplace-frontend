@@ -17,6 +17,7 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
               id
               title
               slug
+              repost
             heroImage {
               id
               url
@@ -75,6 +76,7 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
                   id
                   title
                   slug
+                  repost
                   heroImage {
                     id
                     url

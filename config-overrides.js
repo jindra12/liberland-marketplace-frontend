@@ -22,5 +22,10 @@ module.exports = function override(config) {
         fullySpecified: false,
     };
 
+    config.module.rules.push({
+        test: /\.md$/i,
+        type: "asset/source",
+    });
+
     return config;
 };

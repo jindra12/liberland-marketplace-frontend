@@ -6,6 +6,7 @@ export type MobileDrawerModel = {
     showSyndication: boolean;
     isAuthenticated: boolean;
     onSearchScopeSelect: () => void;
+    onOpenDisclaimers: () => void;
     onPublish: () => void;
     onUnauthorizedBeforeLogin: () => void;
     onProfile: () => void;

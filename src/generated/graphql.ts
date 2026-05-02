@@ -6852,6 +6852,7 @@ export type CompaniesDocAccessFields = {
   lastLikeAt?: Maybe<CompaniesDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesDocAccessFields_LikeCount>;
   name?: Maybe<CompaniesDocAccessFields_Name>;
+  noAutoPost?: Maybe<CompaniesDocAccessFields_NoAutoPost>;
   phone?: Maybe<CompaniesDocAccessFields_Phone>;
   serverURL?: Maybe<CompaniesDocAccessFields_ServerUrl>;
   subscriberCount?: Maybe<CompaniesDocAccessFields_SubscriberCount>;
@@ -7398,6 +7399,34 @@ export type CompaniesDocAccessFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_NoAutoPost = {
+  __typename?: 'CompaniesDocAccessFields_noAutoPost';
+  create?: Maybe<CompaniesDocAccessFields_NoAutoPost_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_NoAutoPost_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_NoAutoPost_Read>;
+  update?: Maybe<CompaniesDocAccessFields_NoAutoPost_Update>;
+};
+
+export type CompaniesDocAccessFields_NoAutoPost_Create = {
+  __typename?: 'CompaniesDocAccessFields_noAutoPost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_NoAutoPost_Delete = {
+  __typename?: 'CompaniesDocAccessFields_noAutoPost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_NoAutoPost_Read = {
+  __typename?: 'CompaniesDocAccessFields_noAutoPost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_NoAutoPost_Update = {
+  __typename?: 'CompaniesDocAccessFields_noAutoPost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_Phone = {
   __typename?: 'CompaniesDocAccessFields_phone';
   create?: Maybe<CompaniesDocAccessFields_Phone_Create>;
@@ -7557,6 +7586,7 @@ export type CompaniesFields = {
   lastLikeAt?: Maybe<CompaniesFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesFields_LikeCount>;
   name?: Maybe<CompaniesFields_Name>;
+  noAutoPost?: Maybe<CompaniesFields_NoAutoPost>;
   phone?: Maybe<CompaniesFields_Phone>;
   serverURL?: Maybe<CompaniesFields_ServerUrl>;
   subscriberCount?: Maybe<CompaniesFields_SubscriberCount>;
@@ -8103,6 +8133,34 @@ export type CompaniesFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_NoAutoPost = {
+  __typename?: 'CompaniesFields_noAutoPost';
+  create?: Maybe<CompaniesFields_NoAutoPost_Create>;
+  delete?: Maybe<CompaniesFields_NoAutoPost_Delete>;
+  read?: Maybe<CompaniesFields_NoAutoPost_Read>;
+  update?: Maybe<CompaniesFields_NoAutoPost_Update>;
+};
+
+export type CompaniesFields_NoAutoPost_Create = {
+  __typename?: 'CompaniesFields_noAutoPost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_NoAutoPost_Delete = {
+  __typename?: 'CompaniesFields_noAutoPost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_NoAutoPost_Read = {
+  __typename?: 'CompaniesFields_noAutoPost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_NoAutoPost_Update = {
+  __typename?: 'CompaniesFields_noAutoPost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_Phone = {
   __typename?: 'CompaniesFields_phone';
   create?: Maybe<CompaniesFields_Phone_Create>;
@@ -8299,6 +8357,7 @@ export type Company = {
   lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  noAutoPost?: Maybe<Scalars['Boolean']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
@@ -8746,6 +8805,7 @@ export type CompanyVersion_Version = {
   lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  noAutoPost?: Maybe<Scalars['Boolean']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
@@ -8985,6 +9045,12 @@ export type Company_Name_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Company_NoAutoPost_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Company_Phone_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -9061,6 +9127,7 @@ export type Company_Where = {
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
+  noAutoPost?: InputMaybe<Company_NoAutoPost_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
@@ -9090,6 +9157,7 @@ export type Company_Where_And = {
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
+  noAutoPost?: InputMaybe<Company_NoAutoPost_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
@@ -9119,6 +9187,7 @@ export type Company_Where_Or = {
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
   name?: InputMaybe<Company_Name_Operator>;
+  noAutoPost?: InputMaybe<Company_NoAutoPost_Operator>;
   phone?: InputMaybe<Company_Phone_Operator>;
   serverURL?: InputMaybe<Company_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Company_SubscriberCount_Operator>;
@@ -35411,6 +35480,7 @@ export type Post = {
   populatedAuthors?: Maybe<Array<Post_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   relatedPosts?: Maybe<Array<Post_RelatedPosts_Relationship>>;
+  repost?: Maybe<Scalars['String']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
@@ -35877,6 +35947,7 @@ export type PostVersion_Version = {
   populatedAuthors?: Maybe<Array<PostVersion_Version_PopulatedAuthors>>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   relatedPosts?: Maybe<Array<PostVersion_Version_RelatedPosts_Relationship>>;
+  repost?: Maybe<Scalars['String']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   title?: Maybe<Scalars['String']['output']>;
@@ -36196,6 +36267,17 @@ export enum Post_RelatedPosts_Relation_RelationTo {
   Startups = 'startups'
 }
 
+export type Post_Repost_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Post_Slug_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -36262,6 +36344,7 @@ export type Post_Where = {
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
+  repost?: InputMaybe<Post_Repost_Operator>;
   slug?: InputMaybe<Post_Slug_Operator>;
   subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
@@ -36293,6 +36376,7 @@ export type Post_Where_And = {
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
+  repost?: InputMaybe<Post_Repost_Operator>;
   slug?: InputMaybe<Post_Slug_Operator>;
   subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
@@ -36324,6 +36408,7 @@ export type Post_Where_Or = {
   populatedAuthors__name?: InputMaybe<Post_PopulatedAuthors__Name_Operator>;
   publishedAt?: InputMaybe<Post_PublishedAt_Operator>;
   relatedPosts?: InputMaybe<Post_RelatedPosts_Relation>;
+  repost?: InputMaybe<Post_Repost_Operator>;
   slug?: InputMaybe<Post_Slug_Operator>;
   subscriberCount?: InputMaybe<Post_SubscriberCount_Operator>;
   title?: InputMaybe<Post_Title_Operator>;
@@ -36389,6 +36474,7 @@ export type PostsDocAccessFields = {
   populatedAuthors?: Maybe<PostsDocAccessFields_PopulatedAuthors>;
   publishedAt?: Maybe<PostsDocAccessFields_PublishedAt>;
   relatedPosts?: Maybe<PostsDocAccessFields_RelatedPosts>;
+  repost?: Maybe<PostsDocAccessFields_Repost>;
   slug?: Maybe<PostsDocAccessFields_Slug>;
   subscriberCount?: Maybe<PostsDocAccessFields_SubscriberCount>;
   title?: Maybe<PostsDocAccessFields_Title>;
@@ -37025,6 +37111,34 @@ export type PostsDocAccessFields_RelatedPosts_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type PostsDocAccessFields_Repost = {
+  __typename?: 'PostsDocAccessFields_repost';
+  create?: Maybe<PostsDocAccessFields_Repost_Create>;
+  delete?: Maybe<PostsDocAccessFields_Repost_Delete>;
+  read?: Maybe<PostsDocAccessFields_Repost_Read>;
+  update?: Maybe<PostsDocAccessFields_Repost_Update>;
+};
+
+export type PostsDocAccessFields_Repost_Create = {
+  __typename?: 'PostsDocAccessFields_repost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_Repost_Delete = {
+  __typename?: 'PostsDocAccessFields_repost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_Repost_Read = {
+  __typename?: 'PostsDocAccessFields_repost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsDocAccessFields_Repost_Update = {
+  __typename?: 'PostsDocAccessFields_repost_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type PostsDocAccessFields_Slug = {
   __typename?: 'PostsDocAccessFields_slug';
   create?: Maybe<PostsDocAccessFields_Slug_Create>;
@@ -37157,6 +37271,7 @@ export type PostsFields = {
   populatedAuthors?: Maybe<PostsFields_PopulatedAuthors>;
   publishedAt?: Maybe<PostsFields_PublishedAt>;
   relatedPosts?: Maybe<PostsFields_RelatedPosts>;
+  repost?: Maybe<PostsFields_Repost>;
   slug?: Maybe<PostsFields_Slug>;
   subscriberCount?: Maybe<PostsFields_SubscriberCount>;
   title?: Maybe<PostsFields_Title>;
@@ -37790,6 +37905,34 @@ export type PostsFields_RelatedPosts_Read = {
 
 export type PostsFields_RelatedPosts_Update = {
   __typename?: 'PostsFields_relatedPosts_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_Repost = {
+  __typename?: 'PostsFields_repost';
+  create?: Maybe<PostsFields_Repost_Create>;
+  delete?: Maybe<PostsFields_Repost_Delete>;
+  read?: Maybe<PostsFields_Repost_Read>;
+  update?: Maybe<PostsFields_Repost_Update>;
+};
+
+export type PostsFields_Repost_Create = {
+  __typename?: 'PostsFields_repost_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_Repost_Delete = {
+  __typename?: 'PostsFields_repost_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_Repost_Read = {
+  __typename?: 'PostsFields_repost_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostsFields_Repost_Update = {
+  __typename?: 'PostsFields_repost_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48168,11 +48311,13 @@ export type SubscribersUpdateDocAccess = {
 export type Syndication = {
   __typename?: 'Syndication';
   _status?: Maybe<Syndication__Status>;
+  autoEnable?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   name?: Maybe<Scalars['String']['output']>;
+  nsfw?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
@@ -48200,10 +48345,12 @@ export type SyndicationVersionParentArgs = {
 export type SyndicationVersion_Version = {
   __typename?: 'SyndicationVersion_Version';
   _status?: Maybe<SyndicationVersion_Version__Status>;
+  autoEnable?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  nsfw?: Maybe<Scalars['Boolean']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
@@ -48237,6 +48384,12 @@ export type Syndication__Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Syndication__Status_Input>>>;
 };
 
+export type Syndication_AutoEnable_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Syndication_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -48251,6 +48404,7 @@ export type Syndication_CreatedAt_Operator = {
 export type Syndication_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -48285,6 +48439,12 @@ export type Syndication_Name_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Syndication_Nsfw_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Syndication_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -48310,11 +48470,13 @@ export type Syndication_Where = {
   AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
   _status?: InputMaybe<Syndication__Status_Operator>;
+  autoEnable?: InputMaybe<Syndication_AutoEnable_Operator>;
   createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
   createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
   description?: InputMaybe<Syndication_Description_Operator>;
   id?: InputMaybe<Syndication_Id_Operator>;
   name?: InputMaybe<Syndication_Name_Operator>;
+  nsfw?: InputMaybe<Syndication_Nsfw_Operator>;
   updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
   url?: InputMaybe<Syndication_Url_Operator>;
 };
@@ -48323,11 +48485,13 @@ export type Syndication_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
   _status?: InputMaybe<Syndication__Status_Operator>;
+  autoEnable?: InputMaybe<Syndication_AutoEnable_Operator>;
   createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
   createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
   description?: InputMaybe<Syndication_Description_Operator>;
   id?: InputMaybe<Syndication_Id_Operator>;
   name?: InputMaybe<Syndication_Name_Operator>;
+  nsfw?: InputMaybe<Syndication_Nsfw_Operator>;
   updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
   url?: InputMaybe<Syndication_Url_Operator>;
 };
@@ -48336,11 +48500,13 @@ export type Syndication_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<Syndication_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<Syndication_Where_Or>>>;
   _status?: InputMaybe<Syndication__Status_Operator>;
+  autoEnable?: InputMaybe<Syndication_AutoEnable_Operator>;
   createdAt?: InputMaybe<Syndication_CreatedAt_Operator>;
   createdBy?: InputMaybe<Syndication_CreatedBy_Operator>;
   description?: InputMaybe<Syndication_Description_Operator>;
   id?: InputMaybe<Syndication_Id_Operator>;
   name?: InputMaybe<Syndication_Name_Operator>;
+  nsfw?: InputMaybe<Syndication_Nsfw_Operator>;
   updatedAt?: InputMaybe<Syndication_UpdatedAt_Operator>;
   url?: InputMaybe<Syndication_Url_Operator>;
 };
@@ -48387,10 +48553,12 @@ export type SyndicationsDeleteDocAccess = {
 export type SyndicationsDocAccessFields = {
   __typename?: 'SyndicationsDocAccessFields';
   _status?: Maybe<SyndicationsDocAccessFields__Status>;
+  autoEnable?: Maybe<SyndicationsDocAccessFields_AutoEnable>;
   createdAt?: Maybe<SyndicationsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<SyndicationsDocAccessFields_CreatedBy>;
   description?: Maybe<SyndicationsDocAccessFields_Description>;
   name?: Maybe<SyndicationsDocAccessFields_Name>;
+  nsfw?: Maybe<SyndicationsDocAccessFields_Nsfw>;
   updatedAt?: Maybe<SyndicationsDocAccessFields_UpdatedAt>;
   url?: Maybe<SyndicationsDocAccessFields_Url>;
 };
@@ -48420,6 +48588,34 @@ export type SyndicationsDocAccessFields__Status_Read = {
 
 export type SyndicationsDocAccessFields__Status_Update = {
   __typename?: 'SyndicationsDocAccessFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_AutoEnable = {
+  __typename?: 'SyndicationsDocAccessFields_autoEnable';
+  create?: Maybe<SyndicationsDocAccessFields_AutoEnable_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_AutoEnable_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_AutoEnable_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_AutoEnable_Update>;
+};
+
+export type SyndicationsDocAccessFields_AutoEnable_Create = {
+  __typename?: 'SyndicationsDocAccessFields_autoEnable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_AutoEnable_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_autoEnable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_AutoEnable_Read = {
+  __typename?: 'SyndicationsDocAccessFields_autoEnable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_AutoEnable_Update = {
+  __typename?: 'SyndicationsDocAccessFields_autoEnable_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48535,6 +48731,34 @@ export type SyndicationsDocAccessFields_Name_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type SyndicationsDocAccessFields_Nsfw = {
+  __typename?: 'SyndicationsDocAccessFields_nsfw';
+  create?: Maybe<SyndicationsDocAccessFields_Nsfw_Create>;
+  delete?: Maybe<SyndicationsDocAccessFields_Nsfw_Delete>;
+  read?: Maybe<SyndicationsDocAccessFields_Nsfw_Read>;
+  update?: Maybe<SyndicationsDocAccessFields_Nsfw_Update>;
+};
+
+export type SyndicationsDocAccessFields_Nsfw_Create = {
+  __typename?: 'SyndicationsDocAccessFields_nsfw_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Nsfw_Delete = {
+  __typename?: 'SyndicationsDocAccessFields_nsfw_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Nsfw_Read = {
+  __typename?: 'SyndicationsDocAccessFields_nsfw_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsDocAccessFields_Nsfw_Update = {
+  __typename?: 'SyndicationsDocAccessFields_nsfw_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type SyndicationsDocAccessFields_UpdatedAt = {
   __typename?: 'SyndicationsDocAccessFields_updatedAt';
   create?: Maybe<SyndicationsDocAccessFields_UpdatedAt_Create>;
@@ -48594,10 +48818,12 @@ export type SyndicationsDocAccessFields_Url_Update = {
 export type SyndicationsFields = {
   __typename?: 'SyndicationsFields';
   _status?: Maybe<SyndicationsFields__Status>;
+  autoEnable?: Maybe<SyndicationsFields_AutoEnable>;
   createdAt?: Maybe<SyndicationsFields_CreatedAt>;
   createdBy?: Maybe<SyndicationsFields_CreatedBy>;
   description?: Maybe<SyndicationsFields_Description>;
   name?: Maybe<SyndicationsFields_Name>;
+  nsfw?: Maybe<SyndicationsFields_Nsfw>;
   updatedAt?: Maybe<SyndicationsFields_UpdatedAt>;
   url?: Maybe<SyndicationsFields_Url>;
 };
@@ -48627,6 +48853,34 @@ export type SyndicationsFields__Status_Read = {
 
 export type SyndicationsFields__Status_Update = {
   __typename?: 'SyndicationsFields__status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_AutoEnable = {
+  __typename?: 'SyndicationsFields_autoEnable';
+  create?: Maybe<SyndicationsFields_AutoEnable_Create>;
+  delete?: Maybe<SyndicationsFields_AutoEnable_Delete>;
+  read?: Maybe<SyndicationsFields_AutoEnable_Read>;
+  update?: Maybe<SyndicationsFields_AutoEnable_Update>;
+};
+
+export type SyndicationsFields_AutoEnable_Create = {
+  __typename?: 'SyndicationsFields_autoEnable_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_AutoEnable_Delete = {
+  __typename?: 'SyndicationsFields_autoEnable_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_AutoEnable_Read = {
+  __typename?: 'SyndicationsFields_autoEnable_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_AutoEnable_Update = {
+  __typename?: 'SyndicationsFields_autoEnable_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -48739,6 +48993,34 @@ export type SyndicationsFields_Name_Read = {
 
 export type SyndicationsFields_Name_Update = {
   __typename?: 'SyndicationsFields_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Nsfw = {
+  __typename?: 'SyndicationsFields_nsfw';
+  create?: Maybe<SyndicationsFields_Nsfw_Create>;
+  delete?: Maybe<SyndicationsFields_Nsfw_Delete>;
+  read?: Maybe<SyndicationsFields_Nsfw_Read>;
+  update?: Maybe<SyndicationsFields_Nsfw_Update>;
+};
+
+export type SyndicationsFields_Nsfw_Create = {
+  __typename?: 'SyndicationsFields_nsfw_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Nsfw_Delete = {
+  __typename?: 'SyndicationsFields_nsfw_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Nsfw_Read = {
+  __typename?: 'SyndicationsFields_nsfw_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type SyndicationsFields_Nsfw_Update = {
+  __typename?: 'SyndicationsFields_nsfw_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -51214,6 +51496,7 @@ export type TransactionsUpdateDocAccess = {
 export type User = {
   __typename?: 'User';
   account?: Maybe<User_Account>;
+  bot?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
   emailVerified: Scalars['Boolean']['output'];
@@ -51306,6 +51589,12 @@ export enum User_Wallets_Chain_MutationInput {
   Solana = 'solana',
   Tron = 'tron'
 }
+
+export type User_Bot_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export type User_CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
@@ -51589,6 +51878,7 @@ export type User_Wallets__Provider_Operator = {
 export type User_Where = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
@@ -51619,6 +51909,7 @@ export type User_Where = {
 export type User_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
@@ -51649,6 +51940,7 @@ export type User_Where_And = {
 export type User_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
   emailVerified?: InputMaybe<User_EmailVerified_Operator>;
@@ -51718,6 +52010,7 @@ export type UsersDeleteDocAccess = {
 export type UsersDocAccessFields = {
   __typename?: 'UsersDocAccessFields';
   account?: Maybe<UsersDocAccessFields_Account>;
+  bot?: Maybe<UsersDocAccessFields_Bot>;
   createdAt?: Maybe<UsersDocAccessFields_CreatedAt>;
   email?: Maybe<UsersDocAccessFields_Email>;
   emailVerified?: Maybe<UsersDocAccessFields_EmailVerified>;
@@ -51757,6 +52050,34 @@ export type UsersDocAccessFields_Account_Read = {
 
 export type UsersDocAccessFields_Account_Update = {
   __typename?: 'UsersDocAccessFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Bot = {
+  __typename?: 'UsersDocAccessFields_bot';
+  create?: Maybe<UsersDocAccessFields_Bot_Create>;
+  delete?: Maybe<UsersDocAccessFields_Bot_Delete>;
+  read?: Maybe<UsersDocAccessFields_Bot_Read>;
+  update?: Maybe<UsersDocAccessFields_Bot_Update>;
+};
+
+export type UsersDocAccessFields_Bot_Create = {
+  __typename?: 'UsersDocAccessFields_bot_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Bot_Delete = {
+  __typename?: 'UsersDocAccessFields_bot_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Bot_Read = {
+  __typename?: 'UsersDocAccessFields_bot_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Bot_Update = {
+  __typename?: 'UsersDocAccessFields_bot_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -52544,6 +52865,7 @@ export type UsersDocAccessFields_Wallets_Provider_Update = {
 export type UsersFields = {
   __typename?: 'UsersFields';
   account?: Maybe<UsersFields_Account>;
+  bot?: Maybe<UsersFields_Bot>;
   createdAt?: Maybe<UsersFields_CreatedAt>;
   email?: Maybe<UsersFields_Email>;
   emailVerified?: Maybe<UsersFields_EmailVerified>;
@@ -52583,6 +52905,34 @@ export type UsersFields_Account_Read = {
 
 export type UsersFields_Account_Update = {
   __typename?: 'UsersFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Bot = {
+  __typename?: 'UsersFields_bot';
+  create?: Maybe<UsersFields_Bot_Create>;
+  delete?: Maybe<UsersFields_Bot_Delete>;
+  read?: Maybe<UsersFields_Bot_Read>;
+  update?: Maybe<UsersFields_Bot_Update>;
+};
+
+export type UsersFields_Bot_Create = {
+  __typename?: 'UsersFields_bot_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Bot_Delete = {
+  __typename?: 'UsersFields_bot_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Bot_Read = {
+  __typename?: 'UsersFields_bot_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Bot_Update = {
+  __typename?: 'UsersFields_bot_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -57095,6 +57445,7 @@ export type MutationCompanyInput = {
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
+  noAutoPost?: InputMaybe<Scalars['Boolean']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
@@ -57134,6 +57485,7 @@ export type MutationCompanyUpdateInput = {
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  noAutoPost?: InputMaybe<Scalars['Boolean']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
@@ -58013,6 +58365,7 @@ export type MutationPostInput = {
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPost_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   relatedPosts?: InputMaybe<Array<InputMaybe<Post_RelatedPostsRelationshipInput>>>;
+  repost?: InputMaybe<Scalars['String']['input']>;
   slug: Scalars['String']['input'];
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title: Scalars['String']['input'];
@@ -58052,6 +58405,7 @@ export type MutationPostUpdateInput = {
   populatedAuthors?: InputMaybe<Array<InputMaybe<MutationPostUpdate_PopulatedAuthorsInput>>>;
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   relatedPosts?: InputMaybe<Array<InputMaybe<PostUpdate_RelatedPostsRelationshipInput>>>;
+  repost?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -58356,20 +58710,24 @@ export type MutationSubscriberUpdateInput = {
 
 export type MutationSyndicationInput = {
   _status?: InputMaybe<Syndication__Status_MutationInput>;
+  autoEnable?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  nsfw?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url: Scalars['String']['input'];
 };
 
 export type MutationSyndicationUpdateInput = {
   _status?: InputMaybe<SyndicationUpdate__Status_MutationInput>;
+  autoEnable?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  nsfw?: InputMaybe<Scalars['Boolean']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
@@ -58459,6 +58817,7 @@ export type MutationTransaction_ItemsInput = {
 };
 
 export type MutationUserInput = {
+  bot?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
   emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
@@ -58473,6 +58832,7 @@ export type MutationUserInput = {
 };
 
 export type MutationUserUpdateInput = {
+  bot?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   emailVerified?: InputMaybe<Scalars['Boolean']['input']>;
@@ -59407,6 +59767,12 @@ export type VersionsCompany_Version__Name_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsCompany_Version__NoAutoPost_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsCompany_Version__Phone_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -59487,6 +59853,7 @@ export type VersionsCompany_Where = {
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__noAutoPost?: InputMaybe<VersionsCompany_Version__NoAutoPost_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
@@ -59520,6 +59887,7 @@ export type VersionsCompany_Where_And = {
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__noAutoPost?: InputMaybe<VersionsCompany_Version__NoAutoPost_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
@@ -59553,6 +59921,7 @@ export type VersionsCompany_Where_Or = {
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsCompany_Version__Name_Operator>;
+  version__noAutoPost?: InputMaybe<VersionsCompany_Version__NoAutoPost_Operator>;
   version__phone?: InputMaybe<VersionsCompany_Version__Phone_Operator>;
   version__serverURL?: InputMaybe<VersionsCompany_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsCompany_Version__SubscriberCount_Operator>;
@@ -60700,6 +61069,17 @@ export enum VersionsPost_Version__RelatedPosts_Relation_RelationTo {
   Startups = 'startups'
 }
 
+export type VersionsPost_Version__Repost_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsPost_Version__Slug_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -60771,6 +61151,7 @@ export type VersionsPost_Where = {
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
+  version__repost?: InputMaybe<VersionsPost_Version__Repost_Operator>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
@@ -60807,6 +61188,7 @@ export type VersionsPost_Where_And = {
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
+  version__repost?: InputMaybe<VersionsPost_Version__Repost_Operator>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
@@ -60843,6 +61225,7 @@ export type VersionsPost_Where_Or = {
   version__populatedAuthors__name?: InputMaybe<VersionsPost_Version__PopulatedAuthors__Name_Operator>;
   version__publishedAt?: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   version__relatedPosts?: InputMaybe<VersionsPost_Version__RelatedPosts_Relation>;
+  version__repost?: InputMaybe<VersionsPost_Version__Repost_Operator>;
   version__slug?: InputMaybe<VersionsPost_Version__Slug_Operator>;
   version__subscriberCount?: InputMaybe<VersionsPost_Version__SubscriberCount_Operator>;
   version__title?: InputMaybe<VersionsPost_Version__Title_Operator>;
@@ -61883,6 +62266,12 @@ export type VersionsSyndication_Version___Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<VersionsSyndication_Version___Status_Input>>>;
 };
 
+export type VersionsSyndication_Version__AutoEnable_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsSyndication_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -61897,6 +62286,7 @@ export type VersionsSyndication_Version__CreatedAt_Operator = {
 export type VersionsSyndication_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -61918,6 +62308,12 @@ export type VersionsSyndication_Version__Name_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsSyndication_Version__Nsfw_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type VersionsSyndication_Version__UpdatedAt_Operator = {
@@ -61950,10 +62346,12 @@ export type VersionsSyndication_Where = {
   parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__autoEnable?: InputMaybe<VersionsSyndication_Version__AutoEnable_Operator>;
   version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
   version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__nsfw?: InputMaybe<VersionsSyndication_Version__Nsfw_Operator>;
   version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
 };
@@ -61967,10 +62365,12 @@ export type VersionsSyndication_Where_And = {
   parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__autoEnable?: InputMaybe<VersionsSyndication_Version__AutoEnable_Operator>;
   version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
   version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__nsfw?: InputMaybe<VersionsSyndication_Version__Nsfw_Operator>;
   version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
 };
@@ -61984,10 +62384,12 @@ export type VersionsSyndication_Where_Or = {
   parent?: InputMaybe<VersionsSyndication_Parent_Operator>;
   updatedAt?: InputMaybe<VersionsSyndication_UpdatedAt_Operator>;
   version___status?: InputMaybe<VersionsSyndication_Version___Status_Operator>;
+  version__autoEnable?: InputMaybe<VersionsSyndication_Version__AutoEnable_Operator>;
   version__createdAt?: InputMaybe<VersionsSyndication_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsSyndication_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsSyndication_Version__Description_Operator>;
   version__name?: InputMaybe<VersionsSyndication_Version__Name_Operator>;
+  version__nsfw?: InputMaybe<VersionsSyndication_Version__Nsfw_Operator>;
   version__updatedAt?: InputMaybe<VersionsSyndication_Version__UpdatedAt_Operator>;
   version__url?: InputMaybe<VersionsSyndication_Version__Url_Operator>;
 };
@@ -62727,11 +63129,11 @@ export type ListPostsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListPostsByCompanyQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+export type ListPostsByCompanyQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
           | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
-          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
@@ -62742,11 +63144,11 @@ export type PostByIdQueryVariables = Exact<{
 }>;
 
 
-export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+export type PostByIdQuery = { __typename?: 'Query', Post?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
         | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
         | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
         | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
-        | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+        | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
         | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
         | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
        | null }> | null } | null };
@@ -62809,7 +63211,7 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null } | null };
 
 export type DeletePostMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -62840,11 +63242,11 @@ export type ListPostsQueryVariables = Exact<{
 }>;
 
 
-export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+export type ListPostsQuery = { __typename?: 'Query', Posts?: { __typename?: 'Posts', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
           | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
-          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
          | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }> } | null };
@@ -62861,11 +63263,11 @@ export type SearchPostsQuery = { __typename?: 'Query', Searches?: { __typename?:
           | { __typename?: 'Company' }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
-          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
+          | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, hasLiked?: boolean | null, likeCount?: number | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null, relatedPosts?: Array<{ __typename?: 'Post_RelatedPosts_Relationship', relationTo?: Post_RelatedPosts_RelationTo | null, value?:
                 | { __typename: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
                 | { __typename: 'Identity', id: string, identityName: string, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
                 | { __typename: 'Job', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
-                | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+                | { __typename: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
                 | { __typename: 'Product', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
                 | { __typename: 'Startup', id: string, title?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, name?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
                | null }> | null, categories?: Array<{ __typename?: 'Category', id: string, title: string, slug: string }> | null }
@@ -62880,7 +63282,7 @@ export type UpdatePostMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null } | null };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: string, title?: string | null, slug?: string | null, repost?: string | null, content?: string | null, hasLiked?: boolean | null, likeCount?: number | null, publishedAt?: any | null, updatedAt?: any | null, createdAt?: any | null, _status?: Post__Status | null, heroImage?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, meta?: { __typename?: 'Post_Meta', title?: string | null, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string, name: string } | null } | null };
 
 export type ListProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -63140,7 +63542,7 @@ export type SubscribeToVentureUpdatesMutation = { __typename?: 'Mutation', creat
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null, name?: string | null, description?: string | null }> } | null };
+export type ListPublishedSyndicationUrlsQuery = { __typename?: 'Query', Syndications?: { __typename?: 'Syndications', docs: Array<{ __typename?: 'Syndication', url?: string | null, name?: string | null, description?: string | null, nsfw?: boolean | null, autoEnable?: boolean | null }> } | null };
 
 export type UnsubscribeFromCompanyUpdatesMutationVariables = Exact<{
   subscriptionID: Scalars['String']['input'];
@@ -66542,6 +66944,7 @@ export const ListPostsByCompanyDocument = `
       id
       title
       slug
+      repost
       heroImage {
         id
         url
@@ -66600,6 +67003,7 @@ export const ListPostsByCompanyDocument = `
             id
             title
             slug
+            repost
             heroImage {
               id
               url
@@ -66781,6 +67185,7 @@ export const PostByIdDocument = `
     id
     title
     slug
+    repost
     heroImage {
       id
       url
@@ -66841,6 +67246,7 @@ export const PostByIdDocument = `
           id
           title
           slug
+          repost
           heroImage {
             id
             url
@@ -67303,6 +67709,7 @@ export const CreatePostDocument = `
     id
     title
     slug
+    repost
     heroImage {
       id
       url
@@ -67466,6 +67873,7 @@ export const ListPostsDocument = `
       id
       title
       slug
+      repost
       heroImage {
         id
         url
@@ -67524,6 +67932,7 @@ export const ListPostsDocument = `
             id
             title
             slug
+            repost
             heroImage {
               id
               url
@@ -67719,6 +68128,7 @@ export const SearchPostsDocument = `
             id
             title
             slug
+            repost
             heroImage {
               id
               url
@@ -67777,6 +68187,7 @@ export const SearchPostsDocument = `
                   id
                   title
                   slug
+                  repost
                   heroImage {
                     id
                     url
@@ -67961,6 +68372,7 @@ export const UpdatePostDocument = `
     id
     title
     slug
+    repost
     heroImage {
       id
       url
@@ -69545,6 +69957,8 @@ export const ListPublishedSyndicationUrlsDocument = `
       url
       name
       description
+      nsfw
+      autoEnable
     }
   }
 }

@@ -35,6 +35,7 @@ export const useMobileDrawerModel = (onClose: () => void): MobileDrawerModel => 
         showSyndication: urls.length > 1,
         isAuthenticated: auth.isAuthenticated,
         onSearchScopeSelect: onClose,
+        onOpenDisclaimers: onClose,
         onPublish: () => {
             navigate(routes.publish.route);
             onClose();

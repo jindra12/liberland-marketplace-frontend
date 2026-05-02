@@ -3,6 +3,7 @@ query PostById($id: String!, $draft: Boolean = false) {
     id
     title
     slug
+    repost
     heroImage {
       id
       url
@@ -63,6 +64,7 @@ query PostById($id: String!, $draft: Boolean = false) {
           id
           title
           slug
+          repost
           heroImage {
             id
             url

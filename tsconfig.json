@@ -23,6 +23,7 @@
         "next-env.d.ts",
         "src/**/*.ts",
         "src/**/*.tsx",
+        "src/**/*.d.ts",
         "tests/ct/servers/**/*.ts",
         ".next/types/**/*.ts"
     ],

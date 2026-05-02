@@ -8,6 +8,7 @@ import { Button, Drawer } from "antd";
 
 import { routes } from "../routes";
 
+import { DisclaimersButton } from "./disclaimers/DisclaimersButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
 import { RouteButton } from "./RouteButton";
@@ -48,6 +49,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                     <SearchButton type="default" block onScopeSelect={() => setDesktopActionsOpen(false)}>
                         Search
                     </SearchButton>
+                    <DisclaimersButton block onClick={() => setDesktopActionsOpen(false)} />
                     {urls.length > 1 ? (
                         <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                             Syndication

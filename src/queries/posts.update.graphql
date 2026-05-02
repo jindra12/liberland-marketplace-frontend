@@ -3,6 +3,7 @@ mutation UpdatePost($id: String!, $data: mutationPostUpdateInput!, $draft: Boole
     id
     title
     slug
+    repost
     heroImage {
       id
       url

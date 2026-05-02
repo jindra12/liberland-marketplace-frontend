@@ -4,6 +4,7 @@ import { GlobalOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 
 import { routes } from "../../routes";
+import { DisclaimersButton } from "../disclaimers/DisclaimersButton";
 import { EndpointAuthAction } from "../EndpointAuthAction";
 import type { MobileDrawerModel } from "../MobileDrawer/types";
 import { RouteButton } from "../RouteButton";
@@ -27,6 +28,7 @@ export const MobileDrawerContent: React.FunctionComponent<MobileDrawerContentPro
                 <SearchButton type="default" block onScopeSelect={props.model.onSearchScopeSelect}>
                     Search
                 </SearchButton>
+                <DisclaimersButton block onClick={props.model.onOpenDisclaimers} />
                 {props.model.showSyndication ? (
                     <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                         Syndication

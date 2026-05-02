@@ -4,6 +4,8 @@ query ListPublishedSyndicationUrls {
             url
             name
             description
+            nsfw
+            autoEnable
         }
     }
 }
