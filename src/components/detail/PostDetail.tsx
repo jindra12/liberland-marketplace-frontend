@@ -62,6 +62,7 @@ const PostDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="PostDetail"
                         serverURL={post.company?.serverURL ?? routeServerURL}
+                        reportPath={routes.posts.detail.getLink(post as Post)}
                         backTo={routes.posts.route}
                         backLabel="Back to posts"
                         shareLabel="Share this post"

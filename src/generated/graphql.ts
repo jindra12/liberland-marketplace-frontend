@@ -58,6 +58,7 @@ export type Access = {
   product_likes?: Maybe<Product_LikesAccess>;
   products?: Maybe<ProductsAccess>;
   redirects?: Maybe<RedirectsAccess>;
+  reports?: Maybe<ReportsAccess>;
   search?: Maybe<SearchAccess>;
   sessions?: Maybe<SessionsAccess>;
   startups?: Maybe<StartupsAccess>;
@@ -22308,6 +22309,7 @@ export type Mutation = {
   createProduct?: Maybe<Product>;
   createProductLike?: Maybe<ProductLike>;
   createRedirect?: Maybe<Redirect>;
+  createReport?: Maybe<Report>;
   createSearch?: Maybe<Search>;
   createSession?: Maybe<Session>;
   createStartup?: Maybe<Startup>;
@@ -22352,6 +22354,7 @@ export type Mutation = {
   deleteProduct?: Maybe<Product>;
   deleteProductLike?: Maybe<ProductLike>;
   deleteRedirect?: Maybe<Redirect>;
+  deleteReport?: Maybe<Report>;
   deleteSearch?: Maybe<Search>;
   deleteSession?: Maybe<Session>;
   deleteStartup?: Maybe<Startup>;
@@ -22396,6 +22399,7 @@ export type Mutation = {
   duplicateProduct?: Maybe<Product>;
   duplicateProductLike?: Maybe<ProductLike>;
   duplicateRedirect?: Maybe<Redirect>;
+  duplicateReport?: Maybe<Report>;
   duplicateSearch?: Maybe<Search>;
   duplicateSession?: Maybe<Session>;
   duplicateStartup?: Maybe<Startup>;
@@ -22455,6 +22459,7 @@ export type Mutation = {
   updateProduct?: Maybe<Product>;
   updateProductLike?: Maybe<ProductLike>;
   updateRedirect?: Maybe<Redirect>;
+  updateReport?: Maybe<Report>;
   updateSearch?: Maybe<Search>;
   updateSession?: Maybe<Session>;
   updateStartup?: Maybe<Startup>;
@@ -22659,6 +22664,12 @@ export type MutationCreateProductLikeArgs = {
 
 export type MutationCreateRedirectArgs = {
   data: MutationRedirectInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateReportArgs = {
+  data: MutationReportInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -22927,6 +22938,12 @@ export type MutationDeleteRedirectArgs = {
 };
 
 
+export type MutationDeleteReportArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteSearchArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -23187,6 +23204,12 @@ export type MutationDuplicateProductLikeArgs = {
 
 export type MutationDuplicateRedirectArgs = {
   data: MutationRedirectInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateReportArgs = {
+  data: MutationReportInput;
   id: Scalars['String']['input'];
 };
 
@@ -23626,6 +23649,15 @@ export type MutationUpdateProductLikeArgs = {
 export type MutationUpdateRedirectArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationRedirectUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateReportArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationReportUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -34324,6 +34356,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   ProductLikes = 'product_likes',
   Products = 'products',
   Redirects = 'redirects',
+  Reports = 'reports',
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
@@ -34347,7 +34380,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Report | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -34383,6 +34416,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   ProductLikes = 'product_likes',
   Products = 'products',
   Redirects = 'redirects',
+  Reports = 'reports',
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
@@ -34426,6 +34460,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   ProductLikes = 'product_likes',
   Products = 'products',
   Redirects = 'redirects',
+  Reports = 'reports',
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
@@ -34512,6 +34547,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   ProductLikes = 'product_likes',
   Products = 'products',
   Redirects = 'redirects',
+  Reports = 'reports',
   Search = 'search',
   Sessions = 'sessions',
   Startups = 'startups',
@@ -41460,6 +41496,8 @@ export type Query = {
   Products?: Maybe<Products>;
   Redirect?: Maybe<Redirect>;
   Redirects?: Maybe<Redirects>;
+  Report?: Maybe<Report>;
+  Reports?: Maybe<Reports>;
   Search?: Maybe<Search>;
   Searches?: Maybe<Searches>;
   Session?: Maybe<Session>;
@@ -41516,6 +41554,7 @@ export type Query = {
   countProductLikes?: Maybe<CountProductLikes>;
   countProducts?: Maybe<CountProducts>;
   countRedirects?: Maybe<CountRedirects>;
+  countReports?: Maybe<CountReports>;
   countSearches?: Maybe<CountSearches>;
   countSessions?: Maybe<CountSessions>;
   countStartups?: Maybe<CountStartups>;
@@ -41563,6 +41602,7 @@ export type Query = {
   docAccessProduct?: Maybe<ProductsDocAccess>;
   docAccessProductLike?: Maybe<Product_LikesDocAccess>;
   docAccessRedirect?: Maybe<RedirectsDocAccess>;
+  docAccessReport?: Maybe<ReportsDocAccess>;
   docAccessSearch?: Maybe<SearchDocAccess>;
   docAccessSession?: Maybe<SessionsDocAccess>;
   docAccessStartup?: Maybe<StartupsDocAccess>;
@@ -42238,6 +42278,26 @@ export type QueryRedirectsArgs = {
 };
 
 
+export type QueryReportArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryReportsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Report_Where>;
+};
+
+
 export type QuerySearchArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -42707,6 +42767,13 @@ export type QueryCountRedirectsArgs = {
 };
 
 
+export type QueryCountReportsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<Report_Where>;
+};
+
+
 export type QueryCountSearchesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -42954,6 +43021,11 @@ export type QueryDocAccessProductLikeArgs = {
 
 
 export type QueryDocAccessRedirectArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessReportArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -43818,6 +43890,541 @@ export type RedirectsUpdateAccess = {
 
 export type RedirectsUpdateDocAccess = {
   __typename?: 'RedirectsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Report = {
+  __typename?: 'Report';
+  contentLink: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy: User;
+  id: Scalars['String']['output'];
+  reason: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userId: User;
+};
+
+export type Report_ContentLink_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Report_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Report_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Report_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Report_Reason_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Report_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Report_UserId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Report_Where = {
+  AND?: InputMaybe<Array<InputMaybe<Report_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Report_Where_Or>>>;
+  contentLink?: InputMaybe<Report_ContentLink_Operator>;
+  createdAt?: InputMaybe<Report_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Report_CreatedBy_Operator>;
+  id?: InputMaybe<Report_Id_Operator>;
+  reason?: InputMaybe<Report_Reason_Operator>;
+  updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
+  userId?: InputMaybe<Report_UserId_Operator>;
+};
+
+export type Report_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<Report_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Report_Where_Or>>>;
+  contentLink?: InputMaybe<Report_ContentLink_Operator>;
+  createdAt?: InputMaybe<Report_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Report_CreatedBy_Operator>;
+  id?: InputMaybe<Report_Id_Operator>;
+  reason?: InputMaybe<Report_Reason_Operator>;
+  updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
+  userId?: InputMaybe<Report_UserId_Operator>;
+};
+
+export type Report_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<Report_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<Report_Where_Or>>>;
+  contentLink?: InputMaybe<Report_ContentLink_Operator>;
+  createdAt?: InputMaybe<Report_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Report_CreatedBy_Operator>;
+  id?: InputMaybe<Report_Id_Operator>;
+  reason?: InputMaybe<Report_Reason_Operator>;
+  updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
+  userId?: InputMaybe<Report_UserId_Operator>;
+};
+
+export type Reports = {
+  __typename?: 'Reports';
+  docs: Array<Report>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type ReportsCreateAccess = {
+  __typename?: 'ReportsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsCreateDocAccess = {
+  __typename?: 'ReportsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsDeleteAccess = {
+  __typename?: 'ReportsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsDeleteDocAccess = {
+  __typename?: 'ReportsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsDocAccessFields = {
+  __typename?: 'ReportsDocAccessFields';
+  contentLink?: Maybe<ReportsDocAccessFields_ContentLink>;
+  createdAt?: Maybe<ReportsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<ReportsDocAccessFields_CreatedBy>;
+  reason?: Maybe<ReportsDocAccessFields_Reason>;
+  updatedAt?: Maybe<ReportsDocAccessFields_UpdatedAt>;
+  userId?: Maybe<ReportsDocAccessFields_UserId>;
+};
+
+export type ReportsDocAccessFields_ContentLink = {
+  __typename?: 'ReportsDocAccessFields_contentLink';
+  create?: Maybe<ReportsDocAccessFields_ContentLink_Create>;
+  delete?: Maybe<ReportsDocAccessFields_ContentLink_Delete>;
+  read?: Maybe<ReportsDocAccessFields_ContentLink_Read>;
+  update?: Maybe<ReportsDocAccessFields_ContentLink_Update>;
+};
+
+export type ReportsDocAccessFields_ContentLink_Create = {
+  __typename?: 'ReportsDocAccessFields_contentLink_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_ContentLink_Delete = {
+  __typename?: 'ReportsDocAccessFields_contentLink_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_ContentLink_Read = {
+  __typename?: 'ReportsDocAccessFields_contentLink_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_ContentLink_Update = {
+  __typename?: 'ReportsDocAccessFields_contentLink_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedAt = {
+  __typename?: 'ReportsDocAccessFields_createdAt';
+  create?: Maybe<ReportsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<ReportsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<ReportsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<ReportsDocAccessFields_CreatedAt_Update>;
+};
+
+export type ReportsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'ReportsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'ReportsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'ReportsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'ReportsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedBy = {
+  __typename?: 'ReportsDocAccessFields_createdBy';
+  create?: Maybe<ReportsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<ReportsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<ReportsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<ReportsDocAccessFields_CreatedBy_Update>;
+};
+
+export type ReportsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'ReportsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'ReportsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'ReportsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'ReportsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Reason = {
+  __typename?: 'ReportsDocAccessFields_reason';
+  create?: Maybe<ReportsDocAccessFields_Reason_Create>;
+  delete?: Maybe<ReportsDocAccessFields_Reason_Delete>;
+  read?: Maybe<ReportsDocAccessFields_Reason_Read>;
+  update?: Maybe<ReportsDocAccessFields_Reason_Update>;
+};
+
+export type ReportsDocAccessFields_Reason_Create = {
+  __typename?: 'ReportsDocAccessFields_reason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Reason_Delete = {
+  __typename?: 'ReportsDocAccessFields_reason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Reason_Read = {
+  __typename?: 'ReportsDocAccessFields_reason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Reason_Update = {
+  __typename?: 'ReportsDocAccessFields_reason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UpdatedAt = {
+  __typename?: 'ReportsDocAccessFields_updatedAt';
+  create?: Maybe<ReportsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<ReportsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<ReportsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<ReportsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type ReportsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'ReportsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'ReportsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'ReportsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'ReportsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UserId = {
+  __typename?: 'ReportsDocAccessFields_userId';
+  create?: Maybe<ReportsDocAccessFields_UserId_Create>;
+  delete?: Maybe<ReportsDocAccessFields_UserId_Delete>;
+  read?: Maybe<ReportsDocAccessFields_UserId_Read>;
+  update?: Maybe<ReportsDocAccessFields_UserId_Update>;
+};
+
+export type ReportsDocAccessFields_UserId_Create = {
+  __typename?: 'ReportsDocAccessFields_userId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UserId_Delete = {
+  __typename?: 'ReportsDocAccessFields_userId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UserId_Read = {
+  __typename?: 'ReportsDocAccessFields_userId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_UserId_Update = {
+  __typename?: 'ReportsDocAccessFields_userId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields = {
+  __typename?: 'ReportsFields';
+  contentLink?: Maybe<ReportsFields_ContentLink>;
+  createdAt?: Maybe<ReportsFields_CreatedAt>;
+  createdBy?: Maybe<ReportsFields_CreatedBy>;
+  reason?: Maybe<ReportsFields_Reason>;
+  updatedAt?: Maybe<ReportsFields_UpdatedAt>;
+  userId?: Maybe<ReportsFields_UserId>;
+};
+
+export type ReportsFields_ContentLink = {
+  __typename?: 'ReportsFields_contentLink';
+  create?: Maybe<ReportsFields_ContentLink_Create>;
+  delete?: Maybe<ReportsFields_ContentLink_Delete>;
+  read?: Maybe<ReportsFields_ContentLink_Read>;
+  update?: Maybe<ReportsFields_ContentLink_Update>;
+};
+
+export type ReportsFields_ContentLink_Create = {
+  __typename?: 'ReportsFields_contentLink_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_ContentLink_Delete = {
+  __typename?: 'ReportsFields_contentLink_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_ContentLink_Read = {
+  __typename?: 'ReportsFields_contentLink_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_ContentLink_Update = {
+  __typename?: 'ReportsFields_contentLink_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedAt = {
+  __typename?: 'ReportsFields_createdAt';
+  create?: Maybe<ReportsFields_CreatedAt_Create>;
+  delete?: Maybe<ReportsFields_CreatedAt_Delete>;
+  read?: Maybe<ReportsFields_CreatedAt_Read>;
+  update?: Maybe<ReportsFields_CreatedAt_Update>;
+};
+
+export type ReportsFields_CreatedAt_Create = {
+  __typename?: 'ReportsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedAt_Delete = {
+  __typename?: 'ReportsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedAt_Read = {
+  __typename?: 'ReportsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedAt_Update = {
+  __typename?: 'ReportsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedBy = {
+  __typename?: 'ReportsFields_createdBy';
+  create?: Maybe<ReportsFields_CreatedBy_Create>;
+  delete?: Maybe<ReportsFields_CreatedBy_Delete>;
+  read?: Maybe<ReportsFields_CreatedBy_Read>;
+  update?: Maybe<ReportsFields_CreatedBy_Update>;
+};
+
+export type ReportsFields_CreatedBy_Create = {
+  __typename?: 'ReportsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedBy_Delete = {
+  __typename?: 'ReportsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedBy_Read = {
+  __typename?: 'ReportsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_CreatedBy_Update = {
+  __typename?: 'ReportsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Reason = {
+  __typename?: 'ReportsFields_reason';
+  create?: Maybe<ReportsFields_Reason_Create>;
+  delete?: Maybe<ReportsFields_Reason_Delete>;
+  read?: Maybe<ReportsFields_Reason_Read>;
+  update?: Maybe<ReportsFields_Reason_Update>;
+};
+
+export type ReportsFields_Reason_Create = {
+  __typename?: 'ReportsFields_reason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Reason_Delete = {
+  __typename?: 'ReportsFields_reason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Reason_Read = {
+  __typename?: 'ReportsFields_reason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Reason_Update = {
+  __typename?: 'ReportsFields_reason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UpdatedAt = {
+  __typename?: 'ReportsFields_updatedAt';
+  create?: Maybe<ReportsFields_UpdatedAt_Create>;
+  delete?: Maybe<ReportsFields_UpdatedAt_Delete>;
+  read?: Maybe<ReportsFields_UpdatedAt_Read>;
+  update?: Maybe<ReportsFields_UpdatedAt_Update>;
+};
+
+export type ReportsFields_UpdatedAt_Create = {
+  __typename?: 'ReportsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UpdatedAt_Delete = {
+  __typename?: 'ReportsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UpdatedAt_Read = {
+  __typename?: 'ReportsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UpdatedAt_Update = {
+  __typename?: 'ReportsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UserId = {
+  __typename?: 'ReportsFields_userId';
+  create?: Maybe<ReportsFields_UserId_Create>;
+  delete?: Maybe<ReportsFields_UserId_Delete>;
+  read?: Maybe<ReportsFields_UserId_Read>;
+  update?: Maybe<ReportsFields_UserId_Update>;
+};
+
+export type ReportsFields_UserId_Create = {
+  __typename?: 'ReportsFields_userId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UserId_Delete = {
+  __typename?: 'ReportsFields_userId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UserId_Read = {
+  __typename?: 'ReportsFields_userId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_UserId_Update = {
+  __typename?: 'ReportsFields_userId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsReadAccess = {
+  __typename?: 'ReportsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsReadDocAccess = {
+  __typename?: 'ReportsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsUpdateAccess = {
+  __typename?: 'ReportsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type ReportsUpdateDocAccess = {
+  __typename?: 'ReportsUpdateDocAccess';
   permission: Scalars['Boolean']['output'];
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
@@ -51505,6 +52112,7 @@ export type User = {
   image?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   phone?: Maybe<Scalars['String']['output']>;
+  reportedLinks?: Maybe<Array<Scalars['String']['output']>>;
   role?: Maybe<Array<User_Role>>;
   session?: Maybe<User_Session>;
   shippingAddress?: Maybe<User_ShippingAddress>;
@@ -51665,6 +52273,17 @@ export type User_Name_Operator = {
 };
 
 export type User_Phone_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type User_ReportedLinks_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
@@ -51887,6 +52506,7 @@ export type User_Where = {
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
+  reportedLinks?: InputMaybe<User_ReportedLinks_Operator>;
   role?: InputMaybe<User_Role_Operator>;
   shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
@@ -51918,6 +52538,7 @@ export type User_Where_And = {
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
+  reportedLinks?: InputMaybe<User_ReportedLinks_Operator>;
   role?: InputMaybe<User_Role_Operator>;
   shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
@@ -51949,6 +52570,7 @@ export type User_Where_Or = {
   image?: InputMaybe<User_Image_Operator>;
   name?: InputMaybe<User_Name_Operator>;
   phone?: InputMaybe<User_Phone_Operator>;
+  reportedLinks?: InputMaybe<User_ReportedLinks_Operator>;
   role?: InputMaybe<User_Role_Operator>;
   shippingAddress__addressLine1?: InputMaybe<User_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<User_ShippingAddress__AddressLine2_Operator>;
@@ -52018,6 +52640,7 @@ export type UsersDocAccessFields = {
   image?: Maybe<UsersDocAccessFields_Image>;
   name?: Maybe<UsersDocAccessFields_Name>;
   phone?: Maybe<UsersDocAccessFields_Phone>;
+  reportedLinks?: Maybe<UsersDocAccessFields_ReportedLinks>;
   role?: Maybe<UsersDocAccessFields_Role>;
   session?: Maybe<UsersDocAccessFields_Session>;
   shippingAddress?: Maybe<UsersDocAccessFields_ShippingAddress>;
@@ -52274,6 +52897,34 @@ export type UsersDocAccessFields_Phone_Read = {
 
 export type UsersDocAccessFields_Phone_Update = {
   __typename?: 'UsersDocAccessFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ReportedLinks = {
+  __typename?: 'UsersDocAccessFields_reportedLinks';
+  create?: Maybe<UsersDocAccessFields_ReportedLinks_Create>;
+  delete?: Maybe<UsersDocAccessFields_ReportedLinks_Delete>;
+  read?: Maybe<UsersDocAccessFields_ReportedLinks_Read>;
+  update?: Maybe<UsersDocAccessFields_ReportedLinks_Update>;
+};
+
+export type UsersDocAccessFields_ReportedLinks_Create = {
+  __typename?: 'UsersDocAccessFields_reportedLinks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ReportedLinks_Delete = {
+  __typename?: 'UsersDocAccessFields_reportedLinks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ReportedLinks_Read = {
+  __typename?: 'UsersDocAccessFields_reportedLinks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_ReportedLinks_Update = {
+  __typename?: 'UsersDocAccessFields_reportedLinks_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -52873,6 +53524,7 @@ export type UsersFields = {
   image?: Maybe<UsersFields_Image>;
   name?: Maybe<UsersFields_Name>;
   phone?: Maybe<UsersFields_Phone>;
+  reportedLinks?: Maybe<UsersFields_ReportedLinks>;
   role?: Maybe<UsersFields_Role>;
   session?: Maybe<UsersFields_Session>;
   shippingAddress?: Maybe<UsersFields_ShippingAddress>;
@@ -53129,6 +53781,34 @@ export type UsersFields_Phone_Read = {
 
 export type UsersFields_Phone_Update = {
   __typename?: 'UsersFields_phone_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ReportedLinks = {
+  __typename?: 'UsersFields_reportedLinks';
+  create?: Maybe<UsersFields_ReportedLinks_Create>;
+  delete?: Maybe<UsersFields_ReportedLinks_Delete>;
+  read?: Maybe<UsersFields_ReportedLinks_Read>;
+  update?: Maybe<UsersFields_ReportedLinks_Update>;
+};
+
+export type UsersFields_ReportedLinks_Create = {
+  __typename?: 'UsersFields_reportedLinks_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ReportedLinks_Delete = {
+  __typename?: 'UsersFields_reportedLinks_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ReportedLinks_Read = {
+  __typename?: 'UsersFields_reportedLinks_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_ReportedLinks_Update = {
+  __typename?: 'UsersFields_reportedLinks_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -56998,6 +57678,11 @@ export type CountRedirects = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountReports = {
+  __typename?: 'countReports';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountSearches = {
   __typename?: 'countSearches';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -58564,6 +59249,24 @@ export type MutationRedirect_ToInput = {
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationReportInput = {
+  contentLink: Scalars['String']['input'];
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  reason: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationReportUpdateInput = {
+  contentLink?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationSearchInput = {
   categories?: InputMaybe<Array<InputMaybe<MutationSearch_CategoriesInput>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
@@ -58825,6 +59528,7 @@ export type MutationUserInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   phone?: InputMaybe<Scalars['String']['input']>;
+  reportedLinks?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   role?: InputMaybe<Array<InputMaybe<User_Role_MutationInput>>>;
   shippingAddress?: InputMaybe<MutationUser_ShippingAddressInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -58840,6 +59544,7 @@ export type MutationUserUpdateInput = {
   image?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  reportedLinks?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   role?: InputMaybe<Array<InputMaybe<UserUpdate_Role_MutationInput>>>;
   shippingAddress?: InputMaybe<MutationUserUpdate_ShippingAddressInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
@@ -59272,6 +59977,24 @@ export type RedirectsDocAccess = {
   fields?: Maybe<RedirectsDocAccessFields>;
   read?: Maybe<RedirectsReadDocAccess>;
   update?: Maybe<RedirectsUpdateDocAccess>;
+};
+
+export type ReportsAccess = {
+  __typename?: 'reportsAccess';
+  create?: Maybe<ReportsCreateAccess>;
+  delete?: Maybe<ReportsDeleteAccess>;
+  fields?: Maybe<ReportsFields>;
+  read?: Maybe<ReportsReadAccess>;
+  update?: Maybe<ReportsUpdateAccess>;
+};
+
+export type ReportsDocAccess = {
+  __typename?: 'reportsDocAccess';
+  create?: Maybe<ReportsCreateDocAccess>;
+  delete?: Maybe<ReportsDeleteDocAccess>;
+  fields?: Maybe<ReportsDocAccessFields>;
+  read?: Maybe<ReportsReadDocAccess>;
+  update?: Maybe<ReportsUpdateDocAccess>;
 };
 
 export type SearchAccess = {
@@ -63396,6 +64119,13 @@ export type UpdateProductMutationVariables = Exact<{
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
+export type CreateReportMutationVariables = Exact<{
+  data: MutationReportInput;
+}>;
+
+
+export type CreateReportMutation = { __typename?: 'Mutation', createReport?: { __typename?: 'Report', id: string, contentLink: string, reason: string, createdAt?: any | null, userId: { __typename?: 'User', id: string } } | null };
+
 export type JoinStartupMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -63591,7 +64321,7 @@ export type UpdateCommentContentMutation = { __typename?: 'Mutation', updateComm
 export type MeUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeUserQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: string, name: string, email: string, phone?: string | null, shippingAddress?: { __typename?: 'User_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, phone?: string | null } | null, wallets?: Array<{ __typename?: 'User_Wallets', chain?: User_Wallets_Chain | null, provider?: string | null, address?: string | null }> | null } | null } | null };
+export type MeUserQuery = { __typename?: 'Query', meUser?: { __typename?: 'usersMe', user?: { __typename?: 'User', id: string, name: string, email: string, phone?: string | null, reportedLinks?: Array<string> | null, shippingAddress?: { __typename?: 'User_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, state?: string | null, postalCode?: string | null, country?: string | null, phone?: string | null } | null, wallets?: Array<{ __typename?: 'User_Wallets', chain?: User_Wallets_Chain | null, provider?: string | null, address?: string | null }> | null } | null } | null };
 
 export type UpdateUserByIdMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -69171,6 +69901,36 @@ export const useUpdateProductMutation = <
 
 useUpdateProductMutation.fetcher = (variables: UpdateProductMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, variables, options);
 
+export const CreateReportDocument = `
+    mutation CreateReport($data: mutationReportInput!) {
+  createReport(data: $data) {
+    id
+    userId {
+      id
+    }
+    contentLink
+    reason
+    createdAt
+  }
+}
+    `;
+
+export const useCreateReportMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateReportMutation, TError, CreateReportMutationVariables, TContext>) => {
+    
+    return useMutation<CreateReportMutation, TError, CreateReportMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateReport'],
+    mutationFn: (variables?: CreateReportMutationVariables) => gqlFetcher<CreateReportMutation, CreateReportMutationVariables>(CreateReportDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateReportMutation.fetcher = (variables: CreateReportMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReportMutation, CreateReportMutationVariables>(CreateReportDocument, variables, options);
+
 export const JoinStartupDocument = `
     mutation JoinStartup($id: String!) {
   joinStartup(id: $id) {
@@ -70154,6 +70914,7 @@ export const MeUserDocument = `
       name
       email
       phone
+      reportedLinks
       shippingAddress {
         title
         firstName

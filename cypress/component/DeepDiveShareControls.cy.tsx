@@ -21,6 +21,19 @@ describe("share controls", () => {
         cy.get(".ShareSection__buttons").should("be.visible");
         cy.get(".ShareSection__iconButton").its("length").should("be.greaterThan", 0);
         cy.get(".ShareSection__nativeButton").should("be.visible");
+        cy.get(".ShareSection__reportButton").should("be.visible");
+        cy.get(".ShareSection__reportButton").then(($reportButton) => {
+            const reportRect = $reportButton[0].getBoundingClientRect();
+
+            cy.get(".ShareSection__iconButton")
+                .first()
+                .then(($iconButton) => {
+                    const iconRect = $iconButton[0].getBoundingClientRect();
+
+                    expect(Math.abs(reportRect.width - iconRect.width)).to.be.lessThan(2);
+                    expect(Math.abs(reportRect.height - iconRect.height)).to.be.lessThan(2);
+                });
+        });
     });
 
     it("uses the mobile share layout below 1200px", () => {
@@ -31,6 +44,8 @@ describe("share controls", () => {
         cy.get(".ShareSection--mobile").should("be.visible");
         cy.get(".ShareSection__mobileActions").should("be.visible");
         cy.get(".ShareSection__mobileButton").its("length").should("be.greaterThan", 0);
+        cy.get(".ShareSection__mobileReportRow").should("be.visible").and("have.css", "justify-content", "flex-end");
+        cy.get(".ShareSection__reportButton").should("be.visible");
         cy.get(".ShareSection__actions").should("not.exist");
         cy.get(".ShareSection__iconButton").should("not.exist");
     });

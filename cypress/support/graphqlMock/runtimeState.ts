@@ -4,6 +4,14 @@ import { guestFixtures } from "./guestFixtures";
 import type { MockCollection, MockNode } from "./types";
 import type { GraphQLFixtureBundle as FixtureGraphQLFixtureBundle } from "./fixtures/types";
 
+type GraphQLRequestContext = {
+    cypress?: {
+        request?: {
+            url?: string;
+        };
+    };
+};
+
 export type GraphQLRequestBody = {
     operationName?: string;
     variables?: {
@@ -66,6 +74,8 @@ let coopFixturesState = cloneFixtureBundle(coopFixtures);
 let guestFixturesState = cloneFixtureBundle(guestFixtures);
 
 export let activeFixtures = mainFixturesState;
+let activeGraphQLHost = "127.0.0.1:3010";
+const reportedLinksByHost = new Map<string, string[]>();
 export const notificationSubscriptions: MockNode[] = [];
 
 let nextIds = {
@@ -74,6 +84,7 @@ let nextIds = {
     company: 1,
     job: 1,
     post: 1,
+    report: 1,
     order: 1,
     product: 1,
     startup: 1,
@@ -87,6 +98,7 @@ const resetIdCounters = () => {
         company: 1,
         job: 1,
         post: 1,
+        report: 1,
         order: 1,
         product: 1,
         startup: 1,
@@ -99,11 +111,15 @@ export const resetGraphQLMock = (): void => {
     coopFixturesState = cloneFixtureBundle(coopFixtures);
     guestFixturesState = cloneFixtureBundle(guestFixtures);
     activeFixtures = mainFixturesState;
+    activeGraphQLHost = "127.0.0.1:3010";
+    reportedLinksByHost.clear();
     notificationSubscriptions.length = 0;
     resetIdCounters();
 };
 
-export const useGraphQLFixturesForHost = (host: string): void => {
+export const graphQLFixturesForHost = (host: string): void => {
+    activeGraphQLHost = host;
+
     if (host === "127.0.0.1:3011") {
         activeFixtures = coopFixturesState;
         return;
@@ -128,6 +144,28 @@ export const getGraphQLFixturesForHost = (host: string) => {
 
     return mainFixturesState;
 };
+
+export const getActiveGraphQLHost = (): string => activeGraphQLHost;
+
+export const getGraphQLHostFromContext = (context: unknown): string | undefined => {
+    const requestUrl = (context as GraphQLRequestContext | undefined)?.cypress?.request?.url;
+    if (!requestUrl) {
+        return undefined;
+    }
+
+    return new URL(requestUrl).host;
+};
+
+export const addReportedLinkForHost = (host: string, reportedLink: string): void => {
+    const existing = reportedLinksByHost.get(host) || [];
+    if (existing.includes(reportedLink)) {
+        return;
+    }
+
+    reportedLinksByHost.set(host, [...existing, reportedLink]);
+};
+
+export const getReportedLinksForHost = (host: string): string[] => reportedLinksByHost.get(host) || [];
 
 export const nextNodeId = (prefix: keyof typeof nextIds): string => {
     const value = nextIds[prefix];

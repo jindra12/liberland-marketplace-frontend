@@ -22,6 +22,7 @@ export type EndpointAuthActionRenderProps = {
     ) => Promise<void>;
 };
 type EndpointAuthActionProps = {
+    defaultAuthUrl?: string;
     children: (props: EndpointAuthActionRenderProps) => React.ReactElement;
 };
 const toEndpointShort = (value: string) => {
@@ -84,12 +85,28 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                 await authorizedAction();
                 return;
             }
+            if (props.defaultAuthUrl) {
+                const runLogin = async () => {
+                    await options?.onUnauthorizedBeforeLogin?.();
+                    await auth.signinRedirect();
+                };
+                if (authUrl === props.defaultAuthUrl) {
+                    await runLogin();
+                    return;
+                }
+                setPendingAction({
+                    action: runLogin,
+                    targetAuthUrl: props.defaultAuthUrl,
+                });
+                setAuthUrl(props.defaultAuthUrl);
+                return;
+            }
             runWithEndpointSelection(async () => {
                 await options?.onUnauthorizedBeforeLogin?.();
                 await auth.signinRedirect();
             });
         },
-        [auth, runWithEndpointSelection],
+        [auth, authUrl, props.defaultAuthUrl, runWithEndpointSelection, setAuthUrl],
     );
     React.useEffect(() => {
         if (!pendingAction?.targetAuthUrl || authUrl !== pendingAction.targetAuthUrl) {
@@ -99,7 +116,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     }, [authUrl, pendingAction, runPendingAction]);
     const items: MenuProps["items"] = urls.map((endpoint) => ({
         key: endpoint.value,
-        label: endpoint.name?.trim()
+        label: endpoint.name
             ? `${endpoint.name} (${toEndpointShort(endpoint.value)})`
             : toEndpointShort(endpoint.value),
     }));

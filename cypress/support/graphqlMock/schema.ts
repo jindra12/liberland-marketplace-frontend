@@ -14,6 +14,7 @@ export const graphqlSchema = buildSchema(`
     scalar mutationPostUpdateInput
     scalar mutationOrderInput
     scalar mutationOrderUpdateInput
+    scalar mutationReportInput
     scalar mutationProductInput
     scalar mutationProductUpdateInput
     scalar mutationStartupInput
@@ -124,6 +125,7 @@ export const graphqlSchema = buildSchema(`
         updateStartup(id: String!, data: mutationStartupUpdateInput, draft: Boolean): MockNode
         createOrder(data: mutationOrderInput, draft: Boolean): MockNode
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
+        createReport(data: mutationReportInput): MockNode
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode
         updateComment(id: String!, data: JSON): MockNode
@@ -265,12 +267,15 @@ export const graphqlSchema = buildSchema(`
         phone: JSON
         email: JSON
         content: JSON
+        contentLink: JSON
+        reason: JSON
         anonymousHash: JSON
         replyPostRelationTo: JSON
         replyPostValue: JSON
         likeCount: JSON
         hasLiked: JSON
         replyCount: JSON
+        reportedLinks: [JSON!]
         currency: JSON
         secret: JSON
         subtotal: JSON
@@ -370,6 +375,7 @@ export const graphqlSchema = buildSchema(`
         company: MockNode
         identity: MockNode
         createdBy: MockNode
+        userId: MockNode
         user: MockNode
         customer: MockNode
         product: MockNode

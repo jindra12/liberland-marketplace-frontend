@@ -53,6 +53,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
         <CommonDetail
             className="SyndicationDetail"
             serverURL={entry.value}
+            reportPath={routes.syndication.detail.getLink(entry)}
             backTo={routes.syndication.route}
             backLabel="Back to syndication"
             shareLabel="Share this endpoint"

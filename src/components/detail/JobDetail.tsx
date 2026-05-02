@@ -49,6 +49,7 @@ const JobDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="JobDetail"
                         serverURL={job?.serverURL ?? routeServerURL}
+                        reportPath={routes.jobs.detail.getLink(job as Job)}
                         backTo={routes.jobs.route}
                         backLabel="Back to jobs"
                         shareLabel="Share this job"

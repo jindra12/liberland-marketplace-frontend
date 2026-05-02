@@ -56,6 +56,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="CompanyDetail"
                         serverURL={companyData?.serverURL ?? routeServerURL}
+                        reportPath={routes.companies.detail.getLink(companyData as Company)}
                         backTo={routes.companies.route}
                         backLabel="Back to companies"
                         shareLabel="Share this company"

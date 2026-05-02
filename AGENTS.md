@@ -32,6 +32,7 @@ manager is `yarn`.
 - When the user asks for a test, treat that as a Cypress component test. Do not switch to Jest unless the user explicitly asks for Jest or another runner.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
+- The only allowed way to run Cypress is through `yarn cypress:run`, which must use the repo lock wrapper. Do not invoke `cypress run` directly from package scripts or ad hoc commands.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"
@@ -129,6 +130,7 @@ manager is `yarn`.
 - If a user asks you to fix a failing test, keep running the relevant targeted test until it passes or you have a concrete app bug to report back.
 - After changing test code or test config, run the smallest relevant targeted test or spec to confirm the change, not the full Cypress suite unless the user explicitly asks for it.
 - If cache invalidation is involved, reset the relevant cache so the UI reloads the correct data. Do not paper over stale data with arbitrary cache writes, upserts, or other one-off overrides.
+- If a refetch does not return the expected data, do not ad-hoc modify the query cache or mutate the result shape. Fix the underlying query, server response, or refetch path instead.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

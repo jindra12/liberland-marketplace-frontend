@@ -82,6 +82,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="ProductDetail"
                         serverURL={product?.serverURL ?? routeServerURL}
+                        reportPath={routes.productsServices.detail.getLink(product as Product)}
                         backTo={routes.productsServices.route}
                         backLabel="Back to products / services"
                         shareLabel="Share this product"

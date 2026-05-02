@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { GlobalOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Space, Typography } from "antd";
 
+import { Identity } from "../../generated/graphql";
 import { decodeServerUrlSegment, routes } from "../../routes";
 import { useIdentityByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
@@ -34,6 +35,7 @@ const IdentityDetail: React.FunctionComponent = () => {
                     <CommonDetail
                         className="IdentityDetail"
                         serverURL={currentServerURL}
+                        reportPath={routes.tribes.detail.getLink(data.Identity as Identity)}
                         backTo={routes.tribes.route}
                         backLabel="Back to tribes"
                         shareLabel="Share this tribe"

@@ -1,10 +1,14 @@
 import type { GraphQLResolveInfo } from "graphql";
 
 import {
+    addReportedLinkForHost,
     activeFixtures,
     cloneValue,
     createNode,
+    getActiveGraphQLHost,
     getGraphQLFixturesForHost,
+    getGraphQLHostFromContext,
+    getReportedLinksForHost,
     mergeInto,
     nextNodeId,
     notificationSubscriptions,
@@ -175,7 +179,16 @@ export const queryResolvers = {
     Product: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.products.find((item) => item.id === args.id) || activeFixtures.products[0],
     Startup: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.startups.find((item) => item.id === args.id) || activeFixtures.startups[0],
     Identity: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.identities.find((item) => item.id === args.id) || activeFixtures.identities[0],
-    meUser: (): MockNode => activeFixtures.meUser,
+    meUser: (_parent: unknown, _args: unknown, context: unknown): MockNode => {
+        const user = cloneValue(activeFixtures.meUser.user);
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        const reportedLinks = getReportedLinksForHost(host);
+        if (reportedLinks.length > 0) {
+            user.reportedLinks = reportedLinks;
+        }
+
+        return searchNode({ user });
+    },
 };
 
 export const mutationResolvers = {
@@ -190,6 +203,39 @@ export const mutationResolvers = {
         }
 
         return createNode(activeFixtures.carts, "cart", data);
+    },
+    createReport: (_parent: unknown, args: { data?: Record<string, unknown> }, context: unknown): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        const reportId = typeof data.id === "string" ? data.id : nextNodeId("report");
+        const fixtures = getFixturesForContext(context);
+        const currentUser = fixtures.meUser.user;
+        const activeUser = activeFixtures.meUser.user;
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        const reportedLink = typeof data.contentLink === "string" ? data.contentLink : "";
+
+        if (reportedLink) {
+            addReportedLinkForHost(host, reportedLink);
+            const existing = currentUser.reportedLinks || [];
+            if (!existing.includes(reportedLink)) {
+                currentUser.reportedLinks = [...existing, reportedLink];
+            }
+
+            if (activeUser !== currentUser) {
+                const activeExisting = activeUser.reportedLinks || [];
+                if (!activeExisting.includes(reportedLink)) {
+                    activeUser.reportedLinks = [...activeExisting, reportedLink];
+                }
+            }
+        }
+
+        return searchNode({
+            id: reportId,
+            contentLink: reportedLink,
+            reason: typeof data.reason === "string" ? data.reason : "",
+            createdAt: nowIso(),
+            userId: currentUser,
+            createdBy: currentUser,
+        });
     },
     deleteCart: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.carts, args.id),
     updateCart: (_parent: unknown, args: { id?: string; data?: Record<string, unknown> }): MockNode => {

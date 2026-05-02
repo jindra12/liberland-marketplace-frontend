@@ -182,6 +182,8 @@ import {
     useDeleteStartupMutation as useDeleteStartupMutationSingle,
     TrackAnalyticsEventDocument,
     useTrackAnalyticsEventMutation as useTrackAnalyticsEventMutationSingle,
+    CreateReportDocument,
+    useCreateReportMutation as useCreateReportMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
@@ -613,3 +615,7 @@ export const useDislikeVentureMutation = enhancedMutationFactory(
     DislikeVentureDocument,
 );
 export const useLikeVentureMutation = enhancedMutationFactory(useLikeVentureMutationSingle, LikeVentureDocument);
+export const useCreateReportMutation = enhancedMutationFactory(
+    useCreateReportMutationSingle,
+    CreateReportDocument,
+);

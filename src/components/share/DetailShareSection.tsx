@@ -16,6 +16,8 @@ import {
 import { LinkOutlined } from "@ant-design/icons";
 import { Button, Flex, Grid, Space, Typography } from "antd";
 
+import { ReportAction } from "../report/ReportAction";
+
 import { NativeShareButton } from "./NativeShareButton";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
@@ -37,7 +39,9 @@ type DetailShareSectionProps = {
     title: string;
     text: string;
     url?: string;
+    serverURL?: string | null;
     subscriptionTarget?: SubscriptionTarget | null;
+    reportPath?: string;
 };
 const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
@@ -98,6 +102,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
     const shareUrl = props.url ?? window.location.href;
+    const reportPath = props.reportPath ?? window.location.pathname;
     const mobileShareActionSize = "middle";
     const payload = {
         title: props.title,
@@ -131,15 +136,20 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                             />
                         </Space.Compact>
                     ) : (
-                        <NativeShareButton
-                            url={shareUrl}
-                            title={props.title}
-                            text={props.text}
-                            label="Share"
-                            size={mobileShareActionSize}
-                            className="NativeShareButton ShareSection__mobileButton"
-                        />
+                        <Space.Compact block className="ShareSection__mobileActions">
+                            <NativeShareButton
+                                url={shareUrl}
+                                title={props.title}
+                                text={props.text}
+                                label="Share"
+                                size={mobileShareActionSize}
+                                className="NativeShareButton ShareSection__mobileButton"
+                            />
+                        </Space.Compact>
                     )}
+                    <Flex justify="flex-end" className="ShareSection__mobileReportRow">
+                        <ReportAction contentLink={reportPath} serverURL={props.serverURL} className="ShareSection__reportButton" />
+                    </Flex>
                 </Flex>
             </>
         );
@@ -155,6 +165,7 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                             <React.Fragment key={key}>{render(payload)}</React.Fragment>
                         ))}
                     </Space>
+                    <ReportAction contentLink={reportPath} serverURL={props.serverURL} className="ShareSection__reportButton" />
                 </Flex>
             </Flex>
         </>

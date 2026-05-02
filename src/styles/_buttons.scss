@@ -32,6 +32,9 @@
 }
 
 .LikeButton.ant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     height: auto;
     padding: 8px 12px;
     border: 0;
@@ -103,8 +106,11 @@
 }
 
 .LikeButton__count {
+    display: inline-flex;
+    align-items: center;
     color: inherit !important;
     font-weight: 600;
+    line-height: 1;
     letter-spacing: 0.01em;
     text-shadow: inherit;
 }

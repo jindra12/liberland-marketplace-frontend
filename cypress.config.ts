@@ -74,6 +74,17 @@ export default defineConfig({
         specPattern: "cypress/component/**/*.cy.tsx",
         supportFile: "cypress/support/component.ts",
         setupNodeEvents(on) {
+            on("before:browser:launch", (browser, launchOptions) => {
+                if (browser.name === "electron" || browser.family === "chromium") {
+                    launchOptions.args.push("--no-sandbox");
+                    launchOptions.args.push("--disable-setuid-sandbox");
+                    launchOptions.args.push("--disable-dev-shm-usage");
+                    launchOptions.args.push("--disable-gpu");
+                    launchOptions.args.push("--disable-software-rasterizer");
+                }
+
+                return launchOptions;
+            });
             on("task", {
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {

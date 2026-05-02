@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { Alert, Flex, Skeleton, Typography } from "antd";
 
+import type { Comment } from "../../generated/graphql";
 import { decodeServerUrlSegment, routes } from "../../routes";
 import { CommonDetail } from "../detail/CommonDetail";
 
@@ -45,6 +46,7 @@ const CommentDetail: React.FunctionComponent = () => {
             <CommonDetail
                 className="CommentDetailPage__detail"
                 serverURL={commentDetailState.comment?.serverUrl ?? serverURL}
+                reportPath={routes.comments.detail.getLink(commentDetailState.comment as Comment)}
                 backTo={routes.home.route}
                 backLabel="Back home"
                 header={

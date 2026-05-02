@@ -80,4 +80,20 @@ describe("like", () => {
         cy.wrap(stubs.dislikeMutation).should("have.been.calledWith", expectedDislikeCall);
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
     });
+
+    it("keeps the heart icon and count centered on the same horizontal line", () => {
+        mountLike(false);
+
+        cy.get(".LikeButton__heart").then(($heart) => {
+            const heartRect = $heart[0].getBoundingClientRect();
+
+            cy.get(".LikeButton__count").then(($count) => {
+                const countRect = $count[0].getBoundingClientRect();
+                const heartCenterY = heartRect.top + heartRect.height / 2;
+                const countCenterY = countRect.top + countRect.height / 2;
+
+                expect(Math.abs(heartCenterY - countCenterY)).to.be.lessThan(2);
+            });
+        });
+    });
 });
