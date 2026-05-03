@@ -184,6 +184,7 @@
         "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
         "codegen": "graphql-codegen --config codegen.ts",
         "deploy": "vercel --prod",
+        "deploy:test": "bash scripts/deploy-test.sh",
         "eject": "react-app-rewired eject",
         "postinstall": "patch-package",
         "cypress:run": "./scripts/run-cypress-single.sh"
