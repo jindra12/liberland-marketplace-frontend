@@ -20,6 +20,10 @@ export type PasswordFormValues = {
     newPassword: string;
 };
 
+export type InformationRequestFormValues = {
+    reason: string;
+};
+
 export type ProfileContactFormValues = {
     phone?: string | null;
     shippingAddress?: MutationUserUpdate_ShippingAddressInput;

@@ -14,6 +14,7 @@ export const graphqlSchema = buildSchema(`
     scalar mutationPostUpdateInput
     scalar mutationOrderInput
     scalar mutationOrderUpdateInput
+    scalar mutationInformationRequestInput
     scalar mutationReportInput
     scalar mutationProductInput
     scalar mutationProductUpdateInput
@@ -125,6 +126,7 @@ export const graphqlSchema = buildSchema(`
         updateStartup(id: String!, data: mutationStartupUpdateInput, draft: Boolean): MockNode
         createOrder(data: mutationOrderInput, draft: Boolean): MockNode
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
+        createInformationRequest(data: mutationInformationRequestInput): MockNode
         createReport(data: mutationReportInput): MockNode
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode

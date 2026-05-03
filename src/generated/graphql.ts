@@ -39,6 +39,7 @@ export type Access = {
   header?: Maybe<HeaderAccess>;
   identities?: Maybe<IdentitiesAccess>;
   identity_likes?: Maybe<Identity_LikesAccess>;
+  information_requests?: Maybe<Information_RequestsAccess>;
   job_likes?: Maybe<Job_LikesAccess>;
   jobs?: Maybe<JobsAccess>;
   media?: Maybe<MediaAccess>;
@@ -14442,6 +14443,469 @@ export type Identity_Where_Or = {
   website?: InputMaybe<Identity_Website_Operator>;
 };
 
+export type InformationRequest = {
+  __typename?: 'InformationRequest';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy: User;
+  id: Scalars['String']['output'];
+  reason: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user: User;
+};
+
+export type InformationRequest_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type InformationRequest_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type InformationRequest_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type InformationRequest_Reason_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type InformationRequest_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type InformationRequest_User_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type InformationRequest_Where = {
+  AND?: InputMaybe<Array<InputMaybe<InformationRequest_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<InformationRequest_Where_Or>>>;
+  createdAt?: InputMaybe<InformationRequest_CreatedAt_Operator>;
+  createdBy?: InputMaybe<InformationRequest_CreatedBy_Operator>;
+  id?: InputMaybe<InformationRequest_Id_Operator>;
+  reason?: InputMaybe<InformationRequest_Reason_Operator>;
+  updatedAt?: InputMaybe<InformationRequest_UpdatedAt_Operator>;
+  user?: InputMaybe<InformationRequest_User_Operator>;
+};
+
+export type InformationRequest_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<InformationRequest_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<InformationRequest_Where_Or>>>;
+  createdAt?: InputMaybe<InformationRequest_CreatedAt_Operator>;
+  createdBy?: InputMaybe<InformationRequest_CreatedBy_Operator>;
+  id?: InputMaybe<InformationRequest_Id_Operator>;
+  reason?: InputMaybe<InformationRequest_Reason_Operator>;
+  updatedAt?: InputMaybe<InformationRequest_UpdatedAt_Operator>;
+  user?: InputMaybe<InformationRequest_User_Operator>;
+};
+
+export type InformationRequest_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<InformationRequest_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<InformationRequest_Where_Or>>>;
+  createdAt?: InputMaybe<InformationRequest_CreatedAt_Operator>;
+  createdBy?: InputMaybe<InformationRequest_CreatedBy_Operator>;
+  id?: InputMaybe<InformationRequest_Id_Operator>;
+  reason?: InputMaybe<InformationRequest_Reason_Operator>;
+  updatedAt?: InputMaybe<InformationRequest_UpdatedAt_Operator>;
+  user?: InputMaybe<InformationRequest_User_Operator>;
+};
+
+export type InformationRequests = {
+  __typename?: 'InformationRequests';
+  docs: Array<InformationRequest>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type InformationRequestsCreateAccess = {
+  __typename?: 'InformationRequestsCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsCreateDocAccess = {
+  __typename?: 'InformationRequestsCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsDeleteAccess = {
+  __typename?: 'InformationRequestsDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsDeleteDocAccess = {
+  __typename?: 'InformationRequestsDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsDocAccessFields = {
+  __typename?: 'InformationRequestsDocAccessFields';
+  createdAt?: Maybe<InformationRequestsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<InformationRequestsDocAccessFields_CreatedBy>;
+  reason?: Maybe<InformationRequestsDocAccessFields_Reason>;
+  updatedAt?: Maybe<InformationRequestsDocAccessFields_UpdatedAt>;
+  user?: Maybe<InformationRequestsDocAccessFields_User>;
+};
+
+export type InformationRequestsDocAccessFields_CreatedAt = {
+  __typename?: 'InformationRequestsDocAccessFields_createdAt';
+  create?: Maybe<InformationRequestsDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<InformationRequestsDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<InformationRequestsDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<InformationRequestsDocAccessFields_CreatedAt_Update>;
+};
+
+export type InformationRequestsDocAccessFields_CreatedAt_Create = {
+  __typename?: 'InformationRequestsDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'InformationRequestsDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedAt_Read = {
+  __typename?: 'InformationRequestsDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedAt_Update = {
+  __typename?: 'InformationRequestsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedBy = {
+  __typename?: 'InformationRequestsDocAccessFields_createdBy';
+  create?: Maybe<InformationRequestsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<InformationRequestsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<InformationRequestsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<InformationRequestsDocAccessFields_CreatedBy_Update>;
+};
+
+export type InformationRequestsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'InformationRequestsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'InformationRequestsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'InformationRequestsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'InformationRequestsDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_Reason = {
+  __typename?: 'InformationRequestsDocAccessFields_reason';
+  create?: Maybe<InformationRequestsDocAccessFields_Reason_Create>;
+  delete?: Maybe<InformationRequestsDocAccessFields_Reason_Delete>;
+  read?: Maybe<InformationRequestsDocAccessFields_Reason_Read>;
+  update?: Maybe<InformationRequestsDocAccessFields_Reason_Update>;
+};
+
+export type InformationRequestsDocAccessFields_Reason_Create = {
+  __typename?: 'InformationRequestsDocAccessFields_reason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_Reason_Delete = {
+  __typename?: 'InformationRequestsDocAccessFields_reason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_Reason_Read = {
+  __typename?: 'InformationRequestsDocAccessFields_reason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_Reason_Update = {
+  __typename?: 'InformationRequestsDocAccessFields_reason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_UpdatedAt = {
+  __typename?: 'InformationRequestsDocAccessFields_updatedAt';
+  create?: Maybe<InformationRequestsDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<InformationRequestsDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<InformationRequestsDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<InformationRequestsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type InformationRequestsDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'InformationRequestsDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'InformationRequestsDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'InformationRequestsDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'InformationRequestsDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_User = {
+  __typename?: 'InformationRequestsDocAccessFields_user';
+  create?: Maybe<InformationRequestsDocAccessFields_User_Create>;
+  delete?: Maybe<InformationRequestsDocAccessFields_User_Delete>;
+  read?: Maybe<InformationRequestsDocAccessFields_User_Read>;
+  update?: Maybe<InformationRequestsDocAccessFields_User_Update>;
+};
+
+export type InformationRequestsDocAccessFields_User_Create = {
+  __typename?: 'InformationRequestsDocAccessFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_User_Delete = {
+  __typename?: 'InformationRequestsDocAccessFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_User_Read = {
+  __typename?: 'InformationRequestsDocAccessFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsDocAccessFields_User_Update = {
+  __typename?: 'InformationRequestsDocAccessFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields = {
+  __typename?: 'InformationRequestsFields';
+  createdAt?: Maybe<InformationRequestsFields_CreatedAt>;
+  createdBy?: Maybe<InformationRequestsFields_CreatedBy>;
+  reason?: Maybe<InformationRequestsFields_Reason>;
+  updatedAt?: Maybe<InformationRequestsFields_UpdatedAt>;
+  user?: Maybe<InformationRequestsFields_User>;
+};
+
+export type InformationRequestsFields_CreatedAt = {
+  __typename?: 'InformationRequestsFields_createdAt';
+  create?: Maybe<InformationRequestsFields_CreatedAt_Create>;
+  delete?: Maybe<InformationRequestsFields_CreatedAt_Delete>;
+  read?: Maybe<InformationRequestsFields_CreatedAt_Read>;
+  update?: Maybe<InformationRequestsFields_CreatedAt_Update>;
+};
+
+export type InformationRequestsFields_CreatedAt_Create = {
+  __typename?: 'InformationRequestsFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedAt_Delete = {
+  __typename?: 'InformationRequestsFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedAt_Read = {
+  __typename?: 'InformationRequestsFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedAt_Update = {
+  __typename?: 'InformationRequestsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedBy = {
+  __typename?: 'InformationRequestsFields_createdBy';
+  create?: Maybe<InformationRequestsFields_CreatedBy_Create>;
+  delete?: Maybe<InformationRequestsFields_CreatedBy_Delete>;
+  read?: Maybe<InformationRequestsFields_CreatedBy_Read>;
+  update?: Maybe<InformationRequestsFields_CreatedBy_Update>;
+};
+
+export type InformationRequestsFields_CreatedBy_Create = {
+  __typename?: 'InformationRequestsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedBy_Delete = {
+  __typename?: 'InformationRequestsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedBy_Read = {
+  __typename?: 'InformationRequestsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_CreatedBy_Update = {
+  __typename?: 'InformationRequestsFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_Reason = {
+  __typename?: 'InformationRequestsFields_reason';
+  create?: Maybe<InformationRequestsFields_Reason_Create>;
+  delete?: Maybe<InformationRequestsFields_Reason_Delete>;
+  read?: Maybe<InformationRequestsFields_Reason_Read>;
+  update?: Maybe<InformationRequestsFields_Reason_Update>;
+};
+
+export type InformationRequestsFields_Reason_Create = {
+  __typename?: 'InformationRequestsFields_reason_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_Reason_Delete = {
+  __typename?: 'InformationRequestsFields_reason_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_Reason_Read = {
+  __typename?: 'InformationRequestsFields_reason_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_Reason_Update = {
+  __typename?: 'InformationRequestsFields_reason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_UpdatedAt = {
+  __typename?: 'InformationRequestsFields_updatedAt';
+  create?: Maybe<InformationRequestsFields_UpdatedAt_Create>;
+  delete?: Maybe<InformationRequestsFields_UpdatedAt_Delete>;
+  read?: Maybe<InformationRequestsFields_UpdatedAt_Read>;
+  update?: Maybe<InformationRequestsFields_UpdatedAt_Update>;
+};
+
+export type InformationRequestsFields_UpdatedAt_Create = {
+  __typename?: 'InformationRequestsFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_UpdatedAt_Delete = {
+  __typename?: 'InformationRequestsFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_UpdatedAt_Read = {
+  __typename?: 'InformationRequestsFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_UpdatedAt_Update = {
+  __typename?: 'InformationRequestsFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_User = {
+  __typename?: 'InformationRequestsFields_user';
+  create?: Maybe<InformationRequestsFields_User_Create>;
+  delete?: Maybe<InformationRequestsFields_User_Delete>;
+  read?: Maybe<InformationRequestsFields_User_Read>;
+  update?: Maybe<InformationRequestsFields_User_Update>;
+};
+
+export type InformationRequestsFields_User_Create = {
+  __typename?: 'InformationRequestsFields_user_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_User_Delete = {
+  __typename?: 'InformationRequestsFields_user_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_User_Read = {
+  __typename?: 'InformationRequestsFields_user_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsFields_User_Update = {
+  __typename?: 'InformationRequestsFields_user_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type InformationRequestsReadAccess = {
+  __typename?: 'InformationRequestsReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsReadDocAccess = {
+  __typename?: 'InformationRequestsReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsUpdateAccess = {
+  __typename?: 'InformationRequestsUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type InformationRequestsUpdateDocAccess = {
+  __typename?: 'InformationRequestsUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type Job = {
   __typename?: 'Job';
   _status?: Maybe<Job__Status>;
@@ -22392,6 +22856,7 @@ export type Mutation = {
   createFormSubmission?: Maybe<FormSubmission>;
   createIdentity?: Maybe<Identity>;
   createIdentityLike?: Maybe<IdentityLike>;
+  createInformationRequest?: Maybe<InformationRequest>;
   createJob?: Maybe<Job>;
   createJobLike?: Maybe<JobLike>;
   createMedia?: Maybe<Media>;
@@ -22437,6 +22902,7 @@ export type Mutation = {
   deleteFormSubmission?: Maybe<FormSubmission>;
   deleteIdentity?: Maybe<Identity>;
   deleteIdentityLike?: Maybe<IdentityLike>;
+  deleteInformationRequest?: Maybe<InformationRequest>;
   deleteJob?: Maybe<Job>;
   deleteJobLike?: Maybe<JobLike>;
   deleteMedia?: Maybe<Media>;
@@ -22482,6 +22948,7 @@ export type Mutation = {
   duplicateFormSubmission?: Maybe<FormSubmission>;
   duplicateIdentity?: Maybe<Identity>;
   duplicateIdentityLike?: Maybe<IdentityLike>;
+  duplicateInformationRequest?: Maybe<InformationRequest>;
   duplicateJob?: Maybe<Job>;
   duplicateJobLike?: Maybe<JobLike>;
   duplicateMedia?: Maybe<Media>;
@@ -22542,6 +23009,7 @@ export type Mutation = {
   updateHeader?: Maybe<Header>;
   updateIdentity?: Maybe<Identity>;
   updateIdentityLike?: Maybe<IdentityLike>;
+  updateInformationRequest?: Maybe<InformationRequest>;
   updateJob?: Maybe<Job>;
   updateJobLike?: Maybe<JobLike>;
   updateMedia?: Maybe<Media>;
@@ -22652,6 +23120,12 @@ export type MutationCreateIdentityArgs = {
 
 export type MutationCreateIdentityLikeArgs = {
   data: MutationIdentityLikeInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateInformationRequestArgs = {
+  data: MutationInformationRequestInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -22926,6 +23400,12 @@ export type MutationDeleteIdentityLikeArgs = {
 };
 
 
+export type MutationDeleteInformationRequestArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteJobArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -23192,6 +23672,12 @@ export type MutationDuplicateIdentityArgs = {
 
 export type MutationDuplicateIdentityLikeArgs = {
   data: MutationIdentityLikeInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateInformationRequestArgs = {
+  data: MutationInformationRequestInput;
   id: Scalars['String']['input'];
 };
 
@@ -23580,6 +24066,15 @@ export type MutationUpdateIdentityArgs = {
 export type MutationUpdateIdentityLikeArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationIdentityLikeUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateInformationRequestArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationInformationRequestUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -34443,6 +34938,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   Forms = 'forms',
   Identities = 'identities',
   IdentityLikes = 'identity_likes',
+  InformationRequests = 'information_requests',
   JobLikes = 'job_likes',
   Jobs = 'jobs',
   Media = 'media',
@@ -34482,7 +34978,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Report | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | InformationRequest | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Report | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -34503,6 +34999,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   Forms = 'forms',
   Identities = 'identities',
   IdentityLikes = 'identity_likes',
+  InformationRequests = 'information_requests',
   JobLikes = 'job_likes',
   Jobs = 'jobs',
   Media = 'media',
@@ -34547,6 +35044,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   Forms = 'forms',
   Identities = 'identities',
   IdentityLikes = 'identity_likes',
+  InformationRequests = 'information_requests',
   JobLikes = 'job_likes',
   Jobs = 'jobs',
   Media = 'media',
@@ -34634,6 +35132,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   Forms = 'forms',
   Identities = 'identities',
   IdentityLikes = 'identity_likes',
+  InformationRequests = 'information_requests',
   JobLikes = 'job_likes',
   Jobs = 'jobs',
   Media = 'media',
@@ -41561,6 +42060,8 @@ export type Query = {
   Identity?: Maybe<Identity>;
   IdentityLike?: Maybe<IdentityLike>;
   IdentityLikes?: Maybe<IdentityLikes>;
+  InformationRequest?: Maybe<InformationRequest>;
+  InformationRequests?: Maybe<InformationRequests>;
   Job?: Maybe<Job>;
   JobLike?: Maybe<JobLike>;
   JobLikes?: Maybe<JobLikes>;
@@ -41638,6 +42139,7 @@ export type Query = {
   countForms?: Maybe<CountForms>;
   countIdentities?: Maybe<CountIdentities>;
   countIdentityLikes?: Maybe<CountIdentityLikes>;
+  countInformationRequests?: Maybe<CountInformationRequests>;
   countJobLikes?: Maybe<CountJobLikes>;
   countJobs?: Maybe<CountJobs>;
   countNotificationSubscriptions?: Maybe<CountNotificationSubscriptions>;
@@ -41685,6 +42187,7 @@ export type Query = {
   docAccessHeader?: Maybe<HeaderDocAccess>;
   docAccessIdentity?: Maybe<IdentitiesDocAccess>;
   docAccessIdentityLike?: Maybe<Identity_LikesDocAccess>;
+  docAccessInformationRequest?: Maybe<Information_RequestsDocAccess>;
   docAccessJob?: Maybe<JobsDocAccess>;
   docAccessJobLike?: Maybe<Job_LikesDocAccess>;
   docAccessMedia?: Maybe<MediaDocAccess>;
@@ -42009,6 +42512,26 @@ export type QueryIdentityLikesArgs = {
   sort?: InputMaybe<Scalars['String']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
   where?: InputMaybe<IdentityLike_Where>;
+};
+
+
+export type QueryInformationRequestArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryInformationRequestsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<InformationRequest_Where>;
 };
 
 
@@ -42743,6 +43266,13 @@ export type QueryCountIdentityLikesArgs = {
 };
 
 
+export type QueryCountInformationRequestsArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<InformationRequest_Where>;
+};
+
+
 export type QueryCountJobLikesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -43028,6 +43558,11 @@ export type QueryDocAccessIdentityArgs = {
 
 
 export type QueryDocAccessIdentityLikeArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessInformationRequestArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -44003,9 +44538,16 @@ export type Report = {
   createdBy: User;
   id: Scalars['String']['output'];
   reason: Scalars['String']['output'];
+  status?: Maybe<Report_Status>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   userId: User;
 };
+
+export enum ReportUpdate_Status_MutationInput {
+  Ignored = 'ignored',
+  Resolved = 'resolved',
+  Waiting = 'waiting'
+}
 
 export type Report_ContentLink_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -44057,6 +44599,33 @@ export type Report_Reason_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export enum Report_Status {
+  Ignored = 'ignored',
+  Resolved = 'resolved',
+  Waiting = 'waiting'
+}
+
+export enum Report_Status_Input {
+  Ignored = 'ignored',
+  Resolved = 'resolved',
+  Waiting = 'waiting'
+}
+
+export enum Report_Status_MutationInput {
+  Ignored = 'ignored',
+  Resolved = 'resolved',
+  Waiting = 'waiting'
+}
+
+export type Report_Status_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Report_Status_Input>>>;
+  equals?: InputMaybe<Report_Status_Input>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Report_Status_Input>>>;
+  not_equals?: InputMaybe<Report_Status_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Report_Status_Input>>>;
+};
+
 export type Report_UpdatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -44084,6 +44653,7 @@ export type Report_Where = {
   createdBy?: InputMaybe<Report_CreatedBy_Operator>;
   id?: InputMaybe<Report_Id_Operator>;
   reason?: InputMaybe<Report_Reason_Operator>;
+  status?: InputMaybe<Report_Status_Operator>;
   updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
   userId?: InputMaybe<Report_UserId_Operator>;
 };
@@ -44096,6 +44666,7 @@ export type Report_Where_And = {
   createdBy?: InputMaybe<Report_CreatedBy_Operator>;
   id?: InputMaybe<Report_Id_Operator>;
   reason?: InputMaybe<Report_Reason_Operator>;
+  status?: InputMaybe<Report_Status_Operator>;
   updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
   userId?: InputMaybe<Report_UserId_Operator>;
 };
@@ -44108,6 +44679,7 @@ export type Report_Where_Or = {
   createdBy?: InputMaybe<Report_CreatedBy_Operator>;
   id?: InputMaybe<Report_Id_Operator>;
   reason?: InputMaybe<Report_Reason_Operator>;
+  status?: InputMaybe<Report_Status_Operator>;
   updatedAt?: InputMaybe<Report_UpdatedAt_Operator>;
   userId?: InputMaybe<Report_UserId_Operator>;
 };
@@ -44157,6 +44729,7 @@ export type ReportsDocAccessFields = {
   createdAt?: Maybe<ReportsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<ReportsDocAccessFields_CreatedBy>;
   reason?: Maybe<ReportsDocAccessFields_Reason>;
+  status?: Maybe<ReportsDocAccessFields_Status>;
   updatedAt?: Maybe<ReportsDocAccessFields_UpdatedAt>;
   userId?: Maybe<ReportsDocAccessFields_UserId>;
 };
@@ -44273,6 +44846,34 @@ export type ReportsDocAccessFields_Reason_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ReportsDocAccessFields_Status = {
+  __typename?: 'ReportsDocAccessFields_status';
+  create?: Maybe<ReportsDocAccessFields_Status_Create>;
+  delete?: Maybe<ReportsDocAccessFields_Status_Delete>;
+  read?: Maybe<ReportsDocAccessFields_Status_Read>;
+  update?: Maybe<ReportsDocAccessFields_Status_Update>;
+};
+
+export type ReportsDocAccessFields_Status_Create = {
+  __typename?: 'ReportsDocAccessFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Status_Delete = {
+  __typename?: 'ReportsDocAccessFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Status_Read = {
+  __typename?: 'ReportsDocAccessFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsDocAccessFields_Status_Update = {
+  __typename?: 'ReportsDocAccessFields_status_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ReportsDocAccessFields_UpdatedAt = {
   __typename?: 'ReportsDocAccessFields_updatedAt';
   create?: Maybe<ReportsDocAccessFields_UpdatedAt_Create>;
@@ -44335,6 +44936,7 @@ export type ReportsFields = {
   createdAt?: Maybe<ReportsFields_CreatedAt>;
   createdBy?: Maybe<ReportsFields_CreatedBy>;
   reason?: Maybe<ReportsFields_Reason>;
+  status?: Maybe<ReportsFields_Status>;
   updatedAt?: Maybe<ReportsFields_UpdatedAt>;
   userId?: Maybe<ReportsFields_UserId>;
 };
@@ -44448,6 +45050,34 @@ export type ReportsFields_Reason_Read = {
 
 export type ReportsFields_Reason_Update = {
   __typename?: 'ReportsFields_reason_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Status = {
+  __typename?: 'ReportsFields_status';
+  create?: Maybe<ReportsFields_Status_Create>;
+  delete?: Maybe<ReportsFields_Status_Delete>;
+  read?: Maybe<ReportsFields_Status_Read>;
+  update?: Maybe<ReportsFields_Status_Update>;
+};
+
+export type ReportsFields_Status_Create = {
+  __typename?: 'ReportsFields_status_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Status_Delete = {
+  __typename?: 'ReportsFields_status_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Status_Read = {
+  __typename?: 'ReportsFields_status_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ReportsFields_Status_Update = {
+  __typename?: 'ReportsFields_status_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -57690,6 +58320,11 @@ export type CountIdentityLikes = {
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountInformationRequests = {
+  __typename?: 'countInformationRequests';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountJobLikes = {
   __typename?: 'countJobLikes';
   totalDocs?: Maybe<Scalars['Int']['output']>;
@@ -57948,6 +58583,24 @@ export type Identity_LikesDocAccess = {
   fields?: Maybe<IdentityLikesDocAccessFields>;
   read?: Maybe<IdentityLikesReadDocAccess>;
   update?: Maybe<IdentityLikesUpdateDocAccess>;
+};
+
+export type Information_RequestsAccess = {
+  __typename?: 'information_requestsAccess';
+  create?: Maybe<InformationRequestsCreateAccess>;
+  delete?: Maybe<InformationRequestsDeleteAccess>;
+  fields?: Maybe<InformationRequestsFields>;
+  read?: Maybe<InformationRequestsReadAccess>;
+  update?: Maybe<InformationRequestsUpdateAccess>;
+};
+
+export type Information_RequestsDocAccess = {
+  __typename?: 'information_requestsDocAccess';
+  create?: Maybe<InformationRequestsCreateDocAccess>;
+  delete?: Maybe<InformationRequestsDeleteDocAccess>;
+  fields?: Maybe<InformationRequestsDocAccessFields>;
+  read?: Maybe<InformationRequestsReadDocAccess>;
+  update?: Maybe<InformationRequestsUpdateDocAccess>;
 };
 
 export type Job_LikesAccess = {
@@ -58460,6 +59113,22 @@ export type MutationIdentityUpdateInput = {
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationInformationRequestInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  reason: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationInformationRequestUpdateInput = {
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationJobInput = {
@@ -59358,6 +60027,7 @@ export type MutationReportInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   reason: Scalars['String']['input'];
+  status?: InputMaybe<Report_Status_MutationInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -59367,6 +60037,7 @@ export type MutationReportUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   reason?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<ReportUpdate_Status_MutationInput>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
@@ -63768,6 +64439,13 @@ export type SearchIdentitiesQuery = { __typename?: 'Query', Searches?: { __typen
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
+export type CreateInformationRequestMutationVariables = Exact<{
+  data: MutationInformationRequestInput;
+}>;
+
+
+export type CreateInformationRequestMutation = { __typename?: 'Mutation', createInformationRequest?: { __typename?: 'InformationRequest', id: string, reason: string, createdAt?: any | null, user: { __typename?: 'User', id: string } } | null };
+
 export type ListJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -66270,6 +66948,35 @@ useSearchIdentitiesQuery.getKey = (variables: SearchIdentitiesQueryVariables) =>
 
 
 useSearchIdentitiesQuery.fetcher = (variables: SearchIdentitiesQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SearchIdentitiesQuery, SearchIdentitiesQueryVariables>(SearchIdentitiesDocument, variables, options);
+
+export const CreateInformationRequestDocument = `
+    mutation CreateInformationRequest($data: mutationInformationRequestInput!) {
+  createInformationRequest(data: $data) {
+    id
+    user {
+      id
+    }
+    reason
+    createdAt
+  }
+}
+    `;
+
+export const useCreateInformationRequestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateInformationRequestMutation, TError, CreateInformationRequestMutationVariables, TContext>) => {
+    
+    return useMutation<CreateInformationRequestMutation, TError, CreateInformationRequestMutationVariables, TContext>(
+      {
+    mutationKey: ['CreateInformationRequest'],
+    mutationFn: (variables?: CreateInformationRequestMutationVariables) => gqlFetcher<CreateInformationRequestMutation, CreateInformationRequestMutationVariables>(CreateInformationRequestDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useCreateInformationRequestMutation.fetcher = (variables: CreateInformationRequestMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateInformationRequestMutation, CreateInformationRequestMutationVariables>(CreateInformationRequestDocument, variables, options);
 
 export const ListJobsByCompanyDocument = `
     query ListJobsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {

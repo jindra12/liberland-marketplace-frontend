@@ -1,0 +1,10 @@
+mutation CreateInformationRequest($data: mutationInformationRequestInput!) {
+    createInformationRequest(data: $data) {
+        id
+        user {
+            id
+        }
+        reason
+        createdAt
+    }
+}

@@ -204,6 +204,20 @@ export const mutationResolvers = {
 
         return createNode(activeFixtures.carts, "cart", data);
     },
+    createInformationRequest: (_parent: unknown, args: { data?: Record<string, unknown> }, context: unknown): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        const requestId = typeof data.id === "string" ? data.id : nextNodeId("report");
+        const fixtures = getFixturesForContext(context);
+        const currentUser = fixtures.meUser.user;
+
+        return searchNode({
+            id: requestId,
+            reason: typeof data.reason === "string" ? data.reason : "",
+            createdAt: nowIso(),
+            user: currentUser,
+            createdBy: currentUser,
+        });
+    },
     createReport: (_parent: unknown, args: { data?: Record<string, unknown> }, context: unknown): MockNode => {
         const data = cloneValue(args.data ?? {});
         const reportId = typeof data.id === "string" ? data.id : nextNodeId("report");

@@ -12,6 +12,7 @@ import { LoginButton } from "../LoginButton";
 
 import { ProfileAccountServerCard } from "./ProfileAccountServerCard";
 import { ProfileContactCard } from "./ProfileContactCard";
+import { ProfileInformationRequestButton } from "./ProfileInformationRequestButton";
 import { ProfileListingsSection } from "./ProfileListingsSection";
 import { ProfileNicknameCard } from "./ProfileNicknameCard";
 import { ProfilePasswordCard } from "./ProfilePasswordCard";
@@ -96,9 +97,10 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <div className="Profile__actions">
+            <Flex className="Profile__actions" gap="small" wrap>
+                <ProfileInformationRequestButton messageApi={messageApi} selectedServerUrl={selectedServerUrl} />
                 <LoginButton action="logout" danger onAfterAction={() => navigate(routes.home.route)} />
-            </div>
+            </Flex>
 
             <Divider />
 
