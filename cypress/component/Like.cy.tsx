@@ -1,6 +1,11 @@
 import { mount } from "cypress/react";
+import { User, UserManager } from "oidc-client-ts";
+import { MemoryRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { AuthContextProvider } from "../../src/components/AuthContext";
+import { EndpointContextProvider } from "../../src/components/EndpointContext";
 import { Like } from "../../src/components/shared/Like/Like";
 
 type LikeMutationCall = {
@@ -14,19 +19,84 @@ type DislikeMutationCall = {
     url?: string | null;
 };
 
-const mountLike = (liked: boolean | null | undefined) => {
+const buildAuthStorageKey = (serverURL: string) =>
+    `oidc.user:${serverURL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
+
+const seedAuthenticatedUser = (serverURL: string) => {
+    cy.window().then((win) => {
+        const now = Math.floor(Date.now() / 1000);
+        const user = new User({
+            access_token: "mock-like-access-token",
+            token_type: "Bearer",
+            scope: "openid profile email",
+            expires_at: now + 3600,
+            profile: {
+                iss: `${serverURL}/api/auth`,
+                aud: "frontend-app",
+                exp: now + 3600,
+                iat: now,
+                sub: "user-like-test",
+                email: "like@example.test",
+                email_verified: true,
+                name: "Like Tester",
+            },
+        });
+
+        win.localStorage.setItem(buildAuthStorageKey(serverURL), user.toStorageString());
+    });
+};
+
+const seedEndpointUrls = (serverURL: string) => {
+    cy.window().then((win) => {
+        win.localStorage.setItem(
+            "endpoints.urls",
+            JSON.stringify([
+                {
+                    enabled: true,
+                    value: serverURL,
+                    name: "Main",
+                },
+            ]),
+        );
+    });
+};
+
+const mountLike = (liked: boolean | null | undefined, authenticated: boolean) => {
     const likeMutation = cy.stub();
     const dislikeMutation = cy.stub();
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                refetchOnMount: false,
+                refetchOnReconnect: false,
+                refetchOnWindowFocus: false,
+            },
+        },
+    });
+
+    seedEndpointUrls(MAIN_SERVER_URL);
+
+    if (authenticated) {
+        seedAuthenticatedUser(MAIN_SERVER_URL);
+    }
 
     mount(
-        <Like
-            id="post-harbor-lantern"
-            liked={liked}
-            likeCount={42}
-            serverURL={MAIN_SERVER_URL}
-            likeMutation={{ mutate: likeMutation }}
-            dislikeMutation={{ mutate: dislikeMutation }}
-        />,
+        <QueryClientProvider client={queryClient}>
+            <MemoryRouter initialEntries={["/"]}>
+                <EndpointContextProvider>
+                    <AuthContextProvider>
+                        <Like
+                            id="post-harbor-lantern"
+                            liked={liked}
+                            likeCount={42}
+                            serverURL={MAIN_SERVER_URL}
+                            likeMutation={{ mutate: likeMutation }}
+                            dislikeMutation={{ mutate: dislikeMutation }}
+                        />
+                    </AuthContextProvider>
+                </EndpointContextProvider>
+            </MemoryRouter>
+        </QueryClientProvider>,
     );
 
     return { likeMutation, dislikeMutation };
@@ -41,7 +111,7 @@ describe("like", () => {
 
     outlinedCases.forEach((testCase) => {
         it(`renders the outlined heart for ${testCase.label} liked state and uses the like mutation`, () => {
-            const stubs = mountLike(testCase.liked);
+            const stubs = mountLike(testCase.liked, true);
             const expectedLikeCall: LikeMutationCall = {
                 id: "post-harbor-lantern",
                 liked: true,
@@ -66,7 +136,7 @@ describe("like", () => {
     });
 
     it("renders the filled heart for liked state and uses the dislike mutation", () => {
-        const stubs = mountLike(true);
+        const stubs = mountLike(true, true);
         const expectedDislikeCall: DislikeMutationCall = {
             id: "post-harbor-lantern",
             url: MAIN_SERVER_URL,
@@ -81,8 +151,21 @@ describe("like", () => {
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
     });
 
+    it("redirects anonymous users to login on the correct server before liking", () => {
+        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+
+        const stubs = mountLike(false, false);
+
+        cy.get(".LikeButton").should("be.visible").and("have.class", "LikeButton--unliked");
+        cy.get(".LikeButton").click();
+
+        cy.wrap(signinRedirect).should("have.been.calledOnce");
+        cy.wrap(stubs.likeMutation).should("not.have.been.called");
+        cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
+    });
+
     it("keeps the heart icon and count centered on the same horizontal line", () => {
-        mountLike(false);
+        mountLike(false, true);
 
         cy.get(".LikeButton__heart").then(($heart) => {
             const heartRect = $heart[0].getBoundingClientRect();
