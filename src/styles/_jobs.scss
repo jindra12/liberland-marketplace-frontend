@@ -227,6 +227,27 @@
     margin-bottom: 0;
 }
 
+.PostRepostLink {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(188, 217, 203, 0.7);
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.PostRepostLink:hover,
+.PostRepostLink:focus-visible {
+    color: #eef8f3;
+}
+
+.PostRepostLink__content {
+    min-width: 0;
+}
+
+.PostRepostLink__icon {
+    font-size: 12px;
+}
+
 .PostList__actionsRow {
     width: 100%;
 }

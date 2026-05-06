@@ -218,6 +218,7 @@ export const graphqlSchema = buildSchema(`
         id: String
         title: String
         slug: String
+        repost: String
         heroImage: Media
         company: Company
     }
@@ -272,6 +273,7 @@ export const graphqlSchema = buildSchema(`
         email: JSON
         content: JSON
         contentLink: JSON
+        repost: JSON
         reason: JSON
         anonymousHash: JSON
         replyPostRelationTo: JSON

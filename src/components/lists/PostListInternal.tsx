@@ -9,6 +9,7 @@ import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { PostRepostLink } from "../shared/post/PostRepostLink";
 import { PostDoc } from "../shared/post/types";
 import { getPostCompanyImageUrl, getPostHeroImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
@@ -79,6 +80,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         <Typography.Paragraph className="EntityList__description PostList__description">
                             {post.meta?.description}
                         </Typography.Paragraph>
+                        <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                         {!xl && getPostCompanyImageUrl(post) && post.company?.name && (
                             <Link
                                 to={routes.posts.detail.getLink(post as Post)}

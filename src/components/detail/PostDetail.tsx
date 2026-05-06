@@ -16,6 +16,7 @@ import { Loader } from "../Loader";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { Like } from "../shared/Like/Like";
+import { PostRepostLink } from "../shared/post/PostRepostLink";
 import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
 import { CommonDetail } from "./CommonDetail";
@@ -79,6 +80,7 @@ const PostDetail: React.FunctionComponent = () => {
                                                 {post.title}
                                             </Typography.Title>
                                         </div>
+                                        <PostRepostLink repost={post.repost} className="PostDetail__repostLink" />
                                         {post.company?.id && post.company?.name && (
                                             <Link
                                                 to={routes.companies.detail.getLink(post.company as Company)}

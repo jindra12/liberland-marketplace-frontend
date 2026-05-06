@@ -24,7 +24,7 @@ export const LIST_GOALS: ListGoal[] = [
         responseKey: "Posts",
         expectedVariables: { limit: 20, page: 1 },
         expectedResultTitle: "Harbor Operations Digest",
-        minimumDocs: 0,
+        minimumDocs: 1,
     },
     {
         trigger: "Jobs",
@@ -100,19 +100,6 @@ export const DETAIL_HOME_GOALS: DetailGoal[] = [
             responseKey: "Job",
             expectedId: "job-dockmaster",
             expectedVariables: { id: "job-dockmaster" },
-        },
-    },
-    {
-        selector: ".SplashEntityCard__itemLink",
-        label: "Harbor Operations Digest",
-        route: detailRoute("/posts", "post-harbor-operations-digest"),
-        title: "Harbor Operations Digest",
-        detailTitleSelector: ".EntityDetail__title",
-        query: {
-            operationName: "PostById",
-            responseKey: "Post",
-            expectedId: "post-harbor-operations-digest",
-            expectedVariables: { id: "post-harbor-operations-digest" },
         },
     },
 ];

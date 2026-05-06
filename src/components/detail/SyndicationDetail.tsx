@@ -98,9 +98,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         >
                             {entry.enabled ? "Disable URL" : "Enable URL"}
                         </Button>
-                        <RouteButton to={routes.syndication.route} size="large">
-                            Back to list
-                        </RouteButton>
                     </Flex>
                     <Divider />
                     {entry.description && (

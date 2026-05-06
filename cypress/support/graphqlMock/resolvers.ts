@@ -112,8 +112,11 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.jobs.filter((job) => matchesSearch(job.title, args.searchTerm) || matchesSearch(job.description, args.searchTerm)) : activeFixtures.jobs;
         return resolveCollection(filtered, args);
     },
-    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
-        const filtered = args.searchTerm ? activeFixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm)) : activeFixtures.posts;
+    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }, context: unknown): MockCollection => {
+        const fixtures = getFixturesForContext(context);
+        const filtered = args.searchTerm
+            ? fixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm))
+            : fixtures.posts;
         return resolveCollection(filtered, args);
     },
     Products: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
