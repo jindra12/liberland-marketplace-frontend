@@ -1,9 +1,11 @@
 import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Flex, Form, Input } from "antd";
 
+import { routes } from "../../routes";
 import { EndpointAuthAction } from "../EndpointAuthAction";
 
 import { CommentCompanyField } from "./CommentCompanyField";
@@ -24,6 +26,7 @@ type CommentComposerActionsProps = {
 
 export const CommentComposerActions: React.FunctionComponent<CommentComposerActionsProps> = (props) => {
     const auth = useAuth();
+    const navigate = useNavigate();
     const userId = auth.user?.profile?.sub;
     const [form] = Form.useForm<CommentComposerValues>();
     const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -65,7 +68,11 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
                         {props.cancelLabel ?? "Cancel"}
                     </Button>
                 )}
-                <EndpointAuthAction defaultAuthUrl={props.serverURL ? props.serverURL : undefined}>
+                <EndpointAuthAction
+                    defaultAuthUrl={props.serverURL ? props.serverURL : undefined}
+                    requireVerifiedEmail
+                    onUnverifiedEmail={() => navigate(routes.publish.route)}
+                >
                     {({ runWithAuthOrLogin }) => (
                         <Button
                             type="primary"

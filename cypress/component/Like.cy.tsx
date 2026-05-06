@@ -1,11 +1,12 @@
 import { mount } from "cypress/react";
 import { User, UserManager } from "oidc-client-ts";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { AuthContextProvider } from "../../src/components/AuthContext";
 import { EndpointContextProvider } from "../../src/components/EndpointContext";
+import { PublishContent } from "../../src/components/publish/PublishContent";
 import { Like } from "../../src/components/shared/Like/Like";
 
 type LikeMutationCall = {
@@ -22,7 +23,7 @@ type DislikeMutationCall = {
 const buildAuthStorageKey = (serverURL: string) =>
     `oidc.user:${serverURL}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
-const seedAuthenticatedUser = (serverURL: string) => {
+const seedAuthenticatedUser = (serverURL: string, emailVerified = true) => {
     cy.window().then((win) => {
         const now = Math.floor(Date.now() / 1000);
         const user = new User({
@@ -37,7 +38,7 @@ const seedAuthenticatedUser = (serverURL: string) => {
                 iat: now,
                 sub: "user-like-test",
                 email: "like@example.test",
-                email_verified: true,
+                email_verified: emailVerified,
                 name: "Like Tester",
             },
         });
@@ -61,7 +62,7 @@ const seedEndpointUrls = (serverURL: string) => {
     });
 };
 
-const mountLike = (liked: boolean | null | undefined, authenticated: boolean) => {
+const mountLike = (liked: boolean | null | undefined, authenticated: boolean, emailVerified = true) => {
     const likeMutation = cy.stub();
     const dislikeMutation = cy.stub();
     const queryClient = new QueryClient({
@@ -77,7 +78,7 @@ const mountLike = (liked: boolean | null | undefined, authenticated: boolean) =>
     seedEndpointUrls(MAIN_SERVER_URL);
 
     if (authenticated) {
-        seedAuthenticatedUser(MAIN_SERVER_URL);
+        seedAuthenticatedUser(MAIN_SERVER_URL, emailVerified);
     }
 
     mount(
@@ -85,14 +86,22 @@ const mountLike = (liked: boolean | null | undefined, authenticated: boolean) =>
             <MemoryRouter initialEntries={["/"]}>
                 <EndpointContextProvider>
                     <AuthContextProvider>
-                        <Like
-                            id="post-harbor-lantern"
-                            liked={liked}
-                            likeCount={42}
-                            serverURL={MAIN_SERVER_URL}
-                            likeMutation={{ mutate: likeMutation }}
-                            dislikeMutation={{ mutate: dislikeMutation }}
-                        />
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={
+                                    <Like
+                                        id="post-harbor-lantern"
+                                        liked={liked}
+                                        likeCount={42}
+                                        serverURL={MAIN_SERVER_URL}
+                                        likeMutation={{ mutate: likeMutation }}
+                                        dislikeMutation={{ mutate: dislikeMutation }}
+                                    />
+                                }
+                            />
+                            <Route path="/publish" element={<PublishContent />} />
+                        </Routes>
                     </AuthContextProvider>
                 </EndpointContextProvider>
             </MemoryRouter>
@@ -160,6 +169,17 @@ describe("like", () => {
         cy.get(".LikeButton").click();
 
         cy.wrap(signinRedirect).should("have.been.calledOnce");
+        cy.wrap(stubs.likeMutation).should("not.have.been.called");
+        cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
+    });
+
+    it("routes unverified users to the email verification warning before liking", () => {
+        const stubs = mountLike(false, true, false);
+
+        cy.get(".LikeButton").should("be.visible").and("have.class", "LikeButton--unliked");
+        cy.get(".LikeButton").click();
+
+        cy.contains(".Publish", "Email not verified", { timeout: 20000 }).should("be.visible");
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
         cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
     });

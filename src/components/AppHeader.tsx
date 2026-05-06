@@ -98,7 +98,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                                 runWithAuthOrLogin(() => navigate(routes.publish.route));
                                             }}
                                         >
-                                            Publish ad
+                                            Create
                                         </Button>
                                     )}
                                 </EndpointAuthAction>
@@ -111,7 +111,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                         navigate(routes.publish.route);
                                     }}
                                 >
-                                    Publish ad
+                                    Create
                                 </Button>
                             )}
                             <LoginButton

@@ -24,8 +24,20 @@ describe("publish", () => {
         mountAuthenticatedMainRoute("/publish");
 
         cy.contains(".Publish", "Publish your ad", { timeout: 20000 }).should("be.visible");
+        cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").within(() => {
+            cy.get(".anticon-plus").should("be.visible");
+        });
         screenshotStep("publish-chooser-visible");
         cy.contains(".Publish__category", "Company").should("be.visible");
         cy.contains(".Publish__category", "Venture").should("be.visible");
+    });
+
+    it("shows the email verification warning for unverified users", () => {
+        mountAuthenticatedMainRoute("/publish", false);
+
+        cy.contains(".Publish", "Email not verified", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish", "You need to verify your email address before you can publish listings.").should(
+            "be.visible",
+        );
     });
 });

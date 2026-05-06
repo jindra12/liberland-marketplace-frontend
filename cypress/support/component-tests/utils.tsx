@@ -76,7 +76,7 @@ export const getRouteEntityId = (pathname: string): string => {
 const buildAuthStorageKey = (serverUrl: string) =>
     `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
-const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
+const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerified = true) => {
     const now = Math.floor(Date.now() / 1000);
     const user = new User({
         access_token: "mock-profile-access-token",
@@ -90,7 +90,7 @@ const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
             iat: now,
             sub: "user-nova",
             email: "nova@example.test",
-            email_verified: true,
+            email_verified: emailVerified,
             name: "Nova Rivers",
             picture: "https://example.test/nova.png",
         },
@@ -99,17 +99,21 @@ const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
     win.localStorage.setItem(buildAuthStorageKey(serverUrl), user.toStorageString());
 };
 
-export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL]) => {
+export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL], emailVerified = true) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.history.pushState({}, "", "/profile");
     });
     mount(<Main />);
 };
 
-export const mountAuthenticatedRoute = (route: string, serverUrls: string[] = [BACKEND_URL]) => {
+export const mountAuthenticatedRoute = (
+    route: string,
+    serverUrls: string[] = [BACKEND_URL],
+    emailVerified = true,
+) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
@@ -119,9 +123,10 @@ export const mountAuthenticatedCartRoute = (
     route: string,
     serverUrls: string[] = [BACKEND_URL],
     cartSecrets?: Record<string, string>,
+    emailVerified = true,
 ) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         if (cartSecrets) {
             const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
@@ -138,9 +143,10 @@ export const mountAuthenticatedDetailRoute = (
     route: string,
     serverUrls: string[] = [BACKEND_URL],
     savedShippingAddress?: AddressWithEmail,
+    emailVerified = true,
 ) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         if (savedShippingAddress) {
             win.localStorage.setItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, JSON.stringify(savedShippingAddress));
@@ -153,9 +159,9 @@ export const mountAuthenticatedDetailRoute = (
     cy.routerNavigate(route);
 };
 
-export const mountAuthenticatedMainRoute = (route: string) => {
+export const mountAuthenticatedMainRoute = (route: string, emailVerified = true) => {
     cy.window().then((win) => {
-        seedAuthorizedProfile(win, BACKEND_URL);
+        seedAuthorizedProfile(win, BACKEND_URL, emailVerified);
         win.localStorage.setItem(
             "endpoints.urls",
             JSON.stringify([

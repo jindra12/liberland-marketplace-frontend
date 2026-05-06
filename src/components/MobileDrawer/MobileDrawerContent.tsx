@@ -53,7 +53,7 @@ export const MobileDrawerContent: React.FunctionComponent<MobileDrawerContentPro
                                 }}
                                 className="AppHeader__drawerPublish"
                             >
-                                Publish ad
+                                Create
                             </Button>
                         )}
                     </EndpointAuthAction>
@@ -67,7 +67,7 @@ export const MobileDrawerContent: React.FunctionComponent<MobileDrawerContentPro
                         }}
                         className="AppHeader__drawerPublish"
                     >
-                        Publish ad
+                        Create
                     </Button>
                 )}
                 {props.model.isAuthenticated ? (

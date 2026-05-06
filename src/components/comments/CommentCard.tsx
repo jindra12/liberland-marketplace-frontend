@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import {
     DeleteOutlined,
     DownOutlined,
@@ -30,6 +32,7 @@ import {
 type CommentCardFormState = "idle" | "reply" | "edit";
 
 export const CommentCard: React.FunctionComponent<React.PropsWithChildren<CommentCardProps>> = (props) => {
+    const navigate = useNavigate();
     const [formState, setFormState] = React.useState<CommentCardFormState>("idle");
     const [areRepliesVisible, setAreRepliesVisible] = React.useState(false);
     const canManageComment = isCommentOwnedByCurrentUser(props.comment, props.currentUser.currentUserId);
@@ -87,7 +90,11 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     className="CommentCard__like"
                     aria-label={`Like comment from ${getCommentDisplayName(props.comment)}`}
                 />
-                <EndpointAuthAction defaultAuthUrl={props.comment.serverUrl ? props.comment.serverUrl : undefined}>
+                <EndpointAuthAction
+                    defaultAuthUrl={props.comment.serverUrl ? props.comment.serverUrl : undefined}
+                    requireVerifiedEmail
+                    onUnverifiedEmail={() => navigate(routes.publish.route)}
+                >
                     {({ runWithAuthOrLogin }) => (
                         <Button
                             type="text"

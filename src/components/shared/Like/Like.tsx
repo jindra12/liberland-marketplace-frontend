@@ -1,8 +1,11 @@
 import * as React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Button, Flex, Typography } from "antd";
 
+import { routes } from "../../../routes";
 import { EndpointAuthAction } from "../../EndpointAuthAction";
 
 import type { DislikeMutation, LikeMutation } from "./types";
@@ -20,6 +23,7 @@ export type LikeProps = {
 };
 
 export const Like: React.FunctionComponent<LikeProps> = (props) => {
+    const navigate = useNavigate();
     const isLiked = Boolean(props.liked);
     const isPending = props.likeMutation.isPending || props.dislikeMutation.isPending;
     const buttonClassName = getLikeButtonClassName(props.className, props.liked, isPending);
@@ -30,7 +34,11 @@ export const Like: React.FunctionComponent<LikeProps> = (props) => {
     );
 
     return (
-        <EndpointAuthAction defaultAuthUrl={props.serverURL ? props.serverURL : undefined}>
+        <EndpointAuthAction
+            defaultAuthUrl={props.serverURL ? props.serverURL : undefined}
+            requireVerifiedEmail
+            onUnverifiedEmail={() => navigate(routes.publish.route)}
+        >
             {({ runWithAuthOrLogin }) => (
                 <Button
                     htmlType="button"

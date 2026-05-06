@@ -75,7 +75,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                                     }}
                                     className="AppHeader__drawerPublish"
                                 >
-                                    Publish ad
+                                    Create
                                 </Button>
                             )}
                         </EndpointAuthAction>
@@ -90,7 +90,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                                 }}
                                 className="AppHeader__drawerPublish"
                             >
-                                Publish ad
+                                Create
                             </Button>
                     )}
                     {auth.isAuthenticated ? (

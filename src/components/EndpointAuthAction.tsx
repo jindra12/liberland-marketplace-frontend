@@ -23,6 +23,8 @@ export type EndpointAuthActionRenderProps = {
 };
 type EndpointAuthActionProps = {
     defaultAuthUrl?: string;
+    requireVerifiedEmail?: boolean;
+    onUnverifiedEmail?: () => void | Promise<void>;
     children: (props: EndpointAuthActionRenderProps) => React.ReactElement;
 };
 const toEndpointShort = (value: string) => {
@@ -73,14 +75,33 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
         },
         [authUrl, runPendingAction, setAuthUrl, urls],
     );
-    const runWithAuthOrLogin = React.useCallback(
-        async (
-            authorizedAction: EndpointAction,
-            options?: {
-                onUnauthorizedBeforeLogin?: () => void | Promise<void>;
-            },
-        ) => {
+    const runWithAuthOrLogin = async (
+        authorizedAction: EndpointAction,
+        options?: {
+            onUnauthorizedBeforeLogin?: () => void | Promise<void>;
+        },
+    ) => {
             if (auth.isAuthenticated) {
+                if (props.requireVerifiedEmail && auth.user?.profile?.email_verified !== true) {
+                    const runUnverifiedAction = async () => {
+                        setPendingAction(undefined);
+                        await props.onUnverifiedEmail?.();
+                    };
+                    if (props.defaultAuthUrl) {
+                        if (authUrl === props.defaultAuthUrl) {
+                            await runUnverifiedAction();
+                            return;
+                        }
+                        setPendingAction({
+                            action: runUnverifiedAction,
+                            targetAuthUrl: props.defaultAuthUrl,
+                        });
+                        setAuthUrl(props.defaultAuthUrl);
+                        return;
+                    }
+                    await runUnverifiedAction();
+                    return;
+                }
                 setPendingAction(undefined);
                 await authorizedAction();
                 return;
@@ -105,9 +126,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                 await options?.onUnauthorizedBeforeLogin?.();
                 await auth.signinRedirect();
             });
-        },
-        [auth, authUrl, props.defaultAuthUrl, runWithEndpointSelection, setAuthUrl],
-    );
+    };
     React.useEffect(() => {
         if (!pendingAction?.targetAuthUrl || authUrl !== pendingAction.targetAuthUrl) {
             return;
