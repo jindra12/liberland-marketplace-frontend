@@ -106,6 +106,7 @@ manager is `yarn`.
 - Do not swallow exceptions in `catch` blocks unless there is a clear reason. If you handle an error locally, log it with `console.error` unless that would be redundant for a justified reason.
 - Prefer `async`/`await` over `.then(...)` chains. If an async callback cannot be awaited at the call site, use an internal `async` function with local `try`/`catch` rather than promise chaining.
 - Do not access `window.localStorage` directly in app code. Use the repo's local-storage hook or a shared storage wrapper so storage access stays consistent and testable.
+- When browser storage is needed in app code, use `window` as the target directly; do not thread alternate storage targets through production code.
 - Do not use `window.history` for navigation or URL cleanup. Use `react-router-dom` navigation hooks inside router context, or `window.location.replace` when you are outside router context and must leave the page.
 - Do not use `React.useCallback` or `useCallback` unless it is absolutely necessary for correctness or there is a demonstrated performance need. Stable handlers are not a default requirement.
 - Never use `useEffect` defensively. Do not mirror props, query data, or other derived values into local state with an effect just to "keep them in sync". Derive the value directly or update state at the actual event source instead.

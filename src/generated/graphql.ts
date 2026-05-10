@@ -5129,7 +5129,7 @@ export type CommentLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type CommentLike_CreatedAt_Operator = {
@@ -5184,13 +5184,11 @@ export type CommentLike_UpdatedAt_Operator = {
 };
 
 export type CommentLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type CommentLike_Where = {
@@ -6850,6 +6848,7 @@ export type CompaniesDocAccessFields = {
   hasLiked?: Maybe<CompaniesDocAccessFields_HasLiked>;
   identity?: Maybe<CompaniesDocAccessFields_Identity>;
   image?: Maybe<CompaniesDocAccessFields_Image>;
+  isPrivate?: Maybe<CompaniesDocAccessFields_IsPrivate>;
   isSubscribed?: Maybe<CompaniesDocAccessFields_IsSubscribed>;
   lastLikeAt?: Maybe<CompaniesDocAccessFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesDocAccessFields_LikeCount>;
@@ -7290,6 +7289,34 @@ export type CompaniesDocAccessFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesDocAccessFields_IsPrivate = {
+  __typename?: 'CompaniesDocAccessFields_isPrivate';
+  create?: Maybe<CompaniesDocAccessFields_IsPrivate_Create>;
+  delete?: Maybe<CompaniesDocAccessFields_IsPrivate_Delete>;
+  read?: Maybe<CompaniesDocAccessFields_IsPrivate_Read>;
+  update?: Maybe<CompaniesDocAccessFields_IsPrivate_Update>;
+};
+
+export type CompaniesDocAccessFields_IsPrivate_Create = {
+  __typename?: 'CompaniesDocAccessFields_isPrivate_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsPrivate_Delete = {
+  __typename?: 'CompaniesDocAccessFields_isPrivate_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsPrivate_Read = {
+  __typename?: 'CompaniesDocAccessFields_isPrivate_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesDocAccessFields_IsPrivate_Update = {
+  __typename?: 'CompaniesDocAccessFields_isPrivate_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesDocAccessFields_IsSubscribed = {
   __typename?: 'CompaniesDocAccessFields_isSubscribed';
   create?: Maybe<CompaniesDocAccessFields_IsSubscribed_Create>;
@@ -7613,6 +7640,7 @@ export type CompaniesFields = {
   hasLiked?: Maybe<CompaniesFields_HasLiked>;
   identity?: Maybe<CompaniesFields_Identity>;
   image?: Maybe<CompaniesFields_Image>;
+  isPrivate?: Maybe<CompaniesFields_IsPrivate>;
   isSubscribed?: Maybe<CompaniesFields_IsSubscribed>;
   lastLikeAt?: Maybe<CompaniesFields_LastLikeAt>;
   likeCount?: Maybe<CompaniesFields_LikeCount>;
@@ -8053,6 +8081,34 @@ export type CompaniesFields_Image_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type CompaniesFields_IsPrivate = {
+  __typename?: 'CompaniesFields_isPrivate';
+  create?: Maybe<CompaniesFields_IsPrivate_Create>;
+  delete?: Maybe<CompaniesFields_IsPrivate_Delete>;
+  read?: Maybe<CompaniesFields_IsPrivate_Read>;
+  update?: Maybe<CompaniesFields_IsPrivate_Update>;
+};
+
+export type CompaniesFields_IsPrivate_Create = {
+  __typename?: 'CompaniesFields_isPrivate_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsPrivate_Delete = {
+  __typename?: 'CompaniesFields_isPrivate_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsPrivate_Read = {
+  __typename?: 'CompaniesFields_isPrivate_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompaniesFields_IsPrivate_Update = {
+  __typename?: 'CompaniesFields_isPrivate_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type CompaniesFields_IsSubscribed = {
   __typename?: 'CompaniesFields_isSubscribed';
   create?: Maybe<CompaniesFields_IsSubscribed_Create>;
@@ -8413,6 +8469,7 @@ export type Company = {
   id: Scalars['String']['output'];
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
+  isPrivate?: Maybe<Scalars['Boolean']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
@@ -8432,7 +8489,7 @@ export type CompanyLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type CompanyLike_CreatedAt_Operator = {
@@ -8479,13 +8536,11 @@ export type CompanyLike_UpdatedAt_Operator = {
 };
 
 export type CompanyLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type CompanyLike_Where = {
@@ -8868,6 +8923,7 @@ export type CompanyVersion_Version = {
   hasLiked?: Maybe<Scalars['Boolean']['output']>;
   identity?: Maybe<Identity>;
   image?: Maybe<Media>;
+  isPrivate?: Maybe<Scalars['Boolean']['output']>;
   isSubscribed?: Maybe<Scalars['Boolean']['output']>;
   lastLikeAt?: Maybe<Scalars['DateTime']['output']>;
   likeCount?: Maybe<Scalars['Float']['output']>;
@@ -9082,6 +9138,12 @@ export type Company_Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type Company_IsPrivate_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type Company_IsSubscribed_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9224,6 +9286,7 @@ export type Company_Where = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isPrivate?: InputMaybe<Company_IsPrivate_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
@@ -9255,6 +9318,7 @@ export type Company_Where_And = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isPrivate?: InputMaybe<Company_IsPrivate_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
@@ -9286,6 +9350,7 @@ export type Company_Where_Or = {
   id?: InputMaybe<Company_Id_Operator>;
   identity?: InputMaybe<Company_Identity_Operator>;
   image?: InputMaybe<Company_Image_Operator>;
+  isPrivate?: InputMaybe<Company_IsPrivate_Operator>;
   isSubscribed?: InputMaybe<Company_IsSubscribed_Operator>;
   lastLikeAt?: InputMaybe<Company_LastLikeAt_Operator>;
   likeCount?: InputMaybe<Company_LikeCount_Operator>;
@@ -12846,6 +12911,7 @@ export type IdentitiesDocAccessFields = {
   createdBy?: Maybe<IdentitiesDocAccessFields_CreatedBy>;
   description?: Maybe<IdentitiesDocAccessFields_Description>;
   hasLiked?: Maybe<IdentitiesDocAccessFields_HasLiked>;
+  id?: Maybe<IdentitiesDocAccessFields_Id>;
   image?: Maybe<IdentitiesDocAccessFields_Image>;
   isSubscribed?: Maybe<IdentitiesDocAccessFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesDocAccessFields_ItemCount>;
@@ -13023,6 +13089,34 @@ export type IdentitiesDocAccessFields_HasLiked_Read = {
 
 export type IdentitiesDocAccessFields_HasLiked_Update = {
   __typename?: 'IdentitiesDocAccessFields_hasLiked_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Id = {
+  __typename?: 'IdentitiesDocAccessFields_id';
+  create?: Maybe<IdentitiesDocAccessFields_Id_Create>;
+  delete?: Maybe<IdentitiesDocAccessFields_Id_Delete>;
+  read?: Maybe<IdentitiesDocAccessFields_Id_Read>;
+  update?: Maybe<IdentitiesDocAccessFields_Id_Update>;
+};
+
+export type IdentitiesDocAccessFields_Id_Create = {
+  __typename?: 'IdentitiesDocAccessFields_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Id_Delete = {
+  __typename?: 'IdentitiesDocAccessFields_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Id_Read = {
+  __typename?: 'IdentitiesDocAccessFields_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesDocAccessFields_Id_Update = {
+  __typename?: 'IdentitiesDocAccessFields_id_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -13314,6 +13408,7 @@ export type IdentitiesFields = {
   createdBy?: Maybe<IdentitiesFields_CreatedBy>;
   description?: Maybe<IdentitiesFields_Description>;
   hasLiked?: Maybe<IdentitiesFields_HasLiked>;
+  id?: Maybe<IdentitiesFields_Id>;
   image?: Maybe<IdentitiesFields_Image>;
   isSubscribed?: Maybe<IdentitiesFields_IsSubscribed>;
   itemCount?: Maybe<IdentitiesFields_ItemCount>;
@@ -13491,6 +13586,34 @@ export type IdentitiesFields_HasLiked_Read = {
 
 export type IdentitiesFields_HasLiked_Update = {
   __typename?: 'IdentitiesFields_hasLiked_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Id = {
+  __typename?: 'IdentitiesFields_id';
+  create?: Maybe<IdentitiesFields_Id_Create>;
+  delete?: Maybe<IdentitiesFields_Id_Delete>;
+  read?: Maybe<IdentitiesFields_Id_Read>;
+  update?: Maybe<IdentitiesFields_Id_Update>;
+};
+
+export type IdentitiesFields_Id_Create = {
+  __typename?: 'IdentitiesFields_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Id_Delete = {
+  __typename?: 'IdentitiesFields_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Id_Read = {
+  __typename?: 'IdentitiesFields_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentitiesFields_Id_Update = {
+  __typename?: 'IdentitiesFields_id_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -13825,7 +13948,7 @@ export type IdentityLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type IdentityLike_CreatedAt_Operator = {
@@ -13872,13 +13995,11 @@ export type IdentityLike_UpdatedAt_Operator = {
 };
 
 export type IdentityLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type IdentityLike_Where = {
@@ -14271,7 +14392,6 @@ export type Identity_Id_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
   equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
@@ -14949,7 +15069,7 @@ export type JobLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type JobLike_CreatedAt_Operator = {
@@ -14996,13 +15116,11 @@ export type JobLike_UpdatedAt_Operator = {
 };
 
 export type JobLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type JobLike_Where = {
@@ -36096,6 +36214,12 @@ export type PayloadPreferencesUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Permissions = {
+  __typename?: 'Permissions';
+  canCreateContentAsNonAdmin: Scalars['Boolean']['output'];
+  serverUrl: Scalars['String']['output'];
+};
+
 export type Post = {
   __typename?: 'Post';
   _status?: Maybe<Post__Status>;
@@ -36140,7 +36264,7 @@ export type PostLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type PostLike_CreatedAt_Operator = {
@@ -36187,13 +36311,11 @@ export type PostLike_UpdatedAt_Operator = {
 };
 
 export type PostLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type PostLike_Where = {
@@ -38778,7 +38900,7 @@ export type ProductLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type ProductLike_CreatedAt_Operator = {
@@ -38825,13 +38947,11 @@ export type ProductLike_UpdatedAt_Operator = {
 };
 
 export type ProductLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type ProductLike_Where = {
@@ -42223,6 +42343,7 @@ export type Query = {
   initializedUser?: Maybe<Scalars['Boolean']['output']>;
   likeStatus: LikeStatus;
   meUser?: Maybe<UsersMe>;
+  permissions: Array<Permissions>;
   userByEmail?: Maybe<User>;
   versionCompany?: Maybe<CompanyVersion>;
   versionJob?: Maybe<JobVersion>;
@@ -52835,6 +52956,7 @@ export type TransactionsUpdateDocAccess = {
 export type User = {
   __typename?: 'User';
   account?: Maybe<User_Account>;
+  banned?: Maybe<Scalars['Boolean']['output']>;
   bot?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
@@ -52929,6 +53051,12 @@ export enum User_Wallets_Chain_MutationInput {
   Solana = 'solana',
   Tron = 'tron'
 }
+
+export type User_Banned_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export type User_Bot_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
@@ -53229,6 +53357,7 @@ export type User_Wallets__Provider_Operator = {
 export type User_Where = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  banned?: InputMaybe<User_Banned_Operator>;
   bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -53261,6 +53390,7 @@ export type User_Where = {
 export type User_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  banned?: InputMaybe<User_Banned_Operator>;
   bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -53293,6 +53423,7 @@ export type User_Where_And = {
 export type User_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<User_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<User_Where_Or>>>;
+  banned?: InputMaybe<User_Banned_Operator>;
   bot?: InputMaybe<User_Bot_Operator>;
   createdAt?: InputMaybe<User_CreatedAt_Operator>;
   email?: InputMaybe<User_Email_Operator>;
@@ -53364,6 +53495,7 @@ export type UsersDeleteDocAccess = {
 export type UsersDocAccessFields = {
   __typename?: 'UsersDocAccessFields';
   account?: Maybe<UsersDocAccessFields_Account>;
+  banned?: Maybe<UsersDocAccessFields_Banned>;
   bot?: Maybe<UsersDocAccessFields_Bot>;
   createdAt?: Maybe<UsersDocAccessFields_CreatedAt>;
   email?: Maybe<UsersDocAccessFields_Email>;
@@ -53405,6 +53537,34 @@ export type UsersDocAccessFields_Account_Read = {
 
 export type UsersDocAccessFields_Account_Update = {
   __typename?: 'UsersDocAccessFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Banned = {
+  __typename?: 'UsersDocAccessFields_banned';
+  create?: Maybe<UsersDocAccessFields_Banned_Create>;
+  delete?: Maybe<UsersDocAccessFields_Banned_Delete>;
+  read?: Maybe<UsersDocAccessFields_Banned_Read>;
+  update?: Maybe<UsersDocAccessFields_Banned_Update>;
+};
+
+export type UsersDocAccessFields_Banned_Create = {
+  __typename?: 'UsersDocAccessFields_banned_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Banned_Delete = {
+  __typename?: 'UsersDocAccessFields_banned_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Banned_Read = {
+  __typename?: 'UsersDocAccessFields_banned_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Banned_Update = {
+  __typename?: 'UsersDocAccessFields_banned_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -54248,6 +54408,7 @@ export type UsersDocAccessFields_Wallets_Provider_Update = {
 export type UsersFields = {
   __typename?: 'UsersFields';
   account?: Maybe<UsersFields_Account>;
+  banned?: Maybe<UsersFields_Banned>;
   bot?: Maybe<UsersFields_Bot>;
   createdAt?: Maybe<UsersFields_CreatedAt>;
   email?: Maybe<UsersFields_Email>;
@@ -54289,6 +54450,34 @@ export type UsersFields_Account_Read = {
 
 export type UsersFields_Account_Update = {
   __typename?: 'UsersFields_account_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Banned = {
+  __typename?: 'UsersFields_banned';
+  create?: Maybe<UsersFields_Banned_Create>;
+  delete?: Maybe<UsersFields_Banned_Delete>;
+  read?: Maybe<UsersFields_Banned_Read>;
+  update?: Maybe<UsersFields_Banned_Update>;
+};
+
+export type UsersFields_Banned_Create = {
+  __typename?: 'UsersFields_banned_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Banned_Delete = {
+  __typename?: 'UsersFields_banned_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Banned_Read = {
+  __typename?: 'UsersFields_banned_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Banned_Update = {
+  __typename?: 'UsersFields_banned_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -57222,7 +57411,7 @@ export type VentureLike = {
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['String']['output'];
+  userId: User;
 };
 
 export type VentureLike_CreatedAt_Operator = {
@@ -57269,13 +57458,11 @@ export type VentureLike_UpdatedAt_Operator = {
 };
 
 export type VentureLike_UserId_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type VentureLike_Where = {
@@ -58838,7 +59025,7 @@ export type MutationCommentLikeInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationCommentLikeUpdateInput = {
@@ -58881,6 +59068,7 @@ export type MutationCompanyInput = {
   hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
@@ -58898,7 +59086,7 @@ export type MutationCompanyLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationCompanyLikeUpdateInput = {
@@ -58922,6 +59110,7 @@ export type MutationCompanyUpdateInput = {
   hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
   identity?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   lastLikeAt?: InputMaybe<Scalars['String']['input']>;
   likeCount?: InputMaybe<Scalars['Float']['input']>;
@@ -59070,6 +59259,7 @@ export type MutationIdentityInput = {
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   hasLiked?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
   isSubscribed?: InputMaybe<Scalars['Boolean']['input']>;
   itemCount?: InputMaybe<Scalars['Float']['input']>;
@@ -59086,7 +59276,7 @@ export type MutationIdentityLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationIdentityLikeUpdateInput = {
@@ -59165,7 +59355,7 @@ export type MutationJobLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationJobLikeUpdateInput = {
@@ -59834,7 +60024,7 @@ export type MutationPostLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationPostLikeUpdateInput = {
@@ -59930,7 +60120,7 @@ export type MutationProductLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationProductLikeUpdateInput = {
@@ -60295,6 +60485,7 @@ export type MutationTransaction_ItemsInput = {
 };
 
 export type MutationUserInput = {
+  banned?: InputMaybe<Scalars['Boolean']['input']>;
   bot?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
@@ -60311,6 +60502,7 @@ export type MutationUserInput = {
 };
 
 export type MutationUserUpdateInput = {
+  banned?: InputMaybe<Scalars['Boolean']['input']>;
   bot?: InputMaybe<Scalars['Boolean']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -60434,7 +60626,7 @@ export type MutationVentureLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationVentureLikeUpdateInput = {
@@ -61228,6 +61420,12 @@ export type VersionsCompany_Version__Image_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
+export type VersionsCompany_Version__IsPrivate_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VersionsCompany_Version__IsSubscribed_Operator = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -61362,6 +61560,7 @@ export type VersionsCompany_Where = {
   version__hasLiked?: InputMaybe<VersionsCompany_Version__HasLiked_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isPrivate?: InputMaybe<VersionsCompany_Version__IsPrivate_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
@@ -61397,6 +61596,7 @@ export type VersionsCompany_Where_And = {
   version__hasLiked?: InputMaybe<VersionsCompany_Version__HasLiked_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isPrivate?: InputMaybe<VersionsCompany_Version__IsPrivate_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
@@ -61432,6 +61632,7 @@ export type VersionsCompany_Where_Or = {
   version__hasLiked?: InputMaybe<VersionsCompany_Version__HasLiked_Operator>;
   version__identity?: InputMaybe<VersionsCompany_Version__Identity_Operator>;
   version__image?: InputMaybe<VersionsCompany_Version__Image_Operator>;
+  version__isPrivate?: InputMaybe<VersionsCompany_Version__IsPrivate_Operator>;
   version__isSubscribed?: InputMaybe<VersionsCompany_Version__IsSubscribed_Operator>;
   version__lastLikeAt?: InputMaybe<VersionsCompany_Version__LastLikeAt_Operator>;
   version__likeCount?: InputMaybe<VersionsCompany_Version__LikeCount_Operator>;
@@ -64236,7 +64437,7 @@ export type ListCompaniesByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByCreatorQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, likeCount?: number | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -64244,7 +64445,7 @@ export type CompanyByIdQueryVariables = Exact<{
 }>;
 
 
-export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type CompanyByIdQuery = { __typename?: 'Query', Company?: { __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, _status?: Company__Status | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type ListCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -64254,7 +64455,7 @@ export type ListCompaniesByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesByIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -64266,7 +64467,7 @@ export type SearchCompaniesByIdentityQueryVariables = Exact<{
 
 
 export type SearchCompaniesByIdentityQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
@@ -64282,7 +64483,7 @@ export type ListCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -64293,7 +64494,7 @@ export type SearchCompaniesBySecondaryIdentityQueryVariables = Exact<{
 }>;
 
 
-export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type SearchCompaniesBySecondaryIdentityQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: MutationCompanyInput;
@@ -64301,7 +64502,7 @@ export type CreateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteCompanyMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -64332,7 +64533,7 @@ export type ListCompaniesQueryVariables = Exact<{
 }>;
 
 
-export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListCompaniesQuery = { __typename?: 'Query', Companies?: { __typename?: 'Companies', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchCompaniesQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -64343,7 +64544,7 @@ export type SearchCompaniesQueryVariables = Exact<{
 
 
 export type SearchCompaniesQuery = { __typename?: 'Query', Searches?: { __typename?: 'Searches', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Search', id: string, title?: string | null, priority?: number | null, doc: { __typename?: 'Search_Doc_Relationship', relationTo?: Search_Doc_RelationTo | null, value?:
-          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
+          | { __typename: 'Company', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, description?: string | null, likeCount?: number | null, website?: string | null, phone?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null }
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
@@ -64358,7 +64559,7 @@ export type UpdateCompanyMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: { __typename?: 'Company', id: string, name?: string | null, verification?: Company_Verification | null, isPrivate?: boolean | null, _status?: Company__Status | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   replyToPost: Comment_ReplyPostRelationshipInput;
@@ -64643,6 +64844,11 @@ export type UpdateOrderMutationVariables = Exact<{
 
 
 export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+
+export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PermissionsQuery = { __typename?: 'Query', permissions: Array<{ __typename?: 'Permissions', serverUrl: string, canCreateContentAsNonAdmin: boolean }> };
 
 export type ListPostsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -65681,6 +65887,7 @@ export const ListCompaniesByCreatorDocument = `
       serverURL
       name
       verification
+      isPrivate
       likeCount
       cryptoAddresses {
         chain
@@ -65731,6 +65938,7 @@ export const CompanyByIdDocument = `
     serverURL
     name
     verification
+    isPrivate
     _status
     description
     likeCount
@@ -65810,7 +66018,7 @@ export const ListCompaniesByIdentityDocument = `
     query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
-    where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}]}
+    where: {AND: [{identity: {equals: $identityId}}, {_status: {equals: published}}, {isPrivate: {equals: false}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -65821,6 +66029,7 @@ export const ListCompaniesByIdentityDocument = `
       serverURL
       name
       verification
+      isPrivate
       description
       hasLiked
       likeCount
@@ -65905,7 +66114,7 @@ export const SearchCompaniesByIdentityDocument = `
     query SearchCompaniesByIdentity($identityId: String!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}, {doc: {value: {isPrivate: false}}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -65924,6 +66133,7 @@ export const SearchCompaniesByIdentityDocument = `
             serverURL
             name
             verification
+            isPrivate
             description
             cryptoAddresses {
               chain
@@ -66009,7 +66219,7 @@ export const ListCompaniesBySecondaryIdentityDocument = `
     query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
-    where: {AND: [{allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
+    where: {AND: [{allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}, {isPrivate: {equals: false}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -66020,6 +66230,7 @@ export const ListCompaniesBySecondaryIdentityDocument = `
       serverURL
       name
       verification
+      isPrivate
       description
       likeCount
       cryptoAddresses {
@@ -66103,7 +66314,7 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
     query SearchCompaniesBySecondaryIdentity($identityId: JSON!, $searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Companies(
     draft: false
-    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}]}
+    where: {AND: [{name: {contains: $searchTerm}}, {allowedIdentities: {in: [$identityId]}}, {_status: {equals: published}}, {isPrivate: {equals: false}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -66114,6 +66325,7 @@ export const SearchCompaniesBySecondaryIdentityDocument = `
       serverURL
       name
       verification
+      isPrivate
       description
       likeCount
       cryptoAddresses {
@@ -66199,6 +66411,7 @@ export const CreateCompanyDocument = `
     id
     name
     verification
+    isPrivate
     cryptoAddresses {
       chain
       address
@@ -66321,6 +66534,7 @@ export const ListCompaniesDocument = `
       serverURL
       name
       verification
+      isPrivate
       description
       hasLiked
       likeCount
@@ -66405,7 +66619,7 @@ export const SearchCompaniesDocument = `
     query SearchCompanies($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
   Searches(
     draft: false
-    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}]}
+    where: {AND: [{title: {contains: $searchTerm}}, {doc: {relationTo: companies}}, {doc: {value: {isPrivate: false}}}]}
     page: $page
     limit: $limit
     sort: $sort
@@ -66424,6 +66638,7 @@ export const SearchCompaniesDocument = `
             serverURL
             name
             verification
+            isPrivate
             description
             likeCount
             cryptoAddresses {
@@ -66503,6 +66718,7 @@ export const UpdateCompanyDocument = `
     id
     name
     verification
+    isPrivate
     cryptoAddresses {
       chain
       address
@@ -68499,6 +68715,36 @@ export const useUpdateOrderMutation = <
 
 
 useUpdateOrderMutation.fetcher = (variables: UpdateOrderMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, variables, options);
+
+export const PermissionsDocument = `
+    query Permissions {
+  permissions {
+    serverUrl
+    canCreateContentAsNonAdmin
+  }
+}
+    `;
+
+export const usePermissionsQuery = <
+      TData = PermissionsQuery,
+      TError = unknown
+    >(
+      variables?: PermissionsQueryVariables,
+      options?: Omit<UseQueryOptions<PermissionsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<PermissionsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<PermissionsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['Permissions'] : ['Permissions', variables],
+    queryFn: gqlFetcher<PermissionsQuery, PermissionsQueryVariables>(PermissionsDocument, variables),
+    ...options
+  }
+    )};
+
+usePermissionsQuery.getKey = (variables?: PermissionsQueryVariables) => variables === undefined ? ['Permissions'] : ['Permissions', variables];
+
+
+usePermissionsQuery.fetcher = (variables?: PermissionsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<PermissionsQuery, PermissionsQueryVariables>(PermissionsDocument, variables, options);
 
 export const ListPostsByCompanyDocument = `
     query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {

@@ -2,7 +2,6 @@ import type { Comment, Company, Identity, Job, Post, Product, Startup } from "./
 import type { URL } from "./types";
 
 import type { PostRelatedTarget } from "./components/shared/post/types";
-import { Post_RelatedPosts_RelationTo } from "./generated/graphql";
 
 export const encodeServerUrlSegment = (value: string) => {
     return Buffer.from(value, "utf8").toString("hex");
@@ -17,92 +16,91 @@ export const decodeServerUrlSegment = (value: string) => {
 };
 
 const home = {
-    route: "/" as const,
-    getLink: () => "/" as const,
+    route: "/",
+    getLink: () => "/",
 };
 
 const jobs = {
-    route: "/jobs" as const,
-    getLink: () => "/jobs" as const,
+    route: "/jobs",
+    getLink: () => "/jobs",
     detail: {
-        route: "/jobs/:id/:serverUrl" as const,
+        route: "/jobs/:id/:serverUrl",
         getLink: (job: Job) => `/jobs/${job.id}/${encodeServerUrlSegment(job.serverURL ?? "")}`,
     },
     edit: {
-        route: "/jobs/edit/:id/:serverUrl" as const,
+        route: "/jobs/edit/:id/:serverUrl",
         getLink: (job: Job) => `/jobs/edit/${job.id}/${encodeServerUrlSegment(job.serverURL ?? "")}`,
     },
 };
 
 const companies = {
-    route: "/companies" as const,
-    getLink: () => "/companies" as const,
+    route: "/companies",
+    getLink: () => "/companies",
     detail: {
-        route: "/companies/:id/:serverUrl" as const,
+        route: "/companies/:id/:serverUrl",
         getLink: (company: Company) => `/companies/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
     edit: {
-        route: "/companies/edit/:id/:serverUrl" as const,
+        route: "/companies/edit/:id/:serverUrl",
         getLink: (company: Company) => `/companies/edit/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
 };
 
 const tribes = {
-    route: "/tribes" as const,
-    getLink: () => "/tribes" as const,
+    route: "/tribes",
+    getLink: () => "/tribes",
     detail: {
-        route: "/tribes/:id/:serverUrl" as const,
+        route: "/tribes/:id/:serverUrl",
         getLink: (identity: Identity) => `/tribes/${identity.id}/${encodeServerUrlSegment(identity.serverURL ?? "")}`,
     },
 };
 
 const productsServices = {
-    route: "/products-services" as const,
-    getLink: () => "/products-services" as const,
+    route: "/products-services",
+    getLink: () => "/products-services",
     detail: {
-        route: "/products-services/:id/:serverUrl" as const,
+        route: "/products-services/:id/:serverUrl",
         getLink: (product: Product) =>
             `/products-services/${product.id}/${encodeServerUrlSegment(product.serverURL ?? "")}`,
     },
     edit: {
-        route: "/products-services/edit/:id/:serverUrl" as const,
+        route: "/products-services/edit/:id/:serverUrl",
         getLink: (product: Product) =>
             `/products-services/edit/${product.id}/${encodeServerUrlSegment(product.serverURL ?? "")}`,
     },
 };
 
 const posts = {
-    route: "/posts" as const,
-    getLink: () => "/posts" as const,
+    route: "/posts",
+    getLink: () => "/posts",
     detail: {
-        route: "/posts/:id/:serverUrl" as const,
+        route: "/posts/:id/:serverUrl",
         getLink: (post: Post) => `/posts/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
     },
     edit: {
-        route: "/posts/edit/:id/:serverUrl" as const,
+        route: "/posts/edit/:id/:serverUrl",
         getLink: (post: Post) => `/posts/edit/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
     },
     relatedTarget: {
         getLink: (related: PostRelatedTarget) => {
-            if (!related?.value || !related.relationTo) {
+            const value = related?.value;
+            if (!value) {
                 return "";
             }
 
-            const relatedValue = related.value as { id: string };
-
-            switch (related.relationTo) {
-                case Post_RelatedPosts_RelationTo.Posts:
-                    return posts.detail.getLink(relatedValue as Post);
-                case Post_RelatedPosts_RelationTo.Companies:
-                    return companies.detail.getLink(relatedValue as Company);
-                case Post_RelatedPosts_RelationTo.Jobs:
-                    return jobs.detail.getLink(relatedValue as Job);
-                case Post_RelatedPosts_RelationTo.Products:
-                    return productsServices.detail.getLink(relatedValue as Product);
-                case Post_RelatedPosts_RelationTo.Identities:
-                    return tribes.detail.getLink(relatedValue as Identity);
-                case Post_RelatedPosts_RelationTo.Startups:
-                    return ventures.detail.getLink(relatedValue as Startup);
+            switch (value.__typename) {
+                case "Post":
+                    return posts.detail.getLink(value as Post);
+                case "Company":
+                    return companies.detail.getLink(value as Company);
+                case "Job":
+                    return jobs.detail.getLink(value as Job);
+                case "Product":
+                    return productsServices.detail.getLink(value as Product);
+                case "Identity":
+                    return tribes.detail.getLink(value as unknown as Identity);
+                case "Startup":
+                    return ventures.detail.getLink(value as Startup);
             }
 
             return "";
@@ -111,66 +109,66 @@ const posts = {
 };
 
 const syndication = {
-    route: "/syndication" as const,
-    getLink: () => "/syndication" as const,
+    route: "/syndication",
+    getLink: () => "/syndication",
     detail: {
-        route: "/syndication/:id/:serverUrl" as const,
+        route: "/syndication/:id/:serverUrl",
         getLink: (entry: URL) => `/syndication/${encodeURIComponent(entry.value)}/${encodeServerUrlSegment(entry.value)}`,
     },
 };
 
 const syndicate = {
-    route: "/syndicate" as const,
-    getLink: () => "/syndicate" as const,
+    route: "/syndicate",
+    getLink: () => "/syndicate",
 };
 
 const profile = {
-    route: "/profile" as const,
-    getLink: () => "/profile" as const,
+    route: "/profile",
+    getLink: () => "/profile",
 };
 
 const publish = {
-    route: "/publish" as const,
-    getLink: () => "/publish" as const,
+    route: "/publish",
+    getLink: () => "/publish",
 };
 
 const cart = {
-    route: "/cart" as const,
-    getLink: () => "/cart" as const,
+    route: "/cart",
+    getLink: () => "/cart",
 };
 
 const order = {
-    route: "/order" as const,
-    getLink: () => "/order" as const,
+    route: "/order",
+    getLink: () => "/order",
 };
 
 const ventures = {
-    route: "/ventures" as const,
-    getLink: () => "/ventures" as const,
+    route: "/ventures",
+    getLink: () => "/ventures",
     detail: {
-        route: "/ventures/:id/:serverUrl" as const,
+        route: "/ventures/:id/:serverUrl",
         getLink: (startup: Startup) => `/ventures/${startup.id}/${encodeServerUrlSegment(startup.serverURL ?? "")}`,
     },
     edit: {
-        route: "/ventures/edit/:id/:serverUrl" as const,
+        route: "/ventures/edit/:id/:serverUrl",
         getLink: (startup: Startup) =>
             `/ventures/edit/${startup.id}/${encodeServerUrlSegment(startup.serverURL ?? "")}`,
     },
 };
 
 const unsubscribe = {
-    route: "/unsubscribe" as const,
-    getLink: () => "/unsubscribe" as const,
+    route: "/unsubscribe",
+    getLink: () => "/unsubscribe",
 };
 
 const authCallback = {
-    route: "/auth/callback" as const,
-    getLink: () => "/auth/callback" as const,
+    route: "/auth/callback",
+    getLink: () => "/auth/callback",
 };
 
 const comments = {
     detail: {
-        route: "/comments/:id/:serverUrl" as const,
+        route: "/comments/:id/:serverUrl",
         getLink: (comment: Comment) => `/comments/${comment.id}/${encodeServerUrlSegment(comment.serverUrl ?? "")}`,
     },
 };

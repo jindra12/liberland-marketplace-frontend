@@ -21,6 +21,7 @@ import { ProductForm } from "./ProductForm";
 import { StartupForm } from "./StartupForm";
 
 export interface PublishFormsProps {
+    defaultCategory?: Category;
     url: string;
 }
 export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) => {
@@ -28,7 +29,9 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
         TOUR_LOCAL_STORAGE_KEY,
         undefined,
     );
-    const [category, setCategory] = React.useState<Category | undefined>(() => getTourCategory(pendingTourType));
+    const [category, setCategory] = React.useState<Category | undefined>(
+        () => props.defaultCategory ?? getTourCategory(pendingTourType),
+    );
 
     React.useEffect(() => {
         setPendingTourType(undefined);
@@ -91,7 +94,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     }
     return (
         <div className="Publish">
-            <Typography.Title level={2}>Publish your ad</Typography.Title>
+            <Typography.Title level={2}>Create</Typography.Title>
             <Typography.Paragraph type="secondary">Choose what you'd like to publish</Typography.Paragraph>
             <Space direction="vertical" size={16} className="Publish__categories">
                 <Card hoverable className="Publish__category" onClick={() => setCategory("publish-job")}>

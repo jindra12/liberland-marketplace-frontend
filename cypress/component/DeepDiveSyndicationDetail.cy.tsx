@@ -1,5 +1,10 @@
-import { MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
-import { mountMainRoute, screenshotStep, waitForCollectionQuery } from "../support/component-tests/utils";
+import { COOP_SERVER_URL, MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
+import {
+    mountAuthenticatedDetailRoute,
+    mountMainRoute,
+    screenshotStep,
+    waitForCollectionQuery,
+} from "../support/component-tests/utils";
 
 describe("syndication detail", () => {
     it("shows endpoint metadata and share controls for an enabled endpoint", () => {
@@ -16,6 +21,7 @@ describe("syndication detail", () => {
         cy.contains(".EntityDetail__title", "Main").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Enabled").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Primary endpoint").should("be.visible");
+        cy.get(".SyndicationDetail__publishListingsTag").contains("Can publish listings").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("be.visible");
         cy.contains("You must be 18+ to see this content.").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains("Main").should("be.visible");
@@ -44,6 +50,21 @@ describe("syndication detail", () => {
         cy.contains("You must be 18+ to see this content.").should("be.visible");
         cy.get(".ShareSection").should("be.visible");
         screenshotStep("syndication-detail-nsfw-mobile");
+    });
+
+    it("shows when the endpoint cannot publish listings", () => {
+        mountAuthenticatedDetailRoute(syndicationDetailRoute(COOP_SERVER_URL), [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        waitForCollectionQuery(
+            MAIN_SERVER_URL,
+            "ListPublishedSyndicationUrls",
+            {},
+            "Syndications",
+            "Main",
+        );
+
+        cy.get(".SyndicationDetail").should("be.visible");
+        cy.contains(".EntityDetail__title", "Co-op Main").should("be.visible");
+        cy.get(".SyndicationDetail__publishListingsTag").contains("Cannot publish listings").should("be.visible");
     });
 
     it("shows the 404 fallback when the endpoint is not in the current context", () => {

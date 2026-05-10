@@ -18,6 +18,7 @@ import {
     updateNode,
 } from "./runtimeState";
 import { searchResponseFor } from "./responseHelpers";
+import { BACKEND_URL } from "../../../src/gqlFetcher";
 import {
     normalizeCartData,
     normalizeCommentData,
@@ -93,6 +94,49 @@ const resolveCollection = (items: MockNode[], args: { page?: number; limit?: num
         prevPage: page > 1 ? page - 1 : null,
         nextPage: page * limit < items.length ? page + 1 : null,
     };
+};
+
+const permissionsForHost = (host: string) => {
+    if (host === "127.0.0.1:3010") {
+        return [
+            {
+                serverUrl: BACKEND_URL,
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    if (host === "127.0.0.1:3011") {
+        return [
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    if (host === "127.0.0.1:3013") {
+        return [
+            {
+                serverUrl: BACKEND_URL,
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3012",
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    return [];
 };
 
 export const queryResolvers = {
@@ -172,6 +216,10 @@ export const queryResolvers = {
         return resolveCollection(filtered, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
+    permissions: (_parent: unknown, _args: unknown, context: unknown) => {
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        return permissionsForHost(host);
+    },
     Comment: (_parent: unknown, args: { id?: string }): MockNode => {
         syncCommentReplyCounts(activeFixtures.comments);
         return ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]);

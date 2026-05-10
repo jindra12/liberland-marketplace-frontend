@@ -123,6 +123,8 @@
         "test:ct:remembered-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberedWallet.cy.tsx",
         "test:ct:notfound": "yarn cypress:run --component --browser electron --spec cypress/component/NotFound.cy.tsx",
         "test:ct:notfound:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/NotFound.cy.tsx",
+        "test:ct:runtime-error": "yarn cypress:run --component --browser electron --spec cypress/component/RuntimeErrorState.cy.tsx",
+        "test:ct:runtime-error:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RuntimeErrorState.cy.tsx",
         "test:ct:unsubscribe": "yarn cypress:run --component --browser electron --spec cypress/component/Unsubscribe.cy.tsx",
         "test:ct:unsubscribe:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Unsubscribe.cy.tsx",
         "test:ct:deep-dive:company": "yarn cypress:run --component --browser electron --spec cypress/component/DeepDiveCompany.cy.tsx",

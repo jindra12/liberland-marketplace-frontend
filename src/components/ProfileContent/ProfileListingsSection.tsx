@@ -159,7 +159,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                     My Listings
                 </Typography.Title>
                 <RouteButton to={routes.publish.route} type="primary" icon={<PlusOutlined />}>
-                    Create Listing
+                    Create
                 </RouteButton>
             </div>
             <Tabs items={listingTabs} />

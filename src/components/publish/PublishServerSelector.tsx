@@ -6,29 +6,14 @@ import { Alert, Button, Card, Flex, Tag, Typography } from "antd";
 import { URL } from "../../types";
 import { getSyndicationHost, getSyndicationName } from "../endpoints/utils";
 
+import { sortPublishableUrls } from "./utils";
+
 export interface PublishServerSelectorProps {
     urls: URL[];
     onConfirm: (url: string) => void;
 }
 export const PublishServerSelector: React.FunctionComponent<PublishServerSelectorProps> = (props) => {
-    const items = React.useMemo(
-        () =>
-            [...props.urls].sort((left, right) => {
-                if (left.name === "Main" && right.name !== "Main") {
-                    return -1;
-                }
-                if (right.name === "Main" && left.name !== "Main") {
-                    return 1;
-                }
-                if (left.enabled !== right.enabled) {
-                    return left.enabled ? -1 : 1;
-                }
-                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", {
-                    sensitivity: "base",
-                });
-            }),
-        [props.urls],
-    );
+    const items = sortPublishableUrls(props.urls);
     const [selectedUrlState, setSelectedUrlState] = React.useState<string>();
     const selectedUrl = items.some((entry) => entry.value === selectedUrlState)
         ? selectedUrlState

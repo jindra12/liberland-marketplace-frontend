@@ -638,7 +638,8 @@ export const goToSyndicationList = () => {
     cy.get(".SplashPage__syndicationManageBtn").contains(SYNDICATION_LIST_GOAL.clickLabel).click();
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
-    cy.contains("h2", SYNDICATION_LIST_GOAL.title).should("be.visible");
+    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Can publish listings");
+    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Cannot publish listings");
     cy.contains(".SyndicationList__nsfwTag", "NSFW").should("be.visible");
     screenshotStep("syndication-list");
 };

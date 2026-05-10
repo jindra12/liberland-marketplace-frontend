@@ -1,9 +1,15 @@
 import * as React from "react";
 
 import { DownloadOutlined } from "@ant-design/icons";
-import { Card, Flex, List, Space, Tag, Typography } from "antd";
+import { Button, Card, Flex, List, Space, Tag, Typography } from "antd";
 
-import type { SyndicatePage } from "./constants";
+import {
+    SYNDICATE_OFFER_EMAIL,
+    SYNDICATE_OFFER_EMAIL_LABEL,
+    SYNDICATE_OFFER_EMAIL_SUBJECT,
+    SYNDICATE_OFFER_NOTE,
+    type SyndicatePage,
+} from "./constants";
 import { SyndicateDownloadAction } from "./SyndicateDownloadAction";
 
 type SyndicatePageContentProps = {
@@ -25,6 +31,16 @@ export const SyndicatePageContent: React.FunctionComponent<SyndicatePageContentP
                 <Typography.Paragraph className="SyndicateModal__description">
                     {props.page.description}
                 </Typography.Paragraph>
+                <Typography.Paragraph type="secondary" className="SyndicateModal__offerNote">
+                    {SYNDICATE_OFFER_NOTE}
+                </Typography.Paragraph>
+                <Button
+                    type="primary"
+                    href={`mailto:${SYNDICATE_OFFER_EMAIL}?subject=${encodeURIComponent(SYNDICATE_OFFER_EMAIL_SUBJECT)}`}
+                    className="SyndicateModal__offerButton"
+                >
+                    {SYNDICATE_OFFER_EMAIL_LABEL}
+                </Button>
             </Flex>
 
             <Card className="SyndicateModal__pageCard">

@@ -35,6 +35,7 @@ export const graphqlSchema = buildSchema(`
     type Query {
         Carts(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
         Searches(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
+        permissions: [Permission!]!
         Companies(
             draft: Boolean
             limit: Int
@@ -146,6 +147,11 @@ export const graphqlSchema = buildSchema(`
         hasLiked: Boolean
         id: String
         likeCount: Int
+    }
+
+    type Permission {
+        serverUrl: String
+        canCreateContentAsNonAdmin: Boolean
     }
 
     type SalaryRange {

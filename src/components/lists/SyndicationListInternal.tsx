@@ -17,9 +17,11 @@ import {
     setEndpointEnabled,
 } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
+import { usePermissionsContext } from "../PermissionsContext";
 import { RouteButton } from "../RouteButton";
 import { NativeShareButton } from "../share/NativeShareButton";
 import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
+import { getPublishListingsTagInfo } from "../syndication/utils";
 
 const byPriority = (entry: URL) => {
     if (entry.name === "Main") {
@@ -31,6 +33,7 @@ const byPriority = (entry: URL) => {
 export const SyndicationListInternal: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const { urls, setUrls } = useEndpointContext();
+    const { canCreateContent } = usePermissionsContext();
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
 
@@ -118,20 +121,30 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             />
                         </Link>
                     ),
-                    description: (entry) => (
-                        <Flex vertical gap={8}>
-                            <Typography.Text type="secondary" className="SyndicationList__host">
-                                {getSyndicationHost(entry.value)}
-                            </Typography.Text>
-                            <Flex wrap gap={8}>
-                                <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
-                                <Tag color={entry.enabled ? "success" : "default"}>
-                                    {entry.enabled ? "Visible in search" : "Hidden from search"}
-                                </Tag>
-                                {entry.nsfw ? <SyndicationNsfwTag className="SyndicationList__nsfwTag" /> : null}
+                    description: (entry) => {
+                        const publishListingsTag = getPublishListingsTagInfo(canCreateContent(entry.value));
+
+                        return (
+                            <Flex vertical gap={8}>
+                                <Typography.Text type="secondary" className="SyndicationList__host">
+                                    {getSyndicationHost(entry.value)}
+                                </Typography.Text>
+                                <Flex wrap gap={8}>
+                                    <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
+                                    <Tag color={entry.enabled ? "success" : "default"}>
+                                        {entry.enabled ? "Visible in search" : "Hidden from search"}
+                                    </Tag>
+                                    <Tag
+                                        color={publishListingsTag.color}
+                                        className="SyndicationList__publishListingsTag"
+                                    >
+                                        {publishListingsTag.label}
+                                    </Tag>
+                                    {entry.nsfw ? <SyndicationNsfwTag className="SyndicationList__nsfwTag" /> : null}
+                                </Flex>
                             </Flex>
-                        </Flex>
-                    ),
+                        );
+                    },
                     body: (entry) => (
                         <Markdown className="Markdown--clamp3 SyndicationList__description">
                             {entry.description}

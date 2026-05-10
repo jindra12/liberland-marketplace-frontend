@@ -192,6 +192,8 @@ import {
     useUpdateOrderMutation as useUpdateOrderMutationSingle,
     MeUserDocument,
     useMeUserQuery as useMeUserQuerySingle,
+    PermissionsDocument,
+    usePermissionsQuery as usePermissionsQuerySingle,
     SubscribeToCompanyUpdatesDocument,
     useSubscribeToCompanyUpdatesMutation as useSubscribeToCompanyUpdatesMutationSingle,
     SubscribeToJobUpdatesDocument,
@@ -530,6 +532,7 @@ export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserD
     const rightEntries = Array.isArray(right) ? right : [right];
     return [...leftEntries, ...rightEntries];
 });
+export const usePermissionsQuery = enhancedQueryFactory(usePermissionsQuerySingle, PermissionsDocument, false);
 export const useCreateCompanyMutation = enhancedMutationFactory(
     useCreateCompanyMutationSingle,
     CreateCompanyDocument,

@@ -31,7 +31,7 @@ export const CommonDetail: React.FunctionComponent<CommonDetailProps> = (props) 
                     label={props.shareLabel}
                     title={props.shareTitle}
                     text={props.shareText}
-                    serverURL={props.serverURL ?? undefined}
+                    serverURL={props.serverURL}
                     subscriptionTarget={props.subscriptionTarget}
                     reportPath={props.reportPath}
                 />

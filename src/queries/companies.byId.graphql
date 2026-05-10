@@ -5,6 +5,7 @@ query CompanyById($id: String!, $draft: Boolean = false) {
         serverURL
         name
         verification
+        isPrivate
         _status
         description
         likeCount

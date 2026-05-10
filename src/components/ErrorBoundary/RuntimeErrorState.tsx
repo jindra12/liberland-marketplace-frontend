@@ -6,6 +6,7 @@ import { HomeOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Space, Tag, Typography } from "antd";
 
 import { routes } from "../../routes";
+import { StorageResetPrompt } from "../shared/StorageResetPrompt";
 
 import { ErrorBoundaryScope } from "./trackRuntimeError";
 
@@ -59,6 +60,7 @@ export const RuntimeErrorState: React.FunctionComponent<RuntimeErrorStateProps> 
                             </Button>
                         )}
                     </Flex>
+                    <StorageResetPrompt />
                 </Space>
             </div>
         </Flex>

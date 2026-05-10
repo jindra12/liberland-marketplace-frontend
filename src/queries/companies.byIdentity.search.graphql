@@ -7,7 +7,13 @@ query SearchCompaniesByIdentity(
 ) {
     Searches(
         draft: false
-        where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: companies } }] }
+        where: {
+            AND: [
+                { title: { contains: $searchTerm } }
+                { doc: { relationTo: companies } }
+                { doc: { value: { isPrivate: false } } }
+            ]
+        }
         page: $page
         limit: $limit
         sort: $sort
@@ -26,6 +32,7 @@ query SearchCompaniesByIdentity(
                         serverURL
                         name
                         verification
+                        isPrivate
                         description
                         cryptoAddresses {
                             chain

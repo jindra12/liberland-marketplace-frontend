@@ -95,7 +95,7 @@ const runTourScenario = (scenario: TourScenario, auth: TourSuiteAuth, mode: Tour
             clickNextTourStep();
         }
 
-    const descriptor = descriptors[index];
+        const descriptor = descriptors[index];
         if (!descriptor) {
             throw new Error(`Missing tour descriptor ${index + 1} for ${scenario.type} in ${mode} mode`);
         }

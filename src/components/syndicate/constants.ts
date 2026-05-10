@@ -12,6 +12,12 @@ export type SyndicatePage = {
     }[];
 };
 
+export const SYNDICATE_OFFER_NOTE =
+    "Time-sensitive offer: if you describe your need in an e-mail to jindra12.underdark@gmail.com, you may get a free server.";
+export const SYNDICATE_OFFER_EMAIL = "jindra12.underdark@gmail.com";
+export const SYNDICATE_OFFER_EMAIL_SUBJECT = "Free server request";
+export const SYNDICATE_OFFER_EMAIL_LABEL = "Contact us";
+
 export const SYNDICATE_PAGES: SyndicatePage[] = [
     {
         eyebrow: "Welcome",
