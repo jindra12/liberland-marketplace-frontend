@@ -80,7 +80,7 @@ export const getPrimaryCryptoAddress = (
         return addresses.find((address) => Boolean(address?.address) || Boolean(address?.chain));
     }
 
-    return addresses ?? undefined;
+    return addresses;
 };
 
 export const hasCryptoWallet = (entity?: CryptoWalletOwner | null): boolean => {
@@ -88,5 +88,5 @@ export const hasCryptoWallet = (entity?: CryptoWalletOwner | null): boolean => {
 };
 
 export const isProductPurchasable = (product?: PurchasableProduct | null): boolean => {
-    return Boolean(product?.orderable) && (hasCryptoWallet(product) || hasCryptoWallet(product.company));
+    return Boolean(product?.orderable) && (hasCryptoWallet(product) || hasCryptoWallet(product?.company));
 };

@@ -155,31 +155,6 @@ export const getRelatedTargetInputSelection = (selection?: RelatedTargetSelectio
     return null;
 };
 
-export const getPostRelatedTargetHref = (related?: PostRelatedTarget | null): string => {
-    if (!related?.value || !related.relationTo) {
-        return "";
-    }
-
-    const relatedValue = related.value as RelatedTargetEntity;
-
-    switch (related.relationTo) {
-        case Post_RelatedPosts_RelationTo.Posts:
-            return `/posts/${relatedValue.id}`;
-        case Post_RelatedPosts_RelationTo.Companies:
-            return `/companies/${relatedValue.id}`;
-        case Post_RelatedPosts_RelationTo.Jobs:
-            return `/jobs/${relatedValue.id}`;
-        case Post_RelatedPosts_RelationTo.Products:
-            return `/products-services/${relatedValue.id}`;
-        case Post_RelatedPosts_RelationTo.Identities:
-            return `/tribes/${relatedValue.id}`;
-        case Post_RelatedPosts_RelationTo.Startups:
-            return `/ventures/${relatedValue.id}`;
-        default:
-            return "";
-    }
-};
-
 export const getPostRelatedTargetText = (related?: PostRelatedTarget | null): string => {
     if (!related?.value || !related.relationTo) {
         return "";

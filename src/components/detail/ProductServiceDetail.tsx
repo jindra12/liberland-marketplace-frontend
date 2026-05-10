@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Company, Product } from "../../generated/graphql";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
@@ -23,12 +24,13 @@ import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
-    const query = useProductByIdQuery({ id: id! });
+    const query = useProductByIdQuery({ id: id!, url: routeServerURL });
     const companyId = query.data?.Product?.company?.id;
-    const companyQuery = useCompanyByIdQuery({ id: companyId || "" }, { enabled: Boolean(companyId) });
+    const companyQuery = useCompanyByIdQuery({ id: companyId || "", url: routeServerURL }, { enabled: Boolean(companyId) });
 
     return (
         <Loader query={query}>
@@ -65,7 +67,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         <AddToCartButtonGuard
                             block
                             productId={product.id}
-                            serverURL={product.serverURL!}
+                            serverURL={product.serverURL ?? routeServerURL}
                             size={md ? "large" : "middle"}
                             maxAvailable={inventoryCount}
                         />
@@ -79,8 +81,9 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                 return (
                     <CommonDetail
                         className="ProductDetail"
-                        serverURL={product?.serverURL}
-                        backTo="/products-services"
+                        serverURL={product?.serverURL ?? routeServerURL}
+                        reportPath={routes.productsServices.detail.getLink(product as Product)}
+                        backTo={routes.productsServices.route}
                         backLabel="Back to products / services"
                         shareLabel="Share this product"
                         shareTitle={shareTitle}
@@ -90,7 +93,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 ? {
                                       collection: "products",
                                       targetID: product.id,
-                                      serverURL: product.serverURL,
+                                      serverURL: product.serverURL ?? routeServerURL,
                                       isSubscribed: product.isSubscribed,
                                   }
                                 : undefined
@@ -130,7 +133,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 )}
                                                 <CartItemCount
                                                     productId={product.id}
-                                                    serverURL={product.serverURL!}
+                                                    serverURL={product.serverURL ?? routeServerURL}
                                                 />
                                             </Flex>
                                             {purchaseControl && (
@@ -147,7 +150,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={`/products-services/edit/${id}`} icon={<EditOutlined />}>
+                                    <RouteButton
+                                        to={routes.productsServices.edit.getLink(product as Product)}
+                                        icon={<EditOutlined />}
+                                    >
                                         Edit
                                     </RouteButton>
                                 )}
@@ -185,7 +191,11 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 </Button>
                                             )}
                                             {product?.company?.id && (
-                                                <RouteButton to={`/companies/${product.company.id}`}>View company</RouteButton>
+                                                <RouteButton
+                                                    to={routes.companies.detail.getLink(product.company as Company)}
+                                                >
+                                                    View company
+                                                </RouteButton>
                                             )}
                                         </Flex>
                                     </>
@@ -198,7 +208,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 <EntityCommentsSection
                                     targetId={id!}
                                     relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                                    serverURL={product?.serverURL}
+                                    serverURL={product?.serverURL ?? routeServerURL}
                                 />
                             )
                         }]}

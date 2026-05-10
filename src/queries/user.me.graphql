@@ -5,6 +5,7 @@ query MeUser {
             name
             email
             phone
+            reportedLinks
             shippingAddress {
                 title
                 firstName

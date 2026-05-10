@@ -1,7 +1,8 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { MAIN_SERVER_URL, editRoute, detailRoute } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     fillFormField,
+    getRouteEntityId,
     mountAuthenticatedMainRoute,
     openPublishCategory,
     screenshotStep,
@@ -58,13 +59,9 @@ describe("company create/edit", () => {
 
         cy.contains("button", "Publish Company").click();
         cy.wait("@mediaUpload");
-        cy.location("pathname").should("match", /\/companies\/company-/);
+        cy.location("pathname").should("match", /\/companies\/company-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created company id");
-            }
-
+            const createdId = getRouteEntityId(pathname);
             waitForDetailQuery(MAIN_SERVER_URL, "CompanyById", { id: createdId }, "Company", createdId, companyName);
             cy.contains("h1", companyName).should("be.visible");
             screenshotStep("company-created-page");
@@ -85,14 +82,10 @@ describe("company create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Company").click();
-        cy.location("pathname").should("match", /\/companies\/company-/);
+        cy.location("pathname").should("match", /\/companies\/company-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created company id");
-            }
-
-            cy.routerNavigate(`/companies/edit/${createdId}`);
+            const createdId = getRouteEntityId(pathname);
+            cy.routerNavigate(editRoute("/companies", createdId));
             cy.contains("h3", "Edit Company").should("be.visible");
             assertFormFieldValue("Company Name", companyName);
             assertFormFieldValue("Email", "editable@harbor.example");
@@ -104,7 +97,7 @@ describe("company create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", `/companies/${createdId}`);
+            cy.location("pathname").should("eq", detailRoute("/companies", createdId));
             assertCompanyName(createdId, updatedCompanyName);
             screenshotStep("company-updated-page");
         });

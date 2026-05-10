@@ -6,6 +6,7 @@ import { CheckCircleFilled, HomeOutlined } from "@ant-design/icons";
 import { Flex, Space, Tag, Typography } from "antd";
 import { useTimeout } from "usehooks-ts";
 
+import { routes } from "../../routes";
 import { RouteButton } from "../RouteButton";
 
 import type { UnsubscribeResolvedEntityProps } from "./types";
@@ -17,7 +18,7 @@ export const UnsubscribeEntitySuccessState: React.FunctionComponent<UnsubscribeR
 
     useTimeout(
         () => {
-            navigate("/");
+            navigate(routes.home.route);
         },
         2200,
     );
@@ -46,7 +47,7 @@ export const UnsubscribeEntitySuccessState: React.FunctionComponent<UnsubscribeR
                     </Flex>
                     <Space size={[12, 12]} wrap className="UnsubscribePage__actions">
                         <RouteButton
-                            to="/"
+                            to={routes.home.route}
                             type="primary"
                             icon={<HomeOutlined />}
                             className="UnsubscribePage__primaryAction"

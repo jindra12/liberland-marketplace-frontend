@@ -1,4 +1,4 @@
-import type { Comment_ReplyPostRelationshipInputRelationTo, CommentByIdQuery, ListCommentRepliesQuery, ListCommentsByTargetQuery } from "../../generated/graphql";
+import type { Comment, Comment_ReplyPostRelationshipInputRelationTo, CommentByIdQuery, ListCommentRepliesQuery, ListCommentsByTargetQuery } from "../../generated/graphql";
 import type { DislikeMutation, LikeMutation } from "../shared/Like/types";
 
 export type EntityCommentsSectionProps = {
@@ -46,7 +46,7 @@ export type CommentCardProps = {
     onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
     onEditAction: (payload: CommentEditPayload) => Promise<void>;
     onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
-    onShare: (commentId: string) => void;
+    onShare: (comment: Comment) => void;
 } & CommentReactionMutations;
 
 export type CommentRepliesListProps = {
@@ -59,7 +59,7 @@ export type CommentRepliesListProps = {
     onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
     onEditAction: (payload: CommentEditPayload) => Promise<void>;
     onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
-    onShare: (commentId: string) => void;
+    onShare: (comment: Comment) => void;
 } & CommentReactionMutations;
 
 export type EntityCommentsSectionDisplayProps = {

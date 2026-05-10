@@ -4,6 +4,8 @@ query CompanyById($id: String!, $draft: Boolean = false) {
         isSubscribed
         serverURL
         name
+        verification
+        isPrivate
         _status
         description
         likeCount

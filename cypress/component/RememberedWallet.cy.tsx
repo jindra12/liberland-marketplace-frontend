@@ -1,4 +1,4 @@
-import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     addToCart,
     fillFormField,
@@ -70,7 +70,7 @@ describe("remembered wallet shortcut", () => {
             connectWallet: () => connectSolanaWalletStub("SoUserWallet1717", "phantom"),
             productId: "product-solar-widget",
             productName: "Solar Widget",
-            route: "/products-services/product-solar-widget",
+            route: detailRoute("/products-services", "product-solar-widget"),
         });
 
         cy.contains(".ant-card", "1st payment").within(() => {
@@ -88,7 +88,7 @@ describe("remembered wallet shortcut", () => {
             connectWallet: () => connectThirdwebWalletStub("0xUserWallet1818", "metamask"),
             productId: "product-harbor-lantern",
             productName: "Harbor Lantern",
-            route: "/products-services/product-harbor-lantern",
+            route: detailRoute("/products-services", "product-harbor-lantern"),
         });
 
         cy.contains(".ant-card", "1st payment").within(() => {
@@ -106,7 +106,7 @@ describe("remembered wallet shortcut", () => {
             connectWallet: () => connectTronWalletStub("TUserWallet1919", "TronLink Stub"),
             productId: "mixed-cart",
             productName: "Mixed Cart",
-            route: "/products-services/product-harbor-lantern",
+            route: detailRoute("/products-services", "product-harbor-lantern"),
         });
 
         cy.contains(".ant-card", "2nd payment").within(() => {

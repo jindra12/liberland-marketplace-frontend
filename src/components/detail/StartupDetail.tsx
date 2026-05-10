@@ -2,15 +2,18 @@ import * as React from "react";
 
 import { useParams } from "react-router-dom";
 
+import { decodeServerUrlSegment } from "../../routes";
 import { useStartupByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 
 import { StartupDetailContent } from "./startupDetail/StartupDetailContent";
 
 const StartupDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const startupQuery = useStartupByIdQuery({
         id: id!,
+        url: routeServerURL,
     });
 
     return (
@@ -24,7 +27,7 @@ const StartupDetail: React.FunctionComponent = () => {
                     <StartupDetailContent
                         startup={data.Startup}
                         startupId={id!}
-                        serverURL={data.Startup.serverURL}
+                        serverURL={data.Startup.serverURL ?? routeServerURL}
                     />
                 );
             }}

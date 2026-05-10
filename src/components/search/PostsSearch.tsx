@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Tag, Typography } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Post, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { useDislikePostMutation, useLikePostMutation, useListPostsQuery, useSearchPostsQuery } from "../hooks";
 import type { RelatedTargetSelection } from "../shared/post/types";
-import { getPostCompanyImageUrl, getPostRelatedTargetHref, getPostRelatedTargetText } from "../shared/post/utils";
+import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 import { SearchDrawer } from "./SearchDrawer";
@@ -88,7 +89,7 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                 renderItem={{
                     title: (post) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/posts/${post.id}`} onClick={props.onClose}>
+                            <Link to={routes.posts.detail.getLink(post as Post)} onClick={props.onClose}>
                                 {post.title}
                             </Link>
                         </Flex>
@@ -96,7 +97,11 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                     avatar: (post) => {
                         const imageSrc = getPostCompanyImageUrl(post);
                         return imageSrc ? (
-                            <Link to={`/posts/${post.id}`} onClick={props.onClose} className="PostList__companyAvatarLink PostList__companyAvatarLink--search">
+                            <Link
+                                to={routes.posts.detail.getLink(post as Post)}
+                                onClick={props.onClose}
+                                className="PostList__companyAvatarLink PostList__companyAvatarLink--search"
+                            >
                                 <Avatar
                                     shape="square"
                                     size={88}
@@ -115,7 +120,7 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                                 </Typography.Paragraph>
                             )}
                             {post.relatedPosts?.[0] && (
-                                <Typography.Link href={getPostRelatedTargetHref(post.relatedPosts[0])}>
+                                <Typography.Link href={routes.posts.relatedTarget.getLink(post.relatedPosts[0])}>
                                     Related: {getPostRelatedTargetText(post.relatedPosts[0])}
                                 </Typography.Link>
                             )}

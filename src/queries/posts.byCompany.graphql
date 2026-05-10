@@ -10,6 +10,7 @@ query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $s
             id
             title
             slug
+            repost
             heroImage {
                 id
                 url
@@ -68,6 +69,7 @@ query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $s
                         id
                         title
                         slug
+                        repost
                         heroImage {
                             id
                             url

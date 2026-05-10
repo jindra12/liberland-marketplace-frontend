@@ -7,10 +7,13 @@ import { MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, Button, Grid, Space, Flex } from "antd";
 
+import { routes } from "../routes";
+
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { useCartItems } from "./cart/useCartItems";
 import { DesktopDrawer } from "./DesktopDrawer";
 import { EndpointAuthAction } from "./EndpointAuthAction";
+import { useEndpointContext } from "./EndpointContext";
 import { LoginButton } from "./LoginButton";
 import { MobileDrawer } from "./MobileDrawer";
 import { getSelectedKeys } from "./MobileDrawer/utils";
@@ -19,11 +22,11 @@ const { Header } = Layout;
 const { useBreakpoint } = Grid;
 
 const desktopBaseItems = [
-    { key: "/jobs", label: "Jobs" },
-    { key: "/products-services", label: "Market" },
-    { key: "/companies", label: "Companies" },
-    { key: "/ventures", label: "Ventures" },
-    { key: "/tribes", label: "Tribes" },
+    { key: routes.jobs.route, label: "Jobs" },
+    { key: routes.productsServices.route, label: "Market" },
+    { key: routes.companies.route, label: "Companies" },
+    { key: routes.ventures.route, label: "Ventures" },
+    { key: routes.tribes.route, label: "Tribes" },
 ];
 
 export const AppHeader: React.FunctionComponent = () => {
@@ -31,8 +34,10 @@ export const AppHeader: React.FunctionComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+    const { urls } = useEndpointContext();
     const { totalQuantity } = useCartItems();
     const authAction = auth.isAuthenticated ? "logout" : "login";
+    const singlePublishEndpoint = urls.length === 1 ? urls[0] : undefined;
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -42,7 +47,7 @@ export const AppHeader: React.FunctionComponent = () => {
 
     const desktopItems = React.useMemo(() => {
         if (totalQuantity > 0) {
-            return [...desktopBaseItems, { key: "/cart", label: "Cart" }];
+            return [...desktopBaseItems, { key: routes.cart.route, label: "Cart" }];
         }
         return desktopBaseItems;
     }, [totalQuantity]);
@@ -64,7 +69,7 @@ export const AppHeader: React.FunctionComponent = () => {
     return (
         <Header className="AppHeader">
             <div className="AppHeader__inner">
-                <Link className="AppHeader__brand" to="/">
+                <Link className="AppHeader__brand" to={routes.home.route}>
                     <img className="AppHeader__logo" src="/logo.svg" alt="NSwap" />
                     <span className="AppHeader__name">NSwap</span>
                 </Link>
@@ -81,26 +86,39 @@ export const AppHeader: React.FunctionComponent = () => {
                             />
                         </div>
                         <Flex align="center" gap={12} className="AppHeader__desktopActions">
-                            <EndpointAuthAction>
-                                {({ runWithAuthOrLogin }) => (
-                                    <Button
-                                        type="primary"
-                                        icon={<PlusOutlined />}
-                                        className="AppHeader__publishBtn"
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            runWithAuthOrLogin(() => navigate("/publish"));
-                                        }}
-                                    >
-                                        Publish ad
-                                    </Button>
-                                )}
-                            </EndpointAuthAction>
+                            {singlePublishEndpoint ? (
+                                <EndpointAuthAction defaultAuthUrl={singlePublishEndpoint.value}>
+                                    {({ runWithAuthOrLogin }) => (
+                                        <Button
+                                            type="primary"
+                                            icon={<PlusOutlined />}
+                                            className="AppHeader__publishBtn"
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                runWithAuthOrLogin(() => navigate(routes.publish.route));
+                                            }}
+                                        >
+                                            Create
+                                        </Button>
+                                    )}
+                                </EndpointAuthAction>
+                            ) : (
+                                <Button
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    className="AppHeader__publishBtn"
+                                    onClick={() => {
+                                        navigate(routes.publish.route);
+                                    }}
+                                >
+                                    Create
+                                </Button>
+                            )}
                             <LoginButton
                                 action={authAction}
                                 type="default"
                                 className="AppHeader__authBtn"
-                                onAfterAction={() => navigate("/")}
+                                onAfterAction={() => navigate(routes.home.route)}
                             />
                             <DesktopDrawer />
                         </Flex>
@@ -111,7 +129,7 @@ export const AppHeader: React.FunctionComponent = () => {
                             action={authAction}
                             type="text"
                             className="AppHeader__mobileAuthBtn"
-                            onAfterAction={() => navigate("/")}
+                            onAfterAction={() => navigate(routes.home.route)}
                         />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
                         <Button

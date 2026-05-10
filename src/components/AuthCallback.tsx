@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Flex, Result, Spin } from "antd";
 
+import { routes } from "../routes";
+
 import { RouteButton } from "./RouteButton";
 
 const AuthCallback: React.FunctionComponent = () => {
@@ -13,7 +15,7 @@ const AuthCallback: React.FunctionComponent = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        navigate("/", { replace: true });
+        navigate(routes.home.route, { replace: true });
     }, [auth.isAuthenticated, navigate]);
 
     const title = auth.error
@@ -23,7 +25,7 @@ const AuthCallback: React.FunctionComponent = () => {
           : "Completing sign-in";
 
     const subTitle = auth.error ? (
-        <RouteButton to="/" type="primary" icon={<ArrowLeftOutlined />}>
+        <RouteButton to={routes.home.route} type="primary" icon={<ArrowLeftOutlined />}>
             Back to homepage
         </RouteButton>
     ) : (

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, Descriptions, Space, Tag } from "antd";
 
+import { routes } from "../../routes";
+
 type ProfileSummaryCardProps = {
     email?: string | null;
     emailVerified?: boolean;
@@ -15,7 +17,7 @@ export const ProfileSummaryCard: React.FunctionComponent<ProfileSummaryCardProps
     return (
         <Card className="Profile__info">
             <Space size={16} align="start">
-                <Link to="/profile">
+                <Link to={routes.profile.route}>
                     <Avatar size={64} src={props.picture} icon={<UserOutlined />} />
                 </Link>
                 <Descriptions column={1} size="small">

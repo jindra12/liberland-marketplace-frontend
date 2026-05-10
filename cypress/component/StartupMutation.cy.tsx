@@ -1,4 +1,4 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountAuthenticatedRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
 import { activeFixtures } from "../support/graphqlMock/runtimeState";
 
@@ -39,7 +39,7 @@ const mountStartupDetail = (route: string, startupId: string, title: string) => 
 
 describe("startup mutations", () => {
     it("joins a startup and refreshes the team state without a page reload", () => {
-        mountStartupDetail("/ventures/startup-sky-relay", "startup-sky-relay", "Sky Relay");
+        mountStartupDetail(detailRoute("/ventures", "startup-sky-relay"), "startup-sky-relay", "Sky Relay");
 
         assertTeamButton("Get Involved");
         assertTeamCount(1);
@@ -61,7 +61,7 @@ describe("startup mutations", () => {
     });
 
     it("leaves a startup and refreshes the team state without a page reload", () => {
-        mountStartupDetail("/ventures/startup-sky-relay", "startup-sky-relay", "Sky Relay");
+        mountStartupDetail(detailRoute("/ventures", "startup-sky-relay"), "startup-sky-relay", "Sky Relay");
 
         assertTeamButton("Get Involved");
         assertTeamCount(1);

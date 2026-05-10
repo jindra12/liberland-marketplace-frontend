@@ -75,10 +75,11 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                         required: true,
                     },
                 ]}
+                className="Publish__productNameField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description">
+            <Form.Item name="description" label="Description" className="Publish__productDescriptionField">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
@@ -91,6 +92,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                         message: "Enter USD price",
                     },
                 ]}
+                className="Publish__productPriceField"
             >
                 <Input
                     suffix={<DollarOutlined />}
@@ -99,10 +101,10 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     className="Publish__fullWidth Publish__priceField"
                 />
             </Form.Item>
-            <Form.Item name="url" label="Product URL">
+            <Form.Item name="url" label="Product URL" className="Publish__productUrlField">
                 <Input />
             </Form.Item>
-            <Form.Item name="inventory" label="Inventory">
+            <Form.Item name="inventory" label="Inventory" className="Publish__productInventoryField">
                 <InputNumber min={0} className="Publish__fullWidth" />
             </Form.Item>
             <Form.Item
@@ -113,6 +115,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                         required: true,
                     },
                 ]}
+                className="Publish__productCompanyField"
             >
                 <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>

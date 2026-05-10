@@ -1,12 +1,12 @@
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generated/graphql";
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
 
 describe("job deep dive", () => {
     beforeEach(() => {
-        mountMainRoute("/jobs/job-dockmaster");
+        mountMainRoute(detailRoute("/jobs", "job-dockmaster"));
         waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(MAIN_SERVER_URL, "JobById", { id: "job-dockmaster" }, "Job", "job-dockmaster", "Dockmaster");
     });

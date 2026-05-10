@@ -6,6 +6,7 @@ import type {
     UseQueryResult,
 } from "@tanstack/react-query";
 import mergeWith from "lodash-es/mergeWith";
+import uniqBy from "lodash-es/uniqBy";
 
 type QueryResult<TData> = UseQueryResult<TData, Error>;
 
@@ -56,7 +57,7 @@ export const deepMergeConcatArrays = <T, E = T>(left: T, right?: T): E => {
         }
 
         if (Array.isArray(leftValue) && Array.isArray(rightValue)) {
-            return [...leftValue, ...rightValue];
+            return uniqBy([...leftValue, ...rightValue], (value: any) => value?.id || Math.random());
         }
 
         const strategy = (specialMergeStrategies as any)[key as any];

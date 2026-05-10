@@ -15,6 +15,7 @@ export const posts: Post[] = [
         createdBy: meUser.user!,
         company: companies[0],
         heroImage: image("post-harbor-operations-digest", "Harbor Operations Digest"),
+        repost: "https://example.test/original/harbor-operations-digest",
         meta: {
             title: "Harbor Operations Digest",
             description: "Weekly harbor operations update",
@@ -314,6 +315,7 @@ export const posts: Post[] = [
         createdBy: meUser.user!,
         company: companies[0],
         heroImage: image("post-harbor-launch-notes", "Harbor Launch Notes"),
+        repost: "https://example.test/original/harbor-launch-notes",
         meta: {
             title: "Harbor Launch Notes",
             description: "Harbor launch notes with markdown and a link",

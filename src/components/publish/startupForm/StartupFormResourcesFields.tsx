@@ -21,10 +21,11 @@ export const StartupFormResourcesFields: React.FunctionComponent = () => {
                         required: true,
                     },
                 ]}
+                className="Publish__startupStageField"
             >
                 <Select options={startupStageOptions} />
             </Form.Item>
-            <Form.Item name="lookingFor" label="Looking For">
+            <Form.Item name="lookingFor" label="Looking For" className="Publish__startupLookingForField">
                 <Select
                     mode="multiple"
                     placeholder="Select resources you need"
@@ -32,7 +33,7 @@ export const StartupFormResourcesFields: React.FunctionComponent = () => {
                     allowClear
                 />
             </Form.Item>
-            <Form.Item name="alreadyHave" label="Already Have">
+            <Form.Item name="alreadyHave" label="Already Have" className="Publish__startupAlreadyHaveField">
                 <Select
                     mode="multiple"
                     placeholder="Select resources you already have"
@@ -40,7 +41,7 @@ export const StartupFormResourcesFields: React.FunctionComponent = () => {
                     allowClear
                 />
             </Form.Item>
-            <Form.Item label="Funds Needed">
+            <Form.Item label="Funds Needed" className="Publish__startupFundsField">
                 <Input.Group compact>
                     <Form.Item name="fundsNeededAmount" noStyle>
                         <InputNumber placeholder="Amount" className="Publish__amountInput" />

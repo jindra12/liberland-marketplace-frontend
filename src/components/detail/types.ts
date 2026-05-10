@@ -11,6 +11,7 @@ export type CommonDetailSection = {
 export type CommonDetailProps = {
     className?: string;
     serverURL?: string | null;
+    reportPath: string;
     backTo: string;
     backLabel: string;
     header?: ReactNode;

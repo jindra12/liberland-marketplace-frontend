@@ -6,5 +6,7 @@ export const syndications: Syndication[] = [
         name: "Guest",
         description: "Guest test server",
         url: "http://127.0.0.1:3012",
+        nsfw: false,
+        autoEnable: false,
     },
 ];

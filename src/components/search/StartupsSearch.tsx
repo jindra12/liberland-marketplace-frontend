@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Tag } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Post_RelatedPosts_RelationTo, Startup } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
 import { useListStartupsQuery, useSearchStartupsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
@@ -92,7 +93,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     title: (startup) => (
                         <Flex justify="space-between" align="center" wrap>
                             <Flex align="center" gap={8}>
-                                <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                                <Link to={routes.ventures.detail.getLink(startup as Startup)} onClick={props.onClose}>
                                     {startup.title}
                                 </Link>
                             </Flex>
@@ -106,7 +107,7 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
                     ),
                     avatar: (startup) =>
                         startup.image?.url ? (
-                            <Link to={`/ventures/${startup.id}`} onClick={props.onClose}>
+                            <Link to={routes.ventures.detail.getLink(startup as Startup)} onClick={props.onClose}>
                                 <Avatar
                                     shape="square"
                                     size={80}

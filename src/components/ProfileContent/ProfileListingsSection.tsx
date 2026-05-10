@@ -3,6 +3,8 @@ import * as React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Tabs, Typography } from "antd";
 
+import { Company, Job, Product, Startup } from "../../generated/graphql";
+import { routes } from "../../routes";
 import {
     useDeleteCompanyMutation,
     useDeleteJobMutation,
@@ -84,10 +86,10 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                     deleteMutation={deleteJobMutation}
                     label="Job"
                     emptyText="No jobs created yet"
-                    items={jobs}
+                    items={jobs as Job[]}
                     loading={jobsQuery.isLoading}
                     refetch={jobsQuery.refetch}
-                    urlPrefix="/jobs"
+                    routePrefix={routes.jobs}
                     renderMeta={(job) => ({
                         title: job.title,
                         description: formatEmploymentType(job.employmentType),
@@ -103,10 +105,10 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                     deleteMutation={deleteCompanyMutation}
                     label="Company"
                     emptyText="No companies created yet"
-                    items={companies}
+                    items={companies as Company[]}
                     loading={companiesQuery.isLoading}
                     refetch={companiesQuery.refetch}
-                    urlPrefix="/companies"
+                    routePrefix={routes.companies}
                     renderMeta={(company) => ({
                         title: company.name,
                     })}
@@ -121,10 +123,10 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                     deleteMutation={deleteStartupMutation}
                     label="Venture"
                     emptyText="No ventures created yet"
-                    items={startups}
+                    items={startups as Startup[]}
                     loading={startupsQuery.isLoading}
                     refetch={startupsQuery.refetch}
-                    urlPrefix="/ventures"
+                    routePrefix={routes.ventures}
                     renderMeta={(startup) => ({
                         title: startup.title,
                     })}
@@ -139,10 +141,10 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                     deleteMutation={deleteProductMutation}
                     label="Product / service"
                     emptyText="No products or services created yet"
-                    items={products}
+                    items={products as Product[]}
                     loading={productsQuery.isLoading}
                     refetch={productsQuery.refetch}
-                    urlPrefix="/products-services"
+                    routePrefix={routes.productsServices}
                     renderMeta={(product) => ({
                         title: product.name,
                     })}
@@ -156,8 +158,8 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
                 <Typography.Title level={3} className="Profile__listingsTitle">
                     My Listings
                 </Typography.Title>
-                <RouteButton to="/publish" type="primary" icon={<PlusOutlined />}>
-                    Create Listing
+                <RouteButton to={routes.publish.route} type="primary" icon={<PlusOutlined />}>
+                    Create
                 </RouteButton>
             </div>
             <Tabs items={listingTabs} />

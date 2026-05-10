@@ -10,7 +10,7 @@ interface FormSubmitButtonsProps {
 }
 export const FormSubmitButtons: React.FunctionComponent<FormSubmitButtonsProps> = (props) => {
     return (
-        <Space>
+        <Space className="Publish__submitButtons">
             <Button
                 type="primary"
                 htmlType="submit"

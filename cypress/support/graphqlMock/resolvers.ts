@@ -1,10 +1,14 @@
 import type { GraphQLResolveInfo } from "graphql";
 
 import {
+    addReportedLinkForHost,
     activeFixtures,
     cloneValue,
     createNode,
+    getActiveGraphQLHost,
     getGraphQLFixturesForHost,
+    getGraphQLHostFromContext,
+    getReportedLinksForHost,
     mergeInto,
     nextNodeId,
     notificationSubscriptions,
@@ -14,6 +18,7 @@ import {
     updateNode,
 } from "./runtimeState";
 import { searchResponseFor } from "./responseHelpers";
+import { BACKEND_URL } from "../../../src/gqlFetcher";
 import {
     normalizeCartData,
     normalizeCommentData,
@@ -91,6 +96,49 @@ const resolveCollection = (items: MockNode[], args: { page?: number; limit?: num
     };
 };
 
+const permissionsForHost = (host: string) => {
+    if (host === "127.0.0.1:3010") {
+        return [
+            {
+                serverUrl: BACKEND_URL,
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    if (host === "127.0.0.1:3011") {
+        return [
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    if (host === "127.0.0.1:3013") {
+        return [
+            {
+                serverUrl: BACKEND_URL,
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3012",
+                canCreateContentAsNonAdmin: true,
+            },
+            {
+                serverUrl: "http://127.0.0.1:3011",
+                canCreateContentAsNonAdmin: false,
+            },
+        ];
+    }
+
+    return [];
+};
+
 export const queryResolvers = {
     Carts: (_parent: unknown, args: { limit?: number; where?: { secret?: { equals?: string } } }, _context: unknown, info: GraphQLResolveInfo): MockCollection => {
         const carts = activeFixtures.carts;
@@ -108,8 +156,11 @@ export const queryResolvers = {
         const filtered = args.searchTerm ? activeFixtures.jobs.filter((job) => matchesSearch(job.title, args.searchTerm) || matchesSearch(job.description, args.searchTerm)) : activeFixtures.jobs;
         return resolveCollection(filtered, args);
     },
-    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
-        const filtered = args.searchTerm ? activeFixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm)) : activeFixtures.posts;
+    Posts: (_parent: unknown, args: { limit?: number; searchTerm?: string }, context: unknown): MockCollection => {
+        const fixtures = getFixturesForContext(context);
+        const filtered = args.searchTerm
+            ? fixtures.posts.filter((post) => matchesSearch(post.title, args.searchTerm) || matchesSearch(post.content, args.searchTerm))
+            : fixtures.posts;
         return resolveCollection(filtered, args);
     },
     Products: (_parent: unknown, args: { limit?: number; searchTerm?: string }): MockCollection => {
@@ -165,6 +216,10 @@ export const queryResolvers = {
         return resolveCollection(filtered, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
+    permissions: (_parent: unknown, _args: unknown, context: unknown) => {
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        return permissionsForHost(host);
+    },
     Comment: (_parent: unknown, args: { id?: string }): MockNode => {
         syncCommentReplyCounts(activeFixtures.comments);
         return ensureCommentState(activeFixtures.comments.find((item) => item.id === args.id) || activeFixtures.comments[0]);
@@ -175,7 +230,16 @@ export const queryResolvers = {
     Product: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.products.find((item) => item.id === args.id) || activeFixtures.products[0],
     Startup: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.startups.find((item) => item.id === args.id) || activeFixtures.startups[0],
     Identity: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.identities.find((item) => item.id === args.id) || activeFixtures.identities[0],
-    meUser: (): MockNode => activeFixtures.meUser,
+    meUser: (_parent: unknown, _args: unknown, context: unknown): MockNode => {
+        const user = cloneValue(activeFixtures.meUser.user);
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        const reportedLinks = getReportedLinksForHost(host);
+        if (reportedLinks.length > 0) {
+            user.reportedLinks = reportedLinks;
+        }
+
+        return searchNode({ user });
+    },
 };
 
 export const mutationResolvers = {
@@ -190,6 +254,53 @@ export const mutationResolvers = {
         }
 
         return createNode(activeFixtures.carts, "cart", data);
+    },
+    createInformationRequest: (_parent: unknown, args: { data?: Record<string, unknown> }, context: unknown): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        const requestId = typeof data.id === "string" ? data.id : nextNodeId("report");
+        const fixtures = getFixturesForContext(context);
+        const currentUser = fixtures.meUser.user;
+
+        return searchNode({
+            id: requestId,
+            reason: typeof data.reason === "string" ? data.reason : "",
+            createdAt: nowIso(),
+            user: currentUser,
+            createdBy: currentUser,
+        });
+    },
+    createReport: (_parent: unknown, args: { data?: Record<string, unknown> }, context: unknown): MockNode => {
+        const data = cloneValue(args.data ?? {});
+        const reportId = typeof data.id === "string" ? data.id : nextNodeId("report");
+        const fixtures = getFixturesForContext(context);
+        const currentUser = fixtures.meUser.user;
+        const activeUser = activeFixtures.meUser.user;
+        const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
+        const reportedLink = typeof data.contentLink === "string" ? data.contentLink : "";
+
+        if (reportedLink) {
+            addReportedLinkForHost(host, reportedLink);
+            const existing = currentUser.reportedLinks || [];
+            if (!existing.includes(reportedLink)) {
+                currentUser.reportedLinks = [...existing, reportedLink];
+            }
+
+            if (activeUser !== currentUser) {
+                const activeExisting = activeUser.reportedLinks || [];
+                if (!activeExisting.includes(reportedLink)) {
+                    activeUser.reportedLinks = [...activeExisting, reportedLink];
+                }
+            }
+        }
+
+        return searchNode({
+            id: reportId,
+            contentLink: reportedLink,
+            reason: typeof data.reason === "string" ? data.reason : "",
+            createdAt: nowIso(),
+            userId: currentUser,
+            createdBy: currentUser,
+        });
     },
     deleteCart: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.carts, args.id),
     updateCart: (_parent: unknown, args: { id?: string; data?: Record<string, unknown> }): MockNode => {

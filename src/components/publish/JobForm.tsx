@@ -127,10 +127,11 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         required: true,
                     },
                 ]}
+                className="Publish__jobTitleField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description">
+            <Form.Item name="description" label="Description" className="Publish__jobDescriptionField">
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
@@ -142,6 +143,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         required: true,
                     },
                 ]}
+                className="Publish__jobEmploymentField"
             >
                 <Select options={employmentOptions} />
             </Form.Item>
@@ -154,6 +156,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         message: "Please select a company",
                     },
                 ]}
+                className="Publish__jobCompanyField"
             >
                 <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>

@@ -1,14 +1,15 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { COOP_SERVER_URL, detailRoute, MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
 import { mountAnonymousRoute, waitForCollectionQuery } from "../support/component-tests/utils";
 
 describe("identity deep dive", () => {
     beforeEach(() => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
     });
 
     it("shows the tabs and related market cards", () => {
         cy.get(".IdentityDetail", { timeout: 20000 }).should("be.visible");
         cy.contains(".EntityDetail__title", "Nova Rivers", { timeout: 20000 }).should("be.visible");
+        cy.contains(".IdentityDetail__syndicationLink", "Open syndication source").should("not.exist");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Products").click();
         waitForCollectionQuery(
             MAIN_SERVER_URL,
@@ -47,5 +48,13 @@ describe("identity deep dive", () => {
         cy.contains(".ant-list-item-meta-title", "Sky Relay").should("be.visible");
         cy.get(".LikeButton").should("have.length.at.least", 4);
         cy.get(".ShareSection").should("be.visible").contains("Share this tribe");
+    });
+
+    it("links back to the syndication detail when multiple servers are enabled", () => {
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL]);
+
+        cy.get(".IdentityDetail__syndicationLink", { timeout: 20000 })
+            .should("be.visible")
+            .and("have.attr", "href", syndicationDetailRoute(MAIN_SERVER_URL));
     });
 });

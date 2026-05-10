@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 
-import { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import { Comment_ReplyPostRelationshipInputRelationTo, Job } from "../../generated/graphql";
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { ApplyButton } from "../ApplyButton";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
@@ -23,10 +24,11 @@ import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
 
 const JobDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const { md } = Grid.useBreakpoint();
     const auth = useAuth();
-    const query = useJobByIdQuery({ id: id! });
+    const query = useJobByIdQuery({ id: id!, url: routeServerURL });
     return (
         <Loader query={query}>
             {(data) => {
@@ -46,8 +48,9 @@ const JobDetail: React.FunctionComponent = () => {
                 return (
                     <CommonDetail
                         className="JobDetail"
-                        serverURL={job?.serverURL}
-                        backTo="/jobs"
+                        serverURL={job?.serverURL ?? routeServerURL}
+                        reportPath={routes.jobs.detail.getLink(job as Job)}
+                        backTo={routes.jobs.route}
                         backLabel="Back to jobs"
                         shareLabel="Share this job"
                         shareTitle={shareTitle}
@@ -57,7 +60,7 @@ const JobDetail: React.FunctionComponent = () => {
                                 ? {
                                       collection: "jobs",
                                       targetID: job.id,
-                                      serverURL: job.serverURL,
+                                      serverURL: job.serverURL ?? routeServerURL,
                                       isSubscribed: job.isSubscribed,
                                   }
                                 : undefined
@@ -97,7 +100,7 @@ const JobDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={`/jobs/edit/${id}`} icon={<EditOutlined />}>
+                                    <RouteButton to={routes.jobs.edit.getLink(job as Job)} icon={<EditOutlined />}>
                                         Edit
                                     </RouteButton>
                                 )}
@@ -120,7 +123,7 @@ const JobDetail: React.FunctionComponent = () => {
                                 <EntityCommentsSection
                                     targetId={id!}
                                     relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
-                                    serverURL={job?.serverURL}
+                                    serverURL={job?.serverURL ?? routeServerURL}
                                 />
                             )
                         }]}

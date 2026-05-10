@@ -3,6 +3,7 @@ mutation CreatePost($data: mutationPostInput!, $draft: Boolean) {
     id
     title
     slug
+    repost
     heroImage {
       id
       url

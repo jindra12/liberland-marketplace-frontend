@@ -8,9 +8,10 @@ import { UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { RocketOutlined, UsergroupAddOutlined, UserAddOutlined, UserDeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, Flex, Grid, Tag, message } from "antd";
 
-import { ListStartupsByIdentityQuery, ListStartupsQuery } from "../../generated/graphql";
+import { ListStartupsByIdentityQuery, ListStartupsQuery, Startup } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { routes } from "../../routes";
 import { formatStageLabel, formatResourceLabel, invalidateStartupQueries } from "../../startupUtils";
 import { AppList } from "../AppList";
 import {
@@ -133,7 +134,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     <Flex justify="space-between" align="center" wrap>
                         <Flex align="center" gap={8}>
                             <RocketOutlined />
-                            <Link to={`/ventures/${startup.id}`}>{startup.title}</Link>
+                            <Link to={routes.ventures.detail.getLink(startup as Startup)}>{startup.title}</Link>
                         </Flex>
                         <Flex gap={4} wrap>
                             <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
@@ -152,7 +153,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                         <Flex justify="flex-end" className="EntityList__actionsRow">
                             <Flex wrap gap="12px" align="center">
                                 <ListShareDetailButtons
-                                    detailPath={`/ventures/${startup.id}`}
+                                    detailPath={routes.ventures.detail.getLink(startup as Startup)}
                                     title={startup.title}
                                     text={`Check out ${startup.title} on NSwap.`}
                                     subscriptionTarget={{
@@ -169,7 +170,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                         <Flex vertical gap="12px" className="EntityList__actionsRow StartupList__actionsRow">
                             <ListShareDetailButtons
                                 compact
-                                detailPath={`/ventures/${startup.id}`}
+                                detailPath={routes.ventures.detail.getLink(startup as Startup)}
                                 title={startup.title}
                                 text={`Check out ${startup.title} on NSwap.`}
                                 subscriptionTarget={{
@@ -184,7 +185,7 @@ export const StartupListInternal: React.FunctionComponent<StartupListInternalPro
                     ),
                 avatar: (startup) =>
                     startup.image?.url ? (
-                        <Link to={`/ventures/${startup.id}`}>
+                        <Link to={routes.ventures.detail.getLink(startup as Startup)}>
                             <Avatar
                                 shape="square"
                                 size={80}

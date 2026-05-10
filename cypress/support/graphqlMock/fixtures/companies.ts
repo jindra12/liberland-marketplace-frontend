@@ -1,7 +1,7 @@
 import { image, MAIN_SYNDICATION_URL } from "./shared";
 import { identities } from "./identities";
 import { meUser } from "./meUser";
-import { Company_CryptoAddresses_Chain, Company__Status } from "../../../../src/generated/graphql";
+import { Company_CryptoAddresses_Chain, Company_Verification, Company__Status } from "../../../../src/generated/graphql";
 import type { Company } from "../../../../src/generated/graphql";
 
 export const companies: Company[] = [
@@ -13,6 +13,7 @@ export const companies: Company[] = [
         phone: "+1 555 1200",
         email: "hello@harbor.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user!,
@@ -30,6 +31,7 @@ export const companies: Company[] = [
         phone: "+1 555 2200",
         email: "team@reef.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.PrivateSeller,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user!,
@@ -47,6 +49,7 @@ export const companies: Company[] = [
         phone: "+1 555 3300",
         email: "info@bazaar.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user!,
@@ -64,6 +67,7 @@ export const companies: Company[] = [
         phone: "+1 555 4400",
         email: "join@nomad.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Unverified,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user!,
@@ -81,6 +85,7 @@ export const companies: Company[] = [
         phone: "+1 555 4401",
         email: "one@fourfold.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.PrivateSeller,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user!,
@@ -98,6 +103,7 @@ export const companies: Company[] = [
         phone: "+1 555 4402",
         email: "two@fourfold.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user!,
@@ -115,6 +121,7 @@ export const companies: Company[] = [
         phone: "+1 555 4403",
         email: "three@fourfold.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Unverified,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user!,
@@ -132,6 +139,7 @@ export const companies: Company[] = [
         phone: "+1 555 4404",
         email: "four@fourfold.example",
         serverURL: MAIN_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user!,

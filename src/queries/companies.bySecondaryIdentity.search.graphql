@@ -12,6 +12,7 @@ query SearchCompaniesBySecondaryIdentity(
                 { name: { contains: $searchTerm } }
                 { allowedIdentities: { in: [$identityId] } }
                 { _status: { equals: published } }
+                { isPrivate: { equals: false } }
             ]
         }
         page: $page
@@ -23,6 +24,8 @@ query SearchCompaniesBySecondaryIdentity(
             isSubscribed
             serverURL
             name
+            verification
+            isPrivate
             description
             likeCount
             cryptoAddresses {

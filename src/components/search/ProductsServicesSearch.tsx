@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Tag } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Post_RelatedPosts_RelationTo, Product } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { useListProductsQuery, useSearchProductsQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -91,7 +92,10 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                 renderItem={{
                     title: (product) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                            <Link
+                                to={routes.productsServices.detail.getLink(product as Product)}
+                                onClick={props.onClose}
+                            >
                                 {product.name}
                             </Link>
                             {product.company?.identity?.name && (
@@ -101,7 +105,10 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                     ),
                     avatar: (product) =>
                         product.image?.url ? (
-                            <Link to={`/products-services/${product.id}`} onClick={props.onClose}>
+                            <Link
+                                to={routes.productsServices.detail.getLink(product as Product)}
+                                onClick={props.onClose}
+                            >
                                 <Avatar
                                     shape="square"
                                     size={80}

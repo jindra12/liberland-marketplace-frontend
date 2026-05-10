@@ -1,8 +1,9 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
     fillFormField,
+    getRouteEntityId,
     mountAuthenticatedMainRoute,
     openPublishCategory,
     screenshotStep,
@@ -52,9 +53,12 @@ const createOwnedCompany = (companyName: string) => {
 
     cy.get(".Publish__form").contains("button", "Publish Company").click();
     cy.wait("@mediaUpload");
-    cy.location("pathname").should("match", /\/companies\/company-/);
-    cy.contains("h1", companyName).should("be.visible");
-    screenshotStep("owned-company-created");
+    cy.location("pathname").should("match", /\/companies\/company-[^/]+\/[a-f0-9]+$/);
+    cy.location("pathname").then((pathname) => {
+        const createdId = getRouteEntityId(pathname);
+        cy.contains("h1", companyName).should("be.visible");
+        screenshotStep(`owned-company-created-${createdId}`);
+    });
 };
 
 describe("product create/edit", () => {
@@ -75,13 +79,9 @@ describe("product create/edit", () => {
 
         cy.contains("button", "Publish Product").click();
         cy.wait("@mediaUpload");
-        cy.location("pathname").should("match", /\/products-services\/product-/);
+        cy.location("pathname").should("match", /\/products-services\/product-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created product id");
-            }
-
+            const createdId = getRouteEntityId(pathname);
             cy.contains("h1", productName).should("be.visible");
             screenshotStep("product-created-page");
         });
@@ -104,14 +104,10 @@ describe("product create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Product").click();
-        cy.location("pathname").should("match", /\/products-services\/product-/);
+        cy.location("pathname").should("match", /\/products-services\/product-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created product id");
-            }
-
-            cy.routerNavigate(`/products-services/edit/${createdId}`);
+            const createdId = getRouteEntityId(pathname);
+            cy.routerNavigate(editRoute("/products-services", createdId));
             cy.contains("h3", "Edit Product").should("be.visible");
             assertFormFieldValue("Product Name", productName);
             assertFormFieldValue("Price (USD)", "49");
@@ -138,7 +134,7 @@ describe("product create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", `/products-services/${createdId}`);
+            cy.location("pathname").should("eq", detailRoute("/products-services", createdId));
             assertProductTitle(createdId, updatedProductName);
             screenshotStep("product-updated-page");
         });

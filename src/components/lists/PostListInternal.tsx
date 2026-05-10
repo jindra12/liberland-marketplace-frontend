@@ -4,16 +4,14 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex, Grid, Image, Tag, Typography } from "antd";
 
+import { Post } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { PostRepostLink } from "../shared/post/PostRepostLink";
 import { PostDoc } from "../shared/post/types";
-import {
-    getPostCompanyImageUrl,
-    getPostHeroImageUrl,
-    getPostRelatedTargetHref,
-    getPostRelatedTargetText,
-} from "../shared/post/utils";
+import { getPostCompanyImageUrl, getPostHeroImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
 export interface PostListInternalProps {
     items: PostDoc[];
@@ -49,7 +47,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
             scrollableTarget={props.scrollableTarget}
             titleHidden={props.titleHidden}
             renderItem={{
-                title: (post) => <Link to={`/posts/${post.id}`}>{post.title}</Link>,
+                title: (post) => <Link to={routes.posts.detail.getLink(post as Post)}>{post.title}</Link>,
                 avatar: (post) => {
                     if (!xl) {
                         return undefined;
@@ -58,7 +56,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                     const imageSrc = getPostCompanyImageUrl(post);
 
                     return imageSrc ? (
-                        <Link to={`/posts/${post.id}`} className="PostList__companyAvatarLink">
+                        <Link to={routes.posts.detail.getLink(post as Post)} className="PostList__companyAvatarLink">
                             <Avatar shape="square" size={112} src={imageSrc} className="EntityList__avatar PostList__companyAvatar" />
                         </Link>
                     ) : undefined;
@@ -66,7 +64,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                 cover: (post) => {
                     const imageSrc = getPostHeroImageUrl(post);
                     return imageSrc ? (
-                        <Link to={`/posts/${post.id}`} className="PostList__coverLink" aria-label={post.title ?? "Post"}>
+                        <Link to={routes.posts.detail.getLink(post as Post)} className="PostList__coverLink" aria-label={post.title ?? "Post"}>
                             <Image
                                 preview={false}
                                 src={imageSrc}
@@ -82,8 +80,12 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         <Typography.Paragraph className="EntityList__description PostList__description">
                             {post.meta?.description}
                         </Typography.Paragraph>
+                        <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                         {!xl && getPostCompanyImageUrl(post) && post.company?.name && (
-                            <Link to={`/posts/${post.id}`} className="PostList__companyInlineLink PostList__companyInlineLink--mobile">
+                            <Link
+                                to={routes.posts.detail.getLink(post as Post)}
+                                className="PostList__companyInlineLink PostList__companyInlineLink--mobile"
+                            >
                                 <Avatar
                                     shape="square"
                                     size={32}
@@ -97,7 +99,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         )}
                         {xl && post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
                         {post.relatedPosts?.[0] && (
-                            <Typography.Link href={getPostRelatedTargetHref(post.relatedPosts[0])}>
+                            <Typography.Link href={routes.posts.relatedTarget.getLink(post.relatedPosts[0])}>
                                 Related: {getPostRelatedTargetText(post.relatedPosts[0])}
                             </Typography.Link>
                         )}
@@ -107,7 +109,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                     md ? (
                         <Flex gap="12px" wrap justify="flex-end" className="EntityList__actionsRow PostList__actionsRow">
                             <ListShareDetailButtons
-                                detailPath={`/posts/${post.id}`}
+                                detailPath={routes.posts.detail.getLink(post as Post)}
                                 title={post.title}
                                 text={`Check out ${post.title} on NSwap.`}
                             />
@@ -116,7 +118,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                         <Flex vertical gap="12px" className="EntityList__actionsRow PostList__actionsRow">
                             <ListShareDetailButtons
                                 compact
-                                detailPath={`/posts/${post.id}`}
+                                detailPath={routes.posts.detail.getLink(post as Post)}
                                 title={post.title}
                                 text={`Check out ${post.title} on NSwap.`}
                             />

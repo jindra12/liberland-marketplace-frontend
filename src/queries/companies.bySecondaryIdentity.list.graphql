@@ -1,7 +1,7 @@
 query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Companies(
         draft: false
-        where: { AND: [{ allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }] }
+        where: { AND: [{ allowedIdentities: { in: [$identityId] } }, { _status: { equals: published } }, { isPrivate: { equals: false } }] }
         page: $page
         limit: $limit
         sort: $sort
@@ -11,6 +11,8 @@ query ListCompaniesBySecondaryIdentity($identityId: JSON!, $page: Int = 1, $limi
             isSubscribed
             serverURL
             name
+            verification
+            isPrivate
             description
             likeCount
             cryptoAddresses {

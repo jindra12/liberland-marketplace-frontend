@@ -1,7 +1,7 @@
 query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
     Companies(
         draft: false
-        where: { AND: [{ identity: { equals: $identityId } }, { _status: { equals: published } }] }
+        where: { AND: [{ identity: { equals: $identityId } }, { _status: { equals: published } }, { isPrivate: { equals: false } }] }
         page: $page
         limit: $limit
         sort: $sort
@@ -11,6 +11,8 @@ query ListCompaniesByIdentity($identityId: JSON!, $page: Int = 1, $limit: Int = 
             isSubscribed
             serverURL
             name
+            verification
+            isPrivate
             description
             hasLiked
             likeCount

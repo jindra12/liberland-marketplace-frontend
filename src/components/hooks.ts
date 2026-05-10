@@ -69,6 +69,7 @@ import {
     SearchJobsBySecondaryIdentityDocument,
     useSearchJobsBySecondaryIdentityQuery as useSearchJobsBySecondaryIdentityQuerySingle,
     CreateJobDocument,
+    CreateInformationRequestDocument,
     useCreateJobMutation as useCreateJobMutationSingle,
     DeleteJobDocument,
     useDeleteJobMutation as useDeleteJobMutationSingle,
@@ -178,16 +179,21 @@ import {
     useSearchStartupsQuery as useSearchStartupsQuerySingle,
     CreateStartupDocument,
     useCreateStartupMutation as useCreateStartupMutationSingle,
+    useCreateInformationRequestMutation as useCreateInformationRequestMutationSingle,
     DeleteStartupDocument,
     useDeleteStartupMutation as useDeleteStartupMutationSingle,
     TrackAnalyticsEventDocument,
     useTrackAnalyticsEventMutation as useTrackAnalyticsEventMutationSingle,
+    CreateReportDocument,
+    useCreateReportMutation as useCreateReportMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
     useUpdateOrderMutation as useUpdateOrderMutationSingle,
     MeUserDocument,
     useMeUserQuery as useMeUserQuerySingle,
+    PermissionsDocument,
+    usePermissionsQuery as usePermissionsQuerySingle,
     SubscribeToCompanyUpdatesDocument,
     useSubscribeToCompanyUpdatesMutation as useSubscribeToCompanyUpdatesMutationSingle,
     SubscribeToJobUpdatesDocument,
@@ -220,6 +226,35 @@ import {
 } from "../generated/graphql";
 import { gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
+import {
+    anonymizeCartBySecretVariables,
+    anonymizeCreateCommentVariables,
+    anonymizeCreateCompanyVariables,
+    anonymizeCreateJobVariables,
+    anonymizeCreateInformationRequestVariables,
+    anonymizeCreatePostCommentVariables,
+    anonymizeCreatePostReplyCommentVariables,
+    anonymizeCreateOrderVariables,
+    anonymizeCreateProductVariables,
+    anonymizeCreateStartupVariables,
+    anonymizeCreateReplyToCommentVariables,
+    anonymizeReportVariables,
+    anonymizeSubscribeToCompanyUpdatesVariables,
+    anonymizeSubscribeToJobUpdatesVariables,
+    anonymizeSubscribeToProductUpdatesVariables,
+    anonymizeSubscribeToTribeUpdatesVariables,
+    anonymizeSubscribeToVentureUpdatesVariables,
+    anonymizeUpdateCompanyVariables,
+    anonymizeUpdateJobVariables,
+    anonymizeUpdateOrderVariables,
+    anonymizeUpdateCommentContentVariables,
+    anonymizeUpdatePostCommentContentVariables,
+    anonymizeCreatePostVariables,
+    anonymizeUpdatePostVariables,
+    anonymizeUpdateProductVariables,
+    anonymizeUpdateStartupVariables,
+    anonymizeUpdateUserByIdVariables,
+} from "./analytics/anonymizers";
 import { combineResult, deepMergeConcatArrays } from "./query/utils";
 import { useSortContent } from "./SortContentBySelect/useSortContent";
 
@@ -263,6 +298,7 @@ export type EnhancedUseMutationHook<TData, TVariables extends object | undefined
 export const enhancedMutationFactory = <TData, TVariables extends object | undefined>(
     _useHook: GeneratedUseMutationHook<TData, TVariables>,
     mutation: string,
+    anonymizer?: (vars: TVariables) => TVariables,
 ): EnhancedUseMutationHook<TData, TVariables> => {
     const useEnhancedMutation = <TError = unknown, TContext = unknown>(
         options?: Omit<UseMutationOptions<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>, "mutationFn">,
@@ -270,7 +306,7 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
         return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>({
             mutationFn: (variables) => {
                 const { url, ...rest } = variables;
-                return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, undefined, url)();
+                return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, undefined, url, anonymizer)();
             },
             ...options,
         });
@@ -281,7 +317,7 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
         options?: RequestInit["headers"],
     ) => {
         const { url, ...rest } = variables;
-        return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url);
+        return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url, anonymizer);
     };
 
     return useEnhancedMutation;
@@ -292,6 +328,7 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
     query: string,
     hasSort: boolean,
     mergeAction: (a: TQueryFnData, b: TQueryFnData) => TResult = deepMergeConcatArrays,
+    anonymizer?: (vars: TVariables) => TVariables,
 ) => {
     return (
         variables?: QueryVariablesWithUrl<TVariables>,
@@ -313,7 +350,8 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
                         sort: value,
                     } : variables) as TVariables,
                     options,
-                    url
+                    url,
+                    anonymizer,
                 ),
                 enabled: (query: Query) => {
                     const queryVariables = query.queryKey[1];
@@ -342,7 +380,13 @@ export const useListCompaniesByCreatorQuery = enhancedQueryFactory(
     ListCompaniesByCreatorDocument,
     true,
 );
-export const useCartBySecretQuery = enhancedQueryFactory(useCartBySecretQuerySingle, CartBySecretDocument, false);
+export const useCartBySecretQuery = enhancedQueryFactory(
+    useCartBySecretQuerySingle,
+    CartBySecretDocument,
+    false,
+    undefined,
+    anonymizeCartBySecretVariables,
+);
 export const useCompanyByIdQuery = enhancedQueryFactory(useCompanyByIdQuerySingle, CompanyByIdDocument, false);
 export const useListCompaniesByIdentityQuery = enhancedQueryFactory(
     useListCompaniesByIdentityQuerySingle,
@@ -488,28 +532,50 @@ export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserD
     const rightEntries = Array.isArray(right) ? right : [right];
     return [...leftEntries, ...rightEntries];
 });
-export const useCreateCompanyMutation = enhancedMutationFactory(useCreateCompanyMutationSingle, CreateCompanyDocument);
+export const usePermissionsQuery = enhancedQueryFactory(usePermissionsQuerySingle, PermissionsDocument, false);
+export const useCreateCompanyMutation = enhancedMutationFactory(
+    useCreateCompanyMutationSingle,
+    CreateCompanyDocument,
+    anonymizeCreateCompanyVariables,
+);
 export const useCreateCartMutation = enhancedMutationFactory(useCreateCartMutationSingle, CreateCartDocument);
 export const useDeleteCartMutation = enhancedMutationFactory(useDeleteCartMutationSingle, DeleteCartDocument);
 export const useUpdateCartMutation = enhancedMutationFactory(useUpdateCartMutationSingle, UpdateCartDocument);
 export const useDeleteCompanyMutation = enhancedMutationFactory(useDeleteCompanyMutationSingle, DeleteCompanyDocument);
-export const useUpdateCompanyMutation = enhancedMutationFactory(useUpdateCompanyMutationSingle, UpdateCompanyDocument);
+export const useUpdateCompanyMutation = enhancedMutationFactory(
+    useUpdateCompanyMutationSingle,
+    UpdateCompanyDocument,
+    anonymizeUpdateCompanyVariables,
+);
 export const useDislikeCompanyMutation = enhancedMutationFactory(
     useDislikeCompanyMutationSingle,
     DislikeCompanyDocument,
 );
 export const useLikeCompanyMutation = enhancedMutationFactory(useLikeCompanyMutationSingle, LikeCompanyDocument);
-export const useCreateCommentMutation = enhancedMutationFactory(useCreateCommentMutationSingle, CreateCommentDocument);
+export const useCreateCommentMutation = enhancedMutationFactory(
+    useCreateCommentMutationSingle,
+    CreateCommentDocument,
+    anonymizeCreateCommentVariables,
+);
 export const useDislikeCommentMutation = enhancedMutationFactory(
     useDislikeCommentMutationSingle,
     DislikeCommentDocument,
 );
 export const useLikeCommentMutation = enhancedMutationFactory(useLikeCommentMutationSingle, LikeCommentDocument);
-export const useCreateOrderMutation = enhancedMutationFactory(useCreateOrderMutationSingle, CreateOrderDocument);
-export const useUpdateOrderMutation = enhancedMutationFactory(useUpdateOrderMutationSingle, UpdateOrderDocument);
+export const useCreateOrderMutation = enhancedMutationFactory(
+    useCreateOrderMutationSingle,
+    CreateOrderDocument,
+    anonymizeCreateOrderVariables,
+);
+export const useUpdateOrderMutation = enhancedMutationFactory(
+    useUpdateOrderMutationSingle,
+    UpdateOrderDocument,
+    anonymizeUpdateOrderVariables,
+);
 export const useCreatePostCommentMutation = enhancedMutationFactory(
     useCreatePostCommentMutationSingle,
     CreatePostCommentDocument,
+    anonymizeCreatePostCommentVariables,
 );
 export const useDeletePostCommentMutation = enhancedMutationFactory(
     useDeletePostCommentMutationSingle,
@@ -518,29 +584,56 @@ export const useDeletePostCommentMutation = enhancedMutationFactory(
 export const useCreatePostReplyCommentMutation = enhancedMutationFactory(
     useCreatePostReplyCommentMutationSingle,
     CreatePostReplyCommentDocument,
+    anonymizeCreatePostReplyCommentVariables,
 );
 export const useUpdatePostCommentContentMutation = enhancedMutationFactory(
     useUpdatePostCommentContentMutationSingle,
     UpdatePostCommentContentDocument,
+    anonymizeUpdatePostCommentContentVariables,
 );
-export const useCreatePostMutation = enhancedMutationFactory(useCreatePostMutationSingle, CreatePostDocument);
+export const useCreatePostMutation = enhancedMutationFactory(
+    useCreatePostMutationSingle,
+    CreatePostDocument,
+    anonymizeCreatePostVariables,
+);
 export const useDeletePostMutation = enhancedMutationFactory(useDeletePostMutationSingle, DeletePostDocument);
 export const useDislikePostMutation = enhancedMutationFactory(useDislikePostMutationSingle, DislikePostDocument);
 export const useLikePostMutation = enhancedMutationFactory(useLikePostMutationSingle, LikePostDocument);
-export const useUpdatePostMutation = enhancedMutationFactory(useUpdatePostMutationSingle, UpdatePostDocument);
+export const useUpdatePostMutation = enhancedMutationFactory(
+    useUpdatePostMutationSingle,
+    UpdatePostDocument,
+    anonymizeUpdatePostVariables,
+);
 export const useCreateReplyToCommentMutation = enhancedMutationFactory(
     useCreateReplyToCommentMutationSingle,
     CreateReplyToCommentDocument,
+    anonymizeCreateReplyToCommentVariables,
 );
 export const useDeleteCommentMutation = enhancedMutationFactory(useDeleteCommentMutationSingle, DeleteCommentDocument);
-export const useCreateJobMutation = enhancedMutationFactory(useCreateJobMutationSingle, CreateJobDocument);
+export const useCreateJobMutation = enhancedMutationFactory(
+    useCreateJobMutationSingle,
+    CreateJobDocument,
+    anonymizeCreateJobVariables,
+);
 export const useDeleteJobMutation = enhancedMutationFactory(useDeleteJobMutationSingle, DeleteJobDocument);
-export const useUpdateJobMutation = enhancedMutationFactory(useUpdateJobMutationSingle, UpdateJobDocument);
+export const useUpdateJobMutation = enhancedMutationFactory(
+    useUpdateJobMutationSingle,
+    UpdateJobDocument,
+    anonymizeUpdateJobVariables,
+);
 export const useDislikeJobMutation = enhancedMutationFactory(useDislikeJobMutationSingle, DislikeJobDocument);
 export const useLikeJobMutation = enhancedMutationFactory(useLikeJobMutationSingle, LikeJobDocument);
-export const useCreateProductMutation = enhancedMutationFactory(useCreateProductMutationSingle, CreateProductDocument);
+export const useCreateProductMutation = enhancedMutationFactory(
+    useCreateProductMutationSingle,
+    CreateProductDocument,
+    anonymizeCreateProductVariables,
+);
 export const useDeleteProductMutation = enhancedMutationFactory(useDeleteProductMutationSingle, DeleteProductDocument);
-export const useUpdateProductMutation = enhancedMutationFactory(useUpdateProductMutationSingle, UpdateProductDocument);
+export const useUpdateProductMutation = enhancedMutationFactory(
+    useUpdateProductMutationSingle,
+    UpdateProductDocument,
+    anonymizeUpdateProductVariables,
+);
 export const useDislikeProductMutation = enhancedMutationFactory(
     useDislikeProductMutationSingle,
     DislikeProductDocument,
@@ -548,12 +641,21 @@ export const useDislikeProductMutation = enhancedMutationFactory(
 export const useLikeProductMutation = enhancedMutationFactory(useLikeProductMutationSingle, LikeProductDocument);
 export const useJoinStartupMutation = enhancedMutationFactory(useJoinStartupMutationSingle, JoinStartupDocument);
 export const useLeaveStartupMutation = enhancedMutationFactory(useLeaveStartupMutationSingle, LeaveStartupDocument);
-export const useCreateStartupMutation = enhancedMutationFactory(useCreateStartupMutationSingle, CreateStartupDocument);
+export const useCreateStartupMutation = enhancedMutationFactory(
+    useCreateStartupMutationSingle,
+    CreateStartupDocument,
+    anonymizeCreateStartupVariables,
+);
 export const useDeleteStartupMutation = enhancedMutationFactory(useDeleteStartupMutationSingle, DeleteStartupDocument);
-export const useUpdateStartupMutation = enhancedMutationFactory(useUpdateStartupMutationSingle, UpdateStartupDocument);
+export const useUpdateStartupMutation = enhancedMutationFactory(
+    useUpdateStartupMutationSingle,
+    UpdateStartupDocument,
+    anonymizeUpdateStartupVariables,
+);
 export const useUpdateCommentContentMutation = enhancedMutationFactory(
     useUpdateCommentContentMutationSingle,
     UpdateCommentContentDocument,
+    anonymizeUpdateCommentContentVariables,
 );
 export const useTrackAnalyticsEventMutation = enhancedMutationFactory(
     useTrackAnalyticsEventMutationSingle,
@@ -562,6 +664,7 @@ export const useTrackAnalyticsEventMutation = enhancedMutationFactory(
 export const useUpdateUserByIdMutation = enhancedMutationFactory(
     useUpdateUserByIdMutationSingle,
     UpdateUserByIdDocument,
+    anonymizeUpdateUserByIdVariables,
 );
 export const useDislikeIdentityMutation = enhancedMutationFactory(
     useDislikeIdentityMutationSingle,
@@ -571,22 +674,27 @@ export const useLikeIdentityMutation = enhancedMutationFactory(useLikeIdentityMu
 export const useSubscribeToCompanyUpdatesMutation = enhancedMutationFactory(
     useSubscribeToCompanyUpdatesMutationSingle,
     SubscribeToCompanyUpdatesDocument,
+    anonymizeSubscribeToCompanyUpdatesVariables,
 );
 export const useSubscribeToJobUpdatesMutation = enhancedMutationFactory(
     useSubscribeToJobUpdatesMutationSingle,
     SubscribeToJobUpdatesDocument,
+    anonymizeSubscribeToJobUpdatesVariables,
 );
 export const useSubscribeToProductUpdatesMutation = enhancedMutationFactory(
     useSubscribeToProductUpdatesMutationSingle,
     SubscribeToProductUpdatesDocument,
+    anonymizeSubscribeToProductUpdatesVariables,
 );
 export const useSubscribeToTribeUpdatesMutation = enhancedMutationFactory(
     useSubscribeToTribeUpdatesMutationSingle,
     SubscribeToTribeUpdatesDocument,
+    anonymizeSubscribeToTribeUpdatesVariables,
 );
 export const useSubscribeToVentureUpdatesMutation = enhancedMutationFactory(
     useSubscribeToVentureUpdatesMutationSingle,
     SubscribeToVentureUpdatesDocument,
+    anonymizeSubscribeToVentureUpdatesVariables,
 );
 export const useUnsubscribeFromCompanyUpdatesMutation = enhancedMutationFactory(
     useUnsubscribeFromCompanyUpdatesMutationSingle,
@@ -613,3 +721,13 @@ export const useDislikeVentureMutation = enhancedMutationFactory(
     DislikeVentureDocument,
 );
 export const useLikeVentureMutation = enhancedMutationFactory(useLikeVentureMutationSingle, LikeVentureDocument);
+export const useCreateReportMutation = enhancedMutationFactory(
+    useCreateReportMutationSingle,
+    CreateReportDocument,
+    anonymizeReportVariables,
+);
+export const useCreateInformationRequestMutation = enhancedMutationFactory(
+    useCreateInformationRequestMutationSingle,
+    CreateInformationRequestDocument,
+    anonymizeCreateInformationRequestVariables,
+);

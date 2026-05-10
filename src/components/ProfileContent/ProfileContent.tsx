@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 import { Divider, Flex, Typography, message } from "antd";
 
+import { routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
 import { LoginButton } from "../LoginButton";
 
 import { ProfileAccountServerCard } from "./ProfileAccountServerCard";
 import { ProfileContactCard } from "./ProfileContactCard";
+import { ProfileInformationRequestButton } from "./ProfileInformationRequestButton";
 import { ProfileListingsSection } from "./ProfileListingsSection";
 import { ProfileNicknameCard } from "./ProfileNicknameCard";
 import { ProfilePasswordCard } from "./ProfilePasswordCard";
@@ -95,9 +97,10 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <div className="Profile__actions">
-                <LoginButton action="logout" danger onAfterAction={() => navigate("/")} />
-            </div>
+            <Flex className="Profile__actions" gap="small" wrap>
+                <ProfileInformationRequestButton messageApi={messageApi} selectedServerUrl={selectedServerUrl} />
+                <LoginButton action="logout" danger onAfterAction={() => navigate(routes.home.route)} />
+            </Flex>
 
             <Divider />
 

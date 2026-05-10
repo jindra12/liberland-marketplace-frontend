@@ -5,30 +5,34 @@ import { useParams } from "react-router-dom";
 import { GlobalOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } from "antd";
 
+import { decodeServerUrlSegment, routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
+import { usePermissionsContext } from "../PermissionsContext";
 import { RouteButton } from "../RouteButton";
+import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
+import { getPublishListingsTagInfo } from "../syndication/utils";
 
 import { CommonDetail } from "./CommonDetail";
 
 const SyndicationDetail: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
+    const { serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const { urls, setUrls } = useEndpointContext();
+    const { canCreateContent } = usePermissionsContext();
 
-    const decodedUrl = React.useMemo(() => {
-        if (!id) {
+    const decodedServerURL = React.useMemo(() => {
+        if (!serverUrl) {
             return "";
         }
 
-        try {
-            return decodeURIComponent(id);
-        } catch {
-            return "";
-        }
-    }, [id]);
+        return decodeServerUrlSegment(serverUrl);
+    }, [serverUrl]);
 
-    const entry = React.useMemo(() => urls.find((current) => current.value === decodedUrl), [decodedUrl, urls]);
+    const entry = React.useMemo(
+        () => urls.find((current) => current.value === decodedServerURL),
+        [decodedServerURL, urls],
+    );
 
     if (!entry) {
         return (
@@ -37,7 +41,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                 title="Syndicated URL not found"
                 subTitle="This syndicated URL is not available in your current marketplace context."
                 extra={
-                    <RouteButton to="/syndication" type="primary">
+                    <RouteButton to={routes.syndication.route} type="primary">
                         Back to syndication
                     </RouteButton>
                 }
@@ -48,12 +52,14 @@ const SyndicationDetail: React.FunctionComponent = () => {
     const host = getSyndicationHost(entry.value);
     const title = getSyndicationName(entry);
     const shareText = `Check out ${title} on NSwap.`;
+    const publishListingsTag = getPublishListingsTagInfo(canCreateContent(entry.value));
 
     return (
         <CommonDetail
             className="SyndicationDetail"
             serverURL={entry.value}
-            backTo="/syndication"
+            reportPath={routes.syndication.detail.getLink(entry)}
+            backTo={routes.syndication.route}
             backLabel="Back to syndication"
             shareLabel="Share this endpoint"
             shareTitle={title}
@@ -73,7 +79,16 @@ const SyndicationDetail: React.FunctionComponent = () => {
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
                             <Tag>{entry.name === "Main" ? "Primary endpoint" : "Syndicated endpoint"}</Tag>
+                            <Tag color={publishListingsTag.color} className="SyndicationDetail__publishListingsTag">
+                                {publishListingsTag.label}
+                            </Tag>
+                            {entry.nsfw ? <SyndicationNsfwTag className="SyndicationDetail__nsfwTag" /> : null}
                         </Flex>
+                        {entry.nsfw ? (
+                            <Typography.Text type="secondary" className="SyndicationDetail__nsfwNote">
+                                You must be 18+ to see this content.
+                            </Typography.Text>
+                        ) : null}
                     </Flex>
                 </Flex>
             }
@@ -90,12 +105,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         >
                             {entry.enabled ? "Disable URL" : "Enable URL"}
                         </Button>
-                        <Button type="primary" size="large" href={entry.value} target="_blank" rel="noreferrer">
-                            Visit URL
-                        </Button>
-                        <RouteButton to="/syndication" size="large">
-                            Back to list
-                        </RouteButton>
                     </Flex>
                     <Divider />
                     {entry.description && (
@@ -113,7 +122,7 @@ const SyndicationDetail: React.FunctionComponent = () => {
                         <Descriptions bordered column={1} size="small" className="SyndicationDetail__meta">
                             <Descriptions.Item label="Name">{title}</Descriptions.Item>
                             <Descriptions.Item label="Host">{host}</Descriptions.Item>
-                            <Descriptions.Item label="URL">
+                            <Descriptions.Item label="Backend URL">
                                 <Typography.Link href={entry.value} target="_blank" rel="noreferrer">
                                     {entry.value}
                                 </Typography.Link>

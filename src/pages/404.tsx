@@ -1,6 +1,7 @@
 import * as React from "react";
-import Link from "next/link";
+
 import { AppHead } from "../AppHead";
+import { Dynamic } from "../Dynamic";
 
 const NotFoundPage: React.FunctionComponent = () => {
     return (
@@ -11,13 +12,7 @@ const NotFoundPage: React.FunctionComponent = () => {
                 canonicalPath="/404"
                 noIndex
             />
-            <main className="NotFoundPage">
-                <h1 className="NotFoundPage__title">404: Page not found</h1>
-                <p>The page you requested does not exist.</p>
-                <p>
-                    <Link href="/">Go back to the homepage</Link>
-                </p>
-            </main>
+            <Dynamic />
         </>
     );
 };

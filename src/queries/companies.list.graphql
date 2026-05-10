@@ -5,6 +5,8 @@ query ListCompanies($page: Int = 1, $limit: Int = 20, $sort: String = "-contentR
             isSubscribed
             serverURL
             name
+            verification
+            isPrivate
             description
             hasLiked
             likeCount

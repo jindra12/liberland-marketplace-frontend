@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 
 import { Avatar, Flex } from "antd";
 
-import { Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { Company, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
 import { useListCompaniesQuery, useSearchCompaniesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
@@ -91,7 +92,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                 renderItem={{
                     title: (company) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                            <Link to={routes.companies.detail.getLink(company as Company)} onClick={props.onClose}>
                                 {company.name}
                             </Link>
                             {company.identity?.name && (
@@ -101,7 +102,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                     ),
                     avatar: (company) =>
                         company.image?.url ? (
-                            <Link to={`/companies/${company.id}`} onClick={props.onClose}>
+                            <Link to={routes.companies.detail.getLink(company as Company)} onClick={props.onClose}>
                                 <Avatar
                                     shape="square"
                                     size={80}

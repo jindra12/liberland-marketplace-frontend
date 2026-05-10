@@ -1,12 +1,12 @@
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generated/graphql";
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
 
 describe("venture deep dive", () => {
     beforeEach(() => {
-        mountMainRoute("/ventures/startup-sky-relay");
+        mountMainRoute(detailRoute("/ventures", "startup-sky-relay"));
         waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,

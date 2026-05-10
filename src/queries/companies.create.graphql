@@ -2,6 +2,8 @@ mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
     createCompany(data: $data, draft: $draft) {
         id
         name
+        verification
+        isPrivate
         cryptoAddresses {
             chain
             address

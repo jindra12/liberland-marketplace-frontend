@@ -1,4 +1,4 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
     screenshotStep,
@@ -7,7 +7,7 @@ import {
 
 describe("company card", () => {
     const loadCompanyCard = () => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
     };
 
     it("shows title, avatar, website, share controls, and overflow link", () => {

@@ -34,7 +34,7 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                     className="NativeShareButton ListShareDetailButtons__button"
                 />
                 {props.subscriptionTarget ? (
-                    <SubscribeButton
+                <SubscribeButton
                         {...props.subscriptionTarget}
                         size={compactShareActionSize}
                         className="ListShareDetailButtons__button"

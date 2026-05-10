@@ -5,6 +5,9 @@ import { useLocation } from "react-router-dom";
 import { HomeOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Space, Tag, Typography } from "antd";
 
+import { routes } from "../../routes";
+import { StorageResetPrompt } from "../shared/StorageResetPrompt";
+
 import { ErrorBoundaryScope } from "./trackRuntimeError";
 
 type RuntimeErrorStateProps = {
@@ -52,11 +55,12 @@ export const RuntimeErrorState: React.FunctionComponent<RuntimeErrorStateProps> 
                         </Button>
                         <Button onClick={() => window.location.reload()}>Reload Page</Button>
                         {isAppBoundary && (
-                            <Button href="/" icon={<HomeOutlined />}>
+                            <Button href={routes.home.route} icon={<HomeOutlined />}>
                                 Go Home
                             </Button>
                         )}
                     </Flex>
+                    <StorageResetPrompt />
                 </Space>
             </div>
         </Flex>

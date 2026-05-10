@@ -16,6 +16,7 @@ const UnsubscribeProduct: React.FunctionComponent<UnsubscribeProductProps> = (pr
     const query = useProductByIdQuery(
         {
             id: props.params.id,
+            url: props.params.serverURL,
         },
         {
             enabled: Boolean(props.params.id),
@@ -38,7 +39,11 @@ const UnsubscribeProduct: React.FunctionComponent<UnsubscribeProductProps> = (pr
                     summary: product.company?.name ? `Company: ${product.company.name}` : product.description,
                     imageURL: getImage(product) || getImage(product.company),
                     serverURL: product.serverURL,
-                    detailPath: getNotificationDetailPath(props.params.collection, product.id),
+                    detailPath: getNotificationDetailPath(
+                        props.params.collection,
+                        product.id,
+                        product.serverURL ?? props.params.serverURL,
+                    ),
                 };
             }}
         />

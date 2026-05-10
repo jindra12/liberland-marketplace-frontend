@@ -6,7 +6,7 @@ import { buildGraphQLAlias, normalizeGraphQLHost } from "./alias";
 import { recordGraphQLRequestLog } from "./requestLogs";
 import { graphqlSchema } from "./schema";
 import { mutationResolvers, queryResolvers } from "./resolvers";
-import { nowIso, useGraphQLFixturesForHost, type GraphQLRequestBody } from "./runtimeState";
+import { nowIso, graphQLFixturesForHost, type GraphQLRequestBody } from "./runtimeState";
 import { searchResponseFor } from "./responseHelpers";
 
 const scalar = (name: string) =>
@@ -31,6 +31,7 @@ const mockScalarMap = [
     "mutationPostUpdateInput",
     "mutationOrderInput",
     "mutationOrderUpdateInput",
+    "mutationReportInput",
     "mutationProductInput",
     "mutationProductUpdateInput",
     "mutationStartupInput",
@@ -96,7 +97,7 @@ export const installGraphQLMock = () => {
         const body = req.body as GraphQLRequestBody;
         const operationName = getOperationName(body);
         const host = normalizeGraphQLHost(req.url);
-        useGraphQLFixturesForHost(host);
+        graphQLFixturesForHost(host);
         req.alias = buildGraphQLAlias(req.url, operationName, body.variables as Record<string, unknown> | undefined);
 
         if (operationName.startsWith("Search")) {

@@ -1,4 +1,4 @@
-import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
     screenshotStep,
@@ -9,7 +9,7 @@ import {
 
 describe("product card", () => {
     const loadHome = () => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL]);
         seedCartSecret(MAIN_SERVER_URL, "alpha-secret");
         waitForDetailQuery(
             MAIN_SERVER_URL,
@@ -29,7 +29,7 @@ describe("product card", () => {
     };
 
     const loadHomeMobile = () => {
-        mountAnonymousRoute("/tribes/identity-nova", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL]);
         seedCartSecret(MAIN_SERVER_URL, "alpha-secret");
     };
 

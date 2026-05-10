@@ -16,6 +16,7 @@ const UnsubscribeStartup: React.FunctionComponent<UnsubscribeStartupProps> = (pr
     const query = useStartupByIdQuery(
         {
             id: props.params.id,
+            url: props.params.serverURL,
         },
         {
             enabled: Boolean(props.params.id),
@@ -38,7 +39,11 @@ const UnsubscribeStartup: React.FunctionComponent<UnsubscribeStartupProps> = (pr
                     summary: startup.company?.name ? `Company: ${startup.company.name}` : startup.description,
                     imageURL: getImage(startup) || getImage(startup.identity),
                     serverURL: startup.serverURL,
-                    detailPath: getNotificationDetailPath(props.params.collection, startup.id),
+                    detailPath: getNotificationDetailPath(
+                        props.params.collection,
+                        startup.id,
+                        startup.serverURL ?? props.params.serverURL,
+                    ),
                 };
             }}
         />

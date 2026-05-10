@@ -1,8 +1,9 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
     fillFormField,
+    getRouteEntityId,
     mountAuthenticatedMainRoute,
     openPublishCategory,
     screenshotStep,
@@ -58,13 +59,9 @@ describe("venture create/edit", () => {
 
         cy.contains("button", "Publish Venture").click();
         cy.wait("@mediaUpload");
-        cy.location("pathname").should("match", /\/ventures\/startup-/);
+        cy.location("pathname").should("match", /\/ventures\/startup-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created venture id");
-            }
-
+            const createdId = getRouteEntityId(pathname);
             waitForDetailQuery(MAIN_SERVER_URL, "StartupById", { id: createdId }, "Startup", createdId, ventureTitle);
             cy.contains("h1", ventureTitle).should("be.visible");
             screenshotStep("venture-created-page");
@@ -85,14 +82,10 @@ describe("venture create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Venture").click();
-        cy.location("pathname").should("match", /\/ventures\/startup-/);
+        cy.location("pathname").should("match", /\/ventures\/startup-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = pathname.split("/").filter(Boolean).pop();
-            if (createdId === undefined) {
-                throw new Error("Missing created venture id");
-            }
-
-            cy.routerNavigate(`/ventures/edit/${createdId}`);
+            const createdId = getRouteEntityId(pathname);
+            cy.routerNavigate(editRoute("/ventures", createdId));
             cy.contains("h3", "Edit Venture").should("be.visible");
             assertFormFieldValue("Venture Name", ventureTitle);
             assertSelectValue("Company", "Harbor Labs");
@@ -106,7 +99,7 @@ describe("venture create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", `/ventures/${createdId}`);
+            cy.location("pathname").should("eq", detailRoute("/ventures", createdId));
             assertStartupTitle(createdId, updatedVentureTitle);
             screenshotStep("venture-updated-page");
         });

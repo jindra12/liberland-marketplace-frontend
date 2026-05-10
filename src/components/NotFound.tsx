@@ -1,8 +1,11 @@
 import * as React from "react";
 
-import { Result } from "antd";
+import { Result, Space } from "antd";
+
+import { routes } from "../routes";
 
 import { RouteButton } from "./RouteButton";
+import { StorageResetPrompt } from "./shared/StorageResetPrompt";
 
 const NotFound: React.FunctionComponent = () => (
     <Result
@@ -10,9 +13,12 @@ const NotFound: React.FunctionComponent = () => (
         title="Page not found"
         subTitle="The page you requested does not exist."
         extra={
-            <RouteButton to="/" type="primary">
-                Back to homepage
-            </RouteButton>
+            <Space direction="vertical" size={16}>
+                <RouteButton to={routes.home.route} type="primary">
+                    Back to homepage
+                </RouteButton>
+                <StorageResetPrompt />
+            </Space>
         }
     />
 );

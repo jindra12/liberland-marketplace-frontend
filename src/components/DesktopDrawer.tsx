@@ -6,6 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 
+import { routes } from "../routes";
+
+import { DisclaimersButton } from "./disclaimers/DisclaimersButton";
 import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
 import { RouteButton } from "./RouteButton";
@@ -18,6 +21,7 @@ export const DesktopDrawer: React.FunctionComponent = () => {
     const auth = useAuth();
     const { urls } = useEndpointContext();
     const [desktopActionsOpen, setDesktopActionsOpen] = React.useState(false);
+    const singlePublishEndpoint = urls.length === 1 ? urls[0] : undefined;
 
     React.useEffect(() => {
         setDesktopActionsOpen(false);
@@ -46,39 +50,55 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                     <SearchButton type="default" block onScopeSelect={() => setDesktopActionsOpen(false)}>
                         Search
                     </SearchButton>
+                    <DisclaimersButton block onClick={() => setDesktopActionsOpen(false)} />
                     {urls.length > 1 ? (
-                        <RouteButton to="/syndication" block type="default" icon={<GlobalOutlined />}>
+                        <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                             Syndication
                         </RouteButton>
                     ) : null}
-                    <EndpointAuthAction>
-                        {({ runWithAuthOrLogin }) => (
+                    {singlePublishEndpoint ? (
+                        <EndpointAuthAction defaultAuthUrl={singlePublishEndpoint.value}>
+                            {({ runWithAuthOrLogin }) => (
+                                <Button
+                                    block
+                                    type="primary"
+                                    icon={<PlusOutlined />}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        runWithAuthOrLogin(
+                                            () => {
+                                                navigate(routes.publish.route);
+                                                setDesktopActionsOpen(false);
+                                            },
+                                            { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
+                                        );
+                                    }}
+                                    className="AppHeader__drawerPublish"
+                                >
+                                    Create
+                                </Button>
+                            )}
+                        </EndpointAuthAction>
+                    ) : (
                             <Button
                                 block
                                 type="primary"
                                 icon={<PlusOutlined />}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    runWithAuthOrLogin(
-                                        () => {
-                                            navigate("/publish");
-                                            setDesktopActionsOpen(false);
-                                        },
-                                        { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
-                                    );
+                                onClick={() => {
+                                    navigate(routes.publish.route);
+                                    setDesktopActionsOpen(false);
                                 }}
                                 className="AppHeader__drawerPublish"
                             >
-                                Publish ad
+                                Create
                             </Button>
-                        )}
-                    </EndpointAuthAction>
+                    )}
                     {auth.isAuthenticated ? (
                         <Button
                             block
                             icon={<UserOutlined />}
                             onClick={() => {
-                                navigate("/profile");
+                                navigate(routes.profile.route);
                                 setDesktopActionsOpen(false);
                             }}
                         >

@@ -9,6 +9,10 @@ import {
     ToolOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Space, Typography } from "antd";
+import useLocalStorage from "use-local-storage";
+
+import type { Category, TourType } from "../tour/types";
+import { TOUR_LOCAL_STORAGE_KEY, getTourCategory } from "../tour/utils";
 
 import { CompanyForm } from "./CompanyForm";
 import { JobForm } from "./JobForm";
@@ -16,13 +20,24 @@ import { PostForm } from "./PostForm";
 import { ProductForm } from "./ProductForm";
 import { StartupForm } from "./StartupForm";
 
-type Category = "job" | "company" | "product" | "post" | "startup";
 export interface PublishFormsProps {
+    defaultCategory?: Category;
     url: string;
 }
 export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) => {
-    const [category, setCategory] = React.useState<Category>();
-    if (category === "job") {
+    const [pendingTourType, setPendingTourType] = useLocalStorage<TourType | undefined>(
+        TOUR_LOCAL_STORAGE_KEY,
+        undefined,
+    );
+    const [category, setCategory] = React.useState<Category | undefined>(
+        () => props.defaultCategory ?? getTourCategory(pendingTourType),
+    );
+
+    React.useEffect(() => {
+        setPendingTourType(undefined);
+    }, [setPendingTourType]);
+
+    if (category === "publish-job") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
@@ -33,7 +48,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
             </div>
         );
     }
-    if (category === "company") {
+    if (category === "publish-company") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
@@ -44,7 +59,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
             </div>
         );
     }
-    if (category === "product") {
+    if (category === "publish-product") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
@@ -55,7 +70,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
             </div>
         );
     }
-    if (category === "post") {
+    if (category === "publish-post") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
@@ -66,7 +81,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
             </div>
         );
     }
-    if (category === "startup") {
+    if (category === "publish-startup") {
         return (
             <div className="Publish">
                 <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
@@ -79,10 +94,10 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     }
     return (
         <div className="Publish">
-            <Typography.Title level={2}>Publish your ad</Typography.Title>
+            <Typography.Title level={2}>Create</Typography.Title>
             <Typography.Paragraph type="secondary">Choose what you'd like to publish</Typography.Paragraph>
             <Space direction="vertical" size={16} className="Publish__categories">
-                <Card hoverable className="Publish__category" onClick={() => setCategory("job")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("publish-job")}>
                     <Space size={16}>
                         <ToolOutlined className="Publish__categoryIcon" />
                         <div>
@@ -93,7 +108,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("company")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("publish-company")}>
                     <Space size={16}>
                         <TeamOutlined className="Publish__categoryIcon" />
                         <div>
@@ -104,7 +119,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("product")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("publish-product")}>
                     <Space size={16}>
                         <ShopOutlined className="Publish__categoryIcon" />
                         <div>
@@ -115,7 +130,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("post")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("publish-post")}>
                     <Space size={16}>
                         <FileTextOutlined className="Publish__categoryIcon" />
                         <div>
@@ -126,7 +141,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                         </div>
                     </Space>
                 </Card>
-                <Card hoverable className="Publish__category" onClick={() => setCategory("startup")}>
+                <Card hoverable className="Publish__category" onClick={() => setCategory("publish-startup")}>
                     <Space size={16}>
                         <RocketOutlined className="Publish__categoryIcon" />
                         <div>

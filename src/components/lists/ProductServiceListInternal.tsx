@@ -7,9 +7,15 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
 
-import { ListProductsByCompanyQuery, ListProductsByIdentityQuery, ListProductsQuery } from "../../generated/graphql";
+import {
+    ListProductsByCompanyQuery,
+    ListProductsByIdentityQuery,
+    ListProductsQuery,
+    Product,
+} from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
@@ -93,14 +99,14 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             renderItem={{
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
-                        <Link to={`/products-services/${product.id}`}>{product.name}</Link>
+                        <Link to={routes.productsServices.detail.getLink(product as Product)}>{product.name}</Link>
                         {product.company?.identity?.name && (
                             <IdentityTagLink identity={product.company.identity} color="success" />
                         )}
                     </Flex>
                 ),
                 actions: (product) => {
-                    const detailHref = `/products-services/${product.id}`;
+                    const detailHref = routes.productsServices.detail.getLink(product as Product);
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
@@ -187,7 +193,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 },
                 avatar: (product) =>
                     product.image?.url ? (
-                        <Link to={`/products-services/${product.id}`}>
+                        <Link to={routes.productsServices.detail.getLink(product as Product)}>
                             <Avatar
                                 shape="square"
                                 size={80}

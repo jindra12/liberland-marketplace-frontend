@@ -1,6 +1,6 @@
 import { UserManager } from "oidc-client-ts";
 
-import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
@@ -10,9 +10,9 @@ import {
 } from "../support/component-tests/utils";
 import type { AddressWithEmail } from "../../src/components/order/types";
 
-const guestProductRoute = "/products-services/guest-product-harbor-light";
-const guestNonOrderableRoute = "/products-services/guest-product-harbor-brochure";
-const mainProductRoute = "/products-services/product-harbor-lantern";
+const guestProductRoute = detailRoute("/products-services", "guest-product-harbor-light", GUEST_SERVER_URL);
+const guestNonOrderableRoute = detailRoute("/products-services", "guest-product-harbor-brochure", GUEST_SERVER_URL);
+const mainProductRoute = detailRoute("/products-services", "product-harbor-lantern");
 
 const mainSavedShippingAddress: AddressWithEmail = {
     id: "saved-main-shipping-address",

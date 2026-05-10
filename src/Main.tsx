@@ -1,27 +1,17 @@
 import * as React from "react";
 
-import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { CypressHistorySupport } from "cypress-react-router";
-import { ThirdwebProvider } from "thirdweb/react";
-
 import { AnalyticsPageTracker } from "./components/analytics/AnalyticsPageTracker";
-import { AppAnalyticsProvider } from "./components/analytics/AppAnalyticsProvider";
-import { AntProvider } from "./components/AntProvider";
-import { AppRouteTitle } from "./components/AppRouteTitle";
-import { AuthContextProvider } from "./components/AuthContext";
-import { CartMutationProvider } from "./components/cart/CartMutationContext";
-import { SolanaContext } from "./components/crypto/SolanaContext";
-import { TronContext } from "./components/crypto/TronContext";
-import { EndpointContextProvider } from "./components/EndpointContext";
-import { AppErrorBoundary } from "./components/ErrorBoundary/AppErrorBoundary";
+import { AppProviders } from "./components/AppProviders";
 import { RouteErrorBoundary } from "./components/ErrorBoundary/RouteErrorBoundary";
 import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
-import { RouteScrollToTop } from "./components/RouteScrollToTop";
+import { ServerUrlGuard } from "./components/ServerUrlGuard";
+import { TourService } from "./components/tour/TourService";
+import { routes } from "./routes";
 
 const Splash = React.lazy(() => import("./components/Splash"));
 const Jobs = React.lazy(() => import("./components/Jobs"));
@@ -30,6 +20,7 @@ const Identities = React.lazy(() => import("./components/Identities"));
 const ProductsServices = React.lazy(() => import("./components/ProductsServices"));
 const Posts = React.lazy(() => import("./components/Posts"));
 const Syndication = React.lazy(() => import("./components/Syndication"));
+const Syndicate = React.lazy(() => import("./components/Syndicate"));
 const Job = React.lazy(() => import("./components/detail/JobDetail"));
 const Company = React.lazy(() => import("./components/detail/CompanyDetail"));
 const Identity = React.lazy(() => import("./components/detail/IdentityDetail"));
@@ -55,6 +46,7 @@ const NotFound = React.lazy(() => import("./components/NotFound"));
 
 type SuspenseRouteOptions = {
     trackPage?: boolean;
+    serverUrlGuard?: boolean;
 };
 
 const suspense =
@@ -62,8 +54,19 @@ const suspense =
     () => (
         <RouteErrorBoundary>
             <React.Suspense fallback={<RouteSurfaceSkeleton />}>
-                {options.trackPage !== false && <AnalyticsPageTracker />}
-                <Component />
+                {options.serverUrlGuard ? (
+                    <ServerUrlGuard>
+                        {options.trackPage && <AnalyticsPageTracker />}
+                        <TourService />
+                        <Component />
+                    </ServerUrlGuard>
+                ) : (
+                    <>
+                        {options.trackPage && <AnalyticsPageTracker />}
+                        <TourService />
+                        <Component />
+                    </>
+                )}
             </React.Suspense>
         </RouteErrorBoundary>
     );
@@ -84,147 +87,201 @@ const Main: React.FunctionComponent = () => {
 
     return (
         <QueryClientProvider client={config}>
-            <HelmetProvider>
-                <EndpointContextProvider>
-                    <TronContext>
-                        <SolanaContext>
-                            <ThirdwebProvider>
-                                <AuthContextProvider>
-                                    <BrowserRouter>
-                                        <CypressHistorySupport />
-                                        <AppAnalyticsProvider>
-                                            <AntProvider>
-                                                <AppErrorBoundary>
-                                                    <AppRouteTitle />
-                                                    <RouteScrollToTop>
-                                                        <CartMutationProvider>
-                                                            <React.Suspense fallback={<AppBootSkeleton />}>
-                                                                <AppLayout>
-                                                                    <Routes>
-                                                                        <Route Component={suspense(Splash)} path="/" />
-                                                                        <Route Component={suspense(Jobs)} path="/jobs" />
-                                                                        <Route
-                                                                            Component={suspense(Companies)}
-                                                                            path="/companies"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(Identities)}
-                                                                            path="/tribes"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(ProductsServices)}
-                                                                            path="/products-services"
-                                                                        />
-                                                                        <Route Component={suspense(Posts)} path="/posts" />
-                                                                        <Route
-                                                                            Component={suspense(Syndication)}
-                                                                            path="/syndication"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(Job, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/jobs/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(Company, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/companies/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(Identity, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/tribes/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(ProductService, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/products-services/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(Post, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/posts/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(CommentDetail, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/comments/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(SyndicationDetail, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/syndication/:id"
-                                                                        />
-                                                                        <Route Component={suspense(Profile)} path="/profile" />
-                                                                        <Route Component={suspense(Publish)} path="/publish" />
-                                                                        <Route
-                                                                            Component={suspense(EditJob, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/jobs/edit/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(EditCompany, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/companies/edit/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(EditProduct, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/products-services/edit/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(EditPost, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/posts/edit/:id"
-                                                                        />
-                                                                        <Route Component={suspense(Cart)} path="/cart" />
-                                                                        <Route Component={suspense(Order)} path="/order" />
-                                                                        <Route Component={suspense(Startups)} path="/ventures" />
-                                                                        <Route
-                                                                            Component={suspense(Startup, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/ventures/:id"
-                                                                        />
-                                                                        <Route
-                                                                            Component={suspense(EditStartup, {
-                                                                                trackPage: false,
-                                                                            })}
-                                                                            path="/ventures/edit/:id"
-                                                                        />
-                                                                        <Route Component={suspense(Unsubscribe)} path="/unsubscribe" />
-                                                                        <Route
-                                                                            Component={suspense(AuthCallback)}
-                                                                            path="/auth/callback"
-                                                                        />
-                                                                        <Route Component={suspense(NotFound)} path="*" />
-                                                                    </Routes>
-                                                                </AppLayout>
-                                                            </React.Suspense>
-                                                        </CartMutationProvider>
-                                                    </RouteScrollToTop>
-                                                </AppErrorBoundary>
-                                            </AntProvider>
-                                        </AppAnalyticsProvider>
-                                    </BrowserRouter>
-                                </AuthContextProvider>
-                            </ThirdwebProvider>
-                        </SolanaContext>
-                    </TronContext>
-                </EndpointContextProvider>
-            </HelmetProvider>
-        </QueryClientProvider>
+            <AppProviders>
+                <React.Suspense fallback={<AppBootSkeleton />}>
+                    <AppLayout>
+                        <Routes>
+                            <Route
+                                Component={suspense(Splash, {
+                                    trackPage: true,
+                                })}
+                                path={routes.home.route}
+                            />
+                            <Route
+                                Component={suspense(Jobs, {
+                                    trackPage: true,
+                                })}
+                                path={routes.jobs.route}
+                            />
+                            <Route
+                                Component={suspense(Companies, {
+                                    trackPage: true,
+                                })}
+                                path={routes.companies.route}
+                            />
+                            <Route
+                                Component={suspense(Identities, {
+                                    trackPage: true,
+                                })}
+                                path={routes.tribes.route}
+                            />
+                            <Route
+                                Component={suspense(ProductsServices, {
+                                    trackPage: true,
+                                })}
+                                path={routes.productsServices.route}
+                            />
+                            <Route
+                                Component={suspense(Posts, {
+                                    trackPage: true,
+                                })}
+                                path={routes.posts.route}
+                            />
+                            <Route
+                                Component={suspense(Syndication, {
+                                    trackPage: true,
+                                })}
+                                path={routes.syndication.route}
+                            />
+                            <Route
+                                Component={suspense(Syndicate, {
+                                    trackPage: true,
+                                })}
+                                path={routes.syndicate.route}
+                            />
+                            <Route
+                                Component={suspense(Job, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.jobs.detail.route}
+                            />
+                            <Route
+                                Component={suspense(Company, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.companies.detail.route}
+                            />
+                            <Route
+                                Component={suspense(Identity, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.tribes.detail.route}
+                            />
+                            <Route
+                                Component={suspense(ProductService, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.productsServices.detail.route}
+                            />
+                            <Route
+                                Component={suspense(Post, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.posts.detail.route}
+                            />
+                            <Route
+                                Component={suspense(CommentDetail, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.comments.detail.route}
+                            />
+                            <Route
+                                Component={suspense(SyndicationDetail, {
+                                    trackPage: false,
+                                })}
+                                path={routes.syndication.detail.route}
+                            />
+                            <Route
+                                Component={suspense(Profile, {
+                                    trackPage: true,
+                                })}
+                                path={routes.profile.route}
+                            />
+                            <Route
+                                Component={suspense(Publish, {
+                                    trackPage: true,
+                                })}
+                                path={routes.publish.route}
+                            />
+                            <Route
+                                Component={suspense(EditJob, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.jobs.edit.route}
+                            />
+                            <Route
+                                Component={suspense(EditCompany, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.companies.edit.route}
+                            />
+                            <Route
+                                Component={suspense(EditProduct, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.productsServices.edit.route}
+                            />
+                            <Route
+                                Component={suspense(EditPost, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.posts.edit.route}
+                            />
+                            <Route
+                                Component={suspense(Cart, {
+                                    trackPage: true,
+                                })}
+                                path={routes.cart.route}
+                            />
+                            <Route
+                                Component={suspense(Order, {
+                                    trackPage: true,
+                                })}
+                                path={routes.order.route}
+                            />
+                            <Route
+                                Component={suspense(Startups, {
+                                    trackPage: true,
+                                })}
+                                path={routes.ventures.route}
+                            />
+                            <Route
+                                Component={suspense(Startup, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.ventures.detail.route}
+                            />
+                            <Route
+                                Component={suspense(EditStartup, {
+                                    trackPage: false,
+                                    serverUrlGuard: true,
+                                })}
+                                path={routes.ventures.edit.route}
+                            />
+                            <Route
+                                Component={suspense(Unsubscribe, {
+                                    trackPage: true,
+                                })}
+                                path={routes.unsubscribe.route}
+                            />
+                            <Route
+                                Component={suspense(AuthCallback, {
+                                    trackPage: true,
+                                })}
+                                path={routes.authCallback.route}
+                            />
+                            <Route
+                                Component={suspense(NotFound, {
+                                    trackPage: true,
+                                })}
+                                path="*"
+                            />
+                        </Routes>
+                        </AppLayout>
+                    </React.Suspense>
+                </AppProviders>
+            </QueryClientProvider>
     );
 };
 

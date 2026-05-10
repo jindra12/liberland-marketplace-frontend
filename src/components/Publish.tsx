@@ -1,32 +1,12 @@
 import * as React from "react";
 
-import { useEndpointContext } from "./EndpointContext";
-import { PublishContent } from "./publish/PublishContent";
-import { PublishServerSelector } from "./publish/PublishServerSelector";
+import { usePermissionsContext } from "./PermissionsContext";
+import { PublishSelectionFlow } from "./publish/PublishSelectionFlow";
 
 const Publish: React.FunctionComponent = () => {
-    const { urls, setAuthUrl } = useEndpointContext();
-    const [serverSelected, setServerSelected] = React.useState(urls.length === 1);
+    const { canCreateContent } = usePermissionsContext();
 
-    React.useEffect(() => {
-        if (urls.length !== 1) {
-            return;
-        }
-
-        setAuthUrl(urls[0].value);
-        setServerSelected(true);
-    }, [setAuthUrl, urls]);
-
-    const handleServerConfirm = (url: string) => {
-        setAuthUrl(url);
-        setServerSelected(true);
-    };
-
-    if (!serverSelected) {
-        return <PublishServerSelector urls={urls} onConfirm={handleServerConfirm} />;
-    }
-
-    return <PublishContent />;
+    return <PublishSelectionFlow canCreateContent={canCreateContent} />;
 };
 
 export default Publish;

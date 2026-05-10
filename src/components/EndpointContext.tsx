@@ -19,6 +19,7 @@ import { combineResult, deepMergeConcatArrays } from "./query/utils";
 export interface EndpointContextType {
     urls: URL[];
     enabled: string[];
+    isSyndicationLoading: boolean;
     setUrls: (urls: URL[] | ((urls?: URL[]) => URL[])) => void;
     authUrl: string;
     setAuthUrl: (auth: string) => void;
@@ -38,9 +39,7 @@ export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[])
                 url.value,
             ),
         })),
-        combine: (result) => {
-            return combineResult(result, deepMergeConcatArrays);
-        },
+        combine: (result) => combineResult(result, deepMergeConcatArrays),
     });
     React.useEffect(() => {
         setUrls((maybeUrls) => mergeSyndicationUrls(maybeUrls, queries.data?.Syndications?.docs || []));
@@ -59,10 +58,12 @@ export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChi
     }, [storedUrls]);
     const [authUrl, setAuthUrl] = React.useState<string>(urls[0].value);
     const enabled = React.useMemo(() => urls.filter(({ enabled }) => enabled).map(({ value }) => value), [urls]);
-    useSyndicationQuery(urls, setUrls);
+    const syndicationQuery = useSyndicationQuery(urls, setUrls);
 
     return (
-        <EndpointContext.Provider value={{ setUrls, urls, enabled, authUrl, setAuthUrl }}>
+        <EndpointContext.Provider
+            value={{ setUrls, urls, enabled, authUrl, setAuthUrl, isSyndicationLoading: syndicationQuery.isLoading }}
+        >
             {props.children}
         </EndpointContext.Provider>
     );

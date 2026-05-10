@@ -14,6 +14,8 @@ export const graphqlSchema = buildSchema(`
     scalar mutationPostUpdateInput
     scalar mutationOrderInput
     scalar mutationOrderUpdateInput
+    scalar mutationInformationRequestInput
+    scalar mutationReportInput
     scalar mutationProductInput
     scalar mutationProductUpdateInput
     scalar mutationStartupInput
@@ -33,6 +35,7 @@ export const graphqlSchema = buildSchema(`
     type Query {
         Carts(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
         Searches(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
+        permissions: [Permission!]!
         Companies(
             draft: Boolean
             limit: Int
@@ -124,6 +127,8 @@ export const graphqlSchema = buildSchema(`
         updateStartup(id: String!, data: mutationStartupUpdateInput, draft: Boolean): MockNode
         createOrder(data: mutationOrderInput, draft: Boolean): MockNode
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
+        createInformationRequest(data: mutationInformationRequestInput): MockNode
+        createReport(data: mutationReportInput): MockNode
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode
         updateComment(id: String!, data: JSON): MockNode
@@ -142,6 +147,11 @@ export const graphqlSchema = buildSchema(`
         hasLiked: Boolean
         id: String
         likeCount: Int
+    }
+
+    type Permission {
+        serverUrl: String
+        canCreateContentAsNonAdmin: Boolean
     }
 
     type SalaryRange {
@@ -214,6 +224,7 @@ export const graphqlSchema = buildSchema(`
         id: String
         title: String
         slug: String
+        repost: String
         heroImage: Media
         company: Company
     }
@@ -221,6 +232,7 @@ export const graphqlSchema = buildSchema(`
     type Company {
         id: String
         name: String
+        verification: String
         image: Media
     }
 
@@ -255,6 +267,7 @@ export const graphqlSchema = buildSchema(`
     type MockNode {
         id: JSON
         name: JSON
+        verification: JSON
         title: JSON
         description: JSON
         slug: JSON
@@ -265,12 +278,16 @@ export const graphqlSchema = buildSchema(`
         phone: JSON
         email: JSON
         content: JSON
+        contentLink: JSON
+        repost: JSON
+        reason: JSON
         anonymousHash: JSON
         replyPostRelationTo: JSON
         replyPostValue: JSON
         likeCount: JSON
         hasLiked: JSON
         replyCount: JSON
+        reportedLinks: [JSON!]
         currency: JSON
         secret: JSON
         subtotal: JSON
@@ -314,6 +331,8 @@ export const graphqlSchema = buildSchema(`
         alt: JSON
         publishedAt: JSON
         contentRankScore: JSON
+        nsfw: JSON
+        autoEnable: JSON
         isSubscribed: JSON
         isActive: JSON
         success: JSON
@@ -370,6 +389,7 @@ export const graphqlSchema = buildSchema(`
         company: MockNode
         identity: MockNode
         createdBy: MockNode
+        userId: MockNode
         user: MockNode
         customer: MockNode
         product: MockNode

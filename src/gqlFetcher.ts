@@ -49,6 +49,7 @@ export const gqlFetcher =
         variables?: TVariables,
         options?: RequestInit["headers"],
         url?: string | null,
+        anonymizer?: (variables: TVariables) => TVariables,
     ) =>
     async (): Promise<TData> => {
         const defUrl = url || BACKEND_URL;
@@ -81,7 +82,7 @@ export const gqlFetcher =
                         operationType,
                         route: getCurrentRoute(),
                         success: true,
-                        variables,
+                        variables: anonymizer?.(variables!) || variables,
                     },
                     {
                         targetUrl: defUrl,
@@ -101,7 +102,7 @@ export const gqlFetcher =
                         operationType,
                         route: getCurrentRoute(),
                         success: false,
-                        variables,
+                        variables: anonymizer?.(variables!) || variables,
                     },
                     {
                         targetUrl: defUrl,

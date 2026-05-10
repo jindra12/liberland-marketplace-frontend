@@ -1,3 +1,7 @@
+import { mount } from "cypress/react";
+
+import { Flex, Typography } from "antd";
+
 import { LIST_GOALS, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     goToList,
@@ -9,6 +13,7 @@ import {
     waitForPageShell,
     waitForSearchQuery,
 } from "../support/component-tests/utils";
+import { PostRepostLink } from "../../src/components/shared/post/PostRepostLink";
 
 describe("lists", () => {
     beforeEach(() => {
@@ -56,5 +61,23 @@ describe("lists", () => {
 
     it("opens the Syndication list from home", () => {
         goToSyndicationList();
+    });
+
+    it("shows the original post link for reposted posts in the list UI", () => {
+        mount(
+            <Flex vertical gap={4} className="PostList__meta">
+                <Typography.Title level={2}>Harbor Launch Notes</Typography.Title>
+                <PostRepostLink repost="https://example.test/original/harbor-launch-notes" />
+            </Flex>,
+        );
+
+        cy.get(".PostRepostLink__icon").should("be.visible");
+        cy.contains(".PostRepostLink", "Original post").should("be.visible");
+        cy.contains(".PostRepostLink", "Original post").should(
+            "have.attr",
+            "href",
+            "https://example.test/original/harbor-launch-notes",
+        );
+        screenshotStep("homepage-post-repost-link");
     });
 });

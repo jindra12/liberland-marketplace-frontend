@@ -1,7 +1,7 @@
 import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generated/graphql";
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountMainRoute,
     waitForCollectionQuery,
@@ -10,7 +10,7 @@ import {
 
 describe("company deep dive", () => {
     beforeEach(() => {
-        mountMainRoute("/companies/company-harbor-labs");
+        mountMainRoute(detailRoute("/companies", "company-harbor-labs"));
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",
@@ -24,6 +24,7 @@ describe("company deep dive", () => {
     it("shows company content, tabs, and comments", () => {
         cy.get(".CompanyDetail").should("be.visible");
         cy.contains(".EntityDetail__title", "Harbor Labs").should("be.visible");
+        cy.contains(".CompanyVerificationTag", "trader").should("be.visible");
         cy.contains(".Markdown", "Distributed shipping and tooling").should("be.visible");
         cy.get(".CompanyContactLinks").should("be.visible").contains("hello@harbor.example");
         cy.get(".ShareSection").should("be.visible").contains("Share this company");

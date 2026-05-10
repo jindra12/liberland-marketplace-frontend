@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { AuthProvider } from "react-oidc-context";
+import { useNavigate } from "react-router-dom";
 
 import { WebStorageStateStore } from "oidc-client-ts";
 
@@ -8,6 +9,7 @@ import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const { authUrl: auth } = useEndpointContext();
+    const navigate = useNavigate();
 
     const store = React.useMemo(() => new WebStorageStateStore({ store: window.localStorage }), []);
 
@@ -26,7 +28,7 @@ export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildre
                 userinfo_endpoint: `${auth}/api/auth/oauth2/userinfo`,
             }}
             onSigninCallback={() => {
-                window.history.replaceState({}, document.title, "/");
+                navigate("/", { replace: true });
             }}
         >
             {props.children}

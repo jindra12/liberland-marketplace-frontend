@@ -62,10 +62,21 @@ export const mountMainRoute = (route: string) => {
     cy.routerNavigate(route);
 };
 
+export const getRouteEntityId = (pathname: string): string => {
+    const segments = pathname.split("/").filter(Boolean);
+    const id = segments[segments.length - 2];
+
+    if (id === undefined) {
+        throw new Error(`Missing route entity id in pathname: ${pathname}`);
+    }
+
+    return id;
+};
+
 const buildAuthStorageKey = (serverUrl: string) =>
     `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
-const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
+const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerified = true) => {
     const now = Math.floor(Date.now() / 1000);
     const user = new User({
         access_token: "mock-profile-access-token",
@@ -79,7 +90,7 @@ const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
             iat: now,
             sub: "user-nova",
             email: "nova@example.test",
-            email_verified: true,
+            email_verified: emailVerified,
             name: "Nova Rivers",
             picture: "https://example.test/nova.png",
         },
@@ -88,17 +99,21 @@ const seedAuthorizedProfile = (win: Window, serverUrl: string) => {
     win.localStorage.setItem(buildAuthStorageKey(serverUrl), user.toStorageString());
 };
 
-export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL]) => {
+export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL], emailVerified = true) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.history.pushState({}, "", "/profile");
     });
     mount(<Main />);
 };
 
-export const mountAuthenticatedRoute = (route: string, serverUrls: string[] = [BACKEND_URL]) => {
+export const mountAuthenticatedRoute = (
+    route: string,
+    serverUrls: string[] = [BACKEND_URL],
+    emailVerified = true,
+) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
@@ -108,9 +123,10 @@ export const mountAuthenticatedCartRoute = (
     route: string,
     serverUrls: string[] = [BACKEND_URL],
     cartSecrets?: Record<string, string>,
+    emailVerified = true,
 ) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         if (cartSecrets) {
             const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
@@ -127,9 +143,10 @@ export const mountAuthenticatedDetailRoute = (
     route: string,
     serverUrls: string[] = [BACKEND_URL],
     savedShippingAddress?: AddressWithEmail,
+    emailVerified = true,
 ) => {
     cy.window().then((win) => {
-        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl));
+        serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         if (savedShippingAddress) {
             win.localStorage.setItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY, JSON.stringify(savedShippingAddress));
@@ -142,9 +159,9 @@ export const mountAuthenticatedDetailRoute = (
     cy.routerNavigate(route);
 };
 
-export const mountAuthenticatedMainRoute = (route: string) => {
+export const mountAuthenticatedMainRoute = (route: string, emailVerified = true) => {
     cy.window().then((win) => {
-        seedAuthorizedProfile(win, BACKEND_URL);
+        seedAuthorizedProfile(win, BACKEND_URL, emailVerified);
         win.localStorage.setItem(
             "endpoints.urls",
             JSON.stringify([
@@ -455,7 +472,12 @@ export const waitForDetailQuery = (
     expectedId: string,
     expectedTitle: string,
 ) => {
-    cy.wait(`@${gqlAlias(serverUrl, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
+    const variables = {
+        ...expectedVariables,
+        url: expectedVariables.url ?? serverUrl,
+    };
+
+    cy.wait(`@${gqlAlias(serverUrl, operationName, variables)}`, { timeout: 20000 }).then((interception) => {
         expect(interception.request.url).to.equal(`${serverUrl}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         cy.contains("h1", expectedTitle, { timeout: 20000 }).should("be.visible").scrollIntoView();
@@ -616,6 +638,8 @@ export const goToSyndicationList = () => {
     cy.get(".SplashPage__syndicationManageBtn").contains(SYNDICATION_LIST_GOAL.clickLabel).click();
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
-    cy.contains("h2", SYNDICATION_LIST_GOAL.title).should("be.visible");
+    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Can publish listings");
+    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Cannot publish listings");
+    cy.contains(".SyndicationList__nsfwTag", "NSFW").should("be.visible");
     screenshotStep("syndication-list");
 };

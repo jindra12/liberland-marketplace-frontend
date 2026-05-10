@@ -11,6 +11,8 @@ query ListCompaniesByCreator(
             isSubscribed
             serverURL
             name
+            verification
+            isPrivate
             likeCount
             cryptoAddresses {
                 chain

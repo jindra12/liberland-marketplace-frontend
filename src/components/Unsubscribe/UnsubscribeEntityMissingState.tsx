@@ -3,6 +3,7 @@ import * as React from "react";
 import { HomeOutlined, StopFilled } from "@ant-design/icons";
 import { Flex, Space, Tag, Typography } from "antd";
 
+import { routes } from "../../routes";
 import { RouteButton } from "../RouteButton";
 
 export const UnsubscribeEntityMissingState: React.FunctionComponent = () => {
@@ -29,7 +30,7 @@ export const UnsubscribeEntityMissingState: React.FunctionComponent = () => {
                         </div>
                     </Flex>
                     <RouteButton
-                        to="/"
+                        to={routes.home.route}
                         icon={<HomeOutlined />}
                         className="UnsubscribePage__secondaryAction"
                     >

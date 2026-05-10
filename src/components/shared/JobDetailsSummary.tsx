@@ -13,6 +13,9 @@ import {
 } from "@ant-design/icons";
 import { Flex, Space, Tag, Typography } from "antd";
 
+import type { Company } from "../../generated/graphql";
+import { routes } from "../../routes";
+
 import { timeAgo } from "./job/utils";
 
 type JobDetailsSummaryProps = {
@@ -31,6 +34,14 @@ type JobDetailsSummaryProps = {
 export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> = (props) => {
     const showCompanyIcon = props.showCompanyIcon === undefined ? false : props.showCompanyIcon;
     const metaSize: React.ComponentProps<typeof Space>["size"] = props.metaSize ?? [12, 8];
+    const companyLink = props.companyId
+        ? routes.companies.detail.getLink(
+              {
+                  id: props.companyId,
+                  name: props.companyName,
+              } as Company,
+          )
+        : "";
     return (
         <Flex vertical gap={4}>
             <Space size={metaSize} wrap>
@@ -41,11 +52,7 @@ export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> 
                                 <HomeFilled />{" "}
                             </>
                         )}
-                        {props.companyId ? (
-                            <Link to={`/companies/${props.companyId}`}>{props.companyName}</Link>
-                        ) : (
-                            props.companyName
-                        )}
+                        {props.companyId ? <Link to={companyLink}>{props.companyName}</Link> : props.companyName}
                     </Typography.Text>
                 )}
                 {props.location && (

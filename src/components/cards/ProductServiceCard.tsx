@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { DollarOutlined } from "@ant-design/icons";
 import { Avatar, Space, Tag } from "antd";
 
-import { ListProductsQuery } from "../../generated/graphql";
+import { ListProductsQuery, Product } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { CartItemCount } from "../cart/CartItemCount";
 import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -34,7 +35,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
             renderItem={(product) => {
                 const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
                 const imageSrc = getImage(product) || getImage(product.company);
-                const detailPath = `/products-services/${product.id}`;
+                const detailPath = routes.productsServices.detail.getLink(product as Product);
                 const shareTitle = product.name || "Product";
                 const shareText = `Check out ${product.name} on NSwap.`;
 

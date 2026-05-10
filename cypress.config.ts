@@ -1,6 +1,6 @@
 import { defineConfig } from "cypress";
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 import { format } from "prettier";
 import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
@@ -57,6 +57,10 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: false,
+    retries: {
+        runMode: 2,
+        openMode: 2,
+    },
     screenshotsFolder: "cypress/artifacts/screenshots",
     videosFolder: "cypress/artifacts/videos",
     viewportWidth: 1200,
@@ -70,10 +74,17 @@ export default defineConfig({
         specPattern: "cypress/component/**/*.cy.tsx",
         supportFile: "cypress/support/component.ts",
         setupNodeEvents(on) {
-            on("before:run", () => {
-                fs.rmSync(path.resolve("cypress/artifacts"), { recursive: true, force: true });
-            });
+            on("before:browser:launch", (browser, launchOptions) => {
+                if (browser.name === "electron" || browser.family === "chromium") {
+                    launchOptions.args.push("--no-sandbox");
+                    launchOptions.args.push("--disable-setuid-sandbox");
+                    launchOptions.args.push("--disable-dev-shm-usage");
+                    launchOptions.args.push("--disable-gpu");
+                    launchOptions.args.push("--disable-software-rasterizer");
+                }
 
+                return launchOptions;
+            });
             on("task", {
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {

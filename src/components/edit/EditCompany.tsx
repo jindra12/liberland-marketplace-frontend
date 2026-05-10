@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { Typography } from "antd";
 
+import { decodeServerUrlSegment } from "../../routes";
 import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { AuthGuard } from "../AuthGuard";
 import { useCompanyByIdQuery } from "../hooks";
@@ -12,8 +13,9 @@ import { OwnerGuard } from "../OwnerGuard";
 import { CompanyForm } from "../publish/CompanyForm";
 
 const EditCompany: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const query = useCompanyByIdQuery({ id: id!, draft: true });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const query = useCompanyByIdQuery({ id: id!, draft: true, url: routeServerURL });
 
     return (
         <AuthGuard>
@@ -25,7 +27,7 @@ const EditCompany: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
-                                <DetailPageTracker serverUrl={company?.serverURL} />
+                                <DetailPageTracker serverUrl={company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Company</Typography.Title>
                                 <CompanyForm
                                     mode="edit"
@@ -40,7 +42,7 @@ const EditCompany: React.FunctionComponent = () => {
                                         existingImageUrl: company?.image?.url,
                                         existingImageId: company?.image?.id,
                                     }}
-                                    url={company?.serverURL!}
+                                    url={company?.serverURL ?? routeServerURL}
                                 />
                             </OwnerGuard>
                         );

@@ -2,7 +2,7 @@ import { useAuth } from "react-oidc-context";
 
 import { useQueryClient } from "@tanstack/react-query";
 
-import type { Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
+import type { Comment, Comment_ReplyPostRelationshipInputRelationTo } from "../../generated/graphql";
 import type { CommentByIdQuery } from "../../generated/graphql";
 import type { AuthProfile } from "../../types";
 import type { DislikeMutation, LikeMutation } from "../shared/Like/types";
@@ -15,6 +15,7 @@ import { copyCommentLink } from "./utils";
 
 type UseCommentDetailStateArgs = {
     commentId: string;
+    serverURL?: string | null;
 };
 
 type CommentDetailState = {
@@ -27,13 +28,16 @@ type CommentDetailState = {
     onDeleteAction: ReturnType<typeof useCommentActions>["onDeleteAction"];
     onEditAction: ReturnType<typeof useCommentActions>["onEditAction"];
     onReplyAction: ReturnType<typeof useCommentActions>["onReplyAction"];
-    handleShare: (targetCommentId: string) => Promise<void>;
+    handleShare: (comment: Comment) => Promise<void>;
 };
 
 export const useCommentDetailState = (args: UseCommentDetailStateArgs): CommentDetailState => {
     const auth = useAuth();
     const queryClient = useQueryClient();
-    const commentQuery = useCommentByIdQuery({ id: args.commentId });
+    const commentQuery = useCommentByIdQuery({
+        id: args.commentId,
+        url: args.serverURL,
+    });
     const { currentUser, dislikeMutation, likeMutation } = useCommentThreadState({
         isAuthenticated: auth.isAuthenticated,
         profile: auth.user?.profile as AuthProfile | undefined,
@@ -54,12 +58,12 @@ export const useCommentDetailState = (args: UseCommentDetailStateArgs): CommentD
             relationTo: comment?.replyPostRelationTo as Comment_ReplyPostRelationshipInputRelationTo | undefined,
             value: comment?.replyPostValue,
         },
-        url: comment?.serverUrl,
+        url: args.serverURL ?? comment?.serverUrl,
     });
 
-    const handleShare = async (targetCommentId: string) => {
+    const handleShare = async (comment: Comment) => {
         try {
-            await copyCommentLink(targetCommentId);
+            await copyCommentLink(comment);
         } catch (error) {
             console.error("Failed to copy comment link", error);
         }

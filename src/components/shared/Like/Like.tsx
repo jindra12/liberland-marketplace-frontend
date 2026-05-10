@@ -1,7 +1,12 @@
 import * as React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Button, Flex, Typography } from "antd";
+
+import { routes } from "../../../routes";
+import { EndpointAuthAction } from "../../EndpointAuthAction";
 
 import type { DislikeMutation, LikeMutation } from "./types";
 import { getLikeButtonClassName, getLikeButtonVariables, getLikeCountText } from "./utils";
@@ -18,6 +23,7 @@ export type LikeProps = {
 };
 
 export const Like: React.FunctionComponent<LikeProps> = (props) => {
+    const navigate = useNavigate();
     const isLiked = Boolean(props.liked);
     const isPending = props.likeMutation.isPending || props.dislikeMutation.isPending;
     const buttonClassName = getLikeButtonClassName(props.className, props.liked, isPending);
@@ -27,32 +33,41 @@ export const Like: React.FunctionComponent<LikeProps> = (props) => {
         <HeartOutlined className="LikeButton__heart LikeButton__heart--outlined" />
     );
 
-    const handleClick = () => {
-        if (isLiked) {
-            props.dislikeMutation.mutate(getLikeButtonVariables(props.id, props.serverURL));
-            return;
-        }
-
-        props.likeMutation.mutate({
-            ...getLikeButtonVariables(props.id, props.serverURL),
-            liked: true,
-        });
-    };
-
     return (
-        <Button
-            htmlType="button"
-            type="text"
-            className={buttonClassName}
-            aria-label={props["aria-label"] ?? (isLiked ? "Unlike" : "Like")}
-            aria-pressed={isLiked}
-            loading={isPending}
-            onClick={handleClick}
+        <EndpointAuthAction
+            defaultAuthUrl={props.serverURL ? props.serverURL : undefined}
+            requireVerifiedEmail
+            onUnverifiedEmail={() => navigate(routes.publish.route)}
         >
-            <Flex align="center" gap={8}>
-                {icon}
-                <Typography.Text className="LikeButton__count">{getLikeCountText(props.likeCount)}</Typography.Text>
-            </Flex>
-        </Button>
+            {({ runWithAuthOrLogin }) => (
+                <Button
+                    htmlType="button"
+                    type="text"
+                    className={buttonClassName}
+                    aria-label={props["aria-label"] ?? (isLiked ? "Unlike" : "Like")}
+                    aria-pressed={isLiked}
+                    loading={isPending}
+                    onClick={async (event) => {
+                        event.preventDefault();
+                        await runWithAuthOrLogin(async () => {
+                            if (isLiked) {
+                                props.dislikeMutation.mutate(getLikeButtonVariables(props.id, props.serverURL));
+                                return;
+                            }
+
+                            props.likeMutation.mutate({
+                                ...getLikeButtonVariables(props.id, props.serverURL),
+                                liked: true,
+                            });
+                        });
+                    }}
+                >
+                    <Flex align="center" gap={8}>
+                        {icon}
+                        <Typography.Text className="LikeButton__count">{getLikeCountText(props.likeCount)}</Typography.Text>
+                    </Flex>
+                </Button>
+            )}
+        </EndpointAuthAction>
     );
 };

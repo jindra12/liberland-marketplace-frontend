@@ -1,7 +1,7 @@
 import { image, COOP_SYNDICATION_URL } from "../fixtures/shared";
 import { identities } from "./identities";
 import { meUser } from "./meUser";
-import { Company__Status, Company_CryptoAddresses_Chain } from "../../../../src/generated/graphql";
+import { Company__Status, Company_CryptoAddresses_Chain, Company_Verification } from "../../../../src/generated/graphql";
 import type { Company } from "../../../../src/generated/graphql";
 
 export const companies: Company[] = [
@@ -13,6 +13,7 @@ export const companies: Company[] = [
         phone: "+1 555 5100",
         email: "hello@helix.example",
         serverURL: COOP_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user,
@@ -30,6 +31,7 @@ export const companies: Company[] = [
         phone: "+1 555 5200",
         email: "team@salt.example",
         serverURL: COOP_SYNDICATION_URL,
+        verification: Company_Verification.PrivateSeller,
         _status: Company__Status.Published,
         isSubscribed: false,
         createdBy: meUser.user,
@@ -47,6 +49,7 @@ export const companies: Company[] = [
         phone: "+1 555 5300",
         email: "team@harbor-ether.example",
         serverURL: COOP_SYNDICATION_URL,
+        verification: Company_Verification.Trader,
         _status: Company__Status.Published,
         isSubscribed: true,
         createdBy: meUser.user,

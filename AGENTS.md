@@ -32,11 +32,15 @@ manager is `yarn`.
 - When the user asks for a test, treat that as a Cypress component test. Do not switch to Jest unless the user explicitly asks for Jest or another runner.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
+- The only allowed way to run Cypress is through `yarn cypress:run`, which must use the repo lock wrapper. Do not invoke `cypress run` directly from package scripts or ad hoc commands.
+- If Cypress/Electron crashes or hangs inside the sandbox, rerun the suite outside the sandbox with elevated permissions instead of looping on the same sandboxed run.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"
 - Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
 - For small layout-only wrappers, prefer Ant Design `Flex` or `Space` instead of custom wrapper `div`s and CSS spacing shims.
+- Route components should stay as thin entry files. If a route file needs `export default` for Next/lazy-loading compatibility, keep it there and add a local ESLint override for `import/no-default-export` in that file instead of changing the global rule.
+- For route components, split the actual UI into one component per file and move shared literals into `constants.ts` or `utils.ts` so the route file only wires the pieces together.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
@@ -101,6 +105,9 @@ manager is `yarn`.
 - Do not add `.catch()` blocks to promises unless the user explicitly asks for that handling style or the behavior clearly requires local error handling.
 - Do not swallow exceptions in `catch` blocks unless there is a clear reason. If you handle an error locally, log it with `console.error` unless that would be redundant for a justified reason.
 - Prefer `async`/`await` over `.then(...)` chains. If an async callback cannot be awaited at the call site, use an internal `async` function with local `try`/`catch` rather than promise chaining.
+- Do not access `window.localStorage` directly in app code. Use the repo's local-storage hook or a shared storage wrapper so storage access stays consistent and testable.
+- When browser storage is needed in app code, use `window` as the target directly; do not thread alternate storage targets through production code.
+- Do not use `window.history` for navigation or URL cleanup. Use `react-router-dom` navigation hooks inside router context, or `window.location.replace` when you are outside router context and must leave the page.
 - Do not use `React.useCallback` or `useCallback` unless it is absolutely necessary for correctness or there is a demonstrated performance need. Stable handlers are not a default requirement.
 - Never use `useEffect` defensively. Do not mirror props, query data, or other derived values into local state with an effect just to "keep them in sync". Derive the value directly or update state at the actual event source instead.
 - Do not use remount keys to reset forms or child state. If a stateful library such as Ant Form needs to reflect changed inputs, update it explicitly with its own setter API instead of forcing an unmount/remount cycle.
@@ -109,9 +116,11 @@ manager is `yarn`.
 - Do not duplicate defensive invariant checks in child components when a parent component already guarantees the contract. Trust validated props and parent-owned form constraints instead of re-checking values like `quantity <= 0` in leaf UI components.
 - Do not add impossible-state guards when the surrounding UI flow already prevents that state. If a screen, button state, or parent guard guarantees the condition, trust it instead of adding extra branches like empty-cart submit checks.
 - Never hand-write local module declarations for third-party packages until you have checked whether the package ships its own types or has an `@types/*` package. Prefer the published types over local `.d.ts` shims.
+- Do not invent or import fake typing packages just to satisfy TypeScript. Use the package's published types, Cypress's built-in globals, or the repo's existing domain types instead of ad-hoc `declare module` shims or guessed imports.
 - Prefer the simplest typed implementation over speculative abstraction. If TypeScript can describe the shape, do not add defensive `typeof`/object checks, bridge layers, custom plugins, or indirection "just in case".
 - When the user asks you to add types to something, use the most concrete domain types the code can support. Do not satisfy the request with the broadest generic type that happens to compile.
 - When payloads are produced entirely inside this app, type them from the real call sites. Do not use broad `unknown`/`Record<string, unknown>` payload models unless the data is genuinely dynamic.
+- Never use `as never` as an acceptable type coercion. If the type is wrong, fix the type or the data shape instead of forcing it through `never`.
 - If the user asks for a behavior or workflow, implement it directly in the default path instead of hiding it behind a config toggle, feature flag, or environment variable unless the user explicitly asked for an optional mode.
 - Do not introduce boolean constants that are always `true` or `false`, and do not add CSS modifier classes for dead branches. Use the actual condition or remove the branch entirely.
 - If you do not know how to solve a problem, or the fix is becoming speculative, stop and tell the user instead of guessing, making broad changes, or altering unrelated app code.
@@ -124,6 +133,7 @@ manager is `yarn`.
 - If a user asks you to fix a failing test, keep running the relevant targeted test until it passes or you have a concrete app bug to report back.
 - After changing test code or test config, run the smallest relevant targeted test or spec to confirm the change, not the full Cypress suite unless the user explicitly asks for it.
 - If cache invalidation is involved, reset the relevant cache so the UI reloads the correct data. Do not paper over stale data with arbitrary cache writes, upserts, or other one-off overrides.
+- If a refetch does not return the expected data, do not ad-hoc modify the query cache or mutate the result shape. Fix the underlying query, server response, or refetch path instead.
 - Stateless utilities belong to `utils.ts/x`.
 - Constants belong to `constants.ts/x`.
 - Types belong to `types.ts`.

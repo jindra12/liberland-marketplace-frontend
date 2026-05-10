@@ -1,10 +1,10 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountMainRoute, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("share controls", () => {
     it("uses the desktop share layout at 1200px and up", () => {
         cy.viewport(1200, 1200);
-        mountMainRoute("/companies/company-harbor-labs");
+        mountMainRoute(detailRoute("/companies", "company-harbor-labs"));
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",
@@ -21,16 +21,31 @@ describe("share controls", () => {
         cy.get(".ShareSection__buttons").should("be.visible");
         cy.get(".ShareSection__iconButton").its("length").should("be.greaterThan", 0);
         cy.get(".ShareSection__nativeButton").should("be.visible");
+        cy.get(".ShareSection__reportButton").should("be.visible");
+        cy.get(".ShareSection__reportButton").then(($reportButton) => {
+            const reportRect = $reportButton[0].getBoundingClientRect();
+
+            cy.get(".ShareSection__iconButton")
+                .first()
+                .then(($iconButton) => {
+                    const iconRect = $iconButton[0].getBoundingClientRect();
+
+                    expect(Math.abs(reportRect.width - iconRect.width)).to.be.lessThan(2);
+                    expect(Math.abs(reportRect.height - iconRect.height)).to.be.lessThan(2);
+                });
+        });
     });
 
     it("uses the mobile share layout below 1200px", () => {
         cy.viewport(767, 1200);
-        mountMainRoute("/companies/company-harbor-labs");
+        mountMainRoute(detailRoute("/companies", "company-harbor-labs"));
         cy.contains("h1", "Harbor Labs").should("be.visible");
 
         cy.get(".ShareSection--mobile").should("be.visible");
         cy.get(".ShareSection__mobileActions").should("be.visible");
         cy.get(".ShareSection__mobileButton").its("length").should("be.greaterThan", 0);
+        cy.get(".ShareSection__mobileReportRow").should("be.visible").and("have.css", "justify-content", "flex-end");
+        cy.get(".ShareSection__reportButton").should("be.visible");
         cy.get(".ShareSection__actions").should("not.exist");
         cy.get(".ShareSection__iconButton").should("not.exist");
     });

@@ -36,6 +36,48 @@
     filter: brightness(1.04);
 }
 
+.ShareSection__reportButton.ant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 93, 126, 0.28);
+    background: rgba(16, 20, 31, 0.88);
+    color: #ff8ea7;
+    box-shadow:
+        0 12px 24px rgba(255, 93, 126, 0.18),
+        0 0 0 1px rgba(255, 93, 126, 0.08) inset,
+        0 0 20px rgba(255, 93, 126, 0.14);
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(255, 93, 126, 0.2);
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease,
+        background 0.18s ease;
+}
+
+.ShareSection__reportButton.ant-btn .anticon {
+    font-size: 17px;
+}
+
+.ShareSection__reportButton.ant-btn:hover,
+.ShareSection__reportButton.ant-btn:focus-visible {
+    transform: translateY(-1px);
+    color: #ffb2c1;
+    background: rgba(24, 24, 38, 0.94);
+    box-shadow:
+        0 16px 28px rgba(255, 93, 126, 0.24),
+        0 0 0 1px rgba(255, 93, 126, 0.12) inset,
+        0 0 24px rgba(255, 93, 126, 0.18);
+}
+
 .NativeShareButton.ant-btn {
     font-weight: 700;
 }
@@ -69,6 +111,10 @@
 .ShareSection__mobileButton.ant-btn {
     width: 100%;
     justify-content: center;
+}
+
+.ShareSection__mobileReportRow {
+    width: 100%;
 }
 
 .ListShareDetailButtons--stacked {
@@ -147,6 +193,12 @@
 
     .ShareSection__actions {
         justify-content: flex-start;
+    }
+
+    .ShareSection__reportButton.ant-btn {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
     }
 
     .SplashEntityCard__actionGroup,
