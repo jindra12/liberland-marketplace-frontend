@@ -4,8 +4,12 @@ import {
     homepageMobileQueries,
     mountMainRoute,
     screenshotStep,
+    waitForCollectionQuery,
     waitForPageShell,
 } from "../support/component-tests/utils";
+import { activeFixtures } from "../support/graphqlMock/runtimeState";
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { MARKET_ACCORDION_POSTS_QUERY_LIMIT } from "../../src/components/splash/constants";
 
 describe("homepage", () => {
     it("shows the splash page on desktop", () => {
@@ -46,6 +50,35 @@ describe("homepage", () => {
         cy.get(".SplashPage__syndicationSection").should("be.visible");
 
         screenshotStep("homepage-desktop");
+    });
+
+    it("hides empty sections", () => {
+        cy.viewport(1440, 1200);
+        cy.window().then(() => {
+            activeFixtures.companies.splice(0, activeFixtures.companies.length);
+        });
+        mountMainRoute("/");
+        waitForPageShell();
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 7, page: 1 }, "Products", "Solar Widget", 0);
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 7, page: 1 }, "Jobs", "Dockmaster", 0);
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListCompanies", { limit: 7, page: 1 }, "Companies", "Harbor Labs", 0);
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListStartups", { limit: 7, page: 1 }, "Startups", "Sky Relay", 0);
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListIdentities", { limit: 7, page: 1 }, "Identities", "Nova Rivers", 0);
+        waitForCollectionQuery(
+            MAIN_SERVER_URL,
+            "ListPosts",
+            { limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT, page: 1 },
+            "Posts",
+            "Harbor Operations Digest",
+            0,
+        );
+        waitForCollectionQuery(MAIN_SERVER_URL, "ListPublishedSyndicationUrls", {}, "Syndications", "Main", 0);
+
+        cy.get(".MarketAccordion").should("be.visible");
+        cy.get(".MarketAccordion__titleLink--companies").should("not.exist");
+        cy.contains(".MarketAccordion__section", "Companies").should("not.exist");
+
+        screenshotStep("homepage-desktop-empty-companies");
     });
 
     it("shows the splash page on mobile", () => {

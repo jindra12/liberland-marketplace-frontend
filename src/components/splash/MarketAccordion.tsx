@@ -22,6 +22,7 @@ import { SlicePostList } from "../lists/SlicePostList";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 
 import { MARKET_ACCORDION_POSTS_QUERY_LIMIT, MARKET_ACCORDION_POSTS_REST_OFFSET, MARKET_ACCORDION_POST_SLICES } from "./constants";
+import { isMarketAccordionSectionEnabled } from "./utils";
 
 export const MarketAccordion: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
@@ -58,15 +59,16 @@ export const MarketAccordion: React.FunctionComponent = () => {
             title: "Posts",
             route: "/posts",
             titleClassName: "MarketAccordion__titleLink--posts",
-                body: (
-                    <SlicePostList
-                        items={postItems}
-                        offset={MARKET_ACCORDION_POST_SLICES[0].offset}
-                        limit={MARKET_ACCORDION_POST_SLICES[0].limit}
-                        loading={postsQuery.isLoading}
-                        className="MarketAccordion__postSection--top"
-                    />
-                ),
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[0].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[0].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--top"
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(postsQuery, postItems.length, 1),
         },
         {
             key: "products",
@@ -79,6 +81,10 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     loading={productsQuery.isLoading}
                 />
             ),
+            enabled: isMarketAccordionSectionEnabled(
+                productsQuery,
+                productsQuery.data?.Products?.docs?.length ?? 0,
+            ),
         },
         {
             key: "jobs",
@@ -86,50 +92,79 @@ export const MarketAccordion: React.FunctionComponent = () => {
             route: "/jobs",
             titleClassName: "MarketAccordion__titleLink--jobs",
             body: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} />,
+            enabled: isMarketAccordionSectionEnabled(jobsQuery, jobsQuery.data?.Jobs?.docs?.length ?? 0),
         },
         {
             key: "posts-first-middle",
             title: "Posts",
             route: "/posts",
             titleClassName: "MarketAccordion__titleLink--posts",
-                body: (
-                    <SlicePostList
-                        items={postItems}
-                        offset={MARKET_ACCORDION_POST_SLICES[1].offset}
-                        limit={MARKET_ACCORDION_POST_SLICES[1].limit}
-                        loading={postsQuery.isLoading}
-                        className="MarketAccordion__postSection--firstMiddle"
-                    />
-                ),
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[1].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[1].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--firstMiddle"
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(
+                postsQuery,
+                postItems.length,
+                MARKET_ACCORDION_POST_SLICES[1].offset + 1,
+            ),
         },
         {
             key: "companies",
             title: "Companies",
             route: "/companies",
             titleClassName: "MarketAccordion__titleLink--companies",
-            body: <CompanyCard items={companiesQuery.data?.Companies?.docs || []} loading={companiesQuery.isLoading} />,
+            body: (
+                <CompanyCard
+                    items={companiesQuery.data?.Companies?.docs || []}
+                    loading={companiesQuery.isLoading}
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(
+                companiesQuery,
+                companiesQuery.data?.Companies?.docs?.length ?? 0,
+            ),
         },
         {
             key: "posts-second-middle",
             title: "Posts",
             route: "/posts",
             titleClassName: "MarketAccordion__titleLink--posts",
-                body: (
-                    <SlicePostList
-                        items={postItems}
-                        offset={MARKET_ACCORDION_POST_SLICES[2].offset}
-                        limit={MARKET_ACCORDION_POST_SLICES[2].limit}
-                        loading={postsQuery.isLoading}
-                        className="MarketAccordion__postSection--secondMiddle"
-                    />
-                ),
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[2].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[2].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--secondMiddle"
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(
+                postsQuery,
+                postItems.length,
+                MARKET_ACCORDION_POST_SLICES[2].offset + 1,
+            ),
         },
         {
             key: "ventures",
             title: "Ventures",
             route: "/ventures",
             titleClassName: "MarketAccordion__titleLink--ventures",
-            body: <StartupCard items={startupsQuery.data?.Startups?.docs || []} loading={startupsQuery.isLoading} />,
+            body: (
+                <StartupCard
+                    items={startupsQuery.data?.Startups?.docs || []}
+                    loading={startupsQuery.isLoading}
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(
+                startupsQuery,
+                startupsQuery.data?.Startups?.docs?.length ?? 0,
+            ),
         },
         {
             key: "tribes",
@@ -142,22 +177,30 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     loading={identitiesQuery.isLoading}
                 />
             ),
+            enabled: isMarketAccordionSectionEnabled(
+                identitiesQuery,
+                identitiesQuery.data?.Identities?.docs?.length ?? 0,
+            ),
         },
         {
             key: "posts-third-middle",
             title: "Posts",
             route: "/posts",
             titleClassName: "MarketAccordion__titleLink--posts",
-                body: (
-                    <SlicePostList
-                        items={postItems}
-                        offset={MARKET_ACCORDION_POST_SLICES[3].offset}
-                        limit={MARKET_ACCORDION_POST_SLICES[3].limit}
-                        loading={postsQuery.isLoading}
-                        className="MarketAccordion__postSection--thirdMiddle"
-                    />
-                ),
-            isMobile: true,
+            body: (
+                <SlicePostList
+                    items={postItems}
+                    offset={MARKET_ACCORDION_POST_SLICES[3].offset}
+                    limit={MARKET_ACCORDION_POST_SLICES[3].limit}
+                    loading={postsQuery.isLoading}
+                    className="MarketAccordion__postSection--thirdMiddle"
+                />
+            ),
+            enabled: isMarketAccordionSectionEnabled(
+                postsQuery,
+                postItems.length,
+                MARKET_ACCORDION_POST_SLICES[3].offset + 1,
+            ),
         },
         {
             key: "posts-rest",
@@ -171,12 +214,15 @@ export const MarketAccordion: React.FunctionComponent = () => {
                     titleHidden
                 />
             ),
+            enabled: true,
         },
     ];
+    const visibleItems = items.filter((item) => item.enabled);
+    const mobileItems = visibleItems.filter((item) => item.key === "posts-third-middle");
 
     return md ? (
         <Flex vertical gap="64px" className="MarketAccordion">
-            {items.map((item) => (
+            {visibleItems.map((item) => (
                 <AnimatedIn key={item.key}>
                     <section className="MarketAccordion__section">
                         <Flex vertical gap={24} className="MarketAccordion__header">
@@ -196,7 +242,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         </Flex>
     ) : (
         <Flex vertical gap="32px" className="MarketAccordionMobile">
-            {items.filter(({ isMobile }) => isMobile).map((item) => (
+            {mobileItems.map((item) => (
                 <AnimatedIn key={item.key}>
                     <section className="MarketAccordionMobile__section">
                         <Flex vertical gap={18} className="MarketAccordionMobile__header">
