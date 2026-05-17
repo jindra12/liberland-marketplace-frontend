@@ -1,3 +1,7 @@
+const { loadEnvConfig } = require("@next/env");
+
+loadEnvConfig(process.cwd());
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith("REACT_APP_"))),

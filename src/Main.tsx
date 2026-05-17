@@ -72,7 +72,7 @@ const suspense =
     );
 
 const Main: React.FunctionComponent = () => {
-    const [config] = React.useState(
+    const config = React.useMemo(
         () =>
             new QueryClient({
                 defaultOptions: {
@@ -83,6 +83,7 @@ const Main: React.FunctionComponent = () => {
                     },
                 },
             }),
+        [],
     );
 
     return (
