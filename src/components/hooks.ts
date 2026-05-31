@@ -186,6 +186,8 @@ import {
     useTrackAnalyticsEventMutation as useTrackAnalyticsEventMutationSingle,
     CreateReportDocument,
     useCreateReportMutation as useCreateReportMutationSingle,
+    ShareRepostDocument,
+    useShareRepostMutation as useShareRepostMutationSingle,
     UpdateStartupDocument,
     useUpdateStartupMutation as useUpdateStartupMutationSingle,
     UpdateOrderDocument,
@@ -725,6 +727,10 @@ export const useCreateReportMutation = enhancedMutationFactory(
     useCreateReportMutationSingle,
     CreateReportDocument,
     anonymizeReportVariables,
+);
+export const useShareRepostMutation = enhancedMutationFactory(
+    useShareRepostMutationSingle,
+    ShareRepostDocument,
 );
 export const useCreateInformationRequestMutation = enhancedMutationFactory(
     useCreateInformationRequestMutationSingle,

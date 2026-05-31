@@ -4881,7 +4881,7 @@ export type Category = {
   __typename?: 'Category';
   breadcrumbs?: Maybe<Array<Category_Breadcrumbs>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   generateSlug?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Media>;
@@ -4955,6 +4955,7 @@ export type Category_CreatedAt_Operator = {
 export type Category_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -5125,7 +5126,7 @@ export type CommentReplyPostArgs = {
 export type CommentLike = {
   __typename?: 'CommentLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -5146,6 +5147,7 @@ export type CommentLike_CreatedAt_Operator = {
 export type CommentLike_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -8486,6 +8488,7 @@ export type Company = {
 export type CompanyLike = {
   __typename?: 'CompanyLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -8501,6 +8504,15 @@ export type CompanyLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type CompanyLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type CompanyLike_Id_Operator = {
@@ -8547,6 +8559,7 @@ export type CompanyLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<CompanyLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<CompanyLike_Where_Or>>>;
   createdAt?: InputMaybe<CompanyLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CompanyLike_CreatedBy_Operator>;
   id?: InputMaybe<CompanyLike_Id_Operator>;
   targetID?: InputMaybe<CompanyLike_TargetId_Operator>;
   updatedAt?: InputMaybe<CompanyLike_UpdatedAt_Operator>;
@@ -8557,6 +8570,7 @@ export type CompanyLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<CompanyLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<CompanyLike_Where_Or>>>;
   createdAt?: InputMaybe<CompanyLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CompanyLike_CreatedBy_Operator>;
   id?: InputMaybe<CompanyLike_Id_Operator>;
   targetID?: InputMaybe<CompanyLike_TargetId_Operator>;
   updatedAt?: InputMaybe<CompanyLike_UpdatedAt_Operator>;
@@ -8567,6 +8581,7 @@ export type CompanyLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<CompanyLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<CompanyLike_Where_Or>>>;
   createdAt?: InputMaybe<CompanyLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<CompanyLike_CreatedBy_Operator>;
   id?: InputMaybe<CompanyLike_Id_Operator>;
   targetID?: InputMaybe<CompanyLike_TargetId_Operator>;
   updatedAt?: InputMaybe<CompanyLike_UpdatedAt_Operator>;
@@ -8615,6 +8630,7 @@ export type CompanyLikesDeleteDocAccess = {
 export type CompanyLikesDocAccessFields = {
   __typename?: 'CompanyLikesDocAccessFields';
   createdAt?: Maybe<CompanyLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<CompanyLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<CompanyLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<CompanyLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<CompanyLikesDocAccessFields_UserId>;
@@ -8645,6 +8661,34 @@ export type CompanyLikesDocAccessFields_CreatedAt_Read = {
 
 export type CompanyLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'CompanyLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesDocAccessFields_CreatedBy = {
+  __typename?: 'CompanyLikesDocAccessFields_createdBy';
+  create?: Maybe<CompanyLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<CompanyLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<CompanyLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<CompanyLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type CompanyLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'CompanyLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'CompanyLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'CompanyLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'CompanyLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -8735,6 +8779,7 @@ export type CompanyLikesDocAccessFields_UserId_Update = {
 export type CompanyLikesFields = {
   __typename?: 'CompanyLikesFields';
   createdAt?: Maybe<CompanyLikesFields_CreatedAt>;
+  createdBy?: Maybe<CompanyLikesFields_CreatedBy>;
   targetID?: Maybe<CompanyLikesFields_TargetId>;
   updatedAt?: Maybe<CompanyLikesFields_UpdatedAt>;
   userId?: Maybe<CompanyLikesFields_UserId>;
@@ -8765,6 +8810,34 @@ export type CompanyLikesFields_CreatedAt_Read = {
 
 export type CompanyLikesFields_CreatedAt_Update = {
   __typename?: 'CompanyLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesFields_CreatedBy = {
+  __typename?: 'CompanyLikesFields_createdBy';
+  create?: Maybe<CompanyLikesFields_CreatedBy_Create>;
+  delete?: Maybe<CompanyLikesFields_CreatedBy_Delete>;
+  read?: Maybe<CompanyLikesFields_CreatedBy_Read>;
+  update?: Maybe<CompanyLikesFields_CreatedBy_Update>;
+};
+
+export type CompanyLikesFields_CreatedBy_Create = {
+  __typename?: 'CompanyLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesFields_CreatedBy_Delete = {
+  __typename?: 'CompanyLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesFields_CreatedBy_Read = {
+  __typename?: 'CompanyLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CompanyLikesFields_CreatedBy_Update = {
+  __typename?: 'CompanyLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -9045,6 +9118,7 @@ export type Company_CreatedAt_Operator = {
 export type Company_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -13926,7 +14000,7 @@ export type Identity = {
   completenessScore?: Maybe<Scalars['Float']['output']>;
   contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
   hasLiked?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['String']['output'];
@@ -13945,6 +14019,7 @@ export type Identity = {
 export type IdentityLike = {
   __typename?: 'IdentityLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -13960,6 +14035,15 @@ export type IdentityLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type IdentityLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type IdentityLike_Id_Operator = {
@@ -14006,6 +14090,7 @@ export type IdentityLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<IdentityLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<IdentityLike_Where_Or>>>;
   createdAt?: InputMaybe<IdentityLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<IdentityLike_CreatedBy_Operator>;
   id?: InputMaybe<IdentityLike_Id_Operator>;
   targetID?: InputMaybe<IdentityLike_TargetId_Operator>;
   updatedAt?: InputMaybe<IdentityLike_UpdatedAt_Operator>;
@@ -14016,6 +14101,7 @@ export type IdentityLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<IdentityLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<IdentityLike_Where_Or>>>;
   createdAt?: InputMaybe<IdentityLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<IdentityLike_CreatedBy_Operator>;
   id?: InputMaybe<IdentityLike_Id_Operator>;
   targetID?: InputMaybe<IdentityLike_TargetId_Operator>;
   updatedAt?: InputMaybe<IdentityLike_UpdatedAt_Operator>;
@@ -14026,6 +14112,7 @@ export type IdentityLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<IdentityLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<IdentityLike_Where_Or>>>;
   createdAt?: InputMaybe<IdentityLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<IdentityLike_CreatedBy_Operator>;
   id?: InputMaybe<IdentityLike_Id_Operator>;
   targetID?: InputMaybe<IdentityLike_TargetId_Operator>;
   updatedAt?: InputMaybe<IdentityLike_UpdatedAt_Operator>;
@@ -14074,6 +14161,7 @@ export type IdentityLikesDeleteDocAccess = {
 export type IdentityLikesDocAccessFields = {
   __typename?: 'IdentityLikesDocAccessFields';
   createdAt?: Maybe<IdentityLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<IdentityLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<IdentityLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<IdentityLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<IdentityLikesDocAccessFields_UserId>;
@@ -14104,6 +14192,34 @@ export type IdentityLikesDocAccessFields_CreatedAt_Read = {
 
 export type IdentityLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'IdentityLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesDocAccessFields_CreatedBy = {
+  __typename?: 'IdentityLikesDocAccessFields_createdBy';
+  create?: Maybe<IdentityLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<IdentityLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<IdentityLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<IdentityLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type IdentityLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'IdentityLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'IdentityLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'IdentityLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'IdentityLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -14194,6 +14310,7 @@ export type IdentityLikesDocAccessFields_UserId_Update = {
 export type IdentityLikesFields = {
   __typename?: 'IdentityLikesFields';
   createdAt?: Maybe<IdentityLikesFields_CreatedAt>;
+  createdBy?: Maybe<IdentityLikesFields_CreatedBy>;
   targetID?: Maybe<IdentityLikesFields_TargetId>;
   updatedAt?: Maybe<IdentityLikesFields_UpdatedAt>;
   userId?: Maybe<IdentityLikesFields_UserId>;
@@ -14224,6 +14341,34 @@ export type IdentityLikesFields_CreatedAt_Read = {
 
 export type IdentityLikesFields_CreatedAt_Update = {
   __typename?: 'IdentityLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesFields_CreatedBy = {
+  __typename?: 'IdentityLikesFields_createdBy';
+  create?: Maybe<IdentityLikesFields_CreatedBy_Create>;
+  delete?: Maybe<IdentityLikesFields_CreatedBy_Delete>;
+  read?: Maybe<IdentityLikesFields_CreatedBy_Read>;
+  update?: Maybe<IdentityLikesFields_CreatedBy_Update>;
+};
+
+export type IdentityLikesFields_CreatedBy_Create = {
+  __typename?: 'IdentityLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesFields_CreatedBy_Delete = {
+  __typename?: 'IdentityLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesFields_CreatedBy_Read = {
+  __typename?: 'IdentityLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type IdentityLikesFields_CreatedBy_Update = {
+  __typename?: 'IdentityLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -14369,6 +14514,7 @@ export type Identity_CreatedAt_Operator = {
 export type Identity_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -14566,7 +14712,7 @@ export type Identity_Where_Or = {
 export type InformationRequest = {
   __typename?: 'InformationRequest';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   reason: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -14587,6 +14733,7 @@ export type InformationRequest_CreatedAt_Operator = {
 export type InformationRequest_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -15066,6 +15213,7 @@ export type JobCompanyArgs = {
 export type JobLike = {
   __typename?: 'JobLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -15081,6 +15229,15 @@ export type JobLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type JobLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type JobLike_Id_Operator = {
@@ -15127,6 +15284,7 @@ export type JobLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<JobLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<JobLike_Where_Or>>>;
   createdAt?: InputMaybe<JobLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<JobLike_CreatedBy_Operator>;
   id?: InputMaybe<JobLike_Id_Operator>;
   targetID?: InputMaybe<JobLike_TargetId_Operator>;
   updatedAt?: InputMaybe<JobLike_UpdatedAt_Operator>;
@@ -15137,6 +15295,7 @@ export type JobLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<JobLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<JobLike_Where_Or>>>;
   createdAt?: InputMaybe<JobLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<JobLike_CreatedBy_Operator>;
   id?: InputMaybe<JobLike_Id_Operator>;
   targetID?: InputMaybe<JobLike_TargetId_Operator>;
   updatedAt?: InputMaybe<JobLike_UpdatedAt_Operator>;
@@ -15147,6 +15306,7 @@ export type JobLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<JobLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<JobLike_Where_Or>>>;
   createdAt?: InputMaybe<JobLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<JobLike_CreatedBy_Operator>;
   id?: InputMaybe<JobLike_Id_Operator>;
   targetID?: InputMaybe<JobLike_TargetId_Operator>;
   updatedAt?: InputMaybe<JobLike_UpdatedAt_Operator>;
@@ -15195,6 +15355,7 @@ export type JobLikesDeleteDocAccess = {
 export type JobLikesDocAccessFields = {
   __typename?: 'JobLikesDocAccessFields';
   createdAt?: Maybe<JobLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<JobLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<JobLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<JobLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<JobLikesDocAccessFields_UserId>;
@@ -15225,6 +15386,34 @@ export type JobLikesDocAccessFields_CreatedAt_Read = {
 
 export type JobLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'JobLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesDocAccessFields_CreatedBy = {
+  __typename?: 'JobLikesDocAccessFields_createdBy';
+  create?: Maybe<JobLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<JobLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<JobLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<JobLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type JobLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'JobLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'JobLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'JobLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'JobLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -15315,6 +15504,7 @@ export type JobLikesDocAccessFields_UserId_Update = {
 export type JobLikesFields = {
   __typename?: 'JobLikesFields';
   createdAt?: Maybe<JobLikesFields_CreatedAt>;
+  createdBy?: Maybe<JobLikesFields_CreatedBy>;
   targetID?: Maybe<JobLikesFields_TargetId>;
   updatedAt?: Maybe<JobLikesFields_UpdatedAt>;
   userId?: Maybe<JobLikesFields_UserId>;
@@ -15345,6 +15535,34 @@ export type JobLikesFields_CreatedAt_Read = {
 
 export type JobLikesFields_CreatedAt_Update = {
   __typename?: 'JobLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesFields_CreatedBy = {
+  __typename?: 'JobLikesFields_createdBy';
+  create?: Maybe<JobLikesFields_CreatedBy_Create>;
+  delete?: Maybe<JobLikesFields_CreatedBy_Delete>;
+  read?: Maybe<JobLikesFields_CreatedBy_Read>;
+  update?: Maybe<JobLikesFields_CreatedBy_Update>;
+};
+
+export type JobLikesFields_CreatedBy_Create = {
+  __typename?: 'JobLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesFields_CreatedBy_Delete = {
+  __typename?: 'JobLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesFields_CreatedBy_Read = {
+  __typename?: 'JobLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type JobLikesFields_CreatedBy_Update = {
+  __typename?: 'JobLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -15801,6 +16019,7 @@ export type Job_CreatedAt_Operator = {
 export type Job_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -18137,7 +18356,7 @@ export type Media = {
   alt?: Maybe<Scalars['String']['output']>;
   caption?: Maybe<Scalars['JSON']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   filename?: Maybe<Scalars['String']['output']>;
   filesize?: Maybe<Scalars['Float']['output']>;
   focalX?: Maybe<Scalars['Float']['output']>;
@@ -22186,6 +22405,7 @@ export type Media_CreatedAt_Operator = {
 export type Media_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -23111,6 +23331,7 @@ export type Mutation = {
   restoreVersionSyndication?: Maybe<Syndication>;
   restoreVersionVariant?: Maybe<Variant>;
   setLikeState: LikeStateMutationResult;
+  shareRepost: ShareRepostResult;
   trackAnalyticsEvent: AnalyticsTrackResult;
   updateAccount?: Maybe<Account>;
   updateAddress?: Maybe<Address>;
@@ -24053,6 +24274,11 @@ export type MutationSetLikeStateArgs = {
   collection: LikeableCollectionMutation;
   id: Scalars['String']['input'];
   liked: Scalars['Boolean']['input'];
+};
+
+
+export type MutationShareRepostArgs = {
+  input: ShareRepostInput;
 };
 
 
@@ -30636,6 +30862,7 @@ export type Page_CreatedAt_Operator = {
 export type Page_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -36261,6 +36488,7 @@ export type PostRelatedPostsArgs = {
 export type PostLike = {
   __typename?: 'PostLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -36276,6 +36504,15 @@ export type PostLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type PostLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type PostLike_Id_Operator = {
@@ -36322,6 +36559,7 @@ export type PostLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<PostLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<PostLike_Where_Or>>>;
   createdAt?: InputMaybe<PostLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<PostLike_CreatedBy_Operator>;
   id?: InputMaybe<PostLike_Id_Operator>;
   targetID?: InputMaybe<PostLike_TargetId_Operator>;
   updatedAt?: InputMaybe<PostLike_UpdatedAt_Operator>;
@@ -36332,6 +36570,7 @@ export type PostLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<PostLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<PostLike_Where_Or>>>;
   createdAt?: InputMaybe<PostLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<PostLike_CreatedBy_Operator>;
   id?: InputMaybe<PostLike_Id_Operator>;
   targetID?: InputMaybe<PostLike_TargetId_Operator>;
   updatedAt?: InputMaybe<PostLike_UpdatedAt_Operator>;
@@ -36342,6 +36581,7 @@ export type PostLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<PostLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<PostLike_Where_Or>>>;
   createdAt?: InputMaybe<PostLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<PostLike_CreatedBy_Operator>;
   id?: InputMaybe<PostLike_Id_Operator>;
   targetID?: InputMaybe<PostLike_TargetId_Operator>;
   updatedAt?: InputMaybe<PostLike_UpdatedAt_Operator>;
@@ -36390,6 +36630,7 @@ export type PostLikesDeleteDocAccess = {
 export type PostLikesDocAccessFields = {
   __typename?: 'PostLikesDocAccessFields';
   createdAt?: Maybe<PostLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<PostLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<PostLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<PostLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<PostLikesDocAccessFields_UserId>;
@@ -36420,6 +36661,34 @@ export type PostLikesDocAccessFields_CreatedAt_Read = {
 
 export type PostLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'PostLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesDocAccessFields_CreatedBy = {
+  __typename?: 'PostLikesDocAccessFields_createdBy';
+  create?: Maybe<PostLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<PostLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<PostLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<PostLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type PostLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'PostLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'PostLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'PostLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'PostLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -36510,6 +36779,7 @@ export type PostLikesDocAccessFields_UserId_Update = {
 export type PostLikesFields = {
   __typename?: 'PostLikesFields';
   createdAt?: Maybe<PostLikesFields_CreatedAt>;
+  createdBy?: Maybe<PostLikesFields_CreatedBy>;
   targetID?: Maybe<PostLikesFields_TargetId>;
   updatedAt?: Maybe<PostLikesFields_UpdatedAt>;
   userId?: Maybe<PostLikesFields_UserId>;
@@ -36540,6 +36810,34 @@ export type PostLikesFields_CreatedAt_Read = {
 
 export type PostLikesFields_CreatedAt_Update = {
   __typename?: 'PostLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesFields_CreatedBy = {
+  __typename?: 'PostLikesFields_createdBy';
+  create?: Maybe<PostLikesFields_CreatedBy_Create>;
+  delete?: Maybe<PostLikesFields_CreatedBy_Delete>;
+  read?: Maybe<PostLikesFields_CreatedBy_Read>;
+  update?: Maybe<PostLikesFields_CreatedBy_Update>;
+};
+
+export type PostLikesFields_CreatedBy_Create = {
+  __typename?: 'PostLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesFields_CreatedBy_Delete = {
+  __typename?: 'PostLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesFields_CreatedBy_Read = {
+  __typename?: 'PostLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type PostLikesFields_CreatedBy_Update = {
+  __typename?: 'PostLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -36893,6 +37191,7 @@ export type Post_CreatedAt_Operator = {
 export type Post_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -38851,6 +39150,7 @@ export type Product = {
   completenessScore?: Maybe<Scalars['Float']['output']>;
   contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   cryptoAddresses?: Maybe<Product_CryptoAddresses>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -38897,6 +39197,7 @@ export type ProductVariantsArgs = {
 export type ProductLike = {
   __typename?: 'ProductLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -38912,6 +39213,15 @@ export type ProductLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ProductLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type ProductLike_Id_Operator = {
@@ -38958,6 +39268,7 @@ export type ProductLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<ProductLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<ProductLike_Where_Or>>>;
   createdAt?: InputMaybe<ProductLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<ProductLike_CreatedBy_Operator>;
   id?: InputMaybe<ProductLike_Id_Operator>;
   targetID?: InputMaybe<ProductLike_TargetId_Operator>;
   updatedAt?: InputMaybe<ProductLike_UpdatedAt_Operator>;
@@ -38968,6 +39279,7 @@ export type ProductLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<ProductLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<ProductLike_Where_Or>>>;
   createdAt?: InputMaybe<ProductLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<ProductLike_CreatedBy_Operator>;
   id?: InputMaybe<ProductLike_Id_Operator>;
   targetID?: InputMaybe<ProductLike_TargetId_Operator>;
   updatedAt?: InputMaybe<ProductLike_UpdatedAt_Operator>;
@@ -38978,6 +39290,7 @@ export type ProductLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<ProductLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<ProductLike_Where_Or>>>;
   createdAt?: InputMaybe<ProductLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<ProductLike_CreatedBy_Operator>;
   id?: InputMaybe<ProductLike_Id_Operator>;
   targetID?: InputMaybe<ProductLike_TargetId_Operator>;
   updatedAt?: InputMaybe<ProductLike_UpdatedAt_Operator>;
@@ -39026,6 +39339,7 @@ export type ProductLikesDeleteDocAccess = {
 export type ProductLikesDocAccessFields = {
   __typename?: 'ProductLikesDocAccessFields';
   createdAt?: Maybe<ProductLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<ProductLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<ProductLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<ProductLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<ProductLikesDocAccessFields_UserId>;
@@ -39056,6 +39370,34 @@ export type ProductLikesDocAccessFields_CreatedAt_Read = {
 
 export type ProductLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'ProductLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesDocAccessFields_CreatedBy = {
+  __typename?: 'ProductLikesDocAccessFields_createdBy';
+  create?: Maybe<ProductLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<ProductLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<ProductLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<ProductLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type ProductLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'ProductLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'ProductLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'ProductLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'ProductLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -39146,6 +39488,7 @@ export type ProductLikesDocAccessFields_UserId_Update = {
 export type ProductLikesFields = {
   __typename?: 'ProductLikesFields';
   createdAt?: Maybe<ProductLikesFields_CreatedAt>;
+  createdBy?: Maybe<ProductLikesFields_CreatedBy>;
   targetID?: Maybe<ProductLikesFields_TargetId>;
   updatedAt?: Maybe<ProductLikesFields_UpdatedAt>;
   userId?: Maybe<ProductLikesFields_UserId>;
@@ -39176,6 +39519,34 @@ export type ProductLikesFields_CreatedAt_Read = {
 
 export type ProductLikesFields_CreatedAt_Update = {
   __typename?: 'ProductLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesFields_CreatedBy = {
+  __typename?: 'ProductLikesFields_createdBy';
+  create?: Maybe<ProductLikesFields_CreatedBy_Create>;
+  delete?: Maybe<ProductLikesFields_CreatedBy_Delete>;
+  read?: Maybe<ProductLikesFields_CreatedBy_Read>;
+  update?: Maybe<ProductLikesFields_CreatedBy_Update>;
+};
+
+export type ProductLikesFields_CreatedBy_Create = {
+  __typename?: 'ProductLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesFields_CreatedBy_Delete = {
+  __typename?: 'ProductLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesFields_CreatedBy_Read = {
+  __typename?: 'ProductLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductLikesFields_CreatedBy_Update = {
+  __typename?: 'ProductLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -39322,6 +39693,7 @@ export type ProductVersion_Version = {
   completenessScore?: Maybe<Scalars['Float']['output']>;
   contentRankScore?: Maybe<Scalars['Float']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   cryptoAddresses?: Maybe<ProductVersion_Version_CryptoAddresses>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -39465,6 +39837,7 @@ export type Product_CompanyIdentityId_Operator = {
 export type Product_Company_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -39499,6 +39872,15 @@ export type Product_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Product_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Product_CryptoAddresses__Address_Operator = {
@@ -39789,6 +40171,7 @@ export type Product_Where = {
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Product_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
@@ -39829,6 +40212,7 @@ export type Product_Where_And = {
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Product_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
@@ -39869,6 +40253,7 @@ export type Product_Where_Or = {
   completenessScore?: InputMaybe<Product_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Product_ContentRankScore_Operator>;
   createdAt?: InputMaybe<Product_CreatedAt_Operator>;
+  createdBy?: InputMaybe<Product_CreatedBy_Operator>;
   cryptoAddresses__address?: InputMaybe<Product_CryptoAddresses__Address_Operator>;
   cryptoAddresses__chain?: InputMaybe<Product_CryptoAddresses__Chain_Operator>;
   deletedAt?: InputMaybe<Product_DeletedAt_Operator>;
@@ -39947,6 +40332,7 @@ export type ProductsDocAccessFields = {
   completenessScore?: Maybe<ProductsDocAccessFields_CompletenessScore>;
   contentRankScore?: Maybe<ProductsDocAccessFields_ContentRankScore>;
   createdAt?: Maybe<ProductsDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<ProductsDocAccessFields_CreatedBy>;
   cryptoAddresses?: Maybe<ProductsDocAccessFields_CryptoAddresses>;
   deletedAt?: Maybe<ProductsDocAccessFields_DeletedAt>;
   description?: Maybe<ProductsDocAccessFields_Description>;
@@ -40140,6 +40526,34 @@ export type ProductsDocAccessFields_CreatedAt_Read = {
 
 export type ProductsDocAccessFields_CreatedAt_Update = {
   __typename?: 'ProductsDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CreatedBy = {
+  __typename?: 'ProductsDocAccessFields_createdBy';
+  create?: Maybe<ProductsDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<ProductsDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<ProductsDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<ProductsDocAccessFields_CreatedBy_Update>;
+};
+
+export type ProductsDocAccessFields_CreatedBy_Create = {
+  __typename?: 'ProductsDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'ProductsDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CreatedBy_Read = {
+  __typename?: 'ProductsDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_CreatedBy_Update = {
+  __typename?: 'ProductsDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -41034,6 +41448,7 @@ export type ProductsFields = {
   completenessScore?: Maybe<ProductsFields_CompletenessScore>;
   contentRankScore?: Maybe<ProductsFields_ContentRankScore>;
   createdAt?: Maybe<ProductsFields_CreatedAt>;
+  createdBy?: Maybe<ProductsFields_CreatedBy>;
   cryptoAddresses?: Maybe<ProductsFields_CryptoAddresses>;
   deletedAt?: Maybe<ProductsFields_DeletedAt>;
   description?: Maybe<ProductsFields_Description>;
@@ -41227,6 +41642,34 @@ export type ProductsFields_CreatedAt_Read = {
 
 export type ProductsFields_CreatedAt_Update = {
   __typename?: 'ProductsFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CreatedBy = {
+  __typename?: 'ProductsFields_createdBy';
+  create?: Maybe<ProductsFields_CreatedBy_Create>;
+  delete?: Maybe<ProductsFields_CreatedBy_Delete>;
+  read?: Maybe<ProductsFields_CreatedBy_Read>;
+  update?: Maybe<ProductsFields_CreatedBy_Update>;
+};
+
+export type ProductsFields_CreatedBy_Create = {
+  __typename?: 'ProductsFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CreatedBy_Delete = {
+  __typename?: 'ProductsFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CreatedBy_Read = {
+  __typename?: 'ProductsFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_CreatedBy_Update = {
+  __typename?: 'ProductsFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -44656,7 +45099,7 @@ export type Report = {
   __typename?: 'Report';
   contentLink: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  createdBy: User;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   reason: Scalars['String']['output'];
   status?: Maybe<Report_Status>;
@@ -44694,6 +45137,7 @@ export type Report_CreatedAt_Operator = {
 export type Report_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -47162,6 +47606,28 @@ export type SessionsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type ShareRepostInput = {
+  companyId?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  link: Scalars['String']['input'];
+};
+
+export type ShareRepostResult = {
+  __typename?: 'ShareRepostResult';
+  company?: Maybe<Company>;
+  post?: Maybe<Post>;
+  source: ShareRepostSource;
+};
+
+export type ShareRepostSource = {
+  __typename?: 'ShareRepostSource';
+  description: Scalars['String']['output'];
+  imageURL?: Maybe<Scalars['String']['output']>;
+  isSinglePageApp: Scalars['Boolean']['output'];
+  link: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
 export type Startup = {
   __typename?: 'Startup';
   _status?: Maybe<Startup__Status>;
@@ -47492,6 +47958,7 @@ export type Startup_CreatedAt_Operator = {
 export type Startup_CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -57408,6 +57875,7 @@ export type VariantsUpdateDocAccess = {
 export type VentureLike = {
   __typename?: 'VentureLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
   id: Scalars['String']['output'];
   targetID: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -57423,6 +57891,15 @@ export type VentureLike_CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VentureLike_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type VentureLike_Id_Operator = {
@@ -57469,6 +57946,7 @@ export type VentureLike_Where = {
   AND?: InputMaybe<Array<InputMaybe<VentureLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VentureLike_Where_Or>>>;
   createdAt?: InputMaybe<VentureLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureLike_CreatedBy_Operator>;
   id?: InputMaybe<VentureLike_Id_Operator>;
   targetID?: InputMaybe<VentureLike_TargetId_Operator>;
   updatedAt?: InputMaybe<VentureLike_UpdatedAt_Operator>;
@@ -57479,6 +57957,7 @@ export type VentureLike_Where_And = {
   AND?: InputMaybe<Array<InputMaybe<VentureLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VentureLike_Where_Or>>>;
   createdAt?: InputMaybe<VentureLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureLike_CreatedBy_Operator>;
   id?: InputMaybe<VentureLike_Id_Operator>;
   targetID?: InputMaybe<VentureLike_TargetId_Operator>;
   updatedAt?: InputMaybe<VentureLike_UpdatedAt_Operator>;
@@ -57489,6 +57968,7 @@ export type VentureLike_Where_Or = {
   AND?: InputMaybe<Array<InputMaybe<VentureLike_Where_And>>>;
   OR?: InputMaybe<Array<InputMaybe<VentureLike_Where_Or>>>;
   createdAt?: InputMaybe<VentureLike_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureLike_CreatedBy_Operator>;
   id?: InputMaybe<VentureLike_Id_Operator>;
   targetID?: InputMaybe<VentureLike_TargetId_Operator>;
   updatedAt?: InputMaybe<VentureLike_UpdatedAt_Operator>;
@@ -57537,6 +58017,7 @@ export type VentureLikesDeleteDocAccess = {
 export type VentureLikesDocAccessFields = {
   __typename?: 'VentureLikesDocAccessFields';
   createdAt?: Maybe<VentureLikesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<VentureLikesDocAccessFields_CreatedBy>;
   targetID?: Maybe<VentureLikesDocAccessFields_TargetId>;
   updatedAt?: Maybe<VentureLikesDocAccessFields_UpdatedAt>;
   userId?: Maybe<VentureLikesDocAccessFields_UserId>;
@@ -57567,6 +58048,34 @@ export type VentureLikesDocAccessFields_CreatedAt_Read = {
 
 export type VentureLikesDocAccessFields_CreatedAt_Update = {
   __typename?: 'VentureLikesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesDocAccessFields_CreatedBy = {
+  __typename?: 'VentureLikesDocAccessFields_createdBy';
+  create?: Maybe<VentureLikesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<VentureLikesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<VentureLikesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<VentureLikesDocAccessFields_CreatedBy_Update>;
+};
+
+export type VentureLikesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'VentureLikesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'VentureLikesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'VentureLikesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'VentureLikesDocAccessFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -57657,6 +58166,7 @@ export type VentureLikesDocAccessFields_UserId_Update = {
 export type VentureLikesFields = {
   __typename?: 'VentureLikesFields';
   createdAt?: Maybe<VentureLikesFields_CreatedAt>;
+  createdBy?: Maybe<VentureLikesFields_CreatedBy>;
   targetID?: Maybe<VentureLikesFields_TargetId>;
   updatedAt?: Maybe<VentureLikesFields_UpdatedAt>;
   userId?: Maybe<VentureLikesFields_UserId>;
@@ -57687,6 +58197,34 @@ export type VentureLikesFields_CreatedAt_Read = {
 
 export type VentureLikesFields_CreatedAt_Update = {
   __typename?: 'VentureLikesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesFields_CreatedBy = {
+  __typename?: 'VentureLikesFields_createdBy';
+  create?: Maybe<VentureLikesFields_CreatedBy_Create>;
+  delete?: Maybe<VentureLikesFields_CreatedBy_Delete>;
+  read?: Maybe<VentureLikesFields_CreatedBy_Read>;
+  update?: Maybe<VentureLikesFields_CreatedBy_Update>;
+};
+
+export type VentureLikesFields_CreatedBy_Create = {
+  __typename?: 'VentureLikesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesFields_CreatedBy_Delete = {
+  __typename?: 'VentureLikesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesFields_CreatedBy_Read = {
+  __typename?: 'VentureLikesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureLikesFields_CreatedBy_Update = {
+  __typename?: 'VentureLikesFields_createdBy_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -59084,6 +59622,7 @@ export type MutationCompanyInput = {
 
 export type MutationCompanyLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -59091,6 +59630,7 @@ export type MutationCompanyLikeInput = {
 
 export type MutationCompanyLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -59274,6 +59814,7 @@ export type MutationIdentityInput = {
 
 export type MutationIdentityLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -59281,6 +59822,7 @@ export type MutationIdentityLikeInput = {
 
 export type MutationIdentityLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -59353,6 +59895,7 @@ export type MutationJobInput = {
 
 export type MutationJobLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -59360,6 +59903,7 @@ export type MutationJobLikeInput = {
 
 export type MutationJobLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60022,6 +60566,7 @@ export type MutationPostInput = {
 
 export type MutationPostLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60029,6 +60574,7 @@ export type MutationPostLikeInput = {
 
 export type MutationPostLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60089,6 +60635,7 @@ export type MutationProductInput = {
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
   contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationProduct_CryptoAddressesInput>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -60118,6 +60665,7 @@ export type MutationProductInput = {
 
 export type MutationProductLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60125,6 +60673,7 @@ export type MutationProductLikeInput = {
 
 export type MutationProductLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60137,6 +60686,7 @@ export type MutationProductUpdateInput = {
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
   contentRankScore?: InputMaybe<Scalars['Float']['input']>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   cryptoAddresses?: InputMaybe<MutationProductUpdate_CryptoAddressesInput>;
   deletedAt?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -60624,6 +61174,7 @@ export type MutationVariantUpdateInput = {
 
 export type MutationVentureLikeInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID: Scalars['String']['input'];
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -60631,6 +61182,7 @@ export type MutationVentureLikeInput = {
 
 export type MutationVentureLikeUpdateInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
   targetID?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -61338,6 +61890,7 @@ export type VersionsCompany_Version__CreatedAt_Operator = {
 export type VersionsCompany_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -61814,6 +62367,7 @@ export type VersionsJob_Version__CreatedAt_Operator = {
 export type VersionsJob_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -62232,6 +62786,7 @@ export type VersionsPage_Version__CreatedAt_Operator = {
 export type VersionsPage_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -62664,6 +63219,7 @@ export type VersionsPost_Version__CreatedAt_Operator = {
 export type VersionsPost_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -63046,6 +63602,7 @@ export type VersionsProduct_Version__CompanyIdentityId_Operator = {
 export type VersionsProduct_Version__Company_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -63080,6 +63637,15 @@ export type VersionsProduct_Version__CreatedAt_Operator = {
   less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
   like?: InputMaybe<Scalars['DateTime']['input']>;
   not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsProduct_Version__CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type VersionsProduct_Version__CryptoAddresses__Address_Operator = {
@@ -63365,6 +63931,7 @@ export type VersionsProduct_Where = {
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsProduct_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
@@ -63410,6 +63977,7 @@ export type VersionsProduct_Where_And = {
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsProduct_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
@@ -63455,6 +64023,7 @@ export type VersionsProduct_Where_Or = {
   version__completenessScore?: InputMaybe<VersionsProduct_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsProduct_Version__ContentRankScore_Operator>;
   version__createdAt?: InputMaybe<VersionsProduct_Version__CreatedAt_Operator>;
+  version__createdBy?: InputMaybe<VersionsProduct_Version__CreatedBy_Operator>;
   version__cryptoAddresses__address?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Address_Operator>;
   version__cryptoAddresses__chain?: InputMaybe<VersionsProduct_Version__CryptoAddresses__Chain_Operator>;
   version__deletedAt?: InputMaybe<VersionsProduct_Version__DeletedAt_Operator>;
@@ -63624,6 +64193,7 @@ export type VersionsStartup_Version__CreatedAt_Operator = {
 export type VersionsStartup_Version__CreatedBy_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   not_equals?: InputMaybe<Scalars['JSON']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
@@ -65131,6 +65701,13 @@ export type CreateReportMutationVariables = Exact<{
 
 
 export type CreateReportMutation = { __typename?: 'Mutation', createReport?: { __typename?: 'Report', id: string, contentLink: string, reason: string, createdAt?: any | null, userId: { __typename?: 'User', id: string } } | null };
+
+export type ShareRepostMutationVariables = Exact<{
+  input: ShareRepostInput;
+}>;
+
+
+export type ShareRepostMutation = { __typename?: 'Mutation', shareRepost: { __typename?: 'ShareRepostResult', company?: { __typename?: 'Company', id: string, name?: string | null } | null, post?: { __typename?: 'Post', id: string, content?: string | null, repost?: string | null, title?: string | null, meta?: { __typename?: 'Post_Meta', description?: string | null } | null } | null, source: { __typename?: 'ShareRepostSource', description: string, imageURL?: string | null, isSinglePageApp: boolean, link: string, title: string } } };
 
 export type JoinStartupMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -71015,6 +71592,49 @@ export const useCreateReportMutation = <
 
 
 useCreateReportMutation.fetcher = (variables: CreateReportMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReportMutation, CreateReportMutationVariables>(CreateReportDocument, variables, options);
+
+export const ShareRepostDocument = `
+    mutation ShareRepost($input: ShareRepostInput!) {
+  shareRepost(input: $input) {
+    company {
+      id
+      name
+    }
+    post {
+      id
+      content
+      meta {
+        description
+      }
+      repost
+      title
+    }
+    source {
+      description
+      imageURL
+      isSinglePageApp
+      link
+      title
+    }
+  }
+}
+    `;
+
+export const useShareRepostMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ShareRepostMutation, TError, ShareRepostMutationVariables, TContext>) => {
+    
+    return useMutation<ShareRepostMutation, TError, ShareRepostMutationVariables, TContext>(
+      {
+    mutationKey: ['ShareRepost'],
+    mutationFn: (variables?: ShareRepostMutationVariables) => gqlFetcher<ShareRepostMutation, ShareRepostMutationVariables>(ShareRepostDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useShareRepostMutation.fetcher = (variables: ShareRepostMutationVariables, options?: RequestInit['headers']) => gqlFetcher<ShareRepostMutation, ShareRepostMutationVariables>(ShareRepostDocument, variables, options);
 
 export const JoinStartupDocument = `
     mutation JoinStartup($id: String!) {

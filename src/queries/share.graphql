@@ -1,0 +1,24 @@
+mutation ShareRepost($input: ShareRepostInput!) {
+    shareRepost(input: $input) {
+      company {
+        id
+        name
+      }
+      post {
+        id
+        content
+        meta {
+          description
+        }
+        repost
+        title
+      }
+      source {
+        description
+        imageURL
+        isSinglePageApp
+        link
+        title
+      }
+    }
+  }

@@ -22,6 +22,12 @@ export const graphqlSchema = buildSchema(`
     scalar mutationStartupUpdateInput
     scalar mutationUserUpdateInput
 
+    input ShareRepostInput {
+        companyId: String
+        description: String
+        link: String!
+    }
+
     enum LikeableCollectionMutation {
         companies
         identities
@@ -129,6 +135,7 @@ export const graphqlSchema = buildSchema(`
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
         createInformationRequest(data: mutationInformationRequestInput): MockNode
         createReport(data: mutationReportInput): MockNode
+        shareRepost(input: ShareRepostInput!): ShareRepostResult!
         createComment(data: JSON): MockNode
         deleteComment(id: String!): MockNode
         updateComment(id: String!, data: JSON): MockNode
@@ -147,6 +154,20 @@ export const graphqlSchema = buildSchema(`
         hasLiked: Boolean
         id: String
         likeCount: Int
+    }
+
+    type ShareRepostSource {
+        description: String!
+        imageURL: String
+        isSinglePageApp: Boolean!
+        link: String!
+        title: String!
+    }
+
+    type ShareRepostResult {
+        company: Company
+        post: Post
+        source: ShareRepostSource!
     }
 
     type Permission {

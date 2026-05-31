@@ -302,6 +302,48 @@ export const mutationResolvers = {
             createdBy: currentUser,
         });
     },
+    shareRepost: (
+        _parent: unknown,
+        args: { input?: { companyId?: string | null; description?: string | null; link?: string } },
+        context: unknown,
+    ) => {
+        const input = args.input || {};
+        const fixtures = getFixturesForContext(context);
+        const link = typeof input.link === "string" ? input.link : "";
+        const description = typeof input.description === "string" ? input.description : "";
+        const company =
+            input.companyId ? fixtures.companies.find((item) => item.id === input.companyId) || fixtures.companies[0] : fixtures.companies[0];
+        const title = link ? new URL(link).hostname.replace(/^www\./i, "") : "Shared content";
+        const post = createNode(
+            fixtures.posts,
+            "post",
+            {
+                company: company ? company.id : undefined,
+                content: description ? `${description}\n\n[Original content](${link})` : `[Original content](${link})`,
+                meta: {
+                    title,
+                    description: description || title,
+                    image: null,
+                },
+                repost: link,
+                title,
+                _status: "published",
+            },
+            "published",
+        );
+
+        return {
+            company: company ? searchNode({ id: company.id, name: company.name }) : null,
+            post,
+            source: {
+                description: description || title,
+                imageURL: null,
+                isSinglePageApp: false,
+                link,
+                title,
+            },
+        };
+    },
     deleteCart: (_parent: unknown, args: { id?: string }): MockNode => removeNode(activeFixtures.carts, args.id),
     updateCart: (_parent: unknown, args: { id?: string; data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});

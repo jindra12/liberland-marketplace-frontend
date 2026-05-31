@@ -19,6 +19,7 @@ import { Button, Flex, Grid, Space, Typography } from "antd";
 import { ReportAction } from "../report/ReportAction";
 
 import { NativeShareButton } from "./NativeShareButton";
+import { ShareRepostAction } from "./ShareRepostAction";
 import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
 import type { SubscriptionTarget } from "./SubscribeButton/types";
 import { useCopyLink } from "./useCopyLink";
@@ -148,7 +149,18 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                         </Space.Compact>
                     )}
                     <Flex justify="flex-end" className="ShareSection__mobileReportRow">
-                        <ReportAction contentLink={reportPath} serverURL={props.serverURL} className="ShareSection__reportButton" />
+                        <Space size={12} className="ShareSection__mobileReportActions">
+                            <ShareRepostAction
+                                contentLink={shareUrl}
+                                serverURL={props.serverURL}
+                                className="ShareSection__repostButton"
+                            />
+                            <ReportAction
+                                contentLink={reportPath}
+                                serverURL={props.serverURL}
+                                className="ShareSection__reportButton"
+                            />
+                        </Space>
                     </Flex>
                 </Flex>
             </>
@@ -165,7 +177,18 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
                             <React.Fragment key={key}>{render(payload)}</React.Fragment>
                         ))}
                     </Space>
-                    <ReportAction contentLink={reportPath} serverURL={props.serverURL} className="ShareSection__reportButton" />
+                    <Space size={12} className="ShareSection__reportActions">
+                        <ShareRepostAction
+                            contentLink={shareUrl}
+                            serverURL={props.serverURL}
+                            className="ShareSection__repostButton"
+                        />
+                        <ReportAction
+                            contentLink={reportPath}
+                            serverURL={props.serverURL}
+                            className="ShareSection__reportButton"
+                        />
+                    </Space>
                 </Flex>
             </Flex>
         </>
