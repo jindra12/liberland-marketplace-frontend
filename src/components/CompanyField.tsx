@@ -10,6 +10,7 @@ type CompanyFieldProps = {
     serverURL?: string | null;
     userId?: string | null;
     placeholder?: string;
+    allowPrivate?: boolean;
 };
 
 export const CompanyField: React.FunctionComponent<CompanyFieldProps> = (props) => {
@@ -28,10 +29,10 @@ export const CompanyField: React.FunctionComponent<CompanyFieldProps> = (props) 
             }}
             placeholder={props.placeholder ?? "Select a company"}
             options={companies
-                .filter((company) => Boolean(company.name))
+                .filter((company) => props.allowPrivate || !company.isPrivate)
                 .map((company) => ({
                     value: company.id,
-                    label: company.name as string,
+                    label: company.name,
                 }))}
             loading={companiesQuery.isLoading}
             disabled={companiesQuery.isLoading}

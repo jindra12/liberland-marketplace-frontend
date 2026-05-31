@@ -100,7 +100,7 @@ const mountLike = (liked: boolean | null | undefined, authenticated: boolean, em
                                     />
                                 }
                             />
-                            <Route path="/publish" element={<PublishContent />} />
+                            <Route path="/publish" element={<PublishContent url={MAIN_SERVER_URL} />} />
                         </Routes>
                     </AuthContextProvider>
                 </EndpointContextProvider>

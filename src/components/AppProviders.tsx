@@ -16,7 +16,6 @@ import { TronContext } from "./crypto/TronContext";
 import { DisclaimersService } from "./disclaimers/DisclaimersService";
 import { EndpointContextProvider } from "./EndpointContext";
 import { AppErrorBoundary } from "./ErrorBoundary/AppErrorBoundary";
-import { PermissionsContextProvider } from "./PermissionsContext";
 import { RouteScrollToTop } from "./RouteScrollToTop";
 
 export interface AppProvidersProps {
@@ -27,33 +26,29 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
     return (
         <HelmetProvider>
             <EndpointContextProvider>
-                <PermissionsContextProvider>
-                    <TronContext>
-                        <SolanaContext>
-                            <ThirdwebProvider>
-                                <BrowserRouter>
-                                    <AuthContextProvider>
-                                        <CypressHistorySupport />
-                                        <AppAnalyticsProvider>
-                                            <AntProvider>
-                                                <AppErrorBoundary>
-                                                    <AppRouteTitle />
-                                                    <RouteScrollToTop>
-                                                        <CartMutationProvider>
-                                                            <DisclaimersService>
-                                                                {props.children}
-                                                            </DisclaimersService>
-                                                        </CartMutationProvider>
-                                                    </RouteScrollToTop>
-                                                </AppErrorBoundary>
-                                            </AntProvider>
-                                        </AppAnalyticsProvider>
-                                    </AuthContextProvider>
-                                </BrowserRouter>
-                            </ThirdwebProvider>
-                        </SolanaContext>
-                    </TronContext>
-                </PermissionsContextProvider>
+                <TronContext>
+                    <SolanaContext>
+                        <ThirdwebProvider>
+                            <BrowserRouter>
+                                <AuthContextProvider>
+                                    <CypressHistorySupport />
+                                    <AppAnalyticsProvider>
+                                        <AntProvider>
+                                            <AppErrorBoundary>
+                                                <AppRouteTitle />
+                                                <RouteScrollToTop>
+                                                    <CartMutationProvider>
+                                                        <DisclaimersService>{props.children}</DisclaimersService>
+                                                    </CartMutationProvider>
+                                                </RouteScrollToTop>
+                                            </AppErrorBoundary>
+                                        </AntProvider>
+                                    </AppAnalyticsProvider>
+                                </AuthContextProvider>
+                            </BrowserRouter>
+                        </ThirdwebProvider>
+                    </SolanaContext>
+                </TronContext>
             </EndpointContextProvider>
         </HelmetProvider>
     );

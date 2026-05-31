@@ -139,7 +139,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                 ]}
                 className="Publish__postCompanyField"
             >
-                <CompanyField serverURL={props.url} userId={userId} />
+                <CompanyField serverURL={props.url} userId={userId} allowPrivate />
             </Form.Item>
             <Form.Item name="relatedTarget" label="Related content" className="Publish__postRelatedField">
                 <RelatedTargetField />

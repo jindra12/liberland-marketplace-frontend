@@ -7,6 +7,7 @@ import {
     fillFormField,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    mockOwnedCompaniesByCreatorQuery,
     selectFormOption,
     screenshotStep,
 } from "../support/component-tests/utils";
@@ -16,6 +17,10 @@ const selectOwnedCompany = (companyName: string) => {
 };
 
 const openPostPublishForm = () => {
+    mockOwnedCompaniesByCreatorQuery([
+        { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+        { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+    ]);
     mountAuthenticatedMainRoute("/publish");
     openPublishCategory("Post");
 };
@@ -119,6 +124,16 @@ describe("posts", () => {
             assertFormFieldValue("Description", updatedSeoDescription);
             screenshotStep("posts-created-and-updated");
         });
+    });
+
+    it("allows selecting a private company in the post form", () => {
+        openPostPublishForm();
+
+        fillFormField("Title", "Private Harbor Update");
+        fillFormField("Content", "Private post content.");
+        selectFormOption("Company", "Reef Studio");
+
+        assertSelectValue("Company", "Reef Studio");
     });
 
     it("deletes a post", () => {

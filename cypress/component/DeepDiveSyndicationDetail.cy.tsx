@@ -21,7 +21,6 @@ describe("syndication detail", () => {
         cy.contains(".EntityDetail__title", "Main").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Enabled").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Primary endpoint").should("be.visible");
-        cy.get(".SyndicationDetail__publishListingsTag").contains("Can publish listings").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("be.visible");
         cy.contains("You must be 18+ to see this content.").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains("Main").should("be.visible");
@@ -64,7 +63,6 @@ describe("syndication detail", () => {
 
         cy.get(".SyndicationDetail").should("be.visible");
         cy.contains(".EntityDetail__title", "Co-op Main").should("be.visible");
-        cy.get(".SyndicationDetail__publishListingsTag").contains("Cannot publish listings").should("be.visible");
     });
 
     it("shows the 404 fallback when the endpoint is not in the current context", () => {

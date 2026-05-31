@@ -177,6 +177,51 @@ export const mountAuthenticatedMainRoute = (route: string, emailVerified = true)
     cy.routerNavigate(route);
 };
 
+export const mockOwnedCompaniesByCreatorQuery = (
+    docs: Array<{
+        id: string;
+        name: string;
+        isPrivate: boolean;
+    }>,
+) => {
+    cy.intercept("POST", "**/api/graphql", (req) => {
+        const body = req.body as { operationName?: string; query?: string };
+
+        if (body.operationName === "ListCompaniesByCreator" || body.query?.includes("ListCompaniesByCreator")) {
+            req.alias = "ownedCompanies";
+            req.reply({
+                data: {
+                    Companies: {
+                        docs: docs.map((company) => ({
+                            id: company.id,
+                            isSubscribed: false,
+                            serverURL: MAIN_SERVER_URL,
+                            name: company.name,
+                            verification: "Trader",
+                            isPrivate: company.isPrivate,
+                            likeCount: 0,
+                            cryptoAddresses: {
+                                chain: "Ethereum",
+                                address: "0xOwnedCompany",
+                            },
+                            image: null,
+                            _status: "published",
+                        })),
+                        totalDocs: docs.length,
+                        limit: 100,
+                        totalPages: 1,
+                        page: 1,
+                        hasPrevPage: false,
+                        hasNextPage: false,
+                        prevPage: null,
+                        nextPage: null,
+                    },
+                },
+            });
+        }
+    });
+};
+
 const buildEndpointUrls = (serverUrls: string[]): EndpointURL[] => {
     return serverUrls.map((serverUrl, index) => ({
         enabled: true,
@@ -211,11 +256,18 @@ export const mountAnonymousRoute = (
 };
 
 export const openPublishServerIfNeeded = (serverName = "Main") => {
+    cy.get(".LoadingSkeleton--surface", { timeout: 30000 }).should("not.exist");
     cy.get("body", { timeout: 20000 }).should(($body) => {
-        expect($body.find(".PublishServer, .Publish__category").length).to.be.greaterThan(0);
+        expect($body.find(".PublishServer, .Publish__category, .Publish__postTitleField").length).to.be.greaterThan(0);
     });
 
     cy.get("body").then(($body) => {
+        if ($body.find(".Publish__postTitleField").length > 0) {
+            cy.contains(".Publish__back", "Back").click();
+            cy.contains(".Publish__category", "Company", { timeout: 20000 }).should("be.visible");
+            return;
+        }
+
         if ($body.find(".PublishServer").length === 0) {
             return;
         }
@@ -638,8 +690,6 @@ export const goToSyndicationList = () => {
     cy.get(".SplashPage__syndicationManageBtn").contains(SYNDICATION_LIST_GOAL.clickLabel).click();
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
-    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Can publish listings");
-    cy.get(".SyndicationList__publishListingsTag").should("contain.text", "Cannot publish listings");
     cy.contains(".SyndicationList__nsfwTag", "NSFW").should("be.visible");
     screenshotStep("syndication-list");
 };

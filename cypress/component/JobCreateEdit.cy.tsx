@@ -6,6 +6,7 @@ import {
     getRouteEntityId,
     mountAuthenticatedMainRoute,
     openPublishCategory,
+    mockOwnedCompaniesByCreatorQuery,
     screenshotStep,
     selectFormOption,
     uploadTestImage,
@@ -44,12 +45,31 @@ const assertJobTitle = (jobId: string, expectedTitle: string) => {
     });
 };
 
+const openJobPublishForm = () => {
+    mockOwnedCompaniesByCreatorQuery([
+        { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+        { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+    ]);
+    mountAuthenticatedMainRoute("/publish");
+    openPublishCategory("Job");
+};
+
 describe("job create/edit", () => {
+    it("hides private companies in the company selector", () => {
+        openJobPublishForm();
+
+        cy.get(".Publish__jobCompanyField").find(".ant-select").click();
+        cy.get(".ant-select-dropdown", { timeout: 20000 })
+            .should("be.visible")
+            .and("contain.text", "Harbor Labs")
+            .and("not.contain.text", "Reef Studio")
+            .and("not.contain.text", "Fourfold One");
+    });
+
     it("creates a job with an uploaded image", () => {
         const jobTitle = "Harbor Shift Coordinator";
 
-        mountAuthenticatedMainRoute("/publish");
-        openPublishCategory("Job");
+        openJobPublishForm();
 
         fillFormField("Title", jobTitle);
         selectFormOption("Employment Type", "Full-time");
@@ -74,8 +94,7 @@ describe("job create/edit", () => {
         const jobTitle = "Editable Dock Crew";
         const updatedJobTitle = "Editable Dock Crew Revised";
 
-        mountAuthenticatedMainRoute("/publish");
-        openPublishCategory("Job");
+        openJobPublishForm();
 
         fillFormField("Title", jobTitle);
         selectFormOption("Employment Type", "Contract");

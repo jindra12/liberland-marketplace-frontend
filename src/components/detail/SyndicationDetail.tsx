@@ -9,17 +9,14 @@ import { decodeServerUrlSegment, routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
-import { usePermissionsContext } from "../PermissionsContext";
 import { RouteButton } from "../RouteButton";
 import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
-import { getPublishListingsTagInfo } from "../syndication/utils";
 
 import { CommonDetail } from "./CommonDetail";
 
 const SyndicationDetail: React.FunctionComponent = () => {
     const { serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const { urls, setUrls } = useEndpointContext();
-    const { canCreateContent } = usePermissionsContext();
 
     const decodedServerURL = React.useMemo(() => {
         if (!serverUrl) {
@@ -52,7 +49,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
     const host = getSyndicationHost(entry.value);
     const title = getSyndicationName(entry);
     const shareText = `Check out ${title} on NSwap.`;
-    const publishListingsTag = getPublishListingsTagInfo(canCreateContent(entry.value));
 
     return (
         <CommonDetail
@@ -79,9 +75,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
                             <Tag>{entry.name === "Main" ? "Primary endpoint" : "Syndicated endpoint"}</Tag>
-                            <Tag color={publishListingsTag.color} className="SyndicationDetail__publishListingsTag">
-                                {publishListingsTag.label}
-                            </Tag>
                             {entry.nsfw ? <SyndicationNsfwTag className="SyndicationDetail__nsfwTag" /> : null}
                         </Flex>
                         {entry.nsfw ? (

@@ -78,12 +78,12 @@ export const SolanaPay: React.FunctionComponent<SolanaPayProps> = (props) => {
                 const recipient = new PublicKey(props.model.recipient);
                 const amount = new BigNumber(props.model.amount.toString()).div("1000000000");
                 const reference = await getSolanaOrderReference(props.model.orderId);
-                const message = "LiberStake transfer from Solana";
+                const paymentMemo = "LiberStake transfer from Solana";
                 const transaction = await createTransfer(connection, new PublicKey(sender!), {
                     recipient,
                     amount,
                     reference,
-                    memo: message,
+                    memo: paymentMemo,
                 });
                 const signature = await sendTransaction(transaction, connection);
                 const latestBlockhash = await connection.getLatestBlockhash();
