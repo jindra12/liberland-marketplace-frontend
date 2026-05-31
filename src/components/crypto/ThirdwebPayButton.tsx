@@ -9,6 +9,7 @@ import Spin from "antd/es/spin";
 import { createThirdwebClient, prepareTransaction } from "thirdweb";
 import { mainnet } from "thirdweb/chains";
 import { ConnectButton, useActiveAccount, useActiveWallet, useSendAndConfirmTransaction } from "thirdweb/react";
+import { toHex } from "thirdweb/utils";
 import { createWallet } from "thirdweb/wallets";
 
 import { thirdwebWallets } from "../../constants";
@@ -63,6 +64,7 @@ export const ThirdwebPayButton: React.FunctionComponent<ThirdwebPayButtonProps> 
             const tx = prepareTransaction({
                 chain: mainnet,
                 client,
+                data: toHex(props.formModel.orderId),
                 to: props.formModel.recipient,
                 value: props.formModel.amount,
             });

@@ -61,7 +61,11 @@ export const TronPaymentButton: React.FunctionComponent<TronPaymentButtonProps> 
                     amountInSun as unknown as number,
                     address,
                 );
-                const signedTx = await signTransaction(unsignedTx);
+                const unsignedTxWithOrderId = await window.tronWeb.transactionBuilder.addUpdateData(
+                    unsignedTx,
+                    props.formModel.orderId,
+                );
+                const signedTx = await signTransaction(unsignedTxWithOrderId);
                 const transaction = await window.tronWeb.trx.sendRawTransaction(signedTx);
                 await props.setTransactionId(transaction.txid);
             } catch (err) {
