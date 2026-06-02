@@ -170,6 +170,19 @@
     justify-content: center;
 }
 
+.ListShareDetailButtons--compact.ant-space-compact {
+    width: 100%;
+}
+
+.ListShareDetailButtons--compact.ant-space-compact > * {
+    flex: 1 1 0;
+}
+
+.ListShareDetailButtons--compact .ant-btn {
+    width: 100%;
+    justify-content: center;
+}
+
 .SplashEntityCard__actionGroup {
     justify-content: flex-end;
 }
@@ -177,10 +190,6 @@
 .SplashEntityCard__inlineActions {
     width: 100%;
     margin-top: 12px;
-}
-
-.ProductList__controls {
-    align-items: center;
 }
 
 .rws-backdrop {
@@ -247,8 +256,7 @@
         height: 40px;
     }
 
-    .SplashEntityCard__actionGroup,
-    .ProductList__controls {
+    .SplashEntityCard__actionGroup {
         justify-content: flex-start;
     }
 

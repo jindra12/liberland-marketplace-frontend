@@ -25,7 +25,6 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                     <Carousel
                         dots={false}
                         arrows={screens.md}
-                        infinite={false}
                         draggable
                         slidesToShow={slidesToShow}
                         slidesToScroll={1}

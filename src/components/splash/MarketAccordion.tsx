@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import { Flex, Grid, Typography } from "antd";
 
-import { useListPostsQuery } from "../../generated/graphql";
 import { CompanyCard } from "../cards/CompanyCard";
 import { IdentityCard } from "../cards/IdentityCard";
 import { JobCard } from "../cards/JobCard";
@@ -16,6 +15,7 @@ import {
     useListJobsQuery,
     useListProductsQuery,
     useListStartupsQuery,
+    useListPostsQuery,
 } from "../hooks";
 import { PostList } from "../lists/PostList";
 import { SlicePostList } from "../lists/SlicePostList";
@@ -49,7 +49,6 @@ export const MarketAccordion: React.FunctionComponent = () => {
     const postsQuery = useListPostsQuery({
         page: 1,
         limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT,
-        sort: "-contentRankScore",
     });
     const postItems = postsQuery.data?.Posts?.docs || [];
 
@@ -218,7 +217,6 @@ export const MarketAccordion: React.FunctionComponent = () => {
         },
     ];
     const visibleItems = items.filter((item) => item.enabled);
-    const mobileItems = visibleItems.filter((item) => item.key === "posts-third-middle");
 
     return md ? (
         <Flex vertical gap="64px" className="MarketAccordion">
@@ -242,7 +240,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         </Flex>
     ) : (
         <Flex vertical gap="32px" className="MarketAccordionMobile">
-            {mobileItems.map((item) => (
+            {visibleItems.map((item) => (
                 <AnimatedIn key={item.key}>
                     <section className="MarketAccordionMobile__section">
                         <Flex vertical gap={18} className="MarketAccordionMobile__header">

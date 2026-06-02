@@ -77,9 +77,11 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                 },
                 description: (post) => (
                     <Flex vertical gap={8} align="start" className="PostList__meta">
-                        <Typography.Paragraph className="EntityList__description PostList__description">
-                            {post.meta?.description}
-                        </Typography.Paragraph>
+                        {post.meta?.description && (
+                            <Typography.Paragraph className="EntityList__description PostList__description">
+                                {post.meta?.description}
+                            </Typography.Paragraph>
+                        )}
                         <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                         {!xl && getPostCompanyImageUrl(post) && post.company?.name && (
                             <Link
