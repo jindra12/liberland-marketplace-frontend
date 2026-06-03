@@ -8,6 +8,5 @@ export type MobileDrawerModel = {
     onSearchScopeSelect: () => void;
     onOpenDisclaimers: () => void;
     onPublish: () => void;
-    onUnauthorizedBeforeLogin: () => void;
     onProfile: () => void;
 };

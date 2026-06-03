@@ -144,6 +144,7 @@ export const mountAuthenticatedDetailRoute = (
     serverUrls: string[] = [BACKEND_URL],
     savedShippingAddress?: AddressWithEmail,
     emailVerified = true,
+    setup?: (win: Window) => void,
 ) => {
     cy.window().then((win) => {
         serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
@@ -153,13 +154,18 @@ export const mountAuthenticatedDetailRoute = (
         } else {
             win.localStorage.removeItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY);
         }
+        setup?.(win);
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
     cy.routerNavigate(route);
 };
 
-export const mountAuthenticatedMainRoute = (route: string, emailVerified = true) => {
+export const mountAuthenticatedMainRoute = (
+    route: string,
+    emailVerified = true,
+    setup?: (win: Window) => void,
+) => {
     cy.window().then((win) => {
         seedAuthorizedProfile(win, BACKEND_URL, emailVerified);
         win.localStorage.setItem(
@@ -172,6 +178,7 @@ export const mountAuthenticatedMainRoute = (route: string, emailVerified = true)
                 },
             ]),
         );
+        setup?.(win);
     });
     mount(<Main />);
     cy.routerNavigate(route);
@@ -255,10 +262,10 @@ export const mountAnonymousRoute = (
     cy.routerNavigate(route);
 };
 
-export const openPublishServerIfNeeded = (serverName = "Main") => {
+export const openPublishServerIfNeeded = () => {
     cy.get(".LoadingSkeleton--surface", { timeout: 30000 }).should("not.exist");
     cy.get("body", { timeout: 20000 }).should(($body) => {
-        expect($body.find(".PublishServer, .Publish__category, .Publish__postTitleField").length).to.be.greaterThan(0);
+        expect($body.find(".Publish__category, .Publish__postTitleField").length).to.be.greaterThan(0);
     });
 
     cy.get("body").then(($body) => {
@@ -267,15 +274,6 @@ export const openPublishServerIfNeeded = (serverName = "Main") => {
             cy.contains(".Publish__category", "Company", { timeout: 20000 }).should("be.visible");
             return;
         }
-
-        if ($body.find(".PublishServer").length === 0) {
-            return;
-        }
-
-        cy.contains(".PublishServer__card", serverName).should("be.visible").click();
-        screenshotStep(`publish-server-selected-${serverName}`);
-        cy.contains(".PublishServer__summary button", "Continue to publish").click();
-        cy.get(".PublishServer").should("not.exist");
     });
 };
 

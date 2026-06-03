@@ -56,29 +56,20 @@ Cypress.Commands.add("resetQL", () => {
     resetGraphQLMock();
 });
 
-Cypress.Commands.add("openPublishServerIfNeeded", (serverName = "Main") => {
+Cypress.Commands.add("openPublishServerIfNeeded", () => {
     cy.get("body").then(($body) => {
-        const chooser = $body.find(".PublishServer");
-        if (chooser.length === 0) {
+        const category = $body.find(".Publish__category");
+        const postForm = $body.find(".Publish__postTitleField");
+
+        if (category.length === 0 && postForm.length === 0) {
             return;
         }
 
-        const button = $body[0].querySelector(".PublishServer__summary button") as HTMLButtonElement | null;
-        if (!button) {
+        if (postForm.length > 0) {
+            const backButton = $body[0].querySelector(".Publish__back") as HTMLButtonElement | null;
+            backButton?.click();
             return;
         }
-
-        if (serverName) {
-            const card = Array.from(chooser[0].querySelectorAll(".PublishServer__card")).find((entry) =>
-                entry.textContent?.includes(serverName),
-            ) as HTMLElement | undefined;
-            if (card) {
-                const chooserButton = card.querySelector("button") as HTMLButtonElement | null;
-                chooserButton?.click();
-            }
-        }
-
-        button.click();
     });
 });
 

@@ -21,7 +21,6 @@ export const DesktopDrawer: React.FunctionComponent = () => {
     const auth = useAuth();
     const { urls } = useEndpointContext();
     const [desktopActionsOpen, setDesktopActionsOpen] = React.useState(false);
-    const singlePublishEndpoint = urls.length === 1 ? urls[0] : undefined;
 
     React.useEffect(() => {
         setDesktopActionsOpen(false);
@@ -56,43 +55,25 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                             Syndication
                         </RouteButton>
                     ) : null}
-                    {singlePublishEndpoint ? (
-                        <EndpointAuthAction defaultAuthUrl={singlePublishEndpoint.value}>
-                            {({ runWithAuthOrLogin }) => (
-                                <Button
-                                    block
-                                    type="primary"
-                                    icon={<PlusOutlined />}
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        runWithAuthOrLogin(
-                                            () => {
-                                                navigate(routes.publish.route);
-                                                setDesktopActionsOpen(false);
-                                            },
-                                            { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
-                                        );
-                                    }}
-                                    className="AppHeader__drawerPublish"
-                                >
-                                    Create
-                                </Button>
-                            )}
-                        </EndpointAuthAction>
-                    ) : (
+                    <EndpointAuthAction>
+                        {({ runWithEndpointSelection }) => (
                             <Button
                                 block
                                 type="primary"
                                 icon={<PlusOutlined />}
-                                onClick={() => {
-                                    navigate(routes.publish.route);
-                                    setDesktopActionsOpen(false);
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    runWithEndpointSelection(() => {
+                                        navigate(routes.publish.route);
+                                        setDesktopActionsOpen(false);
+                                    });
                                 }}
                                 className="AppHeader__drawerPublish"
                             >
                                 Create
                             </Button>
-                    )}
+                        )}
+                    </EndpointAuthAction>
                     {auth.isAuthenticated ? (
                         <Button
                             block

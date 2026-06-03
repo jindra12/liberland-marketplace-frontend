@@ -40,7 +40,6 @@ export const useMobileDrawerModel = (onClose: () => void): MobileDrawerModel => 
             navigate(routes.publish.route);
             onClose();
         },
-        onUnauthorizedBeforeLogin: onClose,
         onProfile: () => {
             navigate(routes.profile.route);
             onClose();

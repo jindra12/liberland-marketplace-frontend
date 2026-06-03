@@ -5,7 +5,8 @@ import { format } from "prettier";
 import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 
-const envFile = fs.readFileSync(path.resolve(".env"), "utf8");
+const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
+const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
 
 envFile.split(/\r?\n/).forEach((line) => {
     const trimmedLine = line.trim();

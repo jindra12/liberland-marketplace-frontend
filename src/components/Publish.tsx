@@ -1,9 +1,12 @@
 import * as React from "react";
 
-import { PublishSelectionFlow } from "./publish/PublishSelectionFlow";
+import { useEndpointContext } from "./EndpointContext";
+import { PublishContent } from "./publish/PublishContent";
 
 const Publish: React.FunctionComponent = () => {
-    return <PublishSelectionFlow />;
+    const { authUrl } = useEndpointContext();
+
+    return <PublishContent url={authUrl} />;
 };
 
 export default Publish;

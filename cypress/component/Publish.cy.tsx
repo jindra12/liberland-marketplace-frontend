@@ -1,10 +1,11 @@
-import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     mountAuthenticatedDetailRoute,
     mountAuthenticatedMainRoute,
     mockOwnedCompaniesByCreatorQuery,
     screenshotStep,
 } from "../support/component-tests/utils";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const buildListCompaniesByCreatorResponse = (docs: Array<{ id: string; name: string; isPrivate: boolean }>) => ({
     data: {
@@ -37,21 +38,33 @@ const buildListCompaniesByCreatorResponse = (docs: Array<{ id: string; name: str
 });
 
 describe("publish", () => {
-    it("shows the server selector when multiple endpoints are configured", () => {
-        mountAuthenticatedDetailRoute("/publish", [MAIN_SERVER_URL, COOP_SERVER_URL]);
-
-        cy.contains(".PublishServer", "Choose where to publish", { timeout: 20000 }).should("be.visible");
-        cy.contains(".PublishServer__card", MAIN_SERVER_URL).should("be.visible");
-        cy.contains(".PublishServer__card", COOP_SERVER_URL).should("be.visible");
-        screenshotStep("publish-server-selector-visible");
-    });
-
-    it("opens the publish form chooser directly when only one endpoint is configured", () => {
+    it("opens the publish form directly from the create button when multiple endpoints are configured", () => {
         mockOwnedCompaniesByCreatorQuery([
             { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
             { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
         ]);
-        mountAuthenticatedMainRoute("/publish");
+        mountAuthenticatedDetailRoute("/jobs", [MAIN_SERVER_URL, GUEST_SERVER_URL], undefined, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+
+        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
+        cy.contains(".ant-dropdown-menu-item", "Main", { timeout: 20000 }).click();
+
+        cy.location("pathname").should("eq", "/publish");
+        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish__category", "Company").should("be.visible");
+        cy.contains(".Publish__category", "Venture").should("be.visible");
+        screenshotStep("publish-flow-visible");
+    });
+
+    it("opens the publish forms directly when only one endpoint is configured", () => {
+        mockOwnedCompaniesByCreatorQuery([
+            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+        ]);
+        mountAuthenticatedMainRoute("/publish", true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
 
         cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
         cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").within(() => {
@@ -62,16 +75,19 @@ describe("publish", () => {
         cy.contains(".Publish__category", "Venture").should("be.visible");
     });
 
-    it("keeps the publish chooser after selecting a server", () => {
+    it("keeps the publish flow after selecting a server from the create dropdown", () => {
         mockOwnedCompaniesByCreatorQuery([
             { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
             { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
         ]);
-        mountAuthenticatedDetailRoute("/publish", ["http://127.0.0.1:3013", MAIN_SERVER_URL, GUEST_SERVER_URL, COOP_SERVER_URL]);
+        mountAuthenticatedDetailRoute("/jobs", ["http://127.0.0.1:3013", MAIN_SERVER_URL, GUEST_SERVER_URL], undefined, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
 
-        cy.contains(".PublishServer", "Choose where to publish", { timeout: 20000 }).should("be.visible");
-        cy.contains(".PublishServer__card", COOP_SERVER_URL).click();
-        cy.contains(".PublishServer__summary button", "Continue to publish").click();
+        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
+        cy.contains(".ant-dropdown-menu-item", "Main", { timeout: 20000 }).click();
+
+        cy.location("pathname").should("eq", "/publish");
         cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
         cy.contains(".Publish__category", "Company").should("be.visible");
         cy.contains(".Publish__category", "Post").should("be.visible");
