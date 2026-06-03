@@ -20,10 +20,5 @@ export const useSortContent = () => {
         didMountRef.current = true;
     }, [queryClient, value]);
 
-    const setSortContent = (nextValue: SortContentByOption) => {
-        localStorage.setItem(SORT_CONTENT_BY_STORAGE_KEY, JSON.stringify(nextValue));
-        setValue(nextValue);
-    };
-
-    return [value, setSortContent] as const;
+    return [value, setValue] as const;
 };

@@ -2,10 +2,11 @@ import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
 
-import { Dropdown } from "antd";
+import { Button, Dropdown, notification, Space } from "antd";
 import type { MenuProps } from "antd";
 
 import { useEndpointContext } from "./EndpointContext";
+import { getSyndicationName } from "./endpoints/utils";
 
 type EndpointAction = () => void | Promise<void>;
 type PendingAction = {
@@ -24,7 +25,6 @@ export type EndpointAuthActionRenderProps = {
 type EndpointAuthActionProps = {
     defaultAuthUrl?: string;
     requireVerifiedEmail?: boolean;
-    onUnverifiedEmail?: () => void | Promise<void>;
     children: (props: EndpointAuthActionRenderProps) => React.ReactElement;
 };
 const toEndpointShort = (value: string) => {
@@ -43,6 +43,30 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     const { urls, authUrl, setAuthUrl } = useEndpointContext();
     const [pendingAction, setPendingAction] = React.useState<PendingAction>();
     const [open, setOpen] = React.useState(false);
+    const showUnverifiedEmailNotification = (targetAuthUrl: string) => {
+        const targetEndpoint = urls.find((entry) => entry.value === targetAuthUrl);
+        const targetEndpointName = targetEndpoint ? getSyndicationName(targetEndpoint) : toEndpointShort(targetAuthUrl);
+
+        notification.warning({
+            key: `endpoint-auth-unverified-${targetAuthUrl}`,
+            duration: 0,
+            message: "Please verify your email first",
+            description: `Your email address still needs to be verified on ${targetEndpointName} before you can continue.`,
+            btn: (
+                <Space>
+                    <Button
+                        type="primary"
+                        size="small"
+                        onClick={() => {
+                            window.open(targetAuthUrl, "_blank", "noopener,noreferrer");
+                        }}
+                    >
+                        Open {targetEndpointName}
+                    </Button>
+                </Space>
+            ),
+        });
+    };
     const runPendingAction = React.useCallback(async (nextAction?: PendingAction) => {
         if (!nextAction) {
             return;
@@ -81,51 +105,51 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             onUnauthorizedBeforeLogin?: () => void | Promise<void>;
         },
     ) => {
-            if (auth.isAuthenticated) {
-                if (props.requireVerifiedEmail && auth.user?.profile?.email_verified !== true) {
-                    const runUnverifiedAction = async () => {
-                        setPendingAction(undefined);
-                        await props.onUnverifiedEmail?.();
-                    };
-                    if (props.defaultAuthUrl) {
-                        if (authUrl === props.defaultAuthUrl) {
-                            await runUnverifiedAction();
-                            return;
-                        }
-                        setPendingAction({
-                            action: runUnverifiedAction,
-                            targetAuthUrl: props.defaultAuthUrl,
-                        });
-                        setAuthUrl(props.defaultAuthUrl);
+        if (auth.isAuthenticated) {
+            if (props.requireVerifiedEmail && auth.user?.profile?.email_verified !== true) {
+                const runUnverifiedAction = async () => {
+                    setPendingAction(undefined);
+                    showUnverifiedEmailNotification(props.defaultAuthUrl ?? authUrl);
+                };
+                if (props.defaultAuthUrl) {
+                    if (authUrl === props.defaultAuthUrl) {
+                        await runUnverifiedAction();
                         return;
                     }
-                    await runUnverifiedAction();
+                    setPendingAction({
+                        action: runUnverifiedAction,
+                        targetAuthUrl: props.defaultAuthUrl,
+                    });
+                    setAuthUrl(props.defaultAuthUrl);
                     return;
                 }
-                setPendingAction(undefined);
-                await authorizedAction();
+                await runUnverifiedAction();
                 return;
             }
-            if (props.defaultAuthUrl) {
-                const runLogin = async () => {
-                    await options?.onUnauthorizedBeforeLogin?.();
-                    await auth.signinRedirect();
-                };
-                if (authUrl === props.defaultAuthUrl) {
-                    await runLogin();
-                    return;
-                }
-                setPendingAction({
-                    action: runLogin,
-                    targetAuthUrl: props.defaultAuthUrl,
-                });
-                setAuthUrl(props.defaultAuthUrl);
-                return;
-            }
-            runWithEndpointSelection(async () => {
+            setPendingAction(undefined);
+            await authorizedAction();
+            return;
+        }
+        if (props.defaultAuthUrl) {
+            const runLogin = async () => {
                 await options?.onUnauthorizedBeforeLogin?.();
                 await auth.signinRedirect();
+            };
+            if (authUrl === props.defaultAuthUrl) {
+                await runLogin();
+                return;
+            }
+            setPendingAction({
+                action: runLogin,
+                targetAuthUrl: props.defaultAuthUrl,
             });
+            setAuthUrl(props.defaultAuthUrl);
+            return;
+        }
+        runWithEndpointSelection(async () => {
+            await options?.onUnauthorizedBeforeLogin?.();
+            await auth.signinRedirect();
+        });
     };
     React.useEffect(() => {
         if (!pendingAction?.targetAuthUrl || authUrl !== pendingAction.targetAuthUrl) {

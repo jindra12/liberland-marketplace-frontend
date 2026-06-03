@@ -7,7 +7,6 @@ import { routes } from "../routes";
 import { RouteButton } from "./RouteButton";
 import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
 import { MarketAccordion } from "./splash/MarketAccordion";
-import { SyndicationSection } from "./splash/SyndicationSection";
 
 const Splash: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
@@ -22,7 +21,7 @@ const Splash: React.FunctionComponent = () => {
                         alt=""
                         aria-hidden="true"
                         width={940}
-                        height={540}
+                        height={400}
                         className="SplashPage__heroBackdrop"
                     />
                     <AnimatedIn className="SplashPage__heroOverlay">
@@ -52,12 +51,9 @@ const Splash: React.FunctionComponent = () => {
                         <MarketAccordion />
                     </div>
                 ) : (
-                    <>
-                        <div className="SplashPage__marketAccordion">
-                            <MarketAccordion />
-                        </div>
-                        <SyndicationSection />
-                    </>
+                    <div className="SplashPage__marketAccordion">
+                        <MarketAccordion />
+                    </div>
                 )}
             </Flex>
         </Flex>

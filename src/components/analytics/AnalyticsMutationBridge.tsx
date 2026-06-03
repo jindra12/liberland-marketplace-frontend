@@ -20,12 +20,25 @@ export const AnalyticsMutationBridge: React.FunctionComponent = () => {
         async (event: AnalyticsMutationEvent) => {
             try {
                 const input: TrackAnalyticsEventMutationVariables["input"] = {
-                    distinctId,
-                    metadata: event.metadata || null,
-                    route: event.route || null,
-                    sessionId,
                     type: event.type,
                 };
+
+                if (distinctId) {
+                    input.distinctId = distinctId;
+                }
+
+                if (sessionId) {
+                    input.sessionId = sessionId;
+                }
+
+                if (event.metadata) {
+                    input.metadata = event.metadata;
+                }
+
+                if (event.route) {
+                    input.route = event.route;
+                }
+
                 const result = await mutation.mutateAsync({
                     input,
                     url: event.targetUrl || BACKEND_URL,

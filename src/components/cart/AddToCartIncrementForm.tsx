@@ -155,6 +155,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     };
     const handleFinish = async (values: { quantity?: number }) => {
         if (isMutating) {
+            messageApi.info("Loading, please try again");
             return;
         }
         if (remainingQuantity !== undefined && remainingQuantity <= 0) {
@@ -181,6 +182,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     };
     const handleRemove = async () => {
         if (isMutating) {
+            messageApi.info("Loading, please try again");
             return;
         }
         setIsMutating(true);

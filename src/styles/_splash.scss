@@ -610,8 +610,39 @@
     }
 }
 
+@include md {
+    .SplashEntityCard__carousel {
+        padding-inline-start: 30px;
+        padding-inline-end: 44px;
+        box-sizing: border-box;
+
+        .slick-prev,
+        .slick-next {
+            top: 50%;
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            transform: translateY(-50%);
+        }
+
+        .slick-prev {
+            inset-inline-start: 0;
+        }
+
+        .slick-next {
+            inset-inline-end: 0;
+        }
+
+        .slick-prev::before,
+        .slick-next::before {
+            font-size: 34px;
+            opacity: 0.88;
+        }
+    }
+}
+
 .SplashEntityCard__carouselSlide {
-    height: 100%;
+    height: 222px;
     padding-inline: 8px;
 }
 
@@ -696,7 +727,11 @@
     }
 }
 
-@include lg-min {
+.SplashEntityCard__actions {
+    margin-top: auto;
+}
+
+@include lg-min {wait wh
     .SplashPage {
         padding-inline: 14px;
 

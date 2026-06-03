@@ -25,7 +25,11 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                     <Carousel
                         dots={false}
                         arrows={screens.md}
+                        autoplay={screens.md}
+                        autoplaySpeed={4800}
                         draggable
+                        pauseOnHover
+                        speed={700}
                         slidesToShow={slidesToShow}
                         slidesToScroll={1}
                         className="SplashEntityCard__carousel"

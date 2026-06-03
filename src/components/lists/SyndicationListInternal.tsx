@@ -9,6 +9,7 @@ import { routes } from "../../routes";
 import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
+import { useNsfwConsent } from "../endpoints/useNsfwConsent";
 import {
     createEndpointEntry,
     getSyndicationHost,
@@ -31,6 +32,7 @@ const byPriority = (entry: URL) => {
 export const SyndicationListInternal: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const { urls, setUrls } = useEndpointContext();
+    const [, setHasAcceptedNsfw] = useNsfwConsent();
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
 
@@ -73,6 +75,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
             messageApi.error("Could not add this syndicated URL.");
         }
     }, [draftUrl, messageApi, setUrls]);
+
+    const handleToggleEnabled = (entry: URL) => {
+        if (!entry.enabled && entry.nsfw) {
+            setHasAcceptedNsfw(true);
+        }
+
+        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled));
+    };
 
     return (
         <>
@@ -152,9 +162,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                 <Button
                                     size="large"
                                     icon={<PoweroffOutlined />}
-                                    onClick={() =>
-                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
-                                    }
+                                    onClick={() => handleToggleEnabled(entry)}
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
@@ -190,9 +198,7 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     size="large"
                                     block
                                     icon={<PoweroffOutlined />}
-                                    onClick={() =>
-                                        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
-                                    }
+                                    onClick={() => handleToggleEnabled(entry)}
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>

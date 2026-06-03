@@ -155,6 +155,8 @@
         "test:ct:deep-dive:syndication-detail:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/DeepDiveSyndicationDetail.cy.tsx",
         "test:ct:syndication-guard": "yarn cypress:run --component --browser electron --spec cypress/component/SyndicationGuard.cy.tsx",
         "test:ct:syndication-guard:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/SyndicationGuard.cy.tsx",
+        "test:ct:syndication-nsfw": "yarn cypress:run --component --browser electron --spec cypress/component/SyndicationNsfw.cy.tsx",
+        "test:ct:syndication-nsfw:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/SyndicationNsfw.cy.tsx",
         "test:ct:syndicate": "yarn cypress:run --component --browser electron --spec cypress/component/Syndicate.cy.tsx",
         "test:ct:syndicate:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Syndicate.cy.tsx",
         "test:ct:tours-authorized-desktop": "yarn cypress:run --component --browser electron --spec cypress/component/Tours.authorized.desktop.cy.tsx",

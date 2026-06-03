@@ -38,6 +38,7 @@ export const SearchResultsList = <TItem,>(props: SearchResultsListProps<TItem>) 
             title={props.title}
             loading={props.loading}
             emptyText={props.emptyText}
+            titleHidden
             renderItem={{
                 ...props.renderItem,
                 actions: (item) => {

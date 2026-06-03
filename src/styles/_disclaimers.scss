@@ -1,5 +1,8 @@
 .DisclaimersModal {
     .ant-modal-content {
+        display: flex;
+        flex-direction: column;
+        max-height: 80vh;
         overflow: hidden;
         border: 0;
         border-radius: 28px;
@@ -28,12 +31,16 @@
     }
 
     .ant-modal-body {
+        flex: 1;
+        min-height: 0;
         padding: 0;
+        overflow: hidden;
     }
 
     &__layout {
         padding: 20px;
-        min-height: min(72vh, 760px);
+        min-height: 0;
+        max-height: calc(80vh - 72px);
     }
 
     &__menuPane,
@@ -98,6 +105,54 @@
     }
 }
 
+.SyndicationNsfwModal {
+    .ant-modal-content {
+        overflow: hidden;
+        border: 0;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(5, 15, 25, 0.98) 0%, rgba(3, 11, 18, 0.98) 100%);
+        box-shadow:
+            0 32px 72px rgba(0, 0, 0, 0.42),
+            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+    }
+
+    .ant-modal-header {
+        border-bottom: 0;
+        background: transparent;
+    }
+
+    .ant-modal-title {
+        color: #eef8f3;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
+
+    .ant-modal-close {
+        color: rgba(188, 217, 203, 0.82);
+    }
+
+    .ant-modal-body {
+        padding-top: 12px;
+    }
+
+    &__copy {
+        margin-bottom: 0;
+        color: rgba(238, 248, 243, 0.92);
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    &__note {
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    &__actions {
+        justify-content: flex-end;
+    }
+}
+
 @include md-min {
     .DisclaimersModal {
         .ant-modal {
@@ -116,6 +171,21 @@
 
         &__contentPane {
             width: 100%;
+        }
+    }
+
+    .SyndicationNsfwModal {
+        .ant-modal {
+            width: calc(100vw - 16px) !important;
+            max-width: none;
+        }
+
+        &__actions {
+            justify-content: stretch;
+        }
+
+        &__actions .ant-btn {
+            flex: 1 1 0;
         }
     }
 }

@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 
 import { Flex, Grid, Typography } from "antd";
 
+import { routes } from "../../routes";
 import { CompanyCard } from "../cards/CompanyCard";
 import { IdentityCard } from "../cards/IdentityCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { StartupCard } from "../cards/StartupCard";
+import { useEndpointContext } from "../EndpointContext";
 import {
     useListIdentitiesQuery,
     useListCompaniesQuery,
@@ -22,6 +24,7 @@ import { SlicePostList } from "../lists/SlicePostList";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 
 import { MARKET_ACCORDION_POSTS_QUERY_LIMIT, MARKET_ACCORDION_POSTS_REST_OFFSET, MARKET_ACCORDION_POST_SLICES } from "./constants";
+import { SyndicationSection } from "./SyndicationSection";
 import { isMarketAccordionSectionEnabled } from "./utils";
 
 export const MarketAccordion: React.FunctionComponent = () => {
@@ -50,13 +53,14 @@ export const MarketAccordion: React.FunctionComponent = () => {
         page: 1,
         limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT,
     });
+    const { urls } = useEndpointContext();
     const postItems = postsQuery.data?.Posts?.docs || [];
 
     const items = [
         {
             key: "posts-top",
             title: "Posts",
-            route: "/posts",
+            route: routes.posts.route,
             titleClassName: "MarketAccordion__titleLink--posts",
             body: (
                 <SlicePostList
@@ -72,7 +76,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "products",
             title: "Products",
-            route: "/products-services",
+            route: routes.productsServices.route,
             titleClassName: "MarketAccordion__titleLink--products",
             body: (
                 <ProductServiceCard
@@ -88,7 +92,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "jobs",
             title: "Jobs",
-            route: "/jobs",
+            route: routes.jobs.route,
             titleClassName: "MarketAccordion__titleLink--jobs",
             body: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} />,
             enabled: isMarketAccordionSectionEnabled(jobsQuery, jobsQuery.data?.Jobs?.docs?.length ?? 0),
@@ -96,7 +100,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "posts-first-middle",
             title: "Posts",
-            route: "/posts",
+            route: routes.posts.route,
             titleClassName: "MarketAccordion__titleLink--posts",
             body: (
                 <SlicePostList
@@ -116,7 +120,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "companies",
             title: "Companies",
-            route: "/companies",
+            route: routes.companies.route,
             titleClassName: "MarketAccordion__titleLink--companies",
             body: (
                 <CompanyCard
@@ -132,7 +136,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "posts-second-middle",
             title: "Posts",
-            route: "/posts",
+            route: routes.posts.route,
             titleClassName: "MarketAccordion__titleLink--posts",
             body: (
                 <SlicePostList
@@ -152,7 +156,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "ventures",
             title: "Ventures",
-            route: "/ventures",
+            route: routes.ventures.route,
             titleClassName: "MarketAccordion__titleLink--ventures",
             body: (
                 <StartupCard
@@ -168,7 +172,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "tribes",
             title: "Tribes",
-            route: "/tribes",
+            route: routes.tribes.route,
             titleClassName: "MarketAccordion__titleLink--tribes",
             body: (
                 <IdentityCard
@@ -184,7 +188,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
         {
             key: "posts-third-middle",
             title: "Posts",
-            route: "/posts",
+            route: routes.posts.route,
             titleClassName: "MarketAccordion__titleLink--posts",
             body: (
                 <SlicePostList
@@ -202,9 +206,19 @@ export const MarketAccordion: React.FunctionComponent = () => {
             ),
         },
         {
+            key: "syndication",
+            title: "Syndication",
+            route: routes.syndication.route,
+            titleClassName: "MarketAccordion__titleLink--syndication",
+            body: (
+                <SyndicationSection />
+            ),
+            enabled: urls.length > 1,
+        },
+        {
             key: "posts-rest",
             title: "Posts",
-            route: "/posts",
+            route: routes.posts.route,
             titleClassName: "MarketAccordion__titleLink--posts",
             body: (
                 <PostList

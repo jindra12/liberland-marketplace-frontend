@@ -7,6 +7,7 @@ import { Avatar, Button, Descriptions, Divider, Flex, Result, Tag, Typography } 
 
 import { decodeServerUrlSegment, routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
+import { useNsfwConsent } from "../endpoints/useNsfwConsent";
 import { getSyndicationHost, getSyndicationName, setEndpointEnabled } from "../endpoints/utils";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
@@ -17,6 +18,7 @@ import { CommonDetail } from "./CommonDetail";
 const SyndicationDetail: React.FunctionComponent = () => {
     const { serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const { urls, setUrls } = useEndpointContext();
+    const [, setHasAcceptedNsfw] = useNsfwConsent();
 
     const decodedServerURL = React.useMemo(() => {
         if (!serverUrl) {
@@ -49,6 +51,13 @@ const SyndicationDetail: React.FunctionComponent = () => {
     const host = getSyndicationHost(entry.value);
     const title = getSyndicationName(entry);
     const shareText = `Check out ${title} on NSwap.`;
+    const handleToggleEnabled = () => {
+        if (!entry.enabled && entry.nsfw) {
+            setHasAcceptedNsfw(true);
+        }
+
+        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled));
+    };
 
     return (
         <CommonDetail
@@ -87,17 +96,15 @@ const SyndicationDetail: React.FunctionComponent = () => {
             }
             beforeShare={
                 <>
-                    <Flex wrap gap={12}>
-                        <Button
-                            type={entry.enabled ? "default" : "primary"}
-                            size="large"
-                            icon={<PoweroffOutlined />}
-                            onClick={() =>
-                                setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))
-                            }
-                        >
-                            {entry.enabled ? "Disable URL" : "Enable URL"}
-                        </Button>
+                        <Flex wrap gap={12}>
+                            <Button
+                                type={entry.enabled ? "default" : "primary"}
+                                size="large"
+                                icon={<PoweroffOutlined />}
+                                onClick={handleToggleEnabled}
+                            >
+                                {entry.enabled ? "Disable URL" : "Enable URL"}
+                            </Button>
                     </Flex>
                     <Divider />
                     {entry.description && (

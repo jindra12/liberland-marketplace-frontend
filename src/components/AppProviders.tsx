@@ -15,6 +15,7 @@ import { SolanaContext } from "./crypto/SolanaContext";
 import { TronContext } from "./crypto/TronContext";
 import { DisclaimersService } from "./disclaimers/DisclaimersService";
 import { EndpointContextProvider } from "./EndpointContext";
+import { SyndicationNsfwService } from "./endpoints/SyndicationNsfwService";
 import { AppErrorBoundary } from "./ErrorBoundary/AppErrorBoundary";
 import { RouteScrollToTop } from "./RouteScrollToTop";
 
@@ -38,7 +39,9 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
                                                 <AppRouteTitle />
                                                 <RouteScrollToTop>
                                                     <CartMutationProvider>
-                                                        <DisclaimersService>{props.children}</DisclaimersService>
+                                                        <SyndicationNsfwService>
+                                                            <DisclaimersService>{props.children}</DisclaimersService>
+                                                        </SyndicationNsfwService>
                                                     </CartMutationProvider>
                                                 </RouteScrollToTop>
                                             </AppErrorBoundary>

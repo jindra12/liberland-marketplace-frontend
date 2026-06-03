@@ -36,7 +36,10 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
     };
     return (
         <>
-            <EndpointAuthAction>
+            <EndpointAuthAction
+                defaultAuthUrl={props.serverURL}
+                requireVerifiedEmail
+            >
                 {({ runWithAuthOrLogin }) => (
                     <Button
                         block={props.block}

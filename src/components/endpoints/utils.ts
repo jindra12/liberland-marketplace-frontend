@@ -68,6 +68,23 @@ export const setEndpointEnabled = (
     });
 };
 
+export const disableNsfwEndpoints = (current: EndpointUrl[] | undefined): EndpointUrl[] => {
+    return (current ?? []).map((entry) => {
+        if (!entry.nsfw) {
+            return entry;
+        }
+
+        return {
+            ...entry,
+            enabled: false,
+        };
+    });
+};
+
+export const hasEnabledNsfwEndpoints = (current: EndpointUrl[] | undefined): boolean => {
+    return (current ?? []).some((entry) => entry.enabled && Boolean(entry.nsfw));
+};
+
 export const enableOrInsertEndpoint = (current: EndpointUrl[] | undefined, value: string): EndpointUrl[] => {
     const entries = current ?? [];
 
@@ -89,7 +106,7 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
 
         return [
             createEndpointEntry(normalizedValue, {
-                enabled: false,
+                enabled: doc.autoEnable ?? false,
                 name: doc.name,
                 description: doc.description,
                 nsfw: doc.nsfw,
