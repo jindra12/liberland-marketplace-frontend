@@ -5,14 +5,10 @@ import { useAuth } from "react-oidc-context";
 import { Button, Dropdown, notification, Space } from "antd";
 import type { MenuProps } from "antd";
 
-import { useEndpointContext } from "./EndpointContext";
+import { useEndpointContext, type EndpointAuthClient, type EndpointPendingAction } from "./EndpointContext";
 import { getSyndicationName } from "./endpoints/utils";
 
-type EndpointAction = () => void | Promise<void>;
-type PendingAction = {
-    action: EndpointAction;
-    targetAuthUrl?: string;
-};
+type EndpointAction = (auth: EndpointAuthClient) => void | Promise<void>;
 export type EndpointAuthActionRenderProps = {
     runWithEndpointSelection: (action: EndpointAction) => void;
     runWithAuthOrLogin: (
@@ -40,8 +36,7 @@ const toEndpointShort = (value: string) => {
 };
 export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps> = (props) => {
     const auth = useAuth();
-    const { urls, authUrl, setAuthUrl } = useEndpointContext();
-    const [pendingAction, setPendingAction] = React.useState<PendingAction>();
+    const { urls, authUrl, setAuthUrl, pendingAction, setPendingAction } = useEndpointContext();
     const [open, setOpen] = React.useState(false);
     const showUnverifiedEmailNotification = (targetAuthUrl: string) => {
         const targetEndpoint = urls.find((entry) => entry.value === targetAuthUrl);
@@ -67,13 +62,13 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             ),
         });
     };
-    const runPendingAction = React.useCallback(async (nextAction?: PendingAction) => {
+    const runPendingAction = React.useCallback(async (nextAction?: EndpointPendingAction) => {
         if (!nextAction) {
             return;
         }
         setPendingAction(undefined);
-        await nextAction.action();
-    }, []);
+        await nextAction.action(auth);
+    }, [auth, setPendingAction]);
     const runWithEndpointSelection = React.useCallback(
         async (action: EndpointAction) => {
             if (urls.length === 1) {
@@ -97,7 +92,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             });
             setOpen(true);
         },
-        [authUrl, runPendingAction, setAuthUrl, urls],
+        [authUrl, runPendingAction, setAuthUrl, setPendingAction, urls],
     );
     const runWithAuthOrLogin = async (
         authorizedAction: EndpointAction,
@@ -127,16 +122,16 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                 return;
             }
             setPendingAction(undefined);
-            await authorizedAction();
+            await authorizedAction(auth);
             return;
         }
         if (props.defaultAuthUrl) {
-            const runLogin = async () => {
+            const runLogin = async (currentAuth: EndpointAuthClient) => {
                 await options?.onUnauthorizedBeforeLogin?.();
-                await auth.signinRedirect();
+                await currentAuth.signinRedirect();
             };
             if (authUrl === props.defaultAuthUrl) {
-                await runLogin();
+                await runLogin(auth);
                 return;
             }
             setPendingAction({
@@ -146,9 +141,9 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             setAuthUrl(props.defaultAuthUrl);
             return;
         }
-        runWithEndpointSelection(async () => {
+        runWithEndpointSelection(async (currentAuth) => {
             await options?.onUnauthorizedBeforeLogin?.();
-            await auth.signinRedirect();
+            await currentAuth.signinRedirect();
         });
     };
     React.useEffect(() => {

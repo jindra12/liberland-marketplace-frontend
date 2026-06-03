@@ -1,5 +1,8 @@
-import { GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { UserManager } from "oidc-client-ts";
+
+import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     mountAuthenticatedMainRoute,
     mockOwnedCompaniesByCreatorQuery,
@@ -73,6 +76,46 @@ describe("publish", () => {
         screenshotStep("publish-chooser-visible");
         cy.contains(".Publish__category", "Company").should("be.visible");
         cy.contains(".Publish__category", "Venture").should("be.visible");
+    });
+
+    it("uses the selected non-main endpoint before redirecting anonymous users to login", () => {
+        cy.viewport(1440, 1200);
+
+        let redirectUrl = "";
+        cy.stub(UserManager.prototype as UserManager & { _signinStart: typeof UserManager.prototype.signinRedirect }, "_signinStart").callsFake(
+            async function (
+                this: UserManager & {
+                    _client: {
+                        createSigninRequest: (requestArgs: Parameters<UserManager["signinRedirect"]>[0]) => Promise<{
+                            url: string;
+                            state: { id: string };
+                        }>;
+                    };
+                },
+                args: Parameters<UserManager["signinRedirect"]>[0],
+            ) {
+                const signinRequest = await this._client.createSigninRequest(args);
+                redirectUrl = signinRequest.url;
+                return {
+                    url: signinRequest.url,
+                    state: signinRequest.state.id,
+                };
+            },
+        );
+
+        mountAnonymousRoute("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+
+        cy.contains(".AppHeader__authBtn", "Log in", { timeout: 20000 }).should("be.visible").click();
+        cy.contains(".ant-dropdown-menu-item", "Co-op", { timeout: 20000 }).should("be.visible").click();
+
+        cy.then(() => {
+            const parsedUrl = new URL(redirectUrl);
+            expect(parsedUrl.origin).to.equal(COOP_SERVER_URL);
+            expect(parsedUrl.pathname).to.equal("/api/auth/oauth2/authorize");
+            expect(parsedUrl.searchParams.get("client_id")).to.be.a("string");
+            expect(parsedUrl.searchParams.get("scope")).to.equal("openid profile email");
+            expect(parsedUrl.searchParams.get("redirect_uri")).to.be.a("string");
+        });
     });
 
     it("keeps the publish flow after selecting a server from the create dropdown", () => {

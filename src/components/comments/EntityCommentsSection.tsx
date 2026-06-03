@@ -97,9 +97,7 @@ export const EntityCommentsSection: React.FunctionComponent<EntityCommentsSectio
             onLoadMore={() => {
                 setPage((currentPage) => currentPage + 1);
             }}
-            onLogin={() => auth.signinRedirect()}
             onReplyAction={commentActions.onReplyAction}
-            onSignUp={() => auth.signinRedirect()}
             onSubmitAction={onSubmitAction}
         />
     );

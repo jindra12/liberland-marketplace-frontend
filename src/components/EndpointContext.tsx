@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import type { AuthContextProps } from "react-oidc-context";
+
 import { useQueries } from "@tanstack/react-query";
 
 import useLocalStorage from "use-local-storage";
@@ -23,7 +25,16 @@ export interface EndpointContextType {
     setUrls: (urls: URL[] | ((urls?: URL[]) => URL[])) => void;
     authUrl: string;
     setAuthUrl: (auth: string) => void;
+    pendingAction?: EndpointPendingAction;
+    setPendingAction: React.Dispatch<React.SetStateAction<EndpointPendingAction | undefined>>;
 }
+
+export type EndpointAuthClient = Pick<AuthContextProps, "signinRedirect" | "removeUser">;
+
+export type EndpointPendingAction = {
+    action: (auth: EndpointAuthClient) => void | Promise<void>;
+    targetAuthUrl?: string;
+};
 
 const EndpointContext = React.createContext<EndpointContextType>(null!);
 const defaultUrls: URL[] = [{ enabled: true, value: BACKEND_URL, name: "Main" }];
@@ -50,6 +61,7 @@ export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[])
 
 export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const [storedUrls, setUrls] = useLocalStorage<URL[]>("endpoints.urls", defaultUrls);
+    const [pendingAction, setPendingAction] = React.useState<EndpointPendingAction>();
     const urls = React.useMemo(() => {
         if (!Array.isArray(storedUrls) || storedUrls.length === 0) {
             return defaultUrls;
@@ -62,7 +74,16 @@ export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChi
 
     return (
         <EndpointContext.Provider
-            value={{ setUrls, urls, enabled, authUrl, setAuthUrl, isSyndicationLoading: syndicationQuery.isLoading }}
+            value={{
+                setUrls,
+                urls,
+                enabled,
+                authUrl,
+                setAuthUrl,
+                pendingAction,
+                setPendingAction,
+                isSyndicationLoading: syndicationQuery.isLoading,
+            }}
         >
             {props.children}
         </EndpointContext.Provider>

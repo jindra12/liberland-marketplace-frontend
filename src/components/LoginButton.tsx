@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 import { EndpointAuthAction } from "./EndpointAuthAction";
+import type { EndpointAuthClient } from "./EndpointContext";
 
 type LoginButtonProps = {
     action?: "login" | "logout";
@@ -18,7 +17,6 @@ type LoginButtonProps = {
 };
 export const LoginButton: React.FunctionComponent<LoginButtonProps> = (props) => {
     const action = props.action === undefined ? "login" : props.action;
-    const auth = useAuth();
     return (
         <EndpointAuthAction>
             {({ runWithEndpointSelection }) => (
@@ -30,13 +28,13 @@ export const LoginButton: React.FunctionComponent<LoginButtonProps> = (props) =>
                     className={props.className}
                     onClick={(event) => {
                         event.preventDefault();
-                        runWithEndpointSelection(async () => {
+                        runWithEndpointSelection(async (currentAuth: EndpointAuthClient) => {
                             props.onAfterClick?.();
                             if (action === "login") {
-                                await auth.signinRedirect();
+                                await currentAuth.signinRedirect();
                                 return;
                             }
-                            await auth.removeUser();
+                            await currentAuth.removeUser();
                             await props.onAfterAction?.();
                         });
                     }}

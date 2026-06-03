@@ -75,8 +75,6 @@ export type EntityCommentsSectionDisplayProps = {
     onDeleteAction: (payload: CommentDeletePayload) => Promise<void>;
     onEditAction: (payload: CommentEditPayload) => Promise<void>;
     onLoadMore: () => void;
-    onLogin: () => void;
     onReplyAction: (payload: CommentReplyPayload) => Promise<void>;
-    onSignUp: () => void;
     onSubmitAction: (payload: CommentSubmitPayload) => Promise<void>;
 } & CommentReactionMutations;

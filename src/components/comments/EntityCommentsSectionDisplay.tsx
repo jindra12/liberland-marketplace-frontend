@@ -2,7 +2,7 @@ import * as React from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Button, Divider, Flex, Space, Spin, Typography, message } from "antd";
+import { Divider, Flex, Spin, Typography, message } from "antd";
 
 import {
     ENTITY_COMMENTS_DEFAULT_PLACEHOLDER,
@@ -56,14 +56,6 @@ export const EntityCommentsSectionDisplay: React.FunctionComponent<EntityComment
                     <Typography.Title level={4} className="EntityCommentsSection__title">
                         Comments{props.commentsCount !== undefined ? ` (${props.commentsCount})` : ""}
                     </Typography.Title>
-                    {props.isAnonymous && (
-                        <Space wrap className="EntityCommentsSection__authActions">
-                            <Button onClick={props.onLogin}>Log in</Button>
-                            <Button type="primary" onClick={props.onSignUp}>
-                                Sign up
-                            </Button>
-                        </Space>
-                    )}
                 </Flex>
                 <CommentCreateComposer
                     serverURL={props.serverURL}

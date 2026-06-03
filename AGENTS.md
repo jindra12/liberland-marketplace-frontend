@@ -93,6 +93,7 @@ manager is `yarn`.
 - Do not use `|| undefined` to coerce values. If a value can really be `null`, reflect that in the type. If a prop specifically needs `undefined`, use an explicit `!value ? undefined : value` check instead.
 - Do not use `?? undefined`. If a value can be absent, model it as `null` in the type or use a deliberate `!` assertion when the contract guarantees it.
 - Do not use `?? null` for any reason.
+- Never use the `void` operator anywhere in app code, tests, or helpers.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
 - Do not use inline `style={{ ... }}` props. Prefer SCSS classes or component props unless a one-off runtime value genuinely cannot be expressed otherwise.
 - Do not thread simple local form fields through pass-through JSX props or render-slot props like `companyField`. Put the field JSX directly inside the owning component.

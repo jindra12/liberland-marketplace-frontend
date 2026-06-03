@@ -3,30 +3,18 @@ import * as React from "react";
 import { AuthProvider } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
 
-import { WebStorageStateStore } from "oidc-client-ts";
-
+import { buildAuthSettings } from "./auth/utils";
 import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
-    const { authUrl: auth } = useEndpointContext();
+    const { authUrl } = useEndpointContext();
     const navigate = useNavigate();
-
-    const store = React.useMemo(() => new WebStorageStateStore({ store: window.localStorage }), []);
+    const authSettings = buildAuthSettings(authUrl);
 
     return (
         <AuthProvider
-            authority={`${auth}/api/auth`}
-            client_id={process.env.REACT_APP_OIDC_CLIENT_ID || ""}
-            client_secret={process.env.REACT_APP_OIDC_CLIENT_SECRET || ""}
-            redirect_uri={process.env.REACT_APP_OIDC_REDIRECT_URI || `${window.location.origin}/auth/callback`}
-            scope="openid profile email"
-            userStore={store}
-            metadata={{
-                issuer: `${auth}/api/auth`,
-                authorization_endpoint: `${auth}/api/auth/oauth2/authorize`,
-                token_endpoint: `${auth}/api/auth/oauth2/token`,
-                userinfo_endpoint: `${auth}/api/auth/oauth2/userinfo`,
-            }}
+            key={authSettings.authority}
+            {...authSettings}
             onSigninCallback={() => {
                 navigate("/", { replace: true });
             }}
