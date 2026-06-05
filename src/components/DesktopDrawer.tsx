@@ -55,25 +55,6 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                             Syndication
                         </RouteButton>
                     ) : null}
-                    <EndpointAuthAction>
-                        {({ runWithEndpointSelection }) => (
-                            <Button
-                                block
-                                type="primary"
-                                icon={<PlusOutlined />}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    runWithEndpointSelection(() => {
-                                        navigate(routes.publish.route);
-                                        setDesktopActionsOpen(false);
-                                    });
-                                }}
-                                className="AppHeader__drawerPublish"
-                            >
-                                Create
-                            </Button>
-                        )}
-                    </EndpointAuthAction>
                     {auth.isAuthenticated ? (
                         <Button
                             block

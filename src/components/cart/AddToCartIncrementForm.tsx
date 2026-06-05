@@ -13,6 +13,7 @@ import { useCartBySecretQuery, useCreateCartMutation, useUpdateCartMutation } fr
 import { AddToCartSubmitButton } from "./AddToCartSubmitButton";
 import { useCartMutationContext } from "./CartMutationContext";
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cartSecrets";
+import { notifyCartSecretsChanged } from "./utils";
 
 type AddToCartIncrementFormProps = {
     productId: string;
@@ -80,16 +81,15 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
         });
         const createdSecret = result.createCart?.secret;
         if (createdSecret) {
-            setCartSecrets((prev) => {
-                const filtered = (prev || []).filter((entry) => entry.url !== props.serverURL);
-                return [
-                    ...filtered,
-                    {
-                        url: props.serverURL,
-                        secret: createdSecret,
-                    },
-                ];
-            });
+            const nextEntries = [
+                ...(cartSecrets || []).filter((entry) => entry.url !== props.serverURL),
+                {
+                    url: props.serverURL,
+                    secret: createdSecret,
+                },
+            ];
+            setCartSecrets(nextEntries);
+            notifyCartSecretsChanged(nextEntries);
         }
     };
     const toItemsByKey = (existingCart: Cart): Record<string, MutationCartUpdate_ItemsInput> => {
@@ -230,6 +230,9 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
                 disabled={isMutating}
                 ariaLabel="Add to cart"
                 icon={<PlusOutlined />}
+                onClick={() => {
+                    props.form.submit();
+                }}
             />
             {hasItemInCart && (
                 <Button

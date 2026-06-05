@@ -193,9 +193,7 @@
         .ant-drawer-content,
         .ant-drawer-header,
         .ant-drawer-body {
-            background:
-                radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 30%),
-                linear-gradient(180deg, #04101a 0%, #05111b 100%);
+            background: rgba(47, 140, 255, 0.08);
         }
 
         .ant-drawer-header {

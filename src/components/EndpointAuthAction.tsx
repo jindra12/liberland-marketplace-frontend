@@ -154,7 +154,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     }, [authUrl, pendingAction, runPendingAction]);
     const items: MenuProps["items"] = urls.map((endpoint) => ({
         key: endpoint.value,
-        label: `Server ${endpoint.name ? endpoint.name : toEndpointShort(endpoint.value)}`,
+        label: `${endpoint.name ? endpoint.name : toEndpointShort(endpoint.value)} server`,
     }));
     const onMenuClick: MenuProps["onClick"] = (info) => {
         const url = String(info.key);

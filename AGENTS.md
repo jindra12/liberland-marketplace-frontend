@@ -34,6 +34,7 @@ manager is `yarn`.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - The only allowed way to run Cypress is through `yarn cypress:run`, which must use the repo lock wrapper. Do not invoke `cypress run` directly from package scripts or ad hoc commands.
 - If Cypress/Electron crashes or hangs inside the sandbox, rerun the suite outside the sandbox with elevated permissions instead of looping on the same sandboxed run.
+- For any Cypress run that matters, prefer the outside-sandbox elevated path from the start; if it fails, retry once outside the sandbox after fixing the blocker instead of repeating sandboxed attempts.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"

@@ -9,6 +9,7 @@ import { routes } from "../../routes";
 import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
+import { ResetSyndicationUrlsButton } from "../endpoints/ResetSyndicationUrlsButton";
 import { useNsfwConsent } from "../endpoints/useNsfwConsent";
 import {
     createEndpointEntry,
@@ -96,18 +97,21 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 title="Syndication"
                 emptyText="No syndicated URLs configured yet."
                 filters={
-                    <Space.Compact block className="SyndicationList__addCompact">
-                        <Input
-                            value={draftUrl}
-                            prefix={<LinkOutlined />}
-                            placeholder="https://your-backend.example"
-                            onChange={(event) => setDraftUrl(event.target.value)}
-                            onPressEnter={handleAdd}
-                        />
-                        <Button type="primary" onClick={handleAdd}>
-                            Add URL
-                        </Button>
-                    </Space.Compact>
+                    <Flex vertical gap={12} className="SyndicationList__filters">
+                        <Space.Compact block className="SyndicationList__addCompact">
+                            <Input
+                                value={draftUrl}
+                                prefix={<LinkOutlined />}
+                                placeholder="https://your-backend.example"
+                                onChange={(event) => setDraftUrl(event.target.value)}
+                                onPressEnter={handleAdd}
+                            />
+                            <Button type="primary" onClick={handleAdd}>
+                                Add URL
+                            </Button>
+                        </Space.Compact>
+                        <ResetSyndicationUrlsButton className="SyndicationList__resetBtn" />
+                    </Flex>
                 }
                 renderItem={{
                     title: (entry) => (

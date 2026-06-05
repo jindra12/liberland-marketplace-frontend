@@ -14,6 +14,7 @@ import { routes } from "../routes";
 
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
+import { notifyCartSecretsChanged } from "./cart/utils";
 import { useEndpointContext } from "./EndpointContext";
 import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
@@ -33,7 +34,7 @@ const Order: React.FunctionComponent = () => {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
-    const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const [cartSecrets, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
         SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
         undefined,
@@ -160,9 +161,11 @@ const Order: React.FunctionComponent = () => {
 
             if (summary.submittedOrders.length > 0) {
                 const submittedCartKeys = new Set(ordered.map((entry) => `${entry.cart.url}::${entry.cart.secret}`));
-                setCartSecrets((prev) =>
-                    (prev || []).filter((entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`)),
+                const nextCartSecrets = (cartSecrets || []).filter(
+                    (entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`),
                 );
+                setCartSecrets(nextCartSecrets);
+                notifyCartSecretsChanged(nextCartSecrets);
             }
 
             setSubmittedOrders(summary.submittedOrders);

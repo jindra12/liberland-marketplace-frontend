@@ -127,6 +127,10 @@
     font-weight: 800;
 }
 
+.SyndicationList__resetBtn.ant-btn {
+    align-self: flex-start;
+}
+
 .SyndicateModal__footerDivider.ant-divider {
     margin: 0;
     border-block-start-color: rgba(147, 214, 255, 0.16);

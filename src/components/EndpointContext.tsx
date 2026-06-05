@@ -12,10 +12,10 @@ import {
     ListPublishedSyndicationUrlsQuery,
     ListPublishedSyndicationUrlsDocument,
 } from "../generated/graphql";
-import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
+import { gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
 
-import { mergeSyndicationUrls } from "./endpoints/utils";
+import { getDefaultEndpointUrls, mergeSyndicationUrls } from "./endpoints/utils";
 import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
 export interface EndpointContextType {
@@ -37,7 +37,7 @@ export type EndpointPendingAction = {
 };
 
 const EndpointContext = React.createContext<EndpointContextType>(null!);
-const defaultUrls: URL[] = [{ enabled: true, value: BACKEND_URL, name: "Main" }];
+const defaultUrls: URL[] = getDefaultEndpointUrls();
 
 export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[]) => URL[]) | URL[]) => void) => {
     const queries = useQueries({

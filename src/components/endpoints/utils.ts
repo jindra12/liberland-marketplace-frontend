@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "../../gqlFetcher";
 import type { SyndicationDoc, URL as EndpointUrl } from "../../types";
 
 export const normalizeSyndicationUrl = (value: string): string => {
@@ -56,6 +57,16 @@ export const insertUniqueEndpoint = (current: EndpointUrl[] | undefined, entry: 
     }
 
     return [...entries, entry];
+};
+
+export const getDefaultEndpointUrls = (): EndpointUrl[] => {
+    return [
+        {
+            enabled: true,
+            value: BACKEND_URL,
+            name: "Main",
+        },
+    ];
 };
 
 export const setEndpointEnabled = (

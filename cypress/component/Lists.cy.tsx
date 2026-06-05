@@ -14,10 +14,18 @@ import {
     waitForSearchQuery,
 } from "../support/component-tests/utils";
 import { PostRepostLink } from "../../src/components/shared/post/PostRepostLink";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
+
+const seedNsfwConsent = () => {
+    cy.window().then((win) => {
+        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+    });
+};
 
 describe("lists", () => {
     beforeEach(() => {
         cy.viewport(1200, 1200);
+        seedNsfwConsent();
         mountMainHome();
     });
 
@@ -61,6 +69,31 @@ describe("lists", () => {
 
     it("opens the Syndication list from home", () => {
         goToSyndicationList();
+    });
+
+    it("adds a product to cart from the market list", () => {
+        const marketGoal = LIST_GOALS.find((goal) => goal.trigger === "Market");
+        if (marketGoal === undefined) {
+            throw new Error("Missing Market list goal");
+        }
+
+        cy.intercept("POST", "**/api/graphql", (req) => {
+            if (JSON.stringify(req.body).includes("CreateCart")) {
+                req.alias = "createCart";
+            }
+        });
+        goToList(marketGoal);
+
+        cy.get(".ProductList__actionsRow")
+            .first()
+            .should("be.visible")
+            .within(() => {
+                cy.get('button[aria-label="Add to cart"]').should("be.visible").click();
+            });
+        cy.wait("@createCart").its("response.statusCode").should("eq", 200);
+        cy.contains(".ant-message-notice", "Added to cart", { timeout: 20000 }).should("be.visible");
+
+        screenshotStep("list-market-add-to-cart");
     });
 
     it("shows the original post link for reposted posts in the list UI", () => {

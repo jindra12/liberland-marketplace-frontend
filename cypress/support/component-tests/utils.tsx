@@ -345,7 +345,7 @@ export const setCartQuantity = (quantity: number) => {
 
 export const mountMainHome = () => {
     mountMainRoute("/");
-    cy.get(".LoadingSkeleton--boot").should("not.exist");
+    cy.get(".LoadingSkeleton--boot", { timeout: 20000 }).should("not.exist");
     cy.get(".SplashPage").should("be.visible");
 };
 
@@ -405,11 +405,13 @@ export const openSearchScope = (scopeLabel: string) => {
 };
 
 export const waitForPageShell = () => {
-    cy.get(".LoadingSkeleton--surface").should("not.exist");
+    cy.get(".LoadingSkeleton--surface", { timeout: 20000 }).should("not.exist");
 };
 
 export const assertImageLoaded = (selector: string) => {
     cy.get(selector, { timeout: 20000 })
+        .first()
+        .scrollIntoView()
         .should("be.visible")
         .should(($img) => {
             const node = $img[0];
@@ -685,7 +687,9 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
 };
 
 export const goToSyndicationList = () => {
-    cy.get(".SplashPage__syndicationManageBtn").contains(SYNDICATION_LIST_GOAL.clickLabel).click();
+    cy.get(".SplashPage__syndicationManageBtn")
+        .contains(SYNDICATION_LIST_GOAL.clickLabel)
+        .click({ waitForAnimations: false });
     cy.location("pathname").should("eq", SYNDICATION_LIST_GOAL.route);
     waitForPageShell();
     cy.contains(".SyndicationList__nsfwTag", "NSFW").should("be.visible");

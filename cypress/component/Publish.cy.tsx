@@ -10,6 +10,14 @@ import {
 } from "../support/component-tests/utils";
 import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
+type SigninRequestClient = {
+    createSigninRequest: (args: { request_type: "si:r" }) => Promise<{ url: string }>;
+};
+
+type SigninRedirectUserManager = UserManager & {
+    _client: SigninRequestClient;
+};
+
 const buildListCompaniesByCreatorResponse = (docs: Array<{ id: string; name: string; isPrivate: boolean }>) => ({
     data: {
         Companies: {
@@ -81,35 +89,23 @@ describe("publish", () => {
     it("uses the selected non-main endpoint before redirecting anonymous users to login", () => {
         cy.viewport(1440, 1200);
 
-        let redirectUrl = "";
-        cy.stub(UserManager.prototype as UserManager & { _signinStart: typeof UserManager.prototype.signinRedirect }, "_signinStart").callsFake(
-            async function (
-                this: UserManager & {
-                    _client: {
-                        createSigninRequest: (requestArgs: Parameters<UserManager["signinRedirect"]>[0]) => Promise<{
-                            url: string;
-                            state: { id: string };
-                        }>;
-                    };
-                },
-                args: Parameters<UserManager["signinRedirect"]>[0],
-            ) {
-                const signinRequest = await this._client.createSigninRequest(args);
-                redirectUrl = signinRequest.url;
-                return {
-                    url: signinRequest.url,
-                    state: signinRequest.state.id,
-                };
-            },
-        );
-
         mountAnonymousRoute("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+
+        let redirectUrl = "";
+        cy.stub(UserManager.prototype, "signinRedirect").callsFake(async function (this: SigninRedirectUserManager) {
+            const signinRequest = await this._client.createSigninRequest({
+                request_type: "si:r",
+            });
+
+            redirectUrl = signinRequest.url;
+        });
 
         cy.contains(".AppHeader__authBtn", "Log in", { timeout: 20000 }).should("be.visible").click();
         cy.contains(".ant-dropdown-menu-item", "Co-op", { timeout: 20000 }).should("be.visible").click();
 
         cy.then(() => {
             const parsedUrl = new URL(redirectUrl);
+
             expect(parsedUrl.origin).to.equal(COOP_SERVER_URL);
             expect(parsedUrl.pathname).to.equal("/api/auth/oauth2/authorize");
             expect(parsedUrl.searchParams.get("client_id")).to.be.a("string");
