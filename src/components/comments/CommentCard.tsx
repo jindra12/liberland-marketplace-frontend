@@ -12,7 +12,7 @@ import { Avatar, Button, Flex, Typography } from "antd";
 
 import { Comment } from "../../generated/graphql";
 import { routes } from "../../routes";
-import { EndpointAuthAction } from "../EndpointAuthAction";
+import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 import { ReportAction } from "../report/ReportAction";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 import { Like } from "../shared/Like/Like";

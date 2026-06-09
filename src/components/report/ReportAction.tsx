@@ -5,7 +5,7 @@ import { useAuth } from "react-oidc-context";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Typography } from "antd";
 
-import { EndpointAuthAction } from "../EndpointAuthAction";
+import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 
 import type { ReportActionProps } from "./types";
 import { useReportAction } from "./useReportAction";

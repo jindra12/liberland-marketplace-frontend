@@ -121,6 +121,8 @@
         "test:ct:remember-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberWallet.cy.tsx",
         "test:ct:remembered-wallet": "yarn cypress:run --component --browser electron --spec cypress/component/RememberedWallet.cy.tsx",
         "test:ct:remembered-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberedWallet.cy.tsx",
+        "test:ct:login-button": "yarn cypress:run --component --browser electron --spec cypress/component/LoginButton.cy.tsx",
+        "test:ct:login-button:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/LoginButton.cy.tsx",
         "test:ct:notfound": "yarn cypress:run --component --browser electron --spec cypress/component/NotFound.cy.tsx",
         "test:ct:notfound:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/NotFound.cy.tsx",
         "test:ct:runtime-error": "yarn cypress:run --component --browser electron --spec cypress/component/RuntimeErrorState.cy.tsx",
@@ -241,7 +243,7 @@
         "stream-browserify": "^3.0.0",
         "tsx": "^4.21.0",
         "typescript": "^5.8.3",
-        "vercel": "^54.6.1",
+        "vercel": "^54.9.1",
         "vite": "^8.0.3",
         "webpack-dev-server": "^5"
     }

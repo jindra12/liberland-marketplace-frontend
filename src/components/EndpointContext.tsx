@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import type { AuthContextProps } from "react-oidc-context";
-
 import { useQueries } from "@tanstack/react-query";
 
 import useLocalStorage from "use-local-storage";
@@ -15,6 +13,7 @@ import {
 import { gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
 
+import type { EndpointPendingAction } from "./EndpointAuthAction/types";
 import { getDefaultEndpointUrls, mergeSyndicationUrls } from "./endpoints/utils";
 import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
@@ -28,13 +27,6 @@ export interface EndpointContextType {
     pendingAction?: EndpointPendingAction;
     setPendingAction: React.Dispatch<React.SetStateAction<EndpointPendingAction | undefined>>;
 }
-
-export type EndpointAuthClient = Pick<AuthContextProps, "signinRedirect" | "removeUser">;
-
-export type EndpointPendingAction = {
-    action: (auth: EndpointAuthClient) => void | Promise<void>;
-    targetAuthUrl?: string;
-};
 
 const EndpointContext = React.createContext<EndpointContextType>(null!);
 const defaultUrls: URL[] = getDefaultEndpointUrls();

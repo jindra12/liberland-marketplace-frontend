@@ -21,7 +21,6 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
     const { sm } = Grid.useBreakpoint();
     const size = props.size === undefined ? "large" : props.size;
     const compact = props.compact === undefined ? false : props.compact;
-    const compactShareActionSize = compact && size === "large" ? "middle" : size;
 
     if (!sm) {
         return (
@@ -30,13 +29,13 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                     path={props.detailPath}
                     title={props.title}
                     text={props.text}
-                    size={compactShareActionSize}
+                    size={size}
                     className="NativeShareButton ListShareDetailButtons__button"
                 />
                 {props.subscriptionTarget ? (
                 <SubscribeButton
                         {...props.subscriptionTarget}
-                        size={compactShareActionSize}
+                        size={size}
                         className="ListShareDetailButtons__button"
                     />
                 ) : null}
@@ -58,11 +57,11 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
                 path={props.detailPath}
                 title={props.title}
                 text={props.text}
-                size={compactShareActionSize}
+                size={size}
                 className="NativeShareButton"
             />
             {props.subscriptionTarget ? (
-                <SubscribeButton {...props.subscriptionTarget} size={compactShareActionSize} />
+                <SubscribeButton {...props.subscriptionTarget} size={size} />
             ) : null}
             <RouteButton to={props.detailPath} size={size} className="ActionBtn">
                 Details

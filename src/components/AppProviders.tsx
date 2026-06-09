@@ -15,6 +15,7 @@ import { SolanaContext } from "./crypto/SolanaContext";
 import { TronContext } from "./crypto/TronContext";
 import { DisclaimersService } from "./disclaimers/DisclaimersService";
 import { EndpointContextProvider } from "./EndpointContext";
+import { EndpointPendingActionHost } from "./EndpointPendingActionHost";
 import { SyndicationNsfwService } from "./endpoints/SyndicationNsfwService";
 import { AppErrorBoundary } from "./ErrorBoundary/AppErrorBoundary";
 import { RouteScrollToTop } from "./RouteScrollToTop";
@@ -32,6 +33,7 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
                         <ThirdwebProvider>
                             <BrowserRouter>
                                 <AuthContextProvider>
+                                    <EndpointPendingActionHost />
                                     <CypressHistorySupport />
                                     <AppAnalyticsProvider>
                                         <AntProvider>

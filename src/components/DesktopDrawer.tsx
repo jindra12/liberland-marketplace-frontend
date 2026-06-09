@@ -3,13 +3,12 @@ import * as React from "react";
 import { useAuth } from "react-oidc-context";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { GlobalOutlined, MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 
 import { routes } from "../routes";
 
 import { DisclaimersButton } from "./disclaimers/DisclaimersButton";
-import { EndpointAuthAction } from "./EndpointAuthAction";
 import { useEndpointContext } from "./EndpointContext";
 import { RouteButton } from "./RouteButton";
 import { SearchButton } from "./SearchButton";

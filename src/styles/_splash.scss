@@ -550,7 +550,13 @@
 
 .MarketAccordion__header {
     min-width: 0;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.MarketAccordionMobile__header {
+    margin-bottom: 10px;
+    margin-left: 5px;
 }
 
 .SplashPage__tribesSection {
@@ -704,9 +710,14 @@
 }
 
 .SplashEntityCard__itemLink {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
     color: #eef8f3;
     font-weight: 800;
     font-size: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .SplashEntityCard__meta {

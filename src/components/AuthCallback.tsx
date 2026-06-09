@@ -8,6 +8,7 @@ import { Flex, Result, Spin } from "antd";
 
 import { routes } from "../routes";
 
+import { getLoginReturnTo } from "./auth/utils";
 import { RouteButton } from "./RouteButton";
 
 const AuthCallback: React.FunctionComponent = () => {
@@ -15,8 +16,12 @@ const AuthCallback: React.FunctionComponent = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        navigate(routes.home.route, { replace: true });
-    }, [auth.isAuthenticated, navigate]);
+        if (auth.isLoading || auth.error || !auth.user) {
+            return;
+        }
+
+        navigate(getLoginReturnTo(auth.user?.state) || routes.home.route, { replace: true });
+    }, [auth.error, auth.isLoading, auth.user, navigate]);
 
     const title = auth.error
         ? "Could not complete sign-in"

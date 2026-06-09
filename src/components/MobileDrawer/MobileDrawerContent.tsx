@@ -5,7 +5,7 @@ import { Button, Menu } from "antd";
 
 import { routes } from "../../routes";
 import { DisclaimersButton } from "../disclaimers/DisclaimersButton";
-import { EndpointAuthAction } from "../EndpointAuthAction";
+import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 import type { MobileDrawerModel } from "../MobileDrawer/types";
 import { RouteButton } from "../RouteButton";
 import { SearchButton } from "../SearchButton";

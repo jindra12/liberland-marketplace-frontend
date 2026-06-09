@@ -17,6 +17,7 @@ type SigninRequestClient = {
 type SigninRedirectUserManager = UserManager & {
     _client: SigninRequestClient;
 };
+type SigninRedirectArgs = Parameters<SigninRedirectUserManager["signinRedirect"]>[0];
 
 const buildListCompaniesByCreatorResponse = (docs: Array<{ id: string; name: string; isPrivate: boolean }>) => ({
     data: {
@@ -92,7 +93,12 @@ describe("publish", () => {
         mountAnonymousRoute("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL]);
 
         let redirectUrl = "";
-        cy.stub(UserManager.prototype, "signinRedirect").callsFake(async function (this: SigninRedirectUserManager) {
+        let signinRedirectArgs: SigninRedirectArgs | undefined;
+        cy.stub(UserManager.prototype, "signinRedirect").callsFake(async function (
+            this: SigninRedirectUserManager,
+            args?: SigninRedirectArgs,
+        ) {
+            signinRedirectArgs = args;
             const signinRequest = await this._client.createSigninRequest({
                 request_type: "si:r",
             });
@@ -100,10 +106,18 @@ describe("publish", () => {
             redirectUrl = signinRequest.url;
         });
 
-        cy.contains(".AppHeader__authBtn", "Log in", { timeout: 20000 }).should("be.visible").click();
-        cy.contains(".ant-dropdown-menu-item", "Co-op", { timeout: 20000 }).should("be.visible").click();
+        cy.get(".SyndicationNsfwModal", { timeout: 20000 }).should("be.visible");
+        cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 }).click();
+        cy.get(".SyndicationNsfwModal", { timeout: 20000 }).should("not.be.visible");
+        cy.get(".AppHeader__authBtn", { timeout: 20000 }).should("contain.text", "Log in").click();
+        cy.get(".LoginButton__popup", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton__popup .ant-select-tree-title", "Co-op", { timeout: 20000 })
+            .should("be.visible")
+            .click();
 
-        cy.then(() => {
+        cy.wrap(null, { timeout: 20000 }).should(() => {
+            expect(redirectUrl).to.not.equal("");
+            expect(signinRedirectArgs?.state).to.equal("/jobs");
             const parsedUrl = new URL(redirectUrl);
 
             expect(parsedUrl.origin).to.equal(COOP_SERVER_URL);

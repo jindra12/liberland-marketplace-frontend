@@ -3,7 +3,7 @@ import * as React from "react";
 import { Button, Empty, Modal } from "antd";
 
 import { routes } from "../../../routes";
-import { EndpointAuthAction } from "../../EndpointAuthAction";
+import { EndpointAuthAction } from "../../EndpointAuthAction/EndpointAuthAction";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { RouteButton } from "../../RouteButton";
 

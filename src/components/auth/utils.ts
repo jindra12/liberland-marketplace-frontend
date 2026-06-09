@@ -26,3 +26,19 @@ export const buildAuthSettings = (authUrl: string) => {
 export const createAuthManager = (authUrl: string) => {
     return new UserManager(buildAuthSettings(authUrl));
 };
+
+export const buildLoginReturnTo = (pathname: string, search: string, hash: string) => {
+    return `${pathname}${search}${hash}`;
+};
+
+export const getLoginReturnTo = (state: unknown) => {
+    if (typeof state !== "string") {
+        return "";
+    }
+
+    if (!state.startsWith("/") || state.startsWith("//")) {
+        return "";
+    }
+
+    return state;
+};

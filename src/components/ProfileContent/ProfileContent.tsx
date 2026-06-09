@@ -1,11 +1,9 @@
 import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
-import { useNavigate } from "react-router-dom";
 
 import { Divider, Flex, Typography, message } from "antd";
 
-import { routes } from "../../routes";
 import { useEndpointContext } from "../EndpointContext";
 import { useMeUserQuery } from "../hooks";
 import { LoginButton } from "../LoginButton";
@@ -21,7 +19,6 @@ import { buildProfileServerOptions, findSelectedServerLabel } from "./utils";
 
 export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
-    const navigate = useNavigate();
     const { authUrl, urls } = useEndpointContext();
     const profile = auth.user?.profile;
     const userId = profile?.sub;
@@ -99,7 +96,7 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Flex className="Profile__actions" gap="small" wrap>
                 <ProfileInformationRequestButton messageApi={messageApi} selectedServerUrl={selectedServerUrl} />
-                <LoginButton action="logout" danger onAfterAction={() => navigate(routes.home.route)} />
+                <LoginButton />
             </Flex>
 
             <Divider />

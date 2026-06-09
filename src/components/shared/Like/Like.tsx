@@ -3,7 +3,7 @@ import * as React from "react";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { Button, Flex, Typography } from "antd";
 
-import { EndpointAuthAction } from "../../EndpointAuthAction";
+import { EndpointAuthAction } from "../../EndpointAuthAction/EndpointAuthAction";
 
 import type { DislikeMutation, LikeMutation } from "./types";
 import { getLikeButtonClassName, getLikeButtonVariables, getLikeCountText } from "./utils";

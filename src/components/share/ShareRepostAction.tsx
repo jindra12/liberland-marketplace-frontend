@@ -6,7 +6,7 @@ import { RetweetOutlined } from "@ant-design/icons";
 import { Button, Form, Modal, Typography } from "antd";
 
 import { CompanyField } from "../CompanyField";
-import { EndpointAuthAction } from "../EndpointAuthAction";
+import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 import { MarkdownEditor } from "../publish/MarkdownEditor";
 
 import type { ShareRepostActionProps } from "./useShareRepostAction";

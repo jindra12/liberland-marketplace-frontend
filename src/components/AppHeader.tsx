@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { MenuOutlined, PlusOutlined } from "@ant-design/icons";
@@ -12,7 +11,7 @@ import { routes } from "../routes";
 import { CartHeaderButton } from "./cart/CartHeaderButton";
 import { useCartItems } from "./cart/useCartItems";
 import { DesktopDrawer } from "./DesktopDrawer";
-import { EndpointAuthAction } from "./EndpointAuthAction";
+import { EndpointAuthAction } from "./EndpointAuthAction/EndpointAuthAction";
 import { LoginButton } from "./LoginButton";
 import { MobileDrawer } from "./MobileDrawer";
 import { getSelectedKeys } from "./MobileDrawer/utils";
@@ -32,9 +31,7 @@ export const AppHeader: React.FunctionComponent = () => {
     const { xl } = useBreakpoint();
     const location = useLocation();
     const navigate = useNavigate();
-    const auth = useAuth();
     const { totalQuantity } = useCartItems();
-    const authAction = auth.isAuthenticated ? "logout" : "login";
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -101,10 +98,7 @@ export const AppHeader: React.FunctionComponent = () => {
                                 )}
                             </EndpointAuthAction>
                             <LoginButton
-                                action={authAction}
-                                type="default"
                                 className="AppHeader__authBtn"
-                                onAfterAction={() => navigate(routes.home.route)}
                             />
                             <DesktopDrawer />
                         </Flex>
@@ -112,10 +106,7 @@ export const AppHeader: React.FunctionComponent = () => {
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
                         <LoginButton
-                            action={authAction}
-                            type="text"
                             className="AppHeader__mobileAuthBtn"
-                            onAfterAction={() => navigate(routes.home.route)}
                         />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
                         <Button

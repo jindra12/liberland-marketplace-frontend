@@ -3,7 +3,9 @@ import * as React from "react";
 import { AuthProvider } from "react-oidc-context";
 import { useNavigate } from "react-router-dom";
 
-import { buildAuthSettings } from "./auth/utils";
+import { routes } from "../routes";
+
+import { buildAuthSettings, getLoginReturnTo } from "./auth/utils";
 import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
@@ -15,8 +17,8 @@ export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildre
         <AuthProvider
             key={authSettings.authority}
             {...authSettings}
-            onSigninCallback={() => {
-                navigate("/", { replace: true });
+            onSigninCallback={(user) => {
+                navigate(getLoginReturnTo(user?.state) || routes.home.route, { replace: true });
             }}
         >
             {props.children}

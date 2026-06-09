@@ -1,46 +1,21 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { Button, Dropdown, notification, Space } from "antd";
 import type { MenuProps } from "antd";
 
-import { useEndpointContext, type EndpointAuthClient, type EndpointPendingAction } from "./EndpointContext";
-import { getSyndicationName } from "./endpoints/utils";
+import type { EndpointAction, EndpointAuthActionProps, EndpointAuthClient } from "./types";
+import { useEndpointAuthAction } from "./useEndpointAuthAction";
+import { buildEndpointAuthMenuItems, getEndpointDisplayName, toEndpointShort } from "./utils";
 
-type EndpointAction = (auth: EndpointAuthClient) => void | Promise<void>;
-export type EndpointAuthActionRenderProps = {
-    runWithEndpointSelection: (action: EndpointAction) => void;
-    runWithAuthOrLogin: (
-        authorizedAction: EndpointAction,
-        options?: {
-            onUnauthorizedBeforeLogin?: () => void | Promise<void>;
-        },
-    ) => Promise<void>;
-};
-type EndpointAuthActionProps = {
-    defaultAuthUrl?: string;
-    requireVerifiedEmail?: boolean;
-    children: (props: EndpointAuthActionRenderProps) => React.ReactElement;
-};
-const toEndpointShort = (value: string) => {
-    try {
-        const parsed = new URL(value);
-        return parsed.hostname.replace(/^www\./i, "");
-    } catch {
-        return value
-            .replace(/^https?:\/\//i, "")
-            .replace(/^www\./i, "")
-            .replace(/\/.*$/, "");
-    }
-};
 export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps> = (props) => {
-    const auth = useAuth();
-    const { urls, authUrl, setAuthUrl, pendingAction, setPendingAction } = useEndpointContext();
+    const { auth, urls, authUrl, pendingAction, setPendingAction, runWithTargetAuthUrl } = useEndpointAuthAction();
     const [open, setOpen] = React.useState(false);
+
     const showUnverifiedEmailNotification = (targetAuthUrl: string) => {
         const targetEndpoint = urls.find((entry) => entry.value === targetAuthUrl);
-        const targetEndpointName = targetEndpoint ? getSyndicationName(targetEndpoint) : toEndpointShort(targetAuthUrl);
+        const targetEndpointName = targetEndpoint
+            ? getEndpointDisplayName(targetEndpoint)
+            : toEndpointShort(targetAuthUrl);
 
         notification.warning({
             key: `endpoint-auth-unverified-${targetAuthUrl}`,
@@ -62,38 +37,20 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             ),
         });
     };
-    const runPendingAction = React.useCallback(async (nextAction?: EndpointPendingAction) => {
-        if (!nextAction) {
+
+    const runWithEndpointSelection = (action: EndpointAction) => {
+        if (urls.length === 1) {
+            const [onlyEndpoint] = urls;
+            runWithTargetAuthUrl(onlyEndpoint.value, action);
             return;
         }
-        setPendingAction(undefined);
-        await nextAction.action(auth);
-    }, [auth, setPendingAction]);
-    const runWithEndpointSelection = React.useCallback(
-        async (action: EndpointAction) => {
-            if (urls.length === 1) {
-                const [onlyEndpoint] = urls;
-                if (onlyEndpoint.value !== authUrl) {
-                    setPendingAction({
-                        action,
-                        targetAuthUrl: onlyEndpoint.value,
-                    });
-                    setAuthUrl(onlyEndpoint.value);
-                    return;
-                }
-                await runPendingAction({
-                    action,
-                    targetAuthUrl: onlyEndpoint.value,
-                });
-                return;
-            }
-            setPendingAction({
-                action,
-            });
-            setOpen(true);
-        },
-        [authUrl, runPendingAction, setAuthUrl, setPendingAction, urls],
-    );
+
+        setPendingAction({
+            action,
+        });
+        setOpen(true);
+    };
+
     const runWithAuthOrLogin = async (
         authorizedAction: EndpointAction,
         options?: {
@@ -106,76 +63,60 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                     setPendingAction(undefined);
                     showUnverifiedEmailNotification(props.defaultAuthUrl ?? authUrl);
                 };
+
                 if (props.defaultAuthUrl) {
                     if (authUrl === props.defaultAuthUrl) {
                         await runUnverifiedAction();
                         return;
                     }
-                    setPendingAction({
-                        action: runUnverifiedAction,
-                        targetAuthUrl: props.defaultAuthUrl,
-                    });
-                    setAuthUrl(props.defaultAuthUrl);
+
+                    await runWithTargetAuthUrl(props.defaultAuthUrl, runUnverifiedAction);
                     return;
                 }
+
                 await runUnverifiedAction();
                 return;
             }
+
             setPendingAction(undefined);
             await authorizedAction(auth);
             return;
         }
+
         if (props.defaultAuthUrl) {
             const runLogin = async (currentAuth: EndpointAuthClient) => {
                 await options?.onUnauthorizedBeforeLogin?.();
                 await currentAuth.signinRedirect();
             };
+
             if (authUrl === props.defaultAuthUrl) {
                 await runLogin(auth);
                 return;
             }
-            setPendingAction({
-                action: runLogin,
-                targetAuthUrl: props.defaultAuthUrl,
-            });
-            setAuthUrl(props.defaultAuthUrl);
+
+            await runWithTargetAuthUrl(props.defaultAuthUrl, runLogin);
             return;
         }
+
         runWithEndpointSelection(async (currentAuth) => {
             await options?.onUnauthorizedBeforeLogin?.();
             await currentAuth.signinRedirect();
         });
     };
-    React.useEffect(() => {
-        if (!pendingAction?.targetAuthUrl || authUrl !== pendingAction.targetAuthUrl) {
-            return;
-        }
-        runPendingAction(pendingAction);
-    }, [authUrl, pendingAction, runPendingAction]);
-    const items: MenuProps["items"] = urls.map((endpoint) => ({
-        key: endpoint.value,
-        label: `${endpoint.name ? endpoint.name : toEndpointShort(endpoint.value)} server`,
-    }));
+
+    const items: MenuProps["items"] = buildEndpointAuthMenuItems(urls);
+
     const onMenuClick: MenuProps["onClick"] = (info) => {
         const url = String(info.key);
         setOpen(false);
+
         if (!pendingAction) {
             return;
         }
-        if (url !== authUrl) {
-            setPendingAction((current) =>
-                current
-                    ? {
-                          ...current,
-                          targetAuthUrl: url,
-                      }
-                    : current,
-            );
-            setAuthUrl(url);
-            return;
-        }
-        runPendingAction(pendingAction);
+
+        runWithTargetAuthUrl(url, pendingAction.action);
     };
+
     return (
         <Dropdown
             trigger={["click"]}
@@ -190,6 +131,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
                     setOpen(false);
                     return;
                 }
+
                 if (pendingAction) {
                     setOpen(true);
                 }
@@ -197,6 +139,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
         >
             {props.children({
                 runWithEndpointSelection,
+                runWithTargetAuthUrl,
                 runWithAuthOrLogin,
             })}
         </Dropdown>

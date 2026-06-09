@@ -4,7 +4,7 @@ import { useAuth } from "react-oidc-context";
 
 import { Button, Flex, Form, Input } from "antd";
 
-import { EndpointAuthAction } from "../EndpointAuthAction";
+import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 
 import { CommentCompanyField } from "./CommentCompanyField";
 import type { CommentComposerValues } from "./types";
