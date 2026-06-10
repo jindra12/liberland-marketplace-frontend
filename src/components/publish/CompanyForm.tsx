@@ -5,6 +5,9 @@ import type { UploadFile } from "antd/es/upload/interface";
 
 import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
 
+import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
+import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
+import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
@@ -17,6 +20,7 @@ interface CompanyFormValues {
     phone?: string | null;
     website?: string | null;
     identity?: string | null;
+    cryptoAddresses?: CryptoAddressesFormValue | null;
     imageFile?: UploadFile[];
 }
 export interface CompanyFormProps {
@@ -45,17 +49,24 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
         createMutation,
         updateMutation,
         url: props.url,
-        buildData: (values: CompanyFormValues, imageId) => ({
-            name: values.name,
-            description: values.description,
-            email: values.email,
-            phone: values.phone,
-            website: values.website,
-            identity: values.identity,
-            ...(imageId !== undefined && {
-                image: imageId,
-            }),
-        }),
+        buildData: (values: CompanyFormValues, imageId) => {
+            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
+
+            return {
+                name: values.name,
+                description: values.description,
+                email: values.email,
+                phone: values.phone,
+                website: values.website,
+                identity: values.identity,
+                ...(cryptoAddresses !== undefined && {
+                    cryptoAddresses,
+                }),
+                ...(imageId !== undefined && {
+                    image: imageId,
+                }),
+            };
+        },
         getCreateId: (r) => r.createCompany?.id,
         getUpdateId: (r) => r.updateCompany?.id,
     });
@@ -112,6 +123,9 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
             <Form.Item name="website" label="Website" className="Publish__companyWebsiteField">
                 <Input />
             </Form.Item>
+            <CryptoAddressesField
+                description="Optional single payout wallet. If no product wallet is set, this wallet will be used at checkout."
+            />
             <Form.Item>
                 <FormSubmitButtons mode={props.mode} entityName="Company" loading={loading} draftRef={draftRef} />
             </Form.Item>

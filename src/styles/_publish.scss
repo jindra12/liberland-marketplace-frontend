@@ -54,6 +54,31 @@
     &__amountInput {
         width: 70%;
     }
+
+    &__cryptoCard {
+        margin: 8px 0 0;
+
+        .ant-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 24px 24px;
+        }
+    }
+
+    &__cryptoCardHeader {
+        min-width: 0;
+    }
+
+    &__cryptoCardTitle {
+        margin: 0 !important;
+    }
+
+    &__cryptoCardDescription {
+        margin: 0 !important;
+        color: rgba(188, 217, 203, 0.76);
+        line-height: 1.6;
+    }
 }
 
 .PublishServer {

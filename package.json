@@ -101,6 +101,8 @@
         "test:ct:job:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/JobCreateEdit.cy.tsx",
         "test:ct:product": "yarn cypress:run --component --browser electron --spec cypress/component/ProductCreateEdit.cy.tsx",
         "test:ct:product:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/ProductCreateEdit.cy.tsx",
+        "test:ct:crypto-addresses": "yarn cypress:run --component --browser electron --spec cypress/component/CryptoAddressesField.cy.tsx",
+        "test:ct:crypto-addresses:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/CryptoAddressesField.cy.tsx",
         "test:ct:venture": "yarn cypress:run --component --browser electron --spec cypress/component/VentureCreateEdit.cy.tsx",
         "test:ct:venture:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/VentureCreateEdit.cy.tsx",
         "test:ct:startup": "yarn cypress:run --component --browser electron --spec cypress/component/StartupMutation.cy.tsx",

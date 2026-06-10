@@ -39,6 +39,12 @@ const EditCompany: React.FunctionComponent = () => {
                                         phone: company?.phone,
                                         website: company?.website,
                                         identity: company?.identity?.id,
+                                        cryptoAddresses: company?.cryptoAddresses
+                                            ? {
+                                                  chain: company.cryptoAddresses.chain,
+                                                  address: company.cryptoAddresses.address,
+                                              }
+                                            : undefined,
                                         existingImageUrl: company?.image?.url,
                                         existingImageId: company?.image?.id,
                                     }}

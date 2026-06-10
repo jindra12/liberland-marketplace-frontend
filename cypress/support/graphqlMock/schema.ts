@@ -388,6 +388,7 @@ export const graphqlSchema = buildSchema(`
         addressLine2: JSON
         provider: JSON
         message: JSON
+        isPrivate: JSON
         allowedIdentities: [MockNode!]
         disallowedIdentities: [MockNode!]
         cryptoAddresses: MockNode

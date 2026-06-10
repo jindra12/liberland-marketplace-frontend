@@ -198,8 +198,11 @@ export const mockOwnedCompaniesByCreatorQuery = (
             req.alias = "ownedCompanies";
             req.reply({
                 data: {
+                    __typename: "Query",
                     Companies: {
+                        __typename: "Companies",
                         docs: docs.map((company) => ({
+                            __typename: "Company",
                             id: company.id,
                             isSubscribed: false,
                             serverURL: MAIN_SERVER_URL,

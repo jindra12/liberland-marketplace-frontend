@@ -10,6 +10,9 @@ import { CompanyField } from "../CompanyField";
 import { useCreateProductMutation, useUpdateProductMutation } from "../hooks";
 import { toCents } from "../shared/product/utils";
 
+import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
+import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
+import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
@@ -22,6 +25,7 @@ interface ProductFormValues {
     url?: string | null;
     inventory?: number | null;
     company?: string | null;
+    cryptoAddresses?: CryptoAddressesFormValue | null;
     imageFile?: UploadFile[];
 }
 export interface ProductFormProps {
@@ -50,18 +54,25 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
         createMutation,
         updateMutation,
         url: props.url,
-        buildData: (values: ProductFormValues, imageId) => ({
-            name: values.name,
-            description: values.description,
-            url: values.url,
-            company: values.company,
-            priceInUSDEnabled: true,
-            priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
-            inventory: values.inventory,
-            ...(imageId !== undefined && {
-                image: imageId,
-            }),
-        }),
+        buildData: (values: ProductFormValues, imageId) => {
+            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
+
+            return {
+                name: values.name,
+                description: values.description,
+                url: values.url,
+                company: values.company,
+                ...(cryptoAddresses !== undefined && {
+                    cryptoAddresses,
+                }),
+                priceInUSDEnabled: true,
+                priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
+                inventory: values.inventory,
+                ...(imageId !== undefined && {
+                    image: imageId,
+                }),
+            };
+        },
         getCreateId: (r) => r.createProduct?.id,
         getUpdateId: (r) => r.updateProduct?.id,
     });
@@ -119,6 +130,9 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
             >
                 <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>
+            <CryptoAddressesField
+                description="Optional single payout wallet. If no product wallet is set, the company wallet is used at checkout."
+            />
             <Form.Item>
                 <FormSubmitButtons mode={props.mode} entityName="Product" loading={loading} draftRef={draftRef} />
             </Form.Item>

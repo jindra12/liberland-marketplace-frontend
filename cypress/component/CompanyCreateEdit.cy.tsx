@@ -4,12 +4,13 @@ import {
     fillFormField,
     getRouteEntityId,
     mountAuthenticatedMainRoute,
-    openPublishCategory,
+    mockOwnedCompaniesByCreatorQuery,
     screenshotStep,
     selectFormOption,
     uploadTestImage,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const assertCompanyName = (companyId: string, expectedTitle: string) => {
     cy.window().then(async (win) => {
@@ -43,12 +44,43 @@ const assertCompanyName = (companyId: string, expectedTitle: string) => {
     });
 };
 
+const continuePastNsfwModal = () => {
+    cy.get("body", { timeout: 20000 }).then(($body) => {
+        if ($body.find(".SyndicationNsfwModal").length > 0) {
+            cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 })
+                .should("be.visible")
+                .click({ force: true });
+            cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("not.be.visible");
+        }
+    });
+};
+
+const openCompanyPublishForm = () => {
+    cy.get("body", { timeout: 30000 }).should(($body) => {
+        expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
+    });
+    cy.get("body").then(($body) => {
+        if ($body.find(".Publish__category").length > 0) {
+            cy.contains(".Publish__category", "Company", { timeout: 30000 }).should("be.visible").click({ force: true });
+            return;
+        }
+
+        cy.contains(".Publish__companyNameField", "Company Name", { timeout: 30000 }).should("be.visible");
+    });
+};
+
 describe("company create/edit", () => {
     it("creates a company with an uploaded image", () => {
         const companyName = "Signal Harbor Works";
-
-        mountAuthenticatedMainRoute("/publish");
-        openPublishCategory("Company");
+        mockOwnedCompaniesByCreatorQuery([
+            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+        ]);
+        mountAuthenticatedMainRoute("/publish", true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+        continuePastNsfwModal();
+        openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);
         fillFormField("Email", "signal@harbor.example");
@@ -64,6 +96,7 @@ describe("company create/edit", () => {
             const createdId = getRouteEntityId(pathname);
             waitForDetailQuery(MAIN_SERVER_URL, "CompanyById", { id: createdId }, "Company", createdId, companyName);
             cy.contains("h1", companyName).should("be.visible");
+            assertCompanyName(createdId, companyName);
             screenshotStep("company-created-page");
         });
     });
@@ -71,9 +104,15 @@ describe("company create/edit", () => {
     it("edits a company and keeps the update after refetch", () => {
         const companyName = "Editable Harbor Works";
         const updatedCompanyName = "Editable Harbor Works Revised";
-
-        mountAuthenticatedMainRoute("/publish");
-        openPublishCategory("Company");
+        mockOwnedCompaniesByCreatorQuery([
+            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+        ]);
+        mountAuthenticatedMainRoute("/publish", true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+        continuePastNsfwModal();
+        openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);
         fillFormField("Email", "editable@harbor.example");

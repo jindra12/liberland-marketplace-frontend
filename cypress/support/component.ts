@@ -49,6 +49,14 @@ Cypress.on("uncaught:exception", (error) => {
         return false;
     }
 
+    if (error.message.includes("ResizeObserver loop completed with undelivered notifications")) {
+        return false;
+    }
+
+    if (error.message.includes("ResizeObserver loop limit exceeded")) {
+        return false;
+    }
+
     return undefined;
 });
 
