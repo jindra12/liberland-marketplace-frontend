@@ -1,9 +1,9 @@
 import { products } from "./catalog";
 import { meUser } from "./meUser";
-import { Order_CryptoPrices_Chain, Order_Currency, Order_Status, Order_TransactionHashes_Chain, Transaction_Status } from "../../../../src/generated/graphql";
-import type { Order } from "../../../../src/generated/graphql";
+import { Order_CryptoPrices_Chain, Order_Currency, Order_Status, Transaction_Status } from "../../../../src/generated/graphql";
+import type { MockNode } from "../types";
 
-export const orders: Order[] = [
+export const orders: MockNode[] = [
     {
         id: "order-alpha",
         status: Order_Status.Processing,
@@ -23,7 +23,7 @@ export const orders: Order[] = [
         transactionHashes: [
             {
                 id: "hash-alpha-1",
-                chain: Order_TransactionHashes_Chain.Solana,
+                chain: "solana",
                 transactionHash: "solana-tx-alpha-1",
                 product: products[0],
             },
@@ -74,7 +74,7 @@ export const orders: Order[] = [
         transactionHashes: [
             {
                 id: "hash-beta-1",
-                chain: Order_TransactionHashes_Chain.Ethereum,
+                chain: "ethereum",
                 transactionHash: "eth-tx-beta-1",
                 product: products[3],
             },

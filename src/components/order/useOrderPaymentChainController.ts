@@ -131,7 +131,7 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
                 orderId: props.entry.order.id,
                 draft: false,
                 data: {
-                    transactionHashes: nextRows,
+                    paymentProofs: nextRows,
                 },
             });
             const updatedOrder = result.updateOrder;

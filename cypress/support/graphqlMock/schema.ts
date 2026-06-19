@@ -109,6 +109,7 @@ export const graphqlSchema = buildSchema(`
         Product(id: String!, draft: Boolean): MockNode
         Startup(id: String!, draft: Boolean): MockNode
         Identity(id: String!, draft: Boolean): MockNode
+        sellerOrderProducts(fulfilled: Boolean, rejected: Boolean, limit: Int, page: Int): SellerOrderProductsPage!
         meUser: MockNode
     }
 
@@ -133,6 +134,9 @@ export const graphqlSchema = buildSchema(`
         updateStartup(id: String!, data: mutationStartupUpdateInput, draft: Boolean): MockNode
         createOrder(data: mutationOrderInput, draft: Boolean): MockNode
         updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
+        sellerOrderProducts(fulfilled: Boolean, rejected: Boolean, limit: Int, page: Int): SellerOrderProductsPage!
+        updateSellerOrderProductFulfilled(fulfilled: Boolean!, orderId: String!, paymentProofId: String!): SellerOrderProduct!
+        updateSellerOrderProductRejected(orderId: String!, paymentProofId: String!, rejected: Boolean!): SellerOrderProduct!
         createInformationRequest(data: mutationInformationRequestInput): MockNode
         createReport(data: mutationReportInput): MockNode
         shareRepost(input: ShareRepostInput!): ShareRepostResult!
@@ -168,6 +172,57 @@ export const graphqlSchema = buildSchema(`
         company: Company
         post: Post
         source: ShareRepostSource!
+    }
+
+    type SellerOrderShippingAddress {
+        title: String
+        firstName: String
+        lastName: String
+        company: String
+        addressLine1: String
+        addressLine2: String
+        city: String
+        state: String
+        postalCode: String
+        country: String
+        phone: String
+    }
+
+    type SellerOrderProductPaymentProof {
+        chain: String!
+        fulfilled: Boolean!
+        rejected: Boolean!
+        id: String!
+        transactionHash: String!
+    }
+
+    type SellerOrderProduct {
+        id: String!
+        chain: String!
+        fulfilled: Boolean!
+        rejected: Boolean!
+        orderCreatedAt: String!
+        orderId: String!
+        orderStatus: String
+        customerEmail: String
+        payerAddress: String
+        paymentProof: SellerOrderProductPaymentProof!
+        paymentProofId: String!
+        product: Product
+        productId: String!
+        quantity: Int!
+        shippingAddress: SellerOrderShippingAddress
+        transactionHash: String!
+    }
+
+    type SellerOrderProductsPage {
+        docs: [SellerOrderProduct!]!
+        totalDocs: Int!
+        limit: Int!
+        totalPages: Int!
+        page: Int!
+        hasPrevPage: Boolean!
+        hasNextPage: Boolean!
     }
 
     type Permission {
@@ -276,6 +331,9 @@ export const graphqlSchema = buildSchema(`
         name: String
         image: Media
         company: Company
+        createdBy: MockNode
+        createdAt: String
+        updatedAt: String
     }
 
     type Startup {

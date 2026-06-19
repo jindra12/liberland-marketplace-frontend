@@ -30,6 +30,7 @@ const routeTitles: Array<{ path: string; title: string }> = [
     { path: routes.profile.route, title: "Profile" },
     { path: routes.publish.route, title: "Publish" },
     { path: routes.cart.route, title: "Cart" },
+    { path: routes.orders.route, title: "Orders" },
     { path: routes.order.route, title: "Order" },
     { path: routes.unsubscribe.route, title: "Unsubscribe" },
     { path: routes.ventures.route, title: "Ventures" },

@@ -89,6 +89,8 @@
         "test:ct:search:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Search.cy.tsx",
         "test:ct:homepage": "yarn cypress:run --component --browser electron --spec cypress/component/Homepage.cy.tsx",
         "test:ct:homepage:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Homepage.cy.tsx",
+        "test:ct:orders": "yarn cypress:run --component --browser electron --spec cypress/component/Orders.cy.tsx",
+        "test:ct:orders:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Orders.cy.tsx",
         "test:ct:profile": "yarn cypress:run --component --browser electron --spec cypress/component/Profile.cy.tsx",
         "test:ct:profile:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Profile.cy.tsx",
         "test:ct:profile-information-request": "yarn cypress:run --component --browser electron --spec cypress/component/ProfileInformationRequest.cy.tsx",

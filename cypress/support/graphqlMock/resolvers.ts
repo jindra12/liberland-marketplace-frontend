@@ -96,6 +96,114 @@ const resolveCollection = (items: MockNode[], args: { page?: number; limit?: num
     };
 };
 
+const getOrderProofRows = (order: MockNode): MockNode[] => {
+    if (Array.isArray(order.paymentProofs)) {
+        return order.paymentProofs as MockNode[];
+    }
+
+    if (Array.isArray(order.transactionHashes)) {
+        return order.transactionHashes as MockNode[];
+    }
+
+    return [];
+};
+
+const getOrderQuantityForProduct = (order: MockNode, productId: string): number => {
+    const items = Array.isArray(order.items) ? (order.items as MockNode[]) : [];
+
+    return items.reduce((total, item) => {
+        const itemProductId = typeof item.product === "string" ? item.product : item.product?.id;
+
+        if (itemProductId !== productId) {
+            return total;
+        }
+
+        return total + Number(item.quantity ?? 0);
+    }, 0);
+};
+
+const buildSellerOrderRows = (orders: MockNode[]): MockNode[] => {
+    return orders.flatMap((order) => {
+        return getOrderProofRows(order).flatMap((proof, index) => {
+            const product = typeof proof.product === "string" ? activeFixtures.products.find((entry) => entry.id === proof.product) : proof.product;
+            const productId = product?.id ?? (typeof proof.product === "string" ? proof.product : "");
+            if (!productId) {
+                return [];
+            }
+
+            const fulfilled = Boolean(proof.fulfilled);
+            const rejected = Boolean(proof.rejected);
+            const paymentProofId = typeof proof.id === "string" ? proof.id : `${order.id || "order"}-${productId}-${index}`;
+
+            return [
+                {
+                    id: paymentProofId,
+                    chain: String(proof.chain ?? ""),
+                    fulfilled,
+                    rejected,
+                    orderCreatedAt: String(order.createdAt ?? nowIso()),
+                    orderId: String(order.id ?? ""),
+                    orderStatus: order.status ? String(order.status) : null,
+                    customerEmail: order.customerEmail ?? null,
+                    payerAddress: order.payerAddress ?? null,
+                    paymentProof: {
+                        chain: String(proof.chain ?? ""),
+                        fulfilled,
+                        rejected,
+                        id: paymentProofId,
+                        transactionHash: String(proof.transactionHash ?? ""),
+                    },
+                    paymentProofId,
+                    product,
+                    productId,
+                    quantity: getOrderQuantityForProduct(order, productId),
+                    shippingAddress: order.shippingAddress ?? null,
+                    transactionHash: String(proof.transactionHash ?? ""),
+                },
+            ];
+        });
+    });
+};
+
+const updateSellerOrderProofState = ({
+    orderId,
+    paymentProofId,
+    nextState,
+}: {
+    orderId: string;
+    paymentProofId: string;
+    nextState: "fulfilled" | "rejected";
+}) => {
+    const order = activeFixtures.orders.find((item) => item.id === orderId);
+
+    if (!order) {
+        return null;
+    }
+
+    const proofs = getOrderProofRows(order);
+    const proofIndex = proofs.findIndex((proof) => proof.id === paymentProofId);
+
+    if (proofIndex < 0) {
+        return null;
+    }
+
+    const proof = proofs[proofIndex];
+    const nextProof = {
+        ...proof,
+        fulfilled: nextState === "fulfilled",
+        rejected: nextState === "rejected",
+    };
+
+    proofs[proofIndex] = nextProof;
+    if (Array.isArray(order.paymentProofs)) {
+        order.paymentProofs = proofs;
+    } else {
+        order.transactionHashes = proofs;
+    }
+
+    return buildSellerOrderRows([order])[0] || null;
+};
+
 const permissionsForHost = (host: string) => {
     if (host === "127.0.0.1:3010") {
         return [
@@ -214,6 +322,24 @@ export const queryResolvers = {
             });
         });
         return resolveCollection(filtered, args);
+    },
+    sellerOrderProducts: (
+        _parent: unknown,
+        args: { fulfilled?: boolean; rejected?: boolean; limit?: number; page?: number },
+    ): MockCollection => {
+        const rows = buildSellerOrderRows(activeFixtures.orders).filter((row) => {
+            if (typeof args.fulfilled === "boolean" && Boolean(row.fulfilled) !== args.fulfilled) {
+                return false;
+            }
+
+            if (typeof args.rejected === "boolean" && Boolean(row.rejected) !== args.rejected) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return resolveCollection(rows, args);
     },
     Syndications: (_parent: unknown, args: { limit?: number }): MockCollection => resolveCollection(activeFixtures.syndications, args),
     permissions: (_parent: unknown, _args: unknown, context: unknown) => {
@@ -470,6 +596,24 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         normalizeOrderData(data);
         return updateNode(activeFixtures.orders, args.id ?? args.orderId, data, "order");
+    },
+    updateSellerOrderProductFulfilled: (_parent: unknown, args: { orderId?: string; paymentProofId?: string; fulfilled?: boolean }) => {
+        const result = updateSellerOrderProofState({
+            orderId: String(args.orderId ?? ""),
+            paymentProofId: String(args.paymentProofId ?? ""),
+            nextState: "fulfilled",
+        });
+
+        return result || searchNode({ id: args.paymentProofId });
+    },
+    updateSellerOrderProductRejected: (_parent: unknown, args: { orderId?: string; paymentProofId?: string; rejected?: boolean }) => {
+        const result = updateSellerOrderProofState({
+            orderId: String(args.orderId ?? ""),
+            paymentProofId: String(args.paymentProofId ?? ""),
+            nextState: "rejected",
+        });
+
+        return result || searchNode({ id: args.paymentProofId });
     },
     createComment: (_parent: unknown, args: { data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});

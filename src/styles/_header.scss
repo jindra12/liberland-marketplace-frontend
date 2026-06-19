@@ -214,6 +214,15 @@
         align-items: center;
     }
 
+    &__ordersLink {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__ordersTag.ant-tag {
+        margin-inline-start: 4px;
+    }
+
     &__drawer,
     &__desktopDrawer {
         .ant-drawer-content,

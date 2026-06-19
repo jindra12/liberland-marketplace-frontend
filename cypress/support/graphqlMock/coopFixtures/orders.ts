@@ -1,7 +1,9 @@
 import { identities } from "./identities";
 import { products } from "./products";
-import type { Order, Transaction, User } from "../../../../src/generated/graphql";
-import { Order_Currency, Order_Status, Order_CryptoPrices_Chain, Order_TransactionHashes_Chain, Transaction_Currency, Transaction_Status } from "../../../../src/generated/graphql";
+import type { Transaction, User } from "../../../../src/generated/graphql";
+import { Order_Currency, Order_Status, Order_CryptoPrices_Chain, Transaction_Currency, Transaction_Status } from "../../../../src/generated/graphql";
+
+import type { MockNode } from "../types";
 
 const customer: User = {
     id: identities[1].id,
@@ -31,7 +33,7 @@ const transaction: Transaction = {
     ],
 };
 
-export const orders: Order[] = [
+export const orders: MockNode[] = [
     {
         id: "coop-order-alpha",
         status: Order_Status.Completed,
@@ -51,7 +53,7 @@ export const orders: Order[] = [
         transactionHashes: [
             {
                 id: "coop-hash-1",
-                chain: Order_TransactionHashes_Chain.Solana,
+                chain: "solana",
                 transactionHash: "coop-solana-tx-1",
                 product: products[0],
             },

@@ -17,14 +17,6 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
             expectedNativeAmount
             fetchedAt
         }
-        transactionHashes {
-            id
-            chain
-            transactionHash
-            product {
-                id
-            }
-        }
         currency
         amount
         customerEmail

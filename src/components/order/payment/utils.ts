@@ -1,5 +1,5 @@
 import {
-    OrderUpdate_TransactionHashes_Chain_MutationInput,
+    OrderUpdate_PaymentProofs_Chain_MutationInput,
     UserUpdate_Wallets_Chain_MutationInput,
 } from "../../../generated/graphql";
 import type { MeUserQuery, MutationUserUpdate_WalletsInput } from "../../../generated/graphql";
@@ -83,14 +83,14 @@ const formatFixedNativeUnits = (units: bigint, decimals: number): string => {
     return `${wholePart.toString()}.${fractionText}`;
 };
 
-const toTransactionHashChainInput = (chain: CryptoChain): OrderUpdate_TransactionHashes_Chain_MutationInput => {
+const toTransactionHashChainInput = (chain: CryptoChain): OrderUpdate_PaymentProofs_Chain_MutationInput => {
     switch (chain) {
         case "ethereum":
-            return OrderUpdate_TransactionHashes_Chain_MutationInput.Ethereum;
+            return OrderUpdate_PaymentProofs_Chain_MutationInput.Ethereum;
         case "solana":
-            return OrderUpdate_TransactionHashes_Chain_MutationInput.Solana;
+            return OrderUpdate_PaymentProofs_Chain_MutationInput.Solana;
         case "tron":
-            return OrderUpdate_TransactionHashes_Chain_MutationInput.Tron;
+            return OrderUpdate_PaymentProofs_Chain_MutationInput.Tron;
     }
 };
 
@@ -286,10 +286,20 @@ export const collectOrderChainPaymentAmounts = (order: Pick<OrderForPayments, "i
 };
 
 export const toExistingTransactionHashRows = (
-    order: Pick<OrderForPayments, "transactionHashes">,
+    order: {
+        items?: OrderItem[] | null;
+        transactionHashes?:
+            | {
+                  id?: string | null;
+                  product?: { id?: string | null } | string | null;
+                  chain?: CryptoChain | null;
+                  transactionHash?: string | null;
+              }[]
+            | null;
+    },
 ): TransactionHashUpdateRow[] => {
     return (order.transactionHashes ?? []).reduce<TransactionHashUpdateRow[]>((rows, entry) => {
-        const productId = entry?.product?.id;
+        const productId = typeof entry?.product === "string" ? entry.product : entry?.product?.id;
         const transactionHash = entry?.transactionHash;
         const chain = entry?.chain ? toCryptoChain(entry.chain) : undefined;
 

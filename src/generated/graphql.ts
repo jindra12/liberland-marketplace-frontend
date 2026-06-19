@@ -23370,6 +23370,8 @@ export type Mutation = {
   updateRedirect?: Maybe<Redirect>;
   updateReport?: Maybe<Report>;
   updateSearch?: Maybe<Search>;
+  updateSellerOrderProductFulfilled: SellerOrderProductMutationResult;
+  updateSellerOrderProductRejected: SellerOrderProductMutationResult;
   updateSession?: Maybe<Session>;
   updateStartup?: Maybe<Startup>;
   updateSubscriber?: Maybe<Subscriber>;
@@ -24611,6 +24613,20 @@ export type MutationUpdateSearchArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateSellerOrderProductFulfilledArgs = {
+  fulfilled: Scalars['Boolean']['input'];
+  orderId: Scalars['String']['input'];
+  paymentProofId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateSellerOrderProductRejectedArgs = {
+  orderId: Scalars['String']['input'];
+  paymentProofId: Scalars['String']['input'];
+  rejected: Scalars['Boolean']['input'];
 };
 
 
@@ -27631,9 +27647,9 @@ export type Order = {
   id: Scalars['String']['output'];
   items?: Maybe<Array<Order_Items>>;
   payerAddress?: Maybe<Scalars['String']['output']>;
+  paymentProofs?: Maybe<Array<Order_PaymentProofs>>;
   shippingAddress?: Maybe<Order_ShippingAddress>;
   status?: Maybe<Order_Status>;
-  transactionHashes?: Maybe<Array<Order_TransactionHashes>>;
   transactions?: Maybe<Array<Transaction>>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -27644,7 +27660,7 @@ export enum OrderUpdate_CryptoPrices_Chain_MutationInput {
   Tron = 'tron'
 }
 
-export enum OrderUpdate_TransactionHashes_Chain_MutationInput {
+export enum OrderUpdate_PaymentProofs_Chain_MutationInput {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
@@ -27701,6 +27717,33 @@ export type Order_ItemsVariantArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Order_PaymentProofs = {
+  __typename?: 'Order_PaymentProofs';
+  chain?: Maybe<Order_PaymentProofs_Chain>;
+  fulfilled?: Maybe<Scalars['Boolean']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  product?: Maybe<Product>;
+  rejected?: Maybe<Scalars['Boolean']['output']>;
+  transactionHash?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type Order_PaymentProofsProductArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum Order_PaymentProofs_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export enum Order_PaymentProofs_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
 export type Order_ShippingAddress = {
   __typename?: 'Order_ShippingAddress';
   addressLine1?: Maybe<Scalars['String']['output']>;
@@ -27715,31 +27758,6 @@ export type Order_ShippingAddress = {
   state?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
-
-export type Order_TransactionHashes = {
-  __typename?: 'Order_TransactionHashes';
-  chain?: Maybe<Order_TransactionHashes_Chain>;
-  id?: Maybe<Scalars['String']['output']>;
-  product?: Maybe<Product>;
-  transactionHash?: Maybe<Scalars['String']['output']>;
-};
-
-
-export type Order_TransactionHashesProductArgs = {
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export enum Order_TransactionHashes_Chain {
-  Ethereum = 'ethereum',
-  Solana = 'solana',
-  Tron = 'tron'
-}
-
-export enum Order_TransactionHashes_Chain_MutationInput {
-  Ethereum = 'ethereum',
-  Solana = 'solana',
-  Tron = 'tron'
-}
 
 export type Order_Amount_Operator = {
   equals?: InputMaybe<Scalars['Float']['input']>;
@@ -27928,6 +27946,61 @@ export type Order_PayerAddress_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export enum Order_PaymentProofs__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export type Order_PaymentProofs__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Order_PaymentProofs__Chain_Input>>>;
+  equals?: InputMaybe<Order_PaymentProofs__Chain_Input>;
+  in?: InputMaybe<Array<InputMaybe<Order_PaymentProofs__Chain_Input>>>;
+  not_equals?: InputMaybe<Order_PaymentProofs__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Order_PaymentProofs__Chain_Input>>>;
+};
+
+export type Order_PaymentProofs__Fulfilled_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Order_PaymentProofs__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_PaymentProofs__Product_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type Order_PaymentProofs__Rejected_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Order_PaymentProofs__TransactionHash_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Order_ShippingAddress__AddressLine1_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -28079,49 +28152,6 @@ export type Order_Status_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Order_Status_Input>>>;
 };
 
-export enum Order_TransactionHashes__Chain_Input {
-  Ethereum = 'ethereum',
-  Solana = 'solana',
-  Tron = 'tron'
-}
-
-export type Order_TransactionHashes__Chain_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Order_TransactionHashes__Chain_Input>>>;
-  equals?: InputMaybe<Order_TransactionHashes__Chain_Input>;
-  in?: InputMaybe<Array<InputMaybe<Order_TransactionHashes__Chain_Input>>>;
-  not_equals?: InputMaybe<Order_TransactionHashes__Chain_Input>;
-  not_in?: InputMaybe<Array<InputMaybe<Order_TransactionHashes__Chain_Input>>>;
-};
-
-export type Order_TransactionHashes__Id_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type Order_TransactionHashes__Product_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  equals?: InputMaybe<Scalars['JSON']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-  not_equals?: InputMaybe<Scalars['JSON']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
-};
-
-export type Order_TransactionHashes__TransactionHash_Operator = {
-  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
-  equals?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  like?: InputMaybe<Scalars['String']['input']>;
-  not_equals?: InputMaybe<Scalars['String']['input']>;
-  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type Order_Transactions_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
   equals?: InputMaybe<Scalars['JSON']['input']>;
@@ -28162,6 +28192,12 @@ export type Order_Where = {
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
   payerAddress?: InputMaybe<Order_PayerAddress_Operator>;
+  paymentProofs__chain?: InputMaybe<Order_PaymentProofs__Chain_Operator>;
+  paymentProofs__fulfilled?: InputMaybe<Order_PaymentProofs__Fulfilled_Operator>;
+  paymentProofs__id?: InputMaybe<Order_PaymentProofs__Id_Operator>;
+  paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
+  paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
+  paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -28174,10 +28210,6 @@ export type Order_Where = {
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
-  transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
-  transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
-  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
-  transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
@@ -28202,6 +28234,12 @@ export type Order_Where_And = {
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
   payerAddress?: InputMaybe<Order_PayerAddress_Operator>;
+  paymentProofs__chain?: InputMaybe<Order_PaymentProofs__Chain_Operator>;
+  paymentProofs__fulfilled?: InputMaybe<Order_PaymentProofs__Fulfilled_Operator>;
+  paymentProofs__id?: InputMaybe<Order_PaymentProofs__Id_Operator>;
+  paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
+  paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
+  paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -28214,10 +28252,6 @@ export type Order_Where_And = {
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
-  transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
-  transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
-  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
-  transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
@@ -28242,6 +28276,12 @@ export type Order_Where_Or = {
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
   payerAddress?: InputMaybe<Order_PayerAddress_Operator>;
+  paymentProofs__chain?: InputMaybe<Order_PaymentProofs__Chain_Operator>;
+  paymentProofs__fulfilled?: InputMaybe<Order_PaymentProofs__Fulfilled_Operator>;
+  paymentProofs__id?: InputMaybe<Order_PaymentProofs__Id_Operator>;
+  paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
+  paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
+  paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -28254,10 +28294,6 @@ export type Order_Where_Or = {
   shippingAddress__state?: InputMaybe<Order_ShippingAddress__State_Operator>;
   shippingAddress__title?: InputMaybe<Order_ShippingAddress__Title_Operator>;
   status?: InputMaybe<Order_Status_Operator>;
-  transactionHashes__chain?: InputMaybe<Order_TransactionHashes__Chain_Operator>;
-  transactionHashes__id?: InputMaybe<Order_TransactionHashes__Id_Operator>;
-  transactionHashes__product?: InputMaybe<Order_TransactionHashes__Product_Operator>;
-  transactionHashes__transactionHash?: InputMaybe<Order_TransactionHashes__TransactionHash_Operator>;
   transactions?: InputMaybe<Order_Transactions_Operator>;
   updatedAt?: InputMaybe<Order_UpdatedAt_Operator>;
 };
@@ -28311,9 +28347,9 @@ export type OrdersDocAccessFields = {
   customerEmail?: Maybe<OrdersDocAccessFields_CustomerEmail>;
   items?: Maybe<OrdersDocAccessFields_Items>;
   payerAddress?: Maybe<OrdersDocAccessFields_PayerAddress>;
+  paymentProofs?: Maybe<OrdersDocAccessFields_PaymentProofs>;
   shippingAddress?: Maybe<OrdersDocAccessFields_ShippingAddress>;
   status?: Maybe<OrdersDocAccessFields_Status>;
-  transactionHashes?: Maybe<OrdersDocAccessFields_TransactionHashes>;
   transactions?: Maybe<OrdersDocAccessFields_Transactions>;
   updatedAt?: Maybe<OrdersDocAccessFields_UpdatedAt>;
 };
@@ -28842,6 +28878,213 @@ export type OrdersDocAccessFields_PayerAddress_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_PaymentProofs = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_PaymentProofs_Fields>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fields = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_Fields';
+  chain?: Maybe<OrdersDocAccessFields_PaymentProofs_Chain>;
+  fulfilled?: Maybe<OrdersDocAccessFields_PaymentProofs_Fulfilled>;
+  id?: Maybe<OrdersDocAccessFields_PaymentProofs_Id>;
+  product?: Maybe<OrdersDocAccessFields_PaymentProofs_Product>;
+  rejected?: Maybe<OrdersDocAccessFields_PaymentProofs_Rejected>;
+  transactionHash?: Maybe<OrdersDocAccessFields_PaymentProofs_TransactionHash>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Chain = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_chain';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Chain_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Chain_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Chain_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Chain_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Chain_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Chain_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Chain_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Chain_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fulfilled = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_fulfilled';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Fulfilled_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Fulfilled_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Fulfilled_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Fulfilled_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fulfilled_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_fulfilled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fulfilled_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_fulfilled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fulfilled_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_fulfilled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Fulfilled_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_fulfilled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Id = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_id';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Id_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Id_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Id_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Id_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Id_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Id_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Id_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Id_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Product = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_product';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Product_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Product_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Product_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Product_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Product_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Product_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Product_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Product_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Rejected = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_rejected';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_Rejected_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_Rejected_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_Rejected_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_Rejected_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Rejected_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_rejected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Rejected_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_rejected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Rejected_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_rejected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_Rejected_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_rejected_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_TransactionHash = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_transactionHash';
+  create?: Maybe<OrdersDocAccessFields_PaymentProofs_TransactionHash_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentProofs_TransactionHash_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentProofs_TransactionHash_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentProofs_TransactionHash_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentProofs_TransactionHash_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_transactionHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_TransactionHash_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_transactionHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_TransactionHash_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_transactionHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentProofs_TransactionHash_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentProofs_transactionHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_ShippingAddress = {
   __typename?: 'OrdersDocAccessFields_shippingAddress';
   create?: Maybe<OrdersDocAccessFields_ShippingAddress_Create>;
@@ -29222,155 +29465,6 @@ export type OrdersDocAccessFields_Status_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
-export type OrdersDocAccessFields_TransactionHashes = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes';
-  create?: Maybe<OrdersDocAccessFields_TransactionHashes_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_Delete>;
-  fields?: Maybe<OrdersDocAccessFields_TransactionHashes_Fields>;
-  read?: Maybe<OrdersDocAccessFields_TransactionHashes_Read>;
-  update?: Maybe<OrdersDocAccessFields_TransactionHashes_Update>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Create = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Delete = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Fields = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_Fields';
-  chain?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain>;
-  id?: Maybe<OrdersDocAccessFields_TransactionHashes_Id>;
-  product?: Maybe<OrdersDocAccessFields_TransactionHashes_Product>;
-  transactionHash?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Read = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Update = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Chain = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_chain';
-  create?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain_Read>;
-  update?: Maybe<OrdersDocAccessFields_TransactionHashes_Chain_Update>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Chain_Create = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_chain_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Chain_Delete = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_chain_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Chain_Read = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_chain_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Chain_Update = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_chain_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Id = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_id';
-  create?: Maybe<OrdersDocAccessFields_TransactionHashes_Id_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_Id_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TransactionHashes_Id_Read>;
-  update?: Maybe<OrdersDocAccessFields_TransactionHashes_Id_Update>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Id_Create = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Id_Delete = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Id_Read = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Id_Update = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Product = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_product';
-  create?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Read>;
-  update?: Maybe<OrdersDocAccessFields_TransactionHashes_Product_Update>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Product_Create = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Product_Delete = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Product_Read = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_Product_Update = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_product_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_TransactionHash = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash';
-  create?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash_Create>;
-  delete?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash_Delete>;
-  read?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash_Read>;
-  update?: Maybe<OrdersDocAccessFields_TransactionHashes_TransactionHash_Update>;
-};
-
-export type OrdersDocAccessFields_TransactionHashes_TransactionHash_Create = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_TransactionHash_Delete = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_TransactionHash_Read = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersDocAccessFields_TransactionHashes_TransactionHash_Update = {
-  __typename?: 'OrdersDocAccessFields_transactionHashes_transactionHash_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
 export type OrdersDocAccessFields_Transactions = {
   __typename?: 'OrdersDocAccessFields_transactions';
   create?: Maybe<OrdersDocAccessFields_Transactions_Create>;
@@ -29437,9 +29531,9 @@ export type OrdersFields = {
   customerEmail?: Maybe<OrdersFields_CustomerEmail>;
   items?: Maybe<OrdersFields_Items>;
   payerAddress?: Maybe<OrdersFields_PayerAddress>;
+  paymentProofs?: Maybe<OrdersFields_PaymentProofs>;
   shippingAddress?: Maybe<OrdersFields_ShippingAddress>;
   status?: Maybe<OrdersFields_Status>;
-  transactionHashes?: Maybe<OrdersFields_TransactionHashes>;
   transactions?: Maybe<OrdersFields_Transactions>;
   updatedAt?: Maybe<OrdersFields_UpdatedAt>;
 };
@@ -29968,6 +30062,213 @@ export type OrdersFields_PayerAddress_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersFields_PaymentProofs = {
+  __typename?: 'OrdersFields_paymentProofs';
+  create?: Maybe<OrdersFields_PaymentProofs_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Delete>;
+  fields?: Maybe<OrdersFields_PaymentProofs_Fields>;
+  read?: Maybe<OrdersFields_PaymentProofs_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Create = {
+  __typename?: 'OrdersFields_paymentProofs_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Fields = {
+  __typename?: 'OrdersFields_paymentProofs_Fields';
+  chain?: Maybe<OrdersFields_PaymentProofs_Chain>;
+  fulfilled?: Maybe<OrdersFields_PaymentProofs_Fulfilled>;
+  id?: Maybe<OrdersFields_PaymentProofs_Id>;
+  product?: Maybe<OrdersFields_PaymentProofs_Product>;
+  rejected?: Maybe<OrdersFields_PaymentProofs_Rejected>;
+  transactionHash?: Maybe<OrdersFields_PaymentProofs_TransactionHash>;
+};
+
+export type OrdersFields_PaymentProofs_Read = {
+  __typename?: 'OrdersFields_paymentProofs_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Update = {
+  __typename?: 'OrdersFields_paymentProofs_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Chain = {
+  __typename?: 'OrdersFields_paymentProofs_chain';
+  create?: Maybe<OrdersFields_PaymentProofs_Chain_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Chain_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_Chain_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Chain_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Chain_Create = {
+  __typename?: 'OrdersFields_paymentProofs_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Chain_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Chain_Read = {
+  __typename?: 'OrdersFields_paymentProofs_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Chain_Update = {
+  __typename?: 'OrdersFields_paymentProofs_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Fulfilled = {
+  __typename?: 'OrdersFields_paymentProofs_fulfilled';
+  create?: Maybe<OrdersFields_PaymentProofs_Fulfilled_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Fulfilled_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_Fulfilled_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Fulfilled_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Fulfilled_Create = {
+  __typename?: 'OrdersFields_paymentProofs_fulfilled_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Fulfilled_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_fulfilled_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Fulfilled_Read = {
+  __typename?: 'OrdersFields_paymentProofs_fulfilled_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Fulfilled_Update = {
+  __typename?: 'OrdersFields_paymentProofs_fulfilled_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Id = {
+  __typename?: 'OrdersFields_paymentProofs_id';
+  create?: Maybe<OrdersFields_PaymentProofs_Id_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Id_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_Id_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Id_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Id_Create = {
+  __typename?: 'OrdersFields_paymentProofs_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Id_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Id_Read = {
+  __typename?: 'OrdersFields_paymentProofs_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Id_Update = {
+  __typename?: 'OrdersFields_paymentProofs_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Product = {
+  __typename?: 'OrdersFields_paymentProofs_product';
+  create?: Maybe<OrdersFields_PaymentProofs_Product_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Product_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_Product_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Product_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Product_Create = {
+  __typename?: 'OrdersFields_paymentProofs_product_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Product_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_product_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Product_Read = {
+  __typename?: 'OrdersFields_paymentProofs_product_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Product_Update = {
+  __typename?: 'OrdersFields_paymentProofs_product_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Rejected = {
+  __typename?: 'OrdersFields_paymentProofs_rejected';
+  create?: Maybe<OrdersFields_PaymentProofs_Rejected_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_Rejected_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_Rejected_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_Rejected_Update>;
+};
+
+export type OrdersFields_PaymentProofs_Rejected_Create = {
+  __typename?: 'OrdersFields_paymentProofs_rejected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Rejected_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_rejected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Rejected_Read = {
+  __typename?: 'OrdersFields_paymentProofs_rejected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_Rejected_Update = {
+  __typename?: 'OrdersFields_paymentProofs_rejected_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_TransactionHash = {
+  __typename?: 'OrdersFields_paymentProofs_transactionHash';
+  create?: Maybe<OrdersFields_PaymentProofs_TransactionHash_Create>;
+  delete?: Maybe<OrdersFields_PaymentProofs_TransactionHash_Delete>;
+  read?: Maybe<OrdersFields_PaymentProofs_TransactionHash_Read>;
+  update?: Maybe<OrdersFields_PaymentProofs_TransactionHash_Update>;
+};
+
+export type OrdersFields_PaymentProofs_TransactionHash_Create = {
+  __typename?: 'OrdersFields_paymentProofs_transactionHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_TransactionHash_Delete = {
+  __typename?: 'OrdersFields_paymentProofs_transactionHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_TransactionHash_Read = {
+  __typename?: 'OrdersFields_paymentProofs_transactionHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentProofs_TransactionHash_Update = {
+  __typename?: 'OrdersFields_paymentProofs_transactionHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersFields_ShippingAddress = {
   __typename?: 'OrdersFields_shippingAddress';
   create?: Maybe<OrdersFields_ShippingAddress_Create>;
@@ -30345,155 +30646,6 @@ export type OrdersFields_Status_Read = {
 
 export type OrdersFields_Status_Update = {
   __typename?: 'OrdersFields_status_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes = {
-  __typename?: 'OrdersFields_transactionHashes';
-  create?: Maybe<OrdersFields_TransactionHashes_Create>;
-  delete?: Maybe<OrdersFields_TransactionHashes_Delete>;
-  fields?: Maybe<OrdersFields_TransactionHashes_Fields>;
-  read?: Maybe<OrdersFields_TransactionHashes_Read>;
-  update?: Maybe<OrdersFields_TransactionHashes_Update>;
-};
-
-export type OrdersFields_TransactionHashes_Create = {
-  __typename?: 'OrdersFields_transactionHashes_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Delete = {
-  __typename?: 'OrdersFields_transactionHashes_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Fields = {
-  __typename?: 'OrdersFields_transactionHashes_Fields';
-  chain?: Maybe<OrdersFields_TransactionHashes_Chain>;
-  id?: Maybe<OrdersFields_TransactionHashes_Id>;
-  product?: Maybe<OrdersFields_TransactionHashes_Product>;
-  transactionHash?: Maybe<OrdersFields_TransactionHashes_TransactionHash>;
-};
-
-export type OrdersFields_TransactionHashes_Read = {
-  __typename?: 'OrdersFields_transactionHashes_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Update = {
-  __typename?: 'OrdersFields_transactionHashes_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Chain = {
-  __typename?: 'OrdersFields_transactionHashes_chain';
-  create?: Maybe<OrdersFields_TransactionHashes_Chain_Create>;
-  delete?: Maybe<OrdersFields_TransactionHashes_Chain_Delete>;
-  read?: Maybe<OrdersFields_TransactionHashes_Chain_Read>;
-  update?: Maybe<OrdersFields_TransactionHashes_Chain_Update>;
-};
-
-export type OrdersFields_TransactionHashes_Chain_Create = {
-  __typename?: 'OrdersFields_transactionHashes_chain_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Chain_Delete = {
-  __typename?: 'OrdersFields_transactionHashes_chain_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Chain_Read = {
-  __typename?: 'OrdersFields_transactionHashes_chain_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Chain_Update = {
-  __typename?: 'OrdersFields_transactionHashes_chain_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Id = {
-  __typename?: 'OrdersFields_transactionHashes_id';
-  create?: Maybe<OrdersFields_TransactionHashes_Id_Create>;
-  delete?: Maybe<OrdersFields_TransactionHashes_Id_Delete>;
-  read?: Maybe<OrdersFields_TransactionHashes_Id_Read>;
-  update?: Maybe<OrdersFields_TransactionHashes_Id_Update>;
-};
-
-export type OrdersFields_TransactionHashes_Id_Create = {
-  __typename?: 'OrdersFields_transactionHashes_id_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Id_Delete = {
-  __typename?: 'OrdersFields_transactionHashes_id_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Id_Read = {
-  __typename?: 'OrdersFields_transactionHashes_id_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Id_Update = {
-  __typename?: 'OrdersFields_transactionHashes_id_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Product = {
-  __typename?: 'OrdersFields_transactionHashes_product';
-  create?: Maybe<OrdersFields_TransactionHashes_Product_Create>;
-  delete?: Maybe<OrdersFields_TransactionHashes_Product_Delete>;
-  read?: Maybe<OrdersFields_TransactionHashes_Product_Read>;
-  update?: Maybe<OrdersFields_TransactionHashes_Product_Update>;
-};
-
-export type OrdersFields_TransactionHashes_Product_Create = {
-  __typename?: 'OrdersFields_transactionHashes_product_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Product_Delete = {
-  __typename?: 'OrdersFields_transactionHashes_product_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Product_Read = {
-  __typename?: 'OrdersFields_transactionHashes_product_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_Product_Update = {
-  __typename?: 'OrdersFields_transactionHashes_product_Update';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_TransactionHash = {
-  __typename?: 'OrdersFields_transactionHashes_transactionHash';
-  create?: Maybe<OrdersFields_TransactionHashes_TransactionHash_Create>;
-  delete?: Maybe<OrdersFields_TransactionHashes_TransactionHash_Delete>;
-  read?: Maybe<OrdersFields_TransactionHashes_TransactionHash_Read>;
-  update?: Maybe<OrdersFields_TransactionHashes_TransactionHash_Update>;
-};
-
-export type OrdersFields_TransactionHashes_TransactionHash_Create = {
-  __typename?: 'OrdersFields_transactionHashes_transactionHash_Create';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_TransactionHash_Delete = {
-  __typename?: 'OrdersFields_transactionHashes_transactionHash_Delete';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_TransactionHash_Read = {
-  __typename?: 'OrdersFields_transactionHashes_transactionHash_Read';
-  permission: Scalars['Boolean']['output'];
-};
-
-export type OrdersFields_TransactionHashes_TransactionHash_Update = {
-  __typename?: 'OrdersFields_transactionHashes_transactionHash_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -42787,6 +42939,7 @@ export type Query = {
   likeStatus: LikeStatus;
   meUser?: Maybe<UsersMe>;
   permissions: Array<Permissions>;
+  sellerOrderProducts: SellerOrderProductsPage;
   userByEmail?: Maybe<User>;
   versionCompany?: Maybe<CompanyVersion>;
   versionJob?: Maybe<JobVersion>;
@@ -44294,6 +44447,14 @@ export type QueryDocAccessVerificationArgs = {
 export type QueryLikeStatusArgs = {
   collection: LikeableCollection;
   id: Scalars['String']['input'];
+};
+
+
+export type QuerySellerOrderProductsArgs = {
+  fulfilled?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  rejected?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -46995,6 +47156,89 @@ export type Select_Options = {
   id?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
+};
+
+export type SellerOrderProduct = {
+  __typename?: 'SellerOrderProduct';
+  chain: Scalars['String']['output'];
+  customerEmail?: Maybe<Scalars['String']['output']>;
+  fulfilled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  orderCreatedAt: Scalars['String']['output'];
+  orderId: Scalars['String']['output'];
+  orderStatus?: Maybe<Scalars['String']['output']>;
+  payerAddress?: Maybe<Scalars['String']['output']>;
+  paymentProof: SellerOrderProductPaymentProof;
+  paymentProofId: Scalars['String']['output'];
+  product?: Maybe<Product>;
+  productId: Scalars['String']['output'];
+  quantity: Scalars['Int']['output'];
+  rejected: Scalars['Boolean']['output'];
+  shippingAddress?: Maybe<SellerOrderShippingAddress>;
+  transactionHash: Scalars['String']['output'];
+};
+
+export type SellerOrderProductMutationResult = {
+  __typename?: 'SellerOrderProductMutationResult';
+  chain: Scalars['String']['output'];
+  fulfilled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  orderCreatedAt: Scalars['String']['output'];
+  orderId: Scalars['String']['output'];
+  orderStatus?: Maybe<Scalars['String']['output']>;
+  payerAddress?: Maybe<Scalars['String']['output']>;
+  paymentProof: SellerOrderProductPaymentProofUpdate;
+  paymentProofId: Scalars['String']['output'];
+  product?: Maybe<Product>;
+  productId: Scalars['String']['output'];
+  quantity: Scalars['Int']['output'];
+  rejected: Scalars['Boolean']['output'];
+  shippingAddress?: Maybe<SellerOrderShippingAddress>;
+  transactionHash: Scalars['String']['output'];
+};
+
+export type SellerOrderProductPaymentProof = {
+  __typename?: 'SellerOrderProductPaymentProof';
+  chain: Scalars['String']['output'];
+  fulfilled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  rejected: Scalars['Boolean']['output'];
+  transactionHash: Scalars['String']['output'];
+};
+
+export type SellerOrderProductPaymentProofUpdate = {
+  __typename?: 'SellerOrderProductPaymentProofUpdate';
+  chain: Scalars['String']['output'];
+  fulfilled: Scalars['Boolean']['output'];
+  id: Scalars['String']['output'];
+  rejected: Scalars['Boolean']['output'];
+  transactionHash: Scalars['String']['output'];
+};
+
+export type SellerOrderProductsPage = {
+  __typename?: 'SellerOrderProductsPage';
+  docs: Array<SellerOrderProduct>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type SellerOrderShippingAddress = {
+  __typename?: 'SellerOrderShippingAddress';
+  addressLine1?: Maybe<Scalars['String']['output']>;
+  addressLine2?: Maybe<Scalars['String']['output']>;
+  city?: Maybe<Scalars['String']['output']>;
+  company?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
+  postalCode?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type Session = {
@@ -60245,9 +60489,9 @@ export type MutationOrderInput = {
   customerEmail?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<MutationOrder_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
+  paymentProofs?: InputMaybe<Array<InputMaybe<MutationOrder_PaymentProofsInput>>>;
   shippingAddress?: InputMaybe<MutationOrder_ShippingAddressInput>;
   status?: InputMaybe<Order_Status_MutationInput>;
-  transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrder_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -60261,9 +60505,9 @@ export type MutationOrderUpdateInput = {
   customerEmail?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
+  paymentProofs?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_PaymentProofsInput>>>;
   shippingAddress?: InputMaybe<MutationOrderUpdate_ShippingAddressInput>;
   status?: InputMaybe<OrderUpdate_Status_MutationInput>;
-  transactionHashes?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_TransactionHashesInput>>>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
@@ -60284,6 +60528,15 @@ export type MutationOrderUpdate_ItemsInput = {
   variant?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationOrderUpdate_PaymentProofsInput = {
+  chain: OrderUpdate_PaymentProofs_Chain_MutationInput;
+  fulfilled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
+  rejected?: InputMaybe<Scalars['Boolean']['input']>;
+  transactionHash: Scalars['String']['input'];
+};
+
 export type MutationOrderUpdate_ShippingAddressInput = {
   addressLine1?: InputMaybe<Scalars['String']['input']>;
   addressLine2?: InputMaybe<Scalars['String']['input']>;
@@ -60296,13 +60549,6 @@ export type MutationOrderUpdate_ShippingAddressInput = {
   postalCode?: InputMaybe<Scalars['String']['input']>;
   state?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationOrderUpdate_TransactionHashesInput = {
-  chain: OrderUpdate_TransactionHashes_Chain_MutationInput;
-  id?: InputMaybe<Scalars['String']['input']>;
-  product?: InputMaybe<Scalars['String']['input']>;
-  transactionHash: Scalars['String']['input'];
 };
 
 export type MutationOrder_CryptoPricesInput = {
@@ -60321,6 +60567,15 @@ export type MutationOrder_ItemsInput = {
   variant?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationOrder_PaymentProofsInput = {
+  chain: Order_PaymentProofs_Chain_MutationInput;
+  fulfilled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  product?: InputMaybe<Scalars['String']['input']>;
+  rejected?: InputMaybe<Scalars['Boolean']['input']>;
+  transactionHash: Scalars['String']['input'];
+};
+
 export type MutationOrder_ShippingAddressInput = {
   addressLine1?: InputMaybe<Scalars['String']['input']>;
   addressLine2?: InputMaybe<Scalars['String']['input']>;
@@ -60333,13 +60588,6 @@ export type MutationOrder_ShippingAddressInput = {
   postalCode?: InputMaybe<Scalars['String']['input']>;
   state?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationOrder_TransactionHashesInput = {
-  chain: Order_TransactionHashes_Chain_MutationInput;
-  id?: InputMaybe<Scalars['String']['input']>;
-  product?: InputMaybe<Scalars['String']['input']>;
-  transactionHash: Scalars['String']['input'];
 };
 
 export type MutationPageInput = {
@@ -65404,7 +65652,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -65413,7 +65661,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, transactionHashes?: Array<{ __typename?: 'Order_TransactionHashes', id?: string | null, chain?: Order_TransactionHashes_Chain | null, transactionHash?: string | null, product?: { __typename?: 'Product', id: string } | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -65701,6 +65949,34 @@ export type CreateReportMutationVariables = Exact<{
 
 
 export type CreateReportMutation = { __typename?: 'Mutation', createReport?: { __typename?: 'Report', id: string, contentLink: string, reason: string, createdAt?: any | null, userId: { __typename?: 'User', id: string } } | null };
+
+export type UpdateSellerOrderProductRejectedMutationVariables = Exact<{
+  rejected: Scalars['Boolean']['input'];
+  orderId: Scalars['String']['input'];
+  paymentProofId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateSellerOrderProductRejectedMutation = { __typename?: 'Mutation', updateSellerOrderProductRejected: { __typename?: 'SellerOrderProductMutationResult', id: string, chain: string, fulfilled: boolean, rejected: boolean, orderCreatedAt: string, orderId: string, orderStatus?: string | null, payerAddress?: string | null, paymentProofId: string, productId: string, quantity: number, transactionHash: string, paymentProof: { __typename?: 'SellerOrderProductPaymentProofUpdate', chain: string, fulfilled: boolean, rejected: boolean, id: string, transactionHash: string }, product?: { __typename?: 'Product', id: string, name?: string | null, updatedAt?: any | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null } | null, shippingAddress?: { __typename?: 'SellerOrderShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } };
+
+export type UpdateSellerOrderProductFulfilledMutationVariables = Exact<{
+  fulfilled: Scalars['Boolean']['input'];
+  orderId: Scalars['String']['input'];
+  paymentProofId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateSellerOrderProductFulfilledMutation = { __typename?: 'Mutation', updateSellerOrderProductFulfilled: { __typename?: 'SellerOrderProductMutationResult', id: string, chain: string, fulfilled: boolean, rejected: boolean, orderCreatedAt: string, orderId: string, orderStatus?: string | null, payerAddress?: string | null, paymentProofId: string, productId: string, quantity: number, transactionHash: string, paymentProof: { __typename?: 'SellerOrderProductPaymentProofUpdate', chain: string, fulfilled: boolean, rejected: boolean, id: string, transactionHash: string }, product?: { __typename?: 'Product', id: string, name?: string | null, updatedAt?: any | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null } | null, shippingAddress?: { __typename?: 'SellerOrderShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } };
+
+export type SellerOrderProductsQueryVariables = Exact<{
+  fulfilled?: InputMaybe<Scalars['Boolean']['input']>;
+  rejected?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SellerOrderProductsQuery = { __typename?: 'Query', sellerOrderProducts: { __typename?: 'SellerOrderProductsPage', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, docs: Array<{ __typename?: 'SellerOrderProduct', id: string, chain: string, fulfilled: boolean, rejected: boolean, orderCreatedAt: string, orderId: string, orderStatus?: string | null, customerEmail?: string | null, payerAddress?: string | null, paymentProofId: string, productId: string, quantity: number, transactionHash: string, paymentProof: { __typename?: 'SellerOrderProductPaymentProof', chain: string, fulfilled: boolean, rejected: boolean, id: string, transactionHash: string }, product?: { __typename?: 'Product', id: string, name?: string | null, updatedAt?: any | null, createdAt?: any | null, company?: { __typename?: 'Company', id: string, name?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null } | null, shippingAddress?: { __typename?: 'SellerOrderShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null }> } };
 
 export type ShareRepostMutationVariables = Exact<{
   input: ShareRepostInput;
@@ -69127,14 +69403,6 @@ export const CreateOrderDocument = `
       expectedNativeAmount
       fetchedAt
     }
-    transactionHashes {
-      id
-      chain
-      transactionHash
-      product {
-        id
-      }
-    }
     currency
     amount
     customerEmail
@@ -69219,14 +69487,6 @@ export const UpdateOrderDocument = `
       nativePerStable
       expectedNativeAmount
       fetchedAt
-    }
-    transactionHashes {
-      id
-      chain
-      transactionHash
-      product {
-        id
-      }
     }
     currency
     amount
@@ -71592,6 +71852,237 @@ export const useCreateReportMutation = <
 
 
 useCreateReportMutation.fetcher = (variables: CreateReportMutationVariables, options?: RequestInit['headers']) => gqlFetcher<CreateReportMutation, CreateReportMutationVariables>(CreateReportDocument, variables, options);
+
+export const UpdateSellerOrderProductRejectedDocument = `
+    mutation UpdateSellerOrderProductRejected($rejected: Boolean!, $orderId: String!, $paymentProofId: String!) {
+  updateSellerOrderProductRejected(
+    rejected: $rejected
+    orderId: $orderId
+    paymentProofId: $paymentProofId
+  ) {
+    id
+    chain
+    fulfilled
+    rejected
+    orderCreatedAt
+    orderId
+    orderStatus
+    payerAddress
+    paymentProof {
+      chain
+      fulfilled
+      rejected
+      id
+      transactionHash
+    }
+    paymentProofId
+    product {
+      id
+      name
+      company {
+        id
+        name
+      }
+      createdBy {
+        id
+      }
+      updatedAt
+      createdAt
+    }
+    productId
+    quantity
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      state
+      country
+      phone
+    }
+    transactionHash
+  }
+}
+    `;
+
+export const useUpdateSellerOrderProductRejectedMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateSellerOrderProductRejectedMutation, TError, UpdateSellerOrderProductRejectedMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateSellerOrderProductRejectedMutation, TError, UpdateSellerOrderProductRejectedMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateSellerOrderProductRejected'],
+    mutationFn: (variables?: UpdateSellerOrderProductRejectedMutationVariables) => gqlFetcher<UpdateSellerOrderProductRejectedMutation, UpdateSellerOrderProductRejectedMutationVariables>(UpdateSellerOrderProductRejectedDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateSellerOrderProductRejectedMutation.fetcher = (variables: UpdateSellerOrderProductRejectedMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateSellerOrderProductRejectedMutation, UpdateSellerOrderProductRejectedMutationVariables>(UpdateSellerOrderProductRejectedDocument, variables, options);
+
+export const UpdateSellerOrderProductFulfilledDocument = `
+    mutation UpdateSellerOrderProductFulfilled($fulfilled: Boolean!, $orderId: String!, $paymentProofId: String!) {
+  updateSellerOrderProductFulfilled(
+    fulfilled: $fulfilled
+    orderId: $orderId
+    paymentProofId: $paymentProofId
+  ) {
+    id
+    chain
+    fulfilled
+    rejected
+    orderCreatedAt
+    orderId
+    orderStatus
+    payerAddress
+    paymentProof {
+      chain
+      fulfilled
+      rejected
+      id
+      transactionHash
+    }
+    paymentProofId
+    product {
+      id
+      name
+      company {
+        id
+        name
+      }
+      createdBy {
+        id
+      }
+      updatedAt
+      createdAt
+    }
+    productId
+    quantity
+    shippingAddress {
+      title
+      firstName
+      lastName
+      company
+      addressLine1
+      addressLine2
+      city
+      postalCode
+      state
+      country
+      phone
+    }
+    transactionHash
+  }
+}
+    `;
+
+export const useUpdateSellerOrderProductFulfilledMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<UpdateSellerOrderProductFulfilledMutation, TError, UpdateSellerOrderProductFulfilledMutationVariables, TContext>) => {
+    
+    return useMutation<UpdateSellerOrderProductFulfilledMutation, TError, UpdateSellerOrderProductFulfilledMutationVariables, TContext>(
+      {
+    mutationKey: ['UpdateSellerOrderProductFulfilled'],
+    mutationFn: (variables?: UpdateSellerOrderProductFulfilledMutationVariables) => gqlFetcher<UpdateSellerOrderProductFulfilledMutation, UpdateSellerOrderProductFulfilledMutationVariables>(UpdateSellerOrderProductFulfilledDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useUpdateSellerOrderProductFulfilledMutation.fetcher = (variables: UpdateSellerOrderProductFulfilledMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateSellerOrderProductFulfilledMutation, UpdateSellerOrderProductFulfilledMutationVariables>(UpdateSellerOrderProductFulfilledDocument, variables, options);
+
+export const SellerOrderProductsDocument = `
+    query SellerOrderProducts($fulfilled: Boolean, $rejected: Boolean, $limit: Int = 20, $page: Int = 1) {
+  sellerOrderProducts(
+    fulfilled: $fulfilled
+    rejected: $rejected
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      chain
+      fulfilled
+      rejected
+      orderCreatedAt
+      orderId
+      orderStatus
+      customerEmail
+      payerAddress
+      paymentProof {
+        chain
+        fulfilled
+        rejected
+        id
+        transactionHash
+      }
+      paymentProofId
+      product {
+        id
+        name
+        company {
+          id
+          name
+        }
+        createdBy {
+          id
+        }
+        updatedAt
+        createdAt
+      }
+      productId
+      quantity
+      shippingAddress {
+        title
+        firstName
+        lastName
+        company
+        addressLine1
+        addressLine2
+        city
+        postalCode
+        state
+        country
+        phone
+      }
+      transactionHash
+    }
+    totalDocs
+    limit
+    totalPages
+    page
+    hasPrevPage
+    hasNextPage
+  }
+}
+    `;
+
+export const useSellerOrderProductsQuery = <
+      TData = SellerOrderProductsQuery,
+      TError = unknown
+    >(
+      variables?: SellerOrderProductsQueryVariables,
+      options?: Omit<UseQueryOptions<SellerOrderProductsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SellerOrderProductsQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<SellerOrderProductsQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['SellerOrderProducts'] : ['SellerOrderProducts', variables],
+    queryFn: gqlFetcher<SellerOrderProductsQuery, SellerOrderProductsQueryVariables>(SellerOrderProductsDocument, variables),
+    ...options
+  }
+    )};
+
+useSellerOrderProductsQuery.getKey = (variables?: SellerOrderProductsQueryVariables) => variables === undefined ? ['SellerOrderProducts'] : ['SellerOrderProducts', variables];
+
+
+useSellerOrderProductsQuery.fetcher = (variables?: SellerOrderProductsQueryVariables, options?: RequestInit['headers']) => gqlFetcher<SellerOrderProductsQuery, SellerOrderProductsQueryVariables>(SellerOrderProductsDocument, variables, options);
 
 export const ShareRepostDocument = `
     mutation ShareRepost($input: ShareRepostInput!) {

@@ -142,6 +142,11 @@ const order = {
     getLink: () => "/order",
 };
 
+const orders = {
+    route: "/orders",
+    getLink: () => "/orders",
+};
+
 const ventures = {
     route: "/ventures",
     getLink: () => "/ventures",
@@ -186,6 +191,7 @@ export const routes = {
     publish,
     cart,
     order,
+    orders,
     ventures,
     unsubscribe,
     authCallback,

@@ -40,6 +40,7 @@ const Startup = React.lazy(() => import("./components/detail/StartupDetail"));
 const EditStartup = React.lazy(() => import("./components/edit/EditStartup"));
 const AuthCallback = React.lazy(() => import("./components/AuthCallback"));
 const Cart = React.lazy(() => import("./components/Cart"));
+const OrderList = React.lazy(() => import("./components/OrderList"));
 const Order = React.lazy(() => import("./components/Order"));
 const Unsubscribe = React.lazy(() => import("./components/Unsubscribe/Unsubscribe"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
@@ -233,6 +234,12 @@ const Main: React.FunctionComponent = () => {
                                     trackPage: true,
                                 })}
                                 path={routes.cart.route}
+                            />
+                            <Route
+                                Component={suspense(OrderList, {
+                                    trackPage: true,
+                                })}
+                                path={routes.orders.route}
                             />
                             <Route
                                 Component={suspense(Order, {
