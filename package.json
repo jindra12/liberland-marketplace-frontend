@@ -127,6 +127,8 @@
         "test:ct:remembered-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberedWallet.cy.tsx",
         "test:ct:login-button": "yarn cypress:run --component --browser electron --spec cypress/component/LoginButton.cy.tsx",
         "test:ct:login-button:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/LoginButton.cy.tsx",
+        "test:ct:markdown-editor": "yarn cypress:run --component --browser electron --spec cypress/component/MarkdownEditor.cy.tsx",
+        "test:ct:markdown-editor:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/MarkdownEditor.cy.tsx",
         "test:ct:notfound": "yarn cypress:run --component --browser electron --spec cypress/component/NotFound.cy.tsx",
         "test:ct:notfound:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/NotFound.cy.tsx",
         "test:ct:runtime-error": "yarn cypress:run --component --browser electron --spec cypress/component/RuntimeErrorState.cy.tsx",

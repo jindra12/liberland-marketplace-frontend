@@ -12,7 +12,7 @@ export const MarkdownEditor: React.FunctionComponent<MarkdownEditorProps> = (pro
     const value = props.value === undefined ? "" : props.value;
     const rows = props.rows === undefined ? 6 : props.rows;
     return (
-        <div data-color-mode="auto">
+        <div className="MarkdownEditor" data-color-mode="dark">
             <MDEditor
                 value={value}
                 onChange={(val) => props.onChange?.(val ?? "")}
