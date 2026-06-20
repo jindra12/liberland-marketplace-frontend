@@ -1,7 +1,7 @@
 import { UserManager } from "oidc-client-ts";
 
 import { LoginButton } from "../../src/components/LoginButton";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
+import { AUTH_URL_STORAGE_KEY, NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountMainRoute, screenshotStep } from "../support/component-tests/utils";
 
@@ -52,6 +52,7 @@ const seedLoggedInServer = (win: Window, serverUrl: string) => {
 const mountLoginButton = (route: string, serverUrls: string[], loggedInServerUrls: string[] = []) => {
     cy.window().then((win) => {
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
+        win.localStorage.setItem(AUTH_URL_STORAGE_KEY, serverUrls[0]);
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         loggedInServerUrls.forEach((serverUrl) => seedLoggedInServer(win, serverUrl));
     });
@@ -130,6 +131,9 @@ describe("login button", () => {
             expect(parsedUrl.searchParams.get("client_id")).to.be.a("string");
             expect(parsedUrl.searchParams.get("scope")).to.equal("openid profile email");
             expect(parsedUrl.searchParams.get("redirect_uri")).to.be.a("string");
+            expect(JSON.parse(window.localStorage.getItem(AUTH_URL_STORAGE_KEY) || "\"\"")).to.equal(
+                COOP_SERVER_URL,
+            );
         });
     });
 

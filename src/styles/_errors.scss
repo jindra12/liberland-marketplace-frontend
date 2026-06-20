@@ -118,7 +118,84 @@
     line-height: 1.6;
 }
 
+.AuthCallback {
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 0;
+    overflow-x: hidden;
+}
+
+.AuthCallback__result.ant-result {
+    width: min(100%, 960px);
+    padding-inline: 0;
+}
+
+.AuthCallback .ant-result-title {
+    color: #f8fafc;
+}
+
+.AuthCallback .ant-result-subtitle {
+    color: rgba(226, 232, 240, 0.78);
+}
+
+.AuthCallback__errorSection {
+    width: min(100%, 760px);
+    padding-inline: 16px;
+    margin-top: 8px;
+    box-sizing: border-box;
+    margin-inline: auto;
+}
+
+.AuthCallback__errorPanelWrap {
+    width: 100%;
+}
+
+.AuthCallback__errorPanel {
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+}
+
+.AuthCallback__error {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    color: #93c5fd;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+    text-align: left;
+}
+
+.AuthCallback__divider.ant-divider {
+    margin: 0;
+}
+
+.AuthCallback__error code {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
 @media (max-width: 768px) {
+    .AuthCallback {
+        padding: 16px 0;
+    }
+
+    .AuthCallback__result.ant-result {
+        width: 100%;
+    }
+
+    .AuthCallback__errorSection {
+        padding-inline: 12px;
+    }
+
     .RuntimeErrorState {
         padding: 24px 0;
 
