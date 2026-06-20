@@ -11,6 +11,8 @@ import {
 import { Button, Card, Space, Typography } from "antd";
 import useLocalStorage from "use-local-storage";
 
+import { routes } from "../../routes";
+import { RouteButton } from "../RouteButton";
 import type { Category, TourType } from "../tour/types";
 import { TOUR_LOCAL_STORAGE_KEY, getTourCategory } from "../tour/utils";
 
@@ -37,12 +39,20 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
         setPendingTourType(undefined);
     }, [setPendingTourType]);
 
+    const backButton = props.defaultCategory === undefined ? (
+        <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
+            Back
+        </Button>
+    ) : (
+        <RouteButton className="Publish__back" icon={<ArrowLeftOutlined />} to={routes.home.route}>
+            Back
+        </RouteButton>
+    );
+
     if (category === "publish-job") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
-                    Back
-                </Button>
+                {backButton}
                 <Typography.Title level={3}>Post a Job</Typography.Title>
                 <JobForm mode="create" url={props.url} />
             </div>
@@ -51,9 +61,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     if (category === "publish-company") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
-                    Back
-                </Button>
+                {backButton}
                 <Typography.Title level={3}>Create a Company</Typography.Title>
                 <CompanyForm mode="create" url={props.url} />
             </div>
@@ -62,9 +70,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     if (category === "publish-product") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
-                    Back
-                </Button>
+                {backButton}
                 <Typography.Title level={3}>List a Product</Typography.Title>
                 <ProductForm mode="create" url={props.url} />
             </div>
@@ -73,9 +79,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     if (category === "publish-post") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
-                    Back
-                </Button>
+                {backButton}
                 <Typography.Title level={3}>Write a Post</Typography.Title>
                 <PostForm mode="create" url={props.url} />
             </div>
@@ -84,9 +88,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
     if (category === "publish-startup") {
         return (
             <div className="Publish">
-                <Button className="Publish__back" icon={<ArrowLeftOutlined />} onClick={() => setCategory(undefined)}>
-                    Back
-                </Button>
+                {backButton}
                 <Typography.Title level={3}>Launch a Venture</Typography.Title>
                 <StartupForm mode="create" url={props.url} />
             </div>

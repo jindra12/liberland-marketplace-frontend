@@ -35,12 +35,13 @@ export const PublishContent: React.FunctionComponent<PublishContentProps> = (pro
                 <EmailVerificationWarning email={auth.user?.profile?.email as string} url={props.url} />
             ) : (
                 <Loader query={ownedCompaniesQuery}>
-                    {(companies) => (
-                        <PublishForms
-                            defaultCategory={companies.Companies?.docs.some(({ isPrivate }) => isPrivate) ? undefined : "publish-post"}
-                            url={props.url}
-                        />
-                    )}
+                    {(companies) => {
+                        const docs = companies.Companies?.docs ?? [];
+                        const hasCompanies = docs.length > 0;
+                        const defaultCategory = hasCompanies && docs.every(({ isPrivate }) => isPrivate) ? "publish-post" : undefined;
+
+                        return <PublishForms defaultCategory={defaultCategory} url={props.url} />;
+                    }}
                 </Loader>
             )}
         </AuthGuard>

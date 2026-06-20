@@ -60,7 +60,7 @@ describe("publish", () => {
         });
 
         cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
-        cy.contains(".ant-dropdown-menu-item", "Main", { timeout: 20000 }).click();
+        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item", { timeout: 20000 }).first().click({ force: true });
 
         cy.location("pathname").should("eq", "/publish");
         cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
@@ -110,8 +110,8 @@ describe("publish", () => {
         cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 }).click();
         cy.get(".SyndicationNsfwModal", { timeout: 20000 }).should("not.be.visible");
         cy.get(".AppHeader__authBtn", { timeout: 20000 }).should("contain.text", "Log in").click();
-        cy.get(".LoginButton__popup", { timeout: 20000 }).should("be.visible");
-        cy.contains(".LoginButton__popup .ant-select-tree-title", "Co-op", { timeout: 20000 })
+        cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op", { timeout: 20000 })
             .should("be.visible")
             .click();
 
@@ -138,7 +138,7 @@ describe("publish", () => {
         });
 
         cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
-        cy.contains(".ant-dropdown-menu-item", "Main", { timeout: 20000 }).click();
+        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item", { timeout: 20000 }).first().click({ force: true });
 
         cy.location("pathname").should("eq", "/publish");
         cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
@@ -158,7 +158,7 @@ describe("publish", () => {
         );
     });
 
-    it("opens the post form directly when the owned companies are public", () => {
+    it("shows the publish chooser when the owned companies are public", () => {
         cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
             const body = req.body as { operationName?: string; query?: string };
 
@@ -171,8 +171,28 @@ describe("publish", () => {
         mountAuthenticatedMainRoute("/publish");
 
         cy.wait("@ownedCompanies", { timeout: 20000 });
-        cy.contains(".Publish", "Write a Post", { timeout: 20000 }).should("be.visible");
-        cy.contains(".Publish__categories", "Company").should("not.exist");
-        cy.contains(".Publish__postTitleField", "Title").should("be.visible");
+        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish__categories", "Company").should("be.visible");
+        cy.contains(".Publish__categories", "Post").should("be.visible");
+        cy.contains(".Publish__categories", "Job").should("be.visible");
+        cy.contains(".Publish__categories", "Product").should("be.visible");
+        cy.contains(".Publish__categories", "Venture").should("be.visible");
+    });
+
+    it("returns home from the post-only publish flow when all owned companies are private", () => {
+        mockOwnedCompaniesByCreatorQuery([
+            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: true },
+            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+        ]);
+        mountAuthenticatedMainRoute("/", true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+
+        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
+        cy.contains(".Publish__postTitleField", "Title", { timeout: 20000 }).should("be.visible");
+
+        cy.contains(".Publish__back", "Back").click();
+
+        cy.location("pathname").should("eq", "/");
     });
 });
