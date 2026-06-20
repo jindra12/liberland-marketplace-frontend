@@ -127,6 +127,8 @@
         "test:ct:remembered-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberedWallet.cy.tsx",
         "test:ct:login-button": "yarn cypress:run --component --browser electron --spec cypress/component/LoginButton.cy.tsx",
         "test:ct:login-button:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/LoginButton.cy.tsx",
+        "test:ct:login-success-message": "yarn cypress:run --component --browser electron --spec cypress/component/LoginSuccessMessage.cy.tsx",
+        "test:ct:login-success-message:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/LoginSuccessMessage.cy.tsx",
         "test:ct:endpoint-context": "yarn cypress:run --component --browser electron --spec cypress/component/EndpointContext.cy.tsx",
         "test:ct:endpoint-context:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/EndpointContext.cy.tsx",
         "test:ct:auth-callback": "yarn cypress:run --component --browser electron --spec cypress/component/AuthCallback.cy.tsx",

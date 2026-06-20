@@ -9,6 +9,7 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { AppAnalyticsProvider } from "./analytics/AppAnalyticsProvider";
 import { AntProvider } from "./AntProvider";
 import { AppRouteTitle } from "./AppRouteTitle";
+import { LoginSuccessMessageService } from "./auth/LoginSuccessMessageService";
 import { AuthContextProvider } from "./AuthContext";
 import { CartMutationProvider } from "./cart/CartMutationContext";
 import { SolanaContext } from "./crypto/SolanaContext";
@@ -37,6 +38,7 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
                                     <CypressHistorySupport />
                                     <AppAnalyticsProvider>
                                         <AntProvider>
+                                            <LoginSuccessMessageService />
                                             <AppErrorBoundary>
                                                 <AppRouteTitle />
                                                 <RouteScrollToTop>

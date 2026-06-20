@@ -1,27 +1,20 @@
 import * as React from "react";
 
-import { AuthProvider } from "react-oidc-context";
-import { useNavigate } from "react-router-dom";
+import { useSessionStorage } from "usehooks-ts";
 
-import { routes } from "../routes";
-
-import { buildAuthSettings, getLoginReturnTo } from "./auth/utils";
+import { AuthContextProviderInner } from "./auth/AuthContextProviderInner";
+import { LOGIN_SUCCESS_MESSAGE_STORAGE_KEY } from "./auth/constants";
+import { buildAuthSettings } from "./auth/utils";
 import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const { authUrl } = useEndpointContext();
-    const navigate = useNavigate();
+    const [, setLoginSuccessPending] = useSessionStorage<boolean>(LOGIN_SUCCESS_MESSAGE_STORAGE_KEY, false);
     const authSettings = buildAuthSettings(authUrl);
 
     return (
-        <AuthProvider
-            key={authSettings.authority}
-            {...authSettings}
-            onSigninCallback={(user) => {
-                navigate(getLoginReturnTo(user?.state) || routes.home.route, { replace: true });
-            }}
-        >
+        <AuthContextProviderInner authSettings={authSettings} setLoginSuccessPending={setLoginSuccessPending}>
             {props.children}
-        </AuthProvider>
+        </AuthContextProviderInner>
     );
 };
