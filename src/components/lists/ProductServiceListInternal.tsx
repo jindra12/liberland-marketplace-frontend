@@ -51,6 +51,8 @@ type ProductListSourceStatic = {
 type ProductServiceListInternalProps = {
     title?: string;
     showOrderNowFallback?: boolean;
+    hideIdentityFilter?: boolean;
+    endMessage?: React.ReactNode;
 } & (ProductListSourceQuery | ProductListSourceStatic);
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
@@ -82,6 +84,8 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
         setPage: props.setPage,
     });
 
+    const filterValue = props.hideIdentityFilter ? undefined : filterNode;
+
     return (
         <AppList
             hasMore={hasMore}
@@ -90,8 +94,8 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
             refetch={handleRefetch}
             loading={isLoading}
             title={props.title || "Products / Services"}
-            filters={filterNode}
-            endMessage={endMessage}
+            filters={filterValue}
+            endMessage={props.endMessage ?? endMessage}
             likeActions={{
                 likeMutation,
                 dislikeMutation,

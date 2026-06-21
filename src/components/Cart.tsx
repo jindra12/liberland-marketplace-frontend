@@ -24,6 +24,8 @@ const Cart: React.FunctionComponent = () => {
                 refetch={refetch}
                 title="Cart"
                 showOrderNowFallback={false}
+                hideIdentityFilter
+                endMessage={false}
             />
             {totalQuantity > 0 && (
                 <RouteButton

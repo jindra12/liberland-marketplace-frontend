@@ -124,6 +124,7 @@ export const mountAuthenticatedCartRoute = (
     serverUrls: string[] = [BACKEND_URL],
     cartSecrets?: Record<string, string>,
     emailVerified = true,
+    setup?: (win: Window) => void,
 ) => {
     cy.window().then((win) => {
         serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
@@ -133,6 +134,7 @@ export const mountAuthenticatedCartRoute = (
             win.localStorage.setItem(CART_SECRETS_INDEX_KEY, JSON.stringify(entries));
         }
         win.localStorage.removeItem(SAVED_SHIPPING_ADDRESS_STORAGE_KEY);
+        setup?.(win);
         win.history.pushState({}, "", route);
     });
     mount(<Main />);

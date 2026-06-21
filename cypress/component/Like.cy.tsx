@@ -139,6 +139,10 @@ describe("like", () => {
 
             cy.get(".LikeButton").click();
 
+            cy.get(".LikeButton").should("not.have.class", "LikeButton--loading");
+            cy.get(".LikeButton .ant-btn-loading-icon").should("not.exist");
+            cy.get(".LikeButton__count").should("have.text", "43");
+            cy.get(".LikeButton").should("have.attr", "aria-pressed", "true");
             cy.wrap(stubs.likeMutation).should("have.been.calledWith", expectedLikeCall);
             cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
         });
@@ -156,6 +160,10 @@ describe("like", () => {
         cy.get(".LikeButton").should("have.css", "color").and("not.equal", "rgb(0, 0, 0)");
         cy.get(".LikeButton").click();
 
+        cy.get(".LikeButton").should("not.have.class", "LikeButton--loading");
+        cy.get(".LikeButton .ant-btn-loading-icon").should("not.exist");
+        cy.get(".LikeButton__count").should("have.text", "41");
+        cy.get(".LikeButton").should("have.attr", "aria-pressed", "false");
         cy.wrap(stubs.dislikeMutation).should("have.been.calledWith", expectedDislikeCall);
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
     });
@@ -179,7 +187,10 @@ describe("like", () => {
         cy.get(".LikeButton").should("be.visible").and("have.class", "LikeButton--unliked");
         cy.get(".LikeButton").click();
 
-        cy.contains(".Publish", "Email not verified", { timeout: 20000 }).should("be.visible");
+        cy.contains("Please verify your email first", { timeout: 20000 }).should("be.visible");
+        cy.contains("Your email address still needs to be verified on Main before you can continue.").should(
+            "be.visible",
+        );
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
         cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
     });
