@@ -55,6 +55,7 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
         authorizedAction: EndpointAction,
         options?: {
             onUnauthorizedBeforeLogin?: () => void | Promise<void>;
+            signinState?: string;
         },
     ) => {
         if (auth.isAuthenticated) {
@@ -86,7 +87,9 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
         if (props.defaultAuthUrl) {
             const runLogin = async (currentAuth: EndpointAuthClient) => {
                 await options?.onUnauthorizedBeforeLogin?.();
-                await currentAuth.signinRedirect();
+                await currentAuth.signinRedirect({
+                    state: options?.signinState,
+                });
             };
 
             if (authUrl === props.defaultAuthUrl) {
@@ -100,7 +103,9 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
 
         runWithEndpointSelection(async (currentAuth) => {
             await options?.onUnauthorizedBeforeLogin?.();
-            await currentAuth.signinRedirect();
+            await currentAuth.signinRedirect({
+                state: options?.signinState,
+            });
         });
     };
 

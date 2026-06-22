@@ -77,6 +77,8 @@
         "test:ct:lists:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Lists.cy.tsx",
         "test:ct:details": "yarn cypress:run --component --browser electron --spec cypress/component/Details.cy.tsx",
         "test:ct:details:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Details.cy.tsx",
+        "test:ct:detail-edit-buttons": "yarn cypress:run --component --browser electron --spec cypress/component/DetailEditButtons.cy.tsx",
+        "test:ct:detail-edit-buttons:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/DetailEditButtons.cy.tsx",
         "test:ct:report": "yarn cypress:run --component --browser electron --spec cypress/component/Report.cy.tsx",
         "test:ct:report:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/Report.cy.tsx",
         "test:ct:disclaimers-desktop": "yarn cypress:run --component --browser electron --spec cypress/component/Disclaimers.desktop.cy.tsx",

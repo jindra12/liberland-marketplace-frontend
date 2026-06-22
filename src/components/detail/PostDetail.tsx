@@ -127,6 +127,7 @@ const PostDetail: React.FunctionComponent = () => {
                                             <RouteButton
                                                 to={routes.posts.edit.getLink(post as Post)}
                                                 icon={<EditOutlined />}
+                                                className="EntityDetail__editButton"
                                             >
                                                 Edit
                                             </RouteButton>

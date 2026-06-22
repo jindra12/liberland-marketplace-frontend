@@ -18,6 +18,7 @@ type AddToCartButtonProps = {
     variantId?: string;
     serverURL: string;
     block?: boolean;
+    hideBuyNowButton?: boolean;
     size?: ButtonProps["size"];
     maxAvailable?: number | null;
     isAuthenticated?: boolean;
@@ -87,16 +88,18 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                     size={size}
                     variantId={props.variantId}
                 />
-                <BuyNowButton
-                    block={props.block}
-                    candidateProfileAddresses={candidateProfileAddressesForBuyNow}
-                    disabled={isMutating}
-                    productId={props.productId}
-                    quantity={inputQuantity}
-                    serverURL={props.serverURL}
-                    size={size}
-                    variantId={props.variantId}
-                />
+                {props.hideBuyNowButton ? null : (
+                    <BuyNowButton
+                        block={props.block}
+                        candidateProfileAddresses={candidateProfileAddressesForBuyNow}
+                        disabled={isMutating}
+                        productId={props.productId}
+                        quantity={inputQuantity}
+                        serverURL={props.serverURL}
+                        size={size}
+                        variantId={props.variantId}
+                    />
+                )}
             </Space.Compact>
         </ConfigProvider>
     );

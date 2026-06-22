@@ -112,6 +112,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                     <RouteButton
                                         to={routes.companies.edit.getLink(companyData as Company)}
                                         icon={<EditOutlined />}
+                                        className="EntityDetail__editButton"
                                     >
                                         Edit
                                     </RouteButton>

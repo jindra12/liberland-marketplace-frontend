@@ -27,6 +27,7 @@ describe("authenticated cart", () => {
         }, true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
+        cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");
         cy.contains(".CartPage__orderButton", "Proceed to order", { timeout: 20000 })
@@ -34,6 +35,7 @@ describe("authenticated cart", () => {
             .click();
 
         cy.contains("h2", "Order").should("be.visible");
+        cy.get(".AddToCartButton__buyNow").should("not.exist");
         screenshotStep("authenticated-cart-main-prefill");
 
         assertMainOrderPrefill();
@@ -45,6 +47,7 @@ describe("authenticated cart", () => {
         }, true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
+        cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");
         cy.contains(".CartPage__orderButton", "Proceed to order", { timeout: 20000 })
@@ -52,6 +55,7 @@ describe("authenticated cart", () => {
             .click();
 
         cy.contains("h2", "Order").should("be.visible");
+        cy.get(".AddToCartButton__buyNow").should("not.exist");
 
         cy.contains("button", "Choose default address").should("be.visible").click();
 

@@ -147,6 +147,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                 refetch={props.refetchProducts}
                 title="Order summary"
                 showOrderNowFallback={false}
+                hideBuyNowButton
             />
 
             <Flex justify="space-between" wrap gap={12}>

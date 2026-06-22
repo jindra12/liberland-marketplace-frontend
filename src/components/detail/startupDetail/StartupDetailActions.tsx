@@ -40,7 +40,11 @@ export const StartupDetailActions: React.FunctionComponent<StartupDetailContentP
                 </div>
             )}
             {startupInvolvement.isOwner && (
-                <RouteButton to={routes.ventures.edit.getLink(props.startup as Startup)} icon={<EditOutlined />}>
+                <RouteButton
+                    to={routes.ventures.edit.getLink(props.startup as Startup)}
+                    icon={<EditOutlined />}
+                    className="EntityDetail__editButton"
+                >
                     Edit
                 </RouteButton>
             )}

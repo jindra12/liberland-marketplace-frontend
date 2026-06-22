@@ -12,6 +12,7 @@ type AddToCartButtonGuardProps = {
     variantId?: string;
     serverURL: string;
     block?: boolean;
+    hideBuyNowButton?: boolean;
     size?: ButtonProps["size"];
     maxAvailable?: number | null;
 };

@@ -8,7 +8,9 @@ import {
     waitForDetailQuery,
     waitForMeUserQuery,
 } from "../support/component-tests/utils";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import type { AddressWithEmail } from "../../src/components/order/types";
+import { BUY_NOW_RETURN_TO_STORAGE_KEY } from "../../src/components/cart/BuyNowButton/constants";
 
 const guestProductRoute = detailRoute("/products-services", "guest-product-harbor-light", GUEST_SERVER_URL);
 const guestNonOrderableRoute = detailRoute("/products-services", "guest-product-harbor-brochure", GUEST_SERVER_URL);
@@ -37,6 +39,7 @@ const openBuyNow = () => {
 describe("buy now", () => {
     it("shows Buy now to anonymous users and redirects them to login", () => {
         const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+        let signinRedirectArgs: Parameters<UserManager["signinRedirect"]>[0];
 
         mountAnonymousRoute(guestProductRoute, [GUEST_SERVER_URL]);
         waitForDetailQuery(
@@ -53,6 +56,58 @@ describe("buy now", () => {
 
         cy.contains(".AddToCartButton__buyNow", "Buy now").click();
         cy.wrap(signinRedirect).should("have.been.calledOnce");
+        cy.wrap(null, { timeout: 20000 }).should(() => {
+            expect(signinRedirect).to.have.been.calledOnce;
+            signinRedirectArgs = signinRedirect.getCall(0)?.args[0];
+            expect(signinRedirectArgs?.state).to.equal(guestProductRoute);
+            expect(JSON.parse(window.sessionStorage.getItem(BUY_NOW_RETURN_TO_STORAGE_KEY) || '""')).to.equal(
+                guestProductRoute,
+            );
+        });
+    });
+
+    it("returns to the current page and reopens buy now after login refresh", () => {
+        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+
+        mountAnonymousRoute(mainProductRoute, [MAIN_SERVER_URL]);
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            "ProductById",
+            { id: "product-harbor-lantern" },
+            "Product",
+            "product-harbor-lantern",
+            "Harbor Lantern",
+        );
+
+        cy.contains("h1", "Harbor Lantern").should("be.visible");
+        cy.contains(".ant-modal", "18+ content").should("be.visible");
+        cy.contains(".ant-modal button", "Continue to site").click();
+        cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
+
+        cy.wrap(signinRedirect).should("have.been.calledOnce");
+        cy.wrap(null, { timeout: 20000 }).should(() => {
+            expect(signinRedirect.getCall(0)?.args[0]?.state).to.equal(mainProductRoute);
+            expect(JSON.parse(window.sessionStorage.getItem(BUY_NOW_RETURN_TO_STORAGE_KEY) || '""')).to.equal(
+                mainProductRoute,
+            );
+        });
+
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            "ProductById",
+            { id: "product-harbor-lantern" },
+            "Product",
+            "product-harbor-lantern",
+            "Harbor Lantern",
+        );
+
+        cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.window().then((win) => {
+            expect(JSON.parse(win.sessionStorage.getItem(BUY_NOW_RETURN_TO_STORAGE_KEY) || '""')).to.equal("");
+        });
     });
 
     it("does not show Buy now on non-orderable products", () => {
@@ -86,7 +141,9 @@ describe("buy now", () => {
     });
 
     it("lets users pick an address and remembers it", () => {
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
         waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
         waitForMeUserQuery(COOP_SERVER_URL, "Iris Shore", {});
 
@@ -106,7 +163,9 @@ describe("buy now", () => {
     });
 
     it("uses a saved shipping address to reach the payment modal immediately", () => {
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress);
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
 
         openBuyNow();
 

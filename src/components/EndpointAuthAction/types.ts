@@ -19,6 +19,7 @@ export type EndpointAuthActionRenderProps = {
         authorizedAction: EndpointAction,
         options?: {
             onUnauthorizedBeforeLogin?: () => void | Promise<void>;
+            signinState?: string;
         },
     ) => Promise<void>;
 };

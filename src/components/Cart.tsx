@@ -25,6 +25,7 @@ const Cart: React.FunctionComponent = () => {
                 title="Cart"
                 showOrderNowFallback={false}
                 hideIdentityFilter
+                hideBuyNowButton
                 endMessage={false}
             />
             {totalQuantity > 0 && (

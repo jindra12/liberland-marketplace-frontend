@@ -10,6 +10,7 @@ import { RouteButton } from "../../RouteButton";
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
 import { BuyNowPaymentStep } from "./BuyNowPaymentStep";
 import type { BuyNowPreparedPurchase } from "./types";
+import { useBuyNowAuthResume } from "./useBuyNowAuthResume";
 
 type BuyNowButtonProps = {
     block?: boolean;
@@ -21,10 +22,18 @@ type BuyNowButtonProps = {
     size?: React.ComponentProps<typeof Button>["size"];
     variantId?: string;
 };
+
 export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) => {
     const size = props.size === undefined ? "large" : props.size;
     const [preparedPurchase, setPreparedPurchase] = React.useState<BuyNowPreparedPurchase>();
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
+    const buyNowAuthResume = useBuyNowAuthResume({
+        onResume: () => {
+            setPreparedPurchase({
+                candidateProfileAddresses: props.candidateProfileAddresses,
+            });
+        },
+    });
     const isBusy = props.disabled || Boolean(preparedPurchase) || submittedOrders.length > 0;
     const handleBuyNow = () => {
         setPreparedPurchase({
@@ -34,12 +43,10 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
     const onCancel = () => {
         setPreparedPurchase(undefined);
     };
+
     return (
         <>
-            <EndpointAuthAction
-                defaultAuthUrl={props.serverURL}
-                requireVerifiedEmail
-            >
+            <EndpointAuthAction defaultAuthUrl={props.serverURL} requireVerifiedEmail>
                 {({ runWithAuthOrLogin }) => (
                     <Button
                         block={props.block}
@@ -48,7 +55,10 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                         disabled={isBusy}
                         onClick={(event) => {
                             event.preventDefault();
-                            runWithAuthOrLogin(handleBuyNow);
+                            runWithAuthOrLogin(handleBuyNow, {
+                                onUnauthorizedBeforeLogin: buyNowAuthResume.markPendingReturnTo,
+                                signinState: buyNowAuthResume.returnTo,
+                            });
                         }}
                         className="AddToCartButton__buyNow"
                     >

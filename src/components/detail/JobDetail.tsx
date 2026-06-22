@@ -100,7 +100,11 @@ const JobDetail: React.FunctionComponent = () => {
                         beforeShare={
                             <>
                                 {isOwner && (
-                                    <RouteButton to={routes.jobs.edit.getLink(job as Job)} icon={<EditOutlined />}>
+                                    <RouteButton
+                                        to={routes.jobs.edit.getLink(job as Job)}
+                                        icon={<EditOutlined />}
+                                        className="EntityDetail__editButton"
+                                    >
                                         Edit
                                     </RouteButton>
                                 )}

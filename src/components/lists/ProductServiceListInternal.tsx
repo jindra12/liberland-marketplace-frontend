@@ -52,6 +52,7 @@ type ProductServiceListInternalProps = {
     title?: string;
     showOrderNowFallback?: boolean;
     hideIdentityFilter?: boolean;
+    hideBuyNowButton?: boolean;
     endMessage?: React.ReactNode;
 } & (ProductListSourceQuery | ProductListSourceStatic);
 
@@ -118,6 +119,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                             productId={product.id}
                             serverURL={product.serverURL!}
                             block={isMobile}
+                            hideBuyNowButton={props.hideBuyNowButton}
                             size={addToCartSize}
                             maxAvailable={product.inventory}
                         />

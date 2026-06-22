@@ -153,6 +153,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     <RouteButton
                                         to={routes.productsServices.edit.getLink(product as Product)}
                                         icon={<EditOutlined />}
+                                        className="EntityDetail__editButton"
                                     >
                                         Edit
                                     </RouteButton>
