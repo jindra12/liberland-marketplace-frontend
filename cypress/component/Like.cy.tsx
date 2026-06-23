@@ -177,8 +177,16 @@ describe("like", () => {
         cy.get(".LikeButton").click();
 
         cy.wrap(signinRedirect).should("have.been.calledOnce");
+        cy.get(".ant-dropdown").should("not.exist");
         cy.wrap(stubs.likeMutation).should("not.have.been.called");
         cy.wrap(stubs.dislikeMutation).should("not.have.been.called");
+    });
+
+    it("does not open an endpoint dropdown when liking known-server content", () => {
+        mountLike(false, true);
+
+        cy.get(".LikeButton").should("be.visible").click();
+        cy.get(".ant-dropdown").should("not.exist");
     });
 
     it("routes unverified users to the email verification warning before liking", () => {

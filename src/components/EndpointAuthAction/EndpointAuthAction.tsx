@@ -39,6 +39,11 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
     };
 
     const runWithEndpointSelection = (action: EndpointAction) => {
+        if (props.defaultAuthUrl) {
+            runWithTargetAuthUrl(props.defaultAuthUrl, action);
+            return;
+        }
+
         if (urls.length === 1) {
             const [onlyEndpoint] = urls;
             runWithTargetAuthUrl(onlyEndpoint.value, action);
@@ -121,6 +126,14 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
 
         runWithTargetAuthUrl(url, pendingAction.action);
     };
+
+    if (props.defaultAuthUrl) {
+        return props.children({
+            runWithEndpointSelection,
+            runWithTargetAuthUrl,
+            runWithAuthOrLogin,
+        });
+    }
 
     return (
         <Dropdown
