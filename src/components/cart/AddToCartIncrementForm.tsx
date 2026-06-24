@@ -29,6 +29,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
     const [messageApi, messageContextHolder] = message.useMessage();
     const [cartSecrets, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const quantityInputTextRef = React.useRef("1");
+    const quantityInputIsDirtyRef = React.useRef(false);
     const cartSecret = React.useMemo(
         () => (cartSecrets || []).find((entry) => entry.url === props.serverURL)?.secret || "",
         [cartSecrets, props.serverURL],
@@ -57,37 +58,30 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
         (item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey,
     );
     const currentItemQuantity = currentItem?.quantity ?? 0;
+    const [quantityText, setQuantityText] = React.useState(() => String(getInitialCartQuantity(currentItemQuantity)));
     const hasItemInCart = currentItemQuantity > 0;
     const usesSplitLayout = !hasItemInCart;
     const formClassName = ["AddToCartButton", usesSplitLayout ? "AddToCartButton--split" : ""]
         .filter(Boolean)
         .join(" ");
     React.useEffect(() => {
-        if (props.form.isFieldTouched("quantity")) {
+        if (quantityInputIsDirtyRef.current) {
             return;
         }
 
-        const nextQuantity = getInitialCartQuantity(currentItemQuantity);
-        if (props.form.getFieldValue("quantity") !== nextQuantity) {
-            props.form.setFieldValue("quantity", nextQuantity);
-        }
-    }, [currentItemQuantity, props.form]);
+        setQuantityText(String(getInitialCartQuantity(currentItemQuantity)));
+    }, [currentItemQuantity]);
 
-    const persistQuantity = async (nextQuantityValue: number | null | undefined, rawInputValue: string | undefined) => {
-        if (rawInputValue && rawInputValue.includes("-")) {
-            props.form.setFieldValue("quantity", currentItemQuantity > 0 ? currentItemQuantity : 1);
-            return;
-        }
+    const resetQuantityDraft = (nextQuantity: number) => {
+        quantityInputIsDirtyRef.current = false;
+        setQuantityText(String(nextQuantity > 0 ? nextQuantity : 1));
+    };
 
-        if (rawInputValue === "") {
-            props.form.setFieldValue("quantity", currentItemQuantity > 0 ? currentItemQuantity : 1);
-            return;
-        }
-
+    const persistQuantity = async (nextQuantityValue: number | null | undefined) => {
         const nextQuantity = clampCartQuantity(nextQuantityValue, maxAvailable);
 
         if (!hasItemInCart && nextQuantity <= 0) {
-            props.form.setFieldValue("quantity", 1);
+            resetQuantityDraft(1);
             return;
         }
 
@@ -100,7 +94,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
         const quantityHasChanged = normalizedQuantity !== currentItemQuantity;
 
         if (!quantityHasChanged && nextQuantity > 0) {
-            props.form.setFieldValue("quantity", normalizedQuantity);
+            resetQuantityDraft(normalizedQuantity);
             return;
         }
 
@@ -135,7 +129,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
                     queryKey: ["CartBySecret"],
                 });
             }
-            props.form.setFieldValue("quantity", normalizedQuantity > 0 ? normalizedQuantity : 1);
+            resetQuantityDraft(normalizedQuantity);
         } catch (error) {
             const errorMessage =
                 error instanceof Error && error.message ? error.message : "Could not update cart quantity";
@@ -212,37 +206,44 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
         >
             {messageContextHolder}
             {hasItemInCart ? (
-                <Form.Item name="quantity" noStyle>
-                    <InputNumber
-                        min={0}
-                        max={maxAvailable}
-                        step={1}
-                        precision={0}
-                        size={size}
-                        className={quantityInputClassName}
-                        disabled={isMutating}
-                        onInput={(value) => {
-                            quantityInputTextRef.current = value;
-                        }}
-                        parser={(value) => {
-                            const digits = (value || "").replace(/[^\d]/g, "");
-                            return digits.length > 0 ? Number(digits) : 0;
-                        }}
-                        formatter={(value) => {
-                            return value === null || value === undefined ? "" : String(value);
-                        }}
-                        onChange={(value) => {
-                            props.form.setFieldValue("quantity", clampCartQuantity(value, maxAvailable));
-                            persistQuantity(value, quantityInputTextRef.current);
-                        }}
-                    />
-                </Form.Item>
+                <InputNumber
+                    min="0"
+                    max={maxAvailable === undefined ? undefined : String(maxAvailable)}
+                    step="1"
+                    precision={0}
+                    stringMode
+                    size={size}
+                    className={quantityInputClassName}
+                    disabled={isMutating}
+                    value={quantityText}
+                    onInput={(value) => {
+                        quantityInputTextRef.current = value;
+                    }}
+                    onChange={(value) => {
+                        quantityInputIsDirtyRef.current = true;
+                        setQuantityText(value === null || value === undefined ? "" : String(value));
+                    }}
+                    onStep={(value) => {
+                        quantityInputIsDirtyRef.current = true;
+                        setQuantityText(String(value));
+                        persistQuantity(Number(value));
+                    }}
+                    onBlur={(event) => {
+                        const typedQuantity = event.currentTarget.value.replace(/[^\d]/g, "");
+                        if (quantityInputTextRef.current.includes("-") || typedQuantity === "") {
+                            resetQuantityDraft(currentItemQuantity > 0 ? currentItemQuantity : 1);
+                            return;
+                        }
+
+                        persistQuantity(Number(typedQuantity));
+                    }}
+                />
             ) : (
                 <AddToCartSubmitButton
                     disabled={isMutating}
                     loading={isMutating}
                     onClick={() => {
-                        persistQuantity(1, "1");
+                        persistQuantity(1);
                     }}
                     size={size}
                     ariaLabel="Add to cart"

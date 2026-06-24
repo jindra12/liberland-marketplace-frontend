@@ -43,4 +43,16 @@ describe("cart control", () => {
         getHarborLanternControl().find("input").type("-", { force: true }).blur();
         getHarborLanternControl().find("input").should("have.value", "1");
     });
+
+    it("waits until blur before persisting typed quantities", () => {
+        mountCartControl();
+
+        getHarborLanternControl().find("input").should("have.value", "1");
+        getHarborLanternControl().find("input").type("5");
+        getHarborLanternControl().find("input").should("have.value", "15");
+        getHarborLanternControl().find("input").blur();
+
+        mountCartControl();
+        getHarborLanternControl().find("input").should("have.value", "15");
+    });
 });
