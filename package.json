@@ -123,6 +123,8 @@
         "test:ct:buy-now:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/BuyNow.cy.tsx",
         "test:ct:cart-auth": "yarn cypress:run --component --browser electron --spec cypress/component/AuthenticatedCart.cy.tsx",
         "test:ct:cart-auth:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/AuthenticatedCart.cy.tsx",
+        "test:ct:cart-control": "yarn cypress:run --component --browser electron --spec cypress/component/CartControl.cy.tsx",
+        "test:ct:cart-control:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/CartControl.cy.tsx",
         "test:ct:remember-wallet": "yarn cypress:run --component --browser electron --spec cypress/component/RememberWallet.cy.tsx",
         "test:ct:remember-wallet:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/RememberWallet.cy.tsx",
         "test:ct:remembered-wallet": "yarn cypress:run --component --browser electron --spec cypress/component/RememberedWallet.cy.tsx",

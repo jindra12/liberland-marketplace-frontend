@@ -49,6 +49,8 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     );
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
+    const maxAvailable =
+        typeof props.maxAvailable === "number" ? props.maxAvailable : undefined;
     const candidateProfileAddresses = React.useMemo(() => buildProfileShippingAddresses(props.me), [props.me]);
     const candidateProfileAddressesForBuyNow = props.isAuthenticated ? candidateProfileAddresses : [];
     const usesSplitLayout = !hasItemInCart;
@@ -56,15 +58,17 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
         "AddToCartButton__compact",
         usesSplitLayout ? "AddToCartButton__compact--split" : "",
         props.block ? "AddToCartButton__compact--block" : "",
-        hasItemInCart ? "AddToCartButton__compact--hasRemove" : "",
     ]
         .filter(Boolean)
         .join(" ");
     const watchedQuantity = Form.useWatch("quantity", form);
-    const inputQuantity = watchedQuantity || 0;
-    const remainingQuantity =
-        typeof props.maxAvailable === "number" ? Math.max(0, props.maxAvailable - currentItemQuantity) : undefined;
-    const shouldHideButton = remainingQuantity !== undefined && remainingQuantity <= 0;
+    const inputQuantity =
+        typeof watchedQuantity === "number" && watchedQuantity > 0
+            ? watchedQuantity
+            : currentItemQuantity > 0
+              ? currentItemQuantity
+              : 1;
+    const shouldHideButton = maxAvailable !== undefined && maxAvailable <= 0 && !hasItemInCart;
     if (shouldHideButton) {
         return null;
     }
@@ -84,7 +88,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                     productId={props.productId}
                     serverURL={props.serverURL}
                     isAuthenticated={props.isAuthenticated}
-                    maxAvailable={props.maxAvailable}
+                    maxAvailable={maxAvailable}
                     size={size}
                     variantId={props.variantId}
                 />

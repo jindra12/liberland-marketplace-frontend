@@ -10,11 +10,11 @@ type AddToCartSubmitButtonProps = {
     loading: boolean;
     onClick: () => void;
     size?: ButtonProps["size"];
+    children?: React.ReactNode;
 };
 export const AddToCartSubmitButton: React.FunctionComponent<AddToCartSubmitButtonProps> = (props) => {
     return (
         <Button
-            type="primary"
             size={props.size}
             className="AddToCartButton__submit"
             icon={props.icon}
@@ -24,6 +24,7 @@ export const AddToCartSubmitButton: React.FunctionComponent<AddToCartSubmitButto
             aria-label={props.ariaLabel}
             onClick={props.onClick}
         >
+            {props.children}
         </Button>
     );
 };

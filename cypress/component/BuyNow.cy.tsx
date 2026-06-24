@@ -193,4 +193,32 @@ describe("buy now", () => {
 
         screenshotStep("buy-now-compact-purchase-control");
     });
+
+    it("shows a secondary Add to cart button before the product is in cart and turns it into quantity control after click", () => {
+        cy.viewport(1200, 1200);
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        });
+
+        waitForDetailQuery(
+            MAIN_SERVER_URL,
+            "ProductById",
+            { id: "product-harbor-lantern" },
+            "Product",
+            "product-harbor-lantern",
+            "Harbor Lantern",
+        );
+
+        cy.contains(".ProductDetail__purchaseControl .AddToCartButton__submit", "Add to cart")
+            .should("be.visible")
+            .and("have.class", "ant-btn-default")
+            .and("not.have.class", "ant-btn-primary");
+
+        cy.contains(".ProductDetail__purchaseControl .AddToCartButton__submit", "Add to cart").click();
+        cy.get(".ProductDetail__purchaseControl .AddToCartButton__quantity input", { timeout: 20000 })
+            .should("be.visible")
+            .and("have.value", "1");
+
+        screenshotStep("buy-now-add-to-cart-switches-to-quantity-control");
+    });
 });

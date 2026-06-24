@@ -6,13 +6,6 @@
     min-width: 132px;
 }
 
-.AddToCartButton__submit {
-    min-width: 48px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    padding-inline: 0;
-}
-
 .AddToCartButton__buyNowLoading {
     display: flex;
     justify-content: center;
@@ -24,18 +17,18 @@
 }
 
 .AddToCartButton__quantity {
-    width: 100px;
-    max-width: 100px;
+    width: 112px;
+    max-width: 112px;
 }
 
 .AddToCartButton__quantity--default {
-    width: 100px;
-    max-width: 100px;
+    width: 112px;
+    max-width: 112px;
 }
 
 .AddToCartButton__quantity--small {
-    width: 48px;
-    max-width: 48px;
+    width: 72px;
+    max-width: 72px;
 }
 
 .AddToCartButton--split {
@@ -47,18 +40,18 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    border-radius: 22px;
+    border-radius: 16px;
     overflow: hidden;
     background: linear-gradient(180deg, rgba(11, 28, 43, 0.94), rgba(7, 19, 30, 0.94));
     box-shadow:
-        inset 0 0 0 1px rgba(28, 61, 88, 0.82),
+        inset 0 0 0 1px rgba(91, 156, 255, 0.82),
         inset 0 1px 0 rgba(147, 214, 255, 0.08),
         0 10px 20px rgba(0, 0, 0, 0.14);
 }
 
 .AddToCartButton__compact.ant-space-compact:focus-within {
     box-shadow:
-        inset 0 0 0 1px rgba(94, 173, 255, 0.88),
+        inset 0 0 0 1px rgba(94, 173, 255, 0.92),
         0 0 0 2px rgba(94, 173, 255, 0.2),
         inset 0 1px 0 rgba(147, 214, 255, 0.1);
 }
@@ -81,12 +74,14 @@
 }
 
 .AddToCartButton__compact > .ant-btn:last-child {
-    border-start-end-radius: 22px !important;
-    border-end-end-radius: 22px !important;
+    border-start-end-radius: 16px !important;
+    border-end-end-radius: 16px !important;
 }
 
 .AddToCartButton__compact .ant-input-number {
     background: rgba(4, 15, 26, 0.72);
+    border-inline-start: 1px solid rgba(91, 156, 255, 0.72) !important;
+    border-inline-end: 1px solid rgba(91, 156, 255, 0.72) !important;
 }
 
 .AddToCartButton__compact .ant-btn:not(:first-child) {
@@ -94,16 +89,9 @@
 }
 
 .AddToCartButton__compact > .ant-input-number {
-    flex: 0 0 100px;
-    width: 100px !important;
-    max-width: 100px;
-    min-width: 0;
-}
-
-.AddToCartButton__compact > .AddToCartButton__submit {
-    flex: 0 0 48px !important;
-    width: 48px !important;
-    max-width: 48px !important;
+    flex: 0 0 108px;
+    width: 108px !important;
+    max-width: 108px;
     min-width: 0;
 }
 
@@ -115,35 +103,51 @@
     min-width: 0;
 }
 
-.AddToCartButton__compact > .ant-btn-dangerous {
-    flex: 0 0 48px;
-    width: 48px !important;
-    max-width: 48px;
-    min-width: 0;
-}
-
 .AddToCartButton__compact .ant-input-number-handler-wrap {
-    border-inline-start: 0 !important;
-    box-shadow: inset 1px 0 0 rgba(22, 50, 72, 0.72) !important;
+    width: 30px;
+    border-inline-start: 1px solid rgba(91, 156, 255, 0.4) !important;
+    background: linear-gradient(180deg, rgba(18, 45, 68, 0.98), rgba(9, 24, 38, 0.98));
+    box-shadow:
+        inset 1px 0 0 rgba(22, 50, 72, 0.72),
+        inset 0 1px 0 rgba(147, 214, 255, 0.08) !important;
+    opacity: 1 !important;
 }
 
 .AddToCartButton__compact .ant-input-number-handler {
     border-top: 0 !important;
     border-bottom: 0 !important;
+    color: #eef8f3;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.AddToCartButton__compact .ant-input-number-handler-up-inner,
+.AddToCartButton__compact .ant-input-number-handler-down-inner {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 0 8px rgba(91, 156, 255, 0.36);
+}
+
+.AddToCartButton__compact .ant-input-number-handler:hover {
+    background: rgba(91, 156, 255, 0.24);
+    color: #ffffff;
 }
 
 .AddToCartButton__compact .ant-input-number-handler-up {
     box-shadow: inset 0 -1px 0 rgba(22, 50, 72, 0.72);
 }
 
-.AddToCartButton__compact .AddToCartButton__quantity.ant-input-number .ant-input-number-input {
-    padding-inline-start: 4px;
-    padding-inline-end: 4px;
-    text-align: center;
+.AddToCartButton__compact .ant-input-number-handler-down {
+    box-shadow: inset 0 1px 0 rgba(22, 50, 72, 0.72);
 }
 
-.AddToCartButton__compact .AddToCartButton__submit {
-    padding-inline: 0;
+.AddToCartButton__compact .AddToCartButton__quantity.ant-input-number .ant-input-number-input {
+    padding-inline-start: 6px;
+    padding-inline-end: 6px;
+    text-align: center;
 }
 
 .CartPage {
