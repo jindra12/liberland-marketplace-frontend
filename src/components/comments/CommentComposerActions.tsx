@@ -65,10 +65,7 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
                         {props.cancelLabel ?? "Cancel"}
                     </Button>
                 )}
-                <EndpointAuthAction
-                    defaultAuthUrl={props.serverURL ? props.serverURL : undefined}
-                    requireVerifiedEmail
-                >
+                <EndpointAuthAction defaultAuthUrl={props.serverURL} requireVerifiedEmail>
                     {({ runWithAuthOrLogin }) => (
                         <Button
                             type="primary"

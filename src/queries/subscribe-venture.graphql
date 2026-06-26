@@ -1,7 +1,6 @@
-mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
-    createNotificationSubscription(data: { email: $email, targetCollection: startups, targetID: $targetID }) {
+mutation SubscribeToVentureUpdates($targetID: String!) {
+    createNotificationSubscription(data: { targetCollection: startups, targetID: $targetID }) {
         id
-        email
         targetCollection
         targetID
     }

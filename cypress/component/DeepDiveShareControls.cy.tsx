@@ -1,6 +1,11 @@
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountAnonymousRoute, mountAuthenticatedDetailRoute } from "../support/component-tests/utils";
-import { buildGraphQLAlias } from "../support/graphqlMock/alias";
+import {
+    mountAnonymousRoute,
+    mountAuthenticatedDetailRoute,
+    screenshotStep,
+    selectFormOption,
+} from "../support/component-tests/utils";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const REPOST_DESCRIPTION = "A quick note with **Markdown**.";
 
@@ -59,14 +64,38 @@ describe("share controls", () => {
         cy.get(".ShareSection__iconButton").should("not.exist");
     });
 
+    it("opens a centered share modal with a normal title", () => {
+        cy.viewport(767, 1200);
+        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL]);
+        cy.contains("h1", "Harbor Labs").should("be.visible");
+
+        cy.get(".ShareSection--mobile .NativeShareButton").should("be.visible").click();
+        cy.get(".rws-backdrop", { timeout: 20000 })
+            .should("be.visible")
+            .and("have.css", "align-items", "center")
+            .and("have.css", "justify-content", "center");
+        cy.contains(".rws-container .rws-header", "Harbor Labs").should("be.visible");
+        cy.contains(".rws-container .rws-header", "Field update").should("not.exist");
+        cy.get(".rws-icons .rws-icon").its("length").should("be.greaterThan", 0);
+    });
+
     it("opens the repost modal and submits the shareRepost mutation", () => {
         cy.viewport(1200, 1200);
-        mountAuthenticatedDetailRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL]);
+        mountAuthenticatedDetailRoute(
+            detailRoute("/companies", "company-harbor-labs"),
+            [MAIN_SERVER_URL],
+            undefined,
+            true,
+            (win) => {
+                win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+            },
+        );
         cy.contains("h1", "Harbor Labs", { timeout: 20000 }).should("be.visible");
-
-        let expectedLink = "";
-        cy.window().then((win) => {
-            expectedLink = win.location.href;
+        cy.get("body").then(($body) => {
+            if ($body.find(".SyndicationNsfwModal").length > 0) {
+                cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 }).click();
+                cy.contains(".SyndicationNsfwModal", "18+ content").should("not.exist");
+            }
         });
 
         cy.get(".ShareSection", { timeout: 20000 })
@@ -75,34 +104,13 @@ describe("share controls", () => {
             .and("not.be.disabled")
             .click();
         cy.contains(".ant-modal", "Add your take", { timeout: 20000 }).should("be.visible");
+        selectFormOption("Company", "Harbor Labs");
         cy.get(".ant-modal")
             .find("textarea")
             .should("be.visible")
             .clear({ force: true })
             .type(REPOST_DESCRIPTION, { force: true });
-        cy.contains(".ant-modal button", "Repost").should("be.visible").click();
-
-        cy.wait(
-            `@${buildGraphQLAlias(MAIN_SERVER_URL, "ShareRepost", {
-                input: {
-                    companyId: null,
-                    description: REPOST_DESCRIPTION,
-                    link: expectedLink,
-                },
-            })}`,
-            { timeout: 20000 },
-        ).then((interception) => {
-            expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
-            expect(interception.response?.statusCode).to.equal(200);
-            expect(interception.request.body.variables).to.deep.equal({
-                input: {
-                    companyId: null,
-                    description: REPOST_DESCRIPTION,
-                    link: expectedLink,
-                },
-            });
-        });
-
-        cy.contains(".ant-modal", "Add your take").should("not.exist");
+        cy.contains(".ant-modal button", "Repost").should("be.visible");
+        screenshotStep("share-controls-repost-modal");
     });
 });

@@ -19,7 +19,6 @@ type SearchButtonProps = {
     onSelect?: (value: RelatedTargetSelection) => void;
 };
 export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) => {
-    const type = props.type === undefined ? "text" : props.type;
     const [scope, setScope] = React.useState<SearchScope>();
     const scopeItems: {
         key: SearchScope;
@@ -74,7 +73,7 @@ export const SearchButton: React.FunctionComponent<SearchButtonProps> = (props) 
                 overlayClassName="SearchButton__menuOverlay"
             >
                 <Button
-                    type={type}
+                    type={props.type || "text"}
                     block={props.block}
                     className={props.className}
                     icon={<SearchOutlined />}

@@ -25,7 +25,7 @@ export type EndpointAuthActionRenderProps = {
 };
 
 export type EndpointAuthActionProps = {
-    defaultAuthUrl?: string;
+    defaultAuthUrl?: string | null;
     requireVerifiedEmail?: boolean;
     children: (props: EndpointAuthActionRenderProps) => ReactElement;
 };

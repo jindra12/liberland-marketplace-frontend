@@ -38,6 +38,8 @@ manager is `yarn`.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"
+- If a single test run exceeds 5 minutes, stop it and diagnose or split it instead of waiting longer.
+- If a single Cypress spec appears to need anything close to 40 minutes, assume something is wrong and investigate rather than letting it run.
 - Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
 - For small layout-only wrappers, prefer Ant Design `Flex` or `Space` instead of custom wrapper `div`s and CSS spacing shims.
 - Route components should stay as thin entry files. If a route file needs `export default` for Next/lazy-loading compatibility, keep it there and add a local ESLint override for `import/no-default-export` in that file instead of changing the global rule.
@@ -147,6 +149,7 @@ manager is `yarn`.
 - Avoid components with more than 2 hooks. If a component needs a third hook, stop and split the behavior into smaller components or an observer/helper component.
 - Never destructure props. Always accept a single `props` parameter and read values directly from `props.foo`.
 - Do not introduce useless local constants that only rename an existing value. If a value is just `props.foo`, use `props.foo` directly instead of mirroring it into `const foo = props.foo`.
+- If a prop-derived fallback value is only used once, inline it instead of storing it in a local const, for example `props.size || "middle"`.
 - Use one component per file by default. If a component family needs to stay together, put those component files in a single CamelCase folder.
 - Never use the `function` keyword for React components. Use `export const Component: React.FunctionComponent<ComponentProps> = (props) => {}`. If a component has no props, use `export const Component: React.FunctionComponent = () => {}`.
 - When a component uses `React.FunctionComponent` or other React namespace types, import React normally with `import React from "react";` rather than `import type * as React from "react";`.

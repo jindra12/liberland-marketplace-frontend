@@ -24,7 +24,6 @@ type BuyNowButtonProps = {
 };
 
 export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) => {
-    const size = props.size === undefined ? "large" : props.size;
     const [preparedPurchase, setPreparedPurchase] = React.useState<BuyNowPreparedPurchase>();
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
     const buyNowAuthResume = useBuyNowAuthResume({
@@ -51,7 +50,7 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                     <Button
                         block={props.block}
                         type="primary"
-                        size={size}
+                        size={props.size || "large"}
                         disabled={isBusy}
                         onClick={(event) => {
                             event.preventDefault();

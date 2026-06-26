@@ -87,10 +87,7 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     className="CommentCard__like"
                     aria-label={`Like comment from ${getCommentDisplayName(props.comment)}`}
                 />
-                <EndpointAuthAction
-                    defaultAuthUrl={props.comment.serverUrl ? props.comment.serverUrl : undefined}
-                    requireVerifiedEmail
-                >
+                <EndpointAuthAction defaultAuthUrl={props.comment.serverUrl} requireVerifiedEmail>
                     {({ runWithAuthOrLogin }) => (
                         <Button
                             type="text"

@@ -20,7 +20,6 @@ type ListShareDetailButtonsProps = {
 export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButtonsProps> = (props) => {
     const { sm } = Grid.useBreakpoint();
     const size = props.size === undefined ? "large" : props.size;
-    const compact = props.compact === undefined ? false : props.compact;
 
     if (!sm) {
         return (
@@ -51,7 +50,7 @@ export const ListShareDetailButtons: React.FunctionComponent<ListShareDetailButt
         );
     }
 
-    return compact ? (
+    return props.compact ? (
         <Space.Compact block className="ListShareDetailButtons ListShareDetailButtons--compact">
             <NativeShareButton
                 path={props.detailPath}

@@ -19,7 +19,7 @@ export const ShareRepostAction: React.FunctionComponent<ShareRepostActionProps> 
 
     return (
         <>
-            <EndpointAuthAction defaultAuthUrl={props.serverURL ?? undefined}>
+            <EndpointAuthAction defaultAuthUrl={props.serverURL}>
                 {({ runWithAuthOrLogin }) => (
                     <Button
                         type="primary"

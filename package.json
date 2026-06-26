@@ -159,6 +159,8 @@
         "test:ct:deep-dive:share-buttons:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/DeepDiveShareButtons.cy.tsx",
         "test:ct:deep-dive:share-controls": "yarn cypress:run --component --browser electron --spec cypress/component/DeepDiveShareControls.cy.tsx",
         "test:ct:deep-dive:share-controls:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/DeepDiveShareControls.cy.tsx",
+        "test:ct:subscribe-button": "yarn cypress:run --component --browser electron --spec cypress/component/SubscribeButton.cy.tsx",
+        "test:ct:subscribe-button:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/SubscribeButton.cy.tsx",
         "test:ct:deep-dive:identity-cards": "yarn cypress:run --component --browser electron --spec cypress/component/DeepDiveIdentityCards.cy.tsx",
         "test:ct:deep-dive:identity-cards:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/DeepDiveIdentityCards.cy.tsx",
         "test:ct:deep-dive:inactive-job": "yarn cypress:run --component --browser electron --spec cypress/component/DeepDiveInactiveJob.cy.tsx",

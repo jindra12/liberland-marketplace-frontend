@@ -7,7 +7,6 @@ export type SubscriptionTarget = {
     targetID: string;
     serverURL?: string | null;
     isSubscribed?: boolean | null;
-    subscriptionID?: string | null;
 };
 
 export type SubscribeButtonProps = SubscriptionTarget & {
@@ -18,12 +17,4 @@ export type SubscribeButtonProps = SubscriptionTarget & {
     type?: ButtonProps["type"];
 };
 
-export type SubscribeAuthButtonProps = SubscribeButtonProps & {
-    email: string;
-};
-
 export type SubscriptionAction = "subscribe" | "unsubscribe";
-
-export type AnonymousSubscribeFormValues = {
-    email: string;
-};

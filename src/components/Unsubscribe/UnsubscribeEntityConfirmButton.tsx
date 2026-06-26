@@ -19,7 +19,7 @@ export const UnsubscribeEntityConfirmButton: React.FunctionComponent<
 
     const handleConfirm = async () => {
         try {
-            await subscriptionActions.unsubscribe(props.params.email);
+            await subscriptionActions.unsubscribe();
             props.messageApi.success(
                 `You will no longer receive ${subscriptionActions.entityLabel} update emails for ${props.entity.title}.`,
             );

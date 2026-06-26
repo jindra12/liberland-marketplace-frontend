@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+
 import {
     useSubscribeToCompanyUpdatesMutation,
     useSubscribeToJobUpdatesMutation,
@@ -11,17 +12,17 @@ import {
     useUnsubscribeFromTribeUpdatesMutation,
     useUnsubscribeFromVentureUpdatesMutation,
 } from "../../hooks";
+import { createAuthManager } from "../../auth/utils";
 import { ENTITY_LABELS } from "./constants";
 import { buildNotificationSubscriptionID, getSubscriptionMutationURL, invalidateSubscriptionQueries } from "./utils";
 import type { SubscribeButtonProps } from "./types";
 
-type SubscriptionActionOptions = Pick<SubscribeButtonProps, "collection" | "targetID" | "serverURL" | "subscriptionID">;
+type SubscriptionActionOptions = Pick<SubscribeButtonProps, "collection" | "targetID" | "serverURL">;
 
 export const useSubscriptionActions = ({
     collection,
     targetID,
     serverURL,
-    subscriptionID,
 }: SubscriptionActionOptions) => {
     const queryClient = useQueryClient();
 
@@ -62,13 +63,12 @@ export const useSubscriptionActions = ({
 
     const mutationURL = getSubscriptionMutationURL(serverURL);
 
-    const subscribe = async (email: string) => {
+    const subscribe = async () => {
         if (!targetID) {
             throw new Error("Missing subscription target.");
         }
 
         await mutationConfig.subscribe.mutateAsync({
-            email,
             targetID,
             url: mutationURL,
         });
@@ -76,18 +76,26 @@ export const useSubscriptionActions = ({
         await invalidateSubscriptionQueries(queryClient, collection);
     };
 
-    const unsubscribe = async (email: string) => {
+    const unsubscribe = async () => {
         if (!targetID) {
             throw new Error("Missing subscription target.");
         }
 
-        const resolvedSubscriptionID =
-            subscriptionID ||
-            (await buildNotificationSubscriptionID({
-                email,
-                targetCollection: collection,
-                targetID,
-            }));
+        const authManager = createAuthManager(mutationURL);
+        const authUser = await authManager.getUser();
+        const authenticatedEmail =
+            typeof authUser?.profile?.email === "string" ? authUser.profile.email : undefined;
+        const resolvedSubscriptionID = authenticatedEmail
+            ? buildNotificationSubscriptionID({
+                  email: authenticatedEmail,
+                  targetCollection: collection,
+                  targetID,
+              })
+            : undefined;
+
+        if (!resolvedSubscriptionID) {
+            throw new Error("Missing subscription ID.");
+        }
 
         await mutationConfig.unsubscribe.mutateAsync({
             subscriptionID: resolvedSubscriptionID,

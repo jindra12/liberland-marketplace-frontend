@@ -31,10 +31,7 @@ export const Like: React.FunctionComponent<LikeProps> = (props) => {
     );
 
     return (
-        <EndpointAuthAction
-            defaultAuthUrl={props.serverURL ? props.serverURL : undefined}
-            requireVerifiedEmail
-        >
+        <EndpointAuthAction defaultAuthUrl={props.serverURL} requireVerifiedEmail>
             {({ runWithAuthOrLogin }) => (
                 <Button
                     htmlType="button"

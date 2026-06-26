@@ -24738,7 +24738,7 @@ export type NotificationSubscription = {
   __typename?: 'NotificationSubscription';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
-  email: Scalars['EmailAddress']['output'];
+  email?: Maybe<Scalars['EmailAddress']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   subscriber?: Maybe<Subscriber>;
   targetCollection: NotificationSubscription_TargetCollection;
@@ -24778,6 +24778,7 @@ export type NotificationSubscription_Email_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
   contains?: InputMaybe<Scalars['EmailAddress']['input']>;
   equals?: InputMaybe<Scalars['EmailAddress']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
   in?: InputMaybe<Array<InputMaybe<Scalars['EmailAddress']['input']>>>;
   like?: InputMaybe<Scalars['EmailAddress']['input']>;
   not_equals?: InputMaybe<Scalars['EmailAddress']['input']>;
@@ -60392,7 +60393,7 @@ export type MutationMedia_Sizes_XlargeInput = {
 export type MutationNotificationSubscriptionInput = {
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   subscriber?: InputMaybe<Scalars['String']['input']>;
   targetCollection: NotificationSubscription_TargetCollection_MutationInput;
@@ -66089,44 +66090,39 @@ export type UpdateStartupMutationVariables = Exact<{
 export type UpdateStartupMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, title?: string | null, _status?: Startup__Status | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type SubscribeToCompanyUpdatesMutationVariables = Exact<{
-  email: Scalars['String']['input'];
   targetID: Scalars['String']['input'];
 }>;
 
 
-export type SubscribeToCompanyUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+export type SubscribeToCompanyUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type SubscribeToJobUpdatesMutationVariables = Exact<{
-  email: Scalars['String']['input'];
   targetID: Scalars['String']['input'];
 }>;
 
 
-export type SubscribeToJobUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+export type SubscribeToJobUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type SubscribeToProductUpdatesMutationVariables = Exact<{
-  email: Scalars['String']['input'];
   targetID: Scalars['String']['input'];
 }>;
 
 
-export type SubscribeToProductUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+export type SubscribeToProductUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type SubscribeToTribeUpdatesMutationVariables = Exact<{
-  email: Scalars['String']['input'];
   targetID: Scalars['String']['input'];
 }>;
 
 
-export type SubscribeToTribeUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+export type SubscribeToTribeUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type SubscribeToVentureUpdatesMutationVariables = Exact<{
-  email: Scalars['String']['input'];
   targetID: Scalars['String']['input'];
 }>;
 
 
-export type SubscribeToVentureUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, email: any, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
+export type SubscribeToVentureUpdatesMutation = { __typename?: 'Mutation', createNotificationSubscription?: { __typename?: 'NotificationSubscription', id?: string | null, targetCollection: NotificationSubscription_TargetCollection, targetID: string } | null };
 
 export type ListPublishedSyndicationUrlsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -72762,12 +72758,11 @@ export const useUpdateStartupMutation = <
 useUpdateStartupMutation.fetcher = (variables: UpdateStartupMutationVariables, options?: RequestInit['headers']) => gqlFetcher<UpdateStartupMutation, UpdateStartupMutationVariables>(UpdateStartupDocument, variables, options);
 
 export const SubscribeToCompanyUpdatesDocument = `
-    mutation SubscribeToCompanyUpdates($email: String!, $targetID: String!) {
+    mutation SubscribeToCompanyUpdates($targetID: String!) {
   createNotificationSubscription(
-    data: {email: $email, targetCollection: companies, targetID: $targetID}
+    data: {targetCollection: companies, targetID: $targetID}
   ) {
     id
-    email
     targetCollection
     targetID
   }
@@ -72791,12 +72786,11 @@ export const useSubscribeToCompanyUpdatesMutation = <
 useSubscribeToCompanyUpdatesMutation.fetcher = (variables: SubscribeToCompanyUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToCompanyUpdatesMutation, SubscribeToCompanyUpdatesMutationVariables>(SubscribeToCompanyUpdatesDocument, variables, options);
 
 export const SubscribeToJobUpdatesDocument = `
-    mutation SubscribeToJobUpdates($email: String!, $targetID: String!) {
+    mutation SubscribeToJobUpdates($targetID: String!) {
   createNotificationSubscription(
-    data: {email: $email, targetCollection: jobs, targetID: $targetID}
+    data: {targetCollection: jobs, targetID: $targetID}
   ) {
     id
-    email
     targetCollection
     targetID
   }
@@ -72820,12 +72814,11 @@ export const useSubscribeToJobUpdatesMutation = <
 useSubscribeToJobUpdatesMutation.fetcher = (variables: SubscribeToJobUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToJobUpdatesMutation, SubscribeToJobUpdatesMutationVariables>(SubscribeToJobUpdatesDocument, variables, options);
 
 export const SubscribeToProductUpdatesDocument = `
-    mutation SubscribeToProductUpdates($email: String!, $targetID: String!) {
+    mutation SubscribeToProductUpdates($targetID: String!) {
   createNotificationSubscription(
-    data: {email: $email, targetCollection: products, targetID: $targetID}
+    data: {targetCollection: products, targetID: $targetID}
   ) {
     id
-    email
     targetCollection
     targetID
   }
@@ -72849,12 +72842,11 @@ export const useSubscribeToProductUpdatesMutation = <
 useSubscribeToProductUpdatesMutation.fetcher = (variables: SubscribeToProductUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToProductUpdatesMutation, SubscribeToProductUpdatesMutationVariables>(SubscribeToProductUpdatesDocument, variables, options);
 
 export const SubscribeToTribeUpdatesDocument = `
-    mutation SubscribeToTribeUpdates($email: String!, $targetID: String!) {
+    mutation SubscribeToTribeUpdates($targetID: String!) {
   createNotificationSubscription(
-    data: {email: $email, targetCollection: identities, targetID: $targetID}
+    data: {targetCollection: identities, targetID: $targetID}
   ) {
     id
-    email
     targetCollection
     targetID
   }
@@ -72878,12 +72870,11 @@ export const useSubscribeToTribeUpdatesMutation = <
 useSubscribeToTribeUpdatesMutation.fetcher = (variables: SubscribeToTribeUpdatesMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SubscribeToTribeUpdatesMutation, SubscribeToTribeUpdatesMutationVariables>(SubscribeToTribeUpdatesDocument, variables, options);
 
 export const SubscribeToVentureUpdatesDocument = `
-    mutation SubscribeToVentureUpdates($email: String!, $targetID: String!) {
+    mutation SubscribeToVentureUpdates($targetID: String!) {
   createNotificationSubscription(
-    data: {email: $email, targetCollection: startups, targetID: $targetID}
+    data: {targetCollection: startups, targetID: $targetID}
   ) {
     id
-    email
     targetCollection
     targetID
   }
