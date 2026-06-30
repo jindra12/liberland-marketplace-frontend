@@ -8,6 +8,9 @@ import type { UploadFile } from "antd/es/upload/interface";
 
 import { CompanyField } from "../CompanyField";
 import { useCreateProductMutation, useUpdateProductMutation } from "../hooks";
+import { ProductParametersField } from "../productParameters/ProductParametersField";
+import type { ProductParameterDraft } from "../productParameters/types";
+import { buildProductParametersInput } from "../productParameters/utils";
 import { toCents } from "../shared/product/utils";
 
 import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
@@ -26,6 +29,7 @@ interface ProductFormValues {
     inventory?: number | null;
     company?: string | null;
     cryptoAddresses?: CryptoAddressesFormValue | null;
+    parameters?: ProductParameterDraft[] | null;
     imageFile?: UploadFile[];
 }
 export interface ProductFormProps {
@@ -56,6 +60,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
         url: props.url,
         buildData: (values: ProductFormValues, imageId) => {
             const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
+            const parameters = buildProductParametersInput(values.parameters);
 
             return {
                 name: values.name,
@@ -64,6 +69,9 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                 company: values.company,
                 ...(cryptoAddresses !== undefined && {
                     cryptoAddresses,
+                }),
+                ...(parameters !== undefined && {
+                    parameters,
                 }),
                 priceInUSDEnabled: true,
                 priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
@@ -130,6 +138,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
             >
                 <CompanyField serverURL={props.url} userId={userId} />
             </Form.Item>
+            <ProductParametersField />
             <CryptoAddressesField
                 description="Optional single payout wallet. If no product wallet is set, the company wallet is used at checkout."
             />

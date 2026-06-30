@@ -16,6 +16,16 @@ mutation CreateCart($data: mutationCartInput!, $draft: Boolean!) {
         items {
             id
             quantity
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    selected
+                }
+            }
             product {
                 id
                 serverURL

@@ -3,6 +3,7 @@ import * as React from "react";
 import type { ButtonProps } from "antd";
 
 import { AuthGuard } from "../AuthGuard";
+import type { ProductParameterSource } from "../productParameters/types";
 
 import { AddToCartButton } from "./AddToCartButton";
 import { AddToCartButtonContainer } from "./AddToCartButtonContainer";
@@ -15,6 +16,7 @@ type AddToCartButtonGuardProps = {
     hideBuyNowButton?: boolean;
     size?: ButtonProps["size"];
     maxAvailable?: number | null;
+    parameters?: ProductParameterSource[] | null;
 };
 
 export const AddToCartButtonGuard: React.FunctionComponent<AddToCartButtonGuardProps> = (props) => {

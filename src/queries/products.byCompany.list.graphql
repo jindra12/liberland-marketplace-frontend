@@ -30,6 +30,21 @@ query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20,
                 key
                 value
             }
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            relatedProducts {
+                id
+                name
+                serverURL
+            }
             image {
                 id
                 url

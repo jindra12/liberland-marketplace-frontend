@@ -27,6 +27,21 @@ query ListProductsByIdentity($identityId: String!, $limit: Int = 50, $page: Int 
             priceInETH
             priceInSOL
             priceInTRX
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            relatedProducts {
+                id
+                name
+                serverURL
+            }
             company {
                 id
                 serverURL

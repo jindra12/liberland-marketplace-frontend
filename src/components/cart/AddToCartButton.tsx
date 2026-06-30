@@ -7,6 +7,7 @@ import useLocalStorage from "use-local-storage";
 import type { Cart, MeUserQuery } from "../../generated/graphql";
 import { useCartBySecretQuery } from "../hooks";
 import { buildProfileShippingAddresses } from "../order/utils";
+import type { ProductParameterSource } from "../productParameters/types";
 
 import { AddToCartIncrementForm } from "./AddToCartIncrementForm";
 import { BuyNowButton } from "./BuyNowButton/BuyNowButton";
@@ -23,6 +24,7 @@ type AddToCartButtonProps = {
     maxAvailable?: number | null;
     isAuthenticated?: boolean;
     me: MeUserQuery[];
+    parameters?: ProductParameterSource[] | null;
 };
 export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (props) => {
     const size = props.size === undefined ? "large" : props.size;
@@ -47,6 +49,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
     const currentItem = existingCart?.items?.find(
         (item) => `${item.product?.id ?? ""}::${item.variant?.id ?? ""}` === productKey,
     );
+    const parameterDefinitions = currentItem?.product?.parameters ?? props.parameters ?? [];
     const currentItemQuantity = currentItem?.quantity ?? 0;
     const hasItemInCart = currentItemQuantity > 0;
     const maxAvailable =
@@ -69,6 +72,7 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
               ? currentItemQuantity
               : 1;
     const shouldHideButton = maxAvailable !== undefined && maxAvailable <= 0 && !hasItemInCart;
+
     if (shouldHideButton) {
         return null;
     }
@@ -91,17 +95,20 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                     maxAvailable={maxAvailable}
                     size={size}
                     variantId={props.variantId}
+                    parameters={parameterDefinitions}
                 />
                 {props.hideBuyNowButton ? null : (
                     <BuyNowButton
                         block={props.block}
                         candidateProfileAddresses={candidateProfileAddressesForBuyNow}
                         disabled={isMutating}
+                        form={form}
                         productId={props.productId}
                         quantity={inputQuantity}
                         serverURL={props.serverURL}
                         size={size}
                         variantId={props.variantId}
+                        parameters={parameterDefinitions}
                     />
                 )}
             </Space.Compact>

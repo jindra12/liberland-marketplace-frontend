@@ -22,6 +22,7 @@ import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 
 import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
+import { ProductRelatedProductsSection } from "./ProductRelatedProductsSection";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
@@ -70,6 +71,7 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                             serverURL={product.serverURL ?? routeServerURL}
                             size={md ? "large" : "middle"}
                             maxAvailable={inventoryCount}
+                            parameters={product.parameters}
                         />
                     ) : orderNowLink ? (
                         <Button block type="primary" href={orderNowLink} size={md ? "large" : "middle"}>
@@ -180,6 +182,12 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                                 </Descriptions.Item>
                                             ))}
                                         </Descriptions>
+                                    </>
+                                )}
+                                {product?.id && product.company?.id && (
+                                    <>
+                                        <Divider />
+                                        <ProductRelatedProductsSection product={product} />
                                     </>
                                 )}
                                 {(orderLink || product?.company?.id) && (

@@ -2978,6 +2978,7 @@ export enum CartUpdate_Status_MutationInput {
 export type Cart_Items = {
   __typename?: 'Cart_Items';
   id?: Maybe<Scalars['String']['output']>;
+  parameters?: Maybe<Array<Cart_Items_Parameters>>;
   product?: Maybe<Product>;
   quantity?: Maybe<Scalars['Float']['output']>;
   variant?: Maybe<Variant>;
@@ -2991,6 +2992,21 @@ export type Cart_ItemsProductArgs = {
 
 export type Cart_ItemsVariantArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Cart_Items_Parameters = {
+  __typename?: 'Cart_Items_Parameters';
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  values?: Maybe<Array<Cart_Items_Parameters_Values>>;
+};
+
+export type Cart_Items_Parameters_Values = {
+  __typename?: 'Cart_Items_Parameters_Values';
+  id?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  selected?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Cart_CreatedAt_Operator = {
@@ -3054,6 +3070,64 @@ export type Cart_Items__Id_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Values__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Values__Key_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Values__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Cart_Items__Parameters__Values__Selected_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Cart_Items__Product_Operator = {
@@ -3161,6 +3235,12 @@ export type Cart_Where = {
   customer?: InputMaybe<Cart_Customer_Operator>;
   id?: InputMaybe<Cart_Id_Operator>;
   items__id?: InputMaybe<Cart_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Cart_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Cart_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Cart_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Cart_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Cart_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Cart_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Cart_Items__Product_Operator>;
   items__quantity?: InputMaybe<Cart_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Cart_Items__Variant_Operator>;
@@ -3179,6 +3259,12 @@ export type Cart_Where_And = {
   customer?: InputMaybe<Cart_Customer_Operator>;
   id?: InputMaybe<Cart_Id_Operator>;
   items__id?: InputMaybe<Cart_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Cart_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Cart_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Cart_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Cart_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Cart_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Cart_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Cart_Items__Product_Operator>;
   items__quantity?: InputMaybe<Cart_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Cart_Items__Variant_Operator>;
@@ -3197,6 +3283,12 @@ export type Cart_Where_Or = {
   customer?: InputMaybe<Cart_Customer_Operator>;
   id?: InputMaybe<Cart_Id_Operator>;
   items__id?: InputMaybe<Cart_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Cart_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Cart_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Cart_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Cart_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Cart_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Cart_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Cart_Items__Product_Operator>;
   items__quantity?: InputMaybe<Cart_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Cart_Items__Variant_Operator>;
@@ -3365,6 +3457,7 @@ export type CartsDocAccessFields_Items_Delete = {
 export type CartsDocAccessFields_Items_Fields = {
   __typename?: 'CartsDocAccessFields_items_Fields';
   id?: Maybe<CartsDocAccessFields_Items_Id>;
+  parameters?: Maybe<CartsDocAccessFields_Items_Parameters>;
   product?: Maybe<CartsDocAccessFields_Items_Product>;
   quantity?: Maybe<CartsDocAccessFields_Items_Quantity>;
   variant?: Maybe<CartsDocAccessFields_Items_Variant>;
@@ -3405,6 +3498,247 @@ export type CartsDocAccessFields_Items_Id_Read = {
 
 export type CartsDocAccessFields_Items_Id_Update = {
   __typename?: 'CartsDocAccessFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters = {
+  __typename?: 'CartsDocAccessFields_items_parameters';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Delete>;
+  fields?: Maybe<CartsDocAccessFields_Items_Parameters_Fields>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Fields = {
+  __typename?: 'CartsDocAccessFields_items_parameters_Fields';
+  id?: Maybe<CartsDocAccessFields_Items_Parameters_Id>;
+  name?: Maybe<CartsDocAccessFields_Items_Parameters_Name>;
+  values?: Maybe<CartsDocAccessFields_Items_Parameters_Values>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Id = {
+  __typename?: 'CartsDocAccessFields_items_parameters_id';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Id_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Id_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Id_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Id_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Id_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Id_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Id_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Id_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Name = {
+  __typename?: 'CartsDocAccessFields_items_parameters_name';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Name_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Name_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Name_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Name_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Name_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Name_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Name_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Name_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Delete>;
+  fields?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Fields>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Fields = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_Fields';
+  id?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Id>;
+  key?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Key>;
+  name?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Name>;
+  selected?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Selected>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Id = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_id';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Id_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Id_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Id_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Id_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Id_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Id_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Id_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Id_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Key = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_key';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Key_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Key_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Key_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Key_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Key_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Key_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Key_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Key_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Name = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_name';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Name_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Name_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Name_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Name_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Name_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Name_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Name_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Name_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Selected = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_selected';
+  create?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Selected_Create>;
+  delete?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Selected_Delete>;
+  read?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Selected_Read>;
+  update?: Maybe<CartsDocAccessFields_Items_Parameters_Values_Selected_Update>;
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Selected_Create = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_selected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Selected_Delete = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_selected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Selected_Read = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_selected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsDocAccessFields_Items_Parameters_Values_Selected_Update = {
+  __typename?: 'CartsDocAccessFields_items_parameters_values_selected_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -3751,6 +4085,7 @@ export type CartsFields_Items_Delete = {
 export type CartsFields_Items_Fields = {
   __typename?: 'CartsFields_items_Fields';
   id?: Maybe<CartsFields_Items_Id>;
+  parameters?: Maybe<CartsFields_Items_Parameters>;
   product?: Maybe<CartsFields_Items_Product>;
   quantity?: Maybe<CartsFields_Items_Quantity>;
   variant?: Maybe<CartsFields_Items_Variant>;
@@ -3791,6 +4126,247 @@ export type CartsFields_Items_Id_Read = {
 
 export type CartsFields_Items_Id_Update = {
   __typename?: 'CartsFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters = {
+  __typename?: 'CartsFields_items_parameters';
+  create?: Maybe<CartsFields_Items_Parameters_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Delete>;
+  fields?: Maybe<CartsFields_Items_Parameters_Fields>;
+  read?: Maybe<CartsFields_Items_Parameters_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Update>;
+};
+
+export type CartsFields_Items_Parameters_Create = {
+  __typename?: 'CartsFields_items_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Delete = {
+  __typename?: 'CartsFields_items_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Fields = {
+  __typename?: 'CartsFields_items_parameters_Fields';
+  id?: Maybe<CartsFields_Items_Parameters_Id>;
+  name?: Maybe<CartsFields_Items_Parameters_Name>;
+  values?: Maybe<CartsFields_Items_Parameters_Values>;
+};
+
+export type CartsFields_Items_Parameters_Read = {
+  __typename?: 'CartsFields_items_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Update = {
+  __typename?: 'CartsFields_items_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Id = {
+  __typename?: 'CartsFields_items_parameters_id';
+  create?: Maybe<CartsFields_Items_Parameters_Id_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Id_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Id_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Id_Update>;
+};
+
+export type CartsFields_Items_Parameters_Id_Create = {
+  __typename?: 'CartsFields_items_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Id_Delete = {
+  __typename?: 'CartsFields_items_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Id_Read = {
+  __typename?: 'CartsFields_items_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Id_Update = {
+  __typename?: 'CartsFields_items_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Name = {
+  __typename?: 'CartsFields_items_parameters_name';
+  create?: Maybe<CartsFields_Items_Parameters_Name_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Name_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Name_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Name_Update>;
+};
+
+export type CartsFields_Items_Parameters_Name_Create = {
+  __typename?: 'CartsFields_items_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Name_Delete = {
+  __typename?: 'CartsFields_items_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Name_Read = {
+  __typename?: 'CartsFields_items_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Name_Update = {
+  __typename?: 'CartsFields_items_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values = {
+  __typename?: 'CartsFields_items_parameters_values';
+  create?: Maybe<CartsFields_Items_Parameters_Values_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Values_Delete>;
+  fields?: Maybe<CartsFields_Items_Parameters_Values_Fields>;
+  read?: Maybe<CartsFields_Items_Parameters_Values_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Values_Update>;
+};
+
+export type CartsFields_Items_Parameters_Values_Create = {
+  __typename?: 'CartsFields_items_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Delete = {
+  __typename?: 'CartsFields_items_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Fields = {
+  __typename?: 'CartsFields_items_parameters_values_Fields';
+  id?: Maybe<CartsFields_Items_Parameters_Values_Id>;
+  key?: Maybe<CartsFields_Items_Parameters_Values_Key>;
+  name?: Maybe<CartsFields_Items_Parameters_Values_Name>;
+  selected?: Maybe<CartsFields_Items_Parameters_Values_Selected>;
+};
+
+export type CartsFields_Items_Parameters_Values_Read = {
+  __typename?: 'CartsFields_items_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Update = {
+  __typename?: 'CartsFields_items_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Id = {
+  __typename?: 'CartsFields_items_parameters_values_id';
+  create?: Maybe<CartsFields_Items_Parameters_Values_Id_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Values_Id_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Values_Id_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Values_Id_Update>;
+};
+
+export type CartsFields_Items_Parameters_Values_Id_Create = {
+  __typename?: 'CartsFields_items_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Id_Delete = {
+  __typename?: 'CartsFields_items_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Id_Read = {
+  __typename?: 'CartsFields_items_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Id_Update = {
+  __typename?: 'CartsFields_items_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Key = {
+  __typename?: 'CartsFields_items_parameters_values_key';
+  create?: Maybe<CartsFields_Items_Parameters_Values_Key_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Values_Key_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Values_Key_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Values_Key_Update>;
+};
+
+export type CartsFields_Items_Parameters_Values_Key_Create = {
+  __typename?: 'CartsFields_items_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Key_Delete = {
+  __typename?: 'CartsFields_items_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Key_Read = {
+  __typename?: 'CartsFields_items_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Key_Update = {
+  __typename?: 'CartsFields_items_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Name = {
+  __typename?: 'CartsFields_items_parameters_values_name';
+  create?: Maybe<CartsFields_Items_Parameters_Values_Name_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Values_Name_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Values_Name_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Values_Name_Update>;
+};
+
+export type CartsFields_Items_Parameters_Values_Name_Create = {
+  __typename?: 'CartsFields_items_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Name_Delete = {
+  __typename?: 'CartsFields_items_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Name_Read = {
+  __typename?: 'CartsFields_items_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Name_Update = {
+  __typename?: 'CartsFields_items_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Selected = {
+  __typename?: 'CartsFields_items_parameters_values_selected';
+  create?: Maybe<CartsFields_Items_Parameters_Values_Selected_Create>;
+  delete?: Maybe<CartsFields_Items_Parameters_Values_Selected_Delete>;
+  read?: Maybe<CartsFields_Items_Parameters_Values_Selected_Read>;
+  update?: Maybe<CartsFields_Items_Parameters_Values_Selected_Update>;
+};
+
+export type CartsFields_Items_Parameters_Values_Selected_Create = {
+  __typename?: 'CartsFields_items_parameters_values_selected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Selected_Delete = {
+  __typename?: 'CartsFields_items_parameters_values_selected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Selected_Read = {
+  __typename?: 'CartsFields_items_parameters_values_selected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type CartsFields_Items_Parameters_Values_Selected_Update = {
+  __typename?: 'CartsFields_items_parameters_values_selected_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -27703,6 +28279,7 @@ export enum Order_CryptoPrices_Chain_MutationInput {
 export type Order_Items = {
   __typename?: 'Order_Items';
   id?: Maybe<Scalars['String']['output']>;
+  parameters?: Maybe<Array<Order_Items_Parameters>>;
   product?: Maybe<Product>;
   quantity?: Maybe<Scalars['Float']['output']>;
   variant?: Maybe<Variant>;
@@ -27716,6 +28293,21 @@ export type Order_ItemsProductArgs = {
 
 export type Order_ItemsVariantArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Order_Items_Parameters = {
+  __typename?: 'Order_Items_Parameters';
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  values?: Maybe<Array<Order_Items_Parameters_Values>>;
+};
+
+export type Order_Items_Parameters_Values = {
+  __typename?: 'Order_Items_Parameters_Values';
+  id?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  selected?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Order_PaymentProofs = {
@@ -27907,6 +28499,64 @@ export type Order_Items__Id_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Values__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Values__Key_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Values__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_Items__Parameters__Values__Selected_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type Order_Items__Product_Operator = {
@@ -28189,6 +28839,12 @@ export type Order_Where = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Order_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Order_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Order_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Order_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Order_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Order_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
@@ -28231,6 +28887,12 @@ export type Order_Where_And = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Order_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Order_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Order_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Order_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Order_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Order_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
@@ -28273,6 +28935,12 @@ export type Order_Where_Or = {
   customerEmail?: InputMaybe<Order_CustomerEmail_Operator>;
   id?: InputMaybe<Order_Id_Operator>;
   items__id?: InputMaybe<Order_Items__Id_Operator>;
+  items__parameters__id?: InputMaybe<Order_Items__Parameters__Id_Operator>;
+  items__parameters__name?: InputMaybe<Order_Items__Parameters__Name_Operator>;
+  items__parameters__values__id?: InputMaybe<Order_Items__Parameters__Values__Id_Operator>;
+  items__parameters__values__key?: InputMaybe<Order_Items__Parameters__Values__Key_Operator>;
+  items__parameters__values__name?: InputMaybe<Order_Items__Parameters__Values__Name_Operator>;
+  items__parameters__values__selected?: InputMaybe<Order_Items__Parameters__Values__Selected_Operator>;
   items__product?: InputMaybe<Order_Items__Product_Operator>;
   items__quantity?: InputMaybe<Order_Items__Quantity_Operator>;
   items__variant?: InputMaybe<Order_Items__Variant_Operator>;
@@ -28724,6 +29392,7 @@ export type OrdersDocAccessFields_Items_Delete = {
 export type OrdersDocAccessFields_Items_Fields = {
   __typename?: 'OrdersDocAccessFields_items_Fields';
   id?: Maybe<OrdersDocAccessFields_Items_Id>;
+  parameters?: Maybe<OrdersDocAccessFields_Items_Parameters>;
   product?: Maybe<OrdersDocAccessFields_Items_Product>;
   quantity?: Maybe<OrdersDocAccessFields_Items_Quantity>;
   variant?: Maybe<OrdersDocAccessFields_Items_Variant>;
@@ -28764,6 +29433,247 @@ export type OrdersDocAccessFields_Items_Id_Read = {
 
 export type OrdersDocAccessFields_Items_Id_Update = {
   __typename?: 'OrdersDocAccessFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters = {
+  __typename?: 'OrdersDocAccessFields_items_parameters';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_Items_Parameters_Fields>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Fields = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_Fields';
+  id?: Maybe<OrdersDocAccessFields_Items_Parameters_Id>;
+  name?: Maybe<OrdersDocAccessFields_Items_Parameters_Name>;
+  values?: Maybe<OrdersDocAccessFields_Items_Parameters_Values>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Id = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_id';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Id_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Id_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Id_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Id_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Id_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Id_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Id_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Id_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Name = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_name';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Name_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Name_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Name_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Name_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Name_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Name_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Name_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Name_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Fields>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Fields = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_Fields';
+  id?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Id>;
+  key?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Key>;
+  name?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Name>;
+  selected?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Selected>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Id = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_id';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Id_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Id_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Id_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Id_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Id_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Id_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Id_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Id_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Key = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_key';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Key_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Key_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Key_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Key_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Key_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Key_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Key_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Key_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Name = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_name';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Name_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Name_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Name_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Name_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Name_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Name_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Name_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Name_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Selected = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_selected';
+  create?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Selected_Create>;
+  delete?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Selected_Delete>;
+  read?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Selected_Read>;
+  update?: Maybe<OrdersDocAccessFields_Items_Parameters_Values_Selected_Update>;
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Selected_Create = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_selected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Selected_Delete = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_selected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Selected_Read = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_selected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_Items_Parameters_Values_Selected_Update = {
+  __typename?: 'OrdersDocAccessFields_items_parameters_values_selected_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -29908,6 +30818,7 @@ export type OrdersFields_Items_Delete = {
 export type OrdersFields_Items_Fields = {
   __typename?: 'OrdersFields_items_Fields';
   id?: Maybe<OrdersFields_Items_Id>;
+  parameters?: Maybe<OrdersFields_Items_Parameters>;
   product?: Maybe<OrdersFields_Items_Product>;
   quantity?: Maybe<OrdersFields_Items_Quantity>;
   variant?: Maybe<OrdersFields_Items_Variant>;
@@ -29948,6 +30859,247 @@ export type OrdersFields_Items_Id_Read = {
 
 export type OrdersFields_Items_Id_Update = {
   __typename?: 'OrdersFields_items_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters = {
+  __typename?: 'OrdersFields_items_parameters';
+  create?: Maybe<OrdersFields_Items_Parameters_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Delete>;
+  fields?: Maybe<OrdersFields_Items_Parameters_Fields>;
+  read?: Maybe<OrdersFields_Items_Parameters_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Create = {
+  __typename?: 'OrdersFields_items_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Delete = {
+  __typename?: 'OrdersFields_items_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Fields = {
+  __typename?: 'OrdersFields_items_parameters_Fields';
+  id?: Maybe<OrdersFields_Items_Parameters_Id>;
+  name?: Maybe<OrdersFields_Items_Parameters_Name>;
+  values?: Maybe<OrdersFields_Items_Parameters_Values>;
+};
+
+export type OrdersFields_Items_Parameters_Read = {
+  __typename?: 'OrdersFields_items_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Update = {
+  __typename?: 'OrdersFields_items_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Id = {
+  __typename?: 'OrdersFields_items_parameters_id';
+  create?: Maybe<OrdersFields_Items_Parameters_Id_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Id_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Id_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Id_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Id_Create = {
+  __typename?: 'OrdersFields_items_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Id_Delete = {
+  __typename?: 'OrdersFields_items_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Id_Read = {
+  __typename?: 'OrdersFields_items_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Id_Update = {
+  __typename?: 'OrdersFields_items_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Name = {
+  __typename?: 'OrdersFields_items_parameters_name';
+  create?: Maybe<OrdersFields_Items_Parameters_Name_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Name_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Name_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Name_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Name_Create = {
+  __typename?: 'OrdersFields_items_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Name_Delete = {
+  __typename?: 'OrdersFields_items_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Name_Read = {
+  __typename?: 'OrdersFields_items_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Name_Update = {
+  __typename?: 'OrdersFields_items_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values = {
+  __typename?: 'OrdersFields_items_parameters_values';
+  create?: Maybe<OrdersFields_Items_Parameters_Values_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Values_Delete>;
+  fields?: Maybe<OrdersFields_Items_Parameters_Values_Fields>;
+  read?: Maybe<OrdersFields_Items_Parameters_Values_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Values_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Create = {
+  __typename?: 'OrdersFields_items_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Delete = {
+  __typename?: 'OrdersFields_items_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Fields = {
+  __typename?: 'OrdersFields_items_parameters_values_Fields';
+  id?: Maybe<OrdersFields_Items_Parameters_Values_Id>;
+  key?: Maybe<OrdersFields_Items_Parameters_Values_Key>;
+  name?: Maybe<OrdersFields_Items_Parameters_Values_Name>;
+  selected?: Maybe<OrdersFields_Items_Parameters_Values_Selected>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Read = {
+  __typename?: 'OrdersFields_items_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Update = {
+  __typename?: 'OrdersFields_items_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Id = {
+  __typename?: 'OrdersFields_items_parameters_values_id';
+  create?: Maybe<OrdersFields_Items_Parameters_Values_Id_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Values_Id_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Values_Id_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Values_Id_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Id_Create = {
+  __typename?: 'OrdersFields_items_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Id_Delete = {
+  __typename?: 'OrdersFields_items_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Id_Read = {
+  __typename?: 'OrdersFields_items_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Id_Update = {
+  __typename?: 'OrdersFields_items_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Key = {
+  __typename?: 'OrdersFields_items_parameters_values_key';
+  create?: Maybe<OrdersFields_Items_Parameters_Values_Key_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Values_Key_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Values_Key_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Values_Key_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Key_Create = {
+  __typename?: 'OrdersFields_items_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Key_Delete = {
+  __typename?: 'OrdersFields_items_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Key_Read = {
+  __typename?: 'OrdersFields_items_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Key_Update = {
+  __typename?: 'OrdersFields_items_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Name = {
+  __typename?: 'OrdersFields_items_parameters_values_name';
+  create?: Maybe<OrdersFields_Items_Parameters_Values_Name_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Values_Name_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Values_Name_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Values_Name_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Name_Create = {
+  __typename?: 'OrdersFields_items_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Name_Delete = {
+  __typename?: 'OrdersFields_items_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Name_Read = {
+  __typename?: 'OrdersFields_items_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Name_Update = {
+  __typename?: 'OrdersFields_items_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Selected = {
+  __typename?: 'OrdersFields_items_parameters_values_selected';
+  create?: Maybe<OrdersFields_Items_Parameters_Values_Selected_Create>;
+  delete?: Maybe<OrdersFields_Items_Parameters_Values_Selected_Delete>;
+  read?: Maybe<OrdersFields_Items_Parameters_Values_Selected_Read>;
+  update?: Maybe<OrdersFields_Items_Parameters_Values_Selected_Update>;
+};
+
+export type OrdersFields_Items_Parameters_Values_Selected_Create = {
+  __typename?: 'OrdersFields_items_parameters_values_selected_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Selected_Delete = {
+  __typename?: 'OrdersFields_items_parameters_values_selected_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Selected_Read = {
+  __typename?: 'OrdersFields_items_parameters_values_selected_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_Items_Parameters_Values_Selected_Update = {
+  __typename?: 'OrdersFields_items_parameters_values_selected_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -39317,6 +40469,7 @@ export type Product = {
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
+  parameters?: Maybe<Array<Product_Parameters>>;
   priceInETH?: Maybe<Scalars['String']['output']>;
   priceInSOL?: Maybe<Scalars['String']['output']>;
   priceInTRX?: Maybe<Scalars['String']['output']>;
@@ -39324,6 +40477,7 @@ export type Product = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<Product_Properties>>;
   purchaseCount?: Maybe<Scalars['Float']['output']>;
+  relatedProducts?: Maybe<Array<Product>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
@@ -39335,6 +40489,11 @@ export type Product = {
 
 
 export type ProductCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ProductRelatedProductsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -39859,6 +41018,7 @@ export type ProductVersion_Version = {
   likeCount?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   orderable?: Maybe<Scalars['Boolean']['output']>;
+  parameters?: Maybe<Array<ProductVersion_Version_Parameters>>;
   priceInETH?: Maybe<Scalars['String']['output']>;
   priceInSOL?: Maybe<Scalars['String']['output']>;
   priceInTRX?: Maybe<Scalars['String']['output']>;
@@ -39866,6 +41026,7 @@ export type ProductVersion_Version = {
   priceInUSDEnabled?: Maybe<Scalars['Boolean']['output']>;
   properties?: Maybe<Array<ProductVersion_Version_Properties>>;
   purchaseCount?: Maybe<Scalars['Float']['output']>;
+  relatedProducts?: Maybe<Array<Product>>;
   serverURL?: Maybe<Scalars['String']['output']>;
   subscriberCount?: Maybe<Scalars['Float']['output']>;
   unlimitedInventory?: Maybe<Scalars['Boolean']['output']>;
@@ -39877,6 +41038,11 @@ export type ProductVersion_Version = {
 
 
 export type ProductVersion_VersionCompanyArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type ProductVersion_VersionRelatedProductsArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -39900,6 +41066,21 @@ export enum ProductVersion_Version_CryptoAddresses_Chain {
   Solana = 'solana',
   Tron = 'tron'
 }
+
+export type ProductVersion_Version_Parameters = {
+  __typename?: 'ProductVersion_Version_Parameters';
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  values?: Maybe<Array<ProductVersion_Version_Parameters_Values>>;
+};
+
+export type ProductVersion_Version_Parameters_Values = {
+  __typename?: 'ProductVersion_Version_Parameters_Values';
+  default?: Maybe<Scalars['Boolean']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
 
 export type ProductVersion_Version_Properties = {
   __typename?: 'ProductVersion_Version_Properties';
@@ -39937,6 +41118,21 @@ export enum Product_CryptoAddresses_Chain_MutationInput {
   Solana = 'solana',
   Tron = 'tron'
 }
+
+export type Product_Parameters = {
+  __typename?: 'Product_Parameters';
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  values?: Maybe<Array<Product_Parameters_Values>>;
+};
+
+export type Product_Parameters_Values = {
+  __typename?: 'Product_Parameters_Values';
+  default?: Maybe<Scalars['Boolean']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
 
 export type Product_Properties = {
   __typename?: 'Product_Properties';
@@ -40166,6 +41362,64 @@ export type Product_Orderable_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Product_Parameters__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Parameters__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Parameters__Values__Default_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Product_Parameters__Values__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Parameters__Values__Key_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Product_Parameters__Values__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Product_PriceInEth_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -40257,6 +41511,15 @@ export type Product_PurchaseCount_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type Product_RelatedProducts_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type Product_ServerUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -40339,6 +41602,12 @@ export type Product_Where = {
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  parameters__id?: InputMaybe<Product_Parameters__Id_Operator>;
+  parameters__name?: InputMaybe<Product_Parameters__Name_Operator>;
+  parameters__values__default?: InputMaybe<Product_Parameters__Values__Default_Operator>;
+  parameters__values__id?: InputMaybe<Product_Parameters__Values__Id_Operator>;
+  parameters__values__key?: InputMaybe<Product_Parameters__Values__Key_Operator>;
+  parameters__values__name?: InputMaybe<Product_Parameters__Values__Name_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
   priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
   priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
@@ -40348,6 +41617,7 @@ export type Product_Where = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
+  relatedProducts?: InputMaybe<Product_RelatedProducts_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -40380,6 +41650,12 @@ export type Product_Where_And = {
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  parameters__id?: InputMaybe<Product_Parameters__Id_Operator>;
+  parameters__name?: InputMaybe<Product_Parameters__Name_Operator>;
+  parameters__values__default?: InputMaybe<Product_Parameters__Values__Default_Operator>;
+  parameters__values__id?: InputMaybe<Product_Parameters__Values__Id_Operator>;
+  parameters__values__key?: InputMaybe<Product_Parameters__Values__Key_Operator>;
+  parameters__values__name?: InputMaybe<Product_Parameters__Values__Name_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
   priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
   priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
@@ -40389,6 +41665,7 @@ export type Product_Where_And = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
+  relatedProducts?: InputMaybe<Product_RelatedProducts_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -40421,6 +41698,12 @@ export type Product_Where_Or = {
   likeCount?: InputMaybe<Product_LikeCount_Operator>;
   name?: InputMaybe<Product_Name_Operator>;
   orderable?: InputMaybe<Product_Orderable_Operator>;
+  parameters__id?: InputMaybe<Product_Parameters__Id_Operator>;
+  parameters__name?: InputMaybe<Product_Parameters__Name_Operator>;
+  parameters__values__default?: InputMaybe<Product_Parameters__Values__Default_Operator>;
+  parameters__values__id?: InputMaybe<Product_Parameters__Values__Id_Operator>;
+  parameters__values__key?: InputMaybe<Product_Parameters__Values__Key_Operator>;
+  parameters__values__name?: InputMaybe<Product_Parameters__Values__Name_Operator>;
   priceInETH?: InputMaybe<Product_PriceInEth_Operator>;
   priceInSOL?: InputMaybe<Product_PriceInSol_Operator>;
   priceInTRX?: InputMaybe<Product_PriceInTrx_Operator>;
@@ -40430,6 +41713,7 @@ export type Product_Where_Or = {
   properties__key?: InputMaybe<Product_Properties__Key_Operator>;
   properties__value?: InputMaybe<Product_Properties__Value_Operator>;
   purchaseCount?: InputMaybe<Product_PurchaseCount_Operator>;
+  relatedProducts?: InputMaybe<Product_RelatedProducts_Operator>;
   serverURL?: InputMaybe<Product_ServerUrl_Operator>;
   subscriberCount?: InputMaybe<Product_SubscriberCount_Operator>;
   unlimitedInventory?: InputMaybe<Product_UnlimitedInventory_Operator>;
@@ -40498,6 +41782,7 @@ export type ProductsDocAccessFields = {
   likeCount?: Maybe<ProductsDocAccessFields_LikeCount>;
   name?: Maybe<ProductsDocAccessFields_Name>;
   orderable?: Maybe<ProductsDocAccessFields_Orderable>;
+  parameters?: Maybe<ProductsDocAccessFields_Parameters>;
   priceInETH?: Maybe<ProductsDocAccessFields_PriceInEth>;
   priceInSOL?: Maybe<ProductsDocAccessFields_PriceInSol>;
   priceInTRX?: Maybe<ProductsDocAccessFields_PriceInTrx>;
@@ -40505,6 +41790,7 @@ export type ProductsDocAccessFields = {
   priceInUSDEnabled?: Maybe<ProductsDocAccessFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsDocAccessFields_Properties>;
   purchaseCount?: Maybe<ProductsDocAccessFields_PurchaseCount>;
+  relatedProducts?: Maybe<ProductsDocAccessFields_RelatedProducts>;
   serverURL?: Maybe<ProductsDocAccessFields_ServerUrl>;
   subscriberCount?: Maybe<ProductsDocAccessFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsDocAccessFields_UnlimitedInventory>;
@@ -41109,6 +42395,247 @@ export type ProductsDocAccessFields_Orderable_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_Parameters = {
+  __typename?: 'ProductsDocAccessFields_parameters';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Delete>;
+  fields?: Maybe<ProductsDocAccessFields_Parameters_Fields>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Fields = {
+  __typename?: 'ProductsDocAccessFields_parameters_Fields';
+  id?: Maybe<ProductsDocAccessFields_Parameters_Id>;
+  name?: Maybe<ProductsDocAccessFields_Parameters_Name>;
+  values?: Maybe<ProductsDocAccessFields_Parameters_Values>;
+};
+
+export type ProductsDocAccessFields_Parameters_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Id = {
+  __typename?: 'ProductsDocAccessFields_parameters_id';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Id_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Id_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Id_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Id_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Id_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Id_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Id_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Id_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Name = {
+  __typename?: 'ProductsDocAccessFields_parameters_name';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Name_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Name_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Name_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Name_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Name_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Name_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Name_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Name_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values = {
+  __typename?: 'ProductsDocAccessFields_parameters_values';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Values_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Values_Delete>;
+  fields?: Maybe<ProductsDocAccessFields_Parameters_Values_Fields>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Values_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Values_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Fields = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_Fields';
+  default?: Maybe<ProductsDocAccessFields_Parameters_Values_Default>;
+  id?: Maybe<ProductsDocAccessFields_Parameters_Values_Id>;
+  key?: Maybe<ProductsDocAccessFields_Parameters_Values_Key>;
+  name?: Maybe<ProductsDocAccessFields_Parameters_Values_Name>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Default = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_default';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Values_Default_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Values_Default_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Values_Default_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Values_Default_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Default_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_default_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Default_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_default_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Default_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_default_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Default_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_default_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Id = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_id';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Values_Id_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Values_Id_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Values_Id_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Values_Id_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Id_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Id_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Id_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Id_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Key = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_key';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Values_Key_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Values_Key_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Values_Key_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Values_Key_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Key_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Key_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Key_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Key_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Name = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_name';
+  create?: Maybe<ProductsDocAccessFields_Parameters_Values_Name_Create>;
+  delete?: Maybe<ProductsDocAccessFields_Parameters_Values_Name_Delete>;
+  read?: Maybe<ProductsDocAccessFields_Parameters_Values_Name_Read>;
+  update?: Maybe<ProductsDocAccessFields_Parameters_Values_Name_Update>;
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Name_Create = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Name_Delete = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Name_Read = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_Parameters_Values_Name_Update = {
+  __typename?: 'ProductsDocAccessFields_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_PriceInEth = {
   __typename?: 'ProductsDocAccessFields_priceInETH';
   create?: Maybe<ProductsDocAccessFields_PriceInEth_Create>;
@@ -41397,6 +42924,34 @@ export type ProductsDocAccessFields_PurchaseCount_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsDocAccessFields_RelatedProducts = {
+  __typename?: 'ProductsDocAccessFields_relatedProducts';
+  create?: Maybe<ProductsDocAccessFields_RelatedProducts_Create>;
+  delete?: Maybe<ProductsDocAccessFields_RelatedProducts_Delete>;
+  read?: Maybe<ProductsDocAccessFields_RelatedProducts_Read>;
+  update?: Maybe<ProductsDocAccessFields_RelatedProducts_Update>;
+};
+
+export type ProductsDocAccessFields_RelatedProducts_Create = {
+  __typename?: 'ProductsDocAccessFields_relatedProducts_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_RelatedProducts_Delete = {
+  __typename?: 'ProductsDocAccessFields_relatedProducts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_RelatedProducts_Read = {
+  __typename?: 'ProductsDocAccessFields_relatedProducts_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsDocAccessFields_RelatedProducts_Update = {
+  __typename?: 'ProductsDocAccessFields_relatedProducts_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsDocAccessFields_ServerUrl = {
   __typename?: 'ProductsDocAccessFields_serverURL';
   create?: Maybe<ProductsDocAccessFields_ServerUrl_Create>;
@@ -41614,6 +43169,7 @@ export type ProductsFields = {
   likeCount?: Maybe<ProductsFields_LikeCount>;
   name?: Maybe<ProductsFields_Name>;
   orderable?: Maybe<ProductsFields_Orderable>;
+  parameters?: Maybe<ProductsFields_Parameters>;
   priceInETH?: Maybe<ProductsFields_PriceInEth>;
   priceInSOL?: Maybe<ProductsFields_PriceInSol>;
   priceInTRX?: Maybe<ProductsFields_PriceInTrx>;
@@ -41621,6 +43177,7 @@ export type ProductsFields = {
   priceInUSDEnabled?: Maybe<ProductsFields_PriceInUsdEnabled>;
   properties?: Maybe<ProductsFields_Properties>;
   purchaseCount?: Maybe<ProductsFields_PurchaseCount>;
+  relatedProducts?: Maybe<ProductsFields_RelatedProducts>;
   serverURL?: Maybe<ProductsFields_ServerUrl>;
   subscriberCount?: Maybe<ProductsFields_SubscriberCount>;
   unlimitedInventory?: Maybe<ProductsFields_UnlimitedInventory>;
@@ -42225,6 +43782,247 @@ export type ProductsFields_Orderable_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type ProductsFields_Parameters = {
+  __typename?: 'ProductsFields_parameters';
+  create?: Maybe<ProductsFields_Parameters_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Delete>;
+  fields?: Maybe<ProductsFields_Parameters_Fields>;
+  read?: Maybe<ProductsFields_Parameters_Read>;
+  update?: Maybe<ProductsFields_Parameters_Update>;
+};
+
+export type ProductsFields_Parameters_Create = {
+  __typename?: 'ProductsFields_parameters_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Delete = {
+  __typename?: 'ProductsFields_parameters_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Fields = {
+  __typename?: 'ProductsFields_parameters_Fields';
+  id?: Maybe<ProductsFields_Parameters_Id>;
+  name?: Maybe<ProductsFields_Parameters_Name>;
+  values?: Maybe<ProductsFields_Parameters_Values>;
+};
+
+export type ProductsFields_Parameters_Read = {
+  __typename?: 'ProductsFields_parameters_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Update = {
+  __typename?: 'ProductsFields_parameters_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Id = {
+  __typename?: 'ProductsFields_parameters_id';
+  create?: Maybe<ProductsFields_Parameters_Id_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Id_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Id_Read>;
+  update?: Maybe<ProductsFields_Parameters_Id_Update>;
+};
+
+export type ProductsFields_Parameters_Id_Create = {
+  __typename?: 'ProductsFields_parameters_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Id_Delete = {
+  __typename?: 'ProductsFields_parameters_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Id_Read = {
+  __typename?: 'ProductsFields_parameters_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Id_Update = {
+  __typename?: 'ProductsFields_parameters_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Name = {
+  __typename?: 'ProductsFields_parameters_name';
+  create?: Maybe<ProductsFields_Parameters_Name_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Name_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Name_Read>;
+  update?: Maybe<ProductsFields_Parameters_Name_Update>;
+};
+
+export type ProductsFields_Parameters_Name_Create = {
+  __typename?: 'ProductsFields_parameters_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Name_Delete = {
+  __typename?: 'ProductsFields_parameters_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Name_Read = {
+  __typename?: 'ProductsFields_parameters_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Name_Update = {
+  __typename?: 'ProductsFields_parameters_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values = {
+  __typename?: 'ProductsFields_parameters_values';
+  create?: Maybe<ProductsFields_Parameters_Values_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Values_Delete>;
+  fields?: Maybe<ProductsFields_Parameters_Values_Fields>;
+  read?: Maybe<ProductsFields_Parameters_Values_Read>;
+  update?: Maybe<ProductsFields_Parameters_Values_Update>;
+};
+
+export type ProductsFields_Parameters_Values_Create = {
+  __typename?: 'ProductsFields_parameters_values_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Delete = {
+  __typename?: 'ProductsFields_parameters_values_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Fields = {
+  __typename?: 'ProductsFields_parameters_values_Fields';
+  default?: Maybe<ProductsFields_Parameters_Values_Default>;
+  id?: Maybe<ProductsFields_Parameters_Values_Id>;
+  key?: Maybe<ProductsFields_Parameters_Values_Key>;
+  name?: Maybe<ProductsFields_Parameters_Values_Name>;
+};
+
+export type ProductsFields_Parameters_Values_Read = {
+  __typename?: 'ProductsFields_parameters_values_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Update = {
+  __typename?: 'ProductsFields_parameters_values_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Default = {
+  __typename?: 'ProductsFields_parameters_values_default';
+  create?: Maybe<ProductsFields_Parameters_Values_Default_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Values_Default_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Values_Default_Read>;
+  update?: Maybe<ProductsFields_Parameters_Values_Default_Update>;
+};
+
+export type ProductsFields_Parameters_Values_Default_Create = {
+  __typename?: 'ProductsFields_parameters_values_default_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Default_Delete = {
+  __typename?: 'ProductsFields_parameters_values_default_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Default_Read = {
+  __typename?: 'ProductsFields_parameters_values_default_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Default_Update = {
+  __typename?: 'ProductsFields_parameters_values_default_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Id = {
+  __typename?: 'ProductsFields_parameters_values_id';
+  create?: Maybe<ProductsFields_Parameters_Values_Id_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Values_Id_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Values_Id_Read>;
+  update?: Maybe<ProductsFields_Parameters_Values_Id_Update>;
+};
+
+export type ProductsFields_Parameters_Values_Id_Create = {
+  __typename?: 'ProductsFields_parameters_values_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Id_Delete = {
+  __typename?: 'ProductsFields_parameters_values_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Id_Read = {
+  __typename?: 'ProductsFields_parameters_values_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Id_Update = {
+  __typename?: 'ProductsFields_parameters_values_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Key = {
+  __typename?: 'ProductsFields_parameters_values_key';
+  create?: Maybe<ProductsFields_Parameters_Values_Key_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Values_Key_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Values_Key_Read>;
+  update?: Maybe<ProductsFields_Parameters_Values_Key_Update>;
+};
+
+export type ProductsFields_Parameters_Values_Key_Create = {
+  __typename?: 'ProductsFields_parameters_values_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Key_Delete = {
+  __typename?: 'ProductsFields_parameters_values_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Key_Read = {
+  __typename?: 'ProductsFields_parameters_values_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Key_Update = {
+  __typename?: 'ProductsFields_parameters_values_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Name = {
+  __typename?: 'ProductsFields_parameters_values_name';
+  create?: Maybe<ProductsFields_Parameters_Values_Name_Create>;
+  delete?: Maybe<ProductsFields_Parameters_Values_Name_Delete>;
+  read?: Maybe<ProductsFields_Parameters_Values_Name_Read>;
+  update?: Maybe<ProductsFields_Parameters_Values_Name_Update>;
+};
+
+export type ProductsFields_Parameters_Values_Name_Create = {
+  __typename?: 'ProductsFields_parameters_values_name_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Name_Delete = {
+  __typename?: 'ProductsFields_parameters_values_name_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Name_Read = {
+  __typename?: 'ProductsFields_parameters_values_name_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_Parameters_Values_Name_Update = {
+  __typename?: 'ProductsFields_parameters_values_name_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type ProductsFields_PriceInEth = {
   __typename?: 'ProductsFields_priceInETH';
   create?: Maybe<ProductsFields_PriceInEth_Create>;
@@ -42510,6 +44308,34 @@ export type ProductsFields_PurchaseCount_Read = {
 
 export type ProductsFields_PurchaseCount_Update = {
   __typename?: 'ProductsFields_purchaseCount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_RelatedProducts = {
+  __typename?: 'ProductsFields_relatedProducts';
+  create?: Maybe<ProductsFields_RelatedProducts_Create>;
+  delete?: Maybe<ProductsFields_RelatedProducts_Delete>;
+  read?: Maybe<ProductsFields_RelatedProducts_Read>;
+  update?: Maybe<ProductsFields_RelatedProducts_Update>;
+};
+
+export type ProductsFields_RelatedProducts_Create = {
+  __typename?: 'ProductsFields_relatedProducts_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_RelatedProducts_Delete = {
+  __typename?: 'ProductsFields_relatedProducts_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_RelatedProducts_Read = {
+  __typename?: 'ProductsFields_relatedProducts_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type ProductsFields_RelatedProducts_Update = {
+  __typename?: 'ProductsFields_relatedProducts_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -59735,16 +61561,44 @@ export type MutationCartUpdateInput = {
 
 export type MutationCartUpdate_ItemsInput = {
   id?: InputMaybe<Scalars['String']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationCartUpdate_Items_ParametersInput>>>;
   product?: InputMaybe<Scalars['String']['input']>;
   quantity: Scalars['Float']['input'];
   variant?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationCartUpdate_Items_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationCartUpdate_Items_Parameters_ValuesInput>>>;
+};
+
+export type MutationCartUpdate_Items_Parameters_ValuesInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type MutationCart_ItemsInput = {
   id?: InputMaybe<Scalars['String']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationCart_Items_ParametersInput>>>;
   product?: InputMaybe<Scalars['String']['input']>;
   quantity: Scalars['Float']['input'];
   variant?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationCart_Items_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationCart_Items_Parameters_ValuesInput>>>;
+};
+
+export type MutationCart_Items_Parameters_ValuesInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MutationCategoryInput = {
@@ -60524,9 +62378,23 @@ export type MutationOrderUpdate_CryptoPricesInput = {
 
 export type MutationOrderUpdate_ItemsInput = {
   id?: InputMaybe<Scalars['String']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_Items_ParametersInput>>>;
   product?: InputMaybe<Scalars['String']['input']>;
   quantity: Scalars['Float']['input'];
   variant?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOrderUpdate_Items_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_Items_Parameters_ValuesInput>>>;
+};
+
+export type MutationOrderUpdate_Items_Parameters_ValuesInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MutationOrderUpdate_PaymentProofsInput = {
@@ -60563,9 +62431,23 @@ export type MutationOrder_CryptoPricesInput = {
 
 export type MutationOrder_ItemsInput = {
   id?: InputMaybe<Scalars['String']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationOrder_Items_ParametersInput>>>;
   product?: InputMaybe<Scalars['String']['input']>;
   quantity: Scalars['Float']['input'];
   variant?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationOrder_Items_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationOrder_Items_Parameters_ValuesInput>>>;
+};
+
+export type MutationOrder_Items_Parameters_ValuesInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MutationOrder_PaymentProofsInput = {
@@ -60897,6 +62779,7 @@ export type MutationProductInput = {
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name: Scalars['String']['input'];
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationProduct_ParametersInput>>>;
   priceInETH?: InputMaybe<Scalars['String']['input']>;
   priceInSOL?: InputMaybe<Scalars['String']['input']>;
   priceInTRX?: InputMaybe<Scalars['String']['input']>;
@@ -60904,6 +62787,7 @@ export type MutationProductInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProduct_PropertiesInput>>>;
   purchaseCount?: InputMaybe<Scalars['Float']['input']>;
+  relatedProducts?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
@@ -60948,6 +62832,7 @@ export type MutationProductUpdateInput = {
   likeCount?: InputMaybe<Scalars['Float']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orderable?: InputMaybe<Scalars['Boolean']['input']>;
+  parameters?: InputMaybe<Array<InputMaybe<MutationProductUpdate_ParametersInput>>>;
   priceInETH?: InputMaybe<Scalars['String']['input']>;
   priceInSOL?: InputMaybe<Scalars['String']['input']>;
   priceInTRX?: InputMaybe<Scalars['String']['input']>;
@@ -60955,6 +62840,7 @@ export type MutationProductUpdateInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   properties?: InputMaybe<Array<InputMaybe<MutationProductUpdate_PropertiesInput>>>;
   purchaseCount?: InputMaybe<Scalars['Float']['input']>;
+  relatedProducts?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   serverURL?: InputMaybe<Scalars['String']['input']>;
   subscriberCount?: InputMaybe<Scalars['Float']['input']>;
   unlimitedInventory?: InputMaybe<Scalars['Boolean']['input']>;
@@ -60968,6 +62854,19 @@ export type MutationProductUpdate_CryptoAddressesInput = {
   chain?: InputMaybe<ProductUpdate_CryptoAddresses_Chain_MutationInput>;
 };
 
+export type MutationProductUpdate_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationProductUpdate_Parameters_ValuesInput>>>;
+};
+
+export type MutationProductUpdate_Parameters_ValuesInput = {
+  default?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
 export type MutationProductUpdate_PropertiesInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   key: Scalars['String']['input'];
@@ -60977,6 +62876,19 @@ export type MutationProductUpdate_PropertiesInput = {
 export type MutationProduct_CryptoAddressesInput = {
   address?: InputMaybe<Scalars['String']['input']>;
   chain?: InputMaybe<Product_CryptoAddresses_Chain_MutationInput>;
+};
+
+export type MutationProduct_ParametersInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  values?: InputMaybe<Array<InputMaybe<MutationProduct_Parameters_ValuesInput>>>;
+};
+
+export type MutationProduct_Parameters_ValuesInput = {
+  default?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type MutationProduct_PropertiesInput = {
@@ -64016,6 +65928,64 @@ export type VersionsProduct_Version__Orderable_Operator = {
   not_equals?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type VersionsProduct_Version__Parameters__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__Parameters__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__Parameters__Values__Default_Operator = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  not_equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type VersionsProduct_Version__Parameters__Values__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__Parameters__Values__Key_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsProduct_Version__Parameters__Values__Name_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsProduct_Version__PriceInEth_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -64107,6 +66077,15 @@ export type VersionsProduct_Version__PurchaseCount_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsProduct_Version__RelatedProducts_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type VersionsProduct_Version__ServerUrl_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -64194,6 +66173,12 @@ export type VersionsProduct_Where = {
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__parameters__id?: InputMaybe<VersionsProduct_Version__Parameters__Id_Operator>;
+  version__parameters__name?: InputMaybe<VersionsProduct_Version__Parameters__Name_Operator>;
+  version__parameters__values__default?: InputMaybe<VersionsProduct_Version__Parameters__Values__Default_Operator>;
+  version__parameters__values__id?: InputMaybe<VersionsProduct_Version__Parameters__Values__Id_Operator>;
+  version__parameters__values__key?: InputMaybe<VersionsProduct_Version__Parameters__Values__Key_Operator>;
+  version__parameters__values__name?: InputMaybe<VersionsProduct_Version__Parameters__Values__Name_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
   version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
   version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
@@ -64203,6 +66188,7 @@ export type VersionsProduct_Where = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
+  version__relatedProducts?: InputMaybe<VersionsProduct_Version__RelatedProducts_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -64240,6 +66226,12 @@ export type VersionsProduct_Where_And = {
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__parameters__id?: InputMaybe<VersionsProduct_Version__Parameters__Id_Operator>;
+  version__parameters__name?: InputMaybe<VersionsProduct_Version__Parameters__Name_Operator>;
+  version__parameters__values__default?: InputMaybe<VersionsProduct_Version__Parameters__Values__Default_Operator>;
+  version__parameters__values__id?: InputMaybe<VersionsProduct_Version__Parameters__Values__Id_Operator>;
+  version__parameters__values__key?: InputMaybe<VersionsProduct_Version__Parameters__Values__Key_Operator>;
+  version__parameters__values__name?: InputMaybe<VersionsProduct_Version__Parameters__Values__Name_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
   version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
   version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
@@ -64249,6 +66241,7 @@ export type VersionsProduct_Where_And = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
+  version__relatedProducts?: InputMaybe<VersionsProduct_Version__RelatedProducts_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -64286,6 +66279,12 @@ export type VersionsProduct_Where_Or = {
   version__likeCount?: InputMaybe<VersionsProduct_Version__LikeCount_Operator>;
   version__name?: InputMaybe<VersionsProduct_Version__Name_Operator>;
   version__orderable?: InputMaybe<VersionsProduct_Version__Orderable_Operator>;
+  version__parameters__id?: InputMaybe<VersionsProduct_Version__Parameters__Id_Operator>;
+  version__parameters__name?: InputMaybe<VersionsProduct_Version__Parameters__Name_Operator>;
+  version__parameters__values__default?: InputMaybe<VersionsProduct_Version__Parameters__Values__Default_Operator>;
+  version__parameters__values__id?: InputMaybe<VersionsProduct_Version__Parameters__Values__Id_Operator>;
+  version__parameters__values__key?: InputMaybe<VersionsProduct_Version__Parameters__Values__Key_Operator>;
+  version__parameters__values__name?: InputMaybe<VersionsProduct_Version__Parameters__Values__Name_Operator>;
   version__priceInETH?: InputMaybe<VersionsProduct_Version__PriceInEth_Operator>;
   version__priceInSOL?: InputMaybe<VersionsProduct_Version__PriceInSol_Operator>;
   version__priceInTRX?: InputMaybe<VersionsProduct_Version__PriceInTrx_Operator>;
@@ -64295,6 +66294,7 @@ export type VersionsProduct_Where_Or = {
   version__properties__key?: InputMaybe<VersionsProduct_Version__Properties__Key_Operator>;
   version__properties__value?: InputMaybe<VersionsProduct_Version__Properties__Value_Operator>;
   version__purchaseCount?: InputMaybe<VersionsProduct_Version__PurchaseCount_Operator>;
+  version__relatedProducts?: InputMaybe<VersionsProduct_Version__RelatedProducts_Operator>;
   version__serverURL?: InputMaybe<VersionsProduct_Version__ServerUrl_Operator>;
   version__subscriberCount?: InputMaybe<VersionsProduct_Version__SubscriberCount_Operator>;
   version__unlimitedInventory?: InputMaybe<VersionsProduct_Version__UnlimitedInventory_Operator>;
@@ -65182,7 +67182,7 @@ export type CartBySecretQueryVariables = Exact<{
 }>;
 
 
-export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
+export type CartBySecretQuery = { __typename?: 'Query', Carts?: { __typename?: 'Carts', totalDocs: number, docs: Array<{ __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, description?: string | null, orderable?: boolean | null, inventory?: number | null, url?: string | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null } | null, parameters?: Array<{ __typename?: 'Cart_Items_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Cart_Items_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, selected?: boolean | null }> | null }> | null, variant?: { __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSD?: number | null, priceInUSDEnabled?: boolean | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string, variantType: { __typename?: 'VariantType', id: string, name: string } }> | null } | null }> | null }> } | null };
 
 export type CreateCartMutationVariables = Exact<{
   data: MutationCartInput;
@@ -65190,7 +67190,7 @@ export type CreateCartMutationVariables = Exact<{
 }>;
 
 
-export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type CreateCartMutation = { __typename?: 'Mutation', createCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, parameters?: Array<{ __typename?: 'Cart_Items_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Cart_Items_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, selected?: boolean | null }> | null }> | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type DeleteCartMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -65207,7 +67207,7 @@ export type UpdateCartMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
+export type UpdateCartMutation = { __typename?: 'Mutation', updateCart?: { __typename?: 'Cart', id: string, secret?: string | null, status?: Cart_Status | null, currency?: Cart_Currency | null, subtotal?: number | null, createdAt?: any | null, updatedAt?: any | null, purchasedAt?: any | null, customer?: { __typename?: 'User', id: string, name: string, email: string } | null, items?: Array<{ __typename?: 'Cart_Items', id?: string | null, quantity?: number | null, parameters?: Array<{ __typename?: 'Cart_Items_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Cart_Items_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, selected?: boolean | null }> | null }> | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null } | null };
 
 export type CommentDetailQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -65629,7 +67629,7 @@ export type ListProductsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, hasLiked?: boolean | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListProductsByIdentityQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, inventory?: number | null, hasLiked?: boolean | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, companyIdentityId?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, _status?: Product__Status | null, createdAt?: any | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
 
 export type ListRepliesToCommentQueryVariables = Exact<{
   parentCommentId: Scalars['JSON']['input'];
@@ -65653,7 +67653,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, parameters?: Array<{ __typename?: 'Order_Items_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Order_Items_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, selected?: boolean | null }> | null }> | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type UpdateOrderMutationVariables = Exact<{
   orderId: Scalars['String']['input'];
@@ -65662,7 +67662,7 @@ export type UpdateOrderMutationVariables = Exact<{
 }>;
 
 
-export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, status?: Order_Status | null, payerAddress?: string | null, currency?: Order_Currency | null, amount?: number | null, customerEmail?: any | null, createdAt?: any | null, updatedAt?: any | null, customer?: { __typename?: 'User', id: string } | null, transactions?: Array<{ __typename?: 'Transaction', id: string }> | null, cryptoPrices?: Array<{ __typename?: 'Order_CryptoPrices', id?: string | null, chain?: Order_CryptoPrices_Chain | null, stablePerNative?: number | null, nativePerStable?: string | null, expectedNativeAmount?: string | null, fetchedAt?: any | null }> | null, items?: Array<{ __typename?: 'Order_Items', id?: string | null, quantity?: number | null, parameters?: Array<{ __typename?: 'Order_Items_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Order_Items_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, selected?: boolean | null }> | null }> | null, product?: { __typename?: 'Product', id: string, serverURL?: string | null, name?: string | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, company?: { __typename?: 'Company', id: string, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null } | null, variant?: { __typename?: 'Variant', id: string, title?: string | null } | null }> | null, shippingAddress?: { __typename?: 'Order_ShippingAddress', title?: string | null, firstName?: string | null, lastName?: string | null, company?: string | null, addressLine1?: string | null, addressLine2?: string | null, city?: string | null, postalCode?: string | null, state?: string | null, country?: string | null, phone?: string | null } | null } | null };
 
 export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -65840,7 +67840,7 @@ export type ListProductsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
+export type ListProductsByCompanyQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }> } | null };
 
 export type SearchProductsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -65856,7 +67856,7 @@ export type SearchProductsByCompanyQuery = { __typename?: 'Query', Searches?: { 
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
-          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -65869,7 +67869,7 @@ export type ListProductsByCreatorQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null }> } | null };
+export type ListProductsByCreatorQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, likeCount?: number | null, orderable?: boolean | null, url?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null }> } | null };
 
 export type ProductByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -65877,7 +67877,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, likeCount?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, likeCount?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -65885,7 +67885,7 @@ export type CreateProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type DeleteProductMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -65916,7 +67916,7 @@ export type ListProductsQueryVariables = Exact<{
 }>;
 
 
-export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
+export type ListProductsQuery = { __typename?: 'Query', Products?: { __typename?: 'Products', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, inventory?: number | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> } | null };
 
 export type SearchProductsQueryVariables = Exact<{
   searchTerm: Scalars['String']['input'];
@@ -65931,7 +67931,7 @@ export type SearchProductsQuery = { __typename?: 'Query', Searches?: { __typenam
           | { __typename?: 'Identity' }
           | { __typename?: 'Job' }
           | { __typename?: 'Post' }
-          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
+          | { __typename: 'Product', id: string, isSubscribed?: boolean | null, serverURL?: string | null, name?: string | null, description?: string | null, likeCount?: number | null, url?: string | null, orderable?: boolean | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }
           | { __typename?: 'Startup' }
          | null } }> } | null };
 
@@ -65942,7 +67942,7 @@ export type UpdateProductMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null, _status?: Product__Status | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null };
 
 export type CreateReportMutationVariables = Exact<{
   data: MutationReportInput;
@@ -66240,6 +68240,21 @@ export const CartBySecretDocument = `
           priceInETH
           priceInSOL
           priceInTRX
+          parameters {
+            id
+            name
+            values {
+              id
+              key
+              name
+              default
+            }
+          }
+          relatedProducts {
+            id
+            name
+            serverURL
+          }
           image {
             id
             url
@@ -66264,6 +68279,16 @@ export const CartBySecretDocument = `
               name
               description
             }
+          }
+        }
+        parameters {
+          id
+          name
+          values {
+            id
+            key
+            name
+            selected
           }
         }
         variant {
@@ -66329,6 +68354,16 @@ export const CreateCartDocument = `
     items {
       id
       quantity
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          selected
+        }
+      }
       product {
         id
         serverURL
@@ -66435,6 +68470,16 @@ export const UpdateCartDocument = `
     items {
       id
       quantity
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          selected
+        }
+      }
       product {
         id
         serverURL
@@ -69225,6 +71270,21 @@ export const ListProductsByIdentityDocument = `
       priceInETH
       priceInSOL
       priceInTRX
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          default
+        }
+      }
+      relatedProducts {
+        id
+        name
+        serverURL
+      }
       company {
         id
         serverURL
@@ -69407,6 +71467,16 @@ export const CreateOrderDocument = `
     items {
       id
       quantity
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          selected
+        }
+      }
       product {
         id
         serverURL
@@ -69492,6 +71562,16 @@ export const UpdateOrderDocument = `
     items {
       id
       quantity
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          selected
+        }
+      }
       product {
         id
         serverURL
@@ -71132,6 +73212,21 @@ export const ListProductsByCompanyDocument = `
         key
         value
       }
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          default
+        }
+      }
+      relatedProducts {
+        id
+        name
+        serverURL
+      }
       image {
         id
         url
@@ -71226,6 +73321,21 @@ export const SearchProductsByCompanyDocument = `
               key
               value
             }
+            parameters {
+              id
+              name
+              values {
+                id
+                key
+                name
+                default
+              }
+            }
+            relatedProducts {
+              id
+              name
+              serverURL
+            }
             image {
               id
               url
@@ -71315,6 +73425,21 @@ export const ListProductsByCreatorDocument = `
         key
         value
       }
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          default
+        }
+      }
+      relatedProducts {
+        id
+        name
+        serverURL
+      }
     }
     totalDocs
   }
@@ -71381,6 +73506,21 @@ export const ProductByIdDocument = `
     companyIdentityId
     _status
     description
+    parameters {
+      id
+      name
+      values {
+        id
+        key
+        name
+        default
+      }
+    }
+    relatedProducts {
+      id
+      name
+      serverURL
+    }
     cryptoAddresses {
       chain
       address
@@ -71469,6 +73609,21 @@ export const CreateProductDocument = `
       id
       key
       value
+    }
+    parameters {
+      id
+      name
+      values {
+        id
+        key
+        name
+        default
+      }
+    }
+    relatedProducts {
+      id
+      name
+      serverURL
     }
     image {
       id
@@ -71606,6 +73761,21 @@ export const ListProductsDocument = `
         key
         value
       }
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          default
+        }
+      }
+      relatedProducts {
+        id
+        name
+        serverURL
+      }
       image {
         id
         url
@@ -71709,6 +73879,21 @@ export const SearchProductsDocument = `
               key
               value
             }
+            parameters {
+              id
+              name
+              values {
+                id
+                key
+                name
+                default
+              }
+            }
+            relatedProducts {
+              id
+              name
+              serverURL
+            }
             image {
               id
               url
@@ -71794,6 +73979,21 @@ export const UpdateProductDocument = `
       id
       key
       value
+    }
+    parameters {
+      id
+      name
+      values {
+        id
+        key
+        name
+        default
+      }
+    }
+    relatedProducts {
+      id
+      name
+      serverURL
     }
     image {
       id

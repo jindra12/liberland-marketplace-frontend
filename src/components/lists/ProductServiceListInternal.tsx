@@ -122,6 +122,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                             hideBuyNowButton={props.hideBuyNowButton}
                             size={addToCartSize}
                             maxAvailable={product.inventory}
+                            parameters={product.parameters}
                         />
                     ) : showOrderNowFallback && orderNowLink ? (
                         <Button type="primary" size={addToCartSize} href={orderNowLink} block={isMobile}>

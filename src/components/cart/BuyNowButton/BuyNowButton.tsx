@@ -1,10 +1,12 @@
 import * as React from "react";
 
-import { Button, Empty, Modal } from "antd";
+import { Button, Empty, Form, Modal, type FormInstance } from "antd";
 
 import { routes } from "../../../routes";
 import { EndpointAuthAction } from "../../EndpointAuthAction/EndpointAuthAction";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
+import type { ProductParameterSource } from "../../productParameters/types";
+import { buildProductParameterSelectionMapFromFormValues } from "../../productParameters/utils";
 import { RouteButton } from "../../RouteButton";
 
 import { BuyNowCreateOrderStep } from "./BuyNowCreateOrderStep";
@@ -16,16 +18,20 @@ type BuyNowButtonProps = {
     block?: boolean;
     candidateProfileAddresses: AddressWithEmail[];
     disabled?: boolean;
+    form: FormInstance;
     productId: string;
     quantity: number;
     serverURL: string;
     size?: React.ComponentProps<typeof Button>["size"];
     variantId?: string;
+    parameters?: ProductParameterSource[] | null;
 };
 
 export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) => {
     const [preparedPurchase, setPreparedPurchase] = React.useState<BuyNowPreparedPurchase>();
     const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
+    const watchedParameters = Form.useWatch("parameters", props.form);
+    const selectedParameterKeys = buildProductParameterSelectionMapFromFormValues(watchedParameters);
     const buyNowAuthResume = useBuyNowAuthResume({
         onResume: () => {
             setPreparedPurchase({
@@ -90,6 +96,8 @@ export const BuyNowButton: React.FunctionComponent<BuyNowButtonProps> = (props) 
                             purchase={preparedPurchase}
                             productId={props.productId}
                             quantity={props.quantity}
+                            parameters={props.parameters}
+                            selectedParameterKeys={selectedParameterKeys}
                             serverURL={props.serverURL}
                             variantId={props.variantId}
                             onCancel={onCancel}

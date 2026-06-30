@@ -23,6 +23,7 @@ import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
 import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
 import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
+import { buildProductParameterSelectionMap, buildSelectedProductParametersInput } from "./productParameters/utils";
 import { RouteButton } from "./RouteButton";
 
 const Order: React.FunctionComponent = () => {
@@ -60,6 +61,10 @@ const Order: React.FunctionComponent = () => {
         () => buildOrderPrefill(meUsersQuery.data),
         [meUsersQuery.data],
     );
+    const buildSelectedParametersForOrderItem = (item: CartSummary["items"][number]) => {
+        const selectedValues = buildProductParameterSelectionMap(item.parameters);
+        return buildSelectedProductParametersInput(item.product?.parameters, selectedValues);
+    };
 
     useTimeout(
         () => {
@@ -102,6 +107,7 @@ const Order: React.FunctionComponent = () => {
                         product: item.product?.id,
                         variant: item.variant?.id,
                         quantity: item.quantity ?? 0,
+                        parameters: buildSelectedParametersForOrderItem(item),
                     }))
                     .filter((item) => Boolean(item.product) && item.quantity > 0);
 

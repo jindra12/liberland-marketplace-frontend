@@ -13,7 +13,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents } from "../shared/product/utils";
 
-import { SplashCard } from "./SplashCard";
+import { ProductCarousel } from "./ProductCarousel";
 import { SplashCardItem } from "./SplashCardItem";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
 
@@ -28,7 +28,7 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
     const dislikeMutation = useDislikeProductMutation();
 
     return (
-        <SplashCard
+        <ProductCarousel
             className="SplashEntityCard--products"
             items={props.items}
             loading={props.loading}

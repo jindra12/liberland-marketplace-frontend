@@ -12,6 +12,21 @@ mutation CreateProduct($data: mutationProductInput!, $draft: Boolean!) {
             key
             value
         }
+        parameters {
+            id
+            name
+            values {
+                id
+                key
+                name
+                default
+            }
+        }
+        relatedProducts {
+            id
+            name
+            serverURL
+        }
         image {
             id
             url

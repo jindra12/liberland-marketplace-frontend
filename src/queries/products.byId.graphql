@@ -36,6 +36,81 @@ query ProductById($id: String!, $draft: Boolean = false) {
         companyIdentityId
         _status
         description
+        parameters {
+            id
+            name
+            values {
+                id
+                key
+                name
+                default
+            }
+        }
+        relatedProducts {
+            id
+            name
+            serverURL
+            isSubscribed
+            description
+            likeCount
+            hasLiked
+            inventory
+            orderable
+            url
+            priceInUSDEnabled
+            priceInUSD
+            priceInETH
+            priceInSOL
+            priceInTRX
+            cryptoAddresses {
+                chain
+                address
+            }
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+        }
         cryptoAddresses {
             chain
             address

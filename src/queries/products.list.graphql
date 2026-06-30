@@ -25,6 +25,21 @@ query ListProducts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRa
                 key
                 value
             }
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            relatedProducts {
+                id
+                name
+                serverURL
+            }
             image {
                 id
                 url

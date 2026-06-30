@@ -16,6 +16,16 @@ mutation UpdateCart($id: String!, $data: mutationCartUpdateInput!, $draft: Boole
         items {
             id
             quantity
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    selected
+                }
+            }
             product {
                 id
                 serverURL

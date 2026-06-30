@@ -40,6 +40,7 @@ const EditProduct: React.FunctionComponent = () => {
                                         url: product?.url,
                                         inventory: product?.inventory,
                                         company: product?.company?.id,
+                                        parameters: product?.parameters,
                                         cryptoAddresses: product?.cryptoAddresses
                                             ? {
                                                   chain: product.cryptoAddresses.chain,

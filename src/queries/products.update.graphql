@@ -12,6 +12,21 @@ mutation UpdateProduct($id: String!, $data: mutationProductUpdateInput!, $draft:
             key
             value
         }
+        parameters {
+            id
+            name
+            values {
+                id
+                key
+                name
+                default
+            }
+        }
+        relatedProducts {
+            id
+            name
+            serverURL
+        }
         image {
             id
             url

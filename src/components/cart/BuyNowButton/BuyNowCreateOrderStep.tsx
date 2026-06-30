@@ -8,6 +8,8 @@ import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../../order/constants";
 import { ShippingAddressSelectModal } from "../../order/ShippingAddressSelectModal";
 import type { AddressWithEmail, SubmittedOrder } from "../../order/types";
 import { toShippingAddressInput } from "../../order/utils";
+import type { ProductParameterSelectionMap, ProductParameterSource } from "../../productParameters/types";
+import { buildSelectedProductParametersInput } from "../../productParameters/utils";
 
 import type { BuyNowPreparedPurchase } from "./types";
 
@@ -15,8 +17,10 @@ type BuyNowCreateOrderStepProps = {
     onCancel: () => void;
     onOrderCreated: (submittedOrder: SubmittedOrder) => void;
     productId: string;
+    parameters?: ProductParameterSource[] | null;
     purchase: BuyNowPreparedPurchase;
     quantity: number;
+    selectedParameterKeys: ProductParameterSelectionMap;
     serverURL: string;
     variantId?: string;
 };
@@ -31,6 +35,10 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
 
     React.useEffect(() => {
         if (shippingAddress) {
+            const selectedParameters = buildSelectedProductParametersInput(
+                props.parameters,
+                props.selectedParameterKeys,
+            );
             createOrderMutation.mutate({
                 url: props.serverURL,
                 draft: false,
@@ -41,6 +49,9 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
                             quantity: props.quantity,
                             product: props.productId,
                             variant: props.variantId,
+                            ...(selectedParameters !== undefined && {
+                                parameters: selectedParameters,
+                            }),
                         },
                     ],
                     shippingAddress: toShippingAddressInput(shippingAddress),
@@ -48,7 +59,15 @@ export const BuyNowCreateOrderStep: React.FunctionComponent<BuyNowCreateOrderSte
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shippingAddress]);
+    }, [
+        props.parameters,
+        props.productId,
+        props.quantity,
+        props.selectedParameterKeys,
+        props.serverURL,
+        props.variantId,
+        shippingAddress,
+    ]);
 
     React.useEffect(() => {
         if (createOrderMutation.isError) {

@@ -32,6 +32,21 @@ query SearchProducts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $so
                             key
                             value
                         }
+                        parameters {
+                            id
+                            name
+                            values {
+                                id
+                                key
+                                name
+                                default
+                            }
+                        }
+                        relatedProducts {
+                            id
+                            name
+                            serverURL
+                        }
                         image {
                             id
                             url
