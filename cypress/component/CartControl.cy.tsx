@@ -1,58 +1,101 @@
-import { MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountAuthenticatedCartRoute } from "../support/component-tests/utils";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { addToCart, mountAuthenticatedDetailRoute } from "../support/component-tests/utils";
 import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
+import type { AddressWithEmail } from "../../src/components/order/types";
 
-const mountCartControl = () => {
-    mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL], {
-        [MAIN_SERVER_URL]: "alpha-secret",
-    }, true, (win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
+const mainSavedShippingAddress: AddressWithEmail = {
+    id: "saved-main-shipping-address",
+    email: "nova@example.test",
+    title: "Home",
+    firstName: "Nova",
+    lastName: "Rivers",
+    company: "Harbor Labs",
+    addressLine1: "1 Dockside Road",
+    addressLine2: "Apt 12",
+    city: "Port Sol",
+    state: "Coast",
+    postalCode: "11001",
+    country: "Liberland",
+    phone: "+1 555 0002",
 };
 
-const getHarborLanternCard = () => cy.get(".CartPage .ant-list-item", { timeout: 20000 }).first();
+const openHarborLanternAndCreateCart = () => {
+    cy.intercept("POST", "**/api/graphql", (req) => {
+        const body = req.body as { operationName?: string; query?: string };
 
-const getHarborLanternControl = () => getHarborLanternCard().find(".AddToCartButton__quantity");
+        if (body.operationName === "ProductById" || body.query?.includes("ProductById")) {
+            req.alias = "productById";
+        }
+
+        if (body.operationName === "CreateCart" || body.query?.includes("CreateCart")) {
+            req.alias = "createCart";
+        }
+
+        if (body.operationName === "CartBySecret" || body.query?.includes("CartBySecret")) {
+            req.alias = "cartBySecret";
+        }
+    });
+    mountAuthenticatedDetailRoute(
+        detailRoute("/products-services", "product-harbor-lantern"),
+        [MAIN_SERVER_URL],
+        mainSavedShippingAddress,
+        true,
+        (win) => {
+            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+        },
+    );
+    cy.wait("@productById", { timeout: 20000 }).its("response.statusCode").should("eq", 200);
+    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.contains('button[aria-label="Add to cart"]', "Add to cart", { timeout: 20000 }).should("be.visible");
+    addToCart();
+};
+
+const openCart = () => {
+    cy.routerNavigate("/cart");
+    cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+    cy.wait("@cartBySecret", { timeout: 20000 }).its("response.statusCode").should("eq", 200);
+};
+
+const getCartQuantityControl = () => cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 });
 
 describe("cart control", () => {
+    beforeEach(() => {
+        openHarborLanternAndCreateCart();
+        openCart();
+    });
+
     it("persists arrow changes across a remount", () => {
-        mountCartControl();
+        getCartQuantityControl().find("input").should("have.value", "1");
+        getCartQuantityControl().find(".ant-input-number-handler-up").click({ force: true });
+        getCartQuantityControl().find("input").should("have.value", "2");
 
-        getHarborLanternControl().find("input").should("have.value", "1");
-        getHarborLanternControl().find(".ant-input-number-handler-up").click({ force: true });
-        getHarborLanternControl().find("input").should("have.value", "2");
-
-        mountCartControl();
-        getHarborLanternControl().find("input").should("have.value", "2");
+        cy.routerNavigate("/cart");
+        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+        getCartQuantityControl().find("input").should("have.value", "2");
     });
 
     it("removes the item when the quantity reaches zero", () => {
-        mountCartControl();
+        getCartQuantityControl().find("input").should("have.value", "1");
+        getCartQuantityControl().find(".ant-input-number-handler-down").click({ force: true });
+        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("not.exist");
 
-        getHarborLanternControl().find("input").should("have.value", "1");
-        getHarborLanternControl().find(".ant-input-number-handler-down").click({ force: true });
-        cy.contains(".CartPage .ant-list-item", "Harbor Lantern", { timeout: 20000 }).should("not.exist");
-
-        mountCartControl();
-        cy.contains(".CartPage .ant-list-item", "Harbor Lantern", { timeout: 20000 }).should("not.exist");
+        cy.routerNavigate("/cart");
+        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("not.exist");
     });
 
     it("does not keep negative values in the quantity field", () => {
-        mountCartControl();
-
-        getHarborLanternControl().find("input").type("-", { force: true }).blur();
-        getHarborLanternControl().find("input").should("have.value", "1");
+        getCartQuantityControl().find("input").type("-", { force: true }).blur();
+        getCartQuantityControl().find("input").should("have.value", "1");
     });
 
     it("waits until blur before persisting typed quantities", () => {
-        mountCartControl();
+        getCartQuantityControl().find("input").should("have.value", "1");
+        getCartQuantityControl().find("input").clear({ force: true }).type("5", { force: true });
+        getCartQuantityControl().find("input").should("have.value", "5");
+        getCartQuantityControl().find("input").blur();
 
-        getHarborLanternControl().find("input").should("have.value", "1");
-        getHarborLanternControl().find("input").type("5");
-        getHarborLanternControl().find("input").should("have.value", "15");
-        getHarborLanternControl().find("input").blur();
-
-        mountCartControl();
-        getHarborLanternControl().find("input").should("have.value", "15");
+        cy.routerNavigate("/cart");
+        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+        getCartQuantityControl().find("input").should("have.value", "5");
     });
 });

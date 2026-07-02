@@ -55,6 +55,8 @@ export type MockNode = {
     value?: string | MockNode | null;
     label?: string | null;
     key?: string | null;
+    default?: boolean | null;
+    selected?: boolean | null;
     mimeType?: string | null;
     filename?: string | null;
     width?: number | null;
@@ -105,6 +107,9 @@ export type MockNode = {
     categories?: Array<Record<string, unknown> | MockNode> | null;
     populatedAuthors?: Array<Record<string, unknown> | MockNode> | null;
     relatedPosts?: Array<Record<string, unknown> | MockNode> | null;
+    relatedProducts?: Array<Record<string, unknown> | MockNode> | null;
+    parameters?: Array<Record<string, unknown> | MockNode> | null;
+    values?: Array<Record<string, unknown> | MockNode> | null;
     options?: Array<Record<string, unknown> | MockNode> | null;
     properties?: Array<Record<string, unknown> | MockNode> | null;
     transactions?: Array<Record<string, unknown> | MockNode> | null;

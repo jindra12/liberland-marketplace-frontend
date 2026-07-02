@@ -1,7 +1,9 @@
 import * as React from "react";
 
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Card, Checkbox, Flex, Form, Input, Space, Typography } from "antd";
+import { Button, Card, Flex, Form, Input, Space, Typography } from "antd";
+
+import { ProductParameterValueDefaultField } from "./ProductParameterValueDefaultField";
 
 export const ProductParametersField: React.FunctionComponent = () => {
     return (
@@ -95,13 +97,10 @@ export const ProductParametersField: React.FunctionComponent = () => {
                                                                 >
                                                                     <Input placeholder="XL" />
                                                                 </Form.Item>
-                                                                <Form.Item
-                                                                    name={[valueField.name, "default"]}
-                                                                    valuePropName="checked"
-                                                                    className="Publish__parameterValueDefaultField"
-                                                                >
-                                                                    <Checkbox>Default</Checkbox>
-                                                                </Form.Item>
+                                                                <ProductParameterValueDefaultField
+                                                                    parameterIndex={field.name}
+                                                                    valueIndex={valueField.name}
+                                                                />
                                                                 <Button
                                                                     danger
                                                                     type="text"

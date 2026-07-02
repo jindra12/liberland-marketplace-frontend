@@ -99,6 +99,54 @@ export const normalizeProductData = (data: Record<string, unknown>) => {
                 }),
             );
     }
+    if (Array.isArray(data.parameters)) {
+        data.parameters = data.parameters
+            .filter((value): value is Record<string, unknown> => isPlainObject(value))
+            .map((value, index) => {
+                const values = Array.isArray(value.values)
+                    ? value.values
+                          .filter((entry): entry is Record<string, unknown> => isPlainObject(entry))
+                          .map((entry, valueIndex) =>
+                              searchNode({
+                                  id: typeof entry.id === "string" ? entry.id : `product-parameter-${index + 1}-value-${valueIndex + 1}`,
+                                  key:
+                                      typeof entry.key === "string" && entry.key.length > 0
+                                          ? entry.key
+                                          : typeof entry.name === "string"
+                                            ? entry.name
+                                                  .normalize("NFD")
+                                                  .toLowerCase()
+                                                  .replace(/[\u0300-\u036f]/g, "")
+                                                  .replace(/[^a-z0-9\s-]/g, "")
+                                                  .replace(/\s+/g, "-")
+                                                  .replace(/-+/g, "-")
+                                                  .replace(/^-+|-+$/g, "")
+                                            : "",
+                                  name: entry.name,
+                                  default: entry.default,
+                              }),
+                          )
+                    : [];
+
+                return searchNode({
+                    id: typeof value.id === "string" ? value.id : `product-parameter-${index + 1}`,
+                    name: value.name,
+                    values,
+                });
+            });
+    }
+    if (Array.isArray(data.relatedProducts)) {
+        data.relatedProducts = data.relatedProducts
+            .filter((value): value is string | Record<string, unknown> => typeof value === "string" || isPlainObject(value))
+            .map((value) => {
+                if (typeof value === "string") {
+                    return createProductRef(value);
+                }
+
+                return createProductRef(typeof value.id === "string" ? value.id : undefined) || searchNode(value);
+            })
+            .filter((value): value is MockNode => value !== null);
+    }
     if (Array.isArray(data.variantTypes)) {
         data.variantTypes = data.variantTypes
             .filter((value): value is string => typeof value === "string")
@@ -237,14 +285,43 @@ const normalizeCartItems = (items: unknown, prefix: string): MockNode[] => {
 
     return items
         .filter((value): value is Record<string, unknown> => isPlainObject(value))
-        .map((value, index) =>
-            searchNode({
+        .map((value, index) => {
+            const parameters = Array.isArray(value.parameters)
+                ? value.parameters
+                      .filter((entry): entry is Record<string, unknown> => isPlainObject(entry))
+                      .map((entry, parameterIndex) => {
+                          const values = Array.isArray(entry.values)
+                              ? entry.values
+                                    .filter((nested): nested is Record<string, unknown> => isPlainObject(nested))
+                                    .map((nested, valueIndex) =>
+                                        searchNode({
+                                            id:
+                                                typeof nested.id === "string"
+                                                    ? nested.id
+                                                    : `${prefix}-item-${index + 1}-parameter-${parameterIndex + 1}-value-${valueIndex + 1}`,
+                                            key: typeof nested.key === "string" ? nested.key : typeof nested.name === "string" ? nested.name : "",
+                                            name: nested.name,
+                                            selected: nested.selected,
+                                        }),
+                                    )
+                              : [];
+
+                          return searchNode({
+                              id: typeof entry.id === "string" ? entry.id : `${prefix}-item-${index + 1}-parameter-${parameterIndex + 1}`,
+                              name: entry.name,
+                              values,
+                          });
+                      })
+                : [];
+
+            return searchNode({
                 id: typeof value.id === "string" ? value.id : `${prefix}-item-${index + 1}`,
                 quantity: value.quantity,
                 product: createProductRef(typeof value.product === "string" ? value.product : undefined),
                 variant: createVariantRef(typeof value.variant === "string" ? value.variant : undefined),
-            }),
-        );
+                parameters,
+            });
+        });
 };
 
 const normalizeOrderItems = (items: unknown, prefix: string): MockNode[] => {
@@ -254,14 +331,43 @@ const normalizeOrderItems = (items: unknown, prefix: string): MockNode[] => {
 
     return items
         .filter((value): value is Record<string, unknown> => isPlainObject(value))
-        .map((value, index) =>
-            searchNode({
+        .map((value, index) => {
+            const parameters = Array.isArray(value.parameters)
+                ? value.parameters
+                      .filter((entry): entry is Record<string, unknown> => isPlainObject(entry))
+                      .map((entry, parameterIndex) => {
+                          const values = Array.isArray(entry.values)
+                              ? entry.values
+                                    .filter((nested): nested is Record<string, unknown> => isPlainObject(nested))
+                                    .map((nested, valueIndex) =>
+                                        searchNode({
+                                            id:
+                                                typeof nested.id === "string"
+                                                    ? nested.id
+                                                    : `${prefix}-item-${index + 1}-parameter-${parameterIndex + 1}-value-${valueIndex + 1}`,
+                                            key: typeof nested.key === "string" ? nested.key : typeof nested.name === "string" ? nested.name : "",
+                                            name: nested.name,
+                                            selected: nested.selected,
+                                        }),
+                                    )
+                              : [];
+
+                          return searchNode({
+                              id: typeof entry.id === "string" ? entry.id : `${prefix}-item-${index + 1}-parameter-${parameterIndex + 1}`,
+                              name: entry.name,
+                              values,
+                          });
+                      })
+                : [];
+
+            return searchNode({
                 id: typeof value.id === "string" ? value.id : `${prefix}-item-${index + 1}`,
                 quantity: value.quantity,
                 product: createProductRef(typeof value.product === "string" ? value.product : undefined),
                 variant: createVariantRef(typeof value.variant === "string" ? value.variant : undefined),
-            }),
-        );
+                parameters,
+            });
+        });
 };
 
 export const normalizeOrderData = (data: Record<string, unknown>) => {

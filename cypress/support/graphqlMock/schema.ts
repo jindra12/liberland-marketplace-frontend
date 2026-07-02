@@ -403,6 +403,8 @@ export const graphqlSchema = buildSchema(`
         value: JSON
         label: JSON
         key: JSON
+        default: JSON
+        selected: JSON
         mimeType: JSON
         filename: JSON
         width: JSON
@@ -456,6 +458,9 @@ export const graphqlSchema = buildSchema(`
         categories: [MockNode!]
         populatedAuthors: [MockNode!]
         relatedPosts: [Post_RelatedPosts_Relationship!]
+        relatedProducts: [MockNode!]
+        parameters: [MockNode!]
+        values: [MockNode!]
         options: [MockNode!]
         properties: [MockNode!]
         transactions: [MockNode!]

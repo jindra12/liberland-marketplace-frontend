@@ -39,6 +39,7 @@ export const orders: MockNode[] = [
                 quantity: 2,
                 product: products[0],
                 variant: products[0].variants?.docs[0]!,
+                parameters: [],
             },
         ],
         shippingAddress: {
@@ -89,6 +90,7 @@ export const orders: MockNode[] = [
                 id: "order-beta-item-1",
                 quantity: 4,
                 product: products[3],
+                parameters: [],
             },
         ],
         shippingAddress: {

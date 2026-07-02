@@ -338,6 +338,7 @@ export const uploadTestImage = () => {
 
 export const addToCart = () => {
     cy.get('button[aria-label="Add to cart"]').click();
+    cy.get(".AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
 };
 
 export const removeFromCart = () => {

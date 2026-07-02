@@ -124,6 +124,16 @@ export const buildProductParameterSelectionMapFromFormValues = (
         return acc;
     }, {});
 
+export const buildProductParameterValuesWithSingleDefault = (
+    values?: ProductParameterDraft["values"] | null,
+    defaultIndex?: number,
+    defaultChecked = true,
+) =>
+    (values || []).map((value, index) => ({
+        ...value,
+        default: index === defaultIndex ? defaultChecked : false,
+    }));
+
 export const buildSelectedProductParametersInput = (
     parameters?: ProductParameterSource[] | null,
     selectedValues?: ProductParameterSelectionMap | null,
