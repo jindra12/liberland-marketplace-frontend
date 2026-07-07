@@ -47,7 +47,8 @@ describe("identity deep dive", () => {
         );
         cy.contains(".ant-list-item-meta-title", "Sky Relay").should("be.visible");
         cy.get(".LikeButton").should("have.length.at.least", 4);
-        cy.get(".ShareSection").should("be.visible").contains("Share this tribe");
+        cy.get(".ShareSection").should("be.visible");
+        cy.contains(".ShareSection", "Share this tribe").should("not.exist");
     });
 
     it("links back to the syndication detail when multiple servers are enabled", () => {

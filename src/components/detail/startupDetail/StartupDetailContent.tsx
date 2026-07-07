@@ -25,7 +25,6 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
             reportPath={routes.ventures.detail.getLink(props.startup as Startup)}
             backTo={routes.ventures.route}
             backLabel="Back to ventures"
-            shareLabel="Share this venture"
             shareTitle={shareTitle}
             shareText={getStartupShareText(props.startup)}
             subscriptionTarget={{

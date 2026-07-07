@@ -129,11 +129,21 @@ describe("details", () => {
         });
         mountMainRoute(detailRoute("/posts", "post-1"));
         cy.contains("h1", "Harbor Launch Notes", { timeout: 20000 }).should("be.visible");
+        cy.get(".PostDetail__metaStack", { timeout: 20000 })
+            .should("be.visible")
+            .children()
+            .should("have.length", 2)
+            .then(($children) => {
+                expect($children.eq(0)).to.have.class("PostDetail__companyLink");
+                expect($children.eq(1)).to.have.class("PostDetail__repostLink");
+            });
+        cy.get(".PostDetail__companyLink").contains("Harbor Labs").should("be.visible");
         cy.get(".PostDetail__repostLink", { timeout: 20000 }).should("be.visible");
         cy.get(".PostDetail__repostLink .PostRepostLink__icon", { timeout: 20000 }).should("be.visible");
         cy.get(".PostDetail__repostLink", { timeout: 20000 })
             .should("have.attr", "href", "https://example.test/original/harbor-launch-notes");
         cy.get(".PostDetail__repostLink", { timeout: 20000 }).contains("Original post").should("be.visible");
+        cy.get(".PostDetail__repostLink", { timeout: 20000 }).should("have.css", "font-size", "15px");
         screenshotStep("detail-post-repost-link");
     });
 

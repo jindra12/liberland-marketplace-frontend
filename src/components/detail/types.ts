@@ -17,7 +17,7 @@ export type CommonDetailProps = {
     header?: ReactNode;
     beforeShare?: ReactNode;
     sections?: CommonDetailSection[];
-    shareLabel: string;
+    afterSections?: ReactNode;
     shareTitle: string;
     shareText: string;
     subscriptionTarget?: SubscriptionTarget | null;

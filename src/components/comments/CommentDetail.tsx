@@ -84,7 +84,6 @@ const CommentDetail: React.FunctionComponent = () => {
                         />
                     </CommentCard>
                 }
-                shareLabel="Share this comment"
                 shareTitle="Comment"
                 shareText="Check out this comment on NSwap."
             />

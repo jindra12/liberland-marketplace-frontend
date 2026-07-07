@@ -52,7 +52,6 @@ const JobDetail: React.FunctionComponent = () => {
                         reportPath={routes.jobs.detail.getLink(job as Job)}
                         backTo={routes.jobs.route}
                         backLabel="Back to jobs"
-                        shareLabel="Share this job"
                         shareTitle={shareTitle}
                         shareText={shareText}
                         subscriptionTarget={

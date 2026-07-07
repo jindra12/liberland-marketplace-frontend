@@ -60,7 +60,6 @@ const CompanyDetail: React.FunctionComponent = () => {
                         reportPath={routes.companies.detail.getLink(companyData as Company)}
                         backTo={routes.companies.route}
                         backLabel="Back to companies"
-                        shareLabel="Share this company"
                         shareTitle={shareTitle}
                         shareText={shareText}
                         subscriptionTarget={

@@ -113,4 +113,29 @@ describe("lists", () => {
         );
         screenshotStep("homepage-post-repost-link");
     });
+
+    it("shows post content in the posts list preview", () => {
+        const postsGoal = LIST_GOALS.find((goal) => goal.trigger === "Posts");
+        if (postsGoal === undefined) {
+            throw new Error("Missing Posts list goal");
+        }
+
+        goToList(postsGoal);
+
+        cy.contains(".PostList__description", "Harbor operations improved this week with tighter handoffs and clearer status updates.")
+            .should("be.visible")
+            .and("have.class", "Markdown--clamp2");
+        cy.contains(".PostList__description", "Weekly harbor operations update").should("not.exist");
+        cy.get(".PostList__meta").first().children().should("have.length.at.least", 3);
+        cy.get(".PostList__meta")
+            .first()
+            .children()
+            .then(($children) => {
+                expect($children.eq(0)).to.have.class("PostList__description");
+                expect($children.eq(1)).to.have.class("PostList__companyTag");
+                expect($children.eq(2)).to.have.class("PostList__repostLink");
+            });
+        cy.get(".PostList__repostLink").first().should("be.visible");
+        screenshotStep("list-post-content-preview");
+    });
 });

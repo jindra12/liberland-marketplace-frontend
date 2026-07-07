@@ -15,7 +15,7 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
             <Spin spinning={Boolean(props.loading)} className="SplashEntityCard__spin">
                 {props.items.length === 0 ? null : !screens.md ? (
                     <Flex vertical gap={12} className="SplashEntityCard__stack">
-                        {props.items.slice(0, 3).map((item) => (
+                        {props.items.slice(0, 5).map((item) => (
                             <AnimatedIn key={item.id} className="SplashEntityCard__stackItem">
                                 {props.renderItem(item)}
                             </AnimatedIn>

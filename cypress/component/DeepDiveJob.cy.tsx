@@ -18,7 +18,8 @@ describe("job deep dive", () => {
         cy.get(".JobDetail__summary").contains("Harbor City").should("be.visible");
         cy.get(".JobDetail__summary").contains("2 positions").should("be.visible");
         cy.get(".JobDetail__summary").contains("USD 3,200 – 4,000").should("be.visible");
-        cy.get(".ShareSection").should("be.visible").contains("Share this job");
+        cy.get(".ShareSection").should("be.visible");
+        cy.contains(".ShareSection", "Share this job").should("not.exist");
         cy.get(".JobDetail__identityRow").should("be.visible");
 
         waitForCollectionQuery(

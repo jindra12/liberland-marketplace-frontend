@@ -28,7 +28,6 @@ export const CommonDetail: React.FunctionComponent<CommonDetailProps> = (props) 
                 {props.beforeShare}
                 <Divider />
                 <DetailShareSection
-                    label={props.shareLabel}
                     title={props.shareTitle}
                     text={props.shareText}
                     serverURL={props.serverURL}
@@ -49,6 +48,7 @@ export const CommonDetail: React.FunctionComponent<CommonDetailProps> = (props) 
                 ) : (
                     sections[0]?.children
                 )}
+                {props.afterSections}
             </Flex>
         </AnimatedIn>
     );

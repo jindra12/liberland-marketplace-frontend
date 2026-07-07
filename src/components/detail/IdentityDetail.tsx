@@ -38,7 +38,6 @@ const IdentityDetail: React.FunctionComponent = () => {
                         reportPath={routes.tribes.detail.getLink(data.Identity as Identity)}
                         backTo={routes.tribes.route}
                         backLabel="Back to tribes"
-                        shareLabel="Share this tribe"
                         shareTitle={shareTitle}
                         shareText={shareText}
                         subscriptionTarget={{

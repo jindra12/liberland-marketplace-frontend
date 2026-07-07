@@ -31,7 +31,8 @@ describe("venture deep dive", () => {
             cy.contains("Product").should("be.visible");
             cy.contains("Distribution").should("be.visible");
         });
-        cy.get(".ShareSection").should("be.visible").contains("Share this venture");
+        cy.get(".ShareSection").should("be.visible");
+        cy.contains(".ShareSection", "Share this venture").should("not.exist");
         cy.get(".EntityDetail__tabs").contains("Team (2)").should("be.visible");
 
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Discussion").click();

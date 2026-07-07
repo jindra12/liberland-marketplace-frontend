@@ -27,7 +27,8 @@ describe("company deep dive", () => {
         cy.contains(".CompanyVerificationTag", "trader").should("be.visible");
         cy.contains(".Markdown", "Distributed shipping and tooling").should("be.visible");
         cy.get(".CompanyContactLinks").should("be.visible").contains("hello@harbor.example");
-        cy.get(".ShareSection").should("be.visible").contains("Share this company");
+        cy.get(".ShareSection").should("be.visible");
+        cy.contains(".ShareSection", "Share this company").should("not.exist");
         cy.get(".ShareSection__nativeButton").should("be.visible");
         cy.get(".ShareSection__iconButton").its("length").should("be.greaterThan", 0);
         cy.get(".CompanyDetail__identityRow").should("be.visible");

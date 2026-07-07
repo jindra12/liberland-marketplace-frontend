@@ -66,7 +66,6 @@ const PostDetail: React.FunctionComponent = () => {
                         reportPath={routes.posts.detail.getLink(post as Post)}
                         backTo={routes.posts.route}
                         backLabel="Back to posts"
-                        shareLabel="Share this post"
                         shareTitle={shareTitle}
                         shareText={shareText}
                         header={
@@ -74,31 +73,32 @@ const PostDetail: React.FunctionComponent = () => {
                                 <PostHeroSplash post={post} />
                                 <Flex vertical gap={14} className="EntityDetail__headerBody PostDetail__headerBody">
                                     <div className="EntityDetail__titleBlock">
-                                        <Typography.Text className="EntityDetail__eyebrow">Post</Typography.Text>
                                         <div className="EntityDetail__titleRow">
                                             <Typography.Title level={1} className="EntityDetail__title">
                                                 {post.title}
                                             </Typography.Title>
                                         </div>
-                                        <PostRepostLink repost={post.repost} className="PostDetail__repostLink" />
-                                        {post.company?.id && post.company?.name && (
-                                            <Link
-                                                to={routes.companies.detail.getLink(post.company as Company)}
-                                                className="PostDetail__companyLink"
-                                            >
-                                                <Flex gap={12} align="center" className="PostDetail__companyRow">
-                                                    <Avatar
-                                                        shape="square"
-                                                        size={52}
-                                                        src={companyImageSrc}
-                                                        className="EntityList__avatar PostDetail__companyAvatar"
-                                                    />
-                                                    <Typography.Text className="PostDetail__companyName">
-                                                        {post.company.name}
-                                                    </Typography.Text>
-                                                </Flex>
-                                            </Link>
-                                        )}
+                                        <Flex vertical gap={8} className="PostDetail__metaStack">
+                                            {post.company?.id && post.company?.name && (
+                                                <Link
+                                                    to={routes.companies.detail.getLink(post.company as Company)}
+                                                    className="PostDetail__companyLink"
+                                                >
+                                                    <Flex gap={12} align="center" className="PostDetail__companyRow">
+                                                        <Avatar
+                                                            shape="square"
+                                                            size={52}
+                                                            src={companyImageSrc}
+                                                            className="EntityList__avatar PostDetail__companyAvatar"
+                                                        />
+                                                        <Typography.Text className="PostDetail__companyName">
+                                                            {post.company.name}
+                                                        </Typography.Text>
+                                                    </Flex>
+                                                </Link>
+                                            )}
+                                            <PostRepostLink repost={post.repost} className="PostDetail__repostLink" />
+                                        </Flex>
                                         {post.createdBy?.name && (
                                             <div className="PostDetail__creatorRow">
                                                 <Typography.Text type="secondary">

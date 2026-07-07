@@ -106,6 +106,10 @@
     margin-bottom: 0;
 }
 
+.PostList__description.Markdown--clamp2 {
+    max-width: 100%;
+}
+
 .PostRepostLink {
     display: inline-flex;
     align-items: center;
@@ -125,6 +129,10 @@
 
 .PostRepostLink__icon {
     font-size: 12px;
+}
+
+.PostList__repostLink {
+    width: fit-content;
 }
 
 .PostList__actionsRow {

@@ -8,6 +8,8 @@ import { Post, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { routes } from "../../routes";
 import { useDislikePostMutation, useLikePostMutation, useListPostsQuery, useSearchPostsQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { PostRepostLink } from "../shared/post/PostRepostLink";
 import type { RelatedTargetSelection } from "../shared/post/types";
 import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
 
@@ -113,12 +115,13 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
                     },
                     description: (post) => (
                         <Flex vertical gap={8} align="start" className="PostList__meta">
-                            {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
-                            {post.meta?.description && (
-                                <Typography.Paragraph className="EntityList__description PostList__description">
-                                    {post.meta.description}
-                                </Typography.Paragraph>
+                            {post.content && (
+                                <Markdown className="Markdown--clamp2 EntityList__description PostList__description">
+                                    {post.content}
+                                </Markdown>
                             )}
+                            {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
+                            <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                             {post.relatedPosts?.[0] && (
                                 <Typography.Link href={routes.posts.relatedTarget.getLink(post.relatedPosts[0])}>
                                     Related: {getPostRelatedTargetText(post.relatedPosts[0])}

@@ -14,7 +14,7 @@ import {
 } from "react-share";
 
 import { LinkOutlined } from "@ant-design/icons";
-import { Button, Flex, Grid, Space, Typography } from "antd";
+import { Button, Flex, Grid, Space } from "antd";
 
 import { ReportAction } from "../report/ReportAction";
 
@@ -36,7 +36,6 @@ type ShareButtonConfig = {
     render: (payload: SharePayload) => React.ReactNode;
 };
 type DetailShareSectionProps = {
-    label: string;
     title: string;
     text: string;
     url?: string;
@@ -119,7 +118,6 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
             <>
                 {messageContextHolder}
                 <Flex vertical gap={12} className="ShareSection ShareSection--mobile">
-                    <Typography.Text className="ShareSection__label">{props.label}</Typography.Text>
                     {props.subscriptionTarget ? (
                         <Space.Compact block className="ShareSection__mobileActions">
                             <NativeShareButton
@@ -170,7 +168,6 @@ export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps
         <>
             {messageContextHolder}
             <Flex justify="space-between" align="center" wrap gap="16px" className="ShareSection">
-                <Typography.Text className="ShareSection__label">{props.label}</Typography.Text>
                 <Flex wrap gap="12px" align="center" className="ShareSection__actions">
                     <Space size={[12, 12]} wrap className="ShareSection__buttons">
                         {SHARE_BUTTONS.map(({ key, render }) => (

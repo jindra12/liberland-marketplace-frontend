@@ -66,7 +66,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
             reportPath={routes.syndication.detail.getLink(entry)}
             backTo={routes.syndication.route}
             backLabel="Back to syndication"
-            shareLabel="Share this endpoint"
             shareTitle={title}
             shareText={shareText}
             header={
@@ -96,17 +95,6 @@ const SyndicationDetail: React.FunctionComponent = () => {
             }
             beforeShare={
                 <>
-                        <Flex wrap gap={12}>
-                            <Button
-                                type={entry.enabled ? "default" : "primary"}
-                                size="large"
-                                icon={<PoweroffOutlined />}
-                                onClick={handleToggleEnabled}
-                            >
-                                {entry.enabled ? "Disable URL" : "Enable URL"}
-                            </Button>
-                    </Flex>
-                    <Divider />
                     {entry.description && (
                         <>
                             <Markdown className="SyndicationDetail__description">{entry.description}</Markdown>
@@ -134,6 +122,16 @@ const SyndicationDetail: React.FunctionComponent = () => {
                     ),
                 },
             ]}
+            afterSections={
+                <Button
+                    type={entry.enabled ? "default" : "primary"}
+                    size="large"
+                    icon={<PoweroffOutlined />}
+                    onClick={handleToggleEnabled}
+                >
+                    {entry.enabled ? "Disable URL" : "Enable URL"}
+                </Button>
+            }
         />
     );
 };

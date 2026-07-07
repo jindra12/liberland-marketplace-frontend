@@ -1,15 +1,16 @@
 import * as React from "react";
 
-import { ConfigProvider, Form, Space } from "antd";
+import { ConfigProvider, Divider, Form, Space } from "antd";
 import type { ButtonProps } from "antd";
 
 import type { MeUserQuery } from "../../generated/graphql";
+import { ProductParameterSelectionFieldList } from "../productParameters/ProductParameterSelectionFieldList";
 import type { ProductParameterSource } from "../productParameters/types";
 
 import { AddToCartIncrementForm } from "./AddToCartIncrementForm";
 import { BuyNowButton } from "./BuyNowButton/BuyNowButton";
 import { useCartMutationContext } from "./CartMutationContext";
-import { useAddToCartButtonState } from "./hooks";
+import { useAddToCartButtonState, useAddToCartIncrementFormState } from "./hooks";
 
 type AddToCartButtonProps = {
     productId: string;
@@ -26,6 +27,17 @@ type AddToCartButtonProps = {
 export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (props) => {
     const [form] = Form.useForm();
     const { isMutating } = useCartMutationContext();
+    const addToCartIncrementState = useAddToCartIncrementFormState({
+        productId: props.productId,
+        variantId: props.variantId,
+        serverURL: props.serverURL,
+        maxAvailable: props.maxAvailable,
+        isAuthenticated: props.isAuthenticated,
+        me: props.me,
+        parameters: props.parameters,
+        size: props.size,
+        form,
+    });
     const addToCartState = useAddToCartButtonState({
         productId: props.productId,
         variantId: props.variantId,
@@ -56,32 +68,50 @@ export const AddToCartButton: React.FunctionComponent<AddToCartButtonProps> = (p
                 },
             }}
         >
-            <Space.Compact block={props.block} className={addToCartState.compactClassName}>
-                <AddToCartIncrementForm
-                    form={form}
-                    productId={props.productId}
-                    serverURL={props.serverURL}
-                    isAuthenticated={props.isAuthenticated}
-                    maxAvailable={addToCartState.maxAvailable}
-                    size={addToCartState.size}
-                    variantId={props.variantId}
-                    parameters={addToCartState.parameterDefinitions}
-                />
-                {props.hideBuyNowButton ? null : (
-                    <BuyNowButton
-                        block={props.block}
-                        candidateProfileAddresses={addToCartState.candidateProfileAddressesForBuyNow}
-                        disabled={isMutating}
-                        form={form}
-                        productId={props.productId}
-                        quantity={addToCartState.inputQuantity}
-                        serverURL={props.serverURL}
+            <Form
+                component={false}
+                className={addToCartIncrementState.formClassName}
+                form={form}
+                initialValues={{
+                    quantity: 1,
+                    parameters: addToCartIncrementState.parameterFormValues,
+                }}
+                onValuesChange={(changedValues) => {
+                    if (!changedValues.parameters || !addToCartIncrementState.hasItemInCart) {
+                        return;
+                    }
+
+                    addToCartIncrementState.persistQuantity(addToCartIncrementState.currentItemQuantity);
+                }}
+            >
+                {addToCartIncrementState.messageContextHolder}
+                <Space.Compact block={props.block} className={addToCartState.compactClassName}>
+                    <AddToCartIncrementForm
                         size={addToCartState.size}
-                        variantId={props.variantId}
-                        parameters={addToCartState.parameterDefinitions}
+                        state={addToCartIncrementState}
                     />
+                    {props.hideBuyNowButton ? null : (
+                        <BuyNowButton
+                            block={props.block}
+                            candidateProfileAddresses={addToCartState.candidateProfileAddressesForBuyNow}
+                            disabled={isMutating}
+                            form={form}
+                            productId={props.productId}
+                            quantity={addToCartState.inputQuantity}
+                            serverURL={props.serverURL}
+                            size={addToCartState.size}
+                            variantId={props.variantId}
+                            parameters={addToCartState.parameterDefinitions}
+                        />
+                    )}
+                </Space.Compact>
+                {addToCartState.parameterDefinitions.length > 0 && (
+                    <>
+                        <Divider className="AddToCartButton__parametersDivider" />
+                        <ProductParameterSelectionFieldList parameters={addToCartState.parameterDefinitions} />
+                    </>
                 )}
-            </Space.Compact>
+            </Form>
         </ConfigProvider>
     );
 };

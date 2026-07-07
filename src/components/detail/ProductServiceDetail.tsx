@@ -87,7 +87,6 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                         reportPath={routes.productsServices.detail.getLink(product as Product)}
                         backTo={routes.productsServices.route}
                         backLabel="Back to products / services"
-                        shareLabel="Share this product"
                         shareTitle={shareTitle}
                         shareText={shareText}
                         subscriptionTarget={

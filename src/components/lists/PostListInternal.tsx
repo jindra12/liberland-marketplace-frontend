@@ -8,6 +8,7 @@ import { Post } from "../../generated/graphql";
 import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
+import { Markdown } from "../Markdown";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { PostRepostLink } from "../shared/post/PostRepostLink";
 import { PostDoc } from "../shared/post/types";
@@ -77,12 +78,11 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                 },
                 description: (post) => (
                     <Flex vertical gap={8} align="start" className="PostList__meta">
-                        {post.meta?.description && (
-                            <Typography.Paragraph className="EntityList__description PostList__description">
-                                {post.meta?.description}
-                            </Typography.Paragraph>
+                        {post.content && (
+                            <Markdown className="Markdown--clamp2 EntityList__description PostList__description">
+                                {post.content}
+                            </Markdown>
                         )}
-                        <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                         {!xl && getPostCompanyImageUrl(post) && post.company?.name && (
                             <Link
                                 to={routes.posts.detail.getLink(post as Post)}
@@ -100,6 +100,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
                             </Link>
                         )}
                         {xl && post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
+                        <PostRepostLink repost={post.repost} className="PostList__repostLink" />
                         {post.relatedPosts?.[0] && (
                             <Typography.Link href={routes.posts.relatedTarget.getLink(post.relatedPosts[0])}>
                                 Related: {getPostRelatedTargetText(post.relatedPosts[0])}
