@@ -2,6 +2,7 @@ import { UserManager } from "oidc-client-ts";
 
 import { detailRoute, COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     screenshotStep,
@@ -80,8 +81,7 @@ describe("buy now", () => {
         );
 
         cy.contains("h1", "Harbor Lantern").should("be.visible");
-        cy.contains(".ant-modal", "18+ content").should("be.visible");
-        cy.contains(".ant-modal button", "Continue to site").click();
+        dismissNsfwModal();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
 
         cy.wrap(signinRedirect).should("have.been.calledOnce");

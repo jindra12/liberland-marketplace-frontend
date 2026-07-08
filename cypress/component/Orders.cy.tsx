@@ -1,6 +1,6 @@
 import { routes } from "../../src/routes";
 import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
-import { mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
+import { dismissNsfwModal, mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
 
 const mountOrdersRoute = (route: string) => {
     mountAuthenticatedMainRoute(route, true, (win) => {
@@ -8,28 +8,11 @@ const mountOrdersRoute = (route: string) => {
     });
 };
 
-const dismissNsfwWarningIfVisible = () => {
-    cy.get("body").then((body) => {
-        const modal = body.find(".SyndicationNsfwModal");
-
-        if (modal.length === 0) {
-            return;
-        }
-
-        if (!modal.is(":visible")) {
-            return;
-        }
-
-        cy.contains(".SyndicationNsfwModal button", "Continue to site").click();
-        cy.contains(".SyndicationNsfwModal", "18+ content").should("not.exist");
-    });
-};
-
 describe("orders", () => {
     it("shows the orders navigation entry on desktop when the user has orders", () => {
         cy.viewport(1440, 900);
         mountOrdersRoute(routes.home.route);
-        dismissNsfwWarningIfVisible();
+        dismissNsfwModal();
 
         cy.contains(".AppHeader__menuLink", "Orders", { timeout: 20000 }).should("be.visible");
         cy.contains(".AppHeader__menuLink", "Orders")
@@ -43,7 +26,7 @@ describe("orders", () => {
     it("shows the orders navigation button on mobile when the user has orders", () => {
         cy.viewport(390, 844);
         mountOrdersRoute(routes.home.route);
-        dismissNsfwWarningIfVisible();
+        dismissNsfwModal();
 
         cy.get(".AppHeader__ordersLink", { timeout: 20000 }).should("be.visible");
         cy.get(".AppHeader__ordersLink .ant-badge-count").should("contain.text", "2");
@@ -54,7 +37,7 @@ describe("orders", () => {
     it("renders seller orders and lets the user switch their status", () => {
         cy.viewport(1440, 900);
         mountOrdersRoute(routes.orders.route);
-        dismissNsfwWarningIfVisible();
+        dismissNsfwModal();
 
         cy.contains("h2", "Orders", { timeout: 20000 }).should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })
@@ -111,7 +94,7 @@ describe("orders", () => {
     it("renders seller orders on mobile with the compact shipping details layout", () => {
         cy.viewport(390, 844);
         mountOrdersRoute(routes.orders.route);
-        dismissNsfwWarningIfVisible();
+        dismissNsfwModal();
 
         cy.contains("h2", "Orders", { timeout: 20000 }).should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })

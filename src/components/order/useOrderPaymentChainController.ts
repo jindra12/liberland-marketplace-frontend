@@ -7,7 +7,6 @@ import { useUpdateOrderMutation, useUpdateUserByIdMutation } from "../hooks";
 import {
     appendPaymentWalletSelection,
     appendTransactionHashRows,
-    collectProductIdsForChain,
     hasPaymentWalletSelection,
     toExistingTransactionHashRows,
     toUserUpdateWalletInputs,
@@ -116,11 +115,10 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
     );
 
     const saveTransactionHash = async (txHash: string): Promise<boolean> => {
-        const productIds = collectProductIdsForChain(props.entry.order, props.chainPayment.chain);
         const existingRows = toExistingTransactionHashRows(props.entry.order);
         const { nextRows } = appendTransactionHashRows({
             existingRows,
-            productIds,
+            productIds: props.chainPayment.productIds,
             chain: props.chainPayment.chain,
             txHash,
         });

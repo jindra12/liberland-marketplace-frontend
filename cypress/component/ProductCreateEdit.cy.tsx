@@ -1,5 +1,6 @@
 import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    dismissNsfwModal,
     fillFormField,
     gqlAlias,
     getRouteEntityId,
@@ -52,14 +53,7 @@ const createOwnedCompany = (companyName: string) => {
     mountAuthenticatedMainRoute("/publish", true, (win) => {
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
     });
-    cy.get("body", { timeout: 20000 }).then(($body) => {
-        if ($body.find(".SyndicationNsfwModal").length > 0) {
-            cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 })
-                .should("be.visible")
-                .click({ force: true });
-            cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("not.be.visible");
-        }
-    });
+    dismissNsfwModal();
     cy.get("body", { timeout: 30000 }).should(($body) => {
         expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
     });
@@ -93,14 +87,7 @@ describe("product create/edit", () => {
 
         createOwnedCompany(ownedCompanyName);
         cy.routerNavigate("/publish");
-        cy.get("body", { timeout: 20000 }).then(($body) => {
-            if ($body.find(".SyndicationNsfwModal").length > 0) {
-                cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 })
-                    .should("be.visible")
-                    .click({ force: true });
-                cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("not.be.visible");
-            }
-        });
+        dismissNsfwModal();
         cy.get("body", { timeout: 30000 }).then(($body) => {
             if ($body.find(".Publish__category, .Publish__productNameField").length === 0) {
                 throw new Error("Expected publish chooser or product form to be visible");
@@ -139,14 +126,7 @@ describe("product create/edit", () => {
 
         createOwnedCompany(ownedCompanyName);
         cy.routerNavigate("/publish");
-        cy.get("body", { timeout: 20000 }).then(($body) => {
-            if ($body.find(".SyndicationNsfwModal").length > 0) {
-                cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 })
-                    .should("be.visible")
-                    .click({ force: true });
-                cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("not.be.visible");
-            }
-        });
+        dismissNsfwModal();
         cy.get("body", { timeout: 30000 }).then(($body) => {
             if ($body.find(".Publish__category, .Publish__productNameField").length === 0) {
                 throw new Error("Expected publish chooser or product form to be visible");

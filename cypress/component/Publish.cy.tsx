@@ -2,6 +2,7 @@ import { UserManager } from "oidc-client-ts";
 
 import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     mountAuthenticatedMainRoute,
@@ -106,9 +107,7 @@ describe("publish", () => {
             redirectUrl = signinRequest.url;
         });
 
-        cy.get(".SyndicationNsfwModal", { timeout: 20000 }).should("be.visible");
-        cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 }).click();
-        cy.get(".SyndicationNsfwModal", { timeout: 20000 }).should("not.be.visible");
+        dismissNsfwModal();
         cy.get(".AppHeader__authBtn", { timeout: 20000 }).should("contain.text", "Log in").click();
         cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op", { timeout: 20000 })

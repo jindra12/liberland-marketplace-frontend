@@ -1,6 +1,7 @@
 import { activeFixtures, resetGraphQLMock } from "../support/graphqlMock/runtimeState";
 
 import { COOP_SERVER_URL, MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
+import { dismissNsfwModal } from "../support/component-tests/utils";
 import {
     mountAuthenticatedDetailRoute,
     mountMainRoute,
@@ -13,12 +14,6 @@ describe("syndication detail", () => {
         resetGraphQLMock();
     });
 
-    const dismissNsfwWarning = () => {
-        cy.contains("18+ content").should("be.visible");
-        cy.contains(".SyndicationNsfwModal button", "Continue to site").click();
-        cy.get(".SyndicationNsfwModal").should("not.be.visible");
-    };
-
     it("shows endpoint metadata and share controls for an enabled endpoint", () => {
         mountMainRoute(syndicationDetailRoute(MAIN_SERVER_URL));
         waitForCollectionQuery(
@@ -29,7 +24,7 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwWarning();
+        dismissNsfwModal();
         cy.get(".SyndicationDetail").should("be.visible");
         cy.contains(".EntityDetail__title", "Main").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Enabled").should("be.visible");
@@ -58,7 +53,7 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwWarning();
+        dismissNsfwModal();
         cy.get(".SyndicationDetail").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("be.visible");
         cy.get(".ShareSection").should("be.visible");
@@ -83,7 +78,7 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwWarning();
+        dismissNsfwModal();
         cy.get(".SyndicationDetail__description").should("not.exist");
         cy.get(".EntityDetail > .ant-divider").should("have.length", 2);
         cy.get(".ShareSection").should("be.visible");

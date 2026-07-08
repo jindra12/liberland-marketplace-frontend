@@ -1,5 +1,8 @@
+import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    addToCart,
+    dismissNsfwModal,
     fillFormField,
     mountAnonymousRoute,
     screenshotDetailStep,
@@ -7,9 +10,11 @@ import {
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
-const anonymousCartSecrets = {
-    [MAIN_SERVER_URL]: "anon-shopping-main-secret",
-    [COOP_SERVER_URL]: "anon-shopping-coop-secret",
+const buildAnonymousCartSecrets = (suffix: string) => {
+    return {
+        [MAIN_SERVER_URL]: `anon-shopping-main-secret-${suffix}`,
+        [COOP_SERVER_URL]: `anon-shopping-coop-secret-${suffix}`,
+    };
 };
 
 const fillOrderAddress = () => {
@@ -22,26 +27,60 @@ const fillOrderAddress = () => {
     fillFormField("Country", "Liberland");
 };
 
-const openProduct = (serverUrl: string, route: string, id: string, title: string) => {
-    mountAnonymousRoute(route, [serverUrl], anonymousCartSecrets);
+const openProduct = (serverUrl: string, route: string, id: string, title: string, cartSecrets: Record<string, string>) => {
+    mountAnonymousRoute(route, [serverUrl], cartSecrets, (win) => {
+        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
+    });
     waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
     cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    dismissNsfwModal();
     cy.get(".ProductDetail").scrollIntoView();
     screenshotDetailStep(`anonymous-shopping-${id}-detail`);
 };
 
 describe("anonymous shopping", () => {
+    beforeEach(() => {
+        cy.clearLocalStorage();
+    });
+
     it("builds mixed server carts and shows the expected chain payment split", () => {
-        openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-harbor-lantern"), "product-harbor-lantern", "Harbor Lantern");
-        openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-solar-widget"), "product-solar-widget", "Solar Widget");
-        openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-solar-rig"), "product-solar-rig", "Solar Rig");
-        openProduct(MAIN_SERVER_URL, detailRoute("/products-services", "product-shore-kit"), "product-shore-kit", "Shore Kit");
+        const cartSecrets = buildAnonymousCartSecrets(`mixed-${Date.now()}`);
+
+        openProduct(
+            MAIN_SERVER_URL,
+            detailRoute("/products-services", "product-harbor-lantern"),
+            "product-harbor-lantern",
+            "Harbor Lantern",
+            cartSecrets,
+        );
+        openProduct(
+            MAIN_SERVER_URL,
+            detailRoute("/products-services", "product-solar-widget"),
+            "product-solar-widget",
+            "Solar Widget",
+            cartSecrets,
+        );
+        openProduct(
+            MAIN_SERVER_URL,
+            detailRoute("/products-services", "product-solar-rig"),
+            "product-solar-rig",
+            "Solar Rig",
+            cartSecrets,
+        );
+        openProduct(
+            MAIN_SERVER_URL,
+            detailRoute("/products-services", "product-shore-kit"),
+            "product-shore-kit",
+            "Shore Kit",
+            cartSecrets,
+        );
 
         openProduct(
             COOP_SERVER_URL,
             detailRoute("/products-services", "coop-product-harbor-ether-lantern", COOP_SERVER_URL),
             "coop-product-harbor-ether-lantern",
             "Harbor Ether Lantern",
+            cartSecrets,
         );
 
         openProduct(
@@ -49,9 +88,10 @@ describe("anonymous shopping", () => {
             detailRoute("/products-services", "coop-product-tide-lamp", COOP_SERVER_URL),
             "coop-product-tide-lamp",
             "Tide Lamp",
+            cartSecrets,
         );
 
-        mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], anonymousCartSecrets);
+        mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], cartSecrets);
         cy.contains("Proceed to order").click();
         cy.contains("h2", "Order").should("be.visible");
         screenshotStep("anonymous-shopping-order-form");

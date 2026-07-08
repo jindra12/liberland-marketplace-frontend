@@ -1,5 +1,6 @@
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
+    dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     screenshotStep,
@@ -91,12 +92,7 @@ describe("share controls", () => {
             },
         );
         cy.contains("h1", "Harbor Labs", { timeout: 20000 }).should("be.visible");
-        cy.get("body").then(($body) => {
-            if ($body.find(".SyndicationNsfwModal").length > 0) {
-                cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 }).click();
-                cy.contains(".SyndicationNsfwModal", "18+ content").should("not.exist");
-            }
-        });
+        dismissNsfwModal();
 
         cy.get(".ShareSection", { timeout: 20000 })
             .find('button[aria-label="Repost content"]')

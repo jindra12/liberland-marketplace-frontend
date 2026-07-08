@@ -119,6 +119,8 @@
         "test:ct:startup:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/StartupMutation.cy.tsx",
         "test:ct:anonymous-shopping": "yarn cypress:run --component --browser electron --spec cypress/component/AnonymousShopping.cy.tsx",
         "test:ct:anonymous-shopping:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/AnonymousShopping.cy.tsx",
+        "test:ct:anonymous-shopping-same-chain": "yarn cypress:run --component --browser electron --spec cypress/component/AnonymousShoppingSameChain.cy.tsx",
+        "test:ct:anonymous-shopping-same-chain:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/AnonymousShoppingSameChain.cy.tsx",
         "test:ct:anonymous-shopping-mobile": "yarn cypress:run --component --browser electron --spec cypress/component/AnonymousShoppingMobile.cy.tsx",
         "test:ct:anonymous-shopping-mobile:headed": "yarn cypress:run --component --browser electron --headed --spec cypress/component/AnonymousShoppingMobile.cy.tsx",
         "test:ct:wallet-stub": "yarn cypress:run --component --browser electron --spec cypress/component/WalletStub.cy.tsx",

@@ -4,10 +4,7 @@ import { Grid, Typography } from "antd";
 
 import { OrderPaymentLockProvider } from "./OrderPaymentLockContext";
 import { OrderPaymentOrderCard } from "./OrderPaymentOrderCard";
-import {
-    collectOrderChainPaymentAmounts,
-    resolveOrderRecipientAddress,
-} from "./payment/utils";
+import { collectOrderChainPaymentAmounts } from "./payment/utils";
 import type { PaymentProfileUsersByUrl, SubmittedOrder } from "./types";
 
 type OrderPaymentStepProps = {
@@ -26,7 +23,7 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
         return (
             count +
             collectOrderChainPaymentAmounts(entry.order).filter((chainPayment) => {
-                return Boolean(resolveOrderRecipientAddress(entry.order, chainPayment.chain));
+                return Boolean(chainPayment.recipient);
             }).length
         );
     }, 0);

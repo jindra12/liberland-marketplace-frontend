@@ -31,8 +31,8 @@ export const buildOrderEntryKey = (url: string, orderId: string): string => {
     return `${url}::${orderId}`;
 };
 
-export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain): string => {
-    return `${entry.url}::${entry.order.id}::${chain}`;
+export const buildPaymentKey = (entry: SubmittedOrder, chain: CryptoChain, recipient?: string): string => {
+    return `${entry.url}::${entry.order.id}::${chain}::${recipient || ""}`;
 };
 
 const resolveItemPaymentChain = (item: OrderItem): CryptoChain | undefined => {
@@ -40,6 +40,23 @@ const resolveItemPaymentChain = (item: OrderItem): CryptoChain | undefined => {
     const companyAddress = getPrimaryCryptoAddress(item.product?.company);
 
     return toCryptoChain(productAddress?.chain) ?? toCryptoChain(companyAddress?.chain);
+};
+
+const resolveItemPaymentRecipient = (item: OrderItem, chain: CryptoChain): string | undefined => {
+    const productAddress = getPrimaryCryptoAddress(item.product);
+    const companyAddress = getPrimaryCryptoAddress(item.product?.company);
+    const productChain = toCryptoChain(productAddress?.chain);
+    const companyChain = toCryptoChain(companyAddress?.chain);
+
+    if (productChain === chain && productAddress?.address) {
+        return productAddress.address;
+    }
+
+    if (companyChain === chain && companyAddress?.address) {
+        return companyAddress.address;
+    }
+
+    return undefined;
 };
 
 const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | null | undefined => {
@@ -229,60 +246,54 @@ export const toUserUpdateWalletInputs = (wallets: PaymentWalletSelection[]): Mut
     }));
 };
 
-export const collectProductIdsForChain = (order: Pick<OrderForPayments, "items">, chain: CryptoChain): string[] => {
-    return Array.from(
-        new Set(
-            (order.items ?? []).reduce<string[]>((productIds, item) => {
-                const productId = item.product?.id;
-
-                if (!productId || resolveItemPaymentChain(item) !== chain) {
-                    return productIds;
-                }
-
-                productIds.push(productId);
-                return productIds;
-            }, []),
-        ),
-    );
-};
-
 export type ChainPaymentAmount = {
     chain: CryptoChain;
+    recipient: string;
+    productIds: string[];
     amountInSmallestUnit: bigint;
     amount: string;
 };
 
 export const collectOrderChainPaymentAmounts = (order: Pick<OrderForPayments, "items">): ChainPaymentAmount[] => {
-    const totals = (order.items ?? []).reduce<Partial<Record<CryptoChain, bigint>>>((result, item) => {
+    const totals = (order.items ?? []).reduce<Record<string, ChainPaymentAmount>>((result, item) => {
         const chain = resolveItemPaymentChain(item);
+        const productId = item.product?.id;
 
-        if (!chain) {
+        if (!chain || !productId) {
+            return result;
+        }
+
+        const recipient = resolveItemPaymentRecipient(item, chain);
+
+        if (!recipient) {
             return result;
         }
 
         const quantity = BigInt(item.quantity ?? 0);
         const unitPrice = toFixedNativeUnits(resolveProductNativePrice(item, chain), CRYPTO_CHAIN_DECIMALS[chain]);
         const lineTotal = unitPrice * quantity;
+        const key = `${chain}::${recipient}`;
+        const current = result[key];
+        const nextAmountInSmallestUnit = (current?.amountInSmallestUnit ?? 0n) + lineTotal;
+        const nextProductIds = current?.productIds.includes(productId)
+            ? current.productIds
+            : [...(current?.productIds ?? []), productId];
 
         return {
             ...result,
-            [chain]: (result[chain] ?? 0n) + lineTotal,
+            [key]: {
+                chain,
+                recipient,
+                productIds: nextProductIds,
+                amountInSmallestUnit: nextAmountInSmallestUnit,
+                amount: formatFixedNativeUnits(nextAmountInSmallestUnit, CRYPTO_CHAIN_DECIMALS[chain]),
+            },
         };
     }, {});
 
-    return CRYPTO_CHAIN_ORDER.map((chain) => {
-        const amountInSmallestUnit = totals[chain] ?? 0n;
-
-        if (amountInSmallestUnit <= 0n) {
-            return undefined;
-        }
-
-        return {
-            chain,
-            amountInSmallestUnit,
-            amount: formatFixedNativeUnits(amountInSmallestUnit, CRYPTO_CHAIN_DECIMALS[chain]),
-        };
-    }).filter((entry): entry is ChainPaymentAmount => Boolean(entry));
+    return CRYPTO_CHAIN_ORDER.flatMap((chain) =>
+        Object.values(totals).filter((entry) => entry.chain === chain && entry.amountInSmallestUnit > 0n),
+    );
 };
 
 export const toExistingTransactionHashRows = (

@@ -1,5 +1,6 @@
 import { MAIN_SERVER_URL, editRoute, detailRoute } from "../support/component-tests/constants";
 import {
+    dismissNsfwModal,
     assertFormFieldValue,
     fillFormField,
     getRouteEntityId,
@@ -44,17 +45,6 @@ const assertCompanyName = (companyId: string, expectedTitle: string) => {
     });
 };
 
-const continuePastNsfwModal = () => {
-    cy.get("body", { timeout: 20000 }).then(($body) => {
-        if ($body.find(".SyndicationNsfwModal").length > 0) {
-            cy.contains(".SyndicationNsfwModal button", "Continue to site", { timeout: 20000 })
-                .should("be.visible")
-                .click({ force: true });
-            cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("not.be.visible");
-        }
-    });
-};
-
 const openCompanyPublishForm = () => {
     cy.get("body", { timeout: 30000 }).should(($body) => {
         expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
@@ -79,7 +69,7 @@ describe("company create/edit", () => {
         mountAuthenticatedMainRoute("/publish", true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
-        continuePastNsfwModal();
+        dismissNsfwModal();
         openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);
@@ -111,7 +101,7 @@ describe("company create/edit", () => {
         mountAuthenticatedMainRoute("/publish", true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
-        continuePastNsfwModal();
+        dismissNsfwModal();
         openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);

@@ -246,12 +246,16 @@ export const mountAnonymousRoute = (
     route: string,
     serverUrls: string[] = [BACKEND_URL],
     cartSecrets?: Record<string, string>,
+    beforeMount?: (win: Window) => void,
 ) => {
     cy.window().then((win) => {
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         if (cartSecrets) {
             const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
             win.localStorage.setItem(CART_SECRETS_INDEX_KEY, JSON.stringify(entries));
+        }
+        if (beforeMount) {
+            beforeMount(win);
         }
         win.history.pushState({}, "", route);
     });
@@ -339,6 +343,73 @@ export const uploadTestImage = () => {
 export const addToCart = () => {
     cy.get('button[aria-label="Add to cart"]').click();
     cy.get(".AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+};
+
+export const dismissNsfwModal = (action: "continue" | "disable" = "continue") => {
+    const buttonLabel = action === "disable" ? "Disable NSFW servers" : "Continue to site";
+
+    cy.get("body").then(($body) => {
+        const modal = $body
+            .find(".SyndicationNsfwModal, .ant-modal")
+            .filter((_, element) => Cypress.$(element).text().includes("18+ content"))
+            .first();
+
+        if (modal.length === 0 || !modal.is(":visible")) {
+            return;
+        }
+
+        cy.contains(".SyndicationNsfwModal button, .ant-modal button", buttonLabel, { timeout: 20000 })
+            .first()
+            .click();
+        cy.contains(".SyndicationNsfwModal, .ant-modal", "18+ content", { timeout: 20000 }).should("not.exist");
+    });
+};
+
+export const clearServerCarts = (serverUrl: string) => {
+    const listCartsQuery = `
+        query ListCarts {
+            Carts(draft: false, limit: 1000) {
+                docs {
+                    id
+                }
+            }
+        }
+    `;
+    const deleteCartMutation = `
+        mutation DeleteCart($id: String!, $trash: Boolean) {
+            deleteCart(id: $id, trash: $trash) {
+                id
+            }
+        }
+    `;
+
+    return cy
+        .request({
+            body: {
+                query: listCartsQuery,
+            },
+            method: "POST",
+            url: `${serverUrl}/api/graphql`,
+        })
+        .then((response: Cypress.Response<{ data?: { Carts?: { docs?: { id?: string }[] } } }>) => {
+            const cartIds = (response.body.data?.Carts?.docs || []).flatMap((cart) => {
+                return cart.id ? [cart.id] : [];
+            });
+
+            cartIds.forEach((cartId) => {
+                cy.request({
+                    body: {
+                        query: deleteCartMutation,
+                        variables: {
+                            id: cartId,
+                            trash: false,
+                        },
+                    },
+                    method: "POST",
+                    url: `${serverUrl}/api/graphql`,
+                });
+            });
+        });
 };
 
 export const removeFromCart = () => {

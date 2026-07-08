@@ -23,10 +23,12 @@ type OrderPaymentChainRowProps = {
 };
 
 export const OrderPaymentChainRow: React.FunctionComponent<OrderPaymentChainRowProps> = (props) => {
-    const recipient = resolveOrderRecipientAddress(props.entry.order, props.chainPayment.chain);
+    const recipient =
+        props.chainPayment.recipient ||
+        resolveOrderRecipientAddress(props.entry.order, props.chainPayment.chain);
     const hasExpectedAmount = props.chainPayment.amountInSmallestUnit > 0n;
     const canPay = Boolean(recipient && hasExpectedAmount);
-    const paymentKey = buildPaymentKey(props.entry, props.chainPayment.chain);
+    const paymentKey = buildPaymentKey(props.entry, props.chainPayment.chain, recipient);
     const action = (
         <OrderPaymentChainAction
             canPay={canPay}

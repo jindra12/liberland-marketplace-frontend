@@ -5,6 +5,7 @@ import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constan
 import type { URL as EndpointURL } from "../../src/types";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { dismissNsfwModal } from "../support/component-tests/utils";
 
 const buildEndpointUrls = (overrides: EndpointURL[]): EndpointURL[] => {
     return overrides;
@@ -38,7 +39,7 @@ describe("syndication nsfw modal", () => {
         ]);
 
         cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
-        cy.contains(".SyndicationNsfwModal button", "Continue to site").click();
+        dismissNsfwModal();
         getConsentValue().should("eq", "true");
         cy.contains(".SyndicationNsfwModal").should("not.exist");
     });
@@ -54,7 +55,7 @@ describe("syndication nsfw modal", () => {
         ]);
 
         cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
-        cy.contains(".SyndicationNsfwModal button", "Disable NSFW servers").click();
+        dismissNsfwModal("disable");
         cy.contains(".SyndicationNsfwModal").should("not.exist");
 
         cy.window().then((win) => {
