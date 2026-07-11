@@ -2,12 +2,16 @@ import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generate
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import {
+    mountAnonymousRoute,
+    seedNsfwConsent,
+    waitForCollectionQuery,
+    waitForDetailQuery,
+} from "../support/component-tests/utils";
 
 describe("venture deep dive", () => {
     beforeEach(() => {
-        mountMainRoute(detailRoute("/ventures", "startup-sky-relay"));
-        waitForRouteLoad(".LoadingSkeleton--detail");
+        mountAnonymousRoute(detailRoute("/ventures", "startup-sky-relay"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "StartupById",

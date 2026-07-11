@@ -1,20 +1,12 @@
-import { homepageQueries, homepageMobileQueries, mountMainRoute, screenshotStep, waitForCollectionQuery, waitForPageShell } from "../support/component-tests/utils";
+import { homepageQueries, homepageMobileQueries, mountMainHome, screenshotStep, waitForCollectionQuery, waitForPageShell, seedNsfwConsent } from "../support/component-tests/utils";
 import { activeFixtures } from "../support/graphqlMock/runtimeState";
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { MARKET_ACCORDION_POSTS_QUERY_LIMIT } from "../../src/components/splash/constants";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
-
-const seedNsfwConsent = () => {
-    cy.window().then((win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
-};
 
 describe("homepage", () => {
     it("shows the splash page on desktop", () => {
         cy.viewport(1440, 1200);
-        seedNsfwConsent();
-        mountMainRoute("/");
+        mountMainHome(seedNsfwConsent);
         waitForPageShell();
         homepageQueries();
         cy.pause();
@@ -57,7 +49,7 @@ describe("homepage", () => {
         cy.window().then(() => {
             activeFixtures.companies.splice(0, activeFixtures.companies.length);
         });
-        mountMainRoute("/");
+        mountMainHome(seedNsfwConsent);
         waitForPageShell();
         waitForCollectionQuery(MAIN_SERVER_URL, "ListProducts", { limit: 7, page: 1 }, "Products", "Solar Widget", 0);
         waitForCollectionQuery(MAIN_SERVER_URL, "ListJobs", { limit: 7, page: 1 }, "Jobs", "Dockmaster", 0);
@@ -83,7 +75,7 @@ describe("homepage", () => {
 
     it("shows the splash page on mobile", () => {
         cy.viewport(390, 844);
-        mountMainRoute("/");
+        mountMainHome(seedNsfwConsent);
         waitForPageShell();
         cy.pause();
         cy.get(".SplashPage").should("be.visible");

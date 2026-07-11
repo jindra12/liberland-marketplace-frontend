@@ -3,10 +3,10 @@ import {
     dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
+    seedNsfwConsent,
     screenshotStep,
     selectFormOption,
 } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const REPOST_DESCRIPTION = "A quick note with **Markdown**.";
 
@@ -67,7 +67,7 @@ describe("share controls", () => {
 
     it("opens a centered share modal with a normal title", () => {
         cy.viewport(767, 1200);
-        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
         cy.contains("h1", "Harbor Labs").should("be.visible");
 
         cy.get(".ShareSection--mobile .NativeShareButton").should("be.visible").click();
@@ -87,9 +87,7 @@ describe("share controls", () => {
             [MAIN_SERVER_URL],
             undefined,
             true,
-            (win) => {
-                win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-            },
+            seedNsfwConsent,
         );
         cy.contains("h1", "Harbor Labs", { timeout: 20000 }).should("be.visible");
         dismissNsfwModal();

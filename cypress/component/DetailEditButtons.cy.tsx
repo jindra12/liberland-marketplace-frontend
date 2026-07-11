@@ -1,7 +1,7 @@
 import { MAIN_SERVER_URL, detailRoute } from "../support/component-tests/constants";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import {
     mountAuthenticatedDetailRoute,
+    seedNsfwConsent,
     screenshotStep,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
@@ -60,9 +60,7 @@ const assertEditButtonIsCompact = () => {
 };
 
 const openDetailPage = (goal: DetailEditButtonGoal) => {
-    mountAuthenticatedDetailRoute(goal.route, [MAIN_SERVER_URL], undefined, true, (win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
+    mountAuthenticatedDetailRoute(goal.route, [MAIN_SERVER_URL], undefined, true, seedNsfwConsent);
     waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.variables, goal.operationName.replace("ById", ""), goal.variables.id, goal.title);
     assertEditButtonIsCompact();
     screenshotStep(`detail-edit-button-${goal.operationName}-${goal.title}`);

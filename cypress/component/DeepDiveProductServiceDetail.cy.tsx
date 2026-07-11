@@ -6,20 +6,14 @@ import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { screenshotStep } from "../support/component-tests/utils";
 import {
-    mountMainRoute,
+    mountAnonymousRoute,
     waitForCollectionQuery,
     waitForDetailQuery,
+    seedNsfwConsent,
 } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
-
-const seedNsfwConsent = () => {
-    cy.window().then((win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
-};
 
 const openMoonLampDetail = () => {
-    mountMainRoute(detailRoute("/products-services", "product-moon-lamp"));
+    mountAnonymousRoute(detailRoute("/products-services", "product-moon-lamp"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
     waitForDetailQuery(
         MAIN_SERVER_URL,
         "ProductById",
@@ -34,7 +28,6 @@ describe("product/service detail", () => {
     beforeEach(() => {
         resetGraphQLMock();
         cy.viewport(1200, 1200);
-        seedNsfwConsent();
     });
 
     it("shows title, company identity, pricing, properties, links, subscribe, and comments", () => {

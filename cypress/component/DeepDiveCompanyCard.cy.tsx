@@ -2,12 +2,13 @@ import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constan
 import {
     mountAnonymousRoute,
     screenshotStep,
+    seedNsfwConsent,
     waitForCollectionQuery,
 } from "../support/component-tests/utils";
 
 describe("company card", () => {
     const loadCompanyCard = () => {
-        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
     };
 
     it("shows title, avatar, website, share controls, and overflow link", () => {

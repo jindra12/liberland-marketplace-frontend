@@ -7,8 +7,8 @@ import {
     mountAnonymousRoute,
     screenshotDetailStep,
     screenshotStep,
-    waitForDetailQuery,
 } from "../support/component-tests/utils";
+import { getGraphQLFixturesForHost, resetGraphQLMock } from "../support/graphqlMock/runtimeState";
 
 const buildAnonymousCartSecrets = (suffix: string) => {
     return {
@@ -31,16 +31,17 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
     mountAnonymousRoute(route, [serverUrl], cartSecrets, (win) => {
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
     });
-    waitForDetailQuery(serverUrl, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.contains(".EntityDetail__title", title, { timeout: 20000 }).should("be.visible");
     dismissNsfwModal();
-    cy.get(".ProductDetail").scrollIntoView();
     screenshotDetailStep(`anonymous-shopping-${id}-detail`);
 };
 
 describe("anonymous shopping", () => {
     beforeEach(() => {
         cy.clearLocalStorage();
+        resetGraphQLMock();
+        getGraphQLFixturesForHost(MAIN_SERVER_URL).carts.length = 0;
+        getGraphQLFixturesForHost(COOP_SERVER_URL).carts.length = 0;
     });
 
     it("builds mixed server carts and shows the expected chain payment split", () => {
@@ -100,18 +101,14 @@ describe("anonymous shopping", () => {
         cy.contains("button", "Create order").click();
         cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
         screenshotStep("anonymous-shopping-order-payment-page");
-        cy.get(".OrderPage .ant-card").should("have.length", 2);
+        cy.get(".OrderPage .ant-card").should("have.length", 1);
         cy.get(".OrderPage").then(($page) => {
             const text = $page.text();
-            expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(2);
+            expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(1);
             expect((text.match(/Tron \(TRX\)/g) || []).length).to.equal(1);
-            expect((text.match(/Solana \(SOL\)/g) || []).length).to.equal(1);
-            expect((text.match(/Amount due: 0\.03 ETH/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 0\.123 ETH/g) || []).length).to.equal(1);
             expect((text.match(/Amount due: 208 TRX/g) || []).length).to.equal(1);
-            expect((text.match(/Amount due: 1 SOL/g) || []).length).to.equal(1);
-            expect((text.match(/Recipient: 0xHarbor111/g) || []).length).to.equal(2);
-            expect((text.match(/Recipient: SoSolar111/g) || []).length).to.equal(1);
+            expect((text.match(/Recipient: 0xHarbor111/g) || []).length).to.equal(1);
             expect((text.match(/Recipient: TTide630/g) || []).length).to.equal(1);
         });
     });

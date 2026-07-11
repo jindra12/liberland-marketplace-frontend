@@ -2,7 +2,12 @@ import { Comment_ReplyPostRelationshipInputRelationTo } from "../../../src/gener
 import { COMMENT_RELATION_TO_QUERY_RELATION, ENTITY_COMMENTS_DEFAULT_LIMIT } from "../../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../../support/component-tests/constants";
-import { gqlAlias, mountAuthenticatedMainRoute } from "../../support/component-tests/utils";
+import {
+    dismissNsfwModal,
+    gqlAlias,
+    mountAuthenticatedMainRoute,
+    seedNsfwConsent,
+} from "../../support/component-tests/utils";
 import type { GraphQLVariables } from "../../support/component-tests/types";
 
 export const DESKTOP_VIEWPORT = {
@@ -95,7 +100,7 @@ export const waitForDetailRequest = (
 };
 
 const mountPostDetail = () => {
-    mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"));
+    mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), true, seedNsfwConsent);
     waitForDetailRequest("PostById", { id: "post-harbor-operations-digest" }, "Harbor Operations Digest");
 };
 
@@ -172,7 +177,7 @@ export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
         cy.get("@clipboardWriteText").should("have.been.calledWith", expectedShareUrl);
 
         cy.routerNavigate(new URL(String(expectedShareUrl)).pathname);
-        waitForDetailRequest("CommentById", { id: commentId }, "Comment");
+        cy.contains(".CommentDetailPage", "Comment").should("be.visible");
         cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
         cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
             if (typeof req.body.query === "string" && req.body.query.includes("CreateReplyToComment")) {
@@ -304,7 +309,7 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
 };
 
 export const replyToReplyChain = (viewport: ViewportConfig) => {
-    mountAuthenticatedMainRoute(detailRoute("/comments", "comment-startup-sky-1"));
+    mountAuthenticatedMainRoute(detailRoute("/comments", "comment-startup-sky-1"), true, seedNsfwConsent);
     waitForDetailRequest("CommentById", { id: "comment-startup-sky-1" }, "Comment");
     cy.contains(".CommentDetailPage", "Sky Relay could use more testers.").should("be.visible");
     cy.contains('.CommentCard[data-comment-id="comment-startup-sky-1"]', "Sky Relay could use more testers.")

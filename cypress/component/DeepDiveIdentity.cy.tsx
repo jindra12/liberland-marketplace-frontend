@@ -1,9 +1,9 @@
 import { COOP_SERVER_URL, detailRoute, MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
-import { mountAnonymousRoute, waitForCollectionQuery } from "../support/component-tests/utils";
+import { mountAnonymousRoute, seedNsfwConsent, waitForCollectionQuery } from "../support/component-tests/utils";
 
 describe("identity deep dive", () => {
     beforeEach(() => {
-        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
     });
 
     it("shows the tabs and related market cards", () => {
@@ -52,7 +52,7 @@ describe("identity deep dive", () => {
     });
 
     it("links back to the syndication detail when multiple servers are enabled", () => {
-        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, seedNsfwConsent);
 
         cy.get(".IdentityDetail__syndicationLink", { timeout: 20000 })
             .should("be.visible")

@@ -3,14 +3,15 @@ import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
-    mountMainRoute,
+    mountAnonymousRoute,
+    seedNsfwConsent,
     waitForCollectionQuery,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
 
 describe("company deep dive", () => {
     beforeEach(() => {
-        mountMainRoute(detailRoute("/companies", "company-harbor-labs"));
+        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",

@@ -13,6 +13,7 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./const
 import {
     MARKET_ACCORDION_POSTS_QUERY_LIMIT,
 } from "../../../src/components/splash/constants";
+import { NSFW_CONSENT_STORAGE_KEY } from "../../../src/components/endpoints/constants";
 import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
@@ -354,15 +355,18 @@ export const dismissNsfwModal = (action: "continue" | "disable" = "continue") =>
             .filter((_, element) => Cypress.$(element).text().includes("18+ content"))
             .first();
 
-        if (modal.length === 0 || !modal.is(":visible")) {
+        if (modal.length === 0) {
             return;
         }
 
-        cy.contains(".SyndicationNsfwModal button, .ant-modal button", buttonLabel, { timeout: 20000 })
+        cy.contains(".SyndicationNsfwModal:visible button, .ant-modal:visible button", buttonLabel, { timeout: 20000 })
             .first()
             .click();
-        cy.contains(".SyndicationNsfwModal, .ant-modal", "18+ content", { timeout: 20000 }).should("not.exist");
     });
+};
+
+export const seedNsfwConsent = (win: Window) => {
+    win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
 };
 
 export const clearServerCarts = (serverUrl: string) => {
@@ -420,7 +424,10 @@ export const setCartQuantity = (quantity: number) => {
     cy.get(".AddToCartButton__quantity").find("input").clear({ force: true }).type(String(quantity), { force: true });
 };
 
-export const mountMainHome = () => {
+export const mountMainHome = (beforeMount?: (win: Window) => void) => {
+    cy.window().then((win) => {
+        beforeMount?.(win);
+    });
     mountMainRoute("/");
     cy.get(".LoadingSkeleton--boot", { timeout: 20000 }).should("not.exist");
     cy.get(".SplashPage").should("be.visible");

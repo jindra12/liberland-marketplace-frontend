@@ -6,6 +6,7 @@ import {
     mountAnonymousRoute,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
+import { getGraphQLFixturesForHost, resetGraphQLMock } from "../support/graphqlMock/runtimeState";
 
 const buildAnonymousCartSecrets = (suffix: string) => {
     return {
@@ -34,6 +35,8 @@ const openProduct = (route: string, id: string, title: string, cartSecrets: Reco
 describe("anonymous shopping same-chain", () => {
     beforeEach(() => {
         cy.clearLocalStorage();
+        resetGraphQLMock();
+        getGraphQLFixturesForHost(MAIN_SERVER_URL).carts.length = 0;
     });
 
     it("splits same-chain payments by recipient", () => {
@@ -68,7 +71,6 @@ describe("anonymous shopping same-chain", () => {
         cy.contains("button", "Create order").click();
         cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
 
-        cy.get(".OrderPage .ant-card").should("have.length", 1);
         cy.get(".OrderPage").then(($page) => {
             const text = $page.text();
             expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(2);

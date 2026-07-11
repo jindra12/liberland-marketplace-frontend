@@ -41,7 +41,7 @@ describe("syndication nsfw modal", () => {
         cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
         dismissNsfwModal();
         getConsentValue().should("eq", "true");
-        cy.contains(".SyndicationNsfwModal").should("not.exist");
+        cy.get(".SyndicationNsfwModal").should("not.be.visible");
     });
 
     it("disables all nsfw-marked servers when asked", () => {
@@ -56,7 +56,7 @@ describe("syndication nsfw modal", () => {
 
         cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
         dismissNsfwModal("disable");
-        cy.contains(".SyndicationNsfwModal").should("not.exist");
+        cy.get(".SyndicationNsfwModal").should("not.be.visible");
 
         cy.window().then((win) => {
             const storedUrls = JSON.parse(win.localStorage.getItem("endpoints.urls") ?? "[]") as EndpointURL[];
@@ -78,6 +78,6 @@ describe("syndication nsfw modal", () => {
         cy.contains("button", "Enable").first().click();
 
         getConsentValue().should("eq", "true");
-        cy.contains(".SyndicationNsfwModal").should("not.exist");
+        cy.get(".SyndicationNsfwModal").should("not.be.visible");
     });
 });

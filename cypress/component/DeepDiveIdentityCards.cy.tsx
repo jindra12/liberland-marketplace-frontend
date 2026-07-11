@@ -2,12 +2,13 @@ import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constan
 import {
     mountAnonymousRoute,
     screenshotStep,
+    seedNsfwConsent,
     waitForCollectionQuery,
 } from "../support/component-tests/utils";
 
 describe("identity tabs", () => {
     const loadIdentityTabs = () => {
-        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL]);
+        mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
     };
 
     it("shows tabs and desktop cards", () => {

@@ -12,21 +12,14 @@ import {
     screenshotStep,
     waitForPageShell,
     waitForSearchQuery,
+    seedNsfwConsent,
 } from "../support/component-tests/utils";
 import { PostRepostLink } from "../../src/components/shared/post/PostRepostLink";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
-
-const seedNsfwConsent = () => {
-    cy.window().then((win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
-};
 
 describe("lists", () => {
     beforeEach(() => {
         cy.viewport(1200, 1200);
-        seedNsfwConsent();
-        mountMainHome();
+        mountMainHome(seedNsfwConsent);
     });
 
     it("Fetches homepage queries", () => {
