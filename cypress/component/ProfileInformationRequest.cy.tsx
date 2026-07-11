@@ -29,7 +29,6 @@ describe("profile information request", () => {
 
         cy.contains(".Profile__actions button", "Request information").click();
         cy.contains(".ant-modal", "Request information", { timeout: 20000 }).should("be.visible");
-        cy.wait(1000);
         cy.get(".ant-modal-content", { timeout: 20000 }).should("be.visible").screenshot(
             `${Cypress.spec.name} profile information request modal`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
         );

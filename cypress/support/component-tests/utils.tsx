@@ -49,7 +49,6 @@ const withDefaultSort = (operationName: string, variables: GraphQLVariables): Gr
 export const screenshotDetailStep = (step: string) => {
     const nextName = `${Cypress.spec.name} ${step}`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 
-    cy.wait(1000);
     cy.get(".EntityDetail", { timeout: 20000 })
         .should("be.visible")
         .scrollIntoView()

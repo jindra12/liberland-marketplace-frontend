@@ -29,6 +29,16 @@ export const runOnViewport = (viewport: ViewportConfig, run: () => void) => {
     run();
 };
 
+export const runOnBothViewports = (run: (viewport: ViewportConfig) => void) => {
+    runOnViewport(DESKTOP_VIEWPORT, () => {
+        run(DESKTOP_VIEWPORT);
+    });
+
+    runOnViewport(MOBILE_VIEWPORT, () => {
+        run(MOBILE_VIEWPORT);
+    });
+};
+
 export const installCommentSpecExceptionGuard = () => {
     cy.on("uncaught:exception", (error) => {
         if (error.message.includes("ResizeObserver loop completed with undelivered notifications")) {

@@ -23,6 +23,12 @@ export const mountDisclaimerRoute = (viewport: DisclaimerViewport) => {
     mountAnonymousRoute("/", [MAIN_SERVER_URL], undefined, seedNsfwConsent);
 };
 
+export const runDisclaimerFlow = (viewport: DisclaimerViewport) => {
+    mountDisclaimerRoute(viewport);
+    screenshotDisclaimerDrawer(viewport);
+    walkDisclaimerPages(viewport);
+};
+
 export const screenshotDisclaimerDrawer = (viewport: DisclaimerViewport) => {
     cy.get(getDrawerButtonSelector(viewport), { timeout: 20000 }).should("be.visible").click();
     cy.contains(getDrawerSelector(viewport), getDrawerOpenLabel(viewport), { timeout: 20000 }).should("be.visible");
@@ -43,12 +49,10 @@ export const walkDisclaimerPages = (viewport: DisclaimerViewport) => {
         }
 
         cy.contains(".DisclaimersModal__title", definition.title, { timeout: 20000 }).should("be.visible");
-        cy.wait(150);
         const screenshotName = `${Cypress.spec.name} ${viewport} ${definition.key}`.replace(/[^a-zA-Z0-9]+/g, "-");
 
         if (viewport === "mobile") {
             cy.contains(".DisclaimersModal__title", definition.title).scrollIntoView();
-            cy.wait(150);
             cy.screenshot(screenshotName, {
                 capture: "viewport",
             });

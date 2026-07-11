@@ -57,7 +57,6 @@ const waitForTourStep = (title: string) => {
 };
 
 const clickNextTourStep = () => {
-    cy.wait(150);
     cy.contains(".ant-tour .ant-tour-buttons button", /Next|Finish/, { timeout: 20000 })
         .should("be.visible")
         .click({ waitForAnimations: false });
@@ -110,18 +109,23 @@ const runTourScenario = (scenario: TourScenario, auth: TourSuiteAuth, mode: Tour
         waitForTourStep(descriptor.title);
 
         if (shouldCaptureStep) {
-            cy.wait(150);
             screenshotStep(`${scenario.type}-${mode}-step-${index + 1}`, "viewport");
         }
     });
 };
 
-export const runTourSuite = (scenarios: TourScenario[], auth: TourSuiteAuth, mode: TourSuiteMode) => {
+export const runTourSuite = (scenarios: TourScenario[], auth: TourSuiteAuth) => {
     scenarios
-        .filter((scenario) => scenario.modes.includes(mode))
+        .filter((scenario) => scenario.modes.includes("desktop") || scenario.modes.includes("mobile"))
         .forEach((scenario) => {
             it(`${scenario.type} shows every step`, () => {
-                runTourScenario(scenario, auth, mode);
+                if (scenario.modes.includes("desktop")) {
+                    runTourScenario(scenario, auth, "desktop");
+                }
+
+                if (scenario.modes.includes("mobile")) {
+                    runTourScenario(scenario, auth, "mobile");
+                }
             });
         });
 };
@@ -134,7 +138,6 @@ export const runAuthPromptScreenshot = (mode: TourSuiteMode) => {
 
     const promptStep = TOUR_AUTH_PROMPT_STEPS[mode][0];
     waitForTourStep(promptStep.title);
-    cy.wait(150);
     screenshotStep(`tour-auth-prompt-${mode}`, "viewport");
 };
 

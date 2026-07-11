@@ -1,12 +1,20 @@
 import { detailRoute } from "../support/component-tests/constants";
 import { dismissNsfwModal, mountAuthenticatedMainRoute } from "../support/component-tests/utils";
-import { DESKTOP_VIEWPORT, createAndEditComment, installCommentSpecExceptionGuard, runOnViewport } from "./comments/shared";
+import {
+    createAndEditComment,
+    installCommentSpecExceptionGuard,
+    runOnBothViewports,
+} from "./comments/shared";
 
 describe("comments manage flow desktop", () => {
     beforeEach(installCommentSpecExceptionGuard);
 
     it("creates and edits a comment with company selection on desktop", () => {
-        runOnViewport(DESKTOP_VIEWPORT, () => createAndEditComment(DESKTOP_VIEWPORT));
+        runOnBothViewports((viewport) => {
+            cy.resetQL();
+            cy.clearLocalStorage();
+            createAndEditComment(viewport);
+        });
     });
 
     it("routes unverified users to the email verification warning before commenting", () => {

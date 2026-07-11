@@ -21,7 +21,6 @@ describe("syndicate modal", () => {
                 }
 
                 cy.contains(".SyndicateModal__title", title, { timeout: 20000 }).should("exist");
-                cy.wait(150);
                 cy.get(".SyndicateModal .ant-modal-content")
                     .should("exist")
                     .screenshot(`${Cypress.spec.name} ${prefix} page ${index + 1}`.replace(/[^a-zA-Z0-9]+/g, "-"));

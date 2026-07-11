@@ -36,6 +36,81 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
     screenshotDetailStep(`anonymous-shopping-${id}-detail`);
 };
 
+const runAnonymousShoppingFlow = (suffix: string) => {
+    cy.clearLocalStorage();
+    resetGraphQLMock();
+    getGraphQLFixturesForHost(MAIN_SERVER_URL).carts.length = 0;
+    getGraphQLFixturesForHost(COOP_SERVER_URL).carts.length = 0;
+    cy.viewport(1280, 1200);
+
+    const cartSecrets = buildAnonymousCartSecrets(suffix);
+
+    openProduct(
+        MAIN_SERVER_URL,
+        detailRoute("/products-services", "product-harbor-lantern"),
+        "product-harbor-lantern",
+        "Harbor Lantern",
+        cartSecrets,
+    );
+    openProduct(
+        MAIN_SERVER_URL,
+        detailRoute("/products-services", "product-solar-widget"),
+        "product-solar-widget",
+        "Solar Widget",
+        cartSecrets,
+    );
+    openProduct(
+        MAIN_SERVER_URL,
+        detailRoute("/products-services", "product-solar-rig"),
+        "product-solar-rig",
+        "Solar Rig",
+        cartSecrets,
+    );
+    openProduct(
+        MAIN_SERVER_URL,
+        detailRoute("/products-services", "product-shore-kit"),
+        "product-shore-kit",
+        "Shore Kit",
+        cartSecrets,
+    );
+
+    openProduct(
+        COOP_SERVER_URL,
+        detailRoute("/products-services", "coop-product-harbor-ether-lantern", COOP_SERVER_URL),
+        "coop-product-harbor-ether-lantern",
+        "Harbor Ether Lantern",
+        cartSecrets,
+    );
+
+    openProduct(
+        COOP_SERVER_URL,
+        detailRoute("/products-services", "coop-product-tide-lamp", COOP_SERVER_URL),
+        "coop-product-tide-lamp",
+        "Tide Lamp",
+        cartSecrets,
+    );
+
+    mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], cartSecrets);
+    cy.contains("Proceed to order").click();
+    cy.contains("h2", "Order").should("be.visible");
+    screenshotStep(`anonymous-shopping-order-form-${suffix}`);
+    fillOrderAddress();
+    screenshotStep(`anonymous-shopping-order-form-filled-${suffix}`);
+    cy.contains("button", "Create order").click();
+    cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
+    screenshotStep(`anonymous-shopping-order-payment-page-${suffix}`);
+    cy.get(".OrderPage .ant-card").should("have.length", 1);
+    cy.get(".OrderPage").then(($page) => {
+        const text = $page.text();
+        expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(1);
+        expect((text.match(/Tron \(TRX\)/g) || []).length).to.equal(1);
+        expect((text.match(/Amount due: 0\.123 ETH/g) || []).length).to.equal(1);
+        expect((text.match(/Amount due: 208 TRX/g) || []).length).to.equal(1);
+        expect((text.match(/Recipient: 0xHarbor111/g) || []).length).to.equal(1);
+        expect((text.match(/Recipient: TTide630/g) || []).length).to.equal(1);
+    });
+};
+
 describe("anonymous shopping", () => {
     beforeEach(() => {
         cy.clearLocalStorage();
@@ -45,71 +120,10 @@ describe("anonymous shopping", () => {
     });
 
     it("builds mixed server carts and shows the expected chain payment split", () => {
-        const cartSecrets = buildAnonymousCartSecrets(`mixed-${Date.now()}`);
-
-        openProduct(
-            MAIN_SERVER_URL,
-            detailRoute("/products-services", "product-harbor-lantern"),
-            "product-harbor-lantern",
-            "Harbor Lantern",
-            cartSecrets,
-        );
-        openProduct(
-            MAIN_SERVER_URL,
-            detailRoute("/products-services", "product-solar-widget"),
-            "product-solar-widget",
-            "Solar Widget",
-            cartSecrets,
-        );
-        openProduct(
-            MAIN_SERVER_URL,
-            detailRoute("/products-services", "product-solar-rig"),
-            "product-solar-rig",
-            "Solar Rig",
-            cartSecrets,
-        );
-        openProduct(
-            MAIN_SERVER_URL,
-            detailRoute("/products-services", "product-shore-kit"),
-            "product-shore-kit",
-            "Shore Kit",
-            cartSecrets,
-        );
-
-        openProduct(
-            COOP_SERVER_URL,
-            detailRoute("/products-services", "coop-product-harbor-ether-lantern", COOP_SERVER_URL),
-            "coop-product-harbor-ether-lantern",
-            "Harbor Ether Lantern",
-            cartSecrets,
-        );
-
-        openProduct(
-            COOP_SERVER_URL,
-            detailRoute("/products-services", "coop-product-tide-lamp", COOP_SERVER_URL),
-            "coop-product-tide-lamp",
-            "Tide Lamp",
-            cartSecrets,
-        );
-
-        mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], cartSecrets);
-        cy.contains("Proceed to order").click();
-        cy.contains("h2", "Order").should("be.visible");
-        screenshotStep("anonymous-shopping-order-form");
-        fillOrderAddress();
-        screenshotStep("anonymous-shopping-order-form-filled");
-        cy.contains("button", "Create order").click();
+        const suffix = `anonymous-shopping-${Date.now()}`;
+        runAnonymousShoppingFlow(`${suffix}-desktop`);
+        cy.viewport(390, 844);
         cy.contains(".OrderPage", "Orders submitted. Pay each order using the chain amount below.").should("be.visible");
-        screenshotStep("anonymous-shopping-order-payment-page");
-        cy.get(".OrderPage .ant-card").should("have.length", 1);
-        cy.get(".OrderPage").then(($page) => {
-            const text = $page.text();
-            expect((text.match(/Ethereum \(ETH\)/g) || []).length).to.equal(1);
-            expect((text.match(/Tron \(TRX\)/g) || []).length).to.equal(1);
-            expect((text.match(/Amount due: 0\.123 ETH/g) || []).length).to.equal(1);
-            expect((text.match(/Amount due: 208 TRX/g) || []).length).to.equal(1);
-            expect((text.match(/Recipient: 0xHarbor111/g) || []).length).to.equal(1);
-            expect((text.match(/Recipient: TTide630/g) || []).length).to.equal(1);
-        });
+        screenshotStep(`${suffix}-mobile`);
     });
 });
