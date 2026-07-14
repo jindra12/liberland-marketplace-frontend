@@ -32,7 +32,7 @@ const CryptoAddressesHarness: React.FunctionComponent<CryptoAddressesHarnessProp
 
 const selectChain = (chainName: string) => {
     cy.contains(".Publish__cryptoChainField .ant-select", "Select a wallet chain").click();
-    cy.contains(".ant-select-dropdown .ant-select-item-option-content", chainName, { timeout: 20000 })
+    cy.contains(".ant-select-dropdown .ant-select-item-option-content", chainName)
         .should("be.visible")
         .click({ force: true });
 };
@@ -61,7 +61,7 @@ describe("crypto addresses field", () => {
         );
         cy.contains("button", "Save wallet").click();
 
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(submittedPayload).to.deep.equal({
                 cryptoAddresses: {
                     chain: "ethereum",

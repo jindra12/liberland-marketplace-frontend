@@ -89,7 +89,7 @@ describe("posts", () => {
                 expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
                 expect(detailInterception.response?.body?.data?.Post?.title).to.equal(initialTitle);
             });
-            cy.contains("h3", "Edit Post", { timeout: 20000 }).should("be.visible");
+            cy.contains("h3", "Edit Post").should("be.visible");
             cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", initialTitle);
@@ -116,7 +116,7 @@ describe("posts", () => {
             });
 
             cy.routerNavigate(editRoute("/posts", createdId));
-            cy.contains("h3", "Edit Post", { timeout: 20000 }).should("be.visible");
+            cy.contains("h3", "Edit Post").should("be.visible");
             cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", updatedTitle);
@@ -138,9 +138,9 @@ describe("posts", () => {
 
     it("deletes a post", () => {
         mountAuthenticatedMainRoute(detailRoute("/posts", "post-1"));
-        cy.contains("h1", "Harbor Launch Notes", { timeout: 20000 }).should("be.visible");
-        cy.contains(".PostDetail button", "Delete", { timeout: 20000 }).should("be.visible").click();
-        cy.contains(".ant-popconfirm", "Delete this post?", { timeout: 20000 }).within(() => {
+        cy.contains("h1", "Harbor Launch Notes").should("be.visible");
+        cy.contains(".PostDetail button", "Delete").should("be.visible").click();
+        cy.contains(".ant-popconfirm", "Delete this post?").within(() => {
             cy.contains("button", "Delete").click();
         });
 

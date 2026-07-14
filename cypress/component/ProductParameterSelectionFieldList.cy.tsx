@@ -75,7 +75,7 @@ describe("ProductParameterSelectionFieldList", () => {
             .first()
             .find(".ant-select-selector")
             .click({ force: true });
-        cy.get(".ant-select-dropdown", { timeout: 20000 }).should("be.visible");
+        cy.get(".ant-select-dropdown").should("be.visible");
         cy.contains(".ant-select-dropdown .ant-select-item-option-content", "Large")
             .should("be.visible")
             .click({ force: true });

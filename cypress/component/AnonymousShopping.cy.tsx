@@ -2,7 +2,6 @@ import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constan
 import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     addToCart,
-    dismissNsfwModal,
     fillFormField,
     mountAnonymousRoute,
     screenshotDetailStep,
@@ -31,8 +30,7 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
     mountAnonymousRoute(route, [serverUrl], cartSecrets, (win) => {
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
     });
-    cy.contains(".EntityDetail__title", title, { timeout: 20000 }).should("be.visible");
-    dismissNsfwModal();
+    cy.contains(".EntityDetail__title", title).should("be.visible");
     screenshotDetailStep(`anonymous-shopping-${id}-detail`);
 };
 

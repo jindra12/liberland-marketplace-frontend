@@ -6,7 +6,7 @@ export const syndications: Syndication[] = [
         name: "Main",
         description: "Primary syndicated content source",
         url: "http://127.0.0.1:3010",
-        nsfw: true,
+        nsfw: false,
         autoEnable: true,
     },
     {

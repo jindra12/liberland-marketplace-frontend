@@ -24,9 +24,9 @@ export const MOBILE_VIEWPORT = {
 
 export type ViewportConfig = typeof DESKTOP_VIEWPORT | typeof MOBILE_VIEWPORT;
 
-export const runOnViewport = (viewport: ViewportConfig, run: () => void) => {
+export const runOnViewport = (viewport: ViewportConfig, run: (viewport: ViewportConfig) => void) => {
     cy.viewport(viewport.width, viewport.height);
-    run();
+    run(viewport);
 };
 
 export const runOnBothViewports = (run: (viewport: ViewportConfig) => void) => {
@@ -50,9 +50,15 @@ export const installCommentSpecExceptionGuard = () => {
 };
 
 export const selectCommentCompany = (containerSelector: string, companyName: string) => {
-    cy.contains(containerSelector, "Author company").find(".ant-select").first().click();
-    cy.get(".ant-select-dropdown", { timeout: 20000 }).should("be.visible");
-    cy.contains(".ant-select-dropdown .ant-select-item-option-content", companyName, { timeout: 20000 }).click({
+    cy.get(containerSelector)
+        .find(".ant-select")
+        .first()
+        .should("be.visible")
+        .and("not.have.class", "ant-select-disabled")
+        .find(".ant-select-selector")
+        .click({ force: true });
+    cy.get(".ant-select-dropdown").should("be.visible");
+    cy.contains(".ant-select-dropdown .ant-select-item-option-content", companyName).click({
         force: true,
     });
 };
@@ -72,8 +78,8 @@ export const fillCommentText = (containerSelector: string, text: string) => {
 };
 
 export const openCommentCardAction = (commentText: string, actionLabel: string) => {
-    cy.contains(".CommentCard", commentText).should("be.visible").within(() => {
-        cy.contains("button", actionLabel).click();
+    cy.contains(".CommentCard:visible", commentText).scrollIntoView().should("be.visible").within(() => {
+        cy.get(`button[aria-label="${actionLabel}"]`).first().click({ force: true });
     });
 };
 
@@ -84,7 +90,7 @@ export const waitForCollectionRequest = (
     expectedTitle: string,
     minimumDocs = 1,
 ) => {
-    cy.wait(`@${gqlAlias(MAIN_SERVER_URL, operationName, expectedVariables)}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${gqlAlias(MAIN_SERVER_URL, operationName, expectedVariables)}`).then((interception) => {
         const response = interception.response?.body as {
             data?: Record<string, { docs?: Array<{ title?: string; name?: string; content?: string }> }>;
         } | undefined;
@@ -106,7 +112,7 @@ export const waitForDetailRequest = (
     expectedVariables: GraphQLVariables,
     expectedTitle: string,
 ) => {
-    cy.contains("h1", expectedTitle, { timeout: 20000 }).should("be.visible");
+    cy.contains("h1", expectedTitle).should("be.visible");
 };
 
 const mountPostDetail = () => {
@@ -123,17 +129,16 @@ export const waitForPostComments = (expectedTitle: string, minimumDocs = 1) => {
             targetId: "post-harbor-operations-digest",
             url: MAIN_SERVER_URL,
         })}`,
-        { timeout: 20000 },
     ).then((interception) => {
         expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
     });
-    cy.contains(".CommentCard", expectedTitle, { timeout: 20000 }).should("be.visible");
+    cy.contains(".CommentCard", expectedTitle).should("be.visible");
 };
 
 export const waitForCommentReplies = (parentCommentId: string, expectedTitle: string, minimumDocs = 1) => {
-    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`, { timeout: 20000 }).should("be.visible");
-    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`, { timeout: 20000 })
+    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`).should("be.visible");
+    cy.get(`.CommentCard[data-comment-id="${parentCommentId}"]`)
         .find(".CommentCard__repliesToggle")
         .should("exist")
         .then(($toggleButton) => {
@@ -143,7 +148,7 @@ export const waitForCommentReplies = (parentCommentId: string, expectedTitle: st
             }
         });
 
-    cy.get(".CommentRepliesList .CommentCard", { timeout: 20000 }).should("have.length.at.least", minimumDocs);
+    cy.get(".CommentRepliesList .CommentCard").should("have.length.at.least", minimumDocs);
 };
 
 export const assertCommentHasNoReplies = (commentId: string) => {
@@ -156,12 +161,11 @@ export const assertCommentHasNoReplies = (commentId: string) => {
 };
 
 export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
-    mountPostDetail();
-    cy.get(".EntityCommentsSection").should("be.visible");
-    waitForPostComments("Harbor Operations Digest keeps the team aligned.");
-    assertCommentHasNoReplies("comment-post-harbor-1");
-
     const commentId = "comment-post-harbor-1";
+
+    mountAuthenticatedMainRoute(detailRoute("/comments", commentId), true, seedNsfwConsent);
+    waitForDetailRequest("CommentById", { id: commentId }, "Comment");
+    cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
 
     cy.window().then((win) => {
         const copiedUrl = `${win.location.origin}${detailRoute("/comments", commentId)}`;
@@ -176,36 +180,36 @@ export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
         cy.wrap(copiedUrl).as("expectedShareUrl");
     });
 
-    cy.contains(".CommentCard", "Harbor Operations Digest keeps the team aligned.")
+    cy.get('.CommentDetailPage .CommentCard[data-comment-id="comment-post-harbor-1"]')
+        .scrollIntoView()
         .should("be.visible")
         .within(() => {
-            cy.contains("button", "Share").click();
+            cy.contains("button", "Share").click({ force: true });
         });
 
     cy.get("@expectedShareUrl").then((expectedShareUrl) => {
         cy.get("@clipboardWriteText").should("have.been.calledOnce");
         cy.get("@clipboardWriteText").should("have.been.calledWith", expectedShareUrl);
 
-        cy.routerNavigate(new URL(String(expectedShareUrl)).pathname);
-        cy.contains(".CommentDetailPage", "Comment").should("be.visible");
-        cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
         cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
             if (typeof req.body.query === "string" && req.body.query.includes("CreateReplyToComment")) {
                 req.alias = "createReply";
             }
         });
 
-        cy.contains(".CommentCard", "Harbor Operations Digest keeps the team aligned.")
+        cy.get('.CommentDetailPage .CommentCard[data-comment-id="comment-post-harbor-1"]')
             .should("be.visible")
+            .scrollIntoView()
             .within(() => {
-                cy.contains("button", "Reply").click();
-        });
+                cy.get('button[aria-label="Reply"]').first().click({ force: true });
+            });
 
+        cy.get(".CommentCard .CommentComposer").should("be.visible");
         selectCommentCompany(".CommentCard .CommentComposer", "Harbor Labs");
         fillCommentText(".CommentCard .CommentComposer", `Detail reply ${viewport.name}`);
         cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 
-        cy.wait("@createReply", { timeout: 20000 }).then((interception) => {
+        cy.wait("@createReply").then((interception) => {
             expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
             expect(interception.response?.statusCode).to.equal(200);
             expect(interception.request.body.variables.content).to.equal(`Detail reply ${viewport.name}`);
@@ -246,7 +250,7 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
     assertCommentCompanyValue(".EntityCommentsSection__header .CommentComposer", "Harbor Labs");
     cy.get(".EntityCommentsSection__header .CommentComposer").contains("button", "Comment").click();
 
-    cy.wait("@createComment", { timeout: 20000 }).then((interception) => {
+    cy.wait("@createComment").then((interception) => {
         expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(interception.request.body.variables.content).to.equal(createdText);
@@ -259,7 +263,7 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
 
         cy.wrap(createdCommentId).as("createdCommentId");
     });
-    cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`).then((interception) => {
         const response = interception.response?.body as {
             data?: {
                 Comments?: {
@@ -290,14 +294,14 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
     cy.get(".CommentCard .CommentComposer").contains("button", "Save").click();
 
     cy.get("@createdCommentId").then((createdCommentId) => {
-        cy.wait("@updateComment", { timeout: 20000 }).then((interception) => {
+        cy.wait("@updateComment").then((interception) => {
             expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
             expect(interception.response?.statusCode).to.equal(200);
             expect(interception.request.body.variables.id).to.equal(createdCommentId);
             expect(interception.request.body.variables.company).to.equal("company-bazaar-foundry");
             expect(interception.request.body.variables.content).to.equal(editedText);
         });
-        cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`, { timeout: 20000 }).then((interception) => {
+        cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "ListCommentsByTarget", listCommentsVariables)}`).then((interception) => {
             const response = interception.response?.body as {
                 data?: {
                     Comments?: {
@@ -326,18 +330,19 @@ export const replyToReplyChain = (viewport: ViewportConfig) => {
         .should("be.visible")
         .within(() => {
             cy.contains("button", "Show replies (1)").should("be.visible");
-        });
+    });
     waitForCommentReplies("comment-startup-sky-1", "Replying to the Sky Relay thread.", 1);
 
-    cy.get(".CommentRepliesList .CommentCard", { timeout: 20000 })
+    cy.get(".CommentRepliesList .CommentCard")
         .first()
         .should("be.visible")
+        .scrollIntoView()
         .within(() => {
-            cy.contains("button", "Reply").click();
+            cy.get('button[aria-label="Reply"]').first().click({ force: true });
         });
     fillCommentText(".CommentCard .CommentComposer", `Nested reply ${viewport.name}`);
     cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 
-    cy.get(".CommentRepliesList .CommentCard", { timeout: 20000 }).should("have.length.at.least", 1);
+    cy.get(".CommentRepliesList .CommentCard").should("have.length.at.least", 1);
     cy.contains(".CommentRepliesList", `Nested reply ${viewport.name}`).should("be.visible");
 };

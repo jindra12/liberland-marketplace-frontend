@@ -7,8 +7,8 @@ describe("identity deep dive", () => {
     });
 
     it("shows the tabs and related market cards", () => {
-        cy.get(".IdentityDetail", { timeout: 20000 }).should("be.visible");
-        cy.contains(".EntityDetail__title", "Nova Rivers", { timeout: 20000 }).should("be.visible");
+        cy.get(".IdentityDetail").should("be.visible");
+        cy.contains(".EntityDetail__title", "Nova Rivers").should("be.visible");
         cy.contains(".IdentityDetail__syndicationLink", "Open syndication source").should("not.exist");
         cy.contains(".EntityDetail__tabs .ant-tabs-tab", "Products").click();
         waitForCollectionQuery(
@@ -54,7 +54,7 @@ describe("identity deep dive", () => {
     it("links back to the syndication detail when multiple servers are enabled", () => {
         mountAnonymousRoute(detailRoute("/tribes", "identity-nova"), [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, seedNsfwConsent);
 
-        cy.get(".IdentityDetail__syndicationLink", { timeout: 20000 })
+        cy.get(".IdentityDetail__syndicationLink")
             .should("be.visible")
             .and("have.attr", "href", syndicationDetailRoute(MAIN_SERVER_URL));
     });

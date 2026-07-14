@@ -36,15 +36,15 @@ const hidePageScrollbars = () => {
 
 describe("markdown editor", () => {
     const openPreviewMode = () => {
-        cy.get(".w-md-editor-toolbar [aria-label^='Preview code']", { timeout: 20000 }).click({ force: true });
-        cy.get(".w-md-editor-preview", { timeout: 20000 }).should("be.visible");
+        cy.get(".w-md-editor-toolbar [aria-label^='Preview code']").click({ force: true });
+        cy.get(".w-md-editor-preview").should("be.visible");
     };
 
     it("renders the editor on desktop", () => {
         cy.viewport(1440, 1200);
         hidePageScrollbars();
         mount(<MarkdownEditorHarness />);
-        cy.get(".MarkdownEditor", { timeout: 20000 }).should("be.visible");
+        cy.get(".MarkdownEditor").should("be.visible");
         cy.get(".w-md-editor").should("be.visible");
         cy.get(".w-md-editor-text-input").should("be.visible");
         screenshotStep("markdown-editor-desktop-edit", "viewport");
@@ -56,7 +56,7 @@ describe("markdown editor", () => {
         cy.viewport(390, 844);
         hidePageScrollbars();
         mount(<MarkdownEditorHarness />);
-        cy.get(".MarkdownEditor", { timeout: 20000 }).should("be.visible");
+        cy.get(".MarkdownEditor").should("be.visible");
         cy.get(".w-md-editor").should("be.visible");
         cy.get(".w-md-editor-text-input").should("be.visible");
         screenshotStep("markdown-editor-mobile-edit", "viewport");

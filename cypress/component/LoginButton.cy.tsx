@@ -50,14 +50,12 @@ const seedLoggedInServer = (win: Window, serverUrl: string) => {
 };
 
 const mountLoginButton = (route: string, serverUrls: string[], loggedInServerUrls: string[] = []) => {
-    cy.window().then((win) => {
+    mountMainRoute(route, (win) => {
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
         win.localStorage.setItem(AUTH_URL_STORAGE_KEY, serverUrls[0]);
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         loggedInServerUrls.forEach((serverUrl) => seedLoggedInServer(win, serverUrl));
     });
-
-    mountMainRoute(route);
 };
 
 describe("login button", () => {
@@ -108,12 +106,12 @@ describe("login button", () => {
             redirectUrl = signinRequest.url;
         });
 
-        cy.contains(".LoginButton", "Log in", { timeout: 20000 }).should("be.visible").click();
-        cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton", "Log in").should("be.visible").click();
+        cy.get(".LoginButton__menu").should("be.visible");
         expectLoginButtonIconToSitBeforeText();
         expectLoginPopupToHaveNoScrollTrackForTwoEntries();
 
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log in", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", /log in/i).should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log out").should("not.exist");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Main").should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op").should("be.visible");
@@ -121,7 +119,7 @@ describe("login button", () => {
 
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op").click({ force: true });
 
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(redirectUrl).to.not.equal("");
             expect(signinRedirectArgs?.state).to.equal("/jobs");
             const parsedUrl = new URL(redirectUrl);
@@ -142,13 +140,13 @@ describe("login button", () => {
         mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL], [MAIN_SERVER_URL]);
         expectLoginButtonTextSizeToMatchCreateButton();
 
-        cy.contains(".LoginButton", "Accounts", { timeout: 20000 }).should("be.visible").click();
-        cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton", "Accounts").should("be.visible").click();
+        cy.get(".LoginButton__menu").should("be.visible");
         expectLoginButtonIconToSitBeforeText();
         expectLoginPopupToHaveNoScrollTrackForTwoEntries();
 
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log in", { timeout: 20000 }).should("be.visible");
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log out", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", /log in/i).should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", /log out/i).should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op").should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Main").should("be.visible");
         screenshotStep("login-button-mixed-tree");
@@ -166,13 +164,13 @@ describe("login button", () => {
             await originalRemoveUser.call(this);
         });
 
-        cy.contains(".LoginButton", "Accounts", { timeout: 20000 }).should("be.visible").click();
-        cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
+        cy.contains(".LoginButton", "Accounts").should("be.visible").click();
+        cy.get(".LoginButton__menu").should("be.visible");
         expectLoginButtonIconToSitBeforeText();
         expectLoginPopupToHaveNoScrollTrackForTwoEntries();
 
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log out", { timeout: 20000 }).should("be.visible");
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", "Log in").should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", /log out/i).should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item-group-title", /log in/i).should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Main").should("be.visible");
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op").should("be.visible");
         screenshotStep("login-button-logout-tree");
@@ -182,10 +180,10 @@ describe("login button", () => {
             .last()
             .click({ force: true });
 
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(removeUserCalled).to.be.true;
             expect(window.localStorage.getItem(buildAuthStorageKey(MAIN_SERVER_URL))).to.be.null;
         });
-        cy.get(".LoginButton__menu", { timeout: 20000 }).should("not.be.visible");
+        cy.get(".LoginButton__menu").should("not.be.visible");
     });
 });

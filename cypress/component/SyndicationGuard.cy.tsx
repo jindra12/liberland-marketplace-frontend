@@ -22,7 +22,7 @@ describe("syndication guard test", () => {
 
         guardedRoutes.forEach((route) => {
             cy.routerNavigate(route);
-            cy.contains("Trust this server?", { timeout: 20000 }).should("be.visible");
+            cy.contains("Trust this server?").should("be.visible");
             cy.contains(".ServerUrlGuard__copy", GUEST_SERVER_URL).should("be.visible");
             cy.contains("Enable content from this server").should("be.visible");
             cy.contains("button", "Yes").should("be.visible");
@@ -34,7 +34,7 @@ describe("syndication guard test", () => {
 
     it("lets a detail page through after trusting the server", () => {
         mountMainRoute(detailRoute("/jobs", "coop-job-dock-foreman", COOP_SERVER_URL));
-        cy.contains("Trust this server?", { timeout: 20000 }).should("be.visible");
+        cy.contains("Trust this server?").should("be.visible");
         cy.contains("Enable content from this server").click();
         cy.contains("button", "Yes").click();
 
@@ -51,7 +51,7 @@ describe("syndication guard test", () => {
 
     it("returns home when the user rejects an edit page", () => {
         mountMainRoute(editRoute("/companies", "guarded-company", GUEST_SERVER_URL));
-        cy.contains("Trust this server?", { timeout: 20000 }).should("be.visible");
+        cy.contains("Trust this server?").should("be.visible");
         cy.contains("button", "No").click();
         cy.location("pathname").should("eq", "/");
         cy.get(".SplashPage").should("be.visible");

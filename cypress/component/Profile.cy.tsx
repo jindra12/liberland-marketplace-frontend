@@ -2,7 +2,7 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/con
 import { mountProfileRoute, screenshotStep, waitForMeUserQuery } from "../support/component-tests/utils";
 
 const assertNicknameValue = (value: string) => {
-    cy.contains(".Profile__card", "Change Nickname", { timeout: 10000 }).within(() => {
+    cy.contains(".Profile__card", "Change Nickname").within(() => {
         cy.get("input").should("have.value", value);
     });
 };

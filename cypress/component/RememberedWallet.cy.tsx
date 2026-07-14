@@ -28,7 +28,7 @@ type RememberedWalletScenario = {
 const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     scenario.connectWallet();
     mountAuthenticatedCartRoute(scenario.route, [MAIN_SERVER_URL], cartSecrets);
-    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.get(".ProductDetail").should("be.visible");
     screenshotStep(`remembered-wallet-product-${scenario.productId}`);
     addToCart();
 

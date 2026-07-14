@@ -70,7 +70,7 @@ describe("endpoint context", () => {
     it("restores the selected auth server from local storage", () => {
         mountEndpointContext(COOP_SERVER_URL);
 
-        cy.get(".EndpointAuthUrlConsumer", { timeout: 20000 })
+        cy.get(".EndpointAuthUrlConsumer")
             .should("be.visible")
             .and("have.text", COOP_SERVER_URL);
     });

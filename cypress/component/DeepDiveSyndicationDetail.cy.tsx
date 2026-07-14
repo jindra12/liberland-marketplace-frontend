@@ -1,7 +1,6 @@
 import { activeFixtures, resetGraphQLMock } from "../support/graphqlMock/runtimeState";
 
 import { COOP_SERVER_URL, MAIN_SERVER_URL, syndicationDetailRoute } from "../support/component-tests/constants";
-import { dismissNsfwModal } from "../support/component-tests/utils";
 import {
     mountAuthenticatedDetailRoute,
     mountMainRoute,
@@ -24,12 +23,11 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwModal();
         cy.get(".SyndicationDetail").should("be.visible");
         cy.contains(".EntityDetail__title", "Main").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Enabled").should("be.visible");
         cy.get(".SyndicationDetail__tagRow").contains("Primary endpoint").should("be.visible");
-        cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("be.visible");
+        cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("not.exist");
         cy.get(".SyndicationDetail__meta").contains("Main").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains("127.0.0.1:3010").should("be.visible");
         cy.get(".SyndicationDetail__meta").contains(MAIN_SERVER_URL).should("be.visible");
@@ -39,10 +37,10 @@ describe("syndication detail", () => {
         cy.get(".ShareSection__nativeButton").should("be.visible");
         cy.get(".SubscribeButton").should("not.exist");
         cy.get(".EntityDetail > .ant-divider").should("have.length", 3);
-        screenshotStep("syndication-detail-nsfw-desktop");
+        screenshotStep("syndication-detail-desktop");
     });
 
-    it("shows the NSFW warning on mobile too", () => {
+    it("shows the endpoint metadata on mobile too", () => {
         cy.viewport(390, 844);
         mountMainRoute(syndicationDetailRoute(MAIN_SERVER_URL));
         waitForCollectionQuery(
@@ -53,11 +51,10 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwModal();
         cy.get(".SyndicationDetail").should("be.visible");
-        cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("be.visible");
+        cy.get(".SyndicationDetail__tagRow").contains("NSFW").should("not.exist");
         cy.get(".ShareSection").should("be.visible");
-        screenshotStep("syndication-detail-nsfw-mobile");
+        screenshotStep("syndication-detail-mobile");
     });
 
     it("keeps the layout to one divider when the endpoint has no description", () => {
@@ -78,7 +75,6 @@ describe("syndication detail", () => {
             "Main",
         );
 
-        dismissNsfwModal();
         cy.get(".SyndicationDetail__description").should("not.exist");
         cy.get(".EntityDetail > .ant-divider").should("have.length", 2);
         cy.get(".ShareSection").should("be.visible");
@@ -100,7 +96,7 @@ describe("syndication detail", () => {
 
     it("shows the 404 fallback when the endpoint is not in the current context", () => {
         mountMainRoute(syndicationDetailRoute("http://127.0.0.1:3999"));
-        cy.contains("Syndicated URL not found", { timeout: 20000 }).should("be.visible");
+        cy.contains("Syndicated URL not found").should("be.visible");
         cy.contains("This syndicated URL is not available in your current marketplace context.").should("be.visible");
         cy.contains("Back to syndication").should("be.visible");
     });

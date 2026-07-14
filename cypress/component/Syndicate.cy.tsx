@@ -20,7 +20,7 @@ describe("syndicate modal", () => {
                     cy.contains(".SyndicateModal__footer button", "Next").click();
                 }
 
-                cy.contains(".SyndicateModal__title", title, { timeout: 20000 }).should("exist");
+                cy.contains(".SyndicateModal__title", title).should("exist");
                 cy.get(".SyndicateModal .ant-modal-content")
                     .should("exist")
                     .screenshot(`${Cypress.spec.name} ${prefix} page ${index + 1}`.replace(/[^a-zA-Z0-9]+/g, "-"));
@@ -43,7 +43,7 @@ describe("syndicate modal", () => {
         cy.viewport(1280, 900);
         mountAnonymousRoute("/syndicate", [MAIN_SERVER_URL]);
 
-        cy.contains(".SyndicateModal__downloadButton", "Download the setup script", { timeout: 20000 })
+        cy.contains(".SyndicateModal__downloadButton", "Download the setup script")
             .should("be.visible")
             .and("have.attr", "href", `${MAIN_SERVER_URL}/deploy-space`);
         cy.contains(".SyndicateModal__downloadDropdown").should("not.exist");
@@ -54,12 +54,12 @@ describe("syndicate modal", () => {
         cy.viewport(1280, 900);
         mountAnonymousRoute("/syndicate", [MAIN_SERVER_URL, COOP_SERVER_URL]);
 
-        cy.contains(".SyndicateModal__downloadDropdown", "Download the setup script", { timeout: 20000 }).should(
+        cy.contains(".SyndicateModal__downloadDropdown", "Download the setup script").should(
             "be.visible",
         );
         cy.get(".SyndicateModal__downloadDropdown").find(".ant-btn-icon-only").click({ force: true });
-        cy.contains(".ant-dropdown-menu-item", "Main", { timeout: 20000 }).should("be.visible");
-        cy.contains(".ant-dropdown-menu-item", "Co-op", { timeout: 20000 }).should("be.visible");
+        cy.contains(".ant-dropdown-menu-item", "Main").should("be.visible");
+        cy.contains(".ant-dropdown-menu-item", "Co-op").should("be.visible");
         cy.get(".SyndicateModal .ant-modal-content")
             .should("exist")
             .screenshot(`${Cypress.spec.name} syndicate-dropdown-download`.replace(/[^a-zA-Z0-9]+/g, "-"));

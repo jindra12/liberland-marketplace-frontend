@@ -8,7 +8,7 @@ describe("unsubscribe", () => {
     it("shows the invalid-link page when required query params are missing", () => {
         mountMainRoute("/unsubscribe");
 
-        cy.contains("Invalid link", { timeout: 20000 }).should("be.visible");
+        cy.contains("Invalid link").should("be.visible");
         cy.contains("This unsubscribe link is missing required details.").should("be.visible");
         screenshotStep("unsubscribe-invalid-link-missing-query-params");
         cy.contains("Back to homepage").click();
@@ -21,7 +21,7 @@ describe("unsubscribe", () => {
             `/unsubscribe?type=widgets&id=widget-1&email=nova@example.test&serverUrl=${encodeServerUrlSegment(MAIN_SERVER_URL)}`,
         );
 
-        cy.contains("Invalid link", { timeout: 20000 }).should("be.visible");
+        cy.contains("Invalid link").should("be.visible");
         cy.contains("This unsubscribe link does not target a supported notification type.").should("be.visible");
         screenshotStep("unsubscribe-invalid-link-unsupported-type");
         cy.contains("Back to homepage").click();

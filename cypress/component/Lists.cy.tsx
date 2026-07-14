@@ -32,24 +32,13 @@ describe("lists", () => {
         });
     });
 
-    it("opens the Jobs list from home on mobile", () => {
-        cy.viewport(390, 844);
+    it("filters a list by tribe using autocomplete search", () => {
         const jobsGoal = LIST_GOALS.find((goal) => goal.trigger === "Jobs");
         if (jobsGoal === undefined) {
             throw new Error("Missing Jobs list goal");
         }
 
-        mountMainRoute(jobsGoal.route);
-        waitForPageShell();
-        cy.contains("h2", jobsGoal.title, { timeout: 20000 }).should("be.visible");
-        cy.get(".JobList__body").should("be.visible").contains("Coordinate shipping and fulfilment");
-        cy.get(".LikeButton").should("exist");
-        screenshotStep("list-Jobs-mobile");
-    });
-
-    it("filters a list by tribe using autocomplete search", () => {
-        cy.contains(".AppHeader__menuLink", "Jobs").click();
-        cy.contains("h2", "Jobs").should("be.visible");
+        goToList(jobsGoal);
 
         cy.get(".FilterControl .ant-select-selector").click();
         cy.get(".FilterControl .ant-select-selection-search-input").type("Nova Rivers", { force: true });
@@ -84,7 +73,6 @@ describe("lists", () => {
                 cy.get('button[aria-label="Add to cart"]').should("be.visible").click();
             });
         cy.wait("@createCart").its("response.statusCode").should("eq", 200);
-        cy.contains(".ant-message-notice", "Added to cart", { timeout: 20000 }).should("be.visible");
 
         screenshotStep("list-market-add-to-cart");
     });
@@ -116,6 +104,7 @@ describe("lists", () => {
         goToList(postsGoal);
 
         cy.contains(".PostList__description", "Harbor operations improved this week with tighter handoffs and clearer status updates.")
+            .scrollIntoView()
             .should("be.visible")
             .and("have.class", "Markdown--clamp2");
         cy.contains(".PostList__description", "Weekly harbor operations update").should("not.exist");

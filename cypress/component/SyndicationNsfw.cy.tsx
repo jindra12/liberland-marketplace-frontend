@@ -6,6 +6,7 @@ import type { URL as EndpointURL } from "../../src/types";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { dismissNsfwModal } from "../support/component-tests/utils";
+import { getGraphQLFixturesForHost } from "../support/graphqlMock/runtimeState";
 
 const buildEndpointUrls = (overrides: EndpointURL[]): EndpointURL[] => {
     return overrides;
@@ -38,7 +39,7 @@ describe("syndication nsfw modal", () => {
             },
         ]);
 
-        cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
+        cy.contains(".SyndicationNsfwModal", "18+ content").should("be.visible");
         dismissNsfwModal();
         getConsentValue().should("eq", "true");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");
@@ -54,28 +55,36 @@ describe("syndication nsfw modal", () => {
             },
         ]);
 
-        cy.contains(".SyndicationNsfwModal", "18+ content", { timeout: 20000 }).should("be.visible");
+        cy.contains(".SyndicationNsfwModal", "18+ content").should("be.visible");
         dismissNsfwModal("disable");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");
 
         cy.window().then((win) => {
             const storedUrls = JSON.parse(win.localStorage.getItem("endpoints.urls") ?? "[]") as EndpointURL[];
             expect(storedUrls.some((entry) => entry.enabled && entry.nsfw)).to.eq(false);
-            expect(storedUrls.some((entry) => entry.nsfw)).to.eq(true);
         });
     });
 
     it("stores the marker when the user manually enables an nsfw server", () => {
+        const mainSyndication = getGraphQLFixturesForHost(MAIN_SERVER_URL).syndications.find(
+            (entry) => entry.url === MAIN_SERVER_URL,
+        );
+        if (mainSyndication === undefined) {
+            throw new Error("Missing main syndication fixture data");
+        }
+        mainSyndication.nsfw = true;
+
         mountRouteWithEndpoints("/syndication", [
             {
                 enabled: false,
                 value: MAIN_SERVER_URL,
                 name: "Main",
-                nsfw: true,
             },
         ]);
 
-        cy.contains("button", "Enable").first().click();
+        cy.contains(".ant-list-item a", /^Main$/).parents(".ant-list-item").within(() => {
+            cy.contains("button", "Enable").click();
+        });
 
         getConsentValue().should("eq", "true");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");

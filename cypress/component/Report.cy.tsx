@@ -41,7 +41,7 @@ const VIEWPORTS = {
 const COOP_GRAPHQL_HOST = new URL(COOP_SERVER_URL).host;
 
 const waitForMeUserReportedLinks = (expectedReportedLinks: string[]) => {
-    cy.wait(`@${ME_USER_ALIAS}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${ME_USER_ALIAS}`).then((interception) => {
         const response = interception.response?.body as MeUserResponse | undefined;
 
         expect(interception.request.url).to.equal(`${COOP_SERVER_URL}/api/graphql`);
@@ -51,18 +51,18 @@ const waitForMeUserReportedLinks = (expectedReportedLinks: string[]) => {
 };
 
 const waitForMeUserRequest = () => {
-    cy.wait(`@${ME_USER_ALIAS}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${ME_USER_ALIAS}`).then((interception) => {
         expect(interception.request.url).to.equal(`${COOP_SERVER_URL}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
     });
 };
 
 const openReportModal = () => {
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .click();
-    cy.contains(".ant-modal", "Report content", { timeout: 20000 }).should("be.visible");
+    cy.contains(".ant-modal", "Report content").should("be.visible");
 };
 
 const fillReportReasonAndSubmit = () => {
@@ -81,20 +81,20 @@ const runAuthenticatedDesktopFlow = () => {
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserRequest();
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("not.be.disabled");
     openReportModal();
     screenshotStep("report-submit-desktop-modal");
     fillReportReasonAndSubmit();
-    cy.wait(`@${CREATE_REPORT_ALIAS}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${CREATE_REPORT_ALIAS}`).then((interception) => {
         expect(interception.request.url).to.equal(`${COOP_SERVER_URL}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(interception.request.body.variables).to.deep.equal(CREATE_REPORT_VARIABLES);
     });
     waitForMeUserReportedLinks([REPORT_ROUTE]);
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.disabled");
     screenshotStep("report-submit-desktop-disabled-after-submit");
@@ -109,20 +109,20 @@ const runAuthenticatedMobileFlow = () => {
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserRequest();
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("not.be.disabled");
     openReportModal();
     screenshotStep("report-submit-mobile-modal");
     fillReportReasonAndSubmit();
-    cy.wait(`@${CREATE_REPORT_ALIAS}`, { timeout: 20000 }).then((interception) => {
+    cy.wait(`@${CREATE_REPORT_ALIAS}`).then((interception) => {
         expect(interception.request.url).to.equal(`${COOP_SERVER_URL}/api/graphql`);
         expect(interception.response?.statusCode).to.equal(200);
         expect(interception.request.body.variables).to.deep.equal(CREATE_REPORT_VARIABLES);
     });
     waitForMeUserReportedLinks([REPORT_ROUTE]);
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.disabled");
     screenshotStep("report-submit-mobile-disabled-after-submit");
@@ -140,7 +140,7 @@ const runDisabledDesktopFlow = () => {
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserReportedLinks([REPORT_ROUTE]);
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("be.disabled");
@@ -159,7 +159,7 @@ const runDisabledMobileFlow = () => {
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserReportedLinks([REPORT_ROUTE]);
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("be.disabled");
@@ -172,12 +172,12 @@ const runAnonymousDesktopFlow = (signinRedirect: sinon.SinonStub) => {
     cy.clearLocalStorage();
     mountAnonymousRoute(REPORT_ROUTE, [MAIN_SERVER_URL, COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("not.be.disabled");
     screenshotStep("report-anonymous-desktop-button");
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .click();
     cy.wrap(signinRedirect).should("have.been.calledOnce");
@@ -190,12 +190,12 @@ const runAnonymousMobileFlow = (signinRedirect: sinon.SinonStub) => {
     cy.clearLocalStorage();
     mountAnonymousRoute(REPORT_ROUTE, [MAIN_SERVER_URL, COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .should("be.visible")
         .and("not.be.disabled");
     screenshotStep("report-anonymous-mobile-button");
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Report content"]')
         .click();
     cy.wrap(signinRedirect).should("have.been.calledOnce");
@@ -243,26 +243,26 @@ const runRepostDesktopFlow = () => {
         }
     });
 
-    cy.get(".ShareSection", { timeout: 20000 })
+    cy.get(".ShareSection")
         .find('button[aria-label="Repost content"]')
         .should("be.visible")
         .and("not.be.disabled")
         .click();
-    cy.contains(".ant-modal", "Add your take", { timeout: 20000 }).should("be.visible");
+    cy.contains(".ant-modal", "Add your take").should("be.visible");
     cy.get(".ant-modal")
         .find(".ant-select")
         .first()
         .should("not.have.class", "ant-select-disabled")
         .click();
-    cy.get(".ant-select-dropdown", { timeout: 20000 }).should("be.visible");
-    cy.get(".ant-select-item-option", { timeout: 20000 }).first().click();
+    cy.get(".ant-select-dropdown").should("be.visible");
+    cy.get(".ant-select-item-option").first().click();
     cy.get(".ant-modal")
         .find("textarea")
         .should("be.visible")
         .clear({ force: true })
         .type(REPOST_DESCRIPTION, { force: true });
     cy.contains(".ant-modal button", "Repost").should("be.visible").click();
-    cy.wait("@shareRepost", { timeout: 20000 }).then((interception) => {
+    cy.wait("@shareRepost").then((interception) => {
         const variables = interception.request.body.variables as {
             input: {
                 companyId: string;

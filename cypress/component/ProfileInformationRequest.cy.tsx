@@ -28,8 +28,8 @@ describe("profile information request", () => {
         screenshotStep("profile-information-request-button", "viewport");
 
         cy.contains(".Profile__actions button", "Request information").click();
-        cy.contains(".ant-modal", "Request information", { timeout: 20000 }).should("be.visible");
-        cy.get(".ant-modal-content", { timeout: 20000 }).should("be.visible").screenshot(
+        cy.contains(".ant-modal", "Request information").should("be.visible");
+        cy.get(".ant-modal-content").should("be.visible").screenshot(
             `${Cypress.spec.name} profile information request modal`.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
         );
 
@@ -38,13 +38,13 @@ describe("profile information request", () => {
             cy.contains("button", "Send request").should("be.visible").click();
         });
 
-        cy.wait(`@${CREATE_INFORMATION_REQUEST_ALIAS}`, { timeout: 20000 }).then((interception) => {
+        cy.wait(`@${CREATE_INFORMATION_REQUEST_ALIAS}`).then((interception) => {
             expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
             expect(interception.response?.statusCode).to.equal(200);
             expect(interception.request.body.variables).to.deep.equal(CREATE_INFORMATION_REQUEST_VARIABLES);
         });
 
-        cy.contains("Your request has been sent", { timeout: 20000 }).should("be.visible");
+        cy.contains("Your request has been sent").should("be.visible");
         cy.get(".ant-modal").should("not.exist");
     });
 });

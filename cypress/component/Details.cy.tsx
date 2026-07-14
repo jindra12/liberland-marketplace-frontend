@@ -33,7 +33,7 @@ describe("details", () => {
 
         mountMainRoute(detailGoal.route);
         cy.location("pathname").should("eq", detailGoal.route);
-        cy.contains(detailGoal.detailTitleSelector, detailGoal.title, { timeout: 20000 }).should("be.visible");
+        cy.contains(detailGoal.detailTitleSelector, detailGoal.title).should("be.visible");
         screenshotStep(`detail-mobile-${detailGoal.title}`);
     });
 
@@ -128,8 +128,8 @@ describe("details", () => {
             }
         });
         mountMainRoute(detailRoute("/posts", "post-1"));
-        cy.contains("h1", "Harbor Launch Notes", { timeout: 20000 }).should("be.visible");
-        cy.get(".PostDetail__metaStack", { timeout: 20000 })
+        cy.contains("h1", "Harbor Launch Notes").should("be.visible");
+        cy.get(".PostDetail__metaStack")
             .should("be.visible")
             .children()
             .should("have.length", 2)
@@ -138,12 +138,12 @@ describe("details", () => {
                 expect($children.eq(1)).to.have.class("PostDetail__repostLink");
             });
         cy.get(".PostDetail__companyLink").contains("Harbor Labs").should("be.visible");
-        cy.get(".PostDetail__repostLink", { timeout: 20000 }).should("be.visible");
-        cy.get(".PostDetail__repostLink .PostRepostLink__icon", { timeout: 20000 }).should("be.visible");
-        cy.get(".PostDetail__repostLink", { timeout: 20000 })
+        cy.get(".PostDetail__repostLink").should("be.visible");
+        cy.get(".PostDetail__repostLink .PostRepostLink__icon").should("be.visible");
+        cy.get(".PostDetail__repostLink")
             .should("have.attr", "href", "https://example.test/original/harbor-launch-notes");
-        cy.get(".PostDetail__repostLink", { timeout: 20000 }).contains("Original post").should("be.visible");
-        cy.get(".PostDetail__repostLink", { timeout: 20000 }).should("have.css", "font-size", "15px");
+        cy.get(".PostDetail__repostLink").contains("Original post").should("be.visible");
+        cy.get(".PostDetail__repostLink").should("have.css", "font-size", "15px");
         screenshotStep("detail-post-repost-link");
     });
 

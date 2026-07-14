@@ -1,6 +1,5 @@
 import { MAIN_SERVER_URL, editRoute, detailRoute } from "../support/component-tests/constants";
 import {
-    dismissNsfwModal,
     assertFormFieldValue,
     fillFormField,
     getRouteEntityId,
@@ -46,16 +45,16 @@ const assertCompanyName = (companyId: string, expectedTitle: string) => {
 };
 
 const openCompanyPublishForm = () => {
-    cy.get("body", { timeout: 30000 }).should(($body) => {
+    cy.get("body").should(($body) => {
         expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
     });
     cy.get("body").then(($body) => {
         if ($body.find(".Publish__category").length > 0) {
-            cy.contains(".Publish__category", "Company", { timeout: 30000 }).should("be.visible").click({ force: true });
+            cy.contains(".Publish__category", "Company").should("be.visible").click({ force: true });
             return;
         }
 
-        cy.contains(".Publish__companyNameField", "Company Name", { timeout: 30000 }).should("be.visible");
+        cy.contains(".Publish__companyNameField", "Company Name").should("be.visible");
     });
 };
 
@@ -69,7 +68,6 @@ describe("company create/edit", () => {
         mountAuthenticatedMainRoute("/publish", true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
-        dismissNsfwModal();
         openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);
@@ -101,7 +99,6 @@ describe("company create/edit", () => {
         mountAuthenticatedMainRoute("/publish", true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
-        dismissNsfwModal();
         openCompanyPublishForm();
 
         fillFormField("Company Name", companyName);

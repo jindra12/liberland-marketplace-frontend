@@ -52,12 +52,12 @@ const seedTourSession = (tourType: TourType, notify = false) => {
 };
 
 const waitForTourStep = (title: string) => {
-    cy.get(".ant-tour", { timeout: 20000 }).should("be.visible");
-    cy.contains(".ant-tour .ant-tour-title", title, { timeout: 20000 }).should("be.visible");
+    cy.get(".ant-tour").should("be.visible");
+    cy.contains(".ant-tour .ant-tour-title", title).should("be.visible");
 };
 
 const clickNextTourStep = () => {
-    cy.contains(".ant-tour .ant-tour-buttons button", /Next|Finish/, { timeout: 20000 })
+    cy.contains(".ant-tour .ant-tour-buttons button", /Next|Finish/)
         .should("be.visible")
         .click({ waitForAnimations: false });
 };
@@ -84,7 +84,7 @@ const runTourScenario = (scenario: TourScenario, auth: TourSuiteAuth, mode: Tour
     }
 
     if (!scenario.type.startsWith("publish") && firstDescriptor.selector) {
-        cy.get(firstDescriptor.selector, { timeout: 20000 }).first().scrollIntoView();
+        cy.get(firstDescriptor.selector).first().scrollIntoView();
     }
 
     waitForTourStep(firstDescriptor.title);
@@ -103,7 +103,7 @@ const runTourScenario = (scenario: TourScenario, auth: TourSuiteAuth, mode: Tour
         const skipSelectorWait = scenario.type === "publish" || scenario.type.startsWith("publish-");
 
         if (!skipSelectorWait && shouldCaptureStep && descriptor.selector) {
-            cy.get(descriptor.selector, { timeout: 20000 }).first().scrollIntoView();
+            cy.get(descriptor.selector).first().scrollIntoView();
         }
 
         waitForTourStep(descriptor.title);

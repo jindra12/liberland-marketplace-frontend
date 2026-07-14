@@ -99,6 +99,7 @@ manager is `yarn`.
 - Do not use `?? null` for any reason.
 - Never use the `void` operator anywhere in app code, tests, or helpers.
 - Do not use the `void` operator to suppress async calls. Call the function directly, pass the async handler through, or `await` it when the flow depends on completion.
+- Never use `timeout: XXX` in Cypress tests or helpers to paper over a test failure. Add the missing assertion, wait for the real UI state, or fix the app behavior instead.
 - Do not use inline `style={{ ... }}` props. Prefer SCSS classes or component props unless a one-off runtime value genuinely cannot be expressed otherwise.
 - Do not thread simple local form fields through pass-through JSX props or render-slot props like `companyField`. Put the field JSX directly inside the owning component.
 - Do not use `children` or `ReactNode` slots for simple form composition. If a shared form needs conditional fields, give it explicit boolean/data props and render the fields directly inside the shared component.

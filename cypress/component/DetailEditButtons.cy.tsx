@@ -47,7 +47,7 @@ const detailEditButtonGoals: DetailEditButtonGoal[] = [
 ];
 
 const assertEditButtonIsCompact = () => {
-    cy.get(".EntityDetail__editButton", { timeout: 20000 })
+    cy.get(".EntityDetail__editButton")
         .should("be.visible")
         .should("contain.text", "Edit")
         .then(($button) => {

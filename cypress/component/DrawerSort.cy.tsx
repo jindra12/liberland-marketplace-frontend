@@ -34,7 +34,8 @@ describe("drawer sort control", () => {
         mountMainHome(seedNsfwConsent);
 
         openDesktopDrawer();
-        cy.contains(".AppHeader__desktopDrawer", "Sort content by").should("be.visible");
+        cy.get(".AppHeader__desktopDrawer").should("be.visible");
+        cy.contains(".AppHeader__desktopDrawer .AppHeader__sortLabel", "Sort content by").should("be.visible");
         assertSelectedSort("Hot");
 
         selectSortOption("Top");
@@ -54,7 +55,8 @@ describe("drawer sort control", () => {
         mountMainHome(seedNsfwConsent);
 
         openMobileDrawer();
-        cy.contains(".AppHeader__drawer", "Sort content by").should("be.visible");
+        cy.get(".AppHeader__drawer").should("be.visible");
+        cy.contains(".AppHeader__drawer .AppHeader__sortLabel", "Sort content by").should("be.visible");
         assertSelectedSort("Hot");
 
         selectSortOption("New");

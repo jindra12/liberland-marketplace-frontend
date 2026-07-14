@@ -1,6 +1,6 @@
 import { routes } from "../../src/routes";
 import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
-import { dismissNsfwModal, mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
+import { mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
 
 const mountOrdersRoute = (route: string) => {
     mountAuthenticatedMainRoute(route, true, (win) => {
@@ -12,9 +12,8 @@ describe("orders", () => {
     it("shows the orders navigation entry on desktop when the user has orders", () => {
         cy.viewport(1440, 900);
         mountOrdersRoute(routes.home.route);
-        dismissNsfwModal();
 
-        cy.contains(".AppHeader__menuLink", "Orders", { timeout: 20000 }).should("be.visible");
+        cy.contains(".AppHeader__menuLink", "Orders").should("be.visible");
         cy.contains(".AppHeader__menuLink", "Orders")
             .parents(".ant-menu-item")
             .contains(".AppHeader__ordersTag", "2")
@@ -26,9 +25,8 @@ describe("orders", () => {
     it("shows the orders navigation button on mobile when the user has orders", () => {
         cy.viewport(390, 844);
         mountOrdersRoute(routes.home.route);
-        dismissNsfwModal();
 
-        cy.get(".AppHeader__ordersLink", { timeout: 20000 }).should("be.visible");
+        cy.get(".AppHeader__ordersLink").should("be.visible");
         cy.get(".AppHeader__ordersLink .ant-badge-count").should("contain.text", "2");
 
         screenshotStep("orders-nav-mobile");
@@ -37,10 +35,9 @@ describe("orders", () => {
     it("renders seller orders and lets the user switch their status", () => {
         cy.viewport(1440, 900);
         mountOrdersRoute(routes.orders.route);
-        dismissNsfwModal();
 
-        cy.contains("h2", "Orders", { timeout: 20000 }).should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })
+        cy.contains("h2", "Orders").should("be.visible");
+        cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .as("solarOrder");
 
@@ -62,8 +59,8 @@ describe("orders", () => {
         screenshotStep("orders-list-pending");
 
         cy.get("@solarOrder").contains("button", "Mark fulfilled").click();
-        cy.contains(".ant-message-notice", "Marked Solar Widget as fulfilled", { timeout: 20000 }).should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })
+        cy.contains(".ant-message-notice", "Marked Solar Widget as fulfilled").should("be.visible");
+        cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .contains(".OrderList__statusTag", "Fulfilled")
             .should("be.visible");
@@ -78,8 +75,8 @@ describe("orders", () => {
             .closest(".ant-list-item")
             .contains("button", "Mark rejected")
             .click();
-        cy.contains(".ant-message-notice", "Marked Solar Widget as rejected", { timeout: 20000 }).should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })
+        cy.contains(".ant-message-notice", "Marked Solar Widget as rejected").should("be.visible");
+        cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .contains(".OrderList__statusTag", "Rejected")
             .should("be.visible");
@@ -94,10 +91,9 @@ describe("orders", () => {
     it("renders seller orders on mobile with the compact shipping details layout", () => {
         cy.viewport(390, 844);
         mountOrdersRoute(routes.orders.route);
-        dismissNsfwModal();
 
-        cy.contains("h2", "Orders", { timeout: 20000 }).should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget", { timeout: 20000 })
+        cy.contains("h2", "Orders").should("be.visible");
+        cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .as("solarOrderMobile");
 

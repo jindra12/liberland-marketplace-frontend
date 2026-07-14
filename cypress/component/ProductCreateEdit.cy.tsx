@@ -1,6 +1,5 @@
 import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
-    dismissNsfwModal,
     fillFormField,
     gqlAlias,
     getRouteEntityId,
@@ -53,15 +52,14 @@ const createOwnedCompany = (companyName: string) => {
     mountAuthenticatedMainRoute("/publish", true, (win) => {
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
     });
-    dismissNsfwModal();
-    cy.get("body", { timeout: 30000 }).should(($body) => {
+    cy.get("body").should(($body) => {
         expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
     });
     cy.get("body").then(($body) => {
         if ($body.find(".Publish__category").length > 0) {
-            cy.contains(".Publish__category", "Company", { timeout: 30000 }).should("be.visible").click({ force: true });
+            cy.contains(".Publish__category", "Company").should("be.visible").click({ force: true });
         } else {
-            cy.contains(".Publish__companyNameField", "Company Name", { timeout: 30000 }).should("be.visible");
+            cy.contains(".Publish__companyNameField", "Company Name").should("be.visible");
         }
     });
 
@@ -87,17 +85,16 @@ describe("product create/edit", () => {
 
         createOwnedCompany(ownedCompanyName);
         cy.routerNavigate("/publish");
-        dismissNsfwModal();
-        cy.get("body", { timeout: 30000 }).then(($body) => {
+        cy.get("body").then(($body) => {
             if ($body.find(".Publish__category, .Publish__productNameField").length === 0) {
                 throw new Error("Expected publish chooser or product form to be visible");
             }
         });
         cy.get("body").then(($body) => {
             if ($body.find(".Publish__category").length > 0) {
-                cy.contains(".Publish__category", "Product", { timeout: 30000 }).should("be.visible").click({ force: true });
+                cy.contains(".Publish__category", "Product").should("be.visible").click({ force: true });
             } else {
-                cy.contains(".Publish__productNameField", "Product Name", { timeout: 30000 }).should("be.visible");
+                cy.contains(".Publish__productNameField", "Product Name").should("be.visible");
             }
         });
 
@@ -126,17 +123,16 @@ describe("product create/edit", () => {
 
         createOwnedCompany(ownedCompanyName);
         cy.routerNavigate("/publish");
-        dismissNsfwModal();
-        cy.get("body", { timeout: 30000 }).then(($body) => {
+        cy.get("body").then(($body) => {
             if ($body.find(".Publish__category, .Publish__productNameField").length === 0) {
                 throw new Error("Expected publish chooser or product form to be visible");
             }
         });
         cy.get("body").then(($body) => {
             if ($body.find(".Publish__category").length > 0) {
-                cy.contains(".Publish__category", "Product", { timeout: 30000 }).should("be.visible").click({ force: true });
+                cy.contains(".Publish__category", "Product").should("be.visible").click({ force: true });
             } else {
-                cy.contains(".Publish__productNameField", "Product Name", { timeout: 30000 }).should("be.visible");
+                cy.contains(".Publish__productNameField", "Product Name").should("be.visible");
             }
         });
 
@@ -154,14 +150,14 @@ describe("product create/edit", () => {
             cy.routerNavigate(editRoute("/products-services", createdId));
             cy.wait(
                 `@${gqlAlias(MAIN_SERVER_URL, "ProductById", { id: createdId, draft: true, url: MAIN_SERVER_URL })}`,
-                { timeout: 20000 },
+                ,
             ).then(
                 (interception) => {
                     expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
                     expect(interception.response?.statusCode).to.equal(200);
                 },
             );
-            cy.contains("h3", "Edit Product", { timeout: 20000 }).should("be.visible");
+            cy.contains("h3", "Edit Product").should("be.visible");
 
             fillFormField("Product Name", updatedProductName);
             fillFormField("Price (USD)", "89");

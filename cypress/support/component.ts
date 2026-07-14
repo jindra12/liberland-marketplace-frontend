@@ -5,10 +5,6 @@ import { resetWalletStubState } from "./walletStub/state";
 
 import "../../src/index.scss";
 
-type CypressWithStop = Cypress.Cypress & {
-    stop?: () => void;
-};
-
 const buildScreenshotName = (test?: Mocha.Test): string => {
     if (test === undefined) {
         return "after-test";
@@ -82,6 +78,7 @@ Cypress.Commands.add("openPublishServerIfNeeded", () => {
 });
 
 beforeEach(() => {
+    cy.clearLocalStorage();
     cy.document().then((doc) => {
         doc.documentElement.setAttribute("data-cypress", "true");
     });
@@ -106,11 +103,5 @@ afterEach(function (this: Mocha.Context) {
             specRelative: Cypress.spec.relative,
             logs,
         });
-    }
-
-    if (this.currentTest?.state === "failed" && !Cypress.browser.isHeaded) {
-        const cypress = Cypress as CypressWithStop;
-        cypress.stop?.();
-        return;
     }
 });

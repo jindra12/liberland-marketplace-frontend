@@ -16,7 +16,7 @@ describe("homepage", () => {
         cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
         cy.get(".SplashPage__heroSecondaryBtn").should("be.visible").contains("Explore Tribes");
         cy.get(".MarketAccordion").should("be.visible");
-        cy.get(".MarketAccordion__postSection--top .AppList__cardItem", { timeout: 20000 }).should("have.length", 2);
+        cy.get(".MarketAccordion__postSection--top .AppList__cardItem").should("have.length", 2);
         cy.get(".MarketAccordion__titleLink--posts .MarketAccordion__title")
             .first()
             .should("have.class", "screen-reader-only")
@@ -30,10 +30,10 @@ describe("homepage", () => {
         });
         cy.get(".MarketAccordion__postSection--top .PostList__coverImage").first().should("be.visible");
         cy.get(".MarketAccordion__postSection--top .PostList__companyAvatar").first().should("be.visible");
-        cy.get(".MarketAccordion__postSection--firstMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
-        cy.get(".MarketAccordion__postSection--secondMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 3);
-        cy.get(".MarketAccordion__postSection--thirdMiddle .AppList__cardItem", { timeout: 20000 }).should("have.length", 4);
-        cy.get(".MarketAccordion__postSection--rest .AppList__cardItem", { timeout: 20000 }).should("have.length.at.least", 1);
+        cy.get(".MarketAccordion__postSection--firstMiddle .AppList__cardItem").should("have.length", 3);
+        cy.get(".MarketAccordion__postSection--secondMiddle .AppList__cardItem").should("have.length", 3);
+        cy.get(".MarketAccordion__postSection--thirdMiddle .AppList__cardItem").should("have.length", 4);
+        cy.get(".MarketAccordion__postSection--rest .AppList__cardItem").should("have.length.at.least", 1);
         cy.get(".MarketAccordion__postSection--rest .AppList__title")
             .should("have.class", "screen-reader-only")
             .and("have.css", "position", "absolute")
@@ -91,7 +91,7 @@ describe("homepage", () => {
             .should("have.class", "screen-reader-only")
             .and("have.css", "position", "absolute");
         cy.contains(".MarketAccordionMobile__section", "Posts")
-            .find(".AppList__cardItem", { timeout: 20000 })
+            .find(".AppList__cardItem")
             .should("have.length.at.least", 2);
         cy.contains(".MarketAccordionMobile__section", "Posts")
             .find(".PostList__companyInlineLink--mobile")

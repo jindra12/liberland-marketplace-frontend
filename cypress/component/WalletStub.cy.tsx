@@ -22,7 +22,7 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
         serverUrl === MAIN_SERVER_URL ? [MAIN_SERVER_URL, COOP_SERVER_URL] : [COOP_SERVER_URL, MAIN_SERVER_URL],
         anonymousCartSecrets,
     );
-    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.get(".ProductDetail").should("be.visible");
     screenshotStep(`wallet-stub-product-${id}`);
 };
 

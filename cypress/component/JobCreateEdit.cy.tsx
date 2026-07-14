@@ -59,7 +59,7 @@ describe("job create/edit", () => {
         openJobPublishForm();
 
         cy.get(".Publish__jobCompanyField").find(".ant-select").click();
-        cy.get(".ant-select-dropdown", { timeout: 20000 })
+        cy.get(".ant-select-dropdown")
             .should("be.visible")
             .and("contain.text", "Harbor Labs")
             .and("not.contain.text", "Reef Studio")

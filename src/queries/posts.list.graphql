@@ -4,6 +4,7 @@ query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankS
       id
       title
       slug
+      content
       repost
       heroImage {
         id

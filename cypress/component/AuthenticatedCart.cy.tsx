@@ -30,7 +30,7 @@ describe("authenticated cart", () => {
         cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");
-        cy.contains(".CartPage__orderButton", "Proceed to order", { timeout: 20000 })
+        cy.contains(".CartPage__orderButton", "Proceed to order")
             .should("be.visible")
             .click();
 
@@ -50,7 +50,7 @@ describe("authenticated cart", () => {
         cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");
-        cy.contains(".CartPage__orderButton", "Proceed to order", { timeout: 20000 })
+        cy.contains(".CartPage__orderButton", "Proceed to order")
             .should("be.visible")
             .click();
 

@@ -2,7 +2,6 @@ import { UserManager } from "oidc-client-ts";
 
 import { detailRoute, COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
-    dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     screenshotStep,
@@ -34,7 +33,7 @@ const mainSavedShippingAddress: AddressWithEmail = {
 };
 
 const openBuyNow = () => {
-    cy.contains(".AddToCartButton__buyNow", "Buy now", { timeout: 20000 }).should("be.visible").click();
+    cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
 };
 
 describe("buy now", () => {
@@ -57,7 +56,7 @@ describe("buy now", () => {
 
         cy.contains(".AddToCartButton__buyNow", "Buy now").click();
         cy.wrap(signinRedirect).should("have.been.calledOnce");
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(signinRedirect).to.have.been.calledOnce;
             signinRedirectArgs = signinRedirect.getCall(0)?.args[0];
             expect(signinRedirectArgs?.state).to.equal(guestProductRoute);
@@ -81,11 +80,10 @@ describe("buy now", () => {
         );
 
         cy.contains("h1", "Harbor Lantern").should("be.visible");
-        dismissNsfwModal();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
 
         cy.wrap(signinRedirect).should("have.been.calledOnce");
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(signinRedirect.getCall(0)?.args[0]?.state).to.equal(mainProductRoute);
             expect(JSON.parse(window.sessionStorage.getItem(BUY_NOW_RETURN_TO_STORAGE_KEY) || '""')).to.equal(
                 mainProductRoute,
@@ -104,7 +102,7 @@ describe("buy now", () => {
             "Harbor Lantern",
         );
 
-        cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         cy.window().then((win) => {
             expect(JSON.parse(win.sessionStorage.getItem(BUY_NOW_RETURN_TO_STORAGE_KEY) || '""')).to.equal("");
         });
@@ -154,11 +152,11 @@ describe("buy now", () => {
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
-        cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         screenshotStep("buy-now-payment-modal-after-address-choice");
         cy.get(".BuyNowPaymentModal .ant-modal-close").click();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
-        cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
 
@@ -169,7 +167,7 @@ describe("buy now", () => {
 
         openBuyNow();
 
-        cy.contains(".BuyNowPaymentModal", "Complete payment", { timeout: 20000 }).should("be.visible");
+        cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         screenshotStep("buy-now-saved-shipping-address-payment-modal");
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
@@ -215,7 +213,7 @@ describe("buy now", () => {
             .and("not.have.class", "ant-btn-primary");
 
         cy.contains(".ProductDetail__purchaseControl .AddToCartButton__submit", "Add to cart").click();
-        cy.get(".ProductDetail__purchaseControl .AddToCartButton__quantity input", { timeout: 20000 })
+        cy.get(".ProductDetail__purchaseControl .AddToCartButton__quantity input")
             .should("be.visible")
             .and("have.value", "1");
 

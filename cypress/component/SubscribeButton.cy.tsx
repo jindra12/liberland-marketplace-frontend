@@ -151,9 +151,9 @@ describe("SubscribeButton", () => {
 
         mountSubscribeButton();
 
-        cy.contains(".SubscribeButton", "Unsubscribe", { timeout: 20000 }).should("be.visible").click();
+        cy.contains(".SubscribeButton", "Unsubscribe").should("be.visible").click();
 
-        cy.wait("@unsubscribeCompany", { timeout: 20000 }).then((interception) => {
+        cy.wait("@unsubscribeCompany").then((interception) => {
             expect(interception.request.url).to.equal(`${COOP_SERVER_URL}/api/graphql`);
             expect(interception.request.body.variables.subscriptionID).to.equal(expectedSubscriptionID);
             expect(interception.request.headers.authorization).to.equal("Bearer coop.user@example.test-access-token");

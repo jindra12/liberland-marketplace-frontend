@@ -30,8 +30,8 @@ export const runDisclaimerFlow = (viewport: DisclaimerViewport) => {
 };
 
 export const screenshotDisclaimerDrawer = (viewport: DisclaimerViewport) => {
-    cy.get(getDrawerButtonSelector(viewport), { timeout: 20000 }).should("be.visible").click();
-    cy.contains(getDrawerSelector(viewport), getDrawerOpenLabel(viewport), { timeout: 20000 }).should("be.visible");
+    cy.get(getDrawerButtonSelector(viewport)).should("be.visible").click();
+    cy.contains(getDrawerSelector(viewport), getDrawerOpenLabel(viewport)).should("be.visible");
     cy.contains(getDrawerSelector(viewport), "Disclaimers").should("be.visible");
     cy.get(getDrawerSelector(viewport))
         .screenshot(`${Cypress.spec.name} ${viewport} drawer`.replace(/[^a-zA-Z0-9]+/g, "-"));
@@ -39,16 +39,16 @@ export const screenshotDisclaimerDrawer = (viewport: DisclaimerViewport) => {
 
 export const walkDisclaimerPages = (viewport: DisclaimerViewport) => {
     cy.contains(`${getDrawerSelector(viewport)} button`, "Disclaimers").click();
-    cy.contains(".DisclaimersModal__title", disclaimerDefinitions[0].title, { timeout: 20000 }).should("be.visible");
+    cy.contains(".DisclaimersModal__title", disclaimerDefinitions[0].title).should("be.visible");
 
     disclaimerDefinitions.forEach((definition, index) => {
         if (index > 0) {
-            cy.contains(".DisclaimersModal__menu .ant-menu-item", definition.title, { timeout: 20000 }).click({
+            cy.contains(".DisclaimersModal__menu .ant-menu-item", definition.title).click({
                 force: true,
             });
         }
 
-        cy.contains(".DisclaimersModal__title", definition.title, { timeout: 20000 }).should("be.visible");
+        cy.contains(".DisclaimersModal__title", definition.title).should("be.visible");
         const screenshotName = `${Cypress.spec.name} ${viewport} ${definition.key}`.replace(/[^a-zA-Z0-9]+/g, "-");
 
         if (viewport === "mobile") {

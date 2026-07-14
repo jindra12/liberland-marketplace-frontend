@@ -44,19 +44,19 @@ const openHarborLanternAndCreateCart = () => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         },
     );
-    cy.wait("@productById", { timeout: 20000 }).its("response.statusCode").should("eq", 200);
-    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
-    cy.contains('button[aria-label="Add to cart"]', "Add to cart", { timeout: 20000 }).should("be.visible");
+    cy.wait("@productById").its("response.statusCode").should("eq", 200);
+    cy.get(".ProductDetail").should("be.visible");
+    cy.contains('button[aria-label="Add to cart"]', "Add to cart").should("be.visible");
     addToCart();
 };
 
 const openCart = () => {
     cy.routerNavigate("/cart");
-    cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
-    cy.wait("@cartBySecret", { timeout: 20000 }).its("response.statusCode").should("eq", 200);
+    cy.get(".CartPage .AddToCartButton__quantity").should("be.visible");
+    cy.wait("@cartBySecret").its("response.statusCode").should("eq", 200);
 };
 
-const getCartQuantityControl = () => cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 });
+const getCartQuantityControl = () => cy.get(".CartPage .AddToCartButton__quantity");
 
 describe("cart control", () => {
     beforeEach(() => {
@@ -70,17 +70,17 @@ describe("cart control", () => {
         getCartQuantityControl().find("input").should("have.value", "2");
 
         cy.routerNavigate("/cart");
-        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+        cy.get(".CartPage .AddToCartButton__quantity").should("be.visible");
         getCartQuantityControl().find("input").should("have.value", "2");
     });
 
     it("removes the item when the quantity reaches zero", () => {
         getCartQuantityControl().find("input").should("have.value", "1");
         getCartQuantityControl().find(".ant-input-number-handler-down").click({ force: true });
-        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("not.exist");
+        cy.get(".CartPage .AddToCartButton__quantity").should("not.exist");
 
         cy.routerNavigate("/cart");
-        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("not.exist");
+        cy.get(".CartPage .AddToCartButton__quantity").should("not.exist");
     });
 
     it("does not keep negative values in the quantity field", () => {
@@ -95,7 +95,7 @@ describe("cart control", () => {
         getCartQuantityControl().find("input").blur();
 
         cy.routerNavigate("/cart");
-        cy.get(".CartPage .AddToCartButton__quantity", { timeout: 20000 }).should("be.visible");
+        cy.get(".CartPage .AddToCartButton__quantity").should("be.visible");
         getCartQuantityControl().find("input").should("have.value", "5");
     });
 });

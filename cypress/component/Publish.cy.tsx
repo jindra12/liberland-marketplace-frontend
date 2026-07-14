@@ -2,7 +2,6 @@ import { UserManager } from "oidc-client-ts";
 
 import { COOP_SERVER_URL, GUEST_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
-    dismissNsfwModal,
     mountAnonymousRoute,
     mountAuthenticatedDetailRoute,
     mountAuthenticatedMainRoute,
@@ -60,11 +59,11 @@ describe("publish", () => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
 
-        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
-        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item", { timeout: 20000 }).first().click({ force: true });
+        cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").click();
+        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item").first().click({ force: true });
 
         cy.location("pathname").should("eq", "/publish");
-        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish", "Create").should("be.visible");
         cy.contains(".Publish__category", "Company").should("be.visible");
         cy.contains(".Publish__category", "Venture").should("be.visible");
         screenshotStep("publish-flow-visible");
@@ -79,7 +78,7 @@ describe("publish", () => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
 
-        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish", "Create").should("be.visible");
         cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").within(() => {
             cy.get(".anticon-plus").should("be.visible");
         });
@@ -107,14 +106,13 @@ describe("publish", () => {
             redirectUrl = signinRequest.url;
         });
 
-        dismissNsfwModal();
-        cy.get(".AppHeader__authBtn", { timeout: 20000 }).should("contain.text", "Log in").click();
-        cy.get(".LoginButton__menu", { timeout: 20000 }).should("be.visible");
-        cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op", { timeout: 20000 })
+        cy.get(".AppHeader__authBtn").should("contain.text", "Log in").click();
+        cy.get(".LoginButton__menu").should("be.visible");
+        cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op")
             .should("be.visible")
             .click();
 
-        cy.wrap(null, { timeout: 20000 }).should(() => {
+        cy.wrap(null).should(() => {
             expect(redirectUrl).to.not.equal("");
             expect(signinRedirectArgs?.state).to.equal("/jobs");
             const parsedUrl = new URL(redirectUrl);
@@ -136,11 +134,11 @@ describe("publish", () => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
 
-        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
-        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item", { timeout: 20000 }).first().click({ force: true });
+        cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").click();
+        cy.get(".ant-dropdown:visible .ant-dropdown-menu-item").first().click({ force: true });
 
         cy.location("pathname").should("eq", "/publish");
-        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish", "Create").should("be.visible");
         cy.contains(".Publish__category", "Company").should("be.visible");
         cy.contains(".Publish__category", "Post").should("be.visible");
         cy.contains(".Publish__category", "Job").should("be.visible");
@@ -151,7 +149,7 @@ describe("publish", () => {
     it("shows the email verification warning for unverified users", () => {
         mountAuthenticatedMainRoute("/publish", false);
 
-        cy.contains(".Publish", "Email not verified", { timeout: 20000 }).should("be.visible");
+        cy.contains(".Publish", "Email not verified").should("be.visible");
         cy.contains(".Publish", "You need to verify your email address before you can publish listings.").should(
             "be.visible",
         );
@@ -169,8 +167,8 @@ describe("publish", () => {
 
         mountAuthenticatedMainRoute("/publish");
 
-        cy.wait("@ownedCompanies", { timeout: 20000 });
-        cy.contains(".Publish", "Create", { timeout: 20000 }).should("be.visible");
+        cy.wait("@ownedCompanies");
+        cy.contains(".Publish", "Create").should("be.visible");
         cy.contains(".Publish__categories", "Company").should("be.visible");
         cy.contains(".Publish__categories", "Post").should("be.visible");
         cy.contains(".Publish__categories", "Job").should("be.visible");
@@ -187,8 +185,8 @@ describe("publish", () => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
 
-        cy.contains(".AppHeader__publishBtn", "Create", { timeout: 20000 }).should("be.visible").click();
-        cy.contains(".Publish__postTitleField", "Title", { timeout: 20000 }).should("be.visible");
+        cy.contains(".AppHeader__publishBtn", "Create").should("be.visible").click();
+        cy.contains(".Publish__postTitleField", "Title").should("be.visible");
 
         cy.contains(".Publish__back", "Back").click();
 

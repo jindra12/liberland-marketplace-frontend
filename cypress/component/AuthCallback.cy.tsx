@@ -45,7 +45,7 @@ const runAuthCallbackFlow = (viewportWidth: number, viewportHeight: number, scre
     cy.viewport(viewportWidth, viewportHeight);
     mountAuthCallback();
 
-    cy.contains("Could not complete sign-in", { timeout: 20000 }).should("be.visible");
+    cy.contains("Could not complete sign-in").should("be.visible");
     cy.contains("Back to homepage").should("be.visible");
     cy.get(".AuthCallback__errorPanel").should("be.visible");
     cy.get(".AuthCallback__error").should("have.css", "text-align", "left");

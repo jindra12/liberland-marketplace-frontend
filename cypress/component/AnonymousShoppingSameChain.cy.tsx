@@ -29,7 +29,7 @@ const openProduct = (route: string, id: string, title: string, cartSecrets: Reco
         win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
     });
     waitForDetailQuery(MAIN_SERVER_URL, "ProductById", { id }, "Product", id, title);
-    cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+    cy.get(".ProductDetail").should("be.visible");
 };
 
 describe("anonymous shopping same-chain", () => {
@@ -59,7 +59,7 @@ describe("anonymous shopping same-chain", () => {
             "product-moon-lamp",
             "Moon Lamp",
         );
-        cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+        cy.get(".ProductDetail").should("be.visible");
         addToCart();
 
         mountAnonymousRoute("/cart", [MAIN_SERVER_URL], cartSecrets, (win) => {

@@ -70,7 +70,7 @@ describe("product/service detail", () => {
             "Harbor Labs has strong logistics.",
         );
 
-        cy.get(".ProductDetail", { timeout: 20000 }).should("be.visible");
+        cy.get(".ProductDetail").should("be.visible");
         cy.contains(".EntityDetail__title", "Moon Lamp").should("be.visible");
         cy.get(".ProductDetail__identityRow").should("be.visible");
         cy.get(".ProductDetail__purchaseMeta").contains("Price: 1.25").should("be.visible");
@@ -111,7 +111,7 @@ describe("product/service detail", () => {
 
         openMoonLampDetail();
 
-        cy.contains(".ProductDetail", "Related products", { timeout: 20000 }).should("be.visible");
+        cy.contains(".ProductDetail", "Related products").should("be.visible");
         cy.get(".ProductDetail .SplashEntityCard__avatar").should("have.length.at.least", 1);
         cy.get(".ProductDetail .SplashEntityCard__itemCard").should("have.length.at.least", 3);
         cy.contains(".ProductDetail", "Solar Widget").should("exist");

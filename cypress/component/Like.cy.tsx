@@ -195,7 +195,7 @@ describe("like", () => {
         cy.get(".LikeButton").should("be.visible").and("have.class", "LikeButton--unliked");
         cy.get(".LikeButton").click();
 
-        cy.contains("Please verify your email first", { timeout: 20000 }).should("be.visible");
+        cy.contains("Please verify your email first").should("be.visible");
         cy.contains("Your email address still needs to be verified on Main before you can continue.").should(
             "be.visible",
         );
