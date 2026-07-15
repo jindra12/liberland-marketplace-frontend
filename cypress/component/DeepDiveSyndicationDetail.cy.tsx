@@ -13,6 +13,13 @@ describe("syndication detail", () => {
         resetGraphQLMock();
     });
 
+    afterEach(() => {
+        const mainSyndication = activeFixtures.syndications.find((entry) => entry.url === MAIN_SERVER_URL);
+        if (mainSyndication !== undefined) {
+            mainSyndication.description = "Primary syndicated content source";
+        }
+    });
+
     it("shows endpoint metadata and share controls for an enabled endpoint", () => {
         mountMainRoute(syndicationDetailRoute(MAIN_SERVER_URL));
         waitForCollectionQuery(
@@ -78,6 +85,9 @@ describe("syndication detail", () => {
         cy.get(".SyndicationDetail__description").should("not.exist");
         cy.get(".EntityDetail > .ant-divider").should("have.length", 2);
         cy.get(".ShareSection").should("be.visible");
+        cy.then(() => {
+            mainSyndication.description = "Primary syndicated content source";
+        });
     });
 
     it("shows when the endpoint cannot publish listings", () => {

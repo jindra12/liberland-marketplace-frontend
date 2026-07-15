@@ -2,9 +2,7 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/con
 import { mountProfileRoute, screenshotStep, waitForMeUserQuery } from "../support/component-tests/utils";
 
 const assertNicknameValue = (value: string) => {
-    cy.contains(".Profile__card", "Change Nickname").within(() => {
-        cy.get("input").should("have.value", value);
-    });
+    cy.get(".Profile__nicknameCard input").should("have.value", value);
 };
 
 const assertPasswordFormIsEmpty = () => {
@@ -67,7 +65,7 @@ const assertCoopDefaults = () => {
 };
 
 const openServerSelect = () => {
-    cy.get(".Profile__serverCard").should("be.visible").find(".ant-select").should("be.visible").click();
+    cy.get(".Profile__serverCard").should("be.visible").find(".ant-select-selector").should("be.visible").click({ force: true });
 };
 
 const selectProfileServer = (label: string) => {

@@ -5,6 +5,7 @@ import {
     getRouteEntityId,
     mountAuthenticatedMainRoute,
     mockOwnedCompaniesByCreatorQuery,
+    openPublishCategory,
     screenshotStep,
     selectFormOption,
     uploadTestImage,
@@ -45,17 +46,7 @@ const assertCompanyName = (companyId: string, expectedTitle: string) => {
 };
 
 const openCompanyPublishForm = () => {
-    cy.get("body").should(($body) => {
-        expect($body.find(".Publish__category, .Publish__companyNameField").length).to.be.greaterThan(0);
-    });
-    cy.get("body").then(($body) => {
-        if ($body.find(".Publish__category").length > 0) {
-            cy.contains(".Publish__category", "Company").should("be.visible").click({ force: true });
-            return;
-        }
-
-        cy.contains(".Publish__companyNameField", "Company Name").should("be.visible");
-    });
+    openPublishCategory("Company");
 };
 
 describe("company create/edit", () => {

@@ -29,6 +29,15 @@ const getConsentValue = () => {
 };
 
 describe("syndication nsfw modal", () => {
+    afterEach(() => {
+        const mainSyndication = getGraphQLFixturesForHost(MAIN_SERVER_URL).syndications.find(
+            (entry) => entry.url === MAIN_SERVER_URL,
+        );
+        if (mainSyndication !== undefined) {
+            mainSyndication.nsfw = false;
+        }
+    });
+
     it("asks for 18+ consent and stores the marker when the user continues", () => {
         mountRouteWithEndpoints("/", [
             {

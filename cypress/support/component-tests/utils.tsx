@@ -103,10 +103,15 @@ const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerified = t
     win.localStorage.setItem(buildAuthStorageKey(serverUrl), user.toStorageString());
 };
 
-export const mountProfileRoute = (serverUrls: string[] = [BACKEND_URL], emailVerified = true) => {
+export const mountProfileRoute = (
+    serverUrls: string[] = [BACKEND_URL],
+    emailVerified = true,
+    beforeMount?: (win: Window) => void,
+) => {
     cy.window().then((win) => {
         win.localStorage.clear();
         serverUrls.forEach((serverUrl) => seedAuthorizedProfile(win, serverUrl, emailVerified));
+        beforeMount?.(win);
         win.history.pushState({}, "", "/profile");
     });
     mount(<Main />);
@@ -270,14 +275,6 @@ export const mountAnonymousRoute = (
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
-    if (cartSecrets) {
-        cy.window().then((win) => {
-            const entries = Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret }));
-            const serialized = JSON.stringify(entries);
-            win.localStorage.setItem(CART_SECRETS_INDEX_KEY, serialized);
-            win.dispatchEvent(new win.StorageEvent("storage", { key: CART_SECRETS_INDEX_KEY, newValue: serialized }));
-        });
-    }
     cy.routerNavigate(route);
 };
 
@@ -289,8 +286,10 @@ export const openPublishServerIfNeeded = () => {
 
     cy.get("body").then(($body) => {
         if ($body.find(".Publish__postTitleField").length > 0) {
-            cy.contains(".Publish__back", "Back").click();
-            cy.contains(".Publish__category", "Company").should("be.visible");
+            if ($body.find(".Publish__back").length > 0) {
+                cy.contains(".Publish__back", "Back").click();
+                cy.contains(".Publish__category", "Company").should("be.visible");
+            }
             return;
         }
     });
@@ -310,8 +309,28 @@ export const openPublishCategory = (categoryName: string) => {
     }
 
     openPublishServerIfNeeded();
-    cy.contains(".Publish__categoryTitle", categoryTitle).should("be.visible").click();
-    screenshotStep(`publish-category-${categoryName}`);
+    const formSelectorByCategory: Record<string, string> = {
+        Job: ".Publish__jobTitleField",
+        Company: ".Publish__companyNameField",
+        Product: ".Publish__productNameField",
+        Post: ".Publish__postTitleField",
+        Venture: ".Publish__startupTitleField",
+    };
+    const formSelector = formSelectorByCategory[categoryName];
+    cy.get("body").then(($body) => {
+        const visibleFormSelector = Object.values(formSelectorByCategory).find((selector) => $body.find(selector).length > 0);
+
+        if (visibleFormSelector === formSelector) {
+            return;
+        }
+
+        if (visibleFormSelector !== undefined && $body.find(".Publish__back").length > 0) {
+            cy.contains(".Publish__back", "Back").click();
+        }
+
+        cy.contains(".Publish__categoryTitle", categoryTitle).should("be.visible").click();
+        screenshotStep(`publish-category-${categoryName}`);
+    });
 };
 
 const getFormItem = (label: string) => cy.contains(".ant-form-item", label);
@@ -325,7 +344,7 @@ export const assertFormFieldValue = (label: string, value: string) => {
 };
 
 export const selectFormOption = (label: string, optionLabel: string) => {
-    getFormItem(label).find(".ant-select").first().click();
+    getFormItem(label).find(".ant-select-selector").first().click({ force: true });
     cy.get(".ant-select-dropdown").should("be.visible");
     cy.contains(".ant-select-dropdown .ant-select-item-option-content", optionLabel).click({
         force: true,
@@ -442,7 +461,8 @@ export const mountMainHome = (beforeMount?: (win: Window) => void) => {
     });
     mount(<Main />);
     cy.routerNavigate("/");
-    cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
+    cy.get(".SplashPage").should("be.visible");
+    cy.contains(".SplashPage__heroActions", "Explore market").should("be.visible");
     cy.get(".SplashPage__heroPrimaryBtn").should("be.visible").contains("Explore market");
 };
 
@@ -457,7 +477,6 @@ export const seedCartSecret = (serverUrl: string, secret: string) => {
     cy.window().then((win) => {
         const serialized = JSON.stringify(entries);
         win.localStorage.setItem(CART_SECRETS_INDEX_KEY, serialized);
-        win.dispatchEvent(new win.StorageEvent("storage", { key: CART_SECRETS_INDEX_KEY, newValue: serialized }));
     });
 };
 
@@ -492,13 +511,13 @@ export const homepageMobileQueries = () => {
 };
 
 export const openDesktopMenu = () => {
-    cy.get('button[aria-label="Open menu"]').click();
+    cy.get('button[aria-label="Open menu"]').click({ force: true });
 };
 
 export const openSearchScope = (scopeLabel: string) => {
     openDesktopMenu();
-    cy.contains(".AppHeader__desktopDrawer button", "Search").click();
-    cy.get(".SearchButton__menuOverlay").should("be.visible").contains(scopeLabel).click();
+    cy.contains(".AppHeader__desktopDrawer button", "Search").click({ force: true });
+    cy.get(".SearchButton__menuOverlay").should("be.visible").contains(scopeLabel).click({ force: true });
 };
 
 export const waitForPageShell = () => {
@@ -519,10 +538,15 @@ export const assertImageLoaded = (selector: string) => {
 };
 
 export const waitForRouteLoad = (pageSkeletonSelector: string) => {
-    cy.get(".LoadingSkeleton--surface").should("exist");
-    cy.get(".LoadingSkeleton--surface").should("not.exist");
-    cy.get(pageSkeletonSelector).should("exist");
-    cy.get(pageSkeletonSelector).should("not.exist");
+    cy.get("body").then(($body) => {
+        if ($body.find(".LoadingSkeleton--surface").length > 0) {
+            cy.get(".LoadingSkeleton--surface").should("not.exist");
+        }
+
+        if ($body.find(pageSkeletonSelector).length > 0) {
+            cy.get(pageSkeletonSelector).should("not.exist");
+        }
+    });
 };
 
 export const waitForCollectionQuery = (

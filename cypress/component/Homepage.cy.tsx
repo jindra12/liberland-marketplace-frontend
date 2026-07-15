@@ -9,7 +9,6 @@ describe("homepage", () => {
         mountMainHome(seedNsfwConsent);
         waitForPageShell();
         homepageQueries();
-        cy.pause();
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");
@@ -46,6 +45,7 @@ describe("homepage", () => {
 
     it("hides empty sections", () => {
         cy.viewport(1440, 1200);
+        const companiesSnapshot = structuredClone(activeFixtures.companies);
         cy.window().then(() => {
             activeFixtures.companies.splice(0, activeFixtures.companies.length);
         });
@@ -71,13 +71,15 @@ describe("homepage", () => {
         cy.contains(".MarketAccordion__section", "Companies").should("not.exist");
 
         screenshotStep("homepage-desktop-empty-companies");
+        cy.then(() => {
+            activeFixtures.companies.splice(0, activeFixtures.companies.length, ...companiesSnapshot);
+        });
     });
 
     it("shows the splash page on mobile", () => {
         cy.viewport(390, 844);
         mountMainHome(seedNsfwConsent);
         waitForPageShell();
-        cy.pause();
         cy.get(".SplashPage").should("be.visible");
         cy.get(".SplashPage__heroBackdrop").should("be.visible");
         cy.get(".SplashPage__heroWordmark").should("be.visible").contains("NSWAP");

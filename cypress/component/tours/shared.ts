@@ -37,18 +37,7 @@ export type TourScenario = {
     auth: TourSuiteAuth;
     modes: TourSuiteMode[];
     captureStepIndexes?: Partial<Record<TourSuiteAuth, number[]>>;
-    seedBeforeMount?: boolean;
-    mount: () => void;
-};
-
-const seedTourSession = (tourType: TourType, notify = false) => {
-    cy.window().then((win) => {
-        const serialized = JSON.stringify(tourType);
-        win.localStorage.setItem(TOUR_LOCAL_STORAGE_KEY, serialized);
-        if (notify) {
-            win.dispatchEvent(new win.StorageEvent("storage", { key: TOUR_LOCAL_STORAGE_KEY, newValue: serialized }));
-        }
-    });
+    mount: (setup?: (win: Window) => void) => void;
 };
 
 const waitForTourStep = (title: string) => {
@@ -75,13 +64,9 @@ const runTourScenario = (scenario: TourScenario, auth: TourSuiteAuth, mode: Tour
 
     cy.viewport(TOUR_VIEWPORTS[mode].width, TOUR_VIEWPORTS[mode].height);
     cy.clearLocalStorage();
-    if (scenario.seedBeforeMount === false) {
-        scenario.mount();
-        seedTourSession(scenario.type, true);
-    } else {
-        seedTourSession(scenario.type);
-        scenario.mount();
-    }
+    scenario.mount((win) => {
+        win.localStorage.setItem(TOUR_LOCAL_STORAGE_KEY, JSON.stringify(scenario.type));
+    });
 
     if (!scenario.type.startsWith("publish") && firstDescriptor.selector) {
         cy.get(firstDescriptor.selector).first().scrollIntoView();
@@ -133,8 +118,9 @@ export const runTourSuite = (scenarios: TourScenario[], auth: TourSuiteAuth) => 
 export const runAuthPromptScreenshot = (mode: TourSuiteMode) => {
     cy.viewport(TOUR_VIEWPORTS[mode].width, TOUR_VIEWPORTS[mode].height);
     cy.clearLocalStorage();
-    seedTourSession("publish");
-    mountAnonymousRoute("/publish", [MAIN_SERVER_URL]);
+    mountAnonymousRoute("/publish", [MAIN_SERVER_URL], undefined, (win) => {
+        win.localStorage.setItem(TOUR_LOCAL_STORAGE_KEY, JSON.stringify("publish"));
+    });
 
     const promptStep = TOUR_AUTH_PROMPT_STEPS[mode][0];
     waitForTourStep(promptStep.title);
@@ -146,96 +132,96 @@ export const UNAUTHORIZED_TOUR_SCENARIOS: TourScenario[] = [
         type: "home",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "jobs",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/jobs", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/jobs", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "job-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(detailRoute("/jobs", "job-dockmaster"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/jobs", "job-dockmaster"), setup);
         },
     },
     {
         type: "companies",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/companies", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/companies", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "company-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(detailRoute("/companies", "company-harbor-labs"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/companies", "company-harbor-labs"), setup);
         },
     },
     {
         type: "tribes",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/tribes", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/tribes", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "tribe-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(detailRoute("/tribes", "identity-nova"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/tribes", "identity-nova"), setup);
         },
     },
     {
         type: "products",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/products-services", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/products-services", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "product-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(detailRoute("/products-services", "product-moon-lamp"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/products-services", "product-moon-lamp"), setup);
         },
     },
     {
         type: "posts",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/posts", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/posts", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "post-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(detailRoute("/posts", "post-harbor-operations-digest"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), setup);
         },
     },
     {
         type: "ventures",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/ventures", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/ventures", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
@@ -245,32 +231,32 @@ export const UNAUTHORIZED_TOUR_SCENARIOS: TourScenario[] = [
         captureStepIndexes: {
             unauthorized: [0, 2],
         },
-        mount: () => {
-            mountMainRoute(detailRoute("/ventures", "startup-sky-relay"));
+        mount: (setup) => {
+            mountMainRoute(detailRoute("/ventures", "startup-sky-relay"), setup);
         },
     },
     {
         type: "syndication",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/syndication", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/syndication", [MAIN_SERVER_URL], undefined, setup);
         },
     },
     {
         type: "syndication-detail",
         auth: "unauthorized",
         modes: ["desktop"],
-        mount: () => {
-            mountMainRoute(syndicationDetailRoute(MAIN_SERVER_URL));
+        mount: (setup) => {
+            mountMainRoute(syndicationDetailRoute(MAIN_SERVER_URL), setup);
         },
     },
     {
         type: "syndicate",
         auth: "unauthorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAnonymousRoute("/syndicate", [MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountAnonymousRoute("/syndicate", [MAIN_SERVER_URL], undefined, setup);
         },
     },
 ];
@@ -280,40 +266,40 @@ export const AUTHORIZED_TOUR_SCENARIOS: TourScenario[] = [
         type: "profile",
         auth: "authorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountProfileRoute([MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountProfileRoute([MAIN_SERVER_URL], true, setup);
         },
     },
     {
         type: "profile-wallets",
         auth: "authorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountProfileRoute([MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountProfileRoute([MAIN_SERVER_URL], true, setup);
         },
     },
     {
         type: "profile-address",
         auth: "authorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountProfileRoute([MAIN_SERVER_URL]);
+        mount: (setup) => {
+            mountProfileRoute([MAIN_SERVER_URL], true, setup);
         },
     },
     {
         type: "cart",
         auth: "authorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL], TOUR_CART_SECRETS);
+        mount: (setup) => {
+            mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL], TOUR_CART_SECRETS, true, setup);
         },
     },
     {
         type: "order",
         auth: "authorized",
         modes: ["desktop", "mobile"],
-        mount: () => {
-            mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL], TOUR_CART_SECRETS);
+        mount: (setup) => {
+            mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL], TOUR_CART_SECRETS, true, setup);
         },
     },
 ];

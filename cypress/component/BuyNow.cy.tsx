@@ -139,6 +139,11 @@ describe("buy now", () => {
     });
 
     it("lets users pick an address and remembers it", () => {
+        cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+            if (typeof req.body.query === "string" && req.body.query.includes("CreateOrder")) {
+                req.alias = "createOrder";
+            }
+        });
         mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, true, (win) => {
             win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
         });
@@ -150,8 +155,12 @@ describe("buy now", () => {
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
         screenshotStep("buy-now-shipping-address-picker");
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
-        cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
+        cy.contains(".ShippingAddressSelectModal__option", "Iris Shore")
+            .should("be.visible")
+            .find(".ant-radio-input")
+            .check({ force: true });
 
+        cy.wait("@createOrder");
         cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         screenshotStep("buy-now-payment-modal-after-address-choice");
         cy.get(".BuyNowPaymentModal .ant-modal-close").click();

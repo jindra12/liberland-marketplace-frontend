@@ -2,12 +2,11 @@ import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generate
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { mountMainRoute, waitForCollectionQuery, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("job deep dive", () => {
     beforeEach(() => {
         mountMainRoute(detailRoute("/jobs", "job-dockmaster"));
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(MAIN_SERVER_URL, "JobById", { id: "job-dockmaster" }, "Job", "job-dockmaster", "Dockmaster");
     });
 

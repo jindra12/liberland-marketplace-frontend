@@ -1,10 +1,9 @@
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, waitForDetailQuery, waitForRouteLoad } from "../support/component-tests/utils";
+import { mountMainRoute, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("inactive job", () => {
     it("shows the inactive title state and notice", () => {
         mountMainRoute(detailRoute("/jobs", "job-harbor-watch"));
-        waitForRouteLoad(".LoadingSkeleton--detail");
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "JobById",

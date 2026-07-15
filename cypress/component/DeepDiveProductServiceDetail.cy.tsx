@@ -24,6 +24,44 @@ const openMoonLampDetail = () => {
     );
 };
 
+const originalMoonLampParameters = structuredClone(
+    activeFixtures.products.find((entry) => entry.id === "product-moon-lamp")?.parameters,
+);
+const originalMoonLampRelatedProducts = structuredClone(
+    activeFixtures.products.find((entry) => entry.id === "product-moon-lamp")?.relatedProducts,
+);
+
+const getMoonLampFixture = () => {
+    const product = activeFixtures.products.find((entry) => entry.id === "product-moon-lamp");
+    if (product === undefined) {
+        throw new Error("Missing product-moon-lamp fixture data");
+    }
+
+    return product;
+};
+
+const getSolarWidgetFixture = () => {
+    const product = activeFixtures.products.find((entry) => entry.id === "product-solar-widget");
+    if (product === undefined) {
+        throw new Error("Missing solar widget fixture data");
+    }
+
+    return product;
+};
+
+const getHarborPackFixture = () => {
+    const product = activeFixtures.products.find((entry) => entry.id === "product-harbor-pack");
+    if (product === undefined) {
+        throw new Error("Missing harbor pack fixture data");
+    }
+
+    return product;
+};
+
+if (originalMoonLampParameters === undefined || originalMoonLampRelatedProducts === undefined) {
+    throw new Error("Missing product fixture data");
+}
+
 describe("product/service detail", () => {
     beforeEach(() => {
         resetGraphQLMock();
@@ -31,10 +69,7 @@ describe("product/service detail", () => {
     });
 
     it("shows title, company identity, pricing, properties, links, subscribe, and comments", () => {
-        const product = activeFixtures.products.find((entry) => entry.id === "product-moon-lamp");
-        if (product === undefined) {
-            throw new Error("Missing product-moon-lamp fixture data");
-        }
+        const product = getMoonLampFixture();
 
         product.parameters = [
             {
@@ -96,18 +131,14 @@ describe("product/service detail", () => {
         cy.get(".ShareSection__nativeButton").should("be.visible");
         cy.get(".SubscribeButton").should("be.visible").and("contain", "Subscribe");
         cy.contains(".EntityCommentsSection", "Harbor Labs has strong logistics.").should("be.visible");
+        cy.then(() => {
+            product.parameters = structuredClone(originalMoonLampParameters);
+        });
     });
 
     it("shows related products with product pictures", () => {
-        const product = activeFixtures.products.find((entry) => entry.id === "product-moon-lamp");
-        const solarWidget = activeFixtures.products.find((entry) => entry.id === "product-solar-widget");
-        const harborPack = activeFixtures.products.find((entry) => entry.id === "product-harbor-pack");
-
-        if (product === undefined || solarWidget === undefined || harborPack === undefined) {
-            throw new Error("Missing related products fixture data");
-        }
-
-        product.relatedProducts = [solarWidget, harborPack];
+        const product = getMoonLampFixture();
+        product.relatedProducts = [getSolarWidgetFixture(), getHarborPackFixture()];
 
         openMoonLampDetail();
 
@@ -117,5 +148,8 @@ describe("product/service detail", () => {
         cy.contains(".ProductDetail", "Solar Widget").should("exist");
         cy.contains(".ProductDetail", "Harbor Pack").should("exist");
         screenshotStep("product-detail-related-products-carousel");
+        cy.then(() => {
+            product.relatedProducts = structuredClone(originalMoonLampRelatedProducts);
+        });
     });
 });

@@ -2,7 +2,6 @@ import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/compon
 import {
     addToCart,
     fillFormField,
-    mountAnonymousRoute,
     mountAuthenticatedCartRoute,
     screenshotStep,
 } from "../support/component-tests/utils";
@@ -11,11 +10,6 @@ import { connectThirdwebWalletStub, connectTronWalletStub, connectSolanaWalletSt
 const cartSecrets = {
     [MAIN_SERVER_URL]: "remembered-wallet-main-secret",
     [COOP_SERVER_URL]: "remembered-wallet-coop-secret",
-};
-
-const anonymousCartSecrets = {
-    [MAIN_SERVER_URL]: "anon-shopping-main-secret",
-    [COOP_SERVER_URL]: "anon-shopping-coop-secret",
 };
 
 type RememberedWalletScenario = {
@@ -28,7 +22,7 @@ type RememberedWalletScenario = {
 const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     scenario.connectWallet();
     mountAuthenticatedCartRoute(scenario.route, [MAIN_SERVER_URL], cartSecrets);
-    cy.get(".ProductDetail").should("be.visible");
+    cy.contains("h1", scenario.productName).should("be.visible");
     screenshotStep(`remembered-wallet-product-${scenario.productId}`);
     addToCart();
 
@@ -49,7 +43,16 @@ const openOrderPaymentPage = (scenario: RememberedWalletScenario) => {
 
 const openTronOrderPaymentPage = (scenario: RememberedWalletScenario) => {
     scenario.connectWallet();
-    mountAnonymousRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], anonymousCartSecrets);
+    mountAuthenticatedCartRoute(scenario.route, [MAIN_SERVER_URL], cartSecrets);
+    cy.contains("h1", "Harbor Lantern").should("be.visible");
+    screenshotStep(`remembered-wallet-product-${scenario.productId}`);
+    addToCart();
+
+    cy.routerNavigate(detailRoute("/products-services", "product-shore-kit"));
+    cy.contains("h1", "Shore Kit").should("be.visible");
+    addToCart();
+
+    cy.routerNavigate("/cart");
     cy.contains("Proceed to order").click();
     cy.contains("h2", "Order").should("be.visible");
     fillFormField("Email", "remembered-wallet@example.test");

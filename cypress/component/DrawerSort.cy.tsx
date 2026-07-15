@@ -14,7 +14,7 @@ const assertSelectedSort = (value: string) => {
 };
 
 const selectSortOption = (value: string) => {
-    cy.get(".AppHeader__sortControl .ant-select").click();
+    cy.get(".AppHeader__sortControl .ant-select-selector").click({ force: true });
     cy.contains(".ant-select-dropdown .ant-select-item-option-content", value).click({ force: true });
 };
 

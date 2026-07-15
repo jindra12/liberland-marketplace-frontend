@@ -42,6 +42,7 @@ manager is `yarn`.
 - If a single test run exceeds 5 minutes, stop it and diagnose or split it instead of waiting longer.
 - If a single Cypress spec appears to need anything close to 40 minutes, assume something is wrong and investigate rather than letting it run.
 - Never use native HTML tags when Ant Design provides an equivalent component; prefer library components over native ones.
+- Before any Cypress run or analysis that may clean up `cypress/artifacts`, first copy the relevant screenshots, videos, and reports to a safe `/tmp` location so the run data is not lost.
 - For small layout-only wrappers, prefer Ant Design `Flex` or `Space` instead of custom wrapper `div`s and CSS spacing shims.
 - Route components should stay as thin entry files. If a route file needs `export default` for Next/lazy-loading compatibility, keep it there and add a local ESLint override for `import/no-default-export` in that file instead of changing the global rule.
 - For route components, split the actual UI into one component per file and move shared literals into `constants.ts` or `utils.ts` so the route file only wires the pieces together.

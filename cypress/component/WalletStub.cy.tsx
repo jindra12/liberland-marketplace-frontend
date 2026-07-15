@@ -1,5 +1,5 @@
 import { detailRoute, COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { fillFormField, mountAnonymousRoute, screenshotStep } from "../support/component-tests/utils";
+import { addToCart, fillFormField, mountAnonymousRoute, screenshotStep } from "../support/component-tests/utils";
 
 const anonymousCartSecrets = {
     [MAIN_SERVER_URL]: "anon-shopping-main-secret",
@@ -22,8 +22,9 @@ const openProduct = (serverUrl: string, route: string, id: string, title: string
         serverUrl === MAIN_SERVER_URL ? [MAIN_SERVER_URL, COOP_SERVER_URL] : [COOP_SERVER_URL, MAIN_SERVER_URL],
         anonymousCartSecrets,
     );
-    cy.get(".ProductDetail").should("be.visible");
+    cy.contains("h1", title).should("be.visible");
     screenshotStep(`wallet-stub-product-${id}`);
+    addToCart();
 };
 
 const openOrderPaymentPage = () => {

@@ -18,6 +18,8 @@ const chainPayment: ChainPaymentAmount = {
     amount: "1",
     amountInSmallestUnit: 1n,
     chain: "ethereum",
+    recipient: "0xRemember0001",
+    productIds: ["product-remember-wallet"],
 };
 
 const order: SubmittedOrder["order"] = {
