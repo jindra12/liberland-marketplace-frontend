@@ -1,11 +1,8 @@
 import { routes } from "../../src/routes";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
 
 const mountOrdersRoute = (route: string) => {
-    mountAuthenticatedMainRoute(route, true, (win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
+    mountAuthenticatedMainRoute(route, true);
 };
 
 describe("orders", () => {

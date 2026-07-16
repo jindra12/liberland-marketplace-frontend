@@ -51,7 +51,8 @@ describe("syndication guard test", () => {
 
     it("returns home when the user rejects an edit page", () => {
         mountMainRoute(editRoute("/companies", "guarded-company", GUEST_SERVER_URL));
-        cy.contains("Trust this server?").should("be.visible");
+        cy.get(".ServerUrlGuard__content").should("be.visible");
+        cy.contains("Enable content from this server").should("be.visible");
         cy.contains("button", "No").click();
         cy.location("pathname").should("eq", "/");
         cy.get(".SplashPage").should("be.visible");

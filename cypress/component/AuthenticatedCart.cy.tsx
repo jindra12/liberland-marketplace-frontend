@@ -1,6 +1,5 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { assertFormFieldValue, mountAuthenticatedCartRoute, screenshotStep } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
@@ -24,9 +23,7 @@ describe("authenticated cart", () => {
     it("prefills the order form from the main server me query", () => {
         mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
-        }, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        }, true);
         cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");
@@ -44,9 +41,7 @@ describe("authenticated cart", () => {
     it("lets the user switch to a shipping address from another logged-in server", () => {
         mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
-        }, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        }, true);
         cy.get(".AddToCartButton__buyNow").should("not.exist");
         cy.contains("Filter by tribe").should("not.exist");
         cy.contains("No more results").should("not.exist");

@@ -8,7 +8,6 @@ import {
     waitForDetailQuery,
     waitForMeUserQuery,
 } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import type { AddressWithEmail } from "../../src/components/order/types";
 import { BUY_NOW_RETURN_TO_STORAGE_KEY } from "../../src/components/cart/BuyNowButton/constants";
 
@@ -90,9 +89,7 @@ describe("buy now", () => {
             );
         });
 
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true);
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "ProductById",
@@ -144,9 +141,7 @@ describe("buy now", () => {
                 req.alias = "createOrder";
             }
         });
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, true);
         waitForMeUserQuery(MAIN_SERVER_URL, "Nova Rivers", {});
         waitForMeUserQuery(COOP_SERVER_URL, "Iris Shore", {});
 
@@ -170,9 +165,7 @@ describe("buy now", () => {
     });
 
     it("uses a saved shipping address to reach the payment modal immediately", () => {
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true);
 
         openBuyNow();
 
@@ -203,9 +196,7 @@ describe("buy now", () => {
 
     it("shows a secondary Add to cart button before the product is in cart and turns it into quantity control after click", () => {
         cy.viewport(1200, 1200);
-        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true, (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        });
+        mountAuthenticatedDetailRoute(mainProductRoute, [MAIN_SERVER_URL], mainSavedShippingAddress, true);
 
         waitForDetailQuery(
             MAIN_SERVER_URL,

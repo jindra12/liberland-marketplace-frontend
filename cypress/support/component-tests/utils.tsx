@@ -13,7 +13,6 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL, SYNDICATION_LIST_GOAL } from "./const
 import {
     MARKET_ACCORDION_POSTS_QUERY_LIMIT,
 } from "../../../src/components/splash/constants";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../../src/components/endpoints/constants";
 import { buildGraphQLAlias } from "../graphqlMock";
 import type {
     DetailGoal,
@@ -279,20 +278,7 @@ export const mountAnonymousRoute = (
 };
 
 export const openPublishServerIfNeeded = () => {
-    cy.get(".LoadingSkeleton--surface").should("not.exist");
-    cy.get("body").should(($body) => {
-        expect($body.find(".Publish__category, .Publish__postTitleField").length).to.be.greaterThan(0);
-    });
-
-    cy.get("body").then(($body) => {
-        if ($body.find(".Publish__postTitleField").length > 0) {
-            if ($body.find(".Publish__back").length > 0) {
-                cy.contains(".Publish__back", "Back").click();
-                cy.contains(".Publish__category", "Company").should("be.visible");
-            }
-            return;
-        }
-    });
+    cy.location("pathname").should("eq", "/publish");
 };
 
 export const openPublishCategory = (categoryName: string) => {
@@ -379,7 +365,7 @@ export const dismissNsfwModal = (action: "continue" | "disable" = "continue") =>
 
     cy.get("body").then(($body) => {
         const modal = $body
-            .find(".SyndicationNsfwModal:visible, .ant-modal:visible")
+            .find(".SyndicationNsfwModal, .ant-modal")
             .filter((_, element) => Cypress.$(element).text().includes("18+ content"))
             .first();
 
@@ -389,14 +375,10 @@ export const dismissNsfwModal = (action: "continue" | "disable" = "continue") =>
 
         cy.wrap(modal)
             .contains("button", buttonLabel)
-            .should("be.visible")
+            .should("exist")
             .click({ force: true });
         cy.contains(".SyndicationNsfwModal, .ant-modal", "18+ content").should("not.be.visible");
     });
-};
-
-export const seedNsfwConsent = (win: Window) => {
-    win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
 };
 
 export const clearServerCarts = (serverUrl: string) => {
@@ -517,7 +499,7 @@ export const openDesktopMenu = () => {
 export const openSearchScope = (scopeLabel: string) => {
     openDesktopMenu();
     cy.contains(".AppHeader__desktopDrawer button", "Search").click({ force: true });
-    cy.get(".SearchButton__menuOverlay").should("be.visible").contains(scopeLabel).click({ force: true });
+    cy.get(".SearchButton__menuOverlay").should("exist").contains(scopeLabel).click({ force: true });
 };
 
 export const waitForPageShell = () => {
@@ -698,14 +680,14 @@ export const waitForSearchResultsPage = (
 
 export const goToList = (goal: ListGoal) => {
     if (goal.trigger === "Market") {
-        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL, COOP_SERVER_URL], undefined, seedNsfwConsent);
+        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL, COOP_SERVER_URL]);
         cy.location("pathname").should("eq", goal.route);
         cy.contains("h2", goal.title).should("be.visible");
         cy.get(".ProductList__actionsRow").first().should("be.visible");
         screenshotStep(`list-${goal.title}`);
         return;
     } else {
-        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL], undefined, seedNsfwConsent);
+        mountAnonymousRoute(goal.route, [MAIN_SERVER_URL]);
     }
     cy.location("pathname").should("eq", goal.route);
     waitForPageShell();

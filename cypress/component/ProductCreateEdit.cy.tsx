@@ -11,7 +11,6 @@ import {
     uploadTestImage,
     waitForDetailQuery,
 } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 
 const assertProductTitle = (productId: string, expectedTitle: string) => {
     cy.window().then(async (win) => {
@@ -50,9 +49,7 @@ const createOwnedCompany = (companyName: string) => {
         { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
         { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
     ]);
-    mountAuthenticatedMainRoute("/publish", true, (win) => {
-        win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-    });
+    mountAuthenticatedMainRoute("/publish", true);
     openPublishCategory("Company");
 
     fillFormField("Company Name", companyName);

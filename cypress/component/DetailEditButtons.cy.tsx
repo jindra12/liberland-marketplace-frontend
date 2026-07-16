@@ -1,10 +1,5 @@
 import { MAIN_SERVER_URL, detailRoute } from "../support/component-tests/constants";
-import {
-    mountAuthenticatedDetailRoute,
-    seedNsfwConsent,
-    screenshotStep,
-    waitForDetailQuery,
-} from "../support/component-tests/utils";
+import { mountAuthenticatedDetailRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
 
 type DetailEditButtonGoal = {
     operationName: "CompanyById" | "JobById" | "PostById" | "ProductById" | "StartupById";
@@ -60,7 +55,7 @@ const assertEditButtonIsCompact = () => {
 };
 
 const openDetailPage = (goal: DetailEditButtonGoal) => {
-    mountAuthenticatedDetailRoute(goal.route, [MAIN_SERVER_URL], undefined, true, seedNsfwConsent);
+    mountAuthenticatedDetailRoute(goal.route, [MAIN_SERVER_URL], undefined, true);
     waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.variables, goal.operationName.replace("ById", ""), goal.variables.id, goal.title);
     assertEditButtonIsCompact();
     screenshotStep(`detail-edit-button-${goal.operationName}-${goal.title}`);

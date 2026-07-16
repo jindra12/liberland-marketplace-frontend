@@ -1,7 +1,7 @@
 import { disclaimerDefinitions } from "../../../src/components/disclaimers/constants";
 
 import { MAIN_SERVER_URL } from "../../support/component-tests/constants";
-import { mountAnonymousRoute, seedNsfwConsent } from "../../support/component-tests/utils";
+import { mountAnonymousRoute } from "../../support/component-tests/utils";
 
 type DisclaimerViewport = "desktop" | "mobile";
 
@@ -20,7 +20,7 @@ export const mountDisclaimerRoute = (viewport: DisclaimerViewport) => {
         cy.viewport(390, 844);
     }
 
-    mountAnonymousRoute("/", [MAIN_SERVER_URL], undefined, seedNsfwConsent);
+    mountAnonymousRoute("/", [MAIN_SERVER_URL]);
 };
 
 export const runDisclaimerFlow = (viewport: DisclaimerViewport) => {

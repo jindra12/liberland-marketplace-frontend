@@ -5,15 +5,10 @@ import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { screenshotStep } from "../support/component-tests/utils";
-import {
-    mountAnonymousRoute,
-    waitForCollectionQuery,
-    waitForDetailQuery,
-    seedNsfwConsent,
-} from "../support/component-tests/utils";
+import { mountAnonymousRoute, waitForCollectionQuery, waitForDetailQuery } from "../support/component-tests/utils";
 
 const openMoonLampDetail = () => {
-    mountAnonymousRoute(detailRoute("/products-services", "product-moon-lamp"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
+    mountAnonymousRoute(detailRoute("/products-services", "product-moon-lamp"), [MAIN_SERVER_URL]);
     waitForDetailQuery(
         MAIN_SERVER_URL,
         "ProductById",

@@ -1,5 +1,5 @@
 import { SORT_CONTENT_BY_STORAGE_KEY } from "../../src/components/SortContentBySelect/constants";
-import { mountMainHome, seedNsfwConsent } from "../support/component-tests/utils";
+import { mountMainHome } from "../support/component-tests/utils";
 
 const openMobileDrawer = () => {
     cy.get('button[aria-label="Open navigation"]').click({ force: true });
@@ -31,7 +31,7 @@ describe("drawer sort control", () => {
 
     it("keeps the selected sort in the desktop drawer", () => {
         cy.viewport(1440, 1200);
-        mountMainHome(seedNsfwConsent);
+        mountMainHome();
 
         openDesktopDrawer();
         cy.get(".AppHeader__desktopDrawer").should("be.visible");
@@ -52,7 +52,7 @@ describe("drawer sort control", () => {
 
     it("keeps the selected sort in the mobile drawer", () => {
         cy.viewport(390, 844);
-        mountMainHome(seedNsfwConsent);
+        mountMainHome();
 
         openMobileDrawer();
         cy.get(".AppHeader__drawer").should("be.visible");

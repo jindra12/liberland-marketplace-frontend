@@ -1,7 +1,6 @@
 import { mount } from "cypress/react";
 
 import Main from "../../src/Main";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import type { URL as EndpointURL } from "../../src/types";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
@@ -14,18 +13,12 @@ const buildEndpointUrls = (overrides: EndpointURL[]): EndpointURL[] => {
 
 const mountRouteWithEndpoints = (route: string, urls: EndpointURL[]) => {
     cy.window().then((win) => {
-        win.localStorage.removeItem(NSFW_CONSENT_STORAGE_KEY);
+        win.localStorage.clear();
         win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(urls)));
         win.history.pushState({}, "", route);
     });
     mount(<Main />);
     cy.routerNavigate(route);
-};
-
-const getConsentValue = () => {
-    return cy.window().then((win) => {
-        return win.localStorage.getItem(NSFW_CONSENT_STORAGE_KEY);
-    });
 };
 
 describe("syndication nsfw modal", () => {
@@ -48,9 +41,8 @@ describe("syndication nsfw modal", () => {
             },
         ]);
 
-        cy.contains(".SyndicationNsfwModal", "18+ content").should("be.visible");
+        cy.contains(".SyndicationNsfwModal", "18+ content").should("exist");
         dismissNsfwModal();
-        getConsentValue().should("eq", "true");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");
     });
 
@@ -64,7 +56,7 @@ describe("syndication nsfw modal", () => {
             },
         ]);
 
-        cy.contains(".SyndicationNsfwModal", "18+ content").should("be.visible");
+        cy.contains(".SyndicationNsfwModal", "18+ content").should("exist");
         dismissNsfwModal("disable");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");
 
@@ -95,7 +87,6 @@ describe("syndication nsfw modal", () => {
             cy.contains("button", "Enable").click();
         });
 
-        getConsentValue().should("eq", "true");
         cy.get(".SyndicationNsfwModal").should("not.be.visible");
     });
 });

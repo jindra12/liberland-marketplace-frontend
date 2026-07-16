@@ -2,16 +2,11 @@ import { Comment_ReplyPostRelationshipInputRelationTo } from "../../src/generate
 import { COMMENT_RELATION_TO_QUERY_RELATION } from "../../src/constants";
 
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import {
-    mountAnonymousRoute,
-    seedNsfwConsent,
-    waitForCollectionQuery,
-    waitForDetailQuery,
-} from "../support/component-tests/utils";
+import { mountAnonymousRoute, waitForCollectionQuery, waitForDetailQuery } from "../support/component-tests/utils";
 
 describe("company deep dive", () => {
     beforeEach(() => {
-        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL], undefined, seedNsfwConsent);
+        mountAnonymousRoute(detailRoute("/companies", "company-harbor-labs"), [MAIN_SERVER_URL]);
         waitForDetailQuery(
             MAIN_SERVER_URL,
             "CompanyById",

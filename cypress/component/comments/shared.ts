@@ -6,7 +6,6 @@ import {
     dismissNsfwModal,
     gqlAlias,
     mountAuthenticatedMainRoute,
-    seedNsfwConsent,
 } from "../../support/component-tests/utils";
 import type { GraphQLVariables } from "../../support/component-tests/types";
 
@@ -116,7 +115,7 @@ export const waitForDetailRequest = (
 };
 
 const mountPostDetail = () => {
-    mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), true, seedNsfwConsent);
+    mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), true);
     waitForDetailRequest("PostById", { id: "post-harbor-operations-digest" }, "Harbor Operations Digest");
 };
 
@@ -163,7 +162,7 @@ export const assertCommentHasNoReplies = (commentId: string) => {
 export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
     const commentId = "comment-post-harbor-1";
 
-    mountAuthenticatedMainRoute(detailRoute("/comments", commentId), true, seedNsfwConsent);
+    mountAuthenticatedMainRoute(detailRoute("/comments", commentId), true);
     waitForDetailRequest("CommentById", { id: commentId }, "Comment");
     cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
 
@@ -323,7 +322,7 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
 };
 
 export const replyToReplyChain = (viewport: ViewportConfig) => {
-    mountAuthenticatedMainRoute(detailRoute("/comments", "comment-startup-sky-1"), true, seedNsfwConsent);
+    mountAuthenticatedMainRoute(detailRoute("/comments", "comment-startup-sky-1"), true);
     waitForDetailRequest("CommentById", { id: "comment-startup-sky-1" }, "Comment");
     cy.contains(".CommentDetailPage", "Sky Relay could use more testers.").should("be.visible");
     cy.contains('.CommentCard[data-comment-id="comment-startup-sky-1"]', "Sky Relay could use more testers.")

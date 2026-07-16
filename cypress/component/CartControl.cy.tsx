@@ -1,6 +1,5 @@
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { addToCart, mountAuthenticatedDetailRoute } from "../support/component-tests/utils";
-import { NSFW_CONSENT_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import type { AddressWithEmail } from "../../src/components/order/types";
 
 const mainSavedShippingAddress: AddressWithEmail = {
@@ -35,15 +34,7 @@ const openHarborLanternAndCreateCart = () => {
             req.alias = "cartBySecret";
         }
     });
-    mountAuthenticatedDetailRoute(
-        detailRoute("/products-services", "product-harbor-lantern"),
-        [MAIN_SERVER_URL],
-        mainSavedShippingAddress,
-        true,
-        (win) => {
-            win.localStorage.setItem(NSFW_CONSENT_STORAGE_KEY, JSON.stringify(true));
-        },
-    );
+    mountAuthenticatedDetailRoute(detailRoute("/products-services", "product-harbor-lantern"), [MAIN_SERVER_URL], mainSavedShippingAddress, true);
     cy.wait("@productById").its("response.statusCode").should("eq", 200);
     cy.get(".ProductDetail").should("be.visible");
     cy.contains('button[aria-label="Add to cart"]', "Add to cart").should("be.visible");
