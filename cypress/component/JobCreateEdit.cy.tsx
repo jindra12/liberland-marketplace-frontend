@@ -1,17 +1,20 @@
-import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import dayjs from "dayjs";
+
+import { Job_EmploymentType_MutationInput } from "../../src/generated/graphql";
+import { JobForm } from "../../src/components/publish/JobForm";
+import type { JobFormProps } from "../../src/components/publish/JobForm";
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
+    buildTestAuthContext,
     fillFormField,
-    getRouteEntityId,
-    mountAuthenticatedMainRoute,
-    openPublishCategory,
+    mountWithProviders,
     mockOwnedCompaniesByCreatorQuery,
     screenshotStep,
     selectFormOption,
     uploadTestImage,
-    waitForDetailQuery,
-} from "../support/component-tests/utils";
+} from "../support/component-tests/directBasic";
 
 const assertJobTitle = (jobId: string, expectedTitle: string) => {
     cy.window().then(async (win) => {
@@ -45,18 +48,56 @@ const assertJobTitle = (jobId: string, expectedTitle: string) => {
     });
 };
 
-const openJobPublishForm = () => {
-    mockOwnedCompaniesByCreatorQuery([
-        { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
-        { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
-    ]);
-    mountAuthenticatedMainRoute("/publish");
-    openPublishCategory("Job");
+const mountJobForm = (initialValues?: JobFormProps["initialValues"]) => {
+    mountWithProviders(<JobForm mode="create" url={MAIN_SERVER_URL} initialValues={initialValues} />, {
+        auth: buildTestAuthContext({
+            isAuthenticated: true,
+            user: {
+                profile: {
+                    sub: "user-nova",
+                },
+            } as never,
+        }),
+        route: "/publish",
+    });
+};
+
+const mountEditJobForm = (initialValues?: JobFormProps["initialValues"]) => {
+    mountWithProviders(<JobForm mode="edit" url={MAIN_SERVER_URL} initialValues={initialValues} />, {
+        auth: buildTestAuthContext({
+            isAuthenticated: true,
+            user: {
+                profile: {
+                    sub: "user-nova",
+                },
+            } as never,
+        }),
+        route: "/jobs/edit/job-editable-dock-crew",
+    });
 };
 
 describe("job create/edit", () => {
+    beforeEach(() => {
+        mockOwnedCompaniesByCreatorQuery([
+            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
+            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
+        ]);
+        cy.intercept("POST", "**/api/graphql", (req) => {
+            const body = req.body as { operationName?: string; query?: string };
+
+            if (body.operationName === "CreateJob" || body.query?.includes("CreateJob")) {
+                req.alias = "createJob";
+            }
+
+            if (body.operationName === "UpdateJob" || body.query?.includes("UpdateJob")) {
+                req.alias = "updateJob";
+            }
+        });
+    });
+
     it("hides private companies in the company selector", () => {
-        openJobPublishForm();
+        mountJobForm();
+        cy.wait("@ownedCompanies");
 
         cy.get(".Publish__jobCompanyField").find(".ant-select").click();
         cy.get(".ant-select-dropdown")
@@ -69,7 +110,8 @@ describe("job create/edit", () => {
     it("creates a job with an uploaded image", () => {
         const jobTitle = "Harbor Shift Coordinator";
 
-        openJobPublishForm();
+        mountJobForm();
+        cy.wait("@ownedCompanies");
 
         fillFormField("Title", jobTitle);
         selectFormOption("Employment Type", "Full-time");
@@ -81,12 +123,18 @@ describe("job create/edit", () => {
 
         cy.contains("button", "Publish Job").click();
         cy.wait("@mediaUpload");
+        cy.wait("@createJob").then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(interception.request.body.variables.data.title).to.equal(jobTitle);
+            expect(interception.request.body.variables.data.positions).to.equal(2);
+            expect(interception.request.body.variables.data.location).to.equal("Harbor City");
+            expect(interception.request.body.variables.data.applyUrl).to.equal("https://harbor.example/jobs/shift-coordinator");
+        });
         cy.location("pathname").should("match", /\/jobs\/job-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = getRouteEntityId(pathname);
-            waitForDetailQuery(MAIN_SERVER_URL, "JobById", { id: createdId }, "Job", createdId, jobTitle);
-            cy.contains("h1", jobTitle).should("be.visible");
-            screenshotStep("job-created-page");
+            const createdId = pathname.split("/")[2];
+            assertJobTitle(createdId, jobTitle);
+            screenshotStep("job-created-form");
         });
     });
 
@@ -94,7 +142,8 @@ describe("job create/edit", () => {
         const jobTitle = "Editable Dock Crew";
         const updatedJobTitle = "Editable Dock Crew Revised";
 
-        openJobPublishForm();
+        mountJobForm();
+        cy.wait("@ownedCompanies");
 
         fillFormField("Title", jobTitle);
         selectFormOption("Employment Type", "Contract");
@@ -104,11 +153,23 @@ describe("job create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Job").click();
-        cy.location("pathname").should("match", /\/jobs\/job-[^/]+\/[a-f0-9]+$/);
+        cy.wait("@mediaUpload");
+        cy.wait("@createJob").then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
+
         cy.location("pathname").then((pathname) => {
-            const createdId = getRouteEntityId(pathname);
-            cy.routerNavigate(editRoute("/jobs", createdId));
-            cy.contains("h3", "Edit Job").should("be.visible");
+            const createdId = pathname.split("/")[2];
+            mountEditJobForm({
+                id: createdId,
+                title: jobTitle,
+                employmentType: Job_EmploymentType_MutationInput.Contract,
+                positions: 2,
+                postedAt: dayjs("2026-01-01"),
+                location: "North Port",
+                company: "company-harbor-labs",
+            });
+
             assertFormFieldValue("Title", jobTitle);
             assertSelectValue("Employment Type", "Contract");
             assertSelectValue("Company", "Harbor Labs");
@@ -122,9 +183,16 @@ describe("job create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", detailRoute("/jobs", createdId));
+            cy.wait("@updateJob").then((interception) => {
+                expect(interception.response?.statusCode).to.equal(200);
+                expect(interception.request.body.variables.id).to.equal(createdId);
+                expect(interception.request.body.variables.data.title).to.equal(updatedJobTitle);
+                expect(interception.request.body.variables.data.positions).to.equal(3);
+                expect(interception.request.body.variables.data.location).to.equal("Harbor City");
+            });
+            cy.location("pathname").should("match", new RegExp(`/jobs/${createdId}/[a-f0-9]+$`));
             assertJobTitle(createdId, updatedJobTitle);
-            screenshotStep("job-updated-page");
+            screenshotStep("job-updated-form");
         });
     });
 });

@@ -9,6 +9,7 @@ import {
     getGraphQLFixturesForHost,
     getGraphQLHostFromContext,
     getReportedLinksForHost,
+    isPlainObject,
     mergeInto,
     nextNodeId,
     notificationSubscriptions,
@@ -31,6 +32,7 @@ import {
     normalizeUserData,
 } from "./normalizers";
 import type { MockCollection, MockNode } from "./types";
+import type { User as GraphQLUser } from "../../../src/generated/graphql";
 
 type GraphQLRequestContext = {
     cypress?: {
@@ -122,11 +124,33 @@ const getOrderQuantityForProduct = (order: MockNode, productId: string): number 
     }, 0);
 };
 
+const requireMockUser = (user: MockNode | null | undefined): GraphQLUser => {
+    if (!user) {
+        throw new Error("Missing meUser fixture");
+    }
+
+    return {
+        ...user,
+        emailVerified: user.emailVerified ?? true,
+    } as GraphQLUser;
+};
+
 const buildSellerOrderRows = (orders: MockNode[]): MockNode[] => {
     return orders.flatMap((order) => {
         return getOrderProofRows(order).flatMap((proof, index) => {
-            const product = typeof proof.product === "string" ? activeFixtures.products.find((entry) => entry.id === proof.product) : proof.product;
-            const productId = product?.id ?? (typeof proof.product === "string" ? proof.product : "");
+            const proofProduct = proof.product;
+            const productId =
+                typeof proofProduct === "string"
+                    ? proofProduct
+                    : isPlainObject(proofProduct) && typeof proofProduct.id === "string"
+                      ? proofProduct.id
+                      : "";
+            const product =
+                typeof proofProduct === "string"
+                    ? activeFixtures.products.find((entry) => entry.id === proofProduct)
+                    : isPlainObject(proofProduct)
+                      ? proofProduct
+                      : undefined;
             if (!productId) {
                 return [];
             }
@@ -357,7 +381,7 @@ export const queryResolvers = {
     Startup: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.startups.find((item) => item.id === args.id) || activeFixtures.startups[0],
     Identity: (_parent: unknown, args: { id?: string }): MockNode => activeFixtures.identities.find((item) => item.id === args.id) || activeFixtures.identities[0],
     meUser: (_parent: unknown, _args: unknown, context: unknown): MockNode => {
-        const user = cloneValue(activeFixtures.meUser.user);
+        const user = cloneValue(requireMockUser(activeFixtures.meUser.user));
         const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
         const reportedLinks = getReportedLinksForHost(host);
         if (reportedLinks.length > 0) {
@@ -385,7 +409,7 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         const requestId = typeof data.id === "string" ? data.id : nextNodeId("report");
         const fixtures = getFixturesForContext(context);
-        const currentUser = fixtures.meUser.user;
+        const currentUser = requireMockUser(fixtures.meUser.user);
 
         return searchNode({
             id: requestId,
@@ -399,20 +423,20 @@ export const mutationResolvers = {
         const data = cloneValue(args.data ?? {});
         const reportId = typeof data.id === "string" ? data.id : nextNodeId("report");
         const fixtures = getFixturesForContext(context);
-        const currentUser = fixtures.meUser.user;
-        const activeUser = activeFixtures.meUser.user;
+        const currentUser = requireMockUser(fixtures.meUser.user);
+        const activeUser = requireMockUser(activeFixtures.meUser.user);
         const host = getGraphQLHostFromContext(context) || getActiveGraphQLHost();
         const reportedLink = typeof data.contentLink === "string" ? data.contentLink : "";
 
         if (reportedLink) {
             addReportedLinkForHost(host, reportedLink);
-            const existing = currentUser.reportedLinks || [];
+            const existing: string[] = currentUser.reportedLinks || [];
             if (!existing.includes(reportedLink)) {
                 currentUser.reportedLinks = [...existing, reportedLink];
             }
 
             if (activeUser !== currentUser) {
-                const activeExisting = activeUser.reportedLinks || [];
+                const activeExisting: string[] = activeUser.reportedLinks || [];
                 if (!activeExisting.includes(reportedLink)) {
                     activeUser.reportedLinks = [...activeExisting, reportedLink];
                 }
@@ -679,7 +703,7 @@ export const mutationResolvers = {
     },
     joinStartup: (_parent: unknown, args: { id?: string }): MockNode => {
         const startup = activeFixtures.startups.find((item) => item.id === args.id);
-        const member = activeFixtures.meUser.user ? cloneValue(activeFixtures.meUser.user) : undefined;
+        const member = cloneValue(requireMockUser(activeFixtures.meUser.user)) as GraphQLUser;
 
         if (startup && member) {
             const involvedUsers = Array.isArray(startup.involvedUsers) ? startup.involvedUsers : [];
@@ -696,7 +720,7 @@ export const mutationResolvers = {
     },
     leaveStartup: (_parent: unknown, args: { id?: string }): MockNode => {
         const startup = activeFixtures.startups.find((item) => item.id === args.id);
-        const memberId = activeFixtures.meUser.user?.id;
+        const memberId = requireMockUser(activeFixtures.meUser.user).id;
 
         if (startup) {
             const involvedUsers = Array.isArray(startup.involvedUsers) ? startup.involvedUsers : [];
@@ -711,10 +735,9 @@ export const mutationResolvers = {
     updateUser: (_parent: unknown, args: { id?: string; data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeUserData(data);
-        const user = activeFixtures.meUser.user;
+        const user = requireMockUser(activeFixtures.meUser.user);
         if (user && user.id === args.id) {
             mergeInto(user, data);
-            user.updatedAt = nowIso();
             return user;
         }
 

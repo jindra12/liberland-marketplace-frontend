@@ -1,6 +1,7 @@
 import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountAuthenticatedRoute, screenshotStep, waitForDetailQuery } from "../support/component-tests/utils";
 import { activeFixtures } from "../support/graphqlMock/runtimeState";
+import type { User } from "../../src/generated/graphql";
 
 const assertTeamButton = (label: string) => {
     cy.contains(".StartupDetail__joinAction button", label).should("be.visible");
@@ -10,9 +11,22 @@ const assertTeamCount = (count: number) => {
     cy.contains(".EntityDetail__tabs .ant-tabs-tab", `Team (${count})`).should("be.visible");
 };
 
+const getCurrentUser = (): User => {
+    const user = activeFixtures.meUser.user;
+
+    if (!user) {
+        throw new Error("Missing meUser fixture");
+    }
+
+    return {
+        ...user,
+        emailVerified: true,
+    } as User;
+};
+
 const mountStartupDetail = (route: string, startupId: string, title: string) => {
     const startup = activeFixtures.startups.find((item) => item.id === startupId);
-    const currentUser = activeFixtures.meUser.user;
+    const currentUser: User = getCurrentUser();
 
     if (startup && currentUser) {
         startup.involvedUsers = [
@@ -21,6 +35,7 @@ const mountStartupDetail = (route: string, startupId: string, title: string) => 
                 id: "startup-peer-member",
                 name: "Peer Member",
                 email: "peer.member@example.test",
+                emailVerified: true,
             },
         ];
     }

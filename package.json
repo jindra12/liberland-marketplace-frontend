@@ -71,7 +71,7 @@
         "start": "next start",
         "foxmcp:start": "bash scripts/start-foxmcp.sh",
         "test": "react-app-rewired test",
-        "test:ct": "./scripts/run-cypress-four.sh",
+        "test:ct": "yarn cypress:run --component --browser chrome",
         "test:ct:headed": "yarn cypress:run --component --browser chrome --headed",
         "test:ct:detail-edit-buttons": "yarn cypress:run --component --browser chrome --spec cypress/component/DetailEditButtons.cy.tsx",
         "test:ct:detail-edit-buttons:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/DetailEditButtons.cy.tsx",

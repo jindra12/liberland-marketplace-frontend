@@ -40,6 +40,16 @@ const VIEWPORTS = {
 } as const;
 const COOP_GRAPHQL_HOST = new URL(COOP_SERVER_URL).host;
 
+const getCurrentUser = () => {
+    const user = activeFixtures.meUser.user;
+
+    if (!user) {
+        throw new Error("Missing meUser fixture");
+    }
+
+    return user;
+};
+
 const waitForMeUserReportedLinks = (expectedReportedLinks: string[]) => {
     cy.wait(`@${ME_USER_ALIAS}`).then((interception) => {
         const response = interception.response?.body as MeUserResponse | undefined;
@@ -77,7 +87,7 @@ const runAuthenticatedDesktopFlow = () => {
     cy.resetQL();
     cy.clearLocalStorage();
     graphQLFixturesForHost(COOP_GRAPHQL_HOST);
-    activeFixtures.meUser.user.reportedLinks = [];
+    getCurrentUser().reportedLinks = [];
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserRequest();
@@ -105,7 +115,7 @@ const runAuthenticatedMobileFlow = () => {
     cy.resetQL();
     cy.clearLocalStorage();
     graphQLFixturesForHost(COOP_GRAPHQL_HOST);
-    activeFixtures.meUser.user.reportedLinks = [];
+    getCurrentUser().reportedLinks = [];
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
     waitForDetailQuery(COOP_SERVER_URL, "JobById", { id: "coop-job-dock-foreman" }, "Job", "coop-job-dock-foreman", "Dock Foreman");
     waitForMeUserRequest();
@@ -134,7 +144,7 @@ const runDisabledDesktopFlow = () => {
     cy.clearLocalStorage();
     cy.then(() => {
         graphQLFixturesForHost(COOP_GRAPHQL_HOST);
-        activeFixtures.meUser.user.reportedLinks = [];
+        getCurrentUser().reportedLinks = [];
         addReportedLinkForHost(COOP_GRAPHQL_HOST, REPORT_ROUTE);
     });
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);
@@ -153,7 +163,7 @@ const runDisabledMobileFlow = () => {
     cy.clearLocalStorage();
     cy.then(() => {
         graphQLFixturesForHost(COOP_GRAPHQL_HOST);
-        activeFixtures.meUser.user.reportedLinks = [];
+        getCurrentUser().reportedLinks = [];
         addReportedLinkForHost(COOP_GRAPHQL_HOST, REPORT_ROUTE);
     });
     mountAuthenticatedDetailRoute(REPORT_ROUTE, [COOP_SERVER_URL]);

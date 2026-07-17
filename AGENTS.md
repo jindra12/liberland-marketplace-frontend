@@ -38,6 +38,7 @@ manager is `yarn`.
 - For any Cypress run that matters, prefer the outside-sandbox elevated path from the start; if it fails, retry once outside the sandbox after fixing the blocker instead of repeating sandboxed attempts.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
+- When Cypress or other test files change, run the test TypeScript project too. Regular `tsc --noEmit` can miss Cypress/test files, so check both `tsc --noEmit` and `tsc -p tsconfig.ct.json --noEmit` before claiming the refactor compiles.
 - After any Cypress run that produces screenshots, always inspect the screenshots yourself before claiming success. Ask first: "Do the screenshots actually show the intended UI state?"
 - If a single test run exceeds 5 minutes, stop it and diagnose or split it instead of waiting longer.
 - If a single Cypress spec appears to need anything close to 40 minutes, assume something is wrong and investigate rather than letting it run.

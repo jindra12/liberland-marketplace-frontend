@@ -23,6 +23,8 @@ import type {
     SearchGoal,
 } from "./types";
 
+export { buildDefaultAuthContext, buildTestAuthContext, createTestQueryClient, mountWithProviders } from "./mount";
+
 export const gqlAlias = (serverUrl: string, operationName: string, variables: GraphQLVariables): string =>
     buildGraphQLAlias(serverUrl, operationName, variables);
 

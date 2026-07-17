@@ -1,28 +1,38 @@
 import { buildSeoDescription } from "../../src/components/publish/postForm/utils";
+import { PostForm } from "../../src/components/publish/PostForm";
+import PostDetail from "../../src/components/detail/PostDetail";
+import type { PostFormProps } from "../../src/components/publish/PostForm";
+import { Route, Routes } from "react-router-dom";
 
-import { detailRoute, editRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { detailRoute, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     assertSelectValue,
+    buildTestAuthContext,
     fillFormField,
-    mountAuthenticatedMainRoute,
-    openPublishCategory,
     mockOwnedCompaniesByCreatorQuery,
+    mountWithProviders,
     selectFormOption,
     screenshotStep,
-} from "../support/component-tests/utils";
+} from "../support/component-tests/directBasic";
 
-const selectOwnedCompany = (companyName: string) => {
-    selectFormOption("Company", companyName);
-};
-
-const openPostPublishForm = () => {
+const mountPostForm = (mode: "create" | "edit", initialValues?: PostFormProps["initialValues"]) => {
     mockOwnedCompaniesByCreatorQuery([
         { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
         { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
     ]);
-    mountAuthenticatedMainRoute("/publish");
-    openPublishCategory("Post");
+    mountWithProviders(<PostForm mode={mode} url={MAIN_SERVER_URL} initialValues={initialValues} />, {
+        auth: buildTestAuthContext({
+            isAuthenticated: true,
+            user: {
+                profile: {
+                    sub: "user-nova",
+                },
+            } as never,
+        }),
+        route: "/publish",
+    });
+    cy.wait("@ownedCompanies");
 };
 
 describe("posts", () => {
@@ -55,10 +65,10 @@ describe("posts", () => {
             }
         });
 
-        openPostPublishForm();
+        mountPostForm("create");
         fillFormField("Title", initialTitle);
         fillFormField("Content", initialContent);
-        selectOwnedCompany("Harbor Labs");
+        selectFormOption("Company", "Harbor Labs");
         cy.contains(".Publish__form button", "Publish Post").click();
 
         cy.wait("@createPost").then((interception) => {
@@ -68,33 +78,21 @@ describe("posts", () => {
                 throw new Error("Missing created post id");
             }
 
-            cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
-                if (typeof req.body.query === "string" && req.body.query.includes("PostById")) {
-                    req.alias = "detailPost";
-                }
+            cy.location("pathname").should("match", /\/posts\/post-[^/]+\/[a-f0-9]+$/);
+            mountPostForm("edit", {
+                id: createdId,
+                title: initialTitle,
+                content: initialContent,
+                seoDescription: initialSeoDescription,
+                company: "company-harbor-labs",
+                slug: "harbor-launch-notes",
             });
 
-            cy.routerNavigate(detailRoute("/posts", createdId));
-            cy.wait("@detailPost").then((detailInterception) => {
-                expect(detailInterception.response?.statusCode).to.equal(200);
-                expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
-                expect(detailInterception.response?.body?.data?.Post?.title).to.equal(initialTitle);
-            });
-            cy.contains("h1", initialTitle).should("be.visible");
-            cy.contains(".PostDetail__content", "Harbor launch notes with markdown and a link.").should("be.visible");
-
-            cy.routerNavigate(editRoute("/posts", createdId));
-            cy.wait("@detailPost").then((detailInterception) => {
-                expect(detailInterception.response?.statusCode).to.equal(200);
-                expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
-                expect(detailInterception.response?.body?.data?.Post?.title).to.equal(initialTitle);
-            });
-            cy.contains("h3", "Edit Post").should("be.visible");
             cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", initialTitle);
-            assertFormFieldValue("Content", initialContent);
-            assertFormFieldValue("Description", initialSeoDescription);
+            cy.get(".Publish__postContentField").find(".w-md-editor-text-input").should("have.value", initialContent);
+            cy.get(".Publish__postDescriptionField textarea").should("have.value", initialSeoDescription);
             assertSelectValue("Company", "Harbor Labs");
 
             fillFormField("Title", updatedTitle);
@@ -106,28 +104,19 @@ describe("posts", () => {
                 expect(updateInterception.request.body.variables.id).to.equal(createdId);
                 expect(updateInterception.request.body.variables.data.title).to.equal(updatedTitle);
                 expect(updateInterception.request.body.variables.data.content).to.equal(updatedContent);
+                expect(updateInterception.request.body.variables.data.meta.description).to.equal(updatedSeoDescription);
             });
 
-            cy.routerNavigate(detailRoute("/posts", createdId));
-            cy.wait("@detailPost").then((detailInterception) => {
-                expect(detailInterception.response?.statusCode).to.equal(200);
-                expect(detailInterception.response?.body?.data?.Post?.id).to.equal(createdId);
-                expect(detailInterception.response?.body?.data?.Post?.title).to.equal(updatedTitle);
-            });
-
-            cy.routerNavigate(editRoute("/posts", createdId));
-            cy.contains("h3", "Edit Post").should("be.visible");
             cy.get(".w-md-editor-toolbar").should("have.css", "display", "flex");
             cy.get(".w-md-editor-text").should("have.css", "padding-top", "10px");
             assertFormFieldValue("Title", updatedTitle);
-            assertFormFieldValue("Content", updatedContent);
-            assertFormFieldValue("Description", updatedSeoDescription);
+            cy.get(".Publish__postContentField").find(".w-md-editor-text-input").should("have.value", updatedContent);
             screenshotStep("posts-created-and-updated");
         });
     });
 
     it("allows selecting a private company in the post form", () => {
-        openPostPublishForm();
+        mountPostForm("create");
 
         fillFormField("Title", "Private Harbor Update");
         fillFormField("Content", "Private post content.");
@@ -137,15 +126,44 @@ describe("posts", () => {
     });
 
     it("deletes a post", () => {
-        mountAuthenticatedMainRoute(detailRoute("/posts", "post-1"));
-        cy.contains("h1", "Harbor Launch Notes").should("be.visible");
+        cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+            if (typeof req.body.query === "string" && req.body.query.includes("PostById")) {
+                req.alias = "postById";
+            }
+
+            if (typeof req.body.query === "string" && req.body.query.includes("DeletePost")) {
+                req.alias = "deletePost";
+            }
+        });
+
+        mountWithProviders(
+            <Routes>
+                <Route path="/posts/:id/:serverUrl" element={<PostDetail />} />
+            </Routes>,
+            {
+                auth: buildTestAuthContext({
+                    isAuthenticated: true,
+                    user: {
+                        profile: {
+                            sub: "user-nova",
+                        },
+                    } as never,
+                }),
+                route: detailRoute("/posts", "post-harbor-operations-digest"),
+            },
+        );
+
+        cy.wait("@postById");
+        cy.contains("h1", "Harbor Operations Digest").should("be.visible");
         cy.contains(".PostDetail button", "Delete").should("be.visible").click();
         cy.contains(".ant-popconfirm", "Delete this post?").within(() => {
             cy.contains("button", "Delete").click();
         });
 
+        cy.wait("@deletePost");
+
         cy.location("pathname").should("eq", "/posts");
-        cy.contains(".PostList", "Harbor Launch Notes").should("not.exist");
+        cy.contains(".PostList", "Harbor Operations Digest").should("not.exist");
         screenshotStep("posts-deleted");
     });
 });

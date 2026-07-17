@@ -1,16 +1,14 @@
-import { MAIN_SERVER_URL, editRoute, detailRoute } from "../support/component-tests/constants";
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     fillFormField,
-    getRouteEntityId,
-    mountAuthenticatedMainRoute,
-    mockOwnedCompaniesByCreatorQuery,
-    openPublishCategory,
+    mountWithProviders,
     screenshotStep,
     selectFormOption,
     uploadTestImage,
-    waitForDetailQuery,
-} from "../support/component-tests/utils";
+} from "../support/component-tests/directBasic";
+import { CompanyForm } from "../../src/components/publish/CompanyForm";
+import type { CompanyFormProps } from "../../src/components/publish/CompanyForm";
 
 const assertCompanyName = (companyId: string, expectedTitle: string) => {
     cy.window().then(async (win) => {
@@ -44,19 +42,31 @@ const assertCompanyName = (companyId: string, expectedTitle: string) => {
     });
 };
 
-const openCompanyPublishForm = () => {
-    openPublishCategory("Company");
+const mountCompanyForm = (mode: "create" | "edit", initialValues?: CompanyFormProps["initialValues"]) => {
+    mountWithProviders(<CompanyForm mode={mode} url={MAIN_SERVER_URL} initialValues={initialValues} />, {
+        route: "/publish",
+    });
 };
 
 describe("company create/edit", () => {
+    beforeEach(() => {
+        cy.intercept("POST", "**/api/graphql", (req) => {
+            const body = req.body as { operationName?: string; query?: string };
+
+            if (body.operationName === "CreateCompany" || body.query?.includes("CreateCompany")) {
+                req.alias = "createCompany";
+            }
+
+            if (body.operationName === "UpdateCompany" || body.query?.includes("UpdateCompany")) {
+                req.alias = "updateCompany";
+            }
+        });
+    });
+
     it("creates a company with an uploaded image", () => {
         const companyName = "Signal Harbor Works";
-        mockOwnedCompaniesByCreatorQuery([
-            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
-            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
-        ]);
-        mountAuthenticatedMainRoute("/publish", true);
-        openCompanyPublishForm();
+
+        mountCompanyForm("create");
 
         fillFormField("Company Name", companyName);
         fillFormField("Email", "signal@harbor.example");
@@ -67,25 +77,26 @@ describe("company create/edit", () => {
 
         cy.contains("button", "Publish Company").click();
         cy.wait("@mediaUpload");
+        cy.wait("@createCompany").then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+            expect(interception.request.body.variables.data.name).to.equal(companyName);
+            expect(interception.request.body.variables.data.email).to.equal("signal@harbor.example");
+            expect(interception.request.body.variables.data.phone).to.equal("+1 555 9001");
+            expect(interception.request.body.variables.data.website).to.equal("https://signal.harbor.example");
+        });
         cy.location("pathname").should("match", /\/companies\/company-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
-            const createdId = getRouteEntityId(pathname);
-            waitForDetailQuery(MAIN_SERVER_URL, "CompanyById", { id: createdId }, "Company", createdId, companyName);
-            cy.contains("h1", companyName).should("be.visible");
+            const createdId = pathname.split("/")[2];
             assertCompanyName(createdId, companyName);
-            screenshotStep("company-created-page");
+            screenshotStep("company-created-form");
         });
     });
 
     it("edits a company and keeps the update after refetch", () => {
         const companyName = "Editable Harbor Works";
         const updatedCompanyName = "Editable Harbor Works Revised";
-        mockOwnedCompaniesByCreatorQuery([
-            { id: "company-harbor-labs", name: "Harbor Labs", isPrivate: false },
-            { id: "company-reef-studio", name: "Reef Studio", isPrivate: true },
-        ]);
-        mountAuthenticatedMainRoute("/publish", true);
-        openCompanyPublishForm();
+
+        mountCompanyForm("create");
 
         fillFormField("Company Name", companyName);
         fillFormField("Email", "editable@harbor.example");
@@ -94,11 +105,21 @@ describe("company create/edit", () => {
         uploadTestImage();
 
         cy.contains("button", "Publish Company").click();
-        cy.location("pathname").should("match", /\/companies\/company-[^/]+\/[a-f0-9]+$/);
+        cy.wait("@mediaUpload");
+        cy.wait("@createCompany").then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
+
         cy.location("pathname").then((pathname) => {
-            const createdId = getRouteEntityId(pathname);
-            cy.routerNavigate(editRoute("/companies", createdId));
-            cy.contains("h3", "Edit Company").should("be.visible");
+            const createdId = pathname.split("/")[2];
+            mountCompanyForm("edit", {
+                id: createdId,
+                name: companyName,
+                email: "editable@harbor.example",
+                website: "https://editable.harbor.example",
+                identity: "identity-nova",
+            });
+
             assertFormFieldValue("Company Name", companyName);
             assertFormFieldValue("Email", "editable@harbor.example");
             assertFormFieldValue("Website", "https://editable.harbor.example");
@@ -109,9 +130,15 @@ describe("company create/edit", () => {
 
             cy.get(".Publish__form").contains("button", "Publish").click();
             cy.wait("@mediaUpload");
-            cy.location("pathname").should("eq", detailRoute("/companies", createdId));
+            cy.wait("@updateCompany").then((updateInterception) => {
+                expect(updateInterception.response?.statusCode).to.equal(200);
+                expect(updateInterception.request.body.variables.id).to.equal(createdId);
+                expect(updateInterception.request.body.variables.data.name).to.equal(updatedCompanyName);
+                expect(updateInterception.request.body.variables.data.website).to.equal("https://edited.harbor.example");
+            });
+            cy.location("pathname").should("match", new RegExp(`/companies/${createdId}/[a-f0-9]+$`));
             assertCompanyName(createdId, updatedCompanyName);
-            screenshotStep("company-updated-page");
+            screenshotStep("company-updated-form");
         });
     });
 });

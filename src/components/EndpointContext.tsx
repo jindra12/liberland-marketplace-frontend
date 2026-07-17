@@ -29,7 +29,7 @@ export interface EndpointContextType {
     setPendingAction: React.Dispatch<React.SetStateAction<EndpointPendingAction | undefined>>;
 }
 
-const EndpointContext = React.createContext<EndpointContextType>(null!);
+export const EndpointContext = React.createContext<EndpointContextType>(null!);
 const defaultUrls: URL[] = getDefaultEndpointUrls();
 
 export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[]) => URL[]) | URL[]) => void) => {

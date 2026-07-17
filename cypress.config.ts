@@ -59,14 +59,15 @@ export default defineConfig({
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: false,
     retries: {
-        runMode: 2,
-        openMode: 2,
+        runMode: 1,
+        openMode: 1,
     },
     screenshotsFolder: "cypress/artifacts/screenshots",
     videosFolder: "cypress/artifacts/videos",
     viewportWidth: 1200,
     viewportHeight: 1200,
     component: {
+        experimentalSingleTabRunMode: true,
         devServer: {
             framework: "next",
             bundler: "webpack",
