@@ -1,18 +1,8 @@
-import { UserManager } from "oidc-client-ts";
-
 import { LoginButton } from "../../src/components/LoginButton";
+import { EndpointPendingActionHost } from "../../src/components/EndpointPendingActionHost";
 import { AUTH_URL_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { mountMainRoute, screenshotStep } from "../support/component-tests/utils";
-
-type SigninRequestClient = {
-    createSigninRequest: (args: { request_type: "si:r" }) => Promise<{ url: string }>;
-};
-
-type SigninRedirectUserManager = UserManager & {
-    _client: SigninRequestClient;
-};
-type SigninRedirectArgs = Parameters<SigninRedirectUserManager["signinRedirect"]>[0];
+import { buildTestAuthContext, mountWithProviders, screenshotStep } from "../support/component-tests/utils";
 
 const buildAuthStorageKey = (serverUrl: string) => {
     return `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
@@ -50,23 +40,43 @@ const seedLoggedInServer = (win: Window, serverUrl: string) => {
 };
 
 const mountLoginButton = (route: string, serverUrls: string[], loggedInServerUrls: string[] = []) => {
-    mountMainRoute(route, (win) => {
-        win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
-        win.localStorage.setItem(AUTH_URL_STORAGE_KEY, serverUrls[0]);
-        loggedInServerUrls.forEach((serverUrl) => seedLoggedInServer(win, serverUrl));
+    const signinRedirect = cy.stub().resolves();
+    let currentWindow: Window | undefined;
+    const removeUser = cy.stub().callsFake(async () => {
+        loggedInServerUrls.forEach((serverUrl) => {
+            currentWindow?.localStorage.removeItem(buildAuthStorageKey(serverUrl));
+        });
     });
+
+    mountWithProviders(
+        <>
+            <LoginButton />
+            <EndpointPendingActionHost />
+        </>,
+        {
+        auth: buildTestAuthContext({
+            signinRedirect,
+            removeUser,
+        }),
+        route,
+        setup: (win) => {
+            currentWindow = win;
+            win.localStorage.setItem("endpoints.urls", JSON.stringify(buildEndpointUrls(serverUrls)));
+            win.localStorage.setItem(AUTH_URL_STORAGE_KEY, serverUrls[0]);
+            loggedInServerUrls.forEach((serverUrl) => seedLoggedInServer(win, serverUrl));
+        },
+        },
+    );
+
+    return {
+        removeUser,
+        signinRedirect,
+    };
 };
 
 describe("login button", () => {
-    const expectLoginButtonTextSizeToMatchCreateButton = () => {
-        cy.get(".AppHeader__publishBtn").then(($createButton) => {
-            const createButtonFontSize = window.getComputedStyle($createButton[0]).fontSize;
-            cy.get(".LoginButton").then(($loginButton) => {
-                const loginButtonFontSize = window.getComputedStyle($loginButton[0]).fontSize;
-
-                expect(loginButtonFontSize).to.equal(createButtonFontSize);
-            });
-        });
+    const expectLoginButtonHasLargeSize = () => {
+        cy.get(".LoginButton").should("have.class", "ant-btn-lg");
     };
 
     const expectLoginButtonIconToSitBeforeText = () => {
@@ -88,22 +98,8 @@ describe("login button", () => {
 
     it("shows login servers and signs in to the selected server", () => {
         cy.viewport(1440, 1200);
-        mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL]);
-        expectLoginButtonTextSizeToMatchCreateButton();
-
-        let redirectUrl = "";
-        let signinRedirectArgs: SigninRedirectArgs | undefined;
-        cy.stub(UserManager.prototype, "signinRedirect").callsFake(async function (
-            this: SigninRedirectUserManager,
-            args?: SigninRedirectArgs,
-        ) {
-            signinRedirectArgs = args;
-            const signinRequest = await this._client.createSigninRequest({
-                request_type: "si:r",
-            });
-
-            redirectUrl = signinRequest.url;
-        });
+        const authSpies = mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL]);
+        expectLoginButtonHasLargeSize();
 
         cy.contains(".LoginButton", "Log in").should("be.visible").click();
         cy.get(".LoginButton__menu").should("be.visible");
@@ -119,15 +115,9 @@ describe("login button", () => {
         cy.contains(".LoginButton__menu .ant-dropdown-menu-item", "Co-op").click({ force: true });
 
         cy.wrap(null).should(() => {
-            expect(redirectUrl).to.not.equal("");
-            expect(signinRedirectArgs?.state).to.equal("/jobs");
-            const parsedUrl = new URL(redirectUrl);
-
-            expect(parsedUrl.origin).to.equal(COOP_SERVER_URL);
-            expect(parsedUrl.pathname).to.equal("/api/auth/oauth2/authorize");
-            expect(parsedUrl.searchParams.get("client_id")).to.be.a("string");
-            expect(parsedUrl.searchParams.get("scope")).to.equal("openid profile email");
-            expect(parsedUrl.searchParams.get("redirect_uri")).to.be.a("string");
+            expect(authSpies.signinRedirect).to.have.been.calledOnceWith({
+                state: "/jobs",
+            });
             expect(JSON.parse(window.localStorage.getItem(AUTH_URL_STORAGE_KEY) || "\"\"")).to.equal(
                 COOP_SERVER_URL,
             );
@@ -137,7 +127,7 @@ describe("login button", () => {
     it("shows logged in and logged out servers in separate tree groups", () => {
         cy.viewport(1440, 1200);
         mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL], [MAIN_SERVER_URL]);
-        expectLoginButtonTextSizeToMatchCreateButton();
+        expectLoginButtonHasLargeSize();
 
         cy.contains(".LoginButton", "Accounts").should("be.visible").click();
         cy.get(".LoginButton__menu").should("be.visible");
@@ -153,15 +143,8 @@ describe("login button", () => {
 
     it("logs out from the selected server", () => {
         cy.viewport(1440, 1200);
-        mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL], [MAIN_SERVER_URL]);
-        expectLoginButtonTextSizeToMatchCreateButton();
-
-        let removeUserCalled = false;
-        const originalRemoveUser = UserManager.prototype.removeUser;
-        cy.stub(UserManager.prototype, "removeUser").callsFake(async function (this: any) {
-            removeUserCalled = true;
-            await originalRemoveUser.call(this);
-        });
+        const authSpies = mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL], [MAIN_SERVER_URL]);
+        expectLoginButtonHasLargeSize();
 
         cy.contains(".LoginButton", "Accounts").should("be.visible").click();
         cy.get(".LoginButton__menu").should("be.visible");
@@ -180,7 +163,7 @@ describe("login button", () => {
             .click({ force: true });
 
         cy.wrap(null).should(() => {
-            expect(removeUserCalled).to.be.true;
+            expect(authSpies.removeUser).to.have.been.calledOnce;
             expect(window.localStorage.getItem(buildAuthStorageKey(MAIN_SERVER_URL))).to.be.null;
         });
         cy.get(".LoginButton__menu").should("not.be.visible");

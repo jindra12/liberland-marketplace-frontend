@@ -81,7 +81,7 @@ export const getRouteEntityId = (pathname: string): string => {
 const buildAuthStorageKey = (serverUrl: string) =>
     `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
 
-const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerified = true) => {
+export const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerified = true) => {
     const now = Math.floor(Date.now() / 1000);
     const user = new User({
         access_token: "mock-profile-access-token",
@@ -495,12 +495,25 @@ export const homepageMobileQueries = () => {
 };
 
 export const openDesktopMenu = () => {
-    cy.get('button[aria-label="Open menu"]').click({ force: true });
+    cy.get("body").then(($body) => {
+        if ($body.find(".AppHeader__quickActionsBtn").length > 0) {
+            cy.get(".AppHeader__quickActionsBtn").click({ force: true });
+            return;
+        }
+
+        cy.get('button[aria-label="Open menu"]').click({ force: true });
+    });
 };
 
 export const openSearchScope = (scopeLabel: string) => {
-    openDesktopMenu();
-    cy.contains(".AppHeader__desktopDrawer button", "Search").click({ force: true });
+    cy.get("body").then(($body) => {
+        if ($body.find(".SearchButton__trigger").length > 0) {
+            cy.contains(".SearchButton__trigger", "Search").click({ force: true });
+        } else {
+            openDesktopMenu();
+            cy.contains(".AppHeader__desktopDrawer button", "Search").click({ force: true });
+        }
+    });
     cy.get(".SearchButton__menuOverlay").should("exist").contains(scopeLabel).click({ force: true });
 };
 
@@ -771,10 +784,17 @@ export const goToDetailFromSearch = (goal: SearchGoal) => {
         });
         cy.get(".SearchDrawer .PostList__companyAvatar").first().should("be.visible");
     }
-    cy.get(`.SearchDrawer a[href="${goal.route}"]`).first().should("be.visible").click();
+    cy.contains(`.SearchDrawer a[href="${goal.route}"]`, goal.searchExpectedTitle).should("be.visible").click();
     cy.location("pathname").should("eq", goal.route);
     cy.get(".SearchDrawer").should("not.exist");
-    waitForPageShell();
+    waitForDetailQuery(
+        MAIN_SERVER_URL,
+        goal.detailOperationName,
+        goal.detailExpectedVariables,
+        goal.responseKey,
+        goal.expectedId,
+        goal.title,
+    );
     cy.contains("h1", goal.title).should("be.visible");
     if (goal.scopeLabel === "Posts") {
         cy.get(".PostDetail__companyAvatar").should("be.visible");

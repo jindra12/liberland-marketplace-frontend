@@ -317,8 +317,18 @@ const normalizeCartItems = (items: unknown, prefix: string): MockNode[] => {
             return searchNode({
                 id: typeof value.id === "string" ? value.id : `${prefix}-item-${index + 1}`,
                 quantity: value.quantity,
-                product: createProductRef(typeof value.product === "string" ? value.product : undefined),
-                variant: createVariantRef(typeof value.variant === "string" ? value.variant : undefined),
+                product:
+                    typeof value.product === "string"
+                        ? createProductRef(value.product)
+                        : isPlainObject(value.product)
+                          ? createProductRef(typeof value.product.id === "string" ? value.product.id : undefined)
+                          : createProductRef(undefined),
+                variant:
+                    typeof value.variant === "string"
+                        ? createVariantRef(value.variant)
+                        : isPlainObject(value.variant)
+                          ? createVariantRef(typeof value.variant.id === "string" ? value.variant.id : undefined)
+                          : createVariantRef(undefined),
                 parameters,
             });
         });

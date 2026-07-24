@@ -735,10 +735,10 @@ export const mutationResolvers = {
     updateUser: (_parent: unknown, args: { id?: string; data?: Record<string, unknown> }): MockNode => {
         const data = cloneValue(args.data ?? {});
         normalizeUserData(data);
-        const user = requireMockUser(activeFixtures.meUser.user);
+        const user = activeFixtures.meUser.user;
         if (user && user.id === args.id) {
             mergeInto(user, data);
-            return user;
+            return requireMockUser(user);
         }
 
         const updated = searchNode({

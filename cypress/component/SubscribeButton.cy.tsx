@@ -1,15 +1,11 @@
 import { createHash } from "crypto";
 
-import { mount } from "cypress/react";
 import { User } from "oidc-client-ts";
-import { MemoryRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { AuthContextProvider } from "../../src/components/AuthContext";
-import { EndpointContextProvider } from "../../src/components/EndpointContext";
 import { AUTH_URL_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { SubscribeButton } from "../../src/components/share/SubscribeButton/SubscribeButton";
 import { MAIN_SERVER_URL, COOP_SERVER_URL } from "../support/component-tests/constants";
+import { buildTestAuthContext, mountWithProviders } from "../support/component-tests/utils";
 
 type GraphQLRequestBody = {
     operationName?: string;
@@ -70,38 +66,43 @@ const seedEndpoints = (win: Window) => {
 };
 
 const mountSubscribeButton = () => {
-    cy.window().then((win) => {
-        seedEndpoints(win);
-        win.localStorage.setItem(AUTH_URL_STORAGE_KEY, JSON.stringify(MAIN_SERVER_URL));
-        seedAuthenticatedUser(win, MAIN_SERVER_URL, "main.user@example.test");
-        seedAuthenticatedUser(win, COOP_SERVER_URL, "coop.user@example.test");
+    const auth = buildTestAuthContext({
+        isAuthenticated: true,
+        user: new User({
+            access_token: "coop.user@example.test-access-token",
+            token_type: "Bearer",
+            scope: "openid profile email",
+            expires_at: Math.floor(Date.now() / 1000) + 3600,
+            profile: {
+                iss: `${COOP_SERVER_URL}/api/auth`,
+                aud: "frontend-app",
+                exp: Math.floor(Date.now() / 1000) + 3600,
+                iat: Math.floor(Date.now() / 1000),
+                sub: "coop.user@example.test-sub",
+                email: "coop.user@example.test",
+                email_verified: true,
+                name: "Co-op User",
+            },
+        }),
     });
 
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                refetchOnMount: false,
-                refetchOnReconnect: false,
-                refetchOnWindowFocus: false,
+    mountWithProviders(
+        <SubscribeButton
+            collection="companies"
+            targetID="company-harbor-labs"
+            serverURL={COOP_SERVER_URL}
+            isSubscribed
+        />,
+        {
+            auth,
+            route: "/companies/company-harbor-labs",
+            setup: (win) => {
+                seedEndpoints(win);
+                win.localStorage.setItem(AUTH_URL_STORAGE_KEY, JSON.stringify(MAIN_SERVER_URL));
+                seedAuthenticatedUser(win, MAIN_SERVER_URL, "main.user@example.test");
+                seedAuthenticatedUser(win, COOP_SERVER_URL, "coop.user@example.test");
             },
         },
-    });
-
-    mount(
-        <QueryClientProvider client={queryClient}>
-            <MemoryRouter initialEntries={["/companies/company-harbor-labs"]}>
-                <EndpointContextProvider>
-                    <AuthContextProvider>
-                        <SubscribeButton
-                            collection="companies"
-                            targetID="company-harbor-labs"
-                            serverURL={COOP_SERVER_URL}
-                            isSubscribed
-                        />
-                    </AuthContextProvider>
-                </EndpointContextProvider>
-            </MemoryRouter>
-        </QueryClientProvider>,
     );
 };
 

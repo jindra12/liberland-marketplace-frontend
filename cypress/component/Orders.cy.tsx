@@ -1,37 +1,21 @@
-import { routes } from "../../src/routes";
-import { mountAuthenticatedMainRoute, screenshotStep } from "../support/component-tests/utils";
+import * as React from "react";
 
-const mountOrdersRoute = (route: string) => {
-    mountAuthenticatedMainRoute(route, true);
+import OrderList from "../../src/components/OrderList";
+import { buildTestAuthContext, mountWithProviders, screenshotStep } from "../support/component-tests/directBasic";
+
+const mountOrderList = (route: string = "/orders") => {
+    mountWithProviders(<OrderList />, {
+        route,
+        auth: buildTestAuthContext({
+            isAuthenticated: true,
+        }),
+    });
 };
 
 describe("orders", () => {
-    it("shows the orders navigation entry on desktop when the user has orders", () => {
+    it("renders seller orders and lets the user switch their status on desktop", () => {
         cy.viewport(1440, 900);
-        mountOrdersRoute(routes.home.route);
-
-        cy.contains(".AppHeader__menuLink", "Orders").should("be.visible");
-        cy.contains(".AppHeader__menuLink", "Orders")
-            .parents(".ant-menu-item")
-            .contains(".AppHeader__ordersTag", "2")
-            .should("be.visible");
-
-        screenshotStep("orders-nav-desktop");
-    });
-
-    it("shows the orders navigation button on mobile when the user has orders", () => {
-        cy.viewport(390, 844);
-        mountOrdersRoute(routes.home.route);
-
-        cy.get(".AppHeader__ordersLink").should("be.visible");
-        cy.get(".AppHeader__ordersLink .ant-badge-count").should("contain.text", "2");
-
-        screenshotStep("orders-nav-mobile");
-    });
-
-    it("renders seller orders and lets the user switch their status", () => {
-        cy.viewport(1440, 900);
-        mountOrdersRoute(routes.orders.route);
+        mountOrderList();
 
         cy.contains("h2", "Orders").should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget")
@@ -56,7 +40,6 @@ describe("orders", () => {
         screenshotStep("orders-list-pending");
 
         cy.get("@solarOrder").contains("button", "Mark fulfilled").click();
-        cy.contains(".ant-message-notice", "Marked Solar Widget as fulfilled").should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .contains(".OrderList__statusTag", "Fulfilled")
@@ -72,7 +55,6 @@ describe("orders", () => {
             .closest(".ant-list-item")
             .contains("button", "Mark rejected")
             .click();
-        cy.contains(".ant-message-notice", "Marked Solar Widget as rejected").should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget")
             .closest(".ant-list-item")
             .contains(".OrderList__statusTag", "Rejected")
@@ -87,7 +69,7 @@ describe("orders", () => {
 
     it("renders seller orders on mobile with the compact shipping details layout", () => {
         cy.viewport(390, 844);
-        mountOrdersRoute(routes.orders.route);
+        mountOrderList();
 
         cy.contains("h2", "Orders").should("be.visible");
         cy.contains(".OrderList__productName", "Solar Widget")

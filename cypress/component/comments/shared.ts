@@ -3,7 +3,6 @@ import { COMMENT_RELATION_TO_QUERY_RELATION, ENTITY_COMMENTS_DEFAULT_LIMIT } fro
 
 import { detailRoute, MAIN_SERVER_URL } from "../../support/component-tests/constants";
 import {
-    dismissNsfwModal,
     gqlAlias,
     mountAuthenticatedMainRoute,
 } from "../../support/component-tests/utils";
@@ -106,17 +105,27 @@ export const waitForCollectionRequest = (
     });
 };
 
-export const waitForDetailRequest = (
-    operationName: string,
-    expectedVariables: GraphQLVariables,
-    expectedTitle: string,
-) => {
-    cy.contains("h1", expectedTitle).should("be.visible");
+export const waitForDetailRequest = (selector: string, expectedText: string) => {
+    cy.contains(selector, expectedText).should("be.visible");
 };
 
 const mountPostDetail = () => {
+    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+        const body = req.body as { operationName?: string; query?: string };
+        if (body.operationName === "PostById" || body.query?.includes("PostById")) {
+            req.alias = "postById";
+        }
+    });
+
     mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), true);
-    waitForDetailRequest("PostById", { id: "post-harbor-operations-digest" }, "Harbor Operations Digest");
+
+    cy.wait("@postById").then((interception) => {
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+    });
+
+    cy.get(".PostDetail").should("be.visible");
+    cy.contains(".PostDetail", "Harbor Operations Digest").should("be.visible");
 };
 
 export const waitForPostComments = (expectedTitle: string, minimumDocs = 1) => {
@@ -162,9 +171,22 @@ export const assertCommentHasNoReplies = (commentId: string) => {
 export const openShareAndCommentDetail = (viewport: ViewportConfig) => {
     const commentId = "comment-post-harbor-1";
 
+    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+        if (typeof req.body.query === "string" && req.body.query.includes("CommentById")) {
+            req.alias = "commentById";
+        }
+    });
+
     mountAuthenticatedMainRoute(detailRoute("/comments", commentId), true);
-    waitForDetailRequest("CommentById", { id: commentId }, "Comment");
-    cy.contains(".CommentDetailPage", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
+
+    cy.wait("@commentById").then((interception) => {
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+    });
+
+    cy.get('.CommentDetailPage .CommentCard[data-comment-id="comment-post-harbor-1"]').should("be.visible");
+    cy.contains(".CommentDetailPage .CommentCard__content", "Harbor Operations Digest keeps the team aligned.")
+        .should("be.visible");
 
     cy.window().then((win) => {
         const copiedUrl = `${win.location.origin}${detailRoute("/comments", commentId)}`;
@@ -322,13 +344,32 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
 };
 
 export const replyToReplyChain = (viewport: ViewportConfig) => {
+    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
+        if (typeof req.body.query === "string" && req.body.query.includes("CommentById")) {
+            req.alias = "commentById";
+        }
+        if (typeof req.body.query === "string" && req.body.query.includes("ListCommentReplies")) {
+            req.alias = "commentReplies";
+        }
+    });
+
     mountAuthenticatedMainRoute(detailRoute("/comments", "comment-startup-sky-1"), true);
-    waitForDetailRequest("CommentById", { id: "comment-startup-sky-1" }, "Comment");
-    cy.contains(".CommentDetailPage", "Sky Relay could use more testers.").should("be.visible");
+
+    cy.wait("@commentById").then((interception) => {
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
+    });
+
+    cy.get('.CommentDetailPage .CommentCard[data-comment-id="comment-startup-sky-1"]').should("be.visible");
+    cy.contains(".CommentDetailPage .CommentCard__content", "Sky Relay could use more testers.").should("be.visible");
     cy.contains('.CommentCard[data-comment-id="comment-startup-sky-1"]', "Sky Relay could use more testers.")
         .should("be.visible")
         .within(() => {
-            cy.contains("button", "Show replies (1)").should("be.visible");
+            cy.contains("button", "Show replies (1)").should("be.visible").click({ force: true });
+    });
+    cy.wait("@commentReplies").then((interception) => {
+        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
+        expect(interception.response?.statusCode).to.equal(200);
     });
     waitForCommentReplies("comment-startup-sky-1", "Replying to the Sky Relay thread.", 1);
 
@@ -339,6 +380,7 @@ export const replyToReplyChain = (viewport: ViewportConfig) => {
         .within(() => {
             cy.get('button[aria-label="Reply"]').first().click({ force: true });
         });
+    cy.get(".CommentCard .CommentComposer").should("be.visible");
     fillCommentText(".CommentCard .CommentComposer", `Nested reply ${viewport.name}`);
     cy.get(".CommentCard .CommentComposer").contains("button", "Reply").click();
 

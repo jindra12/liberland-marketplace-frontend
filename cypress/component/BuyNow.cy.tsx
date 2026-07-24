@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { Form } from "antd";
-import { UserManager } from "oidc-client-ts";
 import { useSessionStorage } from "usehooks-ts";
 
 import { BuyNowButton } from "../../src/components/cart/BuyNowButton/BuyNowButton";
@@ -90,9 +89,10 @@ describe("buy now", () => {
     });
 
     it("shows Buy now to anonymous users and redirects them to login", () => {
-        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
+        const auth = buildTestAuthContext();
+        const signinRedirect = cy.stub(auth, "signinRedirect").resolves();
 
-        mountBuyNowHarness(guestProductRoute, []);
+        mountBuyNowHarness(guestProductRoute, [], auth);
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible");
 
         cy.contains(".AddToCartButton__buyNow", "Buy now").click();
@@ -104,8 +104,9 @@ describe("buy now", () => {
     });
 
     it("returns to the current page and reopens buy now after login refresh", () => {
-        const signinRedirect = cy.stub(UserManager.prototype, "signinRedirect").resolves();
-        mountBuyNowHarness(mainProductRoute, []);
+        const auth = buildTestAuthContext();
+        const signinRedirect = cy.stub(auth, "signinRedirect").resolves();
+        mountBuyNowHarness(mainProductRoute, [], auth);
 
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
         cy.wrap(signinRedirect).should("have.been.calledOnce");

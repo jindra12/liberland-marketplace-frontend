@@ -7,6 +7,7 @@ import { AuthContext, type AuthContextProps } from "react-oidc-context";
 import { User } from "oidc-client-ts";
 
 import { AntProvider } from "../../../src/components/AntProvider";
+import { AppAnalyticsProvider } from "../../../src/components/analytics/AppAnalyticsProvider";
 import { CartMutationProvider } from "../../../src/components/cart/CartMutationContext";
 import { createAuthManager } from "../../../src/components/auth/utils";
 import { MAIN_SERVER_URL } from "./constants";
@@ -118,13 +119,15 @@ export const mountWithProviders = (ui: React.ReactNode, options: MountWithProvid
     mount(
         <AntProvider>
             <QueryClientProvider client={queryClient}>
-                <TestEndpointContextProvider>
-                    <CartMutationProvider>
-                        <AuthContext.Provider value={options.auth || buildDefaultAuthContext()}>
-                            <BrowserRouter>{ui}</BrowserRouter>
-                        </AuthContext.Provider>
-                    </CartMutationProvider>
-                </TestEndpointContextProvider>
+                <AppAnalyticsProvider>
+                    <TestEndpointContextProvider>
+                        <CartMutationProvider>
+                            <AuthContext.Provider value={options.auth || buildDefaultAuthContext()}>
+                                <BrowserRouter>{ui}</BrowserRouter>
+                            </AuthContext.Provider>
+                        </CartMutationProvider>
+                    </TestEndpointContextProvider>
+                </AppAnalyticsProvider>
             </QueryClientProvider>
         </AntProvider>,
     );

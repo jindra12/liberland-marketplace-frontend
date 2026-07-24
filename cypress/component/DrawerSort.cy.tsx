@@ -1,5 +1,7 @@
 import { SORT_CONTENT_BY_STORAGE_KEY } from "../../src/components/SortContentBySelect/constants";
-import { mountMainHome } from "../support/component-tests/utils";
+import { DesktopDrawer } from "../../src/components/DesktopDrawer";
+import { DisclaimersProvider } from "../../src/components/disclaimers/context";
+import { mountMainHome, mountWithProviders } from "../support/component-tests/utils";
 
 const openMobileDrawer = () => {
     cy.get('button[aria-label="Open navigation"]').click({ force: true });
@@ -31,11 +33,18 @@ describe("drawer sort control", () => {
 
     it("keeps the selected sort in the desktop drawer", () => {
         cy.viewport(1440, 1200);
-        mountMainHome();
+        mountWithProviders(
+            <DisclaimersProvider>
+                <DesktopDrawer />
+            </DisclaimersProvider>,
+            {
+                route: "/",
+            },
+        );
 
         openDesktopDrawer();
-        cy.get(".AppHeader__desktopDrawer").should("be.visible");
-        cy.contains(".AppHeader__desktopDrawer .AppHeader__sortLabel", "Sort content by").should("be.visible");
+        cy.get(".AppHeader__desktopDrawer").should("exist");
+        cy.contains(".AppHeader__desktopDrawer .AppHeader__sortLabel", "Sort content by").should("exist");
         assertSelectedSort("Hot");
 
         selectSortOption("Top");

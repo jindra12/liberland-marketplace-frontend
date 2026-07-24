@@ -58,6 +58,7 @@ export default defineConfig({
     video: true,
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: false,
+    numTestsKeptInMemory: 0,
     retries: {
         runMode: 1,
         openMode: 1,
@@ -67,7 +68,7 @@ export default defineConfig({
     viewportWidth: 1200,
     viewportHeight: 1200,
     component: {
-        experimentalSingleTabRunMode: true,
+        experimentalSingleTabRunMode: false,
         devServer: {
             framework: "next",
             bundler: "webpack",

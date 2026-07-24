@@ -57,6 +57,7 @@ const assertEditButtonIsCompact = () => {
 const openDetailPage = (goal: DetailEditButtonGoal) => {
     mountAuthenticatedDetailRoute(goal.route, [MAIN_SERVER_URL], undefined, true);
     waitForDetailQuery(MAIN_SERVER_URL, goal.operationName, goal.variables, goal.operationName.replace("ById", ""), goal.variables.id, goal.title);
+    cy.contains("h1", goal.title).should("be.visible");
     assertEditButtonIsCompact();
     screenshotStep(`detail-edit-button-${goal.operationName}-${goal.title}`);
 };

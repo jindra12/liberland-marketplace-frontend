@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { useAuth } from "react-oidc-context";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
@@ -25,6 +27,7 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
     const { authUrl } = useEndpointContext();
     const [form] = Form.useForm<NicknameFormValues>();
     const mutation = useUpdateUserByIdMutation();
+    const queryClient = useQueryClient();
 
     React.useEffect(() => {
         form.setFieldValue("name", props.currentName);
@@ -42,9 +45,9 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
             if (props.selectedServerUrl === authUrl && auth.isAuthenticated) {
                 await auth.signinSilent();
             }
+            await queryClient.invalidateQueries({ queryKey: ["MeUser"] });
             await props.onUserUpdated();
             props.messageApi.success("Nickname updated");
-            form.resetFields();
         } catch (error) {
             console.error("Failed to update nickname", error);
             props.messageApi.error("Failed to update nickname");

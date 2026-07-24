@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 import { Button, Card, Divider, Form, Input, Space } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 import useLocalStorage from "use-local-storage";
@@ -27,6 +29,7 @@ type ProfileContactCardProps = {
 export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps> = (props) => {
     const [form] = Form.useForm<ProfileContactFormValues>();
     const mutation = useUpdateUserByIdMutation();
+    const queryClient = useQueryClient();
     const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
         SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
         undefined,
@@ -46,6 +49,7 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                 data: buildProfileContactUpdateInput(values, props.selectedServerUser),
                 url: props.selectedServerUrl,
             });
+            await queryClient.invalidateQueries({ queryKey: ["MeUser"] });
             await props.onUserUpdated();
             props.messageApi.success("Contact information updated");
         } catch (error) {

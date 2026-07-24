@@ -1,18 +1,5 @@
 # Codex Workspace Instructions
 
-## Notifications
-
-- Before any command that requests elevated permissions, send a desktop notification first.
-- When a task is complete, send a desktop notification before the final user-facing response.
-- Prefer the helper script at `scripts/codex-notify.sh`.
-- Use `Codex` as the notification title unless a more specific title is helpful.
-- If desktop notifications are temporarily unavailable, continue the task and mention that notification delivery failed.
-
-## Notification Messages
-
-- Permission request: clearly say that Codex needs approval and summarize the action.
-- Task completion: clearly say that the requested work is done.
-
 ## Repository Overview
 
 Liberland Marketplace Frontend is a React 18 app that connects users to syndicated free
@@ -33,9 +20,11 @@ manager is `yarn`.
 - When testing, prefer the smallest relevant targeted test or spec instead of broad suite reruns unless the user explicitly asks for wider coverage.
 - Never start a new Cypress run until you have confirmed the previous Cypress process is fully stopped.
 - The only allowed way to run Cypress is through `yarn cypress:run`, which must use the repo lock wrapper. Do not invoke `cypress run` directly from package scripts or ad hoc commands.
+- Never run Cypress inside the sandbox. Cypress runs must go through the outside-sandbox elevated path so Xvfb/browser startup, locks, and artifact handling behave correctly.
 - Never use `cy.wait(number)` in Cypress tests or helpers. Use alias-based waits, visible state assertions, or explicit network events instead.
 - If Cypress/Electron crashes or hangs inside the sandbox, rerun the suite outside the sandbox with elevated permissions instead of looping on the same sandboxed run.
 - For any Cypress run that matters, prefer the outside-sandbox elevated path from the start; if it fails, retry once outside the sandbox after fixing the blocker instead of repeating sandboxed attempts.
+- Treat Cypress `ChunkLoadError` / missing chunk failures as a site-wide reset signal: stop the current run, start a fresh Cypress session, and rerun the affected spec or suite from a clean browser state instead of trying to push through the broken session.
 - Every Cypress `describe()` should live in its own file so it can be run independently, and every new Cypress file should get matching headed and unheaded `package.json` scripts.
 - Always run a linter before finishing code changes, and always check for compile and lint errors before reporting completion.
 - When Cypress or other test files change, run the test TypeScript project too. Regular `tsc --noEmit` can miss Cypress/test files, so check both `tsc --noEmit` and `tsc -p tsconfig.ct.json --noEmit` before claiming the refactor compiles.

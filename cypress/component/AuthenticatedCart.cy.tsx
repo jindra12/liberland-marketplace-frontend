@@ -1,5 +1,10 @@
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
-import { assertFormFieldValue, mountAuthenticatedCartRoute, screenshotStep } from "../support/component-tests/utils";
+import {
+    assertFormFieldValue,
+    gqlAlias,
+    mountAuthenticatedCartRoute,
+    screenshotStep,
+} from "../support/component-tests/utils";
 
 const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
@@ -21,16 +26,10 @@ const assertCoopOrderPrefill = () => {
 
 describe("authenticated cart", () => {
     it("prefills the order form from the main server me query", () => {
-        mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL], {
+        mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
         }, true);
-        cy.get(".AddToCartButton__buyNow").should("not.exist");
-        cy.contains("Filter by tribe").should("not.exist");
-        cy.contains("No more results").should("not.exist");
-        cy.contains(".CartPage__orderButton", "Proceed to order")
-            .should("be.visible")
-            .click();
-
+        cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "CartBySecret", { secret: "alpha-secret" })}`);
         cy.contains("h2", "Order").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
         screenshotStep("authenticated-cart-main-prefill");
@@ -39,16 +38,10 @@ describe("authenticated cart", () => {
     });
 
     it("lets the user switch to a shipping address from another logged-in server", () => {
-        mountAuthenticatedCartRoute("/cart", [MAIN_SERVER_URL, COOP_SERVER_URL], {
+        mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL, COOP_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
         }, true);
-        cy.get(".AddToCartButton__buyNow").should("not.exist");
-        cy.contains("Filter by tribe").should("not.exist");
-        cy.contains("No more results").should("not.exist");
-        cy.contains(".CartPage__orderButton", "Proceed to order")
-            .should("be.visible")
-            .click();
-
+        cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "CartBySecret", { secret: "alpha-secret" })}`);
         cy.contains("h2", "Order").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
 
