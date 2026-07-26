@@ -5,6 +5,7 @@ import { useAuth } from "react-oidc-context";
 
 import { invalidateStartupQueries } from "../../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../hooks";
+import { useIsOwnedByServerUser } from "../useIsOwnedByServerUser";
 
 import type { StartupDetailEntity } from "./types";
 
@@ -19,6 +20,10 @@ export const useStartupInvolvement = (props: UseStartupInvolvementProps) => {
     const leaveMutation = useLeaveStartupMutation();
     const userId = auth.user?.profile?.sub;
     const involvedUsers = props.startup.involvedUsers || [];
+    const isOwner = useIsOwnedByServerUser({
+        ownerUserId: props.startup.createdBy?.id,
+        serverURL: props.startup.serverURL,
+    });
 
     const handleJoin = async () => {
         try {
@@ -55,6 +60,6 @@ export const useStartupInvolvement = (props: UseStartupInvolvementProps) => {
         isInvolved: userId ? involvedUsers.some((user) => user.id === userId) : false,
         isJoinPending: joinMutation.isPending,
         isLeavePending: leaveMutation.isPending,
-        isOwner: Boolean(userId && props.startup.createdBy?.id === userId),
+        isOwner,
     };
 };

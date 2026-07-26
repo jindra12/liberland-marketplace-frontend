@@ -73,8 +73,6 @@
         "test": "react-app-rewired test",
         "test:ct": "yarn cypress:run --component --browser chrome",
         "test:ct:headed": "yarn cypress:run --component --browser chrome --headed",
-        "test:ct:detail-edit-buttons": "yarn cypress:run --component --browser chrome --spec cypress/component/DetailEditButtons.cy.tsx",
-        "test:ct:detail-edit-buttons:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/DetailEditButtons.cy.tsx",
         "test:ct:report": "yarn cypress:run --component --browser chrome --spec cypress/component/Report.cy.tsx",
         "test:ct:report:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/Report.cy.tsx",
         "test:ct:disclaimers-desktop": "yarn cypress:run --component --browser chrome --spec cypress/component/Disclaimers.desktop.cy.tsx",

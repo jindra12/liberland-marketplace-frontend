@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useQueryClient } from "@tanstack/react-query";
@@ -21,14 +20,18 @@ import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post
 
 import { CommonDetail } from "./CommonDetail";
 import { PostHeroSplash } from "./PostHeroSplash";
+import { useIsOwnedByServerUser } from "./useIsOwnedByServerUser";
 
 const PostDetail: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
-    const auth = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const query = usePostByIdQuery({ id: id!, url: routeServerURL });
+    const isOwner = useIsOwnedByServerUser({
+        ownerUserId: query.data?.Post?.createdBy?.id,
+        serverURL: query.data?.Post?.company?.serverURL ?? routeServerURL,
+    });
     const likeMutation = useLikePostMutation();
     const dislikeMutation = useDislikePostMutation();
     const deleteMutation = useDeletePostMutation();
@@ -56,7 +59,6 @@ const PostDetail: React.FunctionComponent = () => {
                 const companyImageSrc = getPostCompanyImageUrl(post);
                 const shareTitle = post.title ?? "Post";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
-                const isOwner = auth.user?.profile?.sub && post.createdBy?.id === auth.user.profile.sub;
                 const relatedTarget = post.relatedPosts?.[0];
 
                 return (

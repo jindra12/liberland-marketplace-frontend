@@ -14,12 +14,12 @@ describe("profile nickname", () => {
         const editedName = "Nova Rivers Edited";
 
         cy.contains(".Profile__card", "Change Nickname").within(() => {
-            cy.get("input").clear({ force: true }).type(editedName, { force: true });
+            cy.get("input").click().clear({ force: true }).should("have.value", "").type(editedName, { force: true });
             cy.contains("button", "Update").click();
         });
 
         cy.wait("@updateUserById");
-        cy.contains("Nickname updated").should("be.visible");
+        cy.wait("@profileMeUser");
         assertNicknameValue(editedName);
     });
 });

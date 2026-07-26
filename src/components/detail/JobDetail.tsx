@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
 import { useParams } from "react-router-dom";
 
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
@@ -22,13 +21,17 @@ import { JobDetailsSummary } from "../shared/JobDetailsSummary";
 
 import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
+import { useIsOwnedByServerUser } from "./useIsOwnedByServerUser";
 
 const JobDetail: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const { md } = Grid.useBreakpoint();
-    const auth = useAuth();
     const query = useJobByIdQuery({ id: id!, url: routeServerURL });
+    const isOwner = useIsOwnedByServerUser({
+        ownerUserId: query.data?.Job?.createdBy?.id,
+        serverURL: query.data?.Job?.serverURL ?? routeServerURL,
+    });
     return (
         <Loader query={query}>
             {(data) => {
@@ -41,7 +44,6 @@ const JobDetail: React.FunctionComponent = () => {
                 const isInactive = job?.isActive === false;
                 const postedAt = typeof job?.postedAt === "string" ? job.postedAt : undefined;
                 const { allowedIdentities, disallowedIdentities } = getJobIdentityAccess(job, "name");
-                const isOwner = auth.user?.profile?.sub && job?.createdBy?.id === auth.user.profile.sub;
                 const shareTitle = job?.title ?? "Job";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 

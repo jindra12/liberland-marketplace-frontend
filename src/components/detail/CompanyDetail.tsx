@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
 import { useParams } from "react-router-dom";
 
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
@@ -25,15 +24,19 @@ import { CommonDetail } from "./CommonDetail";
 import { CompanyVerificationTag } from "./companyDetail/CompanyVerificationTag";
 import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
+import { useIsOwnedByServerUser } from "./useIsOwnedByServerUser";
 
 const CompanyDetail: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const company = useCompanyByIdQuery({ id: id!, url: routeServerURL });
     const { md } = Grid.useBreakpoint();
-    const auth = useAuth();
 
     const counts = useCompanyTabCounts(id);
+    const isOwner = useIsOwnedByServerUser({
+        ownerUserId: company.data?.Company?.createdBy?.id,
+        serverURL: company.data?.Company?.serverURL ?? routeServerURL,
+    });
 
     return (
         <Loader query={company}>
@@ -49,7 +52,6 @@ const CompanyDetail: React.FunctionComponent = () => {
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 72;
-                const isOwner = auth.user?.profile?.sub && companyData?.createdBy?.id === auth.user.profile.sub;
                 const shareTitle = companyData?.name ?? "Company";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
 

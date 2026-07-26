@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
 import { useParams } from "react-router-dom";
 
 import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
@@ -23,15 +22,19 @@ import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
 import { CommonDetail } from "./CommonDetail";
 import { IdentityGroups } from "./IdentityGroups";
 import { ProductRelatedProductsSection } from "./ProductRelatedProductsSection";
+import { useIsOwnedByServerUser } from "./useIsOwnedByServerUser";
 
 const ProductServiceDetail: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
     const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
     const { md } = Grid.useBreakpoint();
-    const auth = useAuth();
     const query = useProductByIdQuery({ id: id!, url: routeServerURL });
     const companyId = query.data?.Product?.company?.id;
     const companyQuery = useCompanyByIdQuery({ id: companyId || "", url: routeServerURL }, { enabled: Boolean(companyId) });
+    const isOwner = useIsOwnedByServerUser({
+        ownerUserId: query.data?.Product?.company?.createdBy?.id,
+        serverURL: query.data?.Product?.company?.serverURL ?? routeServerURL,
+    });
 
     return (
         <Loader query={query}>
@@ -57,7 +60,6 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                       : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
-                const isOwner = auth.user?.profile?.sub && product?.company?.createdBy?.id === auth.user.profile.sub;
                 const canPurchase = isProductPurchasable(product);
                 const orderNowLink = parseActionLink(product?.url);
                 const orderLink = parseActionLink(product?.url);

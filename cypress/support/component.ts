@@ -92,10 +92,7 @@ afterEach(function (this: Mocha.Context) {
     cy.document().then((doc) => {
         doc.documentElement.removeAttribute("data-cypress");
     });
-    cy.resetQL();
-    cy.screenshot(buildScreenshotName(this.currentTest), {
-        capture: "fullPage",
-    });
+    resetGraphQLMock();
 
     const logs = drainGraphQLRequestLogs();
     if (logs.length > 0) {

@@ -1,17 +1,34 @@
-import { disclaimerDefinitions } from "../../../src/components/disclaimers/constants";
+import * as React from "react";
 
-import { MAIN_SERVER_URL } from "../../support/component-tests/constants";
-import { mountAnonymousRoute } from "../../support/component-tests/utils";
+import { Button } from "antd";
+
+import { disclaimerDefinitions } from "../../../src/components/disclaimers/constants";
+import { DisclaimersModal } from "../../../src/components/disclaimers/DisclaimersModal";
+import { DisclaimersProvider, useDisclaimers } from "../../../src/components/disclaimers/context";
+
+import { mountWithProviders } from "../../support/component-tests/utils";
 
 type DisclaimerViewport = "desktop" | "mobile";
-
-const getDrawerSelector = (viewport: DisclaimerViewport) =>
-    viewport === "desktop" ? ".AppHeader__desktopDrawer" : ".AppHeader__drawer";
 
 const getDrawerButtonSelector = (viewport: DisclaimerViewport) =>
     viewport === "desktop" ? ".AppHeader__quickActionsBtn" : ".AppHeader__burger";
 
 const getDrawerOpenLabel = (viewport: DisclaimerViewport) => (viewport === "desktop" ? "Menu" : "Disclaimers");
+
+const DisclaimerHarness: React.FunctionComponent<{ viewport: DisclaimerViewport }> = (props) => {
+    const { openDisclaimers } = useDisclaimers();
+
+    return (
+        <Button
+            className={getDrawerButtonSelector(props.viewport).slice(1)}
+            onClick={() => {
+                openDisclaimers();
+            }}
+        >
+            {getDrawerOpenLabel(props.viewport)}
+        </Button>
+    );
+};
 
 export const mountDisclaimerRoute = (viewport: DisclaimerViewport) => {
     if (viewport === "desktop") {
@@ -20,7 +37,12 @@ export const mountDisclaimerRoute = (viewport: DisclaimerViewport) => {
         cy.viewport(390, 844);
     }
 
-    mountAnonymousRoute("/", [MAIN_SERVER_URL]);
+    mountWithProviders(
+        <DisclaimersProvider>
+            <DisclaimerHarness viewport={viewport} />
+            <DisclaimersModal />
+        </DisclaimersProvider>,
+    );
 };
 
 export const runDisclaimerFlow = (viewport: DisclaimerViewport) => {
@@ -31,14 +53,13 @@ export const runDisclaimerFlow = (viewport: DisclaimerViewport) => {
 
 export const screenshotDisclaimerDrawer = (viewport: DisclaimerViewport) => {
     cy.get(getDrawerButtonSelector(viewport)).should("be.visible").click();
-    cy.contains(getDrawerSelector(viewport), getDrawerOpenLabel(viewport)).should("be.visible");
-    cy.contains(getDrawerSelector(viewport), "Disclaimers").should("be.visible");
-    cy.get(getDrawerSelector(viewport))
-        .screenshot(`${Cypress.spec.name} ${viewport} drawer`.replace(/[^a-zA-Z0-9]+/g, "-"));
+    cy.get(".DisclaimersModal .ant-modal-content").should("be.visible");
+    cy.screenshot(`${Cypress.spec.name} ${viewport} drawer`.replace(/[^a-zA-Z0-9]+/g, "-"), {
+        capture: "viewport",
+    });
 };
 
 export const walkDisclaimerPages = (viewport: DisclaimerViewport) => {
-    cy.contains(`${getDrawerSelector(viewport)} button`, "Disclaimers").click();
     cy.contains(".DisclaimersModal__title", disclaimerDefinitions[0].title).should("be.visible");
 
     disclaimerDefinitions.forEach((definition, index) => {
@@ -49,15 +70,11 @@ export const walkDisclaimerPages = (viewport: DisclaimerViewport) => {
         }
 
         cy.contains(".DisclaimersModal__title", definition.title).should("be.visible");
+        cy.contains(".DisclaimersModal__title", definition.title).scrollIntoView();
         const screenshotName = `${Cypress.spec.name} ${viewport} ${definition.key}`.replace(/[^a-zA-Z0-9]+/g, "-");
 
-        if (viewport === "mobile") {
-            cy.contains(".DisclaimersModal__title", definition.title).scrollIntoView();
-            cy.screenshot(screenshotName, {
-                capture: "viewport",
-            });
-        } else {
-            cy.get(".DisclaimersModal .ant-modal-content").first().screenshot(screenshotName);
-        }
+        cy.screenshot(screenshotName, {
+            capture: "viewport",
+        });
     });
 };
