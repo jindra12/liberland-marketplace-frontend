@@ -6,6 +6,7 @@ import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 import { Button, Form, Input, Select, Space } from "antd";
 import type { FormInstance, FormListFieldData } from "antd";
 
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../../form/constants";
 import { PROFILE_WALLET_CHAIN_OPTIONS } from "../constants";
 import type {
     ProfileContactFormValues,
@@ -96,6 +97,7 @@ export const ProfileWalletRow: React.FunctionComponent<ProfileWalletRowProps> = 
                                         name={[props.field.name, "address"]}
                                         rules={[
                                             { required: true, message: "Wallet address is required" },
+                                            buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                                             {
                                                 validator: buildProfileWalletDuplicateValidator(
                                                     props.form,

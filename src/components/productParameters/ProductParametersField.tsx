@@ -3,6 +3,8 @@ import * as React from "react";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Flex, Form, Input, Space, Typography } from "antd";
 
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
+
 import { ProductParameterValueDefaultField } from "./ProductParameterValueDefaultField";
 
 export const ProductParametersField: React.FunctionComponent = () => {
@@ -49,6 +51,7 @@ export const ProductParametersField: React.FunctionComponent = () => {
                                                     required: true,
                                                     message: "Enter a property name",
                                                 },
+                                                buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                                             ]}
                                             className="Publish__parameterNameField"
                                         >
@@ -92,6 +95,7 @@ export const ProductParametersField: React.FunctionComponent = () => {
                                                                             required: true,
                                                                             message: "Enter a value name",
                                                                         },
+                                                                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                                                                     ]}
                                                                     className="Publish__parameterValueNameField"
                                                                 >

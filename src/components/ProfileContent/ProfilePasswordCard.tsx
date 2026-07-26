@@ -4,6 +4,7 @@ import { Button, Card, Form, Input } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 
 import { useChangePasswordMutation } from "../../authApi";
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 
 import type { PasswordFormValues } from "./types";
 import { validateSelectedProfileServerUrl } from "./utils";
@@ -44,6 +45,7 @@ export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardPro
                             required: true,
                             message: "Enter current password",
                         },
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         {
                             validator: async () => validateSelectedProfileServerUrl(props.selectedServerUrl),
                         },
@@ -59,6 +61,7 @@ export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardPro
                             min: 6,
                             message: "Min 6 characters",
                         },
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                     ]}
                 >
                     <Input.Password placeholder="New password" />
@@ -71,6 +74,7 @@ export const ProfilePasswordCard: React.FunctionComponent<ProfilePasswordCardPro
                             required: true,
                             message: "Confirm password",
                         },
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         ({ getFieldValue }) => ({
                             validator: async (_, value) => {
                                 if (!value || getFieldValue("newPassword") === value) {

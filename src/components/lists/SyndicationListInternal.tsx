@@ -18,6 +18,7 @@ import {
     insertUniqueEndpoint,
     setEndpointEnabled,
 } from "../endpoints/utils";
+import { TEXT_INPUT_MAX_LENGTH } from "../form/constants";
 import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
 import { NativeShareButton } from "../share/NativeShareButton";
@@ -55,6 +56,10 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
     const handleAdd = React.useCallback(() => {
         if (!draftUrl.trim()) {
             messageApi.warning("Enter a URL first");
+            return;
+        }
+        if (draftUrl.length > TEXT_INPUT_MAX_LENGTH) {
+            messageApi.warning(`Maximum ${TEXT_INPUT_MAX_LENGTH} characters`);
             return;
         }
 

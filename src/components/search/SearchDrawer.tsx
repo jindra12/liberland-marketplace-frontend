@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Button, Drawer, Form, Input, InputRef, Space } from "antd";
 
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
+
 import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
 
 type SearchDrawerProps = {
@@ -48,7 +50,10 @@ export const SearchDrawer: React.FunctionComponent<SearchDrawerProps> = (props) 
                         <Form.Item
                             name="searchValue"
                             className="SearchDrawer__footerInputItem"
-                            rules={[{ required: true, whitespace: true, message: "Search is required" }]}
+                            rules={[
+                                { required: true, whitespace: true, message: "Search is required" },
+                                buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
+                            ]}
                             noStyle={false}
                         >
                             <Input

@@ -3,6 +3,7 @@ import * as React from "react";
 import { Form, Input, Select } from "antd";
 
 import { CompanyField } from "../../CompanyField";
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../../form/constants";
 import { ImageUploadField } from "../ImageUploadField";
 import { MarkdownEditor } from "../MarkdownEditor";
 
@@ -18,12 +19,18 @@ export const StartupFormBasicsFields: React.FunctionComponent<StartupFormBasicsF
                     {
                         required: true,
                     },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__startupTitleField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description" className="Publish__startupDescriptionField">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__startupDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Describe your venture (supports Markdown)" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.existingImageUrl} serverUrl={props.url} />

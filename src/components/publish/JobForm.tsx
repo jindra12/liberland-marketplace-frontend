@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 import { Job_EmploymentType_MutationInput } from "../../generated/graphql";
 import { CompanyField } from "../CompanyField";
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useCreateJobMutation, useUpdateJobMutation } from "../hooks";
 
 import { currencyOptions } from "./constants";
@@ -126,12 +127,18 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                     {
                         required: true,
                     },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__jobTitleField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description" className="Publish__jobDescriptionField">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__jobDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
@@ -182,10 +189,10 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
             >
                 <DatePicker className="Publish__fullWidth" />
             </Form.Item>
-            <Form.Item name="location" label="Location">
+            <Form.Item name="location" label="Location" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}>
                 <Input />
             </Form.Item>
-            <Form.Item name="applyUrl" label="Apply URL">
+            <Form.Item name="applyUrl" label="Apply URL" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}>
                 <Input />
             </Form.Item>
 

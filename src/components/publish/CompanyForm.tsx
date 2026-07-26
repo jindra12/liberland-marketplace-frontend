@@ -3,6 +3,7 @@ import * as React from "react";
 import { Form, Input, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
 
 import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
@@ -85,12 +86,18 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                     {
                         required: true,
                     },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__companyNameField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description" className="Publish__companyDescriptionField">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__companyDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
@@ -114,13 +121,13 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                     }))}
                 />
             </Form.Item>
-            <Form.Item name="email" label="Email" className="Publish__companyEmailField">
+            <Form.Item name="email" label="Email" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyEmailField">
                 <Input type="email" />
             </Form.Item>
-            <Form.Item name="phone" label="Phone" className="Publish__companyPhoneField">
+            <Form.Item name="phone" label="Phone" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyPhoneField">
                 <Input />
             </Form.Item>
-            <Form.Item name="website" label="Website" className="Publish__companyWebsiteField">
+            <Form.Item name="website" label="Website" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyWebsiteField">
                 <Input />
             </Form.Item>
             <CryptoAddressesField

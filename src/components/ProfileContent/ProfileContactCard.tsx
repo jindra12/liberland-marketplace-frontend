@@ -6,6 +6,7 @@ import { Button, Card, Divider, Form, Input, Space } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 import useLocalStorage from "use-local-storage";
 
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useUpdateUserByIdMutation } from "../hooks";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "../order/constants";
 import { GeoapifyAddressFormItem } from "../order/GeoapifyAddressFormItem/GeoapifyAddressFormItem";
@@ -73,6 +74,7 @@ export const ProfileContactCard: React.FunctionComponent<ProfileContactCardProps
                     name="phone"
                     label="Phone number"
                     rules={[
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         {
                             validator: async () =>
                                 validateSelectedProfileServerUser(

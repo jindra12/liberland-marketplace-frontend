@@ -6,6 +6,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Typography } from "antd";
 
 import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
+import { LONG_TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 
 import type { ReportActionProps } from "./types";
 import { useReportAction } from "./useReportAction";
@@ -61,11 +62,18 @@ export const ReportAction: React.FunctionComponent<ReportActionProps> = (props) 
                     <Form.Item
                         name="reason"
                         label="Reason"
-                        rules={[{ required: true, whitespace: true, message: "Tell us why you are reporting this." }]}
+                        rules={[
+                            { required: true, whitespace: true, message: "Tell us why you are reporting this." },
+                            buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH),
+                        ]}
                     >
                         <Input.TextArea
                             autoSize={{ minRows: 4, maxRows: 8 }}
                             placeholder="Explain what should be reviewed"
+                            showCount={{
+                                formatter: ({ count, maxLength }) =>
+                                    `${Math.max((maxLength ?? LONG_TEXT_INPUT_MAX_LENGTH) - count, 0)} characters left`,
+                            }}
                         />
                     </Form.Item>
                 </Form>

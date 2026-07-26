@@ -5,6 +5,7 @@ import { Alert, Button, Card, Col, Flex, Form, Input, Row, Typography } from "an
 import type { ListProductsQuery } from "../../generated/graphql";
 import { routes } from "../../routes";
 import type { CryptoChain } from "../../types";
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { ProductServiceListInternal } from "../lists/ProductServiceListInternal";
 import { RouteButton } from "../RouteButton";
 
@@ -96,6 +97,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                         rules={[
                             { required: true, message: "Required" },
                             { type: "email", message: "Invalid email" },
+                            buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         ]}
                     >
                         <Input type="email" placeholder="you@example.com" />
@@ -106,7 +108,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                             <Form.Item
                                 name={["shippingAddress", "firstName"]}
                                 label="First name"
-                                rules={[{ required: true, message: "Required" }]}
+                                rules={[{ required: true, message: "Required" }, buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
                             >
                                 <Input />
                             </Form.Item>
@@ -115,7 +117,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                             <Form.Item
                                 name={["shippingAddress", "lastName"]}
                                 label="Last name"
-                                rules={[{ required: true, message: "Required" }]}
+                                rules={[{ required: true, message: "Required" }, buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
                             >
                                 <Input />
                             </Form.Item>
@@ -126,12 +128,20 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
 
                     <Row gutter={12}>
                         <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "company"]} label="Company (optional)">
+                            <Form.Item
+                                name={["shippingAddress", "company"]}
+                                label="Company (optional)"
+                                rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12}>
-                            <Form.Item name={["shippingAddress", "phone"]} label="Phone (optional)">
+                            <Form.Item
+                                name={["shippingAddress", "phone"]}
+                                label="Phone (optional)"
+                                rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>

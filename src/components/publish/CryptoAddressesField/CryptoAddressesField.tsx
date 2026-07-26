@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { Card, Form, Input, Select, Space, Typography } from "antd";
 
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../../form/constants";
+
 import { CRYPTO_ADDRESS_CHAIN_OPTIONS } from "./constants";
 import { validateCryptoAddress } from "./utils";
 
@@ -33,6 +35,7 @@ export const CryptoAddressesField: React.FunctionComponent<CryptoAddressesFieldP
                     label="Wallet address"
                     dependencies={[["cryptoAddresses", "chain"]]}
                     rules={[
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         {
                             validator: async (_, value: string | null | undefined) => {
                                 const result = validateCryptoAddress(

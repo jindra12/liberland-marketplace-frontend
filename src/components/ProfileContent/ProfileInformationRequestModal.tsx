@@ -3,6 +3,7 @@ import * as React from "react";
 import { Form, Input, Modal, Typography } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 
+import { LONG_TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useCreateInformationRequestMutation } from "../hooks";
 
 import type { InformationRequestFormValues } from "./types";
@@ -69,11 +70,16 @@ export const ProfileInformationRequestModal: React.FunctionComponent<ProfileInfo
                             whitespace: true,
                             message: "Tell us what you want to request.",
                         },
+                        buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH),
                     ]}
                 >
                     <Input.TextArea
                         autoSize={{ minRows: 4, maxRows: 8 }}
                         placeholder="Explain your request"
+                        showCount={{
+                            formatter: ({ count, maxLength }) =>
+                                `${Math.max((maxLength ?? LONG_TEXT_INPUT_MAX_LENGTH) - count, 0)} characters left`,
+                        }}
                     />
                 </Form.Item>
             </Form>

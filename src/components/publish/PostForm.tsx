@@ -6,6 +6,7 @@ import { Form, Input } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
 import { CompanyField } from "../CompanyField";
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import {
     useCreatePostMutation,
     useUpdatePostMutation,
@@ -103,6 +104,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                     {
                         required: true,
                     },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__postTitleField"
             >
@@ -116,6 +118,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                         required: true,
                         message: "Please add post content",
                     },
+                    buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__postContentField"
             >
@@ -124,9 +127,17 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
             <Form.Item
                 name="seoDescription"
                 label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
                 className="Publish__postDescriptionField"
             >
-                <Input.TextArea rows={3} placeholder="Used as the snippet in lists and search" />
+                <Input.TextArea
+                    rows={3}
+                    placeholder="Used as the snippet in lists and search"
+                    showCount={{
+                        formatter: ({ count, maxLength }) =>
+                            `${Math.max((maxLength ?? LONG_TEXT_INPUT_MAX_LENGTH) - count, 0)} characters left`,
+                    }}
+                />
             </Form.Item>
             <Form.Item
                 name="company"

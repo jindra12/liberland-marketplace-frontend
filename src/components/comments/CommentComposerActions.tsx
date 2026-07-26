@@ -5,6 +5,7 @@ import { useAuth } from "react-oidc-context";
 import { Button, Flex, Form, Input } from "antd";
 
 import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
+import { LONG_TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 
 import { CommentCompanyField } from "./CommentCompanyField";
 import type { CommentComposerValues } from "./types";
@@ -56,8 +57,19 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
             {props.showCompanyField && userId && (
                 <CommentCompanyField serverURL={props.serverURL} userId={userId} />
             )}
-            <Form.Item name="text" className="CommentComposer__field" rules={[{ required: true, whitespace: true }]}>
-                <Input.TextArea placeholder={props.placeholder} autoSize={{ minRows: 3, maxRows: 8 }} />
+            <Form.Item
+                name="text"
+                className="CommentComposer__field"
+                rules={[{ required: true, whitespace: true }, buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+            >
+                <Input.TextArea
+                    placeholder={props.placeholder}
+                    autoSize={{ minRows: 3, maxRows: 8 }}
+                    showCount={{
+                        formatter: ({ count, maxLength }) =>
+                            `${Math.max((maxLength ?? LONG_TEXT_INPUT_MAX_LENGTH) - count, 0)} characters left`,
+                    }}
+                />
             </Form.Item>
             <Flex gap={8} justify="flex-end" wrap className="CommentComposer__actions">
                 {props.allowCancel && props.onCancel && (

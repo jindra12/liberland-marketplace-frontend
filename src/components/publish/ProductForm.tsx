@@ -7,6 +7,7 @@ import { Form, Input, InputNumber } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
 import { CompanyField } from "../CompanyField";
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useCreateProductMutation, useUpdateProductMutation } from "../hooks";
 import { ProductParametersField } from "../productParameters/ProductParametersField";
 import type { ProductParameterDraft } from "../productParameters/types";
@@ -93,12 +94,18 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     {
                         required: true,
                     },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                 ]}
                 className="Publish__productNameField"
             >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description" className="Publish__productDescriptionField">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__productDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
@@ -120,7 +127,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     className="Publish__fullWidth Publish__priceField"
                 />
             </Form.Item>
-            <Form.Item name="url" label="Product URL" className="Publish__productUrlField">
+            <Form.Item name="url" label="Product URL" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__productUrlField">
                 <Input />
             </Form.Item>
             <Form.Item name="inventory" label="Inventory" className="Publish__productInventoryField">

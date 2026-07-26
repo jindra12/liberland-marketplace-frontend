@@ -9,6 +9,7 @@ import { Button, Card, Form, Input } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 
 import { useEndpointContext } from "../EndpointContext";
+import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useUpdateUserByIdMutation } from "../hooks";
 
 import type { NicknameFormValues } from "./types";
@@ -63,13 +64,17 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
                             required: true,
                             message: "Enter a nickname",
                         },
+                        buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
                         {
                             validator: async () =>
                                 validateSelectedProfileServerUser(props.selectedServerUrl, props.selectedServerUserId),
                         },
                     ]}
                 >
-                    <Input prefix={<UserOutlined />} placeholder={props.currentName || "New nickname"} />
+                    <Input
+                        prefix={<UserOutlined />}
+                        placeholder={props.currentName || "New nickname"}
+                    />
                 </Form.Item>
                 <Form.Item>
                     <Button
