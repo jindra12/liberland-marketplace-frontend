@@ -1,45 +1,52 @@
-import React, { useState } from "react";
-import { Form, Modal, Upload } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import type { UploadFile } from "antd/es/upload/interface";
-import { getImage } from "../../utils";
+import * as React from "react";
 
-const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]) => {
+import { PlusOutlined } from "@ant-design/icons";
+import { Form, Modal, Upload } from "antd";
+import type { UploadFile } from "antd/es/upload/interface";
+
+import { getImage } from "../shared/image/utils";
+
+const normFile = (
+    e:
+        | {
+              fileList?: UploadFile[];
+          }
+        | UploadFile[],
+) => {
     if (Array.isArray(e)) return e;
     return e?.fileList;
 };
-
 interface ImageUploadFieldProps {
     existingImageUrl?: string | null;
     serverUrl: string;
 }
-
-export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = ({ existingImageUrl, serverUrl }) => {
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewSrc, setPreviewSrc] = useState("");
-    const existingImageSrc = existingImageUrl
+export const ImageUploadField: React.FunctionComponent<ImageUploadFieldProps> = (props) => {
+    const [previewOpen, setPreviewOpen] = React.useState(false);
+    const [previewSrc, setPreviewSrc] = React.useState("");
+    const existingImageSrc = props.existingImageUrl
         ? getImage({
-            __typename: "Product",
-            image: { url: existingImageUrl },
-            serverURL: serverUrl,
-        })
+              __typename: "Product",
+              image: {
+                  url: props.existingImageUrl,
+              },
+              serverURL: props.serverUrl,
+          })
         : undefined;
-
     const defaultFileList: UploadFile[] = existingImageSrc
-        ? [{
-            uid: "-1",
-            name: "Current image",
-            status: "done",
-            url: existingImageSrc,
-        }]
+        ? [
+              {
+                  uid: "-1",
+                  name: "Current image",
+                  status: "done",
+                  url: existingImageSrc,
+              },
+          ]
         : [];
-
     const handlePreview = async (file: UploadFile) => {
         const src = file.url || URL.createObjectURL(file.originFileObj as File);
         setPreviewSrc(src);
         setPreviewOpen(true);
     };
-
     return (
         <>
             <Form.Item

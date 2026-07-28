@@ -1,79 +1,84 @@
 query SearchCompaniesBySecondaryIdentity(
-  $identityId: JSON!
-  $searchTerm: String!
-  $page: Int = 1
-  $limit: Int = 20
-  $sort: String
+    $identityId: JSON!
+    $searchTerm: String!
+    $page: Int = 1
+    $limit: Int = 20
+    $sort: String = "-contentRankScore"
 ) {
-  Companies(
-    draft: false
-    where: {
-      AND: [
-        { name: { contains: $searchTerm } }
-        { allowedIdentities: { in: [$identityId] } }
-        { _status: { equals: published } }
-      ]
-    }
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      cryptoAddresses {
-          chain
-          address
+    Companies(
+        draft: false
+        where: {
+            AND: [
+                { name: { contains: $searchTerm } }
+                { allowedIdentities: { in: [$identityId] } }
+                { _status: { equals: published } }
+                { isPrivate: { equals: false } }
+            ]
         }
-      website
-      phone
-      email
-      allowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      disallowedIdentities {
-        id
-        serverURL
-        name
-        description
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            verification
+            isPrivate
+            description
+            likeCount
+            cryptoAddresses {
+                chain
+                address
+            }
+            website
+            phone
+            email
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            identity {
+                id
+                serverURL
+                name
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
         }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

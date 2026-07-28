@@ -1,0 +1,271 @@
+.UnsubscribePage {
+    width: min(960px, 100%);
+    margin: 0 auto;
+    padding: clamp(8px, 1.5vw, 18px) 0 clamp(28px, 4vw, 56px);
+
+    &__skeletonInput {
+        width: 220px;
+    }
+}
+
+.UnsubscribePage__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 34px;
+    padding: clamp(28px, 4vw, 44px);
+    background:
+        radial-gradient(circle at top right, rgba(47, 140, 255, 0.22), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(9, 23, 38, 0.96), rgba(4, 14, 25, 0.98));
+    box-shadow:
+        0 32px 72px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: auto -120px -120px auto;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(121, 230, 177, 0.16), transparent 70%);
+        pointer-events: none;
+    }
+}
+
+.UnsubscribePage__card--success {
+    background:
+        radial-gradient(circle at top right, rgba(121, 230, 177, 0.22), transparent 32%),
+        radial-gradient(circle at bottom left, rgba(82, 168, 255, 0.2), transparent 36%),
+        linear-gradient(135deg, rgba(7, 24, 33, 0.96), rgba(3, 14, 24, 0.98));
+}
+
+.UnsubscribePage__card--invalid {
+    background:
+        radial-gradient(circle at top right, rgba(90, 166, 255, 0.2), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.12), transparent 32%),
+        linear-gradient(135deg, rgba(18, 25, 39, 0.96), rgba(9, 15, 25, 0.98));
+}
+
+.UnsubscribePage__card--loading {
+    background:
+        radial-gradient(circle at top right, rgba(82, 168, 255, 0.24), transparent 32%),
+        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.14), transparent 32%),
+        linear-gradient(135deg, rgba(10, 23, 39, 0.96), rgba(4, 14, 25, 0.98));
+}
+
+.UnsubscribePage__kickerRow {
+    position: relative;
+    z-index: 1;
+}
+
+.UnsubscribePage__eyebrow {
+    color: rgba(121, 230, 177, 0.94);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.UnsubscribePage__statusTag.ant-tag {
+    margin-inline-end: 0;
+    padding: 6px 12px;
+    border: 1px solid rgba(147, 214, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(7, 20, 35, 0.58);
+    color: #eef8f3;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.UnsubscribePage__hero {
+    position: relative;
+    z-index: 1;
+    align-items: flex-start;
+}
+
+.UnsubscribePage__iconWrap {
+    flex: 0 0 auto;
+    width: 74px;
+    height: 74px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(90, 166, 255, 0.24), rgba(121, 230, 177, 0.18)), rgba(7, 20, 35, 0.72);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 18px 30px rgba(0, 0, 0, 0.22);
+    color: #eef8f3;
+    font-size: 30px;
+}
+
+.UnsubscribePage__iconWrap--success {
+    background: linear-gradient(135deg, rgba(121, 230, 177, 0.28), rgba(82, 168, 255, 0.16)), rgba(7, 20, 35, 0.72);
+    color: #effff7;
+}
+
+.UnsubscribePage__title.ant-typography {
+    margin: 0 0 12px !important;
+    color: #f4fbf7;
+    font-size: clamp(32px, 4.2vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+}
+
+.UnsubscribePage__description.ant-typography {
+    max-width: 680px;
+    margin-bottom: 0;
+    color: rgba(214, 233, 224, 0.82);
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+.UnsubscribePage__entity {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px;
+    border: 1px solid rgba(147, 214, 255, 0.09);
+    border-radius: 26px;
+    background: rgba(6, 18, 31, 0.62);
+    backdrop-filter: blur(10px);
+}
+
+.UnsubscribePage__entityAvatar {
+    border: 1px solid rgba(147, 214, 255, 0.12);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
+.UnsubscribePage__entityBody {
+    min-width: 0;
+}
+
+.UnsubscribePage__entityType.ant-typography {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: rgba(188, 217, 203, 0.68);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.UnsubscribePage__entityTitle.ant-typography {
+    margin: 0 !important;
+    color: #eff8f3;
+    font-size: clamp(24px, 2.8vw, 32px);
+    line-height: 1.1;
+}
+
+.UnsubscribePage__entitySummary.ant-typography {
+    margin: 10px 0 0;
+    color: rgba(214, 233, 224, 0.76);
+    font-size: 15px;
+    line-height: 1.65;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.UnsubscribePage__meta {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.UnsubscribePage__metaChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    max-width: 100%;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(7, 20, 35, 0.6);
+    border: 1px solid rgba(147, 214, 255, 0.09);
+    color: rgba(232, 245, 238, 0.88);
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+
+    span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
+
+.UnsubscribePage__actions {
+    position: relative;
+    z-index: 1;
+}
+
+.UnsubscribePage__actions .ant-btn {
+    min-height: 50px;
+    padding-inline: 22px;
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.UnsubscribePage__secondaryAction.ant-btn {
+    border-color: rgba(147, 214, 255, 0.14);
+    background: rgba(7, 20, 35, 0.58);
+    color: #eef8f3;
+}
+
+.UnsubscribePage__secondaryAction.ant-btn:hover,
+.UnsubscribePage__secondaryAction.ant-btn:focus {
+    border-color: rgba(147, 214, 255, 0.24) !important;
+    background: rgba(9, 24, 39, 0.74) !important;
+    color: #eef8f3 !important;
+}
+
+.UnsubscribePage__loadingRow {
+    position: relative;
+    z-index: 1;
+    color: rgba(214, 233, 224, 0.76);
+    font-size: 15px;
+}
+
+@include md-min {
+    .UnsubscribePage__card {
+        border-radius: 28px;
+        padding: 24px 20px;
+    }
+
+    .UnsubscribePage__hero {
+        flex-direction: column;
+    }
+
+    .UnsubscribePage__iconWrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        font-size: 26px;
+    }
+
+    .UnsubscribePage__entity {
+        grid-template-columns: 1fr;
+    }
+
+    .UnsubscribePage__actions {
+        width: 100%;
+    }
+
+    .UnsubscribePage__actions.ant-space {
+        width: 100%;
+    }
+
+    .UnsubscribePage__actions.ant-space .ant-space-item,
+    .UnsubscribePage__actions .ant-btn {
+        width: 100%;
+    }
+}

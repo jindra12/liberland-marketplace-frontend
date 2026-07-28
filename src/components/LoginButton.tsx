@@ -1,55 +1,19 @@
 import * as React from "react";
-import { Button } from "antd";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
-import { useAuth } from "react-oidc-context";
-import { EndpointAuthAction } from "./EndpointAuthAction";
+
+import { useLocation } from "react-router-dom";
+
+import { buildLoginReturnTo } from "./auth/utils";
+import { LoginButtonSelect } from "./LoginButtonSelect";
 
 type LoginButtonProps = {
-    action?: "login" | "logout";
-    type?: React.ComponentProps<typeof Button>["type"];
-    block?: boolean;
-    danger?: boolean;
     className?: string;
-    onAfterClick?: () => void;
-    onAfterAction?: () => void | Promise<void>;
 };
 
-export const LoginButton: React.FunctionComponent<LoginButtonProps> = ({
-    action = "login",
-    type,
-    block,
-    danger,
-    className,
-    onAfterClick,
-    onAfterAction,
-}) => {
-    const auth = useAuth();
+export const LoginButton: React.FunctionComponent<LoginButtonProps> = (props) => {
+    const location = useLocation();
+    const returnTo = buildLoginReturnTo(location.pathname, location.search, location.hash);
 
     return (
-        <EndpointAuthAction>
-            {({ runWithEndpointSelection }) => (
-                <Button
-                    type={type}
-                    icon={action === "login" ? <LoginOutlined /> : <LogoutOutlined />}
-                    block={block}
-                    danger={danger}
-                    className={className}
-                    onClick={(event) => {
-                        event.preventDefault();
-                        runWithEndpointSelection(async () => {
-                            onAfterClick?.();
-                            if (action === "login") {
-                                await auth.signinRedirect();
-                                return;
-                            }
-                            await auth.removeUser();
-                            await onAfterAction?.();
-                        });
-                    }}
-                >
-                    {action === "login" ? "Log in" : "Log out"}
-                </Button>
-            )}
-        </EndpointAuthAction>
+        <LoginButtonSelect className={props.className} returnTo={returnTo} />
     );
 };

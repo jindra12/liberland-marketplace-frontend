@@ -1,8 +1,10 @@
 import * as React from "react";
-import { ThirdwebConnect } from "./ThirdwebConnect";
-import { SolanaConnect } from "./SolanaConnect";
-import { TronConnect } from "./TronConnect";
+
 import { Chains, ConnectButtonProps } from "../../types";
+
+import { SolanaConnect } from "./SolanaConnect";
+import { ThirdwebConnect } from "./ThirdwebConnect";
+import { TronConnect } from "./TronConnect";
 
 export interface ChainConnectButtonProps extends ConnectButtonProps {
     chain: Chains;

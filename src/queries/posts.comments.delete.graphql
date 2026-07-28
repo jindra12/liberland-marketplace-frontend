@@ -1,0 +1,5 @@
+mutation DeletePostComment($id: String!) {
+  deleteComment(id: $id) {
+    id
+  }
+}

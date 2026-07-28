@@ -1,20 +1,32 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
 import { UseQueryResult } from "@tanstack/react-query";
+
 import { DollarOutlined } from "@ant-design/icons";
-import { ListProductsByCompanyQuery, ListProductsQuery } from "../../generated/graphql";
-import { AppList } from "../AppList";
-import { formatUsdFromCents, getImage, isProductPurchasable, parseActionLink } from "../../utils";
-import { AddToCartButton } from "../cart/AddToCartButton";
-import { CartItemCount } from "../cart/CartItemCount";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
-import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { Avatar, Button, Divider, Flex, Grid, Tag } from "antd";
+
+import {
+    ListProductsByCompanyQuery,
+    ListProductsByIdentityQuery,
+    ListProductsQuery,
+    Product,
+} from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { useIdentityFilter } from "../../hooks/useIdentityFilter";
+import { routes } from "../../routes";
+import { AppList } from "../AppList";
+import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
+import { CartItemCount } from "../cart/CartItemCount";
+import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
+import { Markdown } from "../Markdown";
+import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
-type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery;
+type ProductListQuery = ListProductsQuery | ListProductsByCompanyQuery | ListProductsByIdentityQuery;
 type ProductListItem =
     | NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number]
     | NonNullable<NonNullable<ListProductsByCompanyQuery["Products"]>["docs"]>[number];
@@ -22,42 +34,43 @@ type ProductListItem =
 type ProductListSourceQuery = {
     source: "query";
     query: UseQueryResult<ProductListQuery, unknown>;
+    setPage: (page: number) => void;
+    page: number;
 };
 
 type ProductListSourceStatic = {
     source: "static";
     products: ProductListItem[];
+    setPage?: (page: number) => void;
+    page?: number;
     hasNextPage: boolean;
     isLoading: boolean;
     refetch: () => void | Promise<unknown>;
 };
 
 type ProductServiceListInternalProps = {
-    setPage: (page: number) => void;
-    page: number;
     title?: string;
     showOrderNowFallback?: boolean;
+    hideIdentityFilter?: boolean;
+    hideBuyNowButton?: boolean;
+    endMessage?: React.ReactNode;
 } & (ProductListSourceQuery | ProductListSourceStatic);
 
 export const ProductServiceListInternal: React.FunctionComponent<ProductServiceListInternalProps> = (props) => {
     const screens = Grid.useBreakpoint();
+    const likeMutation = useLikeProductMutation();
+    const dislikeMutation = useDislikeProductMutation();
     const addToCartSize = screens.lg ? "large" : "middle";
     const isMobile = !screens.md;
     const showOrderNowFallback = props.showOrderNowFallback ?? true;
-    const isLoading = props.source === "query"
-        ? props.query.isLoading
-        : props.isLoading;
-    const refetch = props.source === "query"
-        ? props.query.refetch
-        : props.refetch;
+    const isLoading = props.source === "query" ? props.query.isLoading : props.isLoading;
+    const refetch = props.source === "query" ? props.query.refetch : props.refetch;
     const handleRefetch = () => {
         refetch();
     };
     const allItems = useAccumulatedDocs(
-        props.source === "query"
-            ? (props.query.data?.Products?.docs || [])
-            : props.products,
-        props.page
+        props.source === "query" ? props.query.data?.Products?.docs || [] : props.products,
+        props.page ?? 1,
     );
     const { items, hasMore, endMessage, filterNode } = useIdentityFilter({
         allItems,
@@ -72,36 +85,44 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
         setPage: props.setPage,
     });
 
+    const filterValue = props.hideIdentityFilter ? undefined : filterNode;
+
     return (
         <AppList
             hasMore={hasMore}
             items={items}
-            next={() => props.setPage(props.page + 1)}
+            next={() => props.setPage?.((props.page ?? 1) + 1)}
             refetch={handleRefetch}
             loading={isLoading}
             title={props.title || "Products / Services"}
-            filters={filterNode}
-            endMessage={endMessage}
+            filters={filterValue}
+            endMessage={props.endMessage ?? endMessage}
+            likeActions={{
+                likeMutation,
+                dislikeMutation,
+            }}
             renderItem={{
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
-                        <Link to={`/products-services/${product.id}`}>{product.name}</Link>
+                        <Link to={routes.productsServices.detail.getLink(product as Product)}>{product.name}</Link>
                         {product.company?.identity?.name && (
                             <IdentityTagLink identity={product.company.identity} color="success" />
                         )}
                     </Flex>
                 ),
                 actions: (product) => {
-                    const detailHref = `/products-services/${product.id}`;
+                    const detailHref = routes.productsServices.detail.getLink(product as Product);
                     const orderNowLink = parseActionLink(product.url);
                     const canPurchase = isProductPurchasable(product);
                     const purchaseControl = canPurchase ? (
-                        <AddToCartButton
+                        <AddToCartButtonGuard
                             productId={product.id}
                             serverURL={product.serverURL!}
                             block={isMobile}
+                            hideBuyNowButton={props.hideBuyNowButton}
                             size={addToCartSize}
                             maxAvailable={product.inventory}
+                            parameters={product.parameters}
                         />
                     ) : showOrderNowFallback && orderNowLink ? (
                         <Button type="primary" size={addToCartSize} href={orderNowLink} block={isMobile}>
@@ -112,41 +133,49 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                     return isMobile ? (
                         <Flex vertical gap="12px" className="ProductList__actionsRow">
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
                                 )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
+                            {purchaseControl ? (
+                                <div className="ProductList__purchaseControl">{purchaseControl}</div>
+                            ) : null}
                             <ListShareDetailButtons
                                 compact
                                 detailPath={detailHref}
                                 title={product.name}
                                 text={`Check out ${product.name} on NSwap.`}
                                 size={addToCartSize}
+                                subscriptionTarget={{
+                                    collection: "products",
+                                    targetID: product.id,
+                                    serverURL: product.serverURL,
+                                    isSubscribed: product.isSubscribed,
+                                }}
                             />
-                            {purchaseControl ? (
-                                <div className="ProductList__purchaseControl">
-                                    {purchaseControl}
-                                </div>
-                            ) : null}
                         </Flex>
                     ) : (
-                        <Flex align="center" justify="space-between" gap="16px" wrap className="ProductList__actionsRow">
+                        <Flex
+                            align="center"
+                            justify="space-between"
+                            gap="16px"
+                            wrap
+                            className="ProductList__actionsRow"
+                        >
                             <Flex vertical gap="8px" className="ProductList__metaColumn">
-                                {product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined && (
-                                    <Tag color="success" icon={<DollarOutlined />}>
-                                        {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
-                                    </Tag>
-                                )}
-                                <CartItemCount
-                                    productId={product.id}
-                                    serverURL={product.serverURL!}
-                                />
+                                {product.priceInUSDEnabled &&
+                                    product.priceInUSD !== null &&
+                                    product.priceInUSD !== undefined && (
+                                        <Tag color="success" icon={<DollarOutlined />}>
+                                            {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
+                                        </Tag>
+                                    )}
+                                <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             {purchaseControl ? <Divider className="ProductList__mobileDivider" /> : null}
                             <Flex gap="12px" wrap justify="flex-end" className="ProductList__controls">
@@ -155,30 +184,33 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                     title={product.name}
                                     text={`Check out ${product.name} on NSwap.`}
                                     size={addToCartSize}
+                                    subscriptionTarget={{
+                                        collection: "products",
+                                        targetID: product.id,
+                                        serverURL: product.serverURL,
+                                        isSubscribed: product.isSubscribed,
+                                    }}
                                 />
                                 {purchaseControl ? (
-                                    <div className="ProductList__purchaseControl">
-                                        {purchaseControl}
-                                    </div>
+                                    <div className="ProductList__purchaseControl">{purchaseControl}</div>
                                 ) : null}
                             </Flex>
                         </Flex>
                     );
                 },
-                avatar: (product) => product.image?.url ? (
-                    <Link to={`/products-services/${product.id}`}>
-                        <Avatar
-                            shape="square"
-                            size={80}
-                            src={getImage(product) || getImage(product.company)}
-                            className="EntityList__avatar"
-                        />
-                    </Link>
-                ) : undefined,
+                avatar: (product) =>
+                    product.image?.url ? (
+                        <Link to={routes.productsServices.detail.getLink(product as Product)}>
+                            <Avatar
+                                shape="square"
+                                size={80}
+                                src={getImage(product) || getImage(product.company)}
+                                className="EntityList__avatar"
+                            />
+                        </Link>
+                    ) : undefined,
                 description: (product) => (
-                    <Markdown className="Markdown--clamp3 EntityList__description">
-                        {product.description}
-                    </Markdown>
+                    <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>
                 ),
                 body: () => null,
             }}

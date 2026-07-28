@@ -14,6 +14,7 @@
 # misc
 .DS_Store
 .env.local
+backup.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -97,6 +98,8 @@ web_modules/
 
 # dotenv environment variable files
 .env
+temp.env
+dev.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -159,3 +162,6 @@ dist
 .pnp.*
 .vercel
 screenshots/
+cypress/artifacts/
+cypress/screenshots/
+cypress/videos/

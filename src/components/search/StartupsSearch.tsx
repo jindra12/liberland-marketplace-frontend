@@ -1,59 +1,136 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { AutoSuggest } from "../AutoSuggest";
-import { DocType, SearchOption } from "../../types";
 
-import { getImage } from "../../utils";
-import { useSearchStartupsQuery } from "../hooks";
+import { Link } from "react-router-dom";
+
+import { Avatar, Flex, Tag } from "antd";
+
+import { Post_RelatedPosts_RelationTo, Startup } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
+import { formatStageLabel, formatResourceLabel } from "../../startupUtils";
+import { useListStartupsQuery, useSearchStartupsQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
+
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchStartups } from "./utils";
 
 export interface StartupsSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (props) => {
-    const navigate = useNavigate();
-    const [options, setOptions] = React.useState<SearchOption[]>([]);
-    const [term, setTerm] = React.useState("");
-    const startups = useSearchStartupsQuery({
-        searchTerm: term,
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
+    const defaultStartups = useListStartupsQuery({
         limit: 5,
-        page: 0,
-    }, {
-        enabled: term.length > 0,
+        page: 1,
     });
-
-    React.useEffect(() => {
-        if (!startups.isFetched) {
-            setOptions([]);
-        } else if (startups.data) {
-            setOptions(
-                (startups.data.Searches?.docs ?? [])
-                .filter((searchDoc) => searchDoc.doc?.relationTo === "startups")
-                .map((searchDoc, index) => {
-                    const doc = searchDoc.doc!.value as DocType;
-                    const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                    return {
-                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                        value,
-                        id: doc.id!,
-                        label: searchDoc.title,
-                        image: getImage(doc),
-                    };
-                })
-            );
-        }
-    }, [startups.isFetched, startups.data]);
+    const searchedStartups = useSearchStartupsQuery(
+        {
+            searchTerm: submittedSearchValue,
+            limit: 5,
+            page,
+        },
+        {
+            enabled: submittedSearchValue.length > 0,
+        },
+    );
+    const searchDocs = useAccumulatedDocs(searchedStartups.data?.Searches?.docs, page);
+    const items =
+        submittedSearchValue.length > 0
+            ? mapSearchStartups(searchDocs)
+            : defaultStartups.data?.Startups?.docs ?? [];
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedStartups.isLoading && searchDocs.length === 0
+            : defaultStartups.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedStartups.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (startup: { id: string; title?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Startups,
+            value: startup.id,
+            label: startup.title || "Venture",
+        });
+        props.onClose();
+    };
 
     return (
-        <AutoSuggest
-            onClose={props.onClose}
-            onSelect={(_, { id }) => { navigate(`/ventures/${id}`); props.onClose(); }}
-            options={options}
+        <SearchDrawer
             title="Startup search"
-            runSearch={setTerm}
-            setOptions={setOptions}
-            isLoading={startups.isLoading}
-        />
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
+                setPage(1);
+            }}
+            placeholder="Search ventures"
+        >
+            <SearchResultsList
+                title={
+                    submittedSearchValue.length > 0
+                        ? `Search results for "${submittedSearchValue}"`
+                        : "Ventures"
+                }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
+                items={items}
+                loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
+                refetch={submittedSearchValue.length > 0 ? searchedStartups.refetch : defaultStartups.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
+                emptyText="No matching ventures"
+                renderItem={{
+                    title: (startup) => (
+                        <Flex justify="space-between" align="center" wrap>
+                            <Flex align="center" gap={8}>
+                                <Link to={routes.ventures.detail.getLink(startup as Startup)} onClick={props.onClose}>
+                                    {startup.title}
+                                </Link>
+                            </Flex>
+                            <Flex gap={4} wrap>
+                                <Tag color="blue">{formatStageLabel(startup.stage)}</Tag>
+                                {startup.identity?.name && (
+                                    <IdentityTagLink identity={startup.identity} color="success" />
+                                )}
+                            </Flex>
+                        </Flex>
+                    ),
+                    avatar: (startup) =>
+                        startup.image?.url ? (
+                            <Link to={routes.ventures.detail.getLink(startup as Startup)} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(startup) || getImage(startup?.company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
+                        ) : undefined,
+                    description: (startup) => (
+                        <Flex gap={4} wrap className="StartupList__meta">
+                            {startup.company?.name && <Tag>{startup.company.name}</Tag>}
+                            {startup.lookingFor?.map((r) => (
+                                <Tag key={r} color="orange">
+                                    {formatResourceLabel(r)}
+                                </Tag>
+                            ))}
+                        </Flex>
+                    ),
+                    body: (startup) => (
+                        <Markdown className="Markdown--clamp3 EntityList__description">{startup.description}</Markdown>
+                    ),
+                }}
+            />
+        </SearchDrawer>
     );
 };

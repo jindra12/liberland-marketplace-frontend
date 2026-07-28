@@ -1,15 +1,17 @@
 mutation CreateCompany($data: mutationCompanyInput!, $draft: Boolean!) {
-  createCompany(data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-          chain
-          address
+    createCompany(data: $data, draft: $draft) {
+        id
+        name
+        verification
+        isPrivate
+        cryptoAddresses {
+            chain
+            address
         }
-    _status
-    image {
-      id
-      url
+        _status
+        image {
+            id
+            url
+        }
     }
-  }
 }

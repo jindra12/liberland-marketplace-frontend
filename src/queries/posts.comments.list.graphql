@@ -1,0 +1,52 @@
+query ListPostComments($postId: String!, $limit: Int = 50, $page: Int = 1) {
+  Comments(
+    draft: false
+    where: {
+      AND: [
+        { replyPostRelationTo: { equals: "posts" } }
+        { replyPostValue: { equals: $postId } }
+        { replyComment: { exists: false } }
+      ]
+    }
+    sort: "createdAt"
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      id
+      content
+      createdBy {
+        id
+        name
+        email
+      }
+      company {
+        id
+        serverURL
+        name
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
+      replyPostRelationTo
+      replyPostValue
+      createdAt
+      updatedAt
+      likeCount
+      hasLiked
+      replyCount
+      replyPost {
+        relationTo
+      }
+    }
+    totalDocs
+    hasNextPage
+    nextPage
+  }
+}

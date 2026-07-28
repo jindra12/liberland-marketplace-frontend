@@ -1,16 +1,21 @@
-import React from "react";
+import * as React from "react";
+
 import { useParams } from "react-router-dom";
+
 import { Typography } from "antd";
 
+import { decodeServerUrlSegment } from "../../routes";
+import { DetailPageTracker } from "../analytics/DetailPageTracker";
 import { AuthGuard } from "../AuthGuard";
-import { OwnerGuard } from "../OwnerGuard";
-import { Loader } from "../Loader";
-import { CompanyForm } from "../publish/CompanyForm";
 import { useCompanyByIdQuery } from "../hooks";
+import { Loader } from "../Loader";
+import { OwnerGuard } from "../OwnerGuard";
+import { CompanyForm } from "../publish/CompanyForm";
 
 const EditCompany: React.FunctionComponent = () => {
-    const { id } = useParams<{ id: string }>();
-    const query = useCompanyByIdQuery({ id: id!, draft: true });
+    const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
+    const routeServerURL = decodeServerUrlSegment(serverUrl ?? "");
+    const query = useCompanyByIdQuery({ id: id!, draft: true, url: routeServerURL });
 
     return (
         <AuthGuard>
@@ -22,6 +27,7 @@ const EditCompany: React.FunctionComponent = () => {
 
                         return (
                             <OwnerGuard createdById={createdById}>
+                                <DetailPageTracker serverUrl={company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Company</Typography.Title>
                                 <CompanyForm
                                     mode="edit"
@@ -33,10 +39,16 @@ const EditCompany: React.FunctionComponent = () => {
                                         phone: company?.phone,
                                         website: company?.website,
                                         identity: company?.identity?.id,
+                                        cryptoAddresses: company?.cryptoAddresses
+                                            ? {
+                                                  chain: company.cryptoAddresses.chain,
+                                                  address: company.cryptoAddresses.address,
+                                              }
+                                            : undefined,
                                         existingImageUrl: company?.image?.url,
                                         existingImageId: company?.image?.id,
                                     }}
-                                    url={company?.serverURL!}
+                                    url={company?.serverURL ?? routeServerURL}
                                 />
                             </OwnerGuard>
                         );

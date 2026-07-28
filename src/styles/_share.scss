@@ -18,10 +18,17 @@
     justify-content: flex-end;
 }
 
+.ShareSection__actions {
+    width: 100%;
+    justify-content: flex-end;
+}
+
 .ShareSection__iconButton {
     display: inline-flex;
     border-radius: 999px;
-    transition: transform 0.18s ease, filter 0.18s ease;
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .ShareSection__iconButton:hover {
@@ -29,8 +36,98 @@
     filter: brightness(1.04);
 }
 
+.ShareSection__reportButton.ant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 93, 126, 0.28);
+    background: rgba(16, 20, 31, 0.88);
+    color: #ff8ea7;
+    box-shadow:
+        0 12px 24px rgba(255, 93, 126, 0.18),
+        0 0 0 1px rgba(255, 93, 126, 0.08) inset,
+        0 0 20px rgba(255, 93, 126, 0.14);
+    text-shadow:
+        0 0 2px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(255, 93, 126, 0.2);
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease,
+        background 0.18s ease;
+}
+
+.ShareSection__repostButton.ant-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(24, 144, 255, 0.32);
+    background: rgba(24, 144, 255, 0.98);
+    color: #000;
+    box-shadow:
+        0 12px 24px rgba(24, 144, 255, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.16) inset,
+        0 0 18px rgba(24, 144, 255, 0.16);
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease,
+        background 0.18s ease;
+}
+
+.ShareSection__reportButton.ant-btn .anticon {
+    font-size: 17px;
+}
+
+.ShareSection__repostButton.ant-btn .anticon {
+    font-size: 17px;
+    color: #000;
+}
+
+.ShareSection__reportButton.ant-btn:hover,
+.ShareSection__reportButton.ant-btn:focus-visible {
+    transform: translateY(-1px);
+    color: #ffb2c1;
+    background: rgba(24, 24, 38, 0.94);
+    box-shadow:
+        0 16px 28px rgba(255, 93, 126, 0.24),
+        0 0 0 1px rgba(255, 93, 126, 0.12) inset,
+        0 0 24px rgba(255, 93, 126, 0.18);
+}
+
+.ShareSection__repostButton.ant-btn:hover,
+.ShareSection__repostButton.ant-btn:focus-visible {
+    transform: translateY(-1px);
+    color: #000;
+    background: rgba(56, 159, 255, 1);
+    box-shadow:
+        0 16px 28px rgba(24, 144, 255, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+        0 0 24px rgba(24, 144, 255, 0.2);
+}
+
 .NativeShareButton.ant-btn {
     font-weight: 700;
+}
+
+.SubscribeButton.ant-btn {
+    font-weight: 700;
+}
+
+.SubscribeButton__modalCopy {
+    margin-bottom: 16px;
 }
 
 .ShareSection__nativeButton.ant-btn {
@@ -38,7 +135,50 @@
     font-weight: 700;
 }
 
+.ShareSection__mobileActions.ant-space-compact {
+    width: 100%;
+}
+
+.ShareSection__mobileActions.ant-space-compact > * {
+    flex: 1 1 0;
+}
+
+.ShareSection__mobileActions .ant-btn {
+    width: 100%;
+    justify-content: center;
+}
+
 .ShareSection__mobileButton.ant-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.ShareSection__mobileReportRow {
+    width: 100%;
+}
+
+.ListShareDetailButtons--stacked {
+    width: 100%;
+    align-items: stretch;
+}
+
+.ListShareDetailButtons--stacked .ListShareDetailButtons__button {
+    width: 100%;
+}
+
+.ListShareDetailButtons--stacked .ant-btn {
+    justify-content: center;
+}
+
+.ListShareDetailButtons--compact.ant-space-compact {
+    width: 100%;
+}
+
+.ListShareDetailButtons--compact.ant-space-compact > * {
+    flex: 1 1 0;
+}
+
+.ListShareDetailButtons--compact .ant-btn {
     width: 100%;
     justify-content: center;
 }
@@ -52,24 +192,36 @@
     margin-top: 12px;
 }
 
-.ProductList__controls {
-    align-items: center;
-}
-
 .rws-backdrop {
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
     backdrop-filter: blur(10px);
 }
 
 .rws-container {
+    width: min(24rem, calc(100vw - 32px));
+    max-width: 24rem;
     background: linear-gradient(180deg, rgba(7, 20, 35, 0.98), rgba(4, 16, 29, 0.98));
-    border-radius: 24px 24px 0 0;
+    border-radius: 24px;
     box-shadow:
         0 24px 56px rgba(0, 0, 0, 0.34),
         inset 0 1px 0 rgba(147, 214, 255, 0.08);
 }
 
 .rws-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.5rem;
     color: #eef8f3;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.rws-header:empty {
+    display: none;
 }
 
 .rws-close {
@@ -85,7 +237,9 @@
 .rws-icon {
     border-radius: 14px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    transition: transform 0.18s ease, filter 0.18s ease;
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
 }
 
 .rws-icon:hover {
@@ -102,8 +256,23 @@
         justify-content: flex-start;
     }
 
-    .SplashEntityCard__actionGroup,
-    .ProductList__controls {
+    .ShareSection__actions {
+        justify-content: flex-start;
+    }
+
+    .ShareSection__reportButton.ant-btn {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .ShareSection__repostButton.ant-btn {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+    }
+
+    .SplashEntityCard__actionGroup {
         justify-content: flex-start;
     }
 

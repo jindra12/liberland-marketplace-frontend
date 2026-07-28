@@ -1,43 +1,45 @@
 import * as React from "react";
+
 import { Helmet } from "react-helmet-async";
 import { matchPath, useLocation } from "react-router-dom";
 
-type RouteTitle = {
-    path: string;
-    title: string;
-};
+import { routes } from "../routes";
 
 const APP_NAME = "NSwap";
 
-const routeTitles: RouteTitle[] = [
-    { path: "/jobs/edit/:id", title: "Edit Job" },
-    { path: "/companies/edit/:id", title: "Edit Company" },
-    { path: "/products-services/edit/:id", title: "Edit Product / Service" },
-    { path: "/ventures/edit/:id", title: "Edit Venture" },
-    { path: "/jobs/:id", title: "Job" },
-    { path: "/companies/:id", title: "Company" },
-    { path: "/tribes/:id", title: "Tribe" },
-    { path: "/products-services/:id", title: "Product / Service" },
-    { path: "/syndication/:id", title: "Syndication Detail" },
-    { path: "/ventures/:id", title: "Venture" },
-    { path: "/jobs", title: "Jobs" },
-    { path: "/companies", title: "Companies" },
-    { path: "/tribes", title: "Tribes" },
-    { path: "/products-services", title: "Products / Services" },
-    { path: "/syndication", title: "Syndication" },
-    { path: "/profile", title: "Profile" },
-    { path: "/publish", title: "Publish" },
-    { path: "/cart", title: "Cart" },
-    { path: "/order", title: "Order" },
-    { path: "/ventures", title: "Ventures" },
-    { path: "/auth/callback", title: "Signing In" },
-    { path: "/", title: APP_NAME },
+const routeTitles: Array<{ path: string; title: string }> = [
+    { path: routes.jobs.edit.route, title: "Edit Job" },
+    { path: routes.companies.edit.route, title: "Edit Company" },
+    { path: routes.productsServices.edit.route, title: "Edit Product / Service" },
+    { path: routes.posts.edit.route, title: "Edit Post" },
+    { path: routes.ventures.edit.route, title: "Edit Venture" },
+    { path: routes.jobs.detail.route, title: "Job" },
+    { path: routes.companies.detail.route, title: "Company" },
+    { path: routes.posts.detail.route, title: "Post" },
+    { path: routes.tribes.detail.route, title: "Tribe" },
+    { path: routes.productsServices.detail.route, title: "Product / Service" },
+    { path: routes.comments.detail.route, title: "Comment" },
+    { path: routes.syndication.detail.route, title: "Syndication Detail" },
+    { path: routes.ventures.detail.route, title: "Venture" },
+    { path: routes.jobs.route, title: "Jobs" },
+    { path: routes.companies.route, title: "Companies" },
+    { path: routes.posts.route, title: "Posts" },
+    { path: routes.tribes.route, title: "Tribes" },
+    { path: routes.productsServices.route, title: "Products / Services" },
+    { path: routes.syndication.route, title: "Syndication" },
+    { path: routes.profile.route, title: "Profile" },
+    { path: routes.publish.route, title: "Publish" },
+    { path: routes.cart.route, title: "Cart" },
+    { path: routes.orders.route, title: "Orders" },
+    { path: routes.order.route, title: "Order" },
+    { path: routes.unsubscribe.route, title: "Unsubscribe" },
+    { path: routes.ventures.route, title: "Ventures" },
+    { path: routes.authCallback.route, title: "Signing In" },
+    { path: routes.home.route, title: APP_NAME },
 ];
 
 const getRouteTitle = (pathname: string): string => {
-    const match = routeTitles.find((route) =>
-        Boolean(matchPath({ path: route.path, end: true }, pathname))
-    );
+    const match = routeTitles.find((route) => Boolean(matchPath({ path: route.path, end: true }, pathname)));
 
     if (!match) {
         return `Not Found | ${APP_NAME}`;

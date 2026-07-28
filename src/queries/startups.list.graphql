@@ -1,69 +1,67 @@
-query ListStartups($page: Int = 1, $limit: Int = 20) {
-  Startups(
-    draft: false
-    where: { _status: { equals: published } }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      description
-      stage
-      lookingFor
-      alreadyHave
-      fundsNeeded {
-        amount
-        currency
-      }
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
+query ListStartups($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Startups(draft: false, where: { _status: { equals: published } }, page: $page, limit: $limit, sort: $sort) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            title
+            description
+            hasLiked
+            likeCount
+            stage
+            lookingFor
+            alreadyHave
+            fundsNeeded {
+                amount
+                currency
+            }
+            company {
+                id
+                serverURL
+                name
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                email
+            }
+            identity {
+                id
+                serverURL
+                name
+                description
+                image {
+                    id
+                    url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
+                }
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            involvedUsers {
+                id
+                name
+                email
+            }
         }
-        email
-      }
-      identity {
-        id
-        serverURL
-        name
-        description
-        image {
-          id
-          url
-          alt
-          filename
-          width
-          height
-          mimeType
-        }
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      involvedUsers {
-        id
-        name
-        email
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

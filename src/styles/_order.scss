@@ -11,6 +11,24 @@
     }
 }
 
+.Order__geoapifySearchActions {
+    align-items: center;
+}
+
+.Order__geoapifySearchSummary {
+    flex: 1 1 260px;
+}
+
+.Order__geoapifyModal {
+    .ant-modal-body {
+        overflow: visible;
+    }
+}
+
+.Order__geoapifyModalCopy {
+    margin-bottom: 12px;
+}
+
 .Order__geoapifyInput {
     margin: 2px 0 4px;
 
@@ -28,7 +46,9 @@
         padding: 0 11px;
         height: 40px;
         line-height: 38px;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
     }
 
     .geoapify-autocomplete-input::placeholder {
@@ -48,7 +68,7 @@
         background: var(--geoapify-bg-elevated, #ffffff);
         color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
         overflow: hidden;
-        z-index: 1050;
+        z-index: 1060;
     }
 
     .geoapify-autocomplete-items div {
@@ -71,4 +91,63 @@
     .geoapify-close-button:hover {
         color: var(--geoapify-text, rgba(0, 0, 0, 0.88));
     }
+}
+
+.OrderListPage {
+    width: 100%;
+}
+
+.OrderList__productName {
+    font-size: 18px;
+}
+
+.OrderList__companyName,
+.OrderList__createdAt,
+.OrderList__wallet,
+.OrderList__transactionLink {
+    font-size: 14px;
+}
+
+.OrderList__body {
+    padding-top: 12px;
+}
+
+.OrderList__shippingAddress {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.OrderList__sectionLabel {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.OrderList__shippingAddressLine {
+    display: block;
+    line-height: 1.45;
+    font-size: 15px;
+    color: rgba(238, 248, 243, 0.94);
+}
+
+.OrderList__shippingContact {
+    margin-top: 2px;
+}
+
+.OrderList__shippingContactLine {
+    display: block;
+    line-height: 1.45;
+    font-size: 15px;
+    color: rgba(238, 248, 243, 0.94);
+}
+
+.OrderList__divider.ant-divider {
+    margin: 4px 0 0;
+    border-block-start-color: rgba(255, 255, 255, 0.12);
+}
+
+.OrderList__actions {
+    width: 100%;
 }

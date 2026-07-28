@@ -1,0 +1,7 @@
+mutation SubscribeToTribeUpdates($targetID: String!) {
+    createNotificationSubscription(data: { targetCollection: identities, targetID: $targetID }) {
+        id
+        targetCollection
+        targetID
+    }
+}

@@ -1,22 +1,28 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
 import { GlobalOutlined, LinkOutlined, PoweroffOutlined } from "@ant-design/icons";
+import { Avatar, Button, Flex, Grid, Input, Space, Tag, Typography, message } from "antd";
+
+import { routes } from "../../routes";
+import { URL } from "../../types";
 import { AppList } from "../AppList";
 import { useEndpointContext } from "../EndpointContext";
-import { URL } from "../../types";
+import { ResetSyndicationUrlsButton } from "../endpoints/ResetSyndicationUrlsButton";
+import { useNsfwConsent } from "../endpoints/useNsfwConsent";
 import {
     createEndpointEntry,
     getSyndicationHost,
     getSyndicationName,
     insertUniqueEndpoint,
     setEndpointEnabled,
-} from "../../utils";
+} from "../endpoints/utils";
+import { TEXT_INPUT_MAX_LENGTH } from "../form/constants";
 import { Markdown } from "../Markdown";
-import { NativeShareButton } from "../share/NativeShareButton";
 import { RouteButton } from "../RouteButton";
-
-const buildSyndicationHref = (value: string) => `/syndication/${encodeURIComponent(value)}`;
+import { NativeShareButton } from "../share/NativeShareButton";
+import { SyndicationNsfwTag } from "../shared/SyndicationNsfwTag";
 
 const byPriority = (entry: URL) => {
     if (entry.name === "Main") {
@@ -28,25 +34,32 @@ const byPriority = (entry: URL) => {
 export const SyndicationListInternal: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const { urls, setUrls } = useEndpointContext();
+    const [, setHasAcceptedNsfw] = useNsfwConsent();
     const [draftUrl, setDraftUrl] = React.useState("");
     const [messageApi, messageContextHolder] = message.useMessage();
 
-    const items = React.useMemo(() => (
-        [...urls].sort((left, right) => {
-            const leftPriority = byPriority(left);
-            const rightPriority = byPriority(right);
+    const items = React.useMemo(
+        () =>
+            [...urls].sort((left, right) => {
+                const leftPriority = byPriority(left);
+                const rightPriority = byPriority(right);
 
-            if (leftPriority !== rightPriority) {
-                return leftPriority - rightPriority;
-            }
+                if (leftPriority !== rightPriority) {
+                    return leftPriority - rightPriority;
+                }
 
-            return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
-        })
-    ), [urls]);
+                return getSyndicationName(left).localeCompare(getSyndicationName(right), "en", { sensitivity: "base" });
+            }),
+        [urls],
+    );
 
     const handleAdd = React.useCallback(() => {
         if (!draftUrl.trim()) {
             messageApi.warning("Enter a URL first");
+            return;
+        }
+        if (draftUrl.length > TEXT_INPUT_MAX_LENGTH) {
+            messageApi.warning(`Maximum ${TEXT_INPUT_MAX_LENGTH} characters`);
             return;
         }
 
@@ -69,6 +82,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
         }
     }, [draftUrl, messageApi, setUrls]);
 
+    const handleToggleEnabled = (entry: URL) => {
+        if (!entry.enabled && entry.nsfw) {
+            setHasAcceptedNsfw(true);
+        }
+
+        setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled));
+    };
+
     return (
         <>
             {messageContextHolder}
@@ -80,33 +101,34 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                 loading={false}
                 title="Syndication"
                 emptyText="No syndicated URLs configured yet."
-                filters={(
-                    <Space.Compact block className="SyndicationList__addCompact">
-                        <Input
-                            value={draftUrl}
-                            prefix={<LinkOutlined />}
-                            placeholder="https://your-backend.example"
-                            onChange={(event) => setDraftUrl(event.target.value)}
-                            onPressEnter={handleAdd}
-                        />
-                        <Button type="primary" onClick={handleAdd}>
-                            Add URL
-                        </Button>
-                    </Space.Compact>
-                )}
+                filters={
+                    <Flex vertical gap={12} className="SyndicationList__filters">
+                        <Space.Compact block className="SyndicationList__addCompact">
+                            <Input
+                                value={draftUrl}
+                                prefix={<LinkOutlined />}
+                                placeholder="https://your-backend.example"
+                                onChange={(event) => setDraftUrl(event.target.value)}
+                                onPressEnter={handleAdd}
+                            />
+                            <Button type="primary" onClick={handleAdd}>
+                                Add URL
+                            </Button>
+                        </Space.Compact>
+                        <ResetSyndicationUrlsButton className="SyndicationList__resetBtn" />
+                    </Flex>
+                }
                 renderItem={{
                     title: (entry) => (
                         <Flex justify="space-between" align="center" wrap>
-                            <Link to={buildSyndicationHref(entry.value)}>
-                                {getSyndicationName(entry)}
-                            </Link>
+                            <Link to={routes.syndication.detail.getLink(entry)}>{getSyndicationName(entry)}</Link>
                             <Tag color={entry.enabled ? "success" : "default"}>
                                 {entry.enabled ? "Enabled" : "Disabled"}
                             </Tag>
                         </Flex>
                     ),
                     avatar: (entry) => (
-                        <Link to={buildSyndicationHref(entry.value)}>
+                        <Link to={routes.syndication.detail.getLink(entry)}>
                             <Avatar
                                 shape="square"
                                 size={80}
@@ -115,29 +137,32 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             />
                         </Link>
                     ),
-                    description: (entry) => (
-                        <Flex vertical gap={8}>
-                            <Typography.Text type="secondary" className="SyndicationList__host">
-                                {getSyndicationHost(entry.value)}
-                            </Typography.Text>
-                            <Flex wrap gap={8}>
-                                <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
-                                <Tag color={entry.enabled ? "success" : "default"}>
-                                    {entry.enabled ? "Visible in search" : "Hidden from search"}
-                                </Tag>
+                    description: (entry) => {
+                        return (
+                            <Flex vertical gap={8}>
+                                <Typography.Text type="secondary" className="SyndicationList__host">
+                                    {getSyndicationHost(entry.value)}
+                                </Typography.Text>
+                                <Flex wrap gap={8}>
+                                    <Tag>{entry.name === "Main" ? "Primary" : "Syndicated"}</Tag>
+                                    <Tag color={entry.enabled ? "success" : "default"}>
+                                        {entry.enabled ? "Visible in search" : "Hidden from search"}
+                                    </Tag>
+                                    {entry.nsfw ? <SyndicationNsfwTag className="SyndicationList__nsfwTag" /> : null}
+                                </Flex>
                             </Flex>
-                        </Flex>
-                    ),
+                        );
+                    },
                     body: (entry) => (
                         <Markdown className="Markdown--clamp3 SyndicationList__description">
                             {entry.description}
                         </Markdown>
                     ),
-                    actions: (entry) => (
+                    actions: (entry) =>
                         md ? (
                             <Flex wrap gap="16px" align="center" justify="flex-end" className="EntityList__actionsRow">
                                 <NativeShareButton
-                                    path={buildSyndicationHref(entry.value)}
+                                    path={routes.syndication.detail.getLink(entry)}
                                     title={getSyndicationName(entry)}
                                     text={`Check out ${getSyndicationName(entry)} on NSwap.`}
                                     size="large"
@@ -146,12 +171,12 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                 <Button
                                     size="large"
                                     icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                    onClick={() => handleToggleEnabled(entry)}
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                                 <RouteButton
-                                    to={buildSyndicationHref(entry.value)}
+                                    to={routes.syndication.detail.getLink(entry)}
                                     type="primary"
                                     variant="filled"
                                     className="ActionBtn"
@@ -164,14 +189,14 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                             <Flex vertical gap="12px" className="EntityList__actionsRow SyndicationList__actionsRow">
                                 <Space.Compact block className="SyndicationList__compactActions">
                                     <NativeShareButton
-                                        path={buildSyndicationHref(entry.value)}
+                                        path={routes.syndication.detail.getLink(entry)}
                                         title={getSyndicationName(entry)}
                                         text={`Check out ${getSyndicationName(entry)} on NSwap.`}
                                         size="large"
                                         className="NativeShareButton"
                                     />
                                     <RouteButton
-                                        to={buildSyndicationHref(entry.value)}
+                                        to={routes.syndication.detail.getLink(entry)}
                                         size="large"
                                         className="ActionBtn"
                                     >
@@ -182,13 +207,12 @@ export const SyndicationListInternal: React.FunctionComponent = () => {
                                     size="large"
                                     block
                                     icon={<PoweroffOutlined />}
-                                    onClick={() => setUrls((current) => setEndpointEnabled(current, entry.value, !entry.enabled))}
+                                    onClick={() => handleToggleEnabled(entry)}
                                 >
                                     {entry.enabled ? "Disable" : "Enable"}
                                 </Button>
                             </Flex>
-                        )
-                    ),
+                        ),
                 }}
             />
         </>

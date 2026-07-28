@@ -1,18 +1,18 @@
-import React from "react";
-import {
-    Form,
-    Input,
-    Select } from "antd";
+import * as React from "react";
+
+import { Form, Input, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
+import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
+
+import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
+import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
+import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import {
-    useCreateCompanyMutation,
-    useListIdentitiesQuery,
-    useUpdateCompanyMutation,
-} from "../hooks";
 
 interface CompanyFormValues {
     name: string | null;
@@ -21,9 +21,9 @@ interface CompanyFormValues {
     phone?: string | null;
     website?: string | null;
     identity?: string | null;
+    cryptoAddresses?: CryptoAddressesFormValue | null;
     imageFile?: UploadFile[];
 }
-
 export interface CompanyFormProps {
     mode: "create" | "edit";
     url: string;
@@ -33,63 +33,108 @@ export interface CompanyFormProps {
         existingImageId?: string | null;
     };
 }
-
-export const CompanyForm: React.FunctionComponent<CompanyFormProps> = ({ mode, initialValues, url }) => {
+export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) => {
     const createMutation = useCreateCompanyMutation();
     const updateMutation = useUpdateCompanyMutation();
-
-    const identitiesQuery = useListIdentitiesQuery({ limit: 100 });
+    const identitiesQuery = useListIdentitiesQuery({
+        limit: 100,
+        url: props.url,
+    });
     const identities = identitiesQuery.data?.Identities?.docs ?? [];
-
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Company",
         routePrefix: "/companies",
-        mode,
-        existingImageId: initialValues?.existingImageId,
-        editId: initialValues?.id,
+        mode: props.mode,
+        existingImageId: props.initialValues?.existingImageId,
+        editId: props.initialValues?.id,
         createMutation,
         updateMutation,
-        url,
-        buildData: (values: CompanyFormValues, imageId) => ({
-            name: values.name,
-            description: values.description,
-            email: values.email,
-            phone: values.phone,
-            website: values.website,
-            identity: values.identity,
-            ...(imageId !== undefined && { image: imageId }),
-        }),
+        url: props.url,
+        buildData: (values: CompanyFormValues, imageId) => {
+            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
+
+            return {
+                name: values.name,
+                description: values.description,
+                email: values.email,
+                phone: values.phone,
+                website: values.website,
+                identity: values.identity,
+                ...(cryptoAddresses !== undefined && {
+                    cryptoAddresses,
+                }),
+                ...(imageId !== undefined && {
+                    image: imageId,
+                }),
+            };
+        },
         getCreateId: (r) => r.createCompany?.id,
         getUpdateId: (r) => r.updateCompany?.id,
     });
-
     return (
-        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues} className="Publish__form">
-            <Form.Item name="name" label="Company Name" rules={[{ required: true }]}>
+        <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={props.initialValues}
+            className="Publish__form"
+        >
+            <Form.Item
+                name="name"
+                label="Company Name"
+                rules={[
+                    {
+                        required: true,
+                    },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
+                ]}
+                className="Publish__companyNameField"
+            >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__companyDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
-            <Form.Item name="identity" label="Tribe" rules={[{ required: true, message: "Please select a tribe" }]}>
+            <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
+            <Form.Item
+                name="identity"
+                label="Tribe"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please select a tribe",
+                    },
+                ]}
+                className="Publish__companyIdentityField"
+            >
                 <Select
                     loading={identitiesQuery.isLoading}
                     placeholder="Select a tribe"
-                    options={identities.map((i) => ({ value: i.id, label: i.name }))}
+                    options={identities.map((i) => ({
+                        value: i.id,
+                        label: i.name,
+                    }))}
                 />
             </Form.Item>
-            <Form.Item name="email" label="Email">
+            <Form.Item name="email" label="Email" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyEmailField">
                 <Input type="email" />
             </Form.Item>
-            <Form.Item name="phone" label="Phone">
+            <Form.Item name="phone" label="Phone" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyPhoneField">
                 <Input />
             </Form.Item>
-            <Form.Item name="website" label="Website">
+            <Form.Item name="website" label="Website" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyWebsiteField">
                 <Input />
             </Form.Item>
+            <CryptoAddressesField
+                description="Optional single payout wallet. If no product wallet is set, this wallet will be used at checkout."
+            />
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Company" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={props.mode} entityName="Company" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

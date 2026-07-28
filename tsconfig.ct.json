@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "types": ["cypress", "cypress-react-router", "node"]
+    },
+    "include": [
+        "cypress/**/*.ts",
+        "cypress/**/*.tsx",
+        "cypress/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.d.ts"
+    ],
+    "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

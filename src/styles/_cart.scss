@@ -1,17 +1,34 @@
-.AddToCartButton {
-    max-width: 15rem;
+.AddToCartButton .AddToCartButton__buyNow {
+    width: 100%;
+    max-width: 132px;
+    margin-top: 10px;
+    flex: 0 0 132px;
+    min-width: 132px;
+}
+
+.AddToCartButton__buyNowLoading {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 132px;
+    margin-top: 10px;
+    flex: 0 0 132px;
+    min-width: 132px;
 }
 
 .AddToCartButton__quantity {
-    width: 88px;
+    width: 112px;
+    max-width: 112px;
 }
 
 .AddToCartButton__quantity--default {
-    width: 88px;
+    width: 112px;
+    max-width: 112px;
 }
 
 .AddToCartButton__quantity--small {
     width: 72px;
+    max-width: 72px;
 }
 
 .AddToCartButton--split {
@@ -20,18 +37,22 @@
 
 .AddToCartButton__compact.ant-space-compact {
     position: relative;
-    border-radius: 999px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    border-radius: 16px;
     overflow: hidden;
-    background: rgba(8, 25, 39, 0.9);
+    background: linear-gradient(180deg, rgba(11, 28, 43, 0.94), rgba(7, 19, 30, 0.94));
     box-shadow:
-        inset 0 0 0 1px rgba(22, 50, 72, 0.72),
-        inset 0 1px 0 rgba(147, 214, 255, 0.08);
+        inset 0 0 0 1px rgba(91, 156, 255, 0.82),
+        inset 0 1px 0 rgba(147, 214, 255, 0.08),
+        0 10px 20px rgba(0, 0, 0, 0.14);
 }
 
 .AddToCartButton__compact.ant-space-compact:focus-within {
     box-shadow:
-        inset 0 0 0 1px rgba(94, 173, 255, 0.84),
-        0 0 0 2px rgba(94, 173, 255, 0.16),
+        inset 0 0 0 1px rgba(94, 173, 255, 0.92),
+        0 0 0 2px rgba(94, 173, 255, 0.2),
         inset 0 1px 0 rgba(147, 214, 255, 0.1);
 }
 
@@ -40,7 +61,8 @@
 }
 
 .AddToCartButton__compact--split.ant-space-compact {
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .AddToCartButton__compact .ant-input-number,
@@ -48,56 +70,84 @@
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+    min-height: 44px;
 }
 
 .AddToCartButton__compact > .ant-btn:last-child {
-    border-start-end-radius: 999px !important;
-    border-end-end-radius: 999px !important;
+    border-start-end-radius: 16px !important;
+    border-end-end-radius: 16px !important;
 }
 
 .AddToCartButton__compact .ant-input-number {
-    background: transparent;
+    background: rgba(4, 15, 26, 0.72);
+    border-inline-start: 1px solid rgba(91, 156, 255, 0.72) !important;
+    border-inline-end: 1px solid rgba(91, 156, 255, 0.72) !important;
 }
 
 .AddToCartButton__compact .ant-btn:not(:first-child) {
-    box-shadow: inset 1px 0 0 rgba(22, 50, 72, 0.72) !important;
+    box-shadow: inset 1px 0 0 rgba(32, 69, 100, 0.72) !important;
+}
+
+.AddToCartButton__compact > .ant-input-number {
+    flex: 0 0 108px;
+    width: 108px !important;
+    max-width: 108px;
+    min-width: 0;
+}
+
+.AddToCartButton__compact > .ant-btn-primary,
+.AddToCartButton__compact > .AddToCartButton__buyNow {
+    flex: 0 0 132px;
+    width: 132px !important;
+    max-width: 132px;
+    min-width: 0;
 }
 
 .AddToCartButton__compact .ant-input-number-handler-wrap {
-    border-inline-start: 0 !important;
-    box-shadow: inset 1px 0 0 rgba(22, 50, 72, 0.72) !important;
+    width: 30px;
+    border-inline-start: 1px solid rgba(91, 156, 255, 0.4) !important;
+    background: linear-gradient(180deg, rgba(18, 45, 68, 0.98), rgba(9, 24, 38, 0.98));
+    box-shadow:
+        inset 1px 0 0 rgba(22, 50, 72, 0.72),
+        inset 0 1px 0 rgba(147, 214, 255, 0.08) !important;
+    opacity: 1 !important;
 }
 
 .AddToCartButton__compact .ant-input-number-handler {
     border-top: 0 !important;
     border-bottom: 0 !important;
+    color: #eef8f3;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.AddToCartButton__compact .ant-input-number-handler-up-inner,
+.AddToCartButton__compact .ant-input-number-handler-down-inner {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 0 8px rgba(91, 156, 255, 0.36);
+}
+
+.AddToCartButton__compact .ant-input-number-handler:hover {
+    background: rgba(91, 156, 255, 0.24);
+    color: #ffffff;
 }
 
 .AddToCartButton__compact .ant-input-number-handler-up {
     box-shadow: inset 0 -1px 0 rgba(22, 50, 72, 0.72);
 }
 
-.AddToCartButton__compact--split:not(.AddToCartButton__compact--hasRemove) > .ant-input-number,
-.AddToCartButton__compact--split:not(.AddToCartButton__compact--hasRemove) > .ant-btn {
-    flex: 0 0 50%;
-    width: 50% !important;
-    min-width: 0;
-}
-
-.AddToCartButton__compact--block.AddToCartButton__compact--hasRemove > .ant-input-number,
-.AddToCartButton__compact--block.AddToCartButton__compact--hasRemove > .ant-btn-primary {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-.AddToCartButton__compact--block.AddToCartButton__compact--hasRemove > .ant-btn:last-child {
-    flex: 0 0 56px;
-    width: 56px !important;
+.AddToCartButton__compact .ant-input-number-handler-down {
+    box-shadow: inset 0 1px 0 rgba(22, 50, 72, 0.72);
 }
 
 .AddToCartButton__compact .AddToCartButton__quantity.ant-input-number .ant-input-number-input {
-    padding-inline-start: 20px;
-    padding-inline-end: 14px;
+    padding-inline-start: 6px;
+    padding-inline-end: 6px;
+    text-align: center;
 }
 
 .CartPage {
@@ -106,11 +156,70 @@
 }
 
 .CartPage__orderLink {
-    display: block;
     width: 100%;
 }
 
 .CartPage__orderButton {
     min-height: 48px;
     font-weight: 600;
+}
+
+.ShippingAddressSelectModal {
+    .ant-modal-body {
+        padding-top: 12px;
+    }
+}
+
+.ShippingAddressSelectModal__group {
+    display: block;
+}
+
+.ShippingAddressSelectModal__option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(120, 140, 160, 0.24);
+    border-radius: 18px;
+    background: rgba(11, 22, 34, 0.48);
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.ShippingAddressSelectModal__option:hover {
+    border-color: rgba(91, 156, 255, 0.42);
+    transform: translateY(-1px);
+}
+
+.ShippingAddressSelectModal__option--selected {
+    border-color: rgba(91, 156, 255, 0.72);
+    box-shadow: 0 0 0 2px rgba(91, 156, 255, 0.14);
+}
+
+.ShippingAddressSelectModal__radio {
+    margin-top: 2px;
+}
+
+.ShippingAddressSelectModal__radio .ant-radio {
+    top: 0;
+}
+
+.ShippingAddressSelectModal__content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ShippingAddressSelectModal__summary.ant-typography {
+    margin: 6px 0 0;
+}
+
+.BuyNowPaymentModal {
+    .ant-modal-body {
+        max-height: min(80vh, 860px);
+        overflow: auto;
+    }
 }

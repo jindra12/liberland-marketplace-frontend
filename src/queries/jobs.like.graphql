@@ -1,0 +1,8 @@
+mutation LikeJob($id: String!, $liked: Boolean!) {
+  setLikeState(collection: jobs, id: $id, liked: $liked) {
+    collection
+    hasLiked
+    id
+    likeCount
+  }
+}

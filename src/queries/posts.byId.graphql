@@ -1,0 +1,209 @@
+query PostById($id: String!, $draft: Boolean = false) {
+  Post(id: $id, draft: $draft) {
+    id
+    title
+    slug
+    repost
+    heroImage {
+      id
+      url
+      alt
+      filename
+      width
+      height
+      mimeType
+    }
+    content
+    meta {
+      title
+      description
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    company {
+      id
+      serverURL
+      name
+      description
+      cryptoAddresses {
+        chain
+        address
+      }
+      identity {
+        id
+        serverURL
+        name
+        description
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+    }
+    createdBy {
+      id
+      name
+    }
+    relatedPosts {
+      relationTo
+      value {
+        ... on Post {
+          __typename
+          id
+          title
+          slug
+          repost
+          heroImage {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Company {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Identity {
+          __typename
+          id
+          identityName: name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+        }
+        ... on Job {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Product {
+          __typename
+          id
+          name
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+        ... on Startup {
+          __typename
+          id
+          title
+          image {
+            id
+            url
+            alt
+            filename
+            width
+            height
+            mimeType
+          }
+          company {
+            id
+            name
+            image {
+              id
+              url
+              alt
+              filename
+              width
+              height
+              mimeType
+            }
+          }
+        }
+      }
+    }
+    hasLiked
+    likeCount
+    publishedAt
+    updatedAt
+    createdAt
+    _status
+  }
+}

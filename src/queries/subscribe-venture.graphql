@@ -1,0 +1,7 @@
+mutation SubscribeToVentureUpdates($targetID: String!) {
+    createNotificationSubscription(data: { targetCollection: startups, targetID: $targetID }) {
+        id
+        targetCollection
+        targetID
+    }
+}

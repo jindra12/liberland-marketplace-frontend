@@ -1,0 +1,136 @@
+import * as React from "react";
+
+import { Link } from "react-router-dom";
+
+import { Avatar, Flex, Tag, Typography } from "antd";
+
+import { Post, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
+import { useDislikePostMutation, useLikePostMutation, useListPostsQuery, useSearchPostsQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { PostRepostLink } from "../shared/post/PostRepostLink";
+import type { RelatedTargetSelection } from "../shared/post/types";
+import { getPostCompanyImageUrl, getPostRelatedTargetText } from "../shared/post/utils";
+
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchPosts } from "./utils";
+
+export interface PostsSearchProps {
+    onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
+}
+
+export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) => {
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
+    const defaultPosts = useListPostsQuery({
+        limit: 5,
+        page: 1,
+    });
+    const searchedPosts = useSearchPostsQuery(
+        {
+            searchTerm: submittedSearchValue,
+            limit: 5,
+            page,
+        },
+        {
+            enabled: submittedSearchValue.length > 0,
+        },
+    );
+    const searchPosts = mapSearchPosts(searchedPosts.data?.Searches?.docs);
+    const accumulatedSearchPosts = useAccumulatedDocs(searchPosts, page);
+    const items = submittedSearchValue.length > 0 ? accumulatedSearchPosts : defaultPosts.data?.Posts?.docs ?? [];
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedPosts.isLoading && accumulatedSearchPosts.length === 0
+            : defaultPosts.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedPosts.data?.Searches?.hasNextPage) : false;
+    const likeMutation = useLikePostMutation();
+    const dislikeMutation = useDislikePostMutation();
+    const handleSelect = (post: { id: string; title?: string | null }) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Posts,
+            value: post.id,
+            label: post.title || "Post",
+        });
+        props.onClose();
+    };
+
+    return (
+        <SearchDrawer
+            title="Post search"
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
+                setPage(1);
+            }}
+            placeholder="Search posts"
+        >
+            <SearchResultsList
+                title={submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Posts"}
+                onSelectItem={props.onSelect ? handleSelect : undefined}
+                items={items}
+                loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
+                refetch={submittedSearchValue.length > 0 ? searchedPosts.refetch : defaultPosts.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
+                emptyText="No matching posts"
+                likeActions={{
+                    likeMutation,
+                    dislikeMutation,
+                }}
+                renderItem={{
+                    title: (post) => (
+                        <Flex justify="space-between" align="center" wrap>
+                            <Link to={routes.posts.detail.getLink(post as Post)} onClick={props.onClose}>
+                                {post.title}
+                            </Link>
+                        </Flex>
+                    ),
+                    avatar: (post) => {
+                        const imageSrc = getPostCompanyImageUrl(post);
+                        return imageSrc ? (
+                            <Link
+                                to={routes.posts.detail.getLink(post as Post)}
+                                onClick={props.onClose}
+                                className="PostList__companyAvatarLink PostList__companyAvatarLink--search"
+                            >
+                                <Avatar
+                                    shape="square"
+                                    size={88}
+                                    src={imageSrc}
+                                    className="EntityList__avatar PostList__companyAvatar"
+                                />
+                            </Link>
+                        ) : undefined;
+                    },
+                    description: (post) => (
+                        <Flex vertical gap={8} align="start" className="PostList__meta">
+                            {post.content && (
+                                <Markdown className="Markdown--clamp2 EntityList__description PostList__description">
+                                    {post.content}
+                                </Markdown>
+                            )}
+                            {post.company?.name && <Tag className="PostList__companyTag">{post.company.name}</Tag>}
+                            <PostRepostLink repost={post.repost} className="PostList__repostLink" />
+                            {post.relatedPosts?.[0] && (
+                                <Typography.Link href={routes.posts.relatedTarget.getLink(post.relatedPosts[0])}>
+                                    Related: {getPostRelatedTargetText(post.relatedPosts[0])}
+                                </Typography.Link>
+                            )}
+                        </Flex>
+                    ),
+                }}
+            />
+        </SearchDrawer>
+    );
+};

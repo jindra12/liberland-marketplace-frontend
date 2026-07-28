@@ -1,16 +1,59 @@
 .CryptoPaymentGroup {
     width: 100%;
-    max-width: 350px;
+    max-width: 100%;
     padding: 16px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
+
+.ThirdwebConnect,
+.ThirdwebPay__connect,
+.TronConnect,
+.SolanaButton--payment {
+    width: 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
+    border-radius: 10px !important;
+}
+
+.CryptoPaymentGroup__connectButton {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    margin: 0 auto;
+}
+
+.CryptoPaymentGroup__connectButton.ThirdwebConnect,
+.CryptoPaymentGroup__connectButton.ThirdwebPay__connect,
+.CryptoPaymentGroup__connectButton.TronConnect,
+.CryptoPaymentGroup__connectButton.SolanaButton--payment {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+}
+
+.OrderPaymentChainAction {
+    width: 100%;
+}
+
+.OrderPaymentChainAction .CryptoPaymentGroup,
+.OrderPaymentChainAction .CryptoPaymentGroup > * {
+    width: 100%;
+    max-width: 100%;
+}
+
+.OrderPaymentChainRow {
+    width: 100%;
 }
 
 .SolanaButton {
     line-height: 50px !important;
-    font-size: 19px!important;
-    background-color: black!important;
-    font-family: 'Inter', sans-serif!important;
-    font-weight: 700!important;
-    color: white!important;
+    font-size: 19px !important;
+    background-color: black !important;
+    font-family: "Inter", sans-serif !important;
+    font-weight: 700 !important;
+    color: white !important;
     height: 50px;
 
     .ant-image-img {
@@ -21,25 +64,27 @@
         height: auto;
         min-height: 50px;
         max-height: 100%;
-        min-width: 300px;
+        min-width: 0;
+        width: 180px !important;
+        border-radius: 10px;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         border: solid 1px rgba(255, 255, 255, 0.2);
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
 
         &:hover {
             box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
-        }
-
-        @include lg {
-            width: 100%;
         }
     }
 
     &--main {
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         border: solid 1px white;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
 
         &:hover {
             box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
@@ -59,26 +104,30 @@
         min-height: 50px;
         max-height: 100%;
         justify-content: center;
-        min-width: 300px;
+        min-width: 0;
+        width: 180px !important;
+        max-width: 180px !important;
+        min-width: 180px !important;
+        border-radius: 10px;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         border: solid 1px white;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
         font-weight: normal;
 
         &:hover {
             box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
         }
-
-        @include lg {
-            width: 100%;
-        }
     }
 
     &--main {
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         border: solid 1px white;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
         background-color: black;
         font-weight: bold;
 
@@ -92,16 +141,48 @@
     height: auto;
     min-height: 50px;
     max-height: 100%;
+    width: 100%;
+    min-width: 0;
+    margin: 0 auto;
 }
 .ThirdwebPay {
     &--payment {
-        min-width: 300px;
+        min-width: 0;
+        min-height: 50px;
     }
+}
+.ThirdwebPay__connect {
+    width: 180px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px !important;
+    min-height: 44px;
+    font-weight: 600;
+
+    .ThirdwebPay__ethIcon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        line-height: 0;
+
+        img {
+            object-fit: contain;
+        }
+    }
+}
+.ThirdwebConnect {
+    width: 180px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px !important;
 }
 .TronwebModal {
     &--payment {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        align-items: center;
 
         .adapter-dropdown {
             @include lg {
@@ -112,7 +193,27 @@
 }
 .TronConnect {
     width: 180px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px !important;
 }
 .adapter-dropdown .TronConnect {
-    width: inherit;
+    width: 180px;
+}
+
+.ThirdwebPay--payment,
+.SolanaButton--payment,
+.TronButton--payment {
+    height: 44px !important;
+    min-height: 44px !important;
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    border-radius: 10px !important;
+    border-color: transparent !important;
+    font-weight: 600;
+}
+
+.SolanaButton--pay-now {
+    color: black!important;
 }

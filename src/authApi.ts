@@ -16,14 +16,11 @@ const changePassword = (url: string, currentPassword: string, newPassword: strin
 const sendVerificationEmail = (url: string, email: string) =>
     authClient(url).post("/send-verification-email", { email });
 
-const updateUserName = (url: string, name: string) =>
-    authClient(url).post("/update-user", { name });
-
 export const useChangePasswordMutation = () =>
-    useMutation({ mutationFn: (vars: { url: string; currentPassword: string; newPassword: string }) => changePassword(vars.url, vars.currentPassword, vars.newPassword) });
+    useMutation({
+        mutationFn: (vars: { url: string; currentPassword: string; newPassword: string }) =>
+            changePassword(vars.url, vars.currentPassword, vars.newPassword),
+    });
 
 export const useSendVerificationEmailMutation = () =>
-    useMutation({ mutationFn: (vars: { url: string; email: string; }) => sendVerificationEmail(vars.url, vars.email) });
-
-export const useUpdateUserNameMutation = () =>
-    useMutation({ mutationFn: (vars: { url: string; name: string }) => updateUserName(vars.url, vars.name) });
+    useMutation({ mutationFn: (vars: { url: string; email: string }) => sendVerificationEmail(vars.url, vars.email) });

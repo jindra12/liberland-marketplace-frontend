@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { JobList } from "./lists/JobList";
 
 const Jobs: React.FunctionComponent = () => {

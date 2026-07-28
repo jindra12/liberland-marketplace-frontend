@@ -1,34 +1,20 @@
 import * as React from "react";
-import { AuthProvider } from "react-oidc-context";
-import { WebStorageStateStore } from "oidc-client-ts";
+
+import { useSessionStorage } from "usehooks-ts";
+
+import { AuthContextProviderInner } from "./auth/AuthContextProviderInner";
+import { LOGIN_SUCCESS_MESSAGE_STORAGE_KEY } from "./auth/constants";
+import { buildAuthSettings } from "./auth/utils";
 import { useEndpointContext } from "./EndpointContext";
 
 export const AuthContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
-    const {
-        authUrl: auth
-    } = useEndpointContext();
-
-    const store = React.useMemo(() => new WebStorageStateStore({ store: window.localStorage }), []);
+    const { authUrl } = useEndpointContext();
+    const [, setLoginSuccessPending] = useSessionStorage<boolean>(LOGIN_SUCCESS_MESSAGE_STORAGE_KEY, false);
+    const authSettings = buildAuthSettings(authUrl);
 
     return (
-        <AuthProvider
-            authority={`${auth}/api/auth`}
-            client_id={process.env.REACT_APP_OIDC_CLIENT_ID || ""}
-            client_secret={process.env.REACT_APP_OIDC_CLIENT_SECRET || ""}
-            redirect_uri={process.env.REACT_APP_OIDC_REDIRECT_URI || `${window.location.origin}/auth/callback`}
-            scope="openid profile email"
-            userStore={store}
-            metadata={{
-                issuer: `${auth}/api/auth`,
-                authorization_endpoint: `${auth}/api/auth/oauth2/authorize`,
-                token_endpoint: `${auth}/api/auth/oauth2/token`,
-                userinfo_endpoint: `${auth}/api/auth/oauth2/userinfo`,
-            }}
-            onSigninCallback={() => {
-                window.history.replaceState({}, document.title, "/");
-            }}
-        >
+        <AuthContextProviderInner authSettings={authSettings} setLoginSuccessPending={setLoginSuccessPending}>
             {props.children}
-        </AuthProvider>
+        </AuthContextProviderInner>
     );
 };

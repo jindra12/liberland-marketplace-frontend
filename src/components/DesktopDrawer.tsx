@@ -1,12 +1,18 @@
 import * as React from "react";
-import { Button, Drawer } from "antd";
-import { GlobalOutlined, MenuOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+
 import { useAuth } from "react-oidc-context";
-import { SearchButton } from "./SearchButton";
-import { EndpointAuthAction } from "./EndpointAuthAction";
-import { RouteButton } from "./RouteButton";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { GlobalOutlined, MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Drawer } from "antd";
+
+import { routes } from "../routes";
+
+import { DisclaimersButton } from "./disclaimers/DisclaimersButton";
 import { useEndpointContext } from "./EndpointContext";
+import { RouteButton } from "./RouteButton";
+import { SearchButton } from "./SearchButton";
+import { SortContentBySelect } from "./SortContentBySelect";
 
 export const DesktopDrawer: React.FunctionComponent = () => {
     const location = useLocation();
@@ -42,44 +48,25 @@ export const DesktopDrawer: React.FunctionComponent = () => {
                     <SearchButton type="default" block onScopeSelect={() => setDesktopActionsOpen(false)}>
                         Search
                     </SearchButton>
+                    <DisclaimersButton block onClick={() => setDesktopActionsOpen(false)} />
                     {urls.length > 1 ? (
-                        <RouteButton
-                            to="/syndication"
-                            block
-                            type="default"
-                            icon={<GlobalOutlined />}
-                        >
+                        <RouteButton to={routes.syndication.route} block type="default" icon={<GlobalOutlined />}>
                             Syndication
                         </RouteButton>
                     ) : null}
-                    <EndpointAuthAction>
-                        {({ runWithAuthOrLogin }) => (
-                            <Button
-                                block
-                                type="primary"
-                                icon={<PlusOutlined />}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    runWithAuthOrLogin(
-                                        () => { navigate("/publish"); setDesktopActionsOpen(false); },
-                                        { onUnauthorizedBeforeLogin: () => setDesktopActionsOpen(false) },
-                                    );
-                                }}
-                                className="AppHeader__drawerPublish"
-                            >
-                                Publish ad
-                            </Button>
-                        )}
-                    </EndpointAuthAction>
                     {auth.isAuthenticated ? (
                         <Button
                             block
                             icon={<UserOutlined />}
-                            onClick={() => { navigate("/profile"); setDesktopActionsOpen(false); }}
+                            onClick={() => {
+                                navigate(routes.profile.route);
+                                setDesktopActionsOpen(false);
+                            }}
                         >
                             Profile
                         </Button>
                     ) : null}
+                    <SortContentBySelect />
                 </div>
             </Drawer>
         </>

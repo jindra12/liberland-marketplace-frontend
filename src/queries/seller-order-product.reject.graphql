@@ -1,0 +1,57 @@
+mutation UpdateSellerOrderProductRejected(
+    $rejected: Boolean!
+    $orderId: String!
+    $paymentProofId: String!
+) {
+    updateSellerOrderProductRejected(
+        rejected: $rejected
+        orderId: $orderId
+        paymentProofId: $paymentProofId
+    ) {
+        id
+        chain
+        fulfilled
+        rejected
+        orderCreatedAt
+        orderId
+        orderStatus
+        payerAddress
+        paymentProof {
+            chain
+            fulfilled
+            rejected
+            id
+            transactionHash
+        }
+        paymentProofId
+        product {
+            id
+            name
+            company {
+                id
+                name
+            }
+            createdBy {
+                id
+            }
+            updatedAt
+            createdAt
+        }
+        productId
+        quantity
+        shippingAddress {
+            title
+            firstName
+            lastName
+            company
+            addressLine1
+            addressLine2
+            city
+            postalCode
+            state
+            country
+            phone
+        }
+        transactionHash
+    }
+}

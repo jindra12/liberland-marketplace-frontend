@@ -1,29 +1,32 @@
-query ListIdentities($page: Int = 1, $limit: Int = 20) {
-  Identities(draft: false, page: $page, limit: $limit) {
-    docs {
-      id
-      serverURL
-      name
-      description
-      website
-      itemCount
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
+query ListIdentities($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Identities(draft: false, page: $page, limit: $limit, sort: $sort) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            hasLiked
+            name
+            description
+            website
+            likeCount
+            itemCount
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

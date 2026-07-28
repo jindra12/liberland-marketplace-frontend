@@ -1,5 +1,5 @@
 mutation DeleteStartup($id: String!) {
-  deleteStartup(id: $id) {
-    id
-  }
+    deleteStartup(id: $id) {
+        id
+    }
 }

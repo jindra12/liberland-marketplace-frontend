@@ -1,3 +1,4 @@
+import type { QueryClient } from "@tanstack/react-query";
 import { Startup_Stage } from "./generated/graphql";
 
 const stageLabels: Record<string, string> = {
@@ -20,17 +21,25 @@ const resourceLabels: Record<string, string> = {
 };
 
 export const formatStageLabel = (stage?: Startup_Stage | string | null): string =>
-    stage ? stageLabels[stage] ?? stage : "Unknown";
+    stage ? (stageLabels[stage] ?? stage) : "Unknown";
 
 export const formatResourceLabel = (resource?: string | null): string =>
-    resource ? resourceLabels[resource] ?? resource : "";
+    resource ? (resourceLabels[resource] ?? resource) : "";
 
-export const formatFundsNeeded = (
-    amount?: number | null,
-    currency?: string | null,
-): string | null => {
+export const formatFundsNeeded = (amount?: number | null, currency?: string | null): string | null => {
     if (amount == null) return null;
     const cur = currency || "USD";
     const fmt = amount.toLocaleString("en-US", { maximumFractionDigits: 2 });
     return `${cur} ${fmt}`;
+};
+
+export const invalidateStartupQueries = async (queryClient: QueryClient) => {
+    await Promise.all([
+        queryClient.resetQueries({ queryKey: ["StartupById"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartups"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByCompany"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByCreator"] }),
+        queryClient.resetQueries({ queryKey: ["ListStartupsByIdentity"] }),
+        queryClient.resetQueries({ queryKey: ["SearchStartups"] }),
+    ]);
 };

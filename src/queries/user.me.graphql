@@ -1,0 +1,29 @@
+query MeUser {
+    meUser {
+        user {
+            id
+            name
+            email
+            phone
+            reportedLinks
+            shippingAddress {
+                title
+                firstName
+                lastName
+                company
+                addressLine1
+                addressLine2
+                city
+                state
+                postalCode
+                country
+                phone
+            }
+            wallets {
+                chain
+                provider
+                address
+            }
+        }
+    }
+}

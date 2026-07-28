@@ -1,0 +1,5 @@
+mutation UnsubscribeFromJobUpdates($subscriptionID: String!) {
+    deleteNotificationSubscription(id: $subscriptionID) {
+        id
+    }
+}

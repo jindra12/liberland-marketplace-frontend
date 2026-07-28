@@ -1,0 +1,58 @@
+query SellerOrderProducts($fulfilled: Boolean, $rejected: Boolean, $limit: Int = 20, $page: Int = 1) {
+    sellerOrderProducts(fulfilled: $fulfilled, rejected: $rejected, limit: $limit, page: $page) {
+        docs {
+            id
+            chain
+            fulfilled
+            rejected
+            orderCreatedAt
+            orderId
+            orderStatus
+            customerEmail
+            payerAddress
+            paymentProof {
+                chain
+                fulfilled
+                rejected
+                id
+                transactionHash
+            }
+            paymentProofId
+            product {
+                id
+                name
+                company {
+                    id
+                    name
+                }
+                createdBy {
+                    id
+                }
+                updatedAt
+                createdAt
+            }
+            productId
+            quantity
+            shippingAddress {
+                title
+                firstName
+                lastName
+                company
+                addressLine1
+                addressLine2
+                city
+                postalCode
+                state
+                country
+                phone
+            }
+            transactionHash
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+    }
+}

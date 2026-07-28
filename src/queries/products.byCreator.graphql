@@ -1,22 +1,45 @@
-query ListProductsByCreator($companyIds: [JSON], $page: Int = 1, $limit: Int = 100, $draft: Boolean = false) {
-  Products(draft: $draft, page: $page, limit: $limit, where: { company: { in: $companyIds } }) {
-    docs {
-      id
-      serverURL
-      name
-      cryptoAddresses {
-          chain
-          address
+query ListProductsByCreator(
+    $companyIds: [JSON],
+    $page: Int = 1,
+    $limit: Int = 100,
+    $sort: String = "-contentRankScore",
+    $draft: Boolean = false,
+) {
+    Products(draft: $draft, page: $page, limit: $limit, sort: $sort, where: { company: { in: $companyIds } }) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            likeCount
+            cryptoAddresses {
+                chain
+                address
+            }
+            orderable
+            url
+            _status
+            properties {
+                id
+                key
+                value
+            }
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            relatedProducts {
+                id
+                name
+                serverURL
+            }
         }
-      orderable
-      url
-      _status
-      properties {
-        id
-        key
-        value
-      }
+        totalDocs
     }
-    totalDocs
-  }
 }

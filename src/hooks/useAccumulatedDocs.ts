@@ -5,10 +5,7 @@ import { useEffect, useState } from "react";
  * When page resets to 1, accumulated items reset to the new docs.
  * Deduplicates by `id` to handle edge cases.
  */
-export function useAccumulatedDocs<T extends { id: string }>(
-    docs: T[] | undefined | null,
-    page: number,
-): T[] {
+export function useAccumulatedDocs<T extends { id: string }>(docs: T[] | undefined | null, page: number): T[] {
     const [accumulated, setAccumulated] = useState<T[]>([]);
 
     useEffect(() => {

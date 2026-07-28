@@ -1,15 +1,22 @@
-mutation UpdateCommentContent(
-  $id: String!
-  $content: String!
-) {
-  updateComment(
-    id: $id
-    data: {
-      content: $content
-    }
-  ) {
+mutation UpdateCommentContent($id: String!, $company: String!, $content: String!) {
+  updateComment(id: $id, data: { content: $content, company: $company }) {
     id
     content
     updatedAt
-  }
+    replyCount
+    company {
+      id
+      serverURL
+            name
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+        }
+    }
 }

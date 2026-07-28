@@ -1,13 +1,11 @@
 query ListPublishedSyndicationUrls {
-  Syndications(
-    draft: false
-    where: { _status: { equals: published } }
-    limit: 0
-  ) {
-    docs {
-      url
-      name
-      description
+    Syndications(draft: false, where: { _status: { equals: published } }, limit: 0) {
+        docs {
+            url
+            name
+            description
+            nsfw
+            autoEnable
+        }
     }
-  }
 }

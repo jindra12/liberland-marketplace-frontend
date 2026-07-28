@@ -1,0 +1,7 @@
+mutation SubscribeToCompanyUpdates($targetID: String!) {
+    createNotificationSubscription(data: { targetCollection: companies, targetID: $targetID }) {
+        id
+        targetCollection
+        targetID
+    }
+}

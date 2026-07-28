@@ -6,15 +6,60 @@
         margin-bottom: 16px;
     }
 
-    &__forms {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
     &__card {
         flex: 1;
         min-width: 280px;
+    }
+
+    &__serverCard {
+        flex-basis: 100%;
+    }
+
+    &__contactCard {
+        width: 100%;
+    }
+
+    &__walletField {
+        margin: 24px 0;
+    }
+
+    &__walletHint {
+        margin-bottom: 16px;
+    }
+
+    &__walletList {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__walletRow {
+        padding: 16px;
+        border: 1px solid var(--ant-color-border-secondary);
+        border-radius: 12px;
+        background: var(--ant-color-bg-layout);
+    }
+
+    &__walletCompactField {
+        margin-bottom: 0;
+    }
+
+    &__walletCompact {
+        width: 100%;
+    }
+
+    &__walletRowActions {
+        display: flex;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    &__walletAddButton {
+        align-self: flex-start;
+    }
+
+    &__serverField {
+        margin-bottom: 0;
     }
 
     &__actions {

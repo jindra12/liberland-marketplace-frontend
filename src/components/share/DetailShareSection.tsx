@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Button, Flex, Grid, Space, Typography } from "antd";
-import { LinkOutlined } from "@ant-design/icons";
+
 import {
     FacebookIcon,
     FacebookShareButton,
@@ -13,7 +12,16 @@ import {
     XIcon,
     XShareButton,
 } from "react-share";
+
+import { LinkOutlined } from "@ant-design/icons";
+import { Button, Flex, Grid, Space } from "antd";
+
+import { ReportAction } from "../report/ReportAction";
+
 import { NativeShareButton } from "./NativeShareButton";
+import { ShareRepostAction } from "./ShareRepostAction";
+import { SubscribeButton } from "./SubscribeButton/SubscribeButton";
+import type { SubscriptionTarget } from "./SubscribeButton/types";
 import { useCopyLink } from "./useCopyLink";
 
 type SharePayload = {
@@ -21,27 +29,33 @@ type SharePayload = {
     text: string;
     url: string;
     onCopyLink: () => void;
+    subscriptionTarget?: SubscriptionTarget | null;
 };
-
+type ShareButtonConfig = {
+    key: string;
+    render: (payload: SharePayload) => React.ReactNode;
+};
 type DetailShareSectionProps = {
-    label: string;
     title: string;
     text: string;
     url?: string;
+    serverURL?: string | null;
+    subscriptionTarget?: SubscriptionTarget | null;
+    reportPath?: string;
 };
-
-const SHARE_BUTTONS = [
+const SHARE_BUTTONS: ShareButtonConfig[] = [
     {
         key: "copy",
         render: ({ onCopyLink }: SharePayload) => (
-            <Button
-                icon={<LinkOutlined />}
-                className="ShareSection__nativeButton"
-                onClick={onCopyLink}
-            >
+            <Button icon={<LinkOutlined />} className="ShareSection__nativeButton" onClick={onCopyLink}>
                 Copy Link
             </Button>
         ),
+    },
+    {
+        key: "subscribe",
+        render: ({ subscriptionTarget }: SharePayload) =>
+            subscriptionTarget ? <SubscribeButton {...subscriptionTarget} /> : null,
     },
     {
         key: "x",
@@ -62,12 +76,7 @@ const SHARE_BUTTONS = [
     {
         key: "linkedin",
         render: ({ url, title, text }: SharePayload) => (
-            <LinkedinShareButton
-                url={url}
-                title={title}
-                summary={text}
-                className="ShareSection__iconButton"
-            >
+            <LinkedinShareButton url={url} title={title} summary={text} className="ShareSection__iconButton">
                 <LinkedinIcon size={40} round />
             </LinkedinShareButton>
         ),
@@ -89,60 +98,95 @@ const SHARE_BUTTONS = [
         ),
     },
 ];
-
-export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps> = ({
-    label,
-    title,
-    text,
-    url,
-}) => {
+export const DetailShareSection: React.FunctionComponent<DetailShareSectionProps> = (props) => {
     const { md } = Grid.useBreakpoint();
     const { copyLink, messageContextHolder } = useCopyLink();
-    const shareUrl = url ?? window.location.href;
+    const shareUrl = props.url ?? window.location.href;
+    const reportPath = props.reportPath ?? window.location.pathname;
+    const mobileShareActionSize = "middle";
     const payload = {
-        title,
-        text,
+        title: props.title,
+        text: props.text,
         url: shareUrl,
-        onCopyLink: () => {
-            copyLink(shareUrl);
+        onCopyLink: async () => {
+            await copyLink(shareUrl);
         },
+        subscriptionTarget: props.subscriptionTarget,
     };
-
     if (!md) {
         return (
             <>
                 {messageContextHolder}
                 <Flex vertical gap={12} className="ShareSection ShareSection--mobile">
-                    <Typography.Text className="ShareSection__label">
-                        {label}
-                    </Typography.Text>
-                    <NativeShareButton
-                        url={shareUrl}
-                        title={title}
-                        text={text}
-                        label="Share"
-                        size="large"
-                        className="NativeShareButton ShareSection__mobileButton"
-                    />
+                    {props.subscriptionTarget ? (
+                        <Space.Compact block className="ShareSection__mobileActions">
+                            <NativeShareButton
+                                url={shareUrl}
+                                title={props.title}
+                                text={props.text}
+                                label="Share"
+                                size={mobileShareActionSize}
+                                className="NativeShareButton ShareSection__mobileButton"
+                            />
+                            <SubscribeButton
+                                {...props.subscriptionTarget}
+                                size={mobileShareActionSize}
+                                className="ShareSection__mobileButton"
+                            />
+                        </Space.Compact>
+                    ) : (
+                        <Space.Compact block className="ShareSection__mobileActions">
+                            <NativeShareButton
+                                url={shareUrl}
+                                title={props.title}
+                                text={props.text}
+                                label="Share"
+                                size={mobileShareActionSize}
+                                className="NativeShareButton ShareSection__mobileButton"
+                            />
+                        </Space.Compact>
+                    )}
+                    <Flex justify="flex-end" className="ShareSection__mobileReportRow">
+                        <Space size={12} className="ShareSection__mobileReportActions">
+                            <ShareRepostAction
+                                contentLink={shareUrl}
+                                serverURL={props.serverURL}
+                                className="ShareSection__repostButton"
+                            />
+                            <ReportAction
+                                contentLink={reportPath}
+                                serverURL={props.serverURL}
+                                className="ShareSection__reportButton"
+                            />
+                        </Space>
+                    </Flex>
                 </Flex>
             </>
         );
     }
-
     return (
         <>
             {messageContextHolder}
             <Flex justify="space-between" align="center" wrap gap="16px" className="ShareSection">
-                <Typography.Text className="ShareSection__label">
-                    {label}
-                </Typography.Text>
-                <Space size={[12, 12]} wrap className="ShareSection__buttons">
-                    {SHARE_BUTTONS.map(({ key, render }) => (
-                        <React.Fragment key={key}>
-                            {render(payload)}
-                        </React.Fragment>
-                    ))}
-                </Space>
+                <Flex wrap gap="12px" align="center" className="ShareSection__actions">
+                    <Space size={[12, 12]} wrap className="ShareSection__buttons">
+                        {SHARE_BUTTONS.map(({ key, render }) => (
+                            <React.Fragment key={key}>{render(payload)}</React.Fragment>
+                        ))}
+                    </Space>
+                    <Space size={12} className="ShareSection__reportActions">
+                        <ShareRepostAction
+                            contentLink={shareUrl}
+                            serverURL={props.serverURL}
+                            className="ShareSection__repostButton"
+                        />
+                        <ReportAction
+                            contentLink={reportPath}
+                            serverURL={props.serverURL}
+                            className="ShareSection__reportButton"
+                        />
+                    </Space>
+                </Flex>
             </Flex>
         </>
     );

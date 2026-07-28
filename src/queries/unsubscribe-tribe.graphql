@@ -1,0 +1,5 @@
+mutation UnsubscribeFromTribeUpdates($subscriptionID: String!) {
+    deleteNotificationSubscription(id: $subscriptionID) {
+        id
+    }
+}

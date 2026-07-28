@@ -1,0 +1,7 @@
+mutation SubscribeToJobUpdates($targetID: String!) {
+    createNotificationSubscription(data: { targetCollection: jobs, targetID: $targetID }) {
+        id
+        targetCollection
+        targetID
+    }
+}

@@ -1,49 +1,48 @@
-query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1) {
-  Jobs(
-    draft: false
-    where: {
-      AND: [
-        { companyIdentityId: { equals: $identityId } }
-        { _status: { equals: published } }
-      ]
-    }
-    limit: $limit
-    page: $page
-  ) {
-    docs {
-      id
-      serverURL
-      title
-      companyIdentityId
-      company {
-        id
-        serverURL
-        name
-        cryptoAddresses {
-          chain
-          address
+query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1, $sort: String = "-contentRankScore") {
+    Jobs(
+        draft: false
+        where: { AND: [{ companyIdentityId: { equals: $identityId } }, { _status: { equals: published } }] }
+        limit: $limit
+        page: $page
+        sort: $sort
+    ) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            title
+            hasLiked
+            likeCount
+            companyIdentityId
+            company {
+                id
+                serverURL
+                name
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                image {
+                    id
+                    url
+                }
+            }
+            location
+            employmentType
+            salaryRange {
+                min
+                max
+                currency
+            }
+            image {
+                id
+                url
+            }
+            postedAt
+            _status
         }
-        image {
-          id
-          url
-        }
-      }
-      location
-      employmentType
-      salaryRange {
-        min
-        max
-        currency
-      }
-      image {
-        id
-        url
-      }
-      postedAt
-      _status
+        totalDocs
+        hasNextPage
+        nextPage
     }
-    totalDocs
-    hasNextPage
-    nextPage
-  }
 }

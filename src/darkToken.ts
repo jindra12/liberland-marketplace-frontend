@@ -29,8 +29,7 @@ export const darkToken: Partial<AliasToken> = {
 
     borderRadius: 18,
 
-    fontFamily:
-        "\"Montserrat\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+    fontFamily: '"Montserrat", "Segoe UI", Helvetica, Arial, sans-serif',
 
     fontSize: 18,
     fontSizeSM: 16,
@@ -98,7 +97,6 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
         defaultHoverBorderColor: "rgba(37, 77, 110, 0.46)",
         defaultHoverColor: "#EEF8F3",
         primaryColor: "#03121D",
-        primaryShadow: "0 18px 36px rgba(47, 140, 255, 0.22)",
     },
     Drawer: {
         colorBgElevated: "#05131F",
@@ -108,15 +106,41 @@ export const darkComponents: { [key in keyof OverrideToken]?: OverrideToken[key]
     },
     Input: {
         colorBgContainer: "rgba(4, 15, 26, 0.94)",
-        colorBorder: "rgba(24, 56, 82, 0.4)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
         colorTextPlaceholder: "#8FA99D",
-        activeBorderColor: "#5AA6FF",
-        hoverBorderColor: "#2F8CFF",
+        activeBorderColor: "#79E6B1",
+        hoverBorderColor: "#5AA6FF",
     },
     Select: {
         colorBgContainer: "rgba(4, 15, 26, 0.94)",
-        colorBorder: "rgba(24, 56, 82, 0.4)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
+        activeBorderColor: "#79E6B1",
+        hoverBorderColor: "#5AA6FF",
         optionSelectedBg: "rgba(10, 31, 49, 0.92)",
+    },
+    InputNumber: {
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
+        activeBorderColor: "#79E6B1",
+        hoverBorderColor: "#5AA6FF",
+    },
+    DatePicker: {
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
+        activeBorderColor: "#79E6B1",
+        hoverBorderColor: "#5AA6FF",
+    },
+    TreeSelect: {
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
+    },
+    Mentions: {
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
+    },
+    Cascader: {
+        colorBgContainer: "rgba(4, 15, 26, 0.94)",
+        colorBorder: "rgba(91, 156, 255, 0.5)",
     },
     Tag: {
         defaultBg: "rgba(6, 18, 29, 0.86)",

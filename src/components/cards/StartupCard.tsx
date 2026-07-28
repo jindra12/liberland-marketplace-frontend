@@ -1,100 +1,82 @@
 import * as React from "react";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
-import { RightOutlined } from "@ant-design/icons";
-import { ListStartupsByIdentityQuery } from "../../generated/graphql";
+
+import { Avatar, Space, Tag } from "antd";
+
+import { ListStartupsQuery, Startup } from "../../generated/graphql";
 import { BACKEND_URL } from "../../gqlFetcher";
+import { routes } from "../../routes";
+import { useDislikeVentureMutation, useLikeVentureMutation } from "../hooks";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+
+import { SplashCard } from "./SplashCard";
+import { SplashCardItem } from "./SplashCardItem";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
-import { RouteButton } from "../RouteButton";
 
-type StartupItem = NonNullable<NonNullable<ListStartupsByIdentityQuery["Startups"]>["docs"]>[number];
-
+type StartupItem = NonNullable<NonNullable<ListStartupsQuery["Startups"]>["docs"]>[number];
 type StartupCardProps = {
     items: StartupItem[];
     loading?: boolean;
-    totalDocs?: number;
-    identityId?: string;
 };
 
-export const StartupCard: React.FunctionComponent<StartupCardProps> = ({
-    items,
-    loading,
-    totalDocs,
-    identityId,
-}) => {
-    const { xl } = Grid.useBreakpoint();
-    const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
+export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) => {
+    const likeMutation = useLikeVentureMutation();
+    const dislikeMutation = useDislikeVentureMutation();
+
     return (
-        <Card
-            className="SplashEntityCard SplashEntityCard--ventures"
-            title={(
-                <Typography.Title level={3} className="SplashEntityCard__title">
-                    <Link to="/ventures" className="SplashEntityCard__titleLink">Ventures</Link>
-                </Typography.Title>
-            )}
-        >
-            <List
-                className="SplashEntityCard__list"
-                loading={loading}
-                dataSource={items}
-                locale={{ emptyText: "Coming soon!" }}
-                renderItem={(startup) => {
-                    const imageUrl = startup.image?.url;
-                    return (
-                        <List.Item
-                            actions={xl ? [(
-                                <SplashShareDetailActionRow
-                                    key={`startup-actions-${startup.id}`}
-                                    detailPath={`/ventures/${startup.id}`}
-                                    title={startup.title || "Venture"}
-                                    text={`Check out ${startup.title} on NSwap.`}
-                                />
-                            )] : undefined}
-                        >
-                            <div className="SplashEntityCard__itemBody">
-                                <List.Item.Meta
-                                    avatar={imageUrl ? (
-                                        <Link to={`/ventures/${startup.id}`}>
-                                            <Avatar
-                                                shape="square"
-                                                size={48}
-                                                src={`${BACKEND_URL}${imageUrl}`}
-                                                className="SplashEntityCard__avatar"
-                                            />
-                                        </Link>
-                                    ) : undefined}
-                                    title={(
-                                        <Link to={`/ventures/${startup.id}`} className="SplashEntityCard__itemLink">
-                                            {startup.title}
-                                        </Link>
-                                    )}
-                                />
-                                <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                    {startup.stage && <Tag>{startup.stage}</Tag>}
-                                </Space>
-                                {!xl && (
-                                    <SplashShareDetailActionRow
-                                        detailPath={`/ventures/${startup.id}`}
-                                        title={startup.title || "Venture"}
-                                        text={`Check out ${startup.title} on NSwap.`}
+        <SplashCard
+            className="SplashEntityCard--ventures"
+            items={props.items}
+            loading={props.loading}
+            renderItem={(startup) => {
+                const imageUrl = startup.image?.url;
+                const detailPath = routes.ventures.detail.getLink(startup as Startup);
+
+                return (
+                    <SplashCardItem
+                        id={startup.id}
+                        detailPath={detailPath}
+                        title={startup.title || "Venture"}
+                        avatar={
+                            imageUrl ? (
+                                <Link to={detailPath}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={`${BACKEND_URL}${imageUrl}`}
+                                        className="SplashEntityCard__avatar"
                                     />
-                                )}
-                            </div>
-                        </List.Item>
-                    );
-                }}
-            />
-            {remaining > 0 && identityId && (
-                <RouteButton
-                    to={`/ventures?tribe=${identityId}`}
-                    type="link"
-                    icon={<RightOutlined />}
-                    iconPosition="end"
-                    className="SplashEntityCard__moreLink"
-                >
-                    And +{remaining} more
-                </RouteButton>
-            )}
-        </Card>
+                                </Link>
+                            ) : null
+                        }
+                        liked={startup.hasLiked}
+                        likeCount={startup.likeCount}
+                        serverURL={startup.serverURL}
+                        likeActions={{
+                            likeMutation,
+                            dislikeMutation,
+                        }}
+                        actions={[
+                            <SplashShareDetailActionRow
+                                key={`startup-actions-${startup.id}`}
+                                detailPath={detailPath}
+                                title={startup.title || "Venture"}
+                                text={`Check out ${startup.title} on NSwap.`}
+                            />,
+                        ]}
+                    >
+                        {startup.identity && (
+                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                                <IdentityTagLink identity={startup.identity} color="success" />
+                            </Space>
+                        )}
+                        <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                            {startup.stage && <Tag>{startup.stage}</Tag>}
+                        </Space>
+                    </SplashCardItem>
+                );
+            }}
+        />
     );
 };

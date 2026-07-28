@@ -1,0 +1,54 @@
+.SearchDrawer {
+    .ant-drawer-body {
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .ant-drawer-footer {
+        padding: 18px 24px 24px;
+        border-top: 1px solid rgba(147, 214, 255, 0.08);
+        background:
+            linear-gradient(180deg, rgba(4, 15, 25, 0.96), rgba(3, 12, 21, 0.98)),
+            radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 28%);
+    }
+}
+
+.SearchDrawer__scrollable {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+
+.SearchDrawer__footerForm {
+    width: 100%;
+}
+
+.SearchDrawer__footerCompact {
+    width: 100%;
+}
+
+.SearchDrawer__footerInput {
+    flex: 1;
+    min-width: 0;
+}
+
+.SearchDrawer__footerInputItem {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.SearchDrawer__footerCompact .ant-input-affix-wrapper,
+.SearchDrawer__footerCompact .ant-input {
+    height: 100px;
+    border-radius: 16px 0 0 16px;
+}
+
+.SearchDrawer__footerButton {
+    height: 100px;
+    border-radius: 0 16px 16px 0;
+    font-weight: 800;
+}

@@ -8,7 +8,6 @@ module.exports = function override(config) {
         buffer: require.resolve("buffer/"),
         process: require.resolve("process/browser"),
         vm: require.resolve("vm-browserify"),
-        
     };
 
     config.plugins = [
@@ -22,6 +21,11 @@ module.exports = function override(config) {
     config.module.rules[0].resolve = {
         fullySpecified: false,
     };
+
+    config.module.rules.push({
+        test: /\.md$/i,
+        type: "asset/source",
+    });
 
     return config;
 };

@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { useWallet } from "@solana/wallet-adapter-react";
+
 import { ConnectButtonProps } from "../../types";
 
 export const SolanaCallback: React.FunctionComponent<ConnectButtonProps> = (props) => {
@@ -10,13 +12,13 @@ export const SolanaCallback: React.FunctionComponent<ConnectButtonProps> = (prop
                 await connect();
             }
         })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wallet?.readyState, connected]);
     React.useEffect(() => {
         if (publicKey && connected) {
             props.selectWallet(publicKey.toBase58());
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [publicKey]);
     return null;
 };

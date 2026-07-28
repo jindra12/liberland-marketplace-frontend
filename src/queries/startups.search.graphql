@@ -1,71 +1,68 @@
-query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-priority") {
-  Searches(
-    draft: false
-    where: {
-      AND: [
-        { title: { contains: $searchTerm } }
-        { doc: { relationTo: startups } }
-      ]
-    }
-    page: $page
-    limit: $limit
-    sort: $sort
-  ) {
-    docs {
-      id
-      title
-      priority
-      doc(draft: false) {
-        relationTo
-        value {
-          ... on Startup {
-            __typename
+query SearchStartups($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Searches(
+        draft: false
+        where: { AND: [{ title: { contains: $searchTerm } }, { doc: { relationTo: startups } }] }
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
+        docs {
             id
-            serverURL
             title
-            description
-            stage
-            lookingFor
-            alreadyHave
-            fundsNeeded {
-              amount
-              currency
+            priority
+            doc(draft: false) {
+                relationTo
+                value {
+                    ... on Startup {
+                        __typename
+                        id
+                        isSubscribed
+                        serverURL
+                        title
+                        description
+                        likeCount
+                        stage
+                        lookingFor
+                        alreadyHave
+                        fundsNeeded {
+                            amount
+                            currency
+                        }
+                        company {
+                            id
+                            serverURL
+                            name
+                            cryptoAddresses {
+                                chain
+                                address
+                            }
+                        }
+                        image {
+                            id
+                            url
+                            alt
+                            filename
+                            width
+                            height
+                            mimeType
+                        }
+                        identity {
+                            id
+                            serverURL
+                            name
+                            description
+                        }
+                    }
+                }
             }
-            company {
-              id
-              serverURL
-              name
-              cryptoAddresses {
-          chain
-          address
         }
-            }
-            image {
-              id
-              url
-              alt
-              filename
-              width
-              height
-              mimeType
-            }
-            identity {
-              id
-              serverURL
-              name
-              description
-            }
-          }
-        }
-      }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }

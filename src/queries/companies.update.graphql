@@ -1,15 +1,17 @@
 mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft: Boolean!) {
-  updateCompany(id: $id, data: $data, draft: $draft) {
-    id
-    name
-    cryptoAddresses {
-          chain
-          address
+    updateCompany(id: $id, data: $data, draft: $draft) {
+        id
+        name
+        verification
+        isPrivate
+        cryptoAddresses {
+            chain
+            address
         }
-    _status
-    image {
-      id
-      url
+        _status
+        image {
+            id
+            url
+        }
     }
-  }
 }

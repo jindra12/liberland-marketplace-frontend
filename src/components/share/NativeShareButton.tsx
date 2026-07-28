@@ -1,50 +1,39 @@
 import * as React from "react";
+
+import { RWebShare } from "react-web-share";
+
 import { ShareAltOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import type { ButtonProps } from "antd";
-import { RWebShare } from "react-web-share";
 
 const FALLBACK_SITES = ["copy", "facebook", "twitter", "linkedin", "reddit", "whatsapp", "telegram"];
-
 type NativeShareButtonProps = {
     path?: string;
     url?: string;
     title?: string | null;
     text: string;
     className?: string;
-    label?: React.ReactNode;
+    label?: string;
     size?: ButtonProps["size"];
     type?: ButtonProps["type"];
 };
-
-export const NativeShareButton: React.FunctionComponent<NativeShareButtonProps> = ({
-    path,
-    url,
-    title,
-    text,
-    className,
-    label = "Share",
-    size = "middle",
-    type = "default",
-}) => {
-    const shareUrl = url ?? `${window.location.origin}${path ?? ""}`;
-
+export const NativeShareButton: React.FunctionComponent<NativeShareButtonProps> = (props) => {
     return (
         <RWebShare
             data={{
-                title: title ?? text,
-                text,
-                url: shareUrl,
+                title: props.title || props.label || props.text,
+                text: props.text,
+                url: props.url ?? `${window.location.origin}${props.path ?? ""}`,
             }}
             sites={FALLBACK_SITES}
         >
             <Button
                 icon={<ShareAltOutlined />}
-                className={className}
-                size={size}
-                type={type}
+                className={props.className}
+                size={props.size || "middle"}
+                type={props.type || "default"}
             >
-                {label}
+                {props.label || "Share"}
             </Button>
         </RWebShare>
     );

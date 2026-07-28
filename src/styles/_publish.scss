@@ -31,6 +31,14 @@
         width: 100%;
     }
 
+    &__priceField.ant-input-affix-wrapper {
+        width: 100%;
+    }
+
+    &__priceField .ant-input {
+        width: 100%;
+    }
+
     &__salaryMin {
         width: 35%;
     }
@@ -45,6 +53,31 @@
 
     &__amountInput {
         width: 70%;
+    }
+
+    &__cryptoCard {
+        margin: 8px 0 0;
+
+        .ant-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 24px 24px;
+        }
+    }
+
+    &__cryptoCardHeader {
+        min-width: 0;
+    }
+
+    &__cryptoCardTitle {
+        margin: 0 !important;
+    }
+
+    &__cryptoCardDescription {
+        margin: 0 !important;
+        color: rgba(188, 217, 203, 0.76);
+        line-height: 1.6;
     }
 }
 
@@ -62,7 +95,10 @@
         cursor: pointer;
         border: 1px solid rgba(24, 56, 82, 0.4);
         background: linear-gradient(180deg, rgba(6, 18, 29, 0.92), rgba(4, 14, 24, 0.96));
-        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        transition:
+            transform 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease;
 
         .ant-card-body {
             padding: 24px;

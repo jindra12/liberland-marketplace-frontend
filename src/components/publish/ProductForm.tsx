@@ -1,34 +1,38 @@
-import React from "react";
-import { DollarOutlined } from "@ant-design/icons";
-import {
-    Form,
-    Input,
-    InputNumber,
-    Select,
-} from "antd";
+import * as React from "react";
+
 import { useAuth } from "react-oidc-context";
+
+import { DollarOutlined } from "@ant-design/icons";
+import { Form, Input, InputNumber } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
+
+import { CompanyField } from "../CompanyField";
+import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
+import { useCreateProductMutation, useUpdateProductMutation } from "../hooks";
+import { ProductParametersField } from "../productParameters/ProductParametersField";
+import type { ProductParameterDraft } from "../productParameters/types";
+import { buildProductParametersInput } from "../productParameters/utils";
+import { toCents } from "../shared/product/utils";
+
+import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
+import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
+import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
+import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
-import { FormSubmitButtons } from "./FormSubmitButtons";
 import { useEntityForm } from "./useEntityForm";
-import {
-    useCreateProductMutation,
-    useListCompaniesByCreatorQuery,
-    useUpdateProductMutation,
-} from "../hooks";
-import { toCents } from "../../utils";
 
 interface ProductFormValues {
     name: string | null;
     description?: string | null;
-    priceInUSD?: number | null;
+    priceInUSD?: string | number | null;
     url?: string | null;
     inventory?: number | null;
     company?: string | null;
+    cryptoAddresses?: CryptoAddressesFormValue | null;
+    parameters?: ProductParameterDraft[] | null;
     imageFile?: UploadFile[];
 }
-
 export interface ProductFormProps {
     mode: "create" | "edit";
     url: string;
@@ -38,72 +42,115 @@ export interface ProductFormProps {
         existingImageId?: string | null;
     };
 }
-
-export const ProductForm: React.FunctionComponent<ProductFormProps> = ({ mode, initialValues, url }) => {
+export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) => {
     const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
-
     const userId = auth.user?.profile?.sub;
-    const companiesQuery = useListCompaniesByCreatorQuery(
-        { userId, draft: true },
-    );
-    const companies = companiesQuery.data?.Companies?.docs ?? [];
-    const defaults: Partial<ProductFormValues> = { ...initialValues };
-
+    const defaults: Partial<ProductFormValues> = {
+        ...props.initialValues,
+    };
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
         routePrefix: "/products-services",
-        mode,
-        existingImageId: initialValues?.existingImageId,
-        editId: initialValues?.id,
+        mode: props.mode,
+        existingImageId: props.initialValues?.existingImageId,
+        editId: props.initialValues?.id,
         createMutation,
         updateMutation,
-        url,
-        buildData: (values: ProductFormValues, imageId) => ({
-            name: values.name,
-            description: values.description,
-            url: values.url,
-            company: values.company,
-            priceInUSDEnabled: true,
-            priceInUSD: toCents(values.priceInUSD),
-            inventory: values.inventory,
-            ...(imageId !== undefined && { image: imageId }),
-        }),
+        url: props.url,
+        buildData: (values: ProductFormValues, imageId) => {
+            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
+            const parameters = buildProductParametersInput(values.parameters);
+
+            return {
+                name: values.name,
+                description: values.description,
+                url: values.url,
+                company: values.company,
+                ...(cryptoAddresses !== undefined && {
+                    cryptoAddresses,
+                }),
+                ...(parameters !== undefined && {
+                    parameters,
+                }),
+                priceInUSDEnabled: true,
+                priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
+                inventory: values.inventory,
+                ...(imageId !== undefined && {
+                    image: imageId,
+                }),
+            };
+        },
         getCreateId: (r) => r.createProduct?.id,
         getUpdateId: (r) => r.updateProduct?.id,
     });
-
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
-            <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+            <Form.Item
+                name="name"
+                label="Product Name"
+                rules={[
+                    {
+                        required: true,
+                    },
+                    buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH),
+                ]}
+                className="Publish__productNameField"
+            >
                 <Input />
             </Form.Item>
-            <Form.Item name="description" label="Description">
+            <Form.Item
+                name="description"
+                label="Description"
+                rules={[buildMaxLengthRule(LONG_TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__productDescriptionField"
+            >
                 <MarkdownEditor rows={6} placeholder="Supports Markdown formatting" />
             </Form.Item>
-            <ImageUploadField existingImageUrl={initialValues?.existingImageUrl} serverUrl={url} />
+            <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />
             <Form.Item
                 name="priceInUSD"
                 label="Price (USD)"
-                rules={[{ required: true, message: "Enter USD price" }]}
+                rules={[
+                    {
+                        required: true,
+                        message: "Enter USD price",
+                    },
+                ]}
+                className="Publish__productPriceField"
             >
-                <InputNumber suffix={<DollarOutlined />} placeholder="USD amount" min={0} className="Publish__amountInput" />
-            </Form.Item>
-            <Form.Item name="url" label="Product URL">
-                <Input />
-            </Form.Item>
-            <Form.Item name="inventory" label="Inventory">
-                <InputNumber min={0} className="Publish__fullWidth" />
-            </Form.Item>
-            <Form.Item name="company" label="Company" rules={[{ required: true }]}>
-                <Select
-                    placeholder="Select a company"
-                    options={companies.map((c) => ({ value: c.id, label: c.name }))}
+                <Input
+                    suffix={<DollarOutlined />}
+                    placeholder="USD amount"
+                    inputMode="decimal"
+                    className="Publish__fullWidth Publish__priceField"
                 />
             </Form.Item>
+            <Form.Item name="url" label="Product URL" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__productUrlField">
+                <Input />
+            </Form.Item>
+            <Form.Item name="inventory" label="Inventory" className="Publish__productInventoryField">
+                <InputNumber min={0} className="Publish__fullWidth" />
+            </Form.Item>
+            <Form.Item
+                name="company"
+                label="Company"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+                className="Publish__productCompanyField"
+            >
+                <CompanyField serverURL={props.url} userId={userId} />
+            </Form.Item>
+            <ProductParametersField />
+            <CryptoAddressesField
+                description="Optional single payout wallet. If no product wallet is set, the company wallet is used at checkout."
+            />
             <Form.Item>
-                <FormSubmitButtons mode={mode} entityName="Product" loading={loading} draftRef={draftRef} />
+                <FormSubmitButtons mode={props.mode} entityName="Product" loading={loading} draftRef={draftRef} />
             </Form.Item>
         </Form>
     );

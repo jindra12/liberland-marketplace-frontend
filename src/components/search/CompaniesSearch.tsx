@@ -1,59 +1,130 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { AutoSuggest } from "../AutoSuggest";
-import { DocType, SearchOption } from "../../types";
 
-import { getImage } from "../../utils";
-import { useSearchCompaniesQuery } from "../hooks";
+import { Link } from "react-router-dom";
+
+import { Avatar, Flex } from "antd";
+
+import { Company, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
+import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { routes } from "../../routes";
+import { useListCompaniesQuery, useSearchCompaniesQuery } from "../hooks";
+import { Markdown } from "../Markdown";
+import { CompanyContactLinks } from "../shared/CompanyContactLinks";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import type { RelatedTargetSelection } from "../shared/post/types";
+
+import { SEARCH_DRAWER_SCROLLABLE_ID } from "./constants";
+import { SearchDrawer } from "./SearchDrawer";
+import { SearchResultsList } from "./SearchResultsList";
+import { mapSearchCompanies } from "./utils";
 
 export interface CompaniesSearchProps {
     onClose: () => void;
+    onSelect?: (value: RelatedTargetSelection) => void;
 }
 
 export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (props) => {
-    const navigate = useNavigate();
-    const [options, setOptions] = React.useState<SearchOption[]>([]);
-    const [term, setTerm] = React.useState("");
-    const companies = useSearchCompaniesQuery({
-        searchTerm: term,
+    const [searchValue, setSearchValue] = React.useState("");
+    const [submittedSearchValue, setSubmittedSearchValue] = React.useState("");
+    const [page, setPage] = React.useState(1);
+    const defaultCompanies = useListCompaniesQuery({
         limit: 5,
-        page: 0,
-    }, {
-        enabled: term.length > 0,
+        page: 1,
     });
-
-    React.useEffect(() => {
-        if (!companies.isFetched) {
-            setOptions([]);
-        } else if (companies.data) {
-            setOptions(
-                (companies.data.Searches?.docs ?? [])
-                .filter((searchDoc) => searchDoc.doc?.relationTo === "companies")
-                .map((searchDoc, index) => {
-                    const doc = searchDoc.doc!.value as DocType;
-                    const value = `${doc.serverURL || ""}|${doc.id!}`;
-
-                    return {
-                        key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
-                        value,
-                        id: doc.id!,
-                        label: searchDoc.title,
-                        image: getImage(doc),
-                    };
-                })
-            );
-        }
-    }, [companies.isFetched, companies.data]);
+    const searchedCompanies = useSearchCompaniesQuery(
+        {
+            searchTerm: submittedSearchValue,
+            limit: 5,
+            page,
+        },
+        {
+            enabled: submittedSearchValue.length > 0,
+        },
+    );
+    const searchDocs = useAccumulatedDocs(searchedCompanies.data?.Searches?.docs, page);
+    const items =
+        submittedSearchValue.length > 0
+            ? mapSearchCompanies(searchDocs)
+            : defaultCompanies.data?.Companies?.docs ?? [];
+    const loading =
+        submittedSearchValue.length > 0
+            ? searchedCompanies.isLoading && searchDocs.length === 0
+            : defaultCompanies.isLoading;
+    const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedCompanies.data?.Searches?.hasNextPage) : false;
+    const handleSelect = (company: NonNullable<NonNullable<typeof defaultCompanies.data>["Companies"]>["docs"][number]) => {
+        props.onSelect?.({
+            relationTo: Post_RelatedPosts_RelationTo.Companies,
+            value: company.id,
+            label: company.name || "Company",
+        });
+        props.onClose();
+    };
 
     return (
-        <AutoSuggest
-            onClose={props.onClose}
-            onSelect={(_, option) => { navigate(`/companies/${option.id}`); props.onClose(); }}
-            options={options}
+        <SearchDrawer
             title="Company search"
-            runSearch={setTerm}
-            setOptions={setOptions}
-            isLoading={companies.isLoading}
-        />
+            onClose={props.onClose}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSubmit={() => {
+                setSubmittedSearchValue(searchValue);
+                setPage(1);
+            }}
+            placeholder="Search companies"
+        >
+            <SearchResultsList
+                title={
+                    submittedSearchValue.length > 0
+                        ? `Search results for "${submittedSearchValue}"`
+                        : "Companies"
+                }
+                onSelectItem={props.onSelect ? handleSelect : undefined}
+                items={items}
+                loading={loading}
+                hasMore={hasMore}
+                next={() => {
+                    setPage((currentPage) => currentPage + 1);
+                }}
+                refetch={submittedSearchValue.length > 0 ? searchedCompanies.refetch : defaultCompanies.refetch}
+                scrollableTarget={SEARCH_DRAWER_SCROLLABLE_ID}
+                emptyText="No matching companies"
+                renderItem={{
+                    title: (company) => (
+                        <Flex justify="space-between" align="center" wrap>
+                            <Link to={routes.companies.detail.getLink(company as Company)} onClick={props.onClose}>
+                                {company.name}
+                            </Link>
+                            {company.identity?.name && (
+                                <IdentityTagLink identity={company.identity} color="success" />
+                            )}
+                        </Flex>
+                    ),
+                    avatar: (company) =>
+                        company.image?.url ? (
+                            <Link to={routes.companies.detail.getLink(company as Company)} onClick={props.onClose}>
+                                <Avatar
+                                    shape="square"
+                                    size={80}
+                                    src={getImage(company)}
+                                    className="EntityList__avatar"
+                                />
+                            </Link>
+                        ) : undefined,
+                    body: (company) => (
+                        <div className="EntityList__body CompanyList__body">
+                            <CompanyContactLinks
+                                website={company.website}
+                                email={company.email}
+                                phone={company.phone}
+                                variant="compact"
+                                className="CompanyList__contacts"
+                            />
+                            <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
+                        </div>
+                    ),
+                }}
+            />
+        </SearchDrawer>
     );
 };

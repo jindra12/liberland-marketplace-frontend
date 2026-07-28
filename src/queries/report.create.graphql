@@ -1,0 +1,11 @@
+mutation CreateReport($data: mutationReportInput!) {
+    createReport(data: $data) {
+        id
+        userId {
+            id
+        }
+        contentLink
+        reason
+        createdAt
+    }
+}

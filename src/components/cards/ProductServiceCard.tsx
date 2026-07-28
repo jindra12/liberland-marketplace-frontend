@@ -1,114 +1,93 @@
 import * as React from "react";
-import { DollarOutlined } from "@ant-design/icons";
+
 import { Link } from "react-router-dom";
-import { Avatar, Card, Grid, List, Space, Tag, Typography } from "antd";
-import { RightOutlined } from "@ant-design/icons";
-import { ListProductsQuery } from "../../generated/graphql";
-import { formatUsdFromCents, getImage } from "../../utils";
+
+import { DollarOutlined } from "@ant-design/icons";
+import { Avatar, Space, Tag } from "antd";
+
+import { ListProductsQuery, Product } from "../../generated/graphql";
+import { routes } from "../../routes";
 import { CartItemCount } from "../cart/CartItemCount";
+import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
+import { formatUsdFromCents } from "../shared/product/utils";
+
+import { ProductCarousel } from "./ProductCarousel";
+import { SplashCardItem } from "./SplashCardItem";
 import { SplashShareDetailActionRow } from "./SplashShareDetailActionRow";
-import { RouteButton } from "../RouteButton";
 
 type ProductItem = NonNullable<NonNullable<ListProductsQuery["Products"]>["docs"]>[number];
-
 type ProductServiceCardProps = {
     items: ProductItem[];
     loading?: boolean;
-    totalDocs?: number;
-    identityId?: string;
 };
 
-export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = ({
-    items,
-    loading,
-    identityId,
-    totalDocs,
-}) => {
-    const { xl } = Grid.useBreakpoint();
-    const remaining = totalDocs !== undefined ? totalDocs - items.length : 0;
+export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps> = (props) => {
+    const likeMutation = useLikeProductMutation();
+    const dislikeMutation = useDislikeProductMutation();
+
     return (
-        <Card
-            className="SplashEntityCard SplashEntityCard--products"
-            title={(
-                <Typography.Title level={3} className="SplashEntityCard__title">
-                    <Link to="/products-services" className="SplashEntityCard__titleLink">Products / Services</Link>
-                </Typography.Title>
-            )}
-        >
-            <List
-                className="SplashEntityCard__list"
-                loading={loading}
-                dataSource={items}
-                locale={{ emptyText: "Coming soon!" }}
-                renderItem={(product) => {
-                    const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
-                    const imageSrc = getImage(product) || getImage(product.company);
-                    const detailPath = `/products-services/${product.id}`;
-                    const shareTitle = product.name || "Product";
-                    const shareText = `Check out ${product.name} on NSwap.`;
-                    return (
-                        <List.Item
-                            actions={xl ? [(
-                                <SplashShareDetailActionRow
-                                    key={`product-actions-${product.id}`}
-                                    detailPath={detailPath}
-                                    title={shareTitle}
-                                    text={shareText}
-                                />
-                            )] : undefined}
-                        >
-                            <div className="SplashEntityCard__itemBody">
-                                <List.Item.Meta
-                                    avatar={imageSrc ? (
-                                        <Link to={detailPath}>
-                                            <Avatar
-                                                shape="square"
-                                                size={48}
-                                                src={imageSrc}
-                                                className="SplashEntityCard__avatar"
-                                            />
-                                        </Link>
-                                    ) : undefined}
-                                    title={(
-                                        <Link to={detailPath} className="SplashEntityCard__itemLink">
-                                            {product.name}
-                                        </Link>
-                                    )}
-                                />
-                                <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                    {price && (
-                                        <Tag color="gold" icon={<DollarOutlined />}>
-                                            {`Price: ${price}`}
-                                        </Tag>
-                                    )}
-                                    <CartItemCount
-                                        productId={product.id}
-                                        serverURL={product.serverURL!}
+        <ProductCarousel
+            className="SplashEntityCard--products"
+            items={props.items}
+            loading={props.loading}
+            renderItem={(product) => {
+                const price = product.priceInUSDEnabled ? formatUsdFromCents(product.priceInUSD) : null;
+                const imageSrc = getImage(product) || getImage(product.company);
+                const detailPath = routes.productsServices.detail.getLink(product as Product);
+                const shareTitle = product.name || "Product";
+                const shareText = `Check out ${product.name} on NSwap.`;
+
+                return (
+                    <SplashCardItem
+                        id={product.id}
+                        detailPath={detailPath}
+                        title={product.name || "Product"}
+                        avatar={
+                            imageSrc ? (
+                                <Link to={detailPath}>
+                                    <Avatar
+                                        shape="square"
+                                        size={80}
+                                        src={imageSrc}
+                                        className="SplashEntityCard__avatar"
                                     />
-                                </Space>
-                                {!xl && (
-                                    <SplashShareDetailActionRow
-                                        detailPath={detailPath}
-                                        title={shareTitle}
-                                        text={shareText}
-                                    />
-                                )}
-                            </div>
-                        </List.Item>
-                    );
-                }}
-            />
-            {remaining > 0 && identityId && (
-                <RouteButton
-                    to={`/products-services?tribe=${identityId}`}
-                    type="link"
-                    icon={<RightOutlined />}
-                    iconPosition="end"
-                    className="SplashEntityCard__moreLink"
-                >
-                    And +{remaining} more
-                </RouteButton>
-            )}
-        </Card>
+                                </Link>
+                            ) : null
+                        }
+                        liked={product.hasLiked}
+                        likeCount={product.likeCount}
+                        serverURL={product.serverURL}
+                        likeActions={{
+                            likeMutation,
+                            dislikeMutation,
+                        }}
+                        actions={[
+                            <SplashShareDetailActionRow
+                                key={`product-actions-${product.id}`}
+                                detailPath={detailPath}
+                                title={shareTitle}
+                                text={shareText}
+                            />,
+                        ]}
+                    >
+                        {product.company?.identity && (
+                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                                <IdentityTagLink identity={product.company.identity} color="success" />
+                            </Space>
+                        )}
+                        <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
+                            {price && (
+                                <Tag color="gold" icon={<DollarOutlined />}>
+                                    {`Price: ${price}`}
+                                </Tag>
+                            )}
+                            <CartItemCount productId={product.id} serverURL={product.serverURL!} />
+                        </Space>
+                    </SplashCardItem>
+                );
+            }}
+        />
     );
 };

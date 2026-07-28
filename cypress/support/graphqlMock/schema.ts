@@ -1,0 +1,508 @@
+import { buildSchema } from "graphql";
+
+export const graphqlSchema = buildSchema(`
+    scalar JSON
+    scalar AnalyticsTrackInput
+    scalar Comment_ReplyPostRelationshipInput
+    scalar mutationCartInput
+    scalar mutationCartUpdateInput
+    scalar mutationCompanyInput
+    scalar mutationCompanyUpdateInput
+    scalar mutationJobInput
+    scalar mutationJobUpdateInput
+    scalar mutationPostInput
+    scalar mutationPostUpdateInput
+    scalar mutationOrderInput
+    scalar mutationOrderUpdateInput
+    scalar mutationInformationRequestInput
+    scalar mutationReportInput
+    scalar mutationProductInput
+    scalar mutationProductUpdateInput
+    scalar mutationStartupInput
+    scalar mutationStartupUpdateInput
+    scalar mutationUserUpdateInput
+
+    input ShareRepostInput {
+        companyId: String
+        description: String
+        link: String!
+    }
+
+    enum LikeableCollectionMutation {
+        companies
+        identities
+        jobs
+        posts
+        products
+        startups
+        ventures
+    }
+
+    type Query {
+        Carts(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
+        Searches(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
+        permissions: [Permission!]!
+        Companies(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            identityId: JSON
+            companyId: JSON
+            userId: JSON
+        ): MockCollection!
+        Jobs(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+            companyIds: [JSON!]
+        ): MockCollection!
+        Products(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            companyIds: [JSON]
+        ): MockCollection!
+        Startups(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+        ): MockCollection!
+        Identities(draft: Boolean, limit: Int, page: Int, sort: String, searchTerm: String, where: JSON): MockCollection!
+        Comments(draft: Boolean, limit: Int, page: Int, sort: String, where: JSON): MockCollection!
+        Syndications(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
+        Comment(id: String!, draft: Boolean): MockNode
+        Company(id: String!, draft: Boolean): MockNode
+        Job(id: String!, draft: Boolean): MockNode
+        Post(id: String!, draft: Boolean): MockNode
+        Posts(
+            draft: Boolean
+            limit: Int
+            page: Int
+            sort: String
+            searchTerm: String
+            where: JSON
+            companyId: JSON
+            identityId: JSON
+            userId: JSON
+            companyIds: [JSON!]
+        ): MockCollection!
+        Product(id: String!, draft: Boolean): MockNode
+        Startup(id: String!, draft: Boolean): MockNode
+        Identity(id: String!, draft: Boolean): MockNode
+        sellerOrderProducts(fulfilled: Boolean, rejected: Boolean, limit: Int, page: Int): SellerOrderProductsPage!
+        meUser: MockNode
+    }
+
+    type Mutation {
+        createCart(data: mutationCartInput, draft: Boolean): MockNode
+        deleteCart(id: String!, trash: Boolean): MockNode
+        updateCart(id: String!, data: mutationCartUpdateInput, draft: Boolean): MockNode
+        createCompany(data: mutationCompanyInput, draft: Boolean): MockNode
+        deleteCompany(id: String!): MockNode
+        updateCompany(id: String!, data: mutationCompanyUpdateInput, draft: Boolean): MockNode
+        createJob(data: mutationJobInput, draft: Boolean): MockNode
+        deleteJob(id: String!): MockNode
+        updateJob(id: String!, data: mutationJobUpdateInput, draft: Boolean): MockNode
+        createPost(data: mutationPostInput, draft: Boolean): MockNode
+        deletePost(id: String!): MockNode
+        updatePost(id: String!, data: mutationPostUpdateInput, draft: Boolean): MockNode
+        createProduct(data: mutationProductInput, draft: Boolean): MockNode
+        deleteProduct(id: String!): MockNode
+        updateProduct(id: String!, data: mutationProductUpdateInput, draft: Boolean): MockNode
+        createStartup(data: mutationStartupInput, draft: Boolean): MockNode
+        deleteStartup(id: String!): MockNode
+        updateStartup(id: String!, data: mutationStartupUpdateInput, draft: Boolean): MockNode
+        createOrder(data: mutationOrderInput, draft: Boolean): MockNode
+        updateOrder(id: String!, data: mutationOrderUpdateInput, draft: Boolean): MockNode
+        sellerOrderProducts(fulfilled: Boolean, rejected: Boolean, limit: Int, page: Int): SellerOrderProductsPage!
+        updateSellerOrderProductFulfilled(fulfilled: Boolean!, orderId: String!, paymentProofId: String!): SellerOrderProduct!
+        updateSellerOrderProductRejected(orderId: String!, paymentProofId: String!, rejected: Boolean!): SellerOrderProduct!
+        createInformationRequest(data: mutationInformationRequestInput): MockNode
+        createReport(data: mutationReportInput): MockNode
+        shareRepost(input: ShareRepostInput!): ShareRepostResult!
+        createComment(data: JSON): MockNode
+        deleteComment(id: String!): MockNode
+        updateComment(id: String!, data: JSON): MockNode
+        updateCommentContent(id: String!, content: String!): MockNode
+        createNotificationSubscription(data: JSON): MockNode
+        deleteNotificationSubscription(id: String!): MockNode
+        joinStartup(id: String!): MockNode
+        leaveStartup(id: String!): MockNode
+        updateUser(id: String!, data: mutationUserUpdateInput): MockNode
+        setLikeState(collection: LikeableCollectionMutation!, id: String!, liked: Boolean!): LikeStateMutationResult
+        trackAnalyticsEvent(input: AnalyticsTrackInput): MockNode
+    }
+
+    type LikeStateMutationResult {
+        collection: LikeableCollectionMutation
+        hasLiked: Boolean
+        id: String
+        likeCount: Int
+    }
+
+    type ShareRepostSource {
+        description: String!
+        imageURL: String
+        isSinglePageApp: Boolean!
+        link: String!
+        title: String!
+    }
+
+    type ShareRepostResult {
+        company: Company
+        post: Post
+        source: ShareRepostSource!
+    }
+
+    type SellerOrderShippingAddress {
+        title: String
+        firstName: String
+        lastName: String
+        company: String
+        addressLine1: String
+        addressLine2: String
+        city: String
+        state: String
+        postalCode: String
+        country: String
+        phone: String
+    }
+
+    type SellerOrderProductPaymentProof {
+        chain: String!
+        fulfilled: Boolean!
+        rejected: Boolean!
+        id: String!
+        transactionHash: String!
+    }
+
+    type SellerOrderProduct {
+        id: String!
+        chain: String!
+        fulfilled: Boolean!
+        rejected: Boolean!
+        orderCreatedAt: String!
+        orderId: String!
+        orderStatus: String
+        customerEmail: String
+        payerAddress: String
+        paymentProof: SellerOrderProductPaymentProof!
+        paymentProofId: String!
+        product: Product
+        productId: String!
+        quantity: Int!
+        shippingAddress: SellerOrderShippingAddress
+        transactionHash: String!
+    }
+
+    type SellerOrderProductsPage {
+        docs: [SellerOrderProduct!]!
+        totalDocs: Int!
+        limit: Int!
+        totalPages: Int!
+        page: Int!
+        hasPrevPage: Boolean!
+        hasNextPage: Boolean!
+    }
+
+    type Permission {
+        serverUrl: String
+        canCreateContentAsNonAdmin: Boolean
+    }
+
+    type SalaryRange {
+        min: Float
+        max: Float
+        currency: String
+    }
+
+    enum StartupLookingFor {
+        funding
+        founders
+        team
+        traction
+        distribution
+        production
+        idea
+        product
+    }
+
+    enum StartupAlreadyHave {
+        funding
+        founders
+        team
+        traction
+        distribution
+        production
+        idea
+        product
+    }
+
+    type MockCollection {
+        docs: [MockNode!]!
+        totalDocs: Int!
+        limit: Int!
+        totalPages: Int!
+        page: Int!
+        hasPrevPage: Boolean!
+        hasNextPage: Boolean!
+        prevPage: Int
+        nextPage: Int
+    }
+
+    enum Post_RelatedPosts_RelationTo {
+        posts
+        companies
+        jobs
+        products
+        startups
+        identities
+    }
+
+    type Post_RelatedPosts_Relationship {
+        relationTo: Post_RelatedPosts_RelationTo
+        value: Post_RelatedPosts
+    }
+
+    union Post_RelatedPosts = Post | Company | Identity | Job | Product | Startup
+
+    type Media {
+        id: String
+        url: String
+        alt: String
+        filename: String
+        width: Float
+        height: Float
+        mimeType: String
+    }
+
+    type Post {
+        id: String
+        title: String
+        slug: String
+        repost: String
+        heroImage: Media
+        company: Company
+    }
+
+    type Company {
+        id: String
+        name: String
+        verification: String
+        image: Media
+    }
+
+    type Identity {
+        id: String
+        name: String
+        identityName: String
+        image: Media
+    }
+
+    type Job {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
+    type Product {
+        id: String
+        name: String
+        image: Media
+        company: Company
+        createdBy: MockNode
+        createdAt: String
+        updatedAt: String
+    }
+
+    type Startup {
+        id: String
+        title: String
+        image: Media
+        company: Company
+    }
+
+    type MockNode {
+        id: JSON
+        name: JSON
+        verification: JSON
+        title: JSON
+        description: JSON
+        slug: JSON
+        serverURL: JSON
+        serverUrl: JSON
+        _status: JSON
+        website: JSON
+        phone: JSON
+        email: JSON
+        content: JSON
+        contentLink: JSON
+        repost: JSON
+        reason: JSON
+        anonymousHash: JSON
+        replyPostRelationTo: JSON
+        replyPostValue: JSON
+        likeCount: JSON
+        hasLiked: JSON
+        replyCount: JSON
+        reportedLinks: [JSON!]
+        currency: JSON
+        secret: JSON
+        subtotal: JSON
+        customerEmail: JSON
+        status: JSON
+        createdAt: JSON
+        updatedAt: JSON
+        deletedAt: JSON
+        priceInUSDEnabled: JSON
+        priceInUSD: JSON
+        priceInETH: JSON
+        priceInSOL: JSON
+        priceInTRX: JSON
+        inventory: JSON
+        enableVariants: JSON
+        orderable: JSON
+        companyIdentityId: JSON
+        url: JSON
+        applyUrl: JSON
+        salaryRange: SalaryRange
+        positions: Float
+        location: JSON
+        employmentType: JSON
+        stage: JSON
+        lookingFor: [StartupLookingFor!]
+        alreadyHave: [StartupAlreadyHave!]
+        itemCount: JSON
+        amount: JSON
+        quantity: JSON
+        purchasedAt: JSON
+        payerAddress: JSON
+        chain: JSON
+        address: JSON
+        value: JSON
+        label: JSON
+        key: JSON
+        default: JSON
+        selected: JSON
+        mimeType: JSON
+        filename: JSON
+        width: JSON
+        height: JSON
+        alt: JSON
+        publishedAt: JSON
+        contentRankScore: JSON
+        nsfw: JSON
+        autoEnable: JSON
+        isSubscribed: JSON
+        isActive: JSON
+        success: JSON
+        limit: JSON
+        page: JSON
+        totalDocs: JSON
+        totalPages: JSON
+        hasNextPage: JSON
+        hasPrevPage: JSON
+        nextPage: JSON
+        prevPage: JSON
+        targetCollection: JSON
+        targetID: JSON
+        distinctId: JSON
+        eventId: JSON
+        sessionId: JSON
+        transactionHash: JSON
+        nativePerStable: JSON
+        stablePerNative: JSON
+        expectedNativeAmount: JSON
+        fetchedAt: JSON
+        priority: JSON
+        postedAt: JSON
+        relationTo: JSON
+        firstName: JSON
+        lastName: JSON
+        city: JSON
+        state: JSON
+        postalCode: JSON
+        country: JSON
+        addressLine1: JSON
+        addressLine2: JSON
+        provider: JSON
+        message: JSON
+        isPrivate: JSON
+        allowedIdentities: [MockNode!]
+        disallowedIdentities: [MockNode!]
+        cryptoAddresses: MockNode
+        docs: [MockNode!]
+        involvedUsers: [MockNode!]
+        items: [MockNode!]
+        categories: [MockNode!]
+        populatedAuthors: [MockNode!]
+        relatedPosts: [Post_RelatedPosts_Relationship!]
+        relatedProducts: [MockNode!]
+        parameters: [MockNode!]
+        values: [MockNode!]
+        options: [MockNode!]
+        properties: [MockNode!]
+        transactions: [MockNode!]
+        transactionHashes: [MockNode!]
+        variantTypes: [MockNode!]
+        wallets: [MockNode!]
+        cryptoPrices: [MockNode!]
+        image: MockNode
+        heroImage: MockNode
+        meta: MockNode
+        company: MockNode
+        identity: MockNode
+        createdBy: MockNode
+        userId: MockNode
+        user: MockNode
+        customer: MockNode
+        product: MockNode
+        startup: MockNode
+        job: MockNode
+        doc: MockNode
+        replyComment: MockNode
+        replyPost: MockNode
+        variant: MockNode
+        variantType: MockNode
+        shippingAddress: User_ShippingAddress
+        bounty: MockNode
+        fundsNeeded: MockNode
+        analytics: MockNode
+        variants: MockCollection
+    }
+
+    type User_ShippingAddress {
+        title: JSON
+        firstName: JSON
+        lastName: JSON
+        company: String
+        addressLine1: JSON
+        addressLine2: JSON
+        city: JSON
+        state: JSON
+        postalCode: JSON
+        country: JSON
+        phone: JSON
+    }
+`);

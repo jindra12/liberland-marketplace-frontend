@@ -1,11 +1,15 @@
 import * as React from "react";
+
 import { Flex } from "antd";
-import { ProductServiceListInternal } from "./lists/ProductServiceListInternal";
+
+import { routes } from "../routes";
+
 import { useCartItems } from "./cart/useCartItems";
+import { ProductServiceListInternal } from "./lists/ProductServiceListInternal";
 import { RouteButton } from "./RouteButton";
 
 const Cart: React.FunctionComponent = () => {
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const { isLoading, products, refetch, totalQuantity } = useCartItems();
 
     return (
@@ -20,10 +24,13 @@ const Cart: React.FunctionComponent = () => {
                 refetch={refetch}
                 title="Cart"
                 showOrderNowFallback={false}
+                hideIdentityFilter
+                hideBuyNowButton
+                endMessage={false}
             />
             {totalQuantity > 0 && (
                 <RouteButton
-                    to="/order"
+                    to={routes.order.route}
                     type="primary"
                     size="large"
                     block

@@ -1,70 +1,83 @@
-query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20) {
-  Products(
-    draft: false
-    where: {
-      AND: [
-        { company: { equals: $companyId } }
-        { _status: { equals: published } }
-      ]
+query ListProductsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankScore") {
+    Products(
+        draft: false
+        where: { AND: [{ company: { equals: $companyId } }, { _status: { equals: published } }] }
+        page: $page
+        limit: $limit
+        sort: $sort
+    ) {
+        docs {
+            id
+            isSubscribed
+            serverURL
+            name
+            inventory
+            description
+            likeCount
+            cryptoAddresses {
+                chain
+                address
+            }
+            url
+            orderable
+            priceInUSDEnabled
+            priceInUSD
+            priceInETH
+            priceInSOL
+            priceInTRX
+            properties {
+                id
+                key
+                value
+            }
+            parameters {
+                id
+                name
+                values {
+                    id
+                    key
+                    name
+                    default
+                }
+            }
+            relatedProducts {
+                id
+                name
+                serverURL
+            }
+            image {
+                id
+                url
+                alt
+                filename
+                width
+                height
+                mimeType
+            }
+            company {
+                id
+                serverURL
+                name
+                description
+                cryptoAddresses {
+                    chain
+                    address
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+            }
+        }
+        totalDocs
+        limit
+        totalPages
+        page
+        hasPrevPage
+        hasNextPage
+        prevPage
+        nextPage
     }
-    page: $page
-    limit: $limit
-  ) {
-    docs {
-      id
-      serverURL
-      name
-      inventory
-      description
-      cryptoAddresses {
-          chain
-          address
-        }
-      url
-      orderable
-      priceInUSDEnabled
-      priceInUSD
-      priceInETH
-      priceInSOL
-      priceInTRX
-      properties {
-        id
-        key
-        value
-      }
-      image {
-        id
-        url
-        alt
-        filename
-        width
-        height
-        mimeType
-      }
-      company {
-        id
-        serverURL
-        name
-        description
-        cryptoAddresses {
-          chain
-          address
-        }
-        identity {
-          id
-          serverURL
-          name
-          description
-        }
-      }
-    }
-    totalDocs
-    limit
-    totalPages
-    page
-    hasPrevPage
-    hasNextPage
-    prevPage
-    nextPage
-  }
 }
