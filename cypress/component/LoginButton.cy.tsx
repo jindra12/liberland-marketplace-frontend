@@ -124,6 +124,37 @@ describe("login button", () => {
         });
     });
 
+    it("logs in directly when there is only one available login server", () => {
+        cy.viewport(1440, 1200);
+        const authSpies = mountLoginButton("/jobs", [MAIN_SERVER_URL]);
+        expectLoginButtonHasLargeSize();
+
+        cy.contains(".LoginButton", "Log in").should("be.visible").click();
+        cy.get(".LoginButton__menu").should("not.exist");
+        expectLoginButtonIconToSitBeforeText();
+
+        cy.wrap(null).should(() => {
+            expect(authSpies.signinRedirect).to.have.been.calledOnceWith({
+                state: "/jobs",
+            });
+        });
+    });
+
+    it("logs out directly when there is only one available logged in server", () => {
+        cy.viewport(1440, 1200);
+        const authSpies = mountLoginButton("/jobs", [MAIN_SERVER_URL], [MAIN_SERVER_URL]);
+        expectLoginButtonHasLargeSize();
+
+        cy.contains(".LoginButton", "Accounts").should("be.visible").click();
+        cy.get(".LoginButton__menu").should("not.exist");
+        expectLoginButtonIconToSitBeforeText();
+
+        cy.wrap(null).should(() => {
+            expect(authSpies.removeUser.callCount).to.equal(1);
+            expect(window.localStorage.getItem(buildAuthStorageKey(MAIN_SERVER_URL))).to.equal(null);
+        });
+    });
+
     it("shows logged in and logged out servers in separate tree groups", () => {
         cy.viewport(1440, 1200);
         mountLoginButton("/jobs", [MAIN_SERVER_URL, COOP_SERVER_URL], [MAIN_SERVER_URL]);
@@ -163,8 +194,8 @@ describe("login button", () => {
             .click({ force: true });
 
         cy.wrap(null).should(() => {
-            expect(authSpies.removeUser).to.have.been.calledOnce;
-            expect(window.localStorage.getItem(buildAuthStorageKey(MAIN_SERVER_URL))).to.be.null;
+            expect(authSpies.removeUser.callCount).to.equal(1);
+            expect(window.localStorage.getItem(buildAuthStorageKey(MAIN_SERVER_URL))).to.equal(null);
         });
         cy.get(".LoginButton__menu").should("not.be.visible");
     });

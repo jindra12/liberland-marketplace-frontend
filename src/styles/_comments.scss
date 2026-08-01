@@ -19,6 +19,10 @@
     border: 1px solid var(--ant-color-border-secondary);
     border-radius: 20px;
     background: var(--ant-color-fill-alter);
+
+    &__field {
+        margin-bottom: 40px;
+    }
 }
 
 .CommentComposer__actions {
