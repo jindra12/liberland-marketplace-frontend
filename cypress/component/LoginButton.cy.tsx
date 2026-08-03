@@ -145,7 +145,7 @@ describe("login button", () => {
         const authSpies = mountLoginButton("/jobs", [MAIN_SERVER_URL], [MAIN_SERVER_URL]);
         expectLoginButtonHasLargeSize();
 
-        cy.contains(".LoginButton", "Accounts").should("be.visible").click();
+        cy.contains(".LoginButton", "Log out").should("be.visible").click();
         cy.get(".LoginButton__menu").should("not.exist");
         expectLoginButtonIconToSitBeforeText();
 

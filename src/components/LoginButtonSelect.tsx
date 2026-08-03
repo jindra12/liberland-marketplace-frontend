@@ -21,7 +21,7 @@ export const LoginButtonSelect: React.FunctionComponent<LoginButtonSelectProps> 
     const hasSingleLoginEndpoint = loginEndpoints.length === 1 && logoutEndpoints.length === 0;
     const hasSingleLogoutEndpoint = logoutEndpoints.length === 1 && loginEndpoints.length === 0;
     const className = props.className ? `LoginButton ${props.className}` : "LoginButton";
-    const label = hasLoggedInServer ? "Accounts" : "Log in";
+    const label = hasSingleLogoutEndpoint ? "Log out" : hasLoggedInServer ? "Accounts" : "Log in";
     const icon = hasLoggedInServer ? <UserOutlined /> : <LoginOutlined />;
 
     const menu: MenuProps = {
