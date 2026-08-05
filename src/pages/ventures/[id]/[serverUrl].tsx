@@ -1,6 +1,6 @@
 import { fetchStartupById } from "../../../components/hooks";
-import { buildStartupPageMetadata } from "../../_detailMetadata";
-import { createDetailPage } from "../../_detailPage";
+import { buildStartupPageMetadata } from "../../../detailMetadata";
+import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
     fetcher: fetchStartupById,

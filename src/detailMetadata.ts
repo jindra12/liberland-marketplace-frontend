@@ -7,9 +7,9 @@ import type {
     PostByIdQuery,
     ProductByIdQuery,
     StartupByIdQuery,
-} from "../generated/graphql";
+} from "./generated/graphql";
 
-import { stripMarkdownToText } from "../components/publish/postForm/utils";
+import { stripMarkdownToText } from "./components/publish/postForm/utils";
 
 const SITE_NAME = "NSwap";
 const SITE_URL = "https://nswap.io";
@@ -118,6 +118,25 @@ export type DetailPageMetadata = {
     description: string;
     canonicalPath: string;
     jsonLd: Record<string, unknown>[];
+    imageUrl?: string;
+    imageAlt?: string;
+    ogType?: string;
+    extraMetaTags?: Array<{
+        content: string;
+        name?: string;
+        property?: string;
+    }>;
+};
+
+type DetailPageMetadataExtras = {
+    imageUrl?: string;
+    imageAlt?: string;
+    ogType?: string;
+    extraMetaTags?: Array<{
+        content: string;
+        name?: string;
+        property?: string;
+    }>;
 };
 
 export const decodeServerUrlSegment = (value: string): string => {
@@ -131,12 +150,17 @@ export const buildStandardDetailMetadata = (
     description: string,
     canonicalPath: string,
     extraJsonLd: Record<string, unknown>[] = [],
+    extras: DetailPageMetadataExtras = {},
 ): DetailPageMetadata => {
     return {
         title: ensureSiteSuffix(detailLabel),
         description,
         canonicalPath,
         jsonLd: buildDetailJsonLd(sectionName, sectionPath, detailLabel, description, canonicalPath, extraJsonLd),
+        imageUrl: extras.imageUrl,
+        imageAlt: extras.imageAlt,
+        ogType: extras.ogType,
+        extraMetaTags: extras.extraMetaTags,
     };
 };
 
@@ -157,51 +181,72 @@ export const buildPostPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Posts", "/posts", detailLabel, description, canonicalPath, [
-        {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: detailLabel,
-            description,
-            datePublished: post.publishedAt ?? post.createdAt,
-            dateModified: post.updatedAt,
-            image: buildAbsoluteImageUrl(post.heroImage?.url),
-            author: post.createdBy
-                ? {
-                      "@type": "Person",
-                      identifier: post.createdBy.id,
-                      name: post.createdBy.name,
-                  }
-                : undefined,
-            publisher: post.company
-                ? {
-                      "@type": "Organization",
-                      identifier: post.company.id,
-                      name: post.company.name,
-                      url: post.company.serverURL,
-                      logo: buildAbsoluteImageUrl(post.company.image?.url),
-                  }
-                : undefined,
-            about: post.company
-                ? {
-                      "@type": "Organization",
-                      identifier: post.company.id,
-                      name: post.company.name,
-                  }
-                : undefined,
-            mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
-            interactionStatistic:
-                post.likeCount !== null && post.likeCount !== undefined
-                    ? [
-                          {
-                              "@type": "InteractionCounter",
-                              interactionType: { "@type": "LikeAction" },
-                              userInteractionCount: post.likeCount,
-                          },
-                      ]
+    const imageUrl = buildAbsoluteImageUrl(post.heroImage?.url ?? post.company?.image?.url);
+    const imageAlt = post.heroImage?.alt ?? post.heroImage?.filename ?? detailLabel;
+
+    return buildStandardDetailMetadata(
+        "Posts",
+        "/posts",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: detailLabel,
+                description,
+                datePublished: post.publishedAt ?? post.createdAt,
+                dateModified: post.updatedAt,
+                image: buildAbsoluteImageUrl(post.heroImage?.url),
+                author: post.createdBy
+                    ? {
+                          "@type": "Person",
+                          identifier: post.createdBy.id,
+                          name: post.createdBy.name,
+                      }
                     : undefined,
+                publisher: post.company
+                    ? {
+                          "@type": "Organization",
+                          identifier: post.company.id,
+                          name: post.company.name,
+                          url: post.company.serverURL,
+                          logo: buildAbsoluteImageUrl(post.company.image?.url),
+                      }
+                    : undefined,
+                about: post.company
+                    ? {
+                          "@type": "Organization",
+                          identifier: post.company.id,
+                          name: post.company.name,
+                      }
+                    : undefined,
+                mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+                interactionStatistic:
+                    post.likeCount !== null && post.likeCount !== undefined
+                        ? [
+                              {
+                                  "@type": "InteractionCounter",
+                                  interactionType: { "@type": "LikeAction" },
+                                  userInteractionCount: post.likeCount,
+                              },
+                          ]
+                        : undefined,
+            },
+        ],
+        {
+            imageUrl,
+            imageAlt,
+            ogType: "article",
+            extraMetaTags: [
+                ...(post.publishedAt ? [{ property: "article:published_time", content: post.publishedAt }] : []),
+                ...(post.updatedAt ? [{ property: "article:modified_time", content: post.updatedAt }] : []),
+                ...(post.createdBy?.name ? [{ property: "article:author", content: post.createdBy.name }] : []),
+                ...(post.company?.name ? [{ property: "article:section", content: post.company.name }] : []),
+            ],
         },
-    ]);
+    );
 };
 
 export const buildCommentPageMetadata = (
@@ -223,42 +268,63 @@ export const buildCommentPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Comments", "/comments", detailLabel, description, canonicalPath, [
-        {
-            "@context": "https://schema.org",
-            "@type": "Comment",
-            text: comment.content,
-            dateCreated: comment.createdAt,
-            dateModified: comment.updatedAt,
-            author: comment.createdBy
-                ? {
-                      "@type": "Person",
-                      identifier: comment.createdBy.id,
-                      name: comment.createdBy.name,
-                  }
-                : undefined,
-            about: comment.company
-                ? {
-                      "@type": "Organization",
-                      identifier: comment.company.id,
-                      name: comment.company.name,
-                      image: buildAbsoluteImageUrl(comment.company.image?.url),
-                  }
-                : undefined,
-            mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
-            interactionStatistic:
-                comment.likeCount !== null && comment.likeCount !== undefined
-                    ? [
-                          {
-                              "@type": "InteractionCounter",
-                              interactionType: { "@type": "LikeAction" },
-                              userInteractionCount: comment.likeCount,
-                          },
-                      ]
+    const imageUrl = buildAbsoluteImageUrl(comment.company?.image?.url);
+    const imageAlt = comment.company?.image?.alt ?? comment.company?.image?.filename ?? comment.company?.name ?? detailLabel;
+
+    return buildStandardDetailMetadata(
+        "Comments",
+        "/comments",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "Comment",
+                text: comment.content,
+                dateCreated: comment.createdAt,
+                dateModified: comment.updatedAt,
+                author: comment.createdBy
+                    ? {
+                          "@type": "Person",
+                          identifier: comment.createdBy.id,
+                          name: comment.createdBy.name,
+                      }
                     : undefined,
-            commentCount: comment.replyCount ?? undefined,
+                about: comment.company
+                    ? {
+                          "@type": "Organization",
+                          identifier: comment.company.id,
+                          name: comment.company.name,
+                          image: buildAbsoluteImageUrl(comment.company.image?.url),
+                      }
+                    : undefined,
+                mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+                interactionStatistic:
+                    comment.likeCount !== null && comment.likeCount !== undefined
+                        ? [
+                              {
+                                  "@type": "InteractionCounter",
+                                  interactionType: { "@type": "LikeAction" },
+                                  userInteractionCount: comment.likeCount,
+                              },
+                          ]
+                        : undefined,
+                commentCount: comment.replyCount ?? undefined,
+            },
+        ],
+        {
+            imageUrl,
+            imageAlt,
+            ogType: "article",
+            extraMetaTags: [
+                ...(comment.createdAt ? [{ property: "article:published_time", content: comment.createdAt }] : []),
+                ...(comment.updatedAt ? [{ property: "article:modified_time", content: comment.updatedAt }] : []),
+                ...(comment.createdBy?.name ? [{ property: "article:author", content: comment.createdBy.name }] : []),
+                ...(comment.company?.name ? [{ property: "article:section", content: comment.company.name }] : []),
+            ],
         },
-    ]);
+    );
 };
 
 export const buildCompanyPageMetadata = (
@@ -275,20 +341,35 @@ export const buildCompanyPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Companies", "/companies", detailLabel, description, canonicalPath, [
+    return buildStandardDetailMetadata(
+        "Companies",
+        "/companies",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: detailLabel,
+                description,
+                url: company.website ?? company.serverURL,
+                image: buildAbsoluteImageUrl(company.image?.url),
+                telephone: company.phone,
+                email: company.email,
+                sameAs: company.identity?.website ? [company.identity.website] : undefined,
+                identifier: company.id,
+            },
+        ],
         {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: detailLabel,
-            description,
-            url: company.website ?? company.serverURL,
-            image: buildAbsoluteImageUrl(company.image?.url),
-            telephone: company.phone,
-            email: company.email,
-            sameAs: company.identity?.website ? [company.identity.website] : undefined,
-            identifier: company.id,
+            imageUrl: buildAbsoluteImageUrl(company.image?.url),
+            imageAlt: company.image?.alt ?? company.image?.filename ?? detailLabel,
+            ogType: "website",
+            extraMetaTags: [
+                ...(company.website ? [{ property: "og:see_also", content: company.website }] : []),
+            ],
         },
-    ]);
+    );
 };
 
 export const buildIdentityPageMetadata = (
@@ -304,17 +385,29 @@ export const buildIdentityPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Tribes", "/tribes", detailLabel, description, canonicalPath, [
+    return buildStandardDetailMetadata(
+        "Tribes",
+        "/tribes",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: detailLabel,
+                description,
+                url: identity.website ?? identity.serverURL,
+                image: buildAbsoluteImageUrl(identity.image?.url),
+                identifier: identity.id,
+            },
+        ],
         {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: detailLabel,
-            description,
-            url: identity.website ?? identity.serverURL,
-            image: buildAbsoluteImageUrl(identity.image?.url),
-            identifier: identity.id,
+            imageUrl: buildAbsoluteImageUrl(identity.image?.url),
+            imageAlt: identity.image?.alt ?? identity.image?.filename ?? detailLabel,
+            ogType: "website",
         },
-    ]);
+    );
 };
 
 export const buildJobPageMetadata = (
@@ -337,45 +430,57 @@ export const buildJobPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Jobs", "/jobs", detailLabel, description, canonicalPath, [
-        {
-            "@context": "https://schema.org",
-            "@type": "JobPosting",
-            title: detailLabel,
-            description,
-            datePosted: job.postedAt,
-            employmentType: job.employmentType,
-            jobLocation: job.location ? { "@type": "Place", name: job.location } : undefined,
-            directApply: Boolean(job.applyUrl),
-            applyUrl: job.applyUrl,
-            hiringOrganization: job.company
-                ? {
-                      "@type": "Organization",
-                      identifier: job.company.id,
-                      name: job.company.name,
-                      url: job.company.serverURL,
-                      logo: buildAbsoluteImageUrl(job.company.image?.url),
-                  }
-                : undefined,
-            baseSalary:
-                job.salaryRange?.min !== null &&
-                job.salaryRange?.min !== undefined &&
-                job.salaryRange?.max !== null &&
-                job.salaryRange?.max !== undefined
+    return buildStandardDetailMetadata(
+        "Jobs",
+        "/jobs",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "JobPosting",
+                title: detailLabel,
+                description,
+                datePosted: job.postedAt,
+                employmentType: job.employmentType,
+                jobLocation: job.location ? { "@type": "Place", name: job.location } : undefined,
+                directApply: Boolean(job.applyUrl),
+                applyUrl: job.applyUrl,
+                hiringOrganization: job.company
                     ? {
-                          "@type": "MonetaryAmount",
-                          currency: job.salaryRange.currency,
-                          value: {
-                              "@type": "QuantitativeValue",
-                              minValue: job.salaryRange.min,
-                              maxValue: job.salaryRange.max,
-                          },
+                          "@type": "Organization",
+                          identifier: job.company.id,
+                          name: job.company.name,
+                          url: job.company.serverURL,
+                          logo: buildAbsoluteImageUrl(job.company.image?.url),
                       }
                     : undefined,
-            identifier: job.id,
-            image: buildAbsoluteImageUrl(job.image?.url),
+                baseSalary:
+                    job.salaryRange?.min !== null &&
+                    job.salaryRange?.min !== undefined &&
+                    job.salaryRange?.max !== null &&
+                    job.salaryRange?.max !== undefined
+                        ? {
+                              "@type": "MonetaryAmount",
+                              currency: job.salaryRange.currency,
+                              value: {
+                                  "@type": "QuantitativeValue",
+                                  minValue: job.salaryRange.min,
+                                  maxValue: job.salaryRange.max,
+                              },
+                          }
+                        : undefined,
+                identifier: job.id,
+                image: buildAbsoluteImageUrl(job.image?.url),
+            },
+        ],
+        {
+            imageUrl: buildAbsoluteImageUrl(job.image?.url ?? job.company?.image?.url),
+            imageAlt: job.image?.alt ?? job.image?.filename ?? job.title ?? detailLabel,
+            ogType: "website",
         },
-    ]);
+    );
 };
 
 export const buildProductPageMetadata = (
@@ -446,6 +551,24 @@ export const buildProductPageMetadata = (
                 identifier: product.id,
             },
         ],
+        {
+            imageUrl: buildAbsoluteImageUrl(product.image?.url ?? product.company?.image?.url),
+            imageAlt: product.image?.filename ?? detailLabel,
+            ogType: "product",
+            extraMetaTags:
+                product.priceInUSD !== null && product.priceInUSD !== undefined
+                    ? [
+                          {
+                              property: "product:price:amount",
+                              content: String(product.priceInUSD),
+                          },
+                          {
+                              property: "product:price:currency",
+                              content: "USD",
+                          },
+                      ]
+                    : [],
+        },
     );
 };
 
@@ -466,18 +589,30 @@ export const buildStartupPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Ventures", "/ventures", detailLabel, description, canonicalPath, [
+    return buildStandardDetailMetadata(
+        "Ventures",
+        "/ventures",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: detailLabel,
+                description,
+                image: buildAbsoluteImageUrl(startup.image?.url),
+                foundingDate: startup.createdAt,
+                url: startup.identity?.website ?? startup.company?.serverURL,
+                identifier: startup.id,
+            },
+        ],
         {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: detailLabel,
-            description,
-            image: buildAbsoluteImageUrl(startup.image?.url),
-            foundingDate: startup.createdAt,
-            url: startup.identity?.website ?? startup.company?.serverURL,
-            identifier: startup.id,
+            imageUrl: buildAbsoluteImageUrl(startup.image?.url),
+            imageAlt: startup.image?.alt ?? startup.image?.filename ?? detailLabel,
+            ogType: "website",
         },
-    ]);
+    );
 };
 
 type SyndicationDetail = NonNullable<NonNullable<ListPublishedSyndicationUrlsQuery["Syndications"]>["docs"]>[number];
@@ -495,18 +630,36 @@ export const buildSyndicationPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata("Syndication", "/syndication", detailLabel, description, canonicalPath, [
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            name: detailLabel,
-            description,
-            url: `${SITE_URL}${canonicalPath}`,
-            about: {
-                "@type": "CreativeWork",
-                name: syndication.name ?? syndication.url ?? "Syndicated URL",
+    return buildStandardDetailMetadata(
+        "Syndication",
+        "/syndication",
+        detailLabel,
+        description,
+        canonicalPath,
+        [
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                name: detailLabel,
+                description,
+                url: `${SITE_URL}${canonicalPath}`,
+                about: {
+                    "@type": "CreativeWork",
+                    name: syndication.name ?? syndication.url ?? "Syndicated URL",
+                },
+                identifier: syndication.url,
             },
-            identifier: syndication.url,
+        ],
+        {
+            ogType: "website",
+            extraMetaTags: [
+                ...(syndication.nsfw !== null && syndication.nsfw !== undefined
+                    ? [{ name: "nsfw", content: String(Boolean(syndication.nsfw)) }]
+                    : []),
+                ...(syndication.autoEnable !== null && syndication.autoEnable !== undefined
+                    ? [{ name: "auto-enable", content: String(Boolean(syndication.autoEnable)) }]
+                    : []),
+            ],
         },
-    ]);
+    );
 };

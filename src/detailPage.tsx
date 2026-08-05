@@ -2,9 +2,9 @@ import * as React from "react";
 
 import type { GetServerSideProps } from "next";
 
-import { AppHead } from "../AppHead";
-import { Dynamic } from "../Dynamic";
-import { decodeServerUrlSegment, type DetailPageMetadata } from "./_detailMetadata";
+import { AppHead } from "./AppHead";
+import { Dynamic } from "./Dynamic";
+import { decodeServerUrlSegment, type DetailPageMetadata } from "./detailMetadata";
 
 export type DetailRouteParams = {
     id?: string;
@@ -96,6 +96,10 @@ export const createDetailPage = <TData, TVariables extends object | undefined, T
                     description={props.description}
                     canonicalPath={props.canonicalPath}
                     jsonLd={props.jsonLd}
+                    imageUrl={props.imageUrl}
+                    imageAlt={props.imageAlt}
+                    ogType={props.ogType}
+                    extraMetaTags={props.extraMetaTags}
                 />
                 <Dynamic />
             </>

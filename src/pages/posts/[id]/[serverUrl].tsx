@@ -1,6 +1,6 @@
-import { createDetailPage } from "../../_detailPage";
-import { buildPostPageMetadata } from "../../_detailMetadata";
+import { buildPostPageMetadata } from "../../../detailMetadata";
 import { fetchPostById } from "../../../components/hooks";
+import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
     fetcher: fetchPostById,

@@ -1,6 +1,6 @@
 import { fetchCommentDetail } from "../../../components/hooks";
-import { buildCommentPageMetadata } from "../../_detailMetadata";
-import { createDetailPage } from "../../_detailPage";
+import { buildCommentPageMetadata } from "../../../detailMetadata";
+import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
     fetcher: fetchCommentDetail,

@@ -1,6 +1,6 @@
 import { fetchCompanyById } from "../../../components/hooks";
-import { buildCompanyPageMetadata } from "../../_detailMetadata";
-import { createDetailPage } from "../../_detailPage";
+import { buildCompanyPageMetadata } from "../../../detailMetadata";
+import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
     fetcher: fetchCompanyById,

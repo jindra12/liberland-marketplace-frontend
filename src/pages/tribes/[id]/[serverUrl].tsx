@@ -1,6 +1,6 @@
 import { fetchIdentityById } from "../../../components/hooks";
-import { buildIdentityPageMetadata } from "../../_detailMetadata";
-import { createDetailPage } from "../../_detailPage";
+import { buildIdentityPageMetadata } from "../../../detailMetadata";
+import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
     fetcher: fetchIdentityById,
