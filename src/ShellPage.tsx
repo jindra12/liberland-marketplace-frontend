@@ -80,6 +80,10 @@ const resolvePathnameWithQuery = (pathname: string, query: Record<string, string
     return resolved;
 };
 
+const buildCollectionDescription = (description: string, actions: string[]): string => {
+    return `${description} On this page you can ${actions.join(", ")}.`;
+};
+
 const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] => {
     const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     return [
@@ -132,6 +136,7 @@ const buildCollectionJsonLd = (
     name: string,
     path: string,
     description: string,
+    searchPath: string = path,
 ): ((canonicalPath: string) => Record<string, unknown>[]) => {
     return (canonicalPath: string) => [
         {
@@ -144,6 +149,16 @@ const buildCollectionJsonLd = (
                 "@type": "WebSite",
                 name: SITE_NAME,
                 url: SITE_URL,
+            },
+            mainEntity: {
+                "@type": "ItemList",
+                name,
+                url: `${SITE_URL}${path}`,
+            },
+            potentialAction: {
+                "@type": "SearchAction",
+                target: `${SITE_URL}${searchPath}?search={search_term_string}`,
+                "query-input": "required name=search_term_string",
             },
         },
         {
@@ -223,17 +238,17 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     "/": {
         title: "NSwap | Tribe-first marketplace",
         description:
-            "Discover companies, jobs, products/services, and ventures from a network of syndicated marketplace endpoints.",
+            "Discover companies, jobs, products/services, ventures, posts, tribes, and syndicated sources from a network of marketplace endpoints. Use the sections to browse listings, inspect details, and follow the linked identity or company context.",
         buildJsonLd: buildWebsiteJsonLd,
     },
     "/jobs": {
         title: "Jobs | NSwap",
-        description: "Browse published jobs collected from syndicated marketplace backends.",
-        buildJsonLd: buildCollectionJsonLd(
-            "Jobs",
-            "/jobs",
-            "Job listings available through syndicated marketplace endpoints.",
-        ),
+        description: buildCollectionDescription("Browse published jobs collected from syndicated marketplace backends.", [
+            "scan open roles across syndicated endpoints",
+            "filter for work that matches your skills",
+            "open a job detail page to review the employer and application details",
+        ]),
+        buildJsonLd: buildCollectionJsonLd("Jobs", "/jobs", "Job listings available through syndicated marketplace endpoints."),
     },
     "/jobs/[id]": {
         title: "Job listing | NSwap",
@@ -252,12 +267,12 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/companies": {
         title: "Companies | NSwap",
-        description: "Explore company profiles and their linked marketplace activity.",
-        buildJsonLd: buildCollectionJsonLd(
-            "Companies",
-            "/companies",
-            "Company profiles and related listings shared through syndicated sources.",
-        ),
+        description: buildCollectionDescription("Explore company profiles and their linked marketplace activity.", [
+            "review company profiles",
+            "open related jobs, products, posts, and ventures",
+            "inspect verification and identity links",
+        ]),
+        buildJsonLd: buildCollectionJsonLd("Companies", "/companies", "Company profiles and related listings shared through syndicated sources."),
     },
     "/companies/[id]": {
         title: "Company profile | NSwap",
@@ -276,12 +291,12 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/tribes": {
         title: "Tribes | NSwap",
-        description: "Browse identities (tribes) and explore their marketplace ecosystem.",
-        buildJsonLd: buildCollectionJsonLd(
-            "Tribes",
-            "/tribes",
-            "Identity groups and their related marketplace listings.",
-        ),
+        description: buildCollectionDescription("Browse identities (tribes) and explore their marketplace ecosystem.", [
+            "open tribe profiles",
+            "follow the companies and listings tied to each identity",
+            "compare how different communities participate in the marketplace",
+        ]),
+        buildJsonLd: buildCollectionJsonLd("Tribes", "/tribes", "Identity groups and their related marketplace listings."),
     },
     "/tribes/[id]": {
         title: "Tribe profile | NSwap",
@@ -295,7 +310,11 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/products-services": {
         title: "Products and services | NSwap",
-        description: "Discover orderable products and services published across syndicated endpoints.",
+        description: buildCollectionDescription("Discover orderable products and services published across syndicated endpoints.", [
+            "compare offers, prices, and inventory",
+            "open product detail pages for more specifications",
+            "jump to the seller's company profile",
+        ]),
         buildJsonLd: buildCollectionJsonLd(
             "Products and services",
             "/products-services",
@@ -319,7 +338,11 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/posts": {
         title: "Posts | NSwap",
-        description: "Browse published posts shared through syndicated marketplace endpoints.",
+        description: buildCollectionDescription("Browse published posts shared through syndicated marketplace endpoints.", [
+            "read marketplace announcements and updates",
+            "open post detail pages for the full content",
+            "follow the linked company or author context",
+        ]),
         buildJsonLd: buildCollectionJsonLd("Posts", "/posts", "Published posts from syndicated marketplace sources."),
     },
     "/posts/[id]": {
@@ -334,7 +357,11 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/ventures": {
         title: "Ventures | NSwap",
-        description: "Explore startup and venture profiles shared through the marketplace network.",
+        description: buildCollectionDescription("Explore startup and venture profiles shared through the marketplace network.", [
+            "review startup summaries and funding details",
+            "open venture detail pages for deeper context",
+            "jump to the related identity or company profile",
+        ]),
         buildJsonLd: buildCollectionJsonLd(
             "Ventures",
             "/ventures",
@@ -358,8 +385,14 @@ const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/syndication": {
         title: "Syndication | NSwap",
-        description:
+        description: buildCollectionDescription(
             "Manage syndicated marketplace URLs, add new endpoints, and control which ones are enabled locally.",
+            [
+                "review each syndicated backend endpoint",
+                "check names, descriptions, and NSFW status before enabling a URL",
+                "add or disable sources that feed the marketplace",
+            ],
+        ),
         buildJsonLd: buildCollectionJsonLd(
             "Syndication",
             "/syndication",

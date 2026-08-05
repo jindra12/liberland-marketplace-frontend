@@ -89,6 +89,7 @@ import {
     useListCommentsByTargetQuery as useListCommentsByTargetQuerySingle,
     CreateCommentDocument,
     useCreateCommentMutation as useCreateCommentMutationSingle,
+    CommentDetailDocument,
     DislikeCommentDocument,
     useDislikeCommentMutation as useDislikeCommentMutationSingle,
     LikeCommentDocument,
@@ -226,7 +227,25 @@ import {
     useLikeVentureMutation as useLikeVentureMutationSingle,
     MeUserQuery,
 } from "../generated/graphql";
-import { gqlFetcher } from "../gqlFetcher";
+import type {
+    CommentDetailQuery,
+    CommentDetailQueryVariables,
+    CompanyByIdQuery,
+    CompanyByIdQueryVariables,
+    IdentityByIdQuery,
+    IdentityByIdQueryVariables,
+    JobByIdQuery,
+    JobByIdQueryVariables,
+    ListPublishedSyndicationUrlsQuery,
+    ListPublishedSyndicationUrlsQueryVariables,
+    PostByIdQuery,
+    PostByIdQueryVariables,
+    ProductByIdQuery,
+    ProductByIdQueryVariables,
+    StartupByIdQuery,
+    StartupByIdQueryVariables,
+} from "../generated/graphql";
+import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
 import {
     anonymizeCartBySecretVariables,
@@ -736,4 +755,65 @@ export const useCreateInformationRequestMutation = enhancedMutationFactory(
     useCreateInformationRequestMutationSingle,
     CreateInformationRequestDocument,
     anonymizeCreateInformationRequestVariables,
+);
+
+type GraphQLServerResponse<TData> = {
+    data?: TData;
+    errors?: Array<{
+        message: string;
+    }>;
+};
+
+const createServerQueryFetcher = <TData, TVariables extends object | undefined>(query: string) => {
+    return async (variables: TVariables, url?: string, options?: RequestInit["headers"]) => {
+        const headers = new Headers(options);
+        headers.set("Content-Type", "application/json");
+
+        const response = await fetch(`${url || BACKEND_URL}/api/graphql`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+                query,
+                variables,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`GraphQL request failed with status ${response.status}`);
+        }
+
+        const payload = (await response.json()) as GraphQLServerResponse<TData>;
+
+        if (payload.errors?.length) {
+            throw new Error(payload.errors[0].message);
+        }
+
+        if (!payload.data) {
+            throw new Error("Missing GraphQL data");
+        }
+
+        return payload.data;
+    };
+};
+
+export const fetchCommentDetail = createServerQueryFetcher<CommentDetailQuery, CommentDetailQueryVariables>(
+    CommentDetailDocument,
+);
+export const fetchCompanyById = createServerQueryFetcher<CompanyByIdQuery, CompanyByIdQueryVariables>(
+    CompanyByIdDocument,
+);
+export const fetchIdentityById = createServerQueryFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(
+    IdentityByIdDocument,
+);
+export const fetchJobById = createServerQueryFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument);
+export const fetchListPublishedSyndicationUrls = createServerQueryFetcher<
+    ListPublishedSyndicationUrlsQuery,
+    ListPublishedSyndicationUrlsQueryVariables
+>(ListPublishedSyndicationUrlsDocument);
+export const fetchPostById = createServerQueryFetcher<PostByIdQuery, PostByIdQueryVariables>(PostByIdDocument);
+export const fetchProductById = createServerQueryFetcher<ProductByIdQuery, ProductByIdQueryVariables>(
+    ProductByIdDocument,
+);
+export const fetchStartupById = createServerQueryFetcher<StartupByIdQuery, StartupByIdQueryVariables>(
+    StartupByIdDocument,
 );
