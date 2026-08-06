@@ -1,5 +1,7 @@
 import * as React from "react";
 import Head from "next/head";
+
+import { SITE_URL } from "./siteUrl";
 type AppHeadProps = {
     title?: string;
     description?: string;
@@ -15,11 +17,15 @@ type AppHeadProps = {
         name?: string;
         property?: string;
     }>;
+    extraLinks?: Array<{
+        href: string;
+        rel: string;
+    }>;
 };
 const DEFAULT_TITLE = "NSwap";
 const DEFAULT_DESCRIPTION = "Network marketplace for all your needs";
 const DEFAULT_PREVIEW_IMAGE = "/preview-image.png";
-const DEFAULT_URL = "https://nswap.io";
+const DEFAULT_URL = SITE_URL;
 export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
     const titleValue = props.title || DEFAULT_TITLE;
     const descriptionValue = props.description || DEFAULT_DESCRIPTION;
@@ -55,6 +61,9 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
 
                 return <meta key={`meta-${index}`} property={tag.property} content={tag.content} />;
             })}
+            {(props.extraLinks || []).map((link, index) => (
+                <link key={`link-${index}`} rel={link.rel} href={link.href} />
+            ))}
             {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
             <link rel="apple-touch-icon" href="/logo192.png" />
             <link rel="manifest" href="/manifest.json" />

@@ -236,8 +236,24 @@ import type {
     IdentityByIdQueryVariables,
     JobByIdQuery,
     JobByIdQueryVariables,
+    ListCompaniesByIdentityQuery,
+    ListCompaniesByIdentityQueryVariables,
+    ListJobsByCompanyQuery,
+    ListJobsByCompanyQueryVariables,
+    ListJobsByIdentityQuery,
+    ListJobsByIdentityQueryVariables,
+    ListPostsByCompanyQuery,
+    ListPostsByCompanyQueryVariables,
+    ListProductsByCompanyQuery,
+    ListProductsByCompanyQueryVariables,
+    ListProductsByIdentityQuery,
+    ListProductsByIdentityQueryVariables,
     ListPublishedSyndicationUrlsQuery,
     ListPublishedSyndicationUrlsQueryVariables,
+    ListStartupsByCompanyQuery,
+    ListStartupsByCompanyQueryVariables,
+    ListStartupsByIdentityQuery,
+    ListStartupsByIdentityQueryVariables,
     PostByIdQuery,
     PostByIdQueryVariables,
     ProductByIdQuery,
@@ -805,6 +821,35 @@ export const fetchCompanyById = createServerQueryFetcher<CompanyByIdQuery, Compa
 export const fetchIdentityById = createServerQueryFetcher<IdentityByIdQuery, IdentityByIdQueryVariables>(
     IdentityByIdDocument,
 );
+export const fetchListJobsByCompany = createServerQueryFetcher<ListJobsByCompanyQuery, ListJobsByCompanyQueryVariables>(
+    ListJobsByCompanyDocument,
+);
+export const fetchListProductsByCompany = createServerQueryFetcher<
+    ListProductsByCompanyQuery,
+    ListProductsByCompanyQueryVariables
+>(ListProductsByCompanyDocument);
+export const fetchListStartupsByCompany = createServerQueryFetcher<
+    ListStartupsByCompanyQuery,
+    ListStartupsByCompanyQueryVariables
+>(ListStartupsByCompanyDocument);
+export const fetchListPostsByCompany = createServerQueryFetcher<ListPostsByCompanyQuery, ListPostsByCompanyQueryVariables>(
+    ListPostsByCompanyDocument,
+);
+export const fetchListCompaniesByIdentity = createServerQueryFetcher<
+    ListCompaniesByIdentityQuery,
+    ListCompaniesByIdentityQueryVariables
+>(ListCompaniesByIdentityDocument);
+export const fetchListJobsByIdentity = createServerQueryFetcher<ListJobsByIdentityQuery, ListJobsByIdentityQueryVariables>(
+    ListJobsByIdentityDocument,
+);
+export const fetchListProductsByIdentity = createServerQueryFetcher<
+    ListProductsByIdentityQuery,
+    ListProductsByIdentityQueryVariables
+>(ListProductsByIdentityDocument);
+export const fetchListStartupsByIdentity = createServerQueryFetcher<
+    ListStartupsByIdentityQuery,
+    ListStartupsByIdentityQueryVariables
+>(ListStartupsByIdentityDocument);
 export const fetchJobById = createServerQueryFetcher<JobByIdQuery, JobByIdQueryVariables>(JobByIdDocument);
 export const fetchListPublishedSyndicationUrls = createServerQueryFetcher<
     ListPublishedSyndicationUrlsQuery,

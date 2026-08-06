@@ -4,7 +4,7 @@ import type { GetServerSideProps } from "next";
 
 import { AppHead } from "./AppHead";
 import { Dynamic } from "./Dynamic";
-import { decodeServerUrlSegment, type DetailPageMetadata } from "./detailMetadata";
+import { decodeServerUrlSegment, type DetailPageMetadata } from "./detailMetadata/shared";
 
 export type DetailRouteParams = {
     id?: string;
@@ -17,11 +17,16 @@ type DetailFetcher<TData, TVariables extends object | undefined> = (
     options?: RequestInit["headers"],
 ) => Promise<TData>;
 
-type CreateDetailPageConfig<TData, TVariables extends object | undefined, TEntity> = {
+type CreateDetailPageConfig<TData, TVariables extends object | undefined, TEntity, TExtra = undefined> = {
     fetcher: DetailFetcher<TData, TVariables>;
     buildVariables: (params: DetailRouteParams) => TVariables | null | undefined;
     selectEntity: (data: TData, params: DetailRouteParams) => TEntity | null | undefined;
-    buildMetadata: (entity: TEntity, canonicalPath: string) => DetailPageMetadata;
+    fetchAdditionalData?: (
+        entity: TEntity,
+        params: DetailRouteParams,
+        serverUrl: string,
+    ) => Promise<TExtra> | TExtra;
+    buildMetadata: (entity: TEntity, canonicalPath: string, extraData?: TExtra) => DetailPageMetadata;
     buildCanonicalPath: (params: DetailRouteParams, encodedServerUrl: string) => string;
 };
 
@@ -29,8 +34,8 @@ const isValidServerUrl = (value: string): boolean => {
     return value.startsWith("http://") || value.startsWith("https://");
 };
 
-export const createDetailPage = <TData, TVariables extends object | undefined, TEntity>(
-    config: CreateDetailPageConfig<TData, TVariables, TEntity>,
+export const createDetailPage = <TData, TVariables extends object | undefined, TEntity, TExtra = undefined>(
+    config: CreateDetailPageConfig<TData, TVariables, TEntity, TExtra>,
 ) => {
     const getServerSideProps: GetServerSideProps<DetailPageMetadata, DetailRouteParams> = async (context) => {
         const id = context.params?.id;
@@ -74,11 +79,12 @@ export const createDetailPage = <TData, TVariables extends object | undefined, T
                 };
             }
 
+            const extraData = config.fetchAdditionalData
+                ? await config.fetchAdditionalData(entity, { id, serverUrl: encodedServerUrl }, serverUrl)
+                : undefined;
+
             return {
-                props: config.buildMetadata(
-                    entity,
-                    config.buildCanonicalPath({ id, serverUrl: encodedServerUrl }, encodedServerUrl),
-                ),
+                props: config.buildMetadata(entity, config.buildCanonicalPath({ id, serverUrl: encodedServerUrl }, encodedServerUrl), extraData),
             };
         } catch (error) {
             console.error(error);

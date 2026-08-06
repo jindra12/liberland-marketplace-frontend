@@ -1,5 +1,5 @@
 import { fetchProductById } from "../../../components/hooks";
-import { buildProductPageMetadata } from "../../../detailMetadata";
+import { buildProductPageMetadata, fetchProductRelatedMetadata } from "../../../detailMetadata/products";
 import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
@@ -14,6 +14,7 @@ const { getServerSideProps, DetailPage } = createDetailPage({
         };
     },
     selectEntity: (data) => data.Product,
+    fetchAdditionalData: fetchProductRelatedMetadata,
     buildMetadata: buildProductPageMetadata,
     buildCanonicalPath: (params, encodedServerUrl) =>
         `/products-services/${params.id ?? ""}/${encodedServerUrl}`,

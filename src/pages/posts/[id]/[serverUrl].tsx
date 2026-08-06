@@ -1,4 +1,4 @@
-import { buildPostPageMetadata } from "../../../detailMetadata";
+import { buildPostPageMetadata } from "../../../detailMetadata/posts";
 import { fetchPostById } from "../../../components/hooks";
 import { createDetailPage } from "../../../detailPage";
 

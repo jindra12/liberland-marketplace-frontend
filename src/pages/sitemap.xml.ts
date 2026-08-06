@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 
-const SITE_URL = "https://nswap.io";
+import { SITE_URL } from "../siteUrl";
 
 const INDEXABLE_PATHS = ["/", "/jobs", "/companies", "/products-services", "/posts", "/tribes", "/ventures"];
 

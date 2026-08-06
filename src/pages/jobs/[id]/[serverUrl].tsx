@@ -1,5 +1,5 @@
 import { fetchJobById } from "../../../components/hooks";
-import { buildJobPageMetadata } from "../../../detailMetadata";
+import { buildJobPageMetadata } from "../../../detailMetadata/jobs";
 import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({

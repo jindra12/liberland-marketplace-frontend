@@ -1,5 +1,5 @@
 import { fetchListPublishedSyndicationUrls } from "../../../components/hooks";
-import { buildSyndicationPageMetadata } from "../../../detailMetadata";
+import { buildSyndicationPageMetadata } from "../../../detailMetadata/syndication";
 import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({

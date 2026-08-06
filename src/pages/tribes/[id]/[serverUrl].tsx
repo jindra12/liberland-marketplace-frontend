@@ -1,5 +1,5 @@
 import { fetchIdentityById } from "../../../components/hooks";
-import { buildIdentityPageMetadata } from "../../../detailMetadata";
+import { buildIdentityPageMetadata, fetchIdentityRelatedMetadata } from "../../../detailMetadata/identity";
 import { createDetailPage } from "../../../detailPage";
 
 const { getServerSideProps, DetailPage } = createDetailPage({
@@ -14,6 +14,7 @@ const { getServerSideProps, DetailPage } = createDetailPage({
         };
     },
     selectEntity: (data) => data.Identity,
+    fetchAdditionalData: fetchIdentityRelatedMetadata,
     buildMetadata: buildIdentityPageMetadata,
     buildCanonicalPath: (params, encodedServerUrl) => `/tribes/${params.id ?? ""}/${encodedServerUrl}`,
 });
