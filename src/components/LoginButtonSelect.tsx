@@ -5,6 +5,7 @@ import { Button, Dropdown, type MenuProps } from "antd";
 
 import { getAccessToken } from "../gqlFetcher";
 
+import { buildSignOutUrl } from "./auth/utils";
 import { buildAccountMenuItems, hasAnyLoggedInServer, parseAccountMenuValue } from "./authButton/utils";
 import { useEndpointAuthAction } from "./EndpointAuthAction/useEndpointAuthAction";
 
@@ -44,6 +45,7 @@ export const LoginButtonSelect: React.FunctionComponent<LoginButtonSelectProps> 
 
             await runWithTargetAuthUrl(parsed.targetAuthUrl, async (currentAuth) => {
                 await currentAuth.removeUser();
+                window.location.assign(buildSignOutUrl(parsed.targetAuthUrl, props.returnTo));
             });
         },
     };
@@ -68,6 +70,7 @@ export const LoginButtonSelect: React.FunctionComponent<LoginButtonSelectProps> 
 
                     await runWithTargetAuthUrl(onlyEndpoint.value, async (currentAuth) => {
                         await currentAuth.removeUser();
+                        window.location.assign(buildSignOutUrl(onlyEndpoint.value, props.returnTo));
                     });
                 }}
             >

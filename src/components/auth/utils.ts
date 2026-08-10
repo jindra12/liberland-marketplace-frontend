@@ -4,6 +4,12 @@ export const buildAuthAuthority = (authUrl: string) => {
     return `${authUrl}/api/auth`;
 };
 
+export const buildSignOutUrl = (authUrl: string, returnTo: string) => {
+    const signOutUrl = new URL("/api/auth/sign-out", `${authUrl}/`);
+    signOutUrl.searchParams.set("callbackURL", new URL(returnTo, window.location.origin).toString());
+    return signOutUrl.toString();
+};
+
 export const buildAuthSettings = (authUrl: string) => {
     const authority = buildAuthAuthority(authUrl);
 

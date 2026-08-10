@@ -11,20 +11,64 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1,
             isSubscribed
             serverURL
             title
+            description
             hasLiked
             likeCount
             companyIdentityId
+            positions
+            isActive
+            applyUrl
+            bounty {
+                amount
+                currency
+            }
+            allowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
+            disallowedIdentities {
+                id
+                serverURL
+                name
+                description
+            }
             company {
                 id
                 serverURL
                 name
+                description
                 cryptoAddresses {
                     chain
                     address
                 }
+                allowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                disallowedIdentities {
+                    id
+                    serverURL
+                    name
+                    description
+                }
+                identity {
+                    id
+                    serverURL
+                    name
+                    description
+                }
                 image {
                     id
                     url
+                    alt
+                    filename
+                    width
+                    height
+                    mimeType
                 }
             }
             location
@@ -37,6 +81,11 @@ query ListJobsByIdentity($identityId: String!, $limit: Int = 50, $page: Int = 1,
             image {
                 id
                 url
+                alt
+                filename
+                width
+                height
+                mimeType
             }
             postedAt
             _status

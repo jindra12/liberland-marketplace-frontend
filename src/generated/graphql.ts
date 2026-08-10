@@ -28225,6 +28225,7 @@ export type Order = {
   items?: Maybe<Array<Order_Items>>;
   payerAddress?: Maybe<Scalars['String']['output']>;
   paymentProofs?: Maybe<Array<Order_PaymentProofs>>;
+  paymentTargets?: Maybe<Array<Order_PaymentTargets>>;
   shippingAddress?: Maybe<Order_ShippingAddress>;
   status?: Maybe<Order_Status>;
   transactions?: Maybe<Array<Transaction>>;
@@ -28238,6 +28239,12 @@ export enum OrderUpdate_CryptoPrices_Chain_MutationInput {
 }
 
 export enum OrderUpdate_PaymentProofs_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export enum OrderUpdate_PaymentTargets_Chain_MutationInput {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
@@ -28332,6 +28339,30 @@ export enum Order_PaymentProofs_Chain {
 }
 
 export enum Order_PaymentProofs_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export type Order_PaymentTargets = {
+  __typename?: 'Order_PaymentTargets';
+  chain?: Maybe<Order_PaymentTargets_Chain>;
+  id?: Maybe<Scalars['String']['output']>;
+  normalizedRecipientAddress?: Maybe<Scalars['String']['output']>;
+  productID?: Maybe<Scalars['String']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  recipientAddress?: Maybe<Scalars['String']['output']>;
+  stableAmount?: Maybe<Scalars['Float']['output']>;
+  unitAmount?: Maybe<Scalars['Float']['output']>;
+};
+
+export enum Order_PaymentTargets_Chain {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export enum Order_PaymentTargets_Chain_MutationInput {
   Ethereum = 'ethereum',
   Solana = 'solana',
   Tron = 'tron'
@@ -28652,6 +28683,88 @@ export type Order_PaymentProofs__TransactionHash_Operator = {
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export enum Order_PaymentTargets__Chain_Input {
+  Ethereum = 'ethereum',
+  Solana = 'solana',
+  Tron = 'tron'
+}
+
+export type Order_PaymentTargets__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Order_PaymentTargets__Chain_Input>>>;
+  equals?: InputMaybe<Order_PaymentTargets__Chain_Input>;
+  in?: InputMaybe<Array<InputMaybe<Order_PaymentTargets__Chain_Input>>>;
+  not_equals?: InputMaybe<Order_PaymentTargets__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Order_PaymentTargets__Chain_Input>>>;
+};
+
+export type Order_PaymentTargets__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_PaymentTargets__NormalizedRecipientAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_PaymentTargets__ProductId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_PaymentTargets__Quantity_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_PaymentTargets__RecipientAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Order_PaymentTargets__StableAmount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Order_PaymentTargets__UnitAmount_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Order_ShippingAddress__AddressLine1_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -28855,6 +28968,14 @@ export type Order_Where = {
   paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
   paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
   paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
+  paymentTargets__chain?: InputMaybe<Order_PaymentTargets__Chain_Operator>;
+  paymentTargets__id?: InputMaybe<Order_PaymentTargets__Id_Operator>;
+  paymentTargets__normalizedRecipientAddress?: InputMaybe<Order_PaymentTargets__NormalizedRecipientAddress_Operator>;
+  paymentTargets__productID?: InputMaybe<Order_PaymentTargets__ProductId_Operator>;
+  paymentTargets__quantity?: InputMaybe<Order_PaymentTargets__Quantity_Operator>;
+  paymentTargets__recipientAddress?: InputMaybe<Order_PaymentTargets__RecipientAddress_Operator>;
+  paymentTargets__stableAmount?: InputMaybe<Order_PaymentTargets__StableAmount_Operator>;
+  paymentTargets__unitAmount?: InputMaybe<Order_PaymentTargets__UnitAmount_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -28903,6 +29024,14 @@ export type Order_Where_And = {
   paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
   paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
   paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
+  paymentTargets__chain?: InputMaybe<Order_PaymentTargets__Chain_Operator>;
+  paymentTargets__id?: InputMaybe<Order_PaymentTargets__Id_Operator>;
+  paymentTargets__normalizedRecipientAddress?: InputMaybe<Order_PaymentTargets__NormalizedRecipientAddress_Operator>;
+  paymentTargets__productID?: InputMaybe<Order_PaymentTargets__ProductId_Operator>;
+  paymentTargets__quantity?: InputMaybe<Order_PaymentTargets__Quantity_Operator>;
+  paymentTargets__recipientAddress?: InputMaybe<Order_PaymentTargets__RecipientAddress_Operator>;
+  paymentTargets__stableAmount?: InputMaybe<Order_PaymentTargets__StableAmount_Operator>;
+  paymentTargets__unitAmount?: InputMaybe<Order_PaymentTargets__UnitAmount_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -28951,6 +29080,14 @@ export type Order_Where_Or = {
   paymentProofs__product?: InputMaybe<Order_PaymentProofs__Product_Operator>;
   paymentProofs__rejected?: InputMaybe<Order_PaymentProofs__Rejected_Operator>;
   paymentProofs__transactionHash?: InputMaybe<Order_PaymentProofs__TransactionHash_Operator>;
+  paymentTargets__chain?: InputMaybe<Order_PaymentTargets__Chain_Operator>;
+  paymentTargets__id?: InputMaybe<Order_PaymentTargets__Id_Operator>;
+  paymentTargets__normalizedRecipientAddress?: InputMaybe<Order_PaymentTargets__NormalizedRecipientAddress_Operator>;
+  paymentTargets__productID?: InputMaybe<Order_PaymentTargets__ProductId_Operator>;
+  paymentTargets__quantity?: InputMaybe<Order_PaymentTargets__Quantity_Operator>;
+  paymentTargets__recipientAddress?: InputMaybe<Order_PaymentTargets__RecipientAddress_Operator>;
+  paymentTargets__stableAmount?: InputMaybe<Order_PaymentTargets__StableAmount_Operator>;
+  paymentTargets__unitAmount?: InputMaybe<Order_PaymentTargets__UnitAmount_Operator>;
   shippingAddress__addressLine1?: InputMaybe<Order_ShippingAddress__AddressLine1_Operator>;
   shippingAddress__addressLine2?: InputMaybe<Order_ShippingAddress__AddressLine2_Operator>;
   shippingAddress__city?: InputMaybe<Order_ShippingAddress__City_Operator>;
@@ -29017,6 +29154,7 @@ export type OrdersDocAccessFields = {
   items?: Maybe<OrdersDocAccessFields_Items>;
   payerAddress?: Maybe<OrdersDocAccessFields_PayerAddress>;
   paymentProofs?: Maybe<OrdersDocAccessFields_PaymentProofs>;
+  paymentTargets?: Maybe<OrdersDocAccessFields_PaymentTargets>;
   shippingAddress?: Maybe<OrdersDocAccessFields_ShippingAddress>;
   status?: Maybe<OrdersDocAccessFields_Status>;
   transactions?: Maybe<OrdersDocAccessFields_Transactions>;
@@ -29996,6 +30134,271 @@ export type OrdersDocAccessFields_PaymentProofs_TransactionHash_Update = {
   permission: Scalars['Boolean']['output'];
 };
 
+export type OrdersDocAccessFields_PaymentTargets = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_Delete>;
+  fields?: Maybe<OrdersDocAccessFields_PaymentTargets_Fields>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Fields = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_Fields';
+  chain?: Maybe<OrdersDocAccessFields_PaymentTargets_Chain>;
+  id?: Maybe<OrdersDocAccessFields_PaymentTargets_Id>;
+  normalizedRecipientAddress?: Maybe<OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress>;
+  productID?: Maybe<OrdersDocAccessFields_PaymentTargets_ProductId>;
+  quantity?: Maybe<OrdersDocAccessFields_PaymentTargets_Quantity>;
+  recipientAddress?: Maybe<OrdersDocAccessFields_PaymentTargets_RecipientAddress>;
+  stableAmount?: Maybe<OrdersDocAccessFields_PaymentTargets_StableAmount>;
+  unitAmount?: Maybe<OrdersDocAccessFields_PaymentTargets_UnitAmount>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Chain = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_chain';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_Chain_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_Chain_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_Chain_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_Chain_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Chain_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Chain_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Chain_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Chain_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Id = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_id';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_Id_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_Id_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_Id_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_Id_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Id_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Id_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Id_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Id_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_normalizedRecipientAddress';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_normalizedRecipientAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_normalizedRecipientAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_normalizedRecipientAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_NormalizedRecipientAddress_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_normalizedRecipientAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_ProductId = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_productID';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_ProductId_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_ProductId_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_ProductId_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_ProductId_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_ProductId_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_productID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_ProductId_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_productID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_ProductId_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_productID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_ProductId_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_productID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Quantity = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_quantity';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_Quantity_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_Quantity_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_Quantity_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_Quantity_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Quantity_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_quantity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Quantity_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_quantity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Quantity_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_quantity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_Quantity_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_quantity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_RecipientAddress = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_recipientAddress';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_RecipientAddress_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_RecipientAddress_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_RecipientAddress_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_RecipientAddress_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_RecipientAddress_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_recipientAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_RecipientAddress_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_recipientAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_RecipientAddress_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_recipientAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_RecipientAddress_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_recipientAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_StableAmount = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_stableAmount';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_StableAmount_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_StableAmount_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_StableAmount_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_StableAmount_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_StableAmount_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_stableAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_StableAmount_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_stableAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_StableAmount_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_stableAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_StableAmount_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_stableAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_UnitAmount = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_unitAmount';
+  create?: Maybe<OrdersDocAccessFields_PaymentTargets_UnitAmount_Create>;
+  delete?: Maybe<OrdersDocAccessFields_PaymentTargets_UnitAmount_Delete>;
+  read?: Maybe<OrdersDocAccessFields_PaymentTargets_UnitAmount_Read>;
+  update?: Maybe<OrdersDocAccessFields_PaymentTargets_UnitAmount_Update>;
+};
+
+export type OrdersDocAccessFields_PaymentTargets_UnitAmount_Create = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_unitAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_UnitAmount_Delete = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_unitAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_UnitAmount_Read = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_unitAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersDocAccessFields_PaymentTargets_UnitAmount_Update = {
+  __typename?: 'OrdersDocAccessFields_paymentTargets_unitAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
 export type OrdersDocAccessFields_ShippingAddress = {
   __typename?: 'OrdersDocAccessFields_shippingAddress';
   create?: Maybe<OrdersDocAccessFields_ShippingAddress_Create>;
@@ -30443,6 +30846,7 @@ export type OrdersFields = {
   items?: Maybe<OrdersFields_Items>;
   payerAddress?: Maybe<OrdersFields_PayerAddress>;
   paymentProofs?: Maybe<OrdersFields_PaymentProofs>;
+  paymentTargets?: Maybe<OrdersFields_PaymentTargets>;
   shippingAddress?: Maybe<OrdersFields_ShippingAddress>;
   status?: Maybe<OrdersFields_Status>;
   transactions?: Maybe<OrdersFields_Transactions>;
@@ -31419,6 +31823,271 @@ export type OrdersFields_PaymentProofs_TransactionHash_Read = {
 
 export type OrdersFields_PaymentProofs_TransactionHash_Update = {
   __typename?: 'OrdersFields_paymentProofs_transactionHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets = {
+  __typename?: 'OrdersFields_paymentTargets';
+  create?: Maybe<OrdersFields_PaymentTargets_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_Delete>;
+  fields?: Maybe<OrdersFields_PaymentTargets_Fields>;
+  read?: Maybe<OrdersFields_PaymentTargets_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_Update>;
+};
+
+export type OrdersFields_PaymentTargets_Create = {
+  __typename?: 'OrdersFields_paymentTargets_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Fields = {
+  __typename?: 'OrdersFields_paymentTargets_Fields';
+  chain?: Maybe<OrdersFields_PaymentTargets_Chain>;
+  id?: Maybe<OrdersFields_PaymentTargets_Id>;
+  normalizedRecipientAddress?: Maybe<OrdersFields_PaymentTargets_NormalizedRecipientAddress>;
+  productID?: Maybe<OrdersFields_PaymentTargets_ProductId>;
+  quantity?: Maybe<OrdersFields_PaymentTargets_Quantity>;
+  recipientAddress?: Maybe<OrdersFields_PaymentTargets_RecipientAddress>;
+  stableAmount?: Maybe<OrdersFields_PaymentTargets_StableAmount>;
+  unitAmount?: Maybe<OrdersFields_PaymentTargets_UnitAmount>;
+};
+
+export type OrdersFields_PaymentTargets_Read = {
+  __typename?: 'OrdersFields_paymentTargets_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Update = {
+  __typename?: 'OrdersFields_paymentTargets_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Chain = {
+  __typename?: 'OrdersFields_paymentTargets_chain';
+  create?: Maybe<OrdersFields_PaymentTargets_Chain_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_Chain_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_Chain_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_Chain_Update>;
+};
+
+export type OrdersFields_PaymentTargets_Chain_Create = {
+  __typename?: 'OrdersFields_paymentTargets_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Chain_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Chain_Read = {
+  __typename?: 'OrdersFields_paymentTargets_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Chain_Update = {
+  __typename?: 'OrdersFields_paymentTargets_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Id = {
+  __typename?: 'OrdersFields_paymentTargets_id';
+  create?: Maybe<OrdersFields_PaymentTargets_Id_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_Id_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_Id_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_Id_Update>;
+};
+
+export type OrdersFields_PaymentTargets_Id_Create = {
+  __typename?: 'OrdersFields_paymentTargets_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Id_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Id_Read = {
+  __typename?: 'OrdersFields_paymentTargets_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Id_Update = {
+  __typename?: 'OrdersFields_paymentTargets_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_NormalizedRecipientAddress = {
+  __typename?: 'OrdersFields_paymentTargets_normalizedRecipientAddress';
+  create?: Maybe<OrdersFields_PaymentTargets_NormalizedRecipientAddress_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_NormalizedRecipientAddress_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_NormalizedRecipientAddress_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_NormalizedRecipientAddress_Update>;
+};
+
+export type OrdersFields_PaymentTargets_NormalizedRecipientAddress_Create = {
+  __typename?: 'OrdersFields_paymentTargets_normalizedRecipientAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_NormalizedRecipientAddress_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_normalizedRecipientAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_NormalizedRecipientAddress_Read = {
+  __typename?: 'OrdersFields_paymentTargets_normalizedRecipientAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_NormalizedRecipientAddress_Update = {
+  __typename?: 'OrdersFields_paymentTargets_normalizedRecipientAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_ProductId = {
+  __typename?: 'OrdersFields_paymentTargets_productID';
+  create?: Maybe<OrdersFields_PaymentTargets_ProductId_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_ProductId_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_ProductId_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_ProductId_Update>;
+};
+
+export type OrdersFields_PaymentTargets_ProductId_Create = {
+  __typename?: 'OrdersFields_paymentTargets_productID_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_ProductId_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_productID_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_ProductId_Read = {
+  __typename?: 'OrdersFields_paymentTargets_productID_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_ProductId_Update = {
+  __typename?: 'OrdersFields_paymentTargets_productID_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Quantity = {
+  __typename?: 'OrdersFields_paymentTargets_quantity';
+  create?: Maybe<OrdersFields_PaymentTargets_Quantity_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_Quantity_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_Quantity_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_Quantity_Update>;
+};
+
+export type OrdersFields_PaymentTargets_Quantity_Create = {
+  __typename?: 'OrdersFields_paymentTargets_quantity_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Quantity_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_quantity_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Quantity_Read = {
+  __typename?: 'OrdersFields_paymentTargets_quantity_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_Quantity_Update = {
+  __typename?: 'OrdersFields_paymentTargets_quantity_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_RecipientAddress = {
+  __typename?: 'OrdersFields_paymentTargets_recipientAddress';
+  create?: Maybe<OrdersFields_PaymentTargets_RecipientAddress_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_RecipientAddress_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_RecipientAddress_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_RecipientAddress_Update>;
+};
+
+export type OrdersFields_PaymentTargets_RecipientAddress_Create = {
+  __typename?: 'OrdersFields_paymentTargets_recipientAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_RecipientAddress_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_recipientAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_RecipientAddress_Read = {
+  __typename?: 'OrdersFields_paymentTargets_recipientAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_RecipientAddress_Update = {
+  __typename?: 'OrdersFields_paymentTargets_recipientAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_StableAmount = {
+  __typename?: 'OrdersFields_paymentTargets_stableAmount';
+  create?: Maybe<OrdersFields_PaymentTargets_StableAmount_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_StableAmount_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_StableAmount_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_StableAmount_Update>;
+};
+
+export type OrdersFields_PaymentTargets_StableAmount_Create = {
+  __typename?: 'OrdersFields_paymentTargets_stableAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_StableAmount_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_stableAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_StableAmount_Read = {
+  __typename?: 'OrdersFields_paymentTargets_stableAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_StableAmount_Update = {
+  __typename?: 'OrdersFields_paymentTargets_stableAmount_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_UnitAmount = {
+  __typename?: 'OrdersFields_paymentTargets_unitAmount';
+  create?: Maybe<OrdersFields_PaymentTargets_UnitAmount_Create>;
+  delete?: Maybe<OrdersFields_PaymentTargets_UnitAmount_Delete>;
+  read?: Maybe<OrdersFields_PaymentTargets_UnitAmount_Read>;
+  update?: Maybe<OrdersFields_PaymentTargets_UnitAmount_Update>;
+};
+
+export type OrdersFields_PaymentTargets_UnitAmount_Create = {
+  __typename?: 'OrdersFields_paymentTargets_unitAmount_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_UnitAmount_Delete = {
+  __typename?: 'OrdersFields_paymentTargets_unitAmount_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_UnitAmount_Read = {
+  __typename?: 'OrdersFields_paymentTargets_unitAmount_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type OrdersFields_PaymentTargets_UnitAmount_Update = {
+  __typename?: 'OrdersFields_paymentTargets_unitAmount_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -62345,6 +63014,7 @@ export type MutationOrderInput = {
   items?: InputMaybe<Array<InputMaybe<MutationOrder_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   paymentProofs?: InputMaybe<Array<InputMaybe<MutationOrder_PaymentProofsInput>>>;
+  paymentTargets?: InputMaybe<Array<InputMaybe<MutationOrder_PaymentTargetsInput>>>;
   shippingAddress?: InputMaybe<MutationOrder_ShippingAddressInput>;
   status?: InputMaybe<Order_Status_MutationInput>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -62361,6 +63031,7 @@ export type MutationOrderUpdateInput = {
   items?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_ItemsInput>>>;
   payerAddress?: InputMaybe<Scalars['String']['input']>;
   paymentProofs?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_PaymentProofsInput>>>;
+  paymentTargets?: InputMaybe<Array<InputMaybe<MutationOrderUpdate_PaymentTargetsInput>>>;
   shippingAddress?: InputMaybe<MutationOrderUpdate_ShippingAddressInput>;
   status?: InputMaybe<OrderUpdate_Status_MutationInput>;
   transactions?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -62404,6 +63075,17 @@ export type MutationOrderUpdate_PaymentProofsInput = {
   product?: InputMaybe<Scalars['String']['input']>;
   rejected?: InputMaybe<Scalars['Boolean']['input']>;
   transactionHash: Scalars['String']['input'];
+};
+
+export type MutationOrderUpdate_PaymentTargetsInput = {
+  chain: OrderUpdate_PaymentTargets_Chain_MutationInput;
+  id?: InputMaybe<Scalars['String']['input']>;
+  normalizedRecipientAddress: Scalars['String']['input'];
+  productID: Scalars['String']['input'];
+  quantity: Scalars['Float']['input'];
+  recipientAddress: Scalars['String']['input'];
+  stableAmount: Scalars['Float']['input'];
+  unitAmount: Scalars['Float']['input'];
 };
 
 export type MutationOrderUpdate_ShippingAddressInput = {
@@ -62457,6 +63139,17 @@ export type MutationOrder_PaymentProofsInput = {
   product?: InputMaybe<Scalars['String']['input']>;
   rejected?: InputMaybe<Scalars['Boolean']['input']>;
   transactionHash: Scalars['String']['input'];
+};
+
+export type MutationOrder_PaymentTargetsInput = {
+  chain: Order_PaymentTargets_Chain_MutationInput;
+  id?: InputMaybe<Scalars['String']['input']>;
+  normalizedRecipientAddress: Scalars['String']['input'];
+  productID: Scalars['String']['input'];
+  quantity: Scalars['Float']['input'];
+  recipientAddress: Scalars['String']['input'];
+  stableAmount: Scalars['Float']['input'];
+  unitAmount: Scalars['Float']['input'];
 };
 
 export type MutationOrder_ShippingAddressInput = {
@@ -67474,7 +68167,7 @@ export type ListJobsByCompanyQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, positions?: number | null, isActive?: boolean | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
+export type ListJobsByCompanyQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, limit: number, totalPages: number, page: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage?: number | null, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, location?: string | null, employmentType?: Job_EmploymentType | null, positions?: number | null, postedAt?: any | null, isActive?: boolean | null, applyUrl?: string | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type SearchJobsByCompanyQueryVariables = Exact<{
   companyId: Scalars['JSON']['input'];
@@ -67619,7 +68312,7 @@ export type ListJobsByIdentityQueryVariables = Exact<{
 }>;
 
 
-export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, hasLiked?: boolean | null, likeCount?: number | null, companyIdentityId?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+export type ListJobsByIdentityQuery = { __typename?: 'Query', Jobs?: { __typename?: 'Jobs', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Job', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, companyIdentityId?: string | null, positions?: number | null, isActive?: boolean | null, applyUrl?: string | null, location?: string | null, employmentType?: Job_EmploymentType | null, postedAt?: any | null, _status?: Job__Status | null, bounty?: { __typename?: 'Job_Bounty', amount?: number | null, currency?: Job_Bounty_Currency | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, allowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, disallowedIdentities?: Array<{ __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null }> | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, salaryRange?: { __typename?: 'Job_SalaryRange', min?: number | null, max?: number | null, currency?: Job_SalaryRange_Currency | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null }> } | null };
 
 export type ListProductsByIdentityQueryVariables = Exact<{
   identityId: Scalars['String']['input'];
@@ -67877,7 +68570,7 @@ export type ProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, likeCount?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null }> | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', Product?: { __typename?: 'Product', id: string, isSubscribed?: boolean | null, inventory?: number | null, likeCount?: number | null, enableVariants?: boolean | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, serverURL?: string | null, name?: string | null, companyIdentityId?: string | null, _status?: Product__Status | null, description?: string | null, url?: string | null, orderable?: boolean | null, updatedAt?: any | null, createdAt?: any | null, deletedAt?: any | null, variantTypes?: Array<{ __typename?: 'VariantType', id: string, label: string, name: string }> | null, variants?: { __typename?: 'Product_Variants', hasNextPage: boolean, totalDocs?: number | null, docs: Array<{ __typename?: 'Variant', id: string, title?: string | null, inventory?: number | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, options?: Array<{ __typename?: 'VariantOption', id: string, label: string, value: string }> | null }> } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, relatedProducts?: Array<{ __typename?: 'Product', id: string, name?: string | null, serverURL?: string | null, isSubscribed?: boolean | null, description?: string | null, likeCount?: number | null, hasLiked?: boolean | null, inventory?: number | null, orderable?: boolean | null, url?: string | null, priceInUSDEnabled?: boolean | null, priceInUSD?: number | null, priceInETH?: string | null, priceInSOL?: string | null, priceInTRX?: string | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, parameters?: Array<{ __typename?: 'Product_Parameters', id?: string | null, name?: string | null, values?: Array<{ __typename?: 'Product_Parameters_Values', id?: string | null, key?: string | null, name?: string | null, default?: boolean | null }> | null }> | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null }> | null, cryptoAddresses?: { __typename?: 'Product_CryptoAddresses', chain?: Product_CryptoAddresses_Chain | null, address?: string | null } | null, properties?: Array<{ __typename?: 'Product_Properties', id?: string | null, key?: string | null, value?: string | null }> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, description?: string | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, mimeType?: string | null, width?: number | null, height?: number | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null };
 
 export type CreateProductMutationVariables = Exact<{
   data: MutationProductInput;
@@ -70103,10 +70796,21 @@ export const ListJobsByCompanyDocument = `
       serverURL
       title
       description
+      hasLiked
+      likeCount
+      location
+      employmentType
       positions
+      postedAt
       isActive
+      applyUrl
       bounty {
         amount
+        currency
+      }
+      salaryRange {
+        min
+        max
         currency
       }
       allowedIdentities {
@@ -71182,20 +71886,64 @@ export const ListJobsByIdentityDocument = `
       isSubscribed
       serverURL
       title
+      description
       hasLiked
       likeCount
       companyIdentityId
+      positions
+      isActive
+      applyUrl
+      bounty {
+        amount
+        currency
+      }
+      allowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
+      disallowedIdentities {
+        id
+        serverURL
+        name
+        description
+      }
       company {
         id
         serverURL
         name
+        description
         cryptoAddresses {
           chain
           address
         }
+        allowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        disallowedIdentities {
+          id
+          serverURL
+          name
+          description
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
         image {
           id
           url
+          alt
+          filename
+          width
+          height
+          mimeType
         }
       }
       location
@@ -71208,6 +71956,11 @@ export const ListJobsByIdentityDocument = `
       image {
         id
         url
+        alt
+        filename
+        width
+        height
+        mimeType
       }
       postedAt
       _status
@@ -71672,7 +72425,6 @@ export const ListPostsByCompanyDocument = `
       id
       title
       slug
-      content
       repost
       heroImage {
         id
@@ -72602,6 +73354,7 @@ export const ListPostsDocument = `
       id
       title
       slug
+      content
       repost
       heroImage {
         id
@@ -73521,6 +74274,66 @@ export const ProductByIdDocument = `
       id
       name
       serverURL
+      isSubscribed
+      description
+      likeCount
+      hasLiked
+      inventory
+      orderable
+      url
+      priceInUSDEnabled
+      priceInUSD
+      priceInETH
+      priceInSOL
+      priceInTRX
+      cryptoAddresses {
+        chain
+        address
+      }
+      parameters {
+        id
+        name
+        values {
+          id
+          key
+          name
+          default
+        }
+      }
+      image {
+        id
+        url
+        alt
+        filename
+        width
+        height
+        mimeType
+      }
+      company {
+        id
+        serverURL
+        name
+        description
+        cryptoAddresses {
+          chain
+          address
+        }
+        identity {
+          id
+          serverURL
+          name
+          description
+        }
+        image {
+          id
+          url
+          alt
+          filename
+          width
+          height
+          mimeType
+        }
+      }
     }
     cryptoAddresses {
       chain
