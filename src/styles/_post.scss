@@ -13,6 +13,12 @@
     justify-content: center;
 }
 
+.PostList .ant-list-item:not(.AppList__cardItem) {
+    width: 100%;
+    max-width: 940px;
+    margin-inline: auto;
+}
+
 .AppList__card .ant-card-cover {
     margin: 0;
 }
