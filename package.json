@@ -7,6 +7,7 @@
         "@bradgarropy/use-countdown": "^2.0.1",
         "@geoapify/geocoder-autocomplete": "^3.0.1",
         "@geoapify/react-geocoder-autocomplete": "^3.0.0",
+        "@modelcontextprotocol/sdk": "^1.30.0",
         "@polkadot/extension-dapp": "^0.59.1",
         "@polkadot/util-crypto": "^13.5.1",
         "@solana/pay": "^0.2.5",
@@ -63,7 +64,8 @@
         "use-local-storage": "^3.0.0",
         "usehooks-ts": "^3.1.1",
         "vm-browserify": "^1.1.2",
-        "web-vitals": "^2.1.0"
+        "web-vitals": "^2.1.0",
+        "zod": "^4.4.3"
     },
     "scripts": {
         "dev": "next dev",

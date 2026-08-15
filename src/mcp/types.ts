@@ -1,0 +1,18 @@
+export const MCP_ENTITIES = [
+    "companies",
+    "products",
+    "jobs",
+    "ventures",
+    "identities",
+    "posts",
+    "comments",
+    "orders",
+    "carts",
+    "users",
+    "media",
+    "syndications",
+    "reports",
+    "information-requests",
+    "notification-subscriptions",
+    "subscribers",
+] as const;

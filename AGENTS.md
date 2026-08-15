@@ -39,6 +39,7 @@ manager is `yarn`.
 - If browser automation debugging is in play and FoxMCP is relevant, remind the user to start FoxMCP before troubleshooting the browser session.
 - Do not create lots of tiny files for one feature; keep related code grouped and split files only when a module is getting large, ideally around 300 lines.
 - `yarn codegen` regenerates GraphQL hooks and types from `.graphql` files.
+- Reuse generated GraphQL documents, types, and hooks for existing operations instead of inventing duplicate request shapes or hand-written equivalents.
 - `yarn codegen` requires the sibling backend dev server in `../liberland-marketplace` to be running on port `3001`; start it first and shut it down after codegen finishes.
 - When Codex is told to run codegen, that includes starting the sibling backend repo at `../liberland-marketplace` on port `3001` first and shutting it down after codegen finishes.
 - Never hand-edit `src/generated/graphql.ts`; always regenerate it with `yarn codegen` when GraphQL documents or schema change. If codegen fails, stop and report the problem instead of patching the generated file.

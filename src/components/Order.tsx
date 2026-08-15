@@ -18,6 +18,7 @@ import { notifyCartSecretsChanged } from "./cart/utils";
 import { useEndpointContext } from "./EndpointContext";
 import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
 import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
+import { McpCheckoutHydrator } from "./order/McpCheckoutHydrator";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
@@ -26,7 +27,7 @@ import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils"
 import { buildProductParameterSelectionMap, buildSelectedProductParametersInput } from "./productParameters/utils";
 import { RouteButton } from "./RouteButton";
 
-const Order: React.FunctionComponent = () => {
+const OrderContent: React.FunctionComponent = () => {
     const queryClient = useQueryClient();
     const auth = useAuth();
     const navigate = useNavigate();
@@ -276,5 +277,12 @@ const Order: React.FunctionComponent = () => {
         </Flex>
     );
 };
+
+const Order: React.FunctionComponent = () => (
+    <>
+        <McpCheckoutHydrator />
+        <OrderContent />
+    </>
+);
 
 export default Order;
