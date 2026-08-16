@@ -40,7 +40,7 @@ export const sendMcpAuthorizationChallenge = (
 
 export const buildProtectedResourceMetadata = (serverUrl: string) => ({
     resource: `${buildSiteUrl("/api/mcp")}?auth=required&serverUrl=${encodeURIComponent(serverUrl)}`,
-    authorization_servers: [`${serverUrl}/api/auth`],
+    authorization_servers: [serverUrl],
     scopes_supported: ["openid", "profile", "email"],
     bearer_methods_supported: ["header"],
 });
