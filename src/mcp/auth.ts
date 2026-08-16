@@ -5,12 +5,22 @@ import { normalizeBackendUrl } from "./backend";
 export const getMcpBackendUrl = (request: NextApiRequest): string | null => {
     const value = request.query.serverUrl;
     const serverUrl = Array.isArray(value) ? value[0] : value;
+    const configuredBackendUrl = process.env.REACT_APP_BACKEND_URL;
 
-    if (!serverUrl) {
+    const resolvedServerUrl = serverUrl ?? configuredBackendUrl;
+
+    if (!resolvedServerUrl) {
         return null;
     }
 
-    return normalizeBackendUrl(serverUrl);
+    return normalizeBackendUrl(resolvedServerUrl);
+};
+
+export const isMcpAuthenticationRequired = (request: NextApiRequest): boolean => {
+    const value = request.query.auth;
+    const authMode = Array.isArray(value) ? value[0] : value;
+
+    return authMode === "required";
 };
 
 export const sendMcpAuthorizationChallenge = (
@@ -18,7 +28,7 @@ export const sendMcpAuthorizationChallenge = (
     serverUrl: string | null,
 ): void => {
     if (!serverUrl) {
-        response.status(400).json({ error: "MCP requires a serverUrl query parameter for authentication discovery." });
+        response.status(500).json({ error: "MCP authentication is not configured with a backend URL." });
         return;
     }
 
@@ -29,7 +39,7 @@ export const sendMcpAuthorizationChallenge = (
 };
 
 export const buildProtectedResourceMetadata = (serverUrl: string) => ({
-    resource: `${buildSiteUrl("/api/mcp")}?serverUrl=${encodeURIComponent(serverUrl)}`,
+    resource: `${buildSiteUrl("/api/mcp")}?auth=required&serverUrl=${encodeURIComponent(serverUrl)}`,
     authorization_servers: [`${serverUrl}/api/auth`],
     scopes_supported: ["openid", "profile", "email"],
     bearer_methods_supported: ["header"],

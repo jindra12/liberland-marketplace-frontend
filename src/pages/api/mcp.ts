@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { getMcpBackendUrl, isMcpAuthenticationRequired, sendMcpAuthorizationChallenge } from "../../mcp/auth";
 import { createNswapMcpServer } from "../../mcp/server";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
@@ -11,8 +12,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse): Prom
 
     const authorization = typeof request.headers.authorization === "string" ? request.headers.authorization : undefined;
 
+    if (isMcpAuthenticationRequired(request) && !authorization) {
+        sendMcpAuthorizationChallenge(response, getMcpBackendUrl(request));
+        return;
+    }
+
+    const selectedServerUrl = isMcpAuthenticationRequired(request) ? getMcpBackendUrl(request) : undefined;
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
-    const server = createNswapMcpServer(authorization);
+    const server = createNswapMcpServer(authorization, selectedServerUrl);
 
     await server.connect(transport);
     await transport.handleRequest(request, response, request.body);

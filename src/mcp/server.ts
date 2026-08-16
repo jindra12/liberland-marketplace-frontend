@@ -15,12 +15,13 @@ const DISCOVERY_INSTRUCTIONS = "Nswap is a syndicated marketplace gateway. It do
 type ListedSyndicatedServer = { serverUrl: string };
 type ListedSyndicatedServersResult = { servers?: ListedSyndicatedServer[] };
 
-const call = (authorization: string | undefined, toolName: string, args: Record<string, unknown>) => {
+const callBackend = (authorization: string | undefined, toolName: string, args: Record<string, unknown>, defaultServerUrl?: string | null) => {
     const { serverUrl, ...backendArguments } = args;
-    return callBackendTool(resolveBackendUrl(typeof serverUrl === "string" ? serverUrl : undefined), authorization, toolName, backendArguments);
+    const requestedServerUrl = typeof serverUrl === "string" ? serverUrl : defaultServerUrl;
+    return callBackendTool(resolveBackendUrl(requestedServerUrl), authorization, toolName, backendArguments);
 };
 
-const callAll = async (authorization: string | undefined, toolName: string, args: Record<string, unknown>, serverUrl?: string) => Promise.all(
+const callAllBackends = async (authorization: string | undefined, toolName: string, args: Record<string, unknown>, serverUrl?: string) => Promise.all(
     resolveSessionServers(authorization, serverUrl).map(async (resolvedServerUrl) => ({
         serverUrl: resolvedServerUrl,
         result: await callBackendTool(resolvedServerUrl, authorization, toolName, args),
@@ -36,7 +37,15 @@ const requireAuthorization = (authorization?: string): string => {
     return authorization;
 };
 
-export const createNswapMcpServer = (authorization?: string): McpServer => {
+export const createNswapMcpServer = (authorization?: string, selectedServerUrl?: string | null): McpServer => {
+    const call = (auth: string | undefined, toolName: string, args: Record<string, unknown>) => callBackend(auth, toolName, args, selectedServerUrl);
+    const callAll = (auth: string | undefined, toolName: string, args: Record<string, unknown>, serverUrl?: string) => {
+        if (serverUrl || !selectedServerUrl) {
+            return callAllBackends(auth, toolName, args, serverUrl);
+        }
+
+        return Promise.resolve([{ serverUrl: selectedServerUrl, result: callBackend(auth, toolName, args, selectedServerUrl) }]);
+    };
     const server = new McpServer({ name: "nswap-syndicated-marketplace", version: "1.0.0" }, { instructions: DISCOVERY_INSTRUCTIONS });
 
     server.registerTool("add_syndicated_server", {
