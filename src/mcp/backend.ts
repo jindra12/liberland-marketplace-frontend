@@ -36,13 +36,20 @@ export const callBackendTool = async (
             throw new Error(result.content.map((item) => item.type === "text" ? item.text : "Backend MCP tool failed.").join("\n"));
         }
 
-        return result.structuredContent ?? result.content;
+        const hasTextContent = result.content.some((item) => item.type === "text" && item.text);
+
+        return hasTextContent ? result.content : result.structuredContent ?? result.content;
     } finally {
         await client.close();
     }
 };
 
 type McpTextContent = { type: "text"; text?: string };
+
+type RagResponse = {
+    error?: string;
+    [key: string]: unknown;
+};
 
 export const parseBackendToolResult = <T>(value: unknown): T => {
     if (Array.isArray(value)) {
@@ -60,7 +67,11 @@ export const searchBackendRag = async (serverUrl: string, authorization: string 
         headers,
         body: JSON.stringify({ query, limit }),
     });
-    const body = await response.json() as unknown;
-    if (!response.ok) throw new Error(`RAG search failed on ${serverUrl}.`);
+    const body = await response.json() as RagResponse;
+    if (!response.ok) {
+        const detail = typeof body.error === "string" ? `: ${body.error}` : ".";
+        throw new Error(`RAG search failed on ${serverUrl}${detail}`);
+    }
+
     return body;
 };
