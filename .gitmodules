@@ -1,0 +1,3 @@
+[submodule "src/submodules/liberland-marketplace-contracts"]
+	path = src/submodules/liberland-marketplace-contracts
+	url = git@github.com:jindra12/liberland-marketplace-contracts.git
