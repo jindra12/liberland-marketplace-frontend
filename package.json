@@ -2,6 +2,27 @@
     "name": "liberstake-marketplace-frontend",
     "version": "0.0.1",
     "private": true,
+    "workspaces": {
+        "packages": [
+            "src/submodules/liberland-marketplace-contracts"
+        ],
+        "nohoist": [
+            "**/hardhat",
+            "**/hardhat/**",
+            "**/@nomicfoundation/hardhat-ethers",
+            "**/@nomicfoundation/hardhat-ethers/**",
+            "**/@openzeppelin/hardhat-upgrades",
+            "**/@openzeppelin/hardhat-upgrades/**",
+            "**/@openzeppelin/contracts",
+            "**/@openzeppelin/contracts/**",
+            "**/@openzeppelin/contracts-upgradeable",
+            "**/@openzeppelin/contracts-upgradeable/**",
+            "**/@uniswap/v4-core",
+            "**/@uniswap/v4-core/**",
+            "**/@uniswap/v4-periphery",
+            "**/@uniswap/v4-periphery/**"
+        ]
+    },
     "dependencies": {
         "@ant-design/icons": "^6.1.0",
         "@bradgarropy/use-countdown": "^2.0.1",

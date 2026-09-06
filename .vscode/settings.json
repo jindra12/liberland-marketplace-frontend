@@ -19,5 +19,12 @@
         "**/coverage": true
     },
     "typescript.disableAutomaticTypeAcquisition": true,
-    "npm.autoDetect": "off"
+    "npm.autoDetect": "off",
+    "solidity.packageDefaultDependenciesDirectory": "node_modules",
+    "solidity.packageDefaultDependenciesContractsDirectory": "contracts",
+    "solidity.remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
+        "@uniswap/=node_modules/@uniswap/",
+        "solmate/=node_modules/solmate/"
+    ]
 }
