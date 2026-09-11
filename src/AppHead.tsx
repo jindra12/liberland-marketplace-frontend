@@ -41,8 +41,10 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             <link rel="icon" href="/favicon.ico" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta name="theme-color" content="#000000" />
+            <meta name="application-name" content="NSwap" />
             <meta name="robots" content={robotsValue} />
             <meta name="description" content={descriptionValue} />
+            <meta property="og:site_name" content="NSwap" />
             <meta property="og:title" content={titleValue} />
             <meta property="og:description" content={descriptionValue} />
             <meta property="og:image" content={imageUrl} />
@@ -54,6 +56,7 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             <meta name="twitter:description" content={descriptionValue} />
             <meta name="twitter:image" content={imageUrl} />
             <meta name="twitter:image:alt" content={imageAlt} />
+            {canonicalUrl && <meta name="twitter:url" content={canonicalUrl} />}
             {(props.extraMetaTags || []).map((tag, index) => {
                 if (tag.name) {
                     return <meta key={`meta-${index}`} name={tag.name} content={tag.content} />;
