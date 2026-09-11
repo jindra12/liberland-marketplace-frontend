@@ -6,7 +6,27 @@ export type SeoConfig = {
     noIndex?: boolean;
     paginate?: boolean;
     keywords?: string[];
-    buildJsonLd?: (canonicalPath: string, pageNumber?: number) => Record<string, unknown>[];
+    buildJsonLd?: (
+        canonicalPath: string,
+        pageNumber?: number,
+        pageData?: SeoCollectionPageData,
+    ) => Record<string, unknown>[];
+};
+
+export type SeoCollectionItem = {
+    name: string;
+    url: string;
+    description?: string | null;
+    type?: string;
+    attributes?: Array<{ name: string; value: string | number | boolean }>;
+};
+
+export type SeoCollectionPageData = {
+    items: SeoCollectionItem[];
+    page: number;
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
 };
 
 const buildCollectionDescription = (description: string, actions: string[]): string => {
@@ -58,21 +78,54 @@ const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] =>
                 url: `${SITE_URL}${section.path}`,
             })),
         },
+        {
+            "@context": "https://schema.org",
+            "@type": "DataCatalog",
+            name: `${SITE_NAME} marketplace directory`,
+            description:
+                "A searchable, syndicated directory of identities, companies, ventures, products and services, jobs, and posts.",
+            dataset: SECTION_LINKS.filter((section) => section.path !== "/syndication").map((section) => ({
+                "@type": "Dataset",
+                name: section.name,
+                description: section.description,
+                url: `${SITE_URL}${section.path}`,
+                isAccessibleForFree: true,
+                spatialCoverage: "Syndicated marketplace communities",
+            })),
+            additionalProperty: [
+                {
+                    "@type": "PropertyValue",
+                    name: "naturalLanguageDiscovery",
+                    value: "Search by entity type, name, description, job title, location, identity affiliation, company affiliation, availability, or recency.",
+                },
+                {
+                    "@type": "PropertyValue",
+                    name: "relationships",
+                    value: "Companies can have jobs, products, ventures, and posts; identities can have companies, jobs, products, and ventures.",
+                },
+                {
+                    "@type": "PropertyValue",
+                    name: "pagination",
+                    value: "Directory pages continue with ?page=2, ?page=3, and higher.",
+                },
+            ],
+        },
     ];
 };
 
-const buildCollectionJsonLd = (
+export const buildCollectionJsonLd = (
     name: string,
     path: string,
     description: string,
     keywords: string[] = [],
     searchPath: string = path,
-): ((canonicalPath: string, pageNumber?: number) => Record<string, unknown>[]) => {
-    return (canonicalPath: string, pageNumber?: number) => [
+): ((canonicalPath: string, pageNumber?: number, pageData?: SeoCollectionPageData) => Record<string, unknown>[]) => {
+    return (canonicalPath: string, pageNumber?: number, pageData?: SeoCollectionPageData) => [
         {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: pageNumber && pageNumber > 1 ? `${name} | ${SITE_NAME} | Page ${pageNumber}` : `${name} | ${SITE_NAME}`,
+            name:
+                pageNumber && pageNumber > 1 ? `${name} | ${SITE_NAME} | Page ${pageNumber}` : `${name} | ${SITE_NAME}`,
             url: `${SITE_URL}${canonicalPath}`,
             description,
             isPartOf: {
@@ -84,13 +137,63 @@ const buildCollectionJsonLd = (
                 "@type": "ItemList",
                 name,
                 url: `${SITE_URL}${path}`,
+                itemListOrder: "https://schema.org/ItemListOrderDescending",
+                numberOfItems: pageData?.totalItems,
+                itemListElement: pageData?.items.map((item, index) => ({
+                    "@type": "ListItem",
+                    position: (pageData.page - 1) * 20 + index + 1,
+                    name: item.name,
+                    url: item.url,
+                    item: {
+                        "@type": item.type ?? "Thing",
+                        "@id": item.url,
+                        name: item.name,
+                        description: item.description || undefined,
+                        additionalProperty: item.attributes?.map((attribute) => ({
+                            "@type": "PropertyValue",
+                            name: attribute.name,
+                            value: attribute.value,
+                        })),
+                    },
+                })),
             },
             keywords: keywords.join(", "),
+            about: {
+                "@type": "DefinedTermSet",
+                name: `${name} directory`,
+                hasDefinedTerm: [
+                    {
+                        "@type": "DefinedTerm",
+                        name,
+                        description,
+                    },
+                ],
+            },
+            relatedLink: SECTION_LINKS.filter((section) => section.path !== path).map(
+                (section) => `${SITE_URL}${section.path}`,
+            ),
+            isAccessibleForFree: true,
+            audience: {
+                "@type": "Audience",
+                audienceType: "People and AI agents looking for marketplace information",
+            },
             potentialAction: {
                 "@type": "SearchAction",
                 target: `${SITE_URL}${searchPath}?search={search_term_string}`,
                 "query-input": "required name=search_term_string",
             },
+            additionalProperty: [
+                {
+                    "@type": "PropertyValue",
+                    name: "pagination",
+                    value: "Use ?page=2, ?page=3, and higher to browse the complete directory.",
+                },
+                {
+                    "@type": "PropertyValue",
+                    name: "dataSource",
+                    value: "This directory aggregates published records from syndicated marketplace backends.",
+                },
+            ],
         },
         {
             "@context": "https://schema.org",
@@ -174,20 +277,22 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/jobs": {
         title: "Jobs | NSwap",
-        description: buildCollectionDescription("Browse published jobs collected from syndicated marketplace backends.", [
-            "scan open roles across syndicated endpoints",
-            "filter for work that matches your skills",
-            "open a job detail page to review the employer and application details",
-        ]),
+        description: buildCollectionDescription(
+            "Browse published jobs collected from syndicated marketplace backends.",
+            [
+                "scan open roles across syndicated endpoints",
+                "filter for work that matches your skills",
+                "open a job detail page to review the employer and application details",
+            ],
+        ),
         paginate: true,
         keywords: ["jobs", "open roles", "careers", "hiring", "employment", "marketplace jobs"],
-        buildJsonLd: buildCollectionJsonLd("Jobs", "/jobs", "Job listings available through syndicated marketplace endpoints.", [
-            "jobs",
-            "open roles",
-            "careers",
-            "employment",
-            "hiring",
-        ]),
+        buildJsonLd: buildCollectionJsonLd(
+            "Jobs",
+            "/jobs",
+            "Job listings available through syndicated marketplace endpoints.",
+            ["jobs", "open roles", "careers", "employment", "hiring"],
+        ),
     },
     "/jobs/[id]": {
         title: "Job listing | NSwap",
@@ -213,12 +318,12 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         ]),
         paginate: true,
         keywords: ["companies", "company profiles", "organizations", "businesses", "marketplace companies"],
-        buildJsonLd: buildCollectionJsonLd("Companies", "/companies", "Company profiles and related listings shared through syndicated sources.", [
-            "companies",
-            "company profiles",
-            "organizations",
-            "businesses",
-        ]),
+        buildJsonLd: buildCollectionJsonLd(
+            "Companies",
+            "/companies",
+            "Company profiles and related listings shared through syndicated sources.",
+            ["companies", "company profiles", "organizations", "businesses"],
+        ),
     },
     "/companies/[id]": {
         title: "Company profile | NSwap",
@@ -244,12 +349,12 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         ]),
         paginate: true,
         keywords: ["tribes", "identities", "communities", "marketplace networks"],
-        buildJsonLd: buildCollectionJsonLd("Tribes", "/tribes", "Identity groups and their related marketplace listings.", [
-            "tribes",
-            "identities",
-            "communities",
-            "network profiles",
-        ]),
+        buildJsonLd: buildCollectionJsonLd(
+            "Tribes",
+            "/tribes",
+            "Identity groups and their related marketplace listings.",
+            ["tribes", "identities", "communities", "network profiles"],
+        ),
     },
     "/tribes/[id]": {
         title: "Tribe profile | NSwap",
@@ -263,13 +368,24 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/products-services": {
         title: "Products and services | NSwap",
-        description: buildCollectionDescription("Discover orderable products and services published across syndicated endpoints.", [
-            "compare offers, prices, and inventory",
-            "open product detail pages for more specifications",
-            "jump to the seller's company profile",
-        ]),
+        description: buildCollectionDescription(
+            "Discover orderable products and services published across syndicated endpoints.",
+            [
+                "compare offers, prices, and inventory",
+                "open product detail pages for more specifications",
+                "jump to the seller's company profile",
+            ],
+        ),
         paginate: true,
-        keywords: ["products", "services", "product listings", "services listings", "inventory", "prices", "marketplace products"],
+        keywords: [
+            "products",
+            "services",
+            "product listings",
+            "services listings",
+            "inventory",
+            "prices",
+            "marketplace products",
+        ],
         buildJsonLd: buildCollectionJsonLd(
             "Products and services",
             "/products-services",
@@ -294,11 +410,14 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/posts": {
         title: "Posts | NSwap",
-        description: buildCollectionDescription("Browse published posts shared through syndicated marketplace endpoints.", [
-            "read marketplace announcements and updates",
-            "open post detail pages for the full content",
-            "follow the linked company or author context",
-        ]),
+        description: buildCollectionDescription(
+            "Browse published posts shared through syndicated marketplace endpoints.",
+            [
+                "read marketplace announcements and updates",
+                "open post detail pages for the full content",
+                "follow the linked company or author context",
+            ],
+        ),
         paginate: true,
         keywords: ["posts", "announcements", "updates", "marketplace posts", "news"],
         buildJsonLd: buildCollectionJsonLd("Posts", "/posts", "Published posts from syndicated marketplace sources.", [
@@ -320,11 +439,14 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
     },
     "/ventures": {
         title: "Ventures | NSwap",
-        description: buildCollectionDescription("Explore startup and venture profiles shared through the marketplace network.", [
-            "review startup summaries and funding details",
-            "open venture detail pages for deeper context",
-            "jump to the related identity or company profile",
-        ]),
+        description: buildCollectionDescription(
+            "Explore startup and venture profiles shared through the marketplace network.",
+            [
+                "review startup summaries and funding details",
+                "open venture detail pages for deeper context",
+                "jump to the related identity or company profile",
+            ],
+        ),
         paginate: true,
         keywords: ["ventures", "startups", "funding", "portfolio", "venture profiles"],
         buildJsonLd: buildCollectionJsonLd(
