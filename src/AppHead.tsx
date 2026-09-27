@@ -70,6 +70,7 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
             <link rel="apple-touch-icon" href="/logo192.png" />
             <link rel="manifest" href="/manifest.json" />
+            <link rel="alternate" type="text/plain" title="Nswap AI guide" href={`${resolvedSiteUrl}/llms.txt`} />
             <title>{titleValue}</title>
             {(props.jsonLd || []).map((entry, index) => (
                 <script

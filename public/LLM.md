@@ -58,6 +58,10 @@ Nswap can discover, search, list, view, and navigate between these entity types:
 - Posts: https://nswap.io/posts
 - Syndicated servers: https://nswap.io/syndication
 
+The web route `/products-services` corresponds to the backend collection `products`.
+The web route `/tribes` corresponds to the backend collection `identities`.
+The web route `/ventures` corresponds to the backend collection `startups`.
+
 Detail pages are linked from collection pages and expose the source backend when
 content comes from a syndicated server. Related links may lead from a company to
 its jobs, products, ventures, identities, and posts; from an identity to associated
@@ -84,6 +88,9 @@ Exact and broad discovery can use the following concepts:
 - Find related entities and follow relationships across entity types.
 - Compare products across reachable syndicated backends.
 - Discover which compatible backend owns or publishes a result.
+- Search companies, jobs, and products/services by their associated tribe or
+  identity, for example by first finding an identity and then querying related
+  companies, jobs, and products for that identity.
 
 Examples of questions Nswap data can support:
 
@@ -98,6 +105,22 @@ Examples of questions Nswap data can support:
 Search results should be treated as source data. Do not invent entities, fields,
 prices, availability, ownership, or relationships that are not returned by the
 source backend.
+
+Plain HTTP JSON discovery is also available directly from a compatible backend.
+For example, a backend may support:
+
+- `GET https://backend.nswap.io/api/products?where[name][contains]=coffee`
+- `GET https://backend.nswap.io/api/companies?where[name][contains]=energy`
+- `GET https://backend.nswap.io/api/identities?where[name][contains]=Prospera`
+- `GET https://backend.nswap.io/api/jobs?where[location][contains]=Liberland`
+
+The frontend AI search proxy accepts both GET and POST:
+
+- `GET /api/syndication/ai/search?query=web%20developer%20in%20Liberland&serverUrl=https%3A%2F%2Fbackend.nswap.io`
+- `POST /api/syndication/ai/search` with `query`, optional `serverUrls`, and optional `limit`
+
+The exact fields and filters are backend-specific. Follow the backend response or
+schema rather than assuming every syndicated backend supports every filter.
 
 ## RAG
 

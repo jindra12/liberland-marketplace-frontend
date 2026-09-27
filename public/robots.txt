@@ -13,3 +13,4 @@ Disallow: /ventures/edit/
 Disallow: /404
 
 Sitemap: https://nswap.io/sitemap.xml
+# AI capability guide: https://nswap.io/llms.txt

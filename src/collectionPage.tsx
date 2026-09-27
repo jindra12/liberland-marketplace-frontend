@@ -4,8 +4,9 @@ import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 import { AppHead } from "./AppHead";
 import { Dynamic } from "./Dynamic";
+import { SeoFallback } from "./SeoFallback";
 import { fetchCollectionPageMetadata } from "./collectionMetadata";
-import { SEO_BY_ROUTE } from "./shellPage/seo";
+import { SEO_BY_ROUTE, type SeoCollectionItem } from "./shellPage/seo";
 import { buildCanonicalPath, parsePageNumber } from "./shellPage/utils";
 
 type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
@@ -17,6 +18,9 @@ type CollectionPageProps = {
     jsonLd: Record<string, unknown>[];
     extraMetaTags: Array<{ name?: string; property?: string; content: string }>;
     extraLinks: Array<{ href: string; rel: string }>;
+    items: SeoCollectionItem[];
+    page: number;
+    hasNextPage: boolean;
 };
 
 const getPageNumber = (context: GetServerSidePropsContext): number => {
@@ -44,6 +48,9 @@ export const createCollectionPage = (route: CollectionRoute) => {
                     jsonLd: seo.buildJsonLd?.(canonicalPath, page) ?? [],
                     extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
                     extraLinks: [],
+                    items: [],
+                    page,
+                    hasNextPage: false,
                 },
             };
         }
@@ -59,6 +66,13 @@ export const createCollectionPage = (route: CollectionRoute) => {
                     jsonLd={props.jsonLd}
                     extraMetaTags={props.extraMetaTags}
                     extraLinks={props.extraLinks}
+                />
+                <SeoFallback
+                    title={props.title}
+                    description={props.description}
+                    items={props.items}
+                    page={props.page}
+                    hasNextPage={props.hasNextPage}
                 />
                 <Dynamic />
             </>

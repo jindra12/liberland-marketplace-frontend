@@ -169,9 +169,13 @@ export const buildCollectionJsonLd = (
                     },
                 ],
             },
-            relatedLink: SECTION_LINKS.filter((section) => section.path !== path).map(
-                (section) => `${SITE_URL}${section.path}`,
-            ),
+            relatedLink: [
+                ...SECTION_LINKS.filter((section) => section.path !== path).map(
+                    (section) => `${SITE_URL}${section.path}`,
+                ),
+                ...(pageData?.hasNextPage ? [`${SITE_URL}${path}?page=${pageData.page + 1}`] : []),
+                ...(pageData && pageData.page > 1 ? [`${SITE_URL}${path}?page=${pageData.page - 1}`] : []),
+            ],
             isAccessibleForFree: true,
             audience: {
                 "@type": "Audience",

@@ -4,7 +4,9 @@ import type { GetServerSideProps } from "next";
 
 import { AppHead } from "./AppHead";
 import { Dynamic } from "./Dynamic";
+import { SeoFallback } from "./SeoFallback";
 import { decodeServerUrlSegment, type DetailPageMetadata } from "./detailMetadata/shared";
+import { fetchOptionalDetailData } from "./detailPage/utils";
 
 export type DetailRouteParams = {
     id?: string;
@@ -79,9 +81,12 @@ export const createDetailPage = <TData, TVariables extends object | undefined, T
                 };
             }
 
-            const extraData = config.fetchAdditionalData
-                ? await config.fetchAdditionalData(entity, { id, serverUrl: encodedServerUrl }, serverUrl)
-                : undefined;
+            const extraData = await fetchOptionalDetailData(
+                config.fetchAdditionalData,
+                entity,
+                { id, serverUrl: encodedServerUrl },
+                serverUrl,
+            );
 
             return {
                 props: config.buildMetadata(entity, config.buildCanonicalPath({ id, serverUrl: encodedServerUrl }, encodedServerUrl), extraData),
@@ -107,6 +112,7 @@ export const createDetailPage = <TData, TVariables extends object | undefined, T
                     ogType={props.ogType}
                     extraMetaTags={props.extraMetaTags}
                 />
+                <SeoFallback title={props.title} description={props.description} />
                 <Dynamic />
             </>
         );

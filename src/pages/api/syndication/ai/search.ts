@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { BACKEND_URL } from "../../../../gqlFetcher";
+
 type ProxyRequest = {
     query: string;
     serverUrls: string[];
@@ -18,6 +20,8 @@ type BackendResponse = {
     answer: string;
     sources: BackendSource[];
 };
+
+type BackendErrorResponse = { error?: string };
 
 type ProxyResult = {
     serverUrl: string;
@@ -60,19 +64,30 @@ const normalizeServerUrl = (value: string): string => {
     return parsed.toString().replace(/\/+$/, "");
 };
 
-const parseRequest = (body: ProxyRequest): ProxyRequest => {
-    if (!Array.isArray(body.serverUrls) || body.serverUrls.length === 0 || body.serverUrls.length > MAX_SERVER_COUNT) {
-        throw new Error(`Provide between 1 and ${MAX_SERVER_COUNT} syndicated backend URLs.`);
-    }
+const parseRequest = (body: { query?: unknown; q?: unknown; serverUrl?: unknown; serverUrls?: unknown; limit?: unknown }): ProxyRequest => {
+    const query = typeof body.query === "string" ? body.query : body.q;
+    const listedServerUrls = Array.isArray(body.serverUrls)
+        ? body.serverUrls
+        : typeof body.serverUrls === "string"
+          ? body.serverUrls.split(",")
+          : [];
+    const serverUrls = [
+        ...(typeof body.serverUrl === "string" ? [body.serverUrl] : []),
+        ...listedServerUrls.filter((value): value is string => typeof value === "string"),
+    ];
 
-    if (typeof body.query !== "string" || body.query.length === 0 || body.query.length > MAX_QUERY_LENGTH) {
+    if (typeof query !== "string" || query.length === 0 || query.length > MAX_QUERY_LENGTH) {
         throw new Error(`Query must contain between 1 and ${MAX_QUERY_LENGTH} characters.`);
     }
 
+    if (serverUrls.length > MAX_SERVER_COUNT) {
+        throw new Error(`Provide no more than ${MAX_SERVER_COUNT} syndicated backend URLs.`);
+    }
+
     return {
-        query: body.query,
-        serverUrls: Array.from(new Set(body.serverUrls.map(normalizeServerUrl))),
-        limit: body.limit,
+        query,
+        serverUrls: Array.from(new Set((serverUrls.length > 0 ? serverUrls : [BACKEND_URL]).map(normalizeServerUrl))),
+        limit: typeof body.limit === "number" ? body.limit : undefined,
     };
 };
 
@@ -83,16 +98,19 @@ const queryBackend = async (serverUrl: string, body: ProxyRequest, authorization
         headers.Authorization = authorization;
     }
 
-    const response = await fetch(`${serverUrl}/api/ai/search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query: body.query, limit: body.limit }),
-    });
+    const searchUrl = new URL(`${serverUrl}/api/ai/search`);
+    searchUrl.searchParams.set("query", body.query);
+    if (body.limit !== undefined) {
+        searchUrl.searchParams.set("limit", String(body.limit));
+    }
 
-    const result = (await response.json()) as BackendResponse | { error?: string };
+    const response = await fetch(searchUrl, { method: "GET", headers });
+
+    const result = (await response.json()) as BackendResponse | BackendErrorResponse;
 
     if (!response.ok || !("answer" in result) || !("sources" in result)) {
-        throw new Error("The syndicated backend rejected the AI search.");
+        const message = "error" in result && result.error ? result.error : `Backend responded with status ${response.status}.`;
+        throw new Error(`The syndicated backend rejected the AI search: ${message}`);
     }
 
     return { serverUrl, answer: result.answer, sources: result.sources };
@@ -102,14 +120,31 @@ const handler = async (
     request: NextApiRequest,
     response: NextApiResponse<ProxyResponse | { error: string }>,
 ): Promise<void> => {
-    if (request.method !== "POST") {
-        response.setHeader("Allow", "POST");
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (request.method === "OPTIONS") {
+        response.status(204).end();
+        return;
+    }
+
+    if (request.method !== "GET" && request.method !== "POST") {
+        response.setHeader("Allow", "GET, POST, OPTIONS");
         response.status(405).json({ error: "Method not allowed." });
         return;
     }
 
     try {
-        const body = parseRequest(request.body as ProxyRequest);
+        const body = request.method === "GET"
+            ? parseRequest({
+                  query: request.query.query,
+                  q: request.query.q,
+                  serverUrl: request.query.serverUrl,
+                  serverUrls: request.query.serverUrls,
+                  limit: request.query.limit ? Number(request.query.limit) : undefined,
+              })
+            : parseRequest(request.body as ProxyRequest);
         const authorization = typeof request.headers.authorization === "string" ? request.headers.authorization : undefined;
         const settledResults = await Promise.allSettled(
             body.serverUrls.map(async (serverUrl) => queryBackend(serverUrl, body, authorization)),

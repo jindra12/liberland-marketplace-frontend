@@ -136,6 +136,7 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                         "Product",
                         definedAttributes([
                             { name: "company", value: product.company?.name },
+                            { name: "identity", value: product.company?.identity?.name },
                             { name: "orderable", value: product.orderable },
                             { name: "priceInUSD", value: product.priceInUSD },
                             { name: "priceInETH", value: product.priceInETH },
@@ -222,6 +223,9 @@ export const fetchCollectionPageMetadata = async (
     jsonLd: Record<string, unknown>[];
     extraMetaTags: Array<{ name?: string; property?: string; content: string }>;
     extraLinks: Array<{ href: string; rel: string }>;
+    items: SeoCollectionItem[];
+    page: number;
+    hasNextPage: boolean;
 }> => {
     const variables = { page, limit: 20, sort: "-contentRankScore" };
     const data = await collectionData(route, variables);
@@ -262,5 +266,8 @@ export const fetchCollectionPageMetadata = async (
             ...(page > 1 ? [{ rel: "prev", href: `${canonicalPath.split("?")[0]}?page=${page - 1}` }] : []),
             ...(pageData.hasNextPage ? [{ rel: "next", href: `${canonicalPath.split("?")[0]}?page=${page + 1}` }] : []),
         ],
+        items: pageData.items,
+        page,
+        hasNextPage: pageData.hasNextPage,
     };
 };
