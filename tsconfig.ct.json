@@ -11,5 +11,10 @@
         "src/**/*.tsx",
         "src/**/*.d.ts"
     ],
-    "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+    "exclude": [
+        "src/**/*.test.ts", "src/**/*.test.tsx",
+        "src/submodules/liberland-marketplace-contracts/hardhat.config.ts",
+        "src/submodules/liberland-marketplace-contracts/scripts/**/*.ts",
+        "src/submodules/liberland-marketplace-contracts/test/**/*.ts"
+    ]
 }

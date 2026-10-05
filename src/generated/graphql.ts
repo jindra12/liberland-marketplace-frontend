@@ -50375,6 +50375,7 @@ export type Startup = {
   company?: Maybe<Company>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
   contentRankScore?: Maybe<Scalars['Float']['output']>;
+  contractDeployments?: Maybe<Array<Startup_ContractDeployments>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -50405,6 +50406,11 @@ export type StartupMembershipResult = {
   message: Scalars['String']['output'];
   startup?: Maybe<Startup>;
 };
+
+export enum StartupUpdate_ContractDeployments_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
+}
 
 export enum StartupUpdate_FundsNeeded_Currency_MutationInput {
   Btc = 'BTC',
@@ -50477,6 +50483,7 @@ export type StartupVersion_Version = {
   company?: Maybe<Company>;
   completenessScore?: Maybe<Scalars['Float']['output']>;
   contentRankScore?: Maybe<Scalars['Float']['output']>;
+  contractDeployments?: Maybe<Array<StartupVersion_Version_ContractDeployments>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   createdBy?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
@@ -50500,6 +50507,41 @@ export type StartupVersion_Version = {
 export type StartupVersion_VersionCompanyArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
+
+export type StartupVersion_Version_ContractDeployments = {
+  __typename?: 'StartupVersion_Version_ContractDeployments';
+  chain?: Maybe<StartupVersion_Version_ContractDeployments_Chain>;
+  chainId?: Maybe<Scalars['String']['output']>;
+  daoAddress?: Maybe<Scalars['String']['output']>;
+  daoImplementationAddress?: Maybe<Scalars['String']['output']>;
+  deployedAt?: Maybe<Scalars['DateTime']['output']>;
+  deployerWalletAddress?: Maybe<Scalars['String']['output']>;
+  exchangePoolAddress?: Maybe<Scalars['String']['output']>;
+  exchangePoolId?: Maybe<Scalars['String']['output']>;
+  forwarderAddress?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  initialSupply?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  permit2Address?: Maybe<Scalars['String']['output']>;
+  poolManagerAddress?: Maybe<Scalars['String']['output']>;
+  positionManagerAddress?: Maybe<Scalars['String']['output']>;
+  rewardTokenAddress?: Maybe<Scalars['String']['output']>;
+  rewardTokenImplementationAddress?: Maybe<Scalars['String']['output']>;
+  swapRouterAddress?: Maybe<Scalars['String']['output']>;
+  swapRouterImplementationAddress?: Maybe<Scalars['String']['output']>;
+  timelockAddress?: Maybe<Scalars['String']['output']>;
+  timelockImplementationAddress?: Maybe<Scalars['String']['output']>;
+  tokenAddress?: Maybe<Scalars['String']['output']>;
+  tokenDecimals?: Maybe<Scalars['Float']['output']>;
+  tokenImplementationAddress?: Maybe<Scalars['String']['output']>;
+  tokenName?: Maybe<Scalars['String']['output']>;
+  tokenSymbol?: Maybe<Scalars['String']['output']>;
+};
+
+export enum StartupVersion_Version_ContractDeployments_Chain {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
+}
 
 export type StartupVersion_Version_FundsNeeded = {
   __typename?: 'StartupVersion_Version_FundsNeeded';
@@ -50554,6 +50596,46 @@ export enum StartupVersion_Version_Stage {
   Idea = 'idea',
   Mvp = 'mvp',
   Scaling = 'scaling'
+}
+
+export type Startup_ContractDeployments = {
+  __typename?: 'Startup_ContractDeployments';
+  chain?: Maybe<Startup_ContractDeployments_Chain>;
+  chainId?: Maybe<Scalars['String']['output']>;
+  daoAddress?: Maybe<Scalars['String']['output']>;
+  daoImplementationAddress?: Maybe<Scalars['String']['output']>;
+  deployedAt?: Maybe<Scalars['DateTime']['output']>;
+  deployerWalletAddress?: Maybe<Scalars['String']['output']>;
+  exchangePoolAddress?: Maybe<Scalars['String']['output']>;
+  exchangePoolId?: Maybe<Scalars['String']['output']>;
+  forwarderAddress?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  initialSupply?: Maybe<Scalars['String']['output']>;
+  network?: Maybe<Scalars['String']['output']>;
+  permit2Address?: Maybe<Scalars['String']['output']>;
+  poolManagerAddress?: Maybe<Scalars['String']['output']>;
+  positionManagerAddress?: Maybe<Scalars['String']['output']>;
+  rewardTokenAddress?: Maybe<Scalars['String']['output']>;
+  rewardTokenImplementationAddress?: Maybe<Scalars['String']['output']>;
+  swapRouterAddress?: Maybe<Scalars['String']['output']>;
+  swapRouterImplementationAddress?: Maybe<Scalars['String']['output']>;
+  timelockAddress?: Maybe<Scalars['String']['output']>;
+  timelockImplementationAddress?: Maybe<Scalars['String']['output']>;
+  tokenAddress?: Maybe<Scalars['String']['output']>;
+  tokenDecimals?: Maybe<Scalars['Float']['output']>;
+  tokenImplementationAddress?: Maybe<Scalars['String']['output']>;
+  tokenName?: Maybe<Scalars['String']['output']>;
+  tokenSymbol?: Maybe<Scalars['String']['output']>;
+};
+
+export enum Startup_ContractDeployments_Chain {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
+}
+
+export enum Startup_ContractDeployments_Chain_MutationInput {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
 }
 
 export type Startup_FundsNeeded = {
@@ -50682,6 +50764,293 @@ export type Startup_ContentRankScore_Operator = {
   less_than?: InputMaybe<Scalars['Float']['input']>;
   less_than_equal?: InputMaybe<Scalars['Float']['input']>;
   not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Startup_ContractDeployments__ChainId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export enum Startup_ContractDeployments__Chain_Input {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
+}
+
+export type Startup_ContractDeployments__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Startup_ContractDeployments__Chain_Input>>>;
+  equals?: InputMaybe<Startup_ContractDeployments__Chain_Input>;
+  in?: InputMaybe<Array<InputMaybe<Startup_ContractDeployments__Chain_Input>>>;
+  not_equals?: InputMaybe<Startup_ContractDeployments__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<Startup_ContractDeployments__Chain_Input>>>;
+};
+
+export type Startup_ContractDeployments__DaoAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__DaoImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__DeployedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Startup_ContractDeployments__DeployerWalletAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__ExchangePoolAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__ExchangePoolId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__ForwarderAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__InitialSupply_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__Network_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__Permit2Address_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__PoolManagerAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__PositionManagerAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__RewardTokenAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__RewardTokenImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__SwapRouterAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__SwapRouterImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TimelockAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TimelockImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TokenAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TokenDecimals_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Startup_ContractDeployments__TokenImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TokenName_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__TokenSymbol_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Startup_CreatedAt_Operator = {
@@ -50939,6 +51308,32 @@ export type Startup_Where = {
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
+  contractDeployments__chain?: InputMaybe<Startup_ContractDeployments__Chain_Operator>;
+  contractDeployments__chainId?: InputMaybe<Startup_ContractDeployments__ChainId_Operator>;
+  contractDeployments__daoAddress?: InputMaybe<Startup_ContractDeployments__DaoAddress_Operator>;
+  contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
+  contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
+  contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
+  contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
+  contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
+  contractDeployments__id?: InputMaybe<Startup_ContractDeployments__Id_Operator>;
+  contractDeployments__initialSupply?: InputMaybe<Startup_ContractDeployments__InitialSupply_Operator>;
+  contractDeployments__network?: InputMaybe<Startup_ContractDeployments__Network_Operator>;
+  contractDeployments__permit2Address?: InputMaybe<Startup_ContractDeployments__Permit2Address_Operator>;
+  contractDeployments__poolManagerAddress?: InputMaybe<Startup_ContractDeployments__PoolManagerAddress_Operator>;
+  contractDeployments__positionManagerAddress?: InputMaybe<Startup_ContractDeployments__PositionManagerAddress_Operator>;
+  contractDeployments__rewardTokenAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenAddress_Operator>;
+  contractDeployments__rewardTokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  contractDeployments__swapRouterAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterAddress_Operator>;
+  contractDeployments__swapRouterImplementationAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  contractDeployments__timelockAddress?: InputMaybe<Startup_ContractDeployments__TimelockAddress_Operator>;
+  contractDeployments__timelockImplementationAddress?: InputMaybe<Startup_ContractDeployments__TimelockImplementationAddress_Operator>;
+  contractDeployments__tokenAddress?: InputMaybe<Startup_ContractDeployments__TokenAddress_Operator>;
+  contractDeployments__tokenDecimals?: InputMaybe<Startup_ContractDeployments__TokenDecimals_Operator>;
+  contractDeployments__tokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__TokenImplementationAddress_Operator>;
+  contractDeployments__tokenName?: InputMaybe<Startup_ContractDeployments__TokenName_Operator>;
+  contractDeployments__tokenSymbol?: InputMaybe<Startup_ContractDeployments__TokenSymbol_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -50968,6 +51363,32 @@ export type Startup_Where_And = {
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
+  contractDeployments__chain?: InputMaybe<Startup_ContractDeployments__Chain_Operator>;
+  contractDeployments__chainId?: InputMaybe<Startup_ContractDeployments__ChainId_Operator>;
+  contractDeployments__daoAddress?: InputMaybe<Startup_ContractDeployments__DaoAddress_Operator>;
+  contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
+  contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
+  contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
+  contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
+  contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
+  contractDeployments__id?: InputMaybe<Startup_ContractDeployments__Id_Operator>;
+  contractDeployments__initialSupply?: InputMaybe<Startup_ContractDeployments__InitialSupply_Operator>;
+  contractDeployments__network?: InputMaybe<Startup_ContractDeployments__Network_Operator>;
+  contractDeployments__permit2Address?: InputMaybe<Startup_ContractDeployments__Permit2Address_Operator>;
+  contractDeployments__poolManagerAddress?: InputMaybe<Startup_ContractDeployments__PoolManagerAddress_Operator>;
+  contractDeployments__positionManagerAddress?: InputMaybe<Startup_ContractDeployments__PositionManagerAddress_Operator>;
+  contractDeployments__rewardTokenAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenAddress_Operator>;
+  contractDeployments__rewardTokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  contractDeployments__swapRouterAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterAddress_Operator>;
+  contractDeployments__swapRouterImplementationAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  contractDeployments__timelockAddress?: InputMaybe<Startup_ContractDeployments__TimelockAddress_Operator>;
+  contractDeployments__timelockImplementationAddress?: InputMaybe<Startup_ContractDeployments__TimelockImplementationAddress_Operator>;
+  contractDeployments__tokenAddress?: InputMaybe<Startup_ContractDeployments__TokenAddress_Operator>;
+  contractDeployments__tokenDecimals?: InputMaybe<Startup_ContractDeployments__TokenDecimals_Operator>;
+  contractDeployments__tokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__TokenImplementationAddress_Operator>;
+  contractDeployments__tokenName?: InputMaybe<Startup_ContractDeployments__TokenName_Operator>;
+  contractDeployments__tokenSymbol?: InputMaybe<Startup_ContractDeployments__TokenSymbol_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -50997,6 +51418,32 @@ export type Startup_Where_Or = {
   company?: InputMaybe<Startup_Company_Operator>;
   completenessScore?: InputMaybe<Startup_CompletenessScore_Operator>;
   contentRankScore?: InputMaybe<Startup_ContentRankScore_Operator>;
+  contractDeployments__chain?: InputMaybe<Startup_ContractDeployments__Chain_Operator>;
+  contractDeployments__chainId?: InputMaybe<Startup_ContractDeployments__ChainId_Operator>;
+  contractDeployments__daoAddress?: InputMaybe<Startup_ContractDeployments__DaoAddress_Operator>;
+  contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
+  contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
+  contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
+  contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
+  contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
+  contractDeployments__id?: InputMaybe<Startup_ContractDeployments__Id_Operator>;
+  contractDeployments__initialSupply?: InputMaybe<Startup_ContractDeployments__InitialSupply_Operator>;
+  contractDeployments__network?: InputMaybe<Startup_ContractDeployments__Network_Operator>;
+  contractDeployments__permit2Address?: InputMaybe<Startup_ContractDeployments__Permit2Address_Operator>;
+  contractDeployments__poolManagerAddress?: InputMaybe<Startup_ContractDeployments__PoolManagerAddress_Operator>;
+  contractDeployments__positionManagerAddress?: InputMaybe<Startup_ContractDeployments__PositionManagerAddress_Operator>;
+  contractDeployments__rewardTokenAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenAddress_Operator>;
+  contractDeployments__rewardTokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  contractDeployments__swapRouterAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterAddress_Operator>;
+  contractDeployments__swapRouterImplementationAddress?: InputMaybe<Startup_ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  contractDeployments__timelockAddress?: InputMaybe<Startup_ContractDeployments__TimelockAddress_Operator>;
+  contractDeployments__timelockImplementationAddress?: InputMaybe<Startup_ContractDeployments__TimelockImplementationAddress_Operator>;
+  contractDeployments__tokenAddress?: InputMaybe<Startup_ContractDeployments__TokenAddress_Operator>;
+  contractDeployments__tokenDecimals?: InputMaybe<Startup_ContractDeployments__TokenDecimals_Operator>;
+  contractDeployments__tokenImplementationAddress?: InputMaybe<Startup_ContractDeployments__TokenImplementationAddress_Operator>;
+  contractDeployments__tokenName?: InputMaybe<Startup_ContractDeployments__TokenName_Operator>;
+  contractDeployments__tokenSymbol?: InputMaybe<Startup_ContractDeployments__TokenSymbol_Operator>;
   createdAt?: InputMaybe<Startup_CreatedAt_Operator>;
   createdBy?: InputMaybe<Startup_CreatedBy_Operator>;
   description?: InputMaybe<Startup_Description_Operator>;
@@ -51064,6 +51511,7 @@ export type StartupsDocAccessFields = {
   company?: Maybe<StartupsDocAccessFields_Company>;
   completenessScore?: Maybe<StartupsDocAccessFields_CompletenessScore>;
   contentRankScore?: Maybe<StartupsDocAccessFields_ContentRankScore>;
+  contractDeployments?: Maybe<StartupsDocAccessFields_ContractDeployments>;
   createdAt?: Maybe<StartupsDocAccessFields_CreatedAt>;
   createdBy?: Maybe<StartupsDocAccessFields_CreatedBy>;
   description?: Maybe<StartupsDocAccessFields_Description>;
@@ -51220,6 +51668,793 @@ export type StartupsDocAccessFields_ContentRankScore_Read = {
 
 export type StartupsDocAccessFields_ContentRankScore_Update = {
   __typename?: 'StartupsDocAccessFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_Delete>;
+  fields?: Maybe<StartupsDocAccessFields_ContractDeployments_Fields>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Fields = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_Fields';
+  chain?: Maybe<StartupsDocAccessFields_ContractDeployments_Chain>;
+  chainId?: Maybe<StartupsDocAccessFields_ContractDeployments_ChainId>;
+  daoAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoAddress>;
+  daoImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress>;
+  deployedAt?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt>;
+  deployerWalletAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress>;
+  exchangePoolAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress>;
+  exchangePoolId?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId>;
+  forwarderAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress>;
+  id?: Maybe<StartupsDocAccessFields_ContractDeployments_Id>;
+  initialSupply?: Maybe<StartupsDocAccessFields_ContractDeployments_InitialSupply>;
+  network?: Maybe<StartupsDocAccessFields_ContractDeployments_Network>;
+  permit2Address?: Maybe<StartupsDocAccessFields_ContractDeployments_Permit2Address>;
+  poolManagerAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_PoolManagerAddress>;
+  positionManagerAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_PositionManagerAddress>;
+  rewardTokenAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenAddress>;
+  rewardTokenImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress>;
+  swapRouterAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterAddress>;
+  swapRouterImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress>;
+  timelockAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockAddress>;
+  timelockImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress>;
+  tokenAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenAddress>;
+  tokenDecimals?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenDecimals>;
+  tokenImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress>;
+  tokenName?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenName>;
+  tokenSymbol?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenSymbol>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Chain = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chain';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_Chain_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_Chain_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_Chain_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_Chain_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ChainId = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chainId';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_ChainId_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_ChainId_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_ChainId_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_ChainId_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ChainId_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chainId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ChainId_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chainId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ChainId_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chainId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ChainId_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chainId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Chain_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Chain_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Chain_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Chain_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoImplementationAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_daoImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployedAt = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployedAt';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployedAt_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployedAt_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployedAt_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployedAt_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolId = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolId';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ExchangePoolId_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_exchangePoolId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ForwarderAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_forwarderAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_forwarderAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_forwarderAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_forwarderAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_ForwarderAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_forwarderAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Id = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_id';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_Id_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_Id_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_Id_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_Id_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Id_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Id_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Id_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Id_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_InitialSupply = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_initialSupply';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_InitialSupply_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_InitialSupply_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_InitialSupply_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_InitialSupply_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_InitialSupply_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_initialSupply_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_InitialSupply_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_initialSupply_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_InitialSupply_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_initialSupply_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_InitialSupply_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_initialSupply_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Network = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_network';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_Network_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_Network_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_Network_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_Network_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Network_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_network_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Network_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_network_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Network_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_network_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Network_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_network_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Permit2Address = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_permit2Address';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_Permit2Address_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_Permit2Address_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_Permit2Address_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_Permit2Address_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Permit2Address_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_permit2Address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Permit2Address_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_permit2Address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Permit2Address_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_permit2Address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_Permit2Address_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_permit2Address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PoolManagerAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_poolManagerAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_poolManagerAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_poolManagerAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_poolManagerAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PoolManagerAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_poolManagerAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PositionManagerAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_positionManagerAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_positionManagerAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_positionManagerAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_positionManagerAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_PositionManagerAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_positionManagerAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenImplementationAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_RewardTokenImplementationAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_rewardTokenImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterImplementationAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_SwapRouterImplementationAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_swapRouterImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockImplementationAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TimelockImplementationAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_timelockImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenDecimals = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenDecimals';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenDecimals_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenDecimals_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenDecimals_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenDecimals_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenDecimals_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenDecimals_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenDecimals_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenDecimals_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenDecimals_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenDecimals_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenDecimals_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenDecimals_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenImplementationAddress';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenImplementationAddress_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenName = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenName';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenName_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenName_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenName_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenName_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenName_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenName_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenName_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenName_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenSymbol = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenSymbol';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenSymbol_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenSymbol_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenSymbol_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_TokenSymbol_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenSymbol_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenSymbol_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenSymbol_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenSymbol_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenSymbol_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenSymbol_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_TokenSymbol_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_tokenSymbol_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -51769,6 +53004,7 @@ export type StartupsFields = {
   company?: Maybe<StartupsFields_Company>;
   completenessScore?: Maybe<StartupsFields_CompletenessScore>;
   contentRankScore?: Maybe<StartupsFields_ContentRankScore>;
+  contractDeployments?: Maybe<StartupsFields_ContractDeployments>;
   createdAt?: Maybe<StartupsFields_CreatedAt>;
   createdBy?: Maybe<StartupsFields_CreatedBy>;
   description?: Maybe<StartupsFields_Description>;
@@ -51925,6 +53161,793 @@ export type StartupsFields_ContentRankScore_Read = {
 
 export type StartupsFields_ContentRankScore_Update = {
   __typename?: 'StartupsFields_contentRankScore_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments = {
+  __typename?: 'StartupsFields_contractDeployments';
+  create?: Maybe<StartupsFields_ContractDeployments_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_Delete>;
+  fields?: Maybe<StartupsFields_ContractDeployments_Fields>;
+  read?: Maybe<StartupsFields_ContractDeployments_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_Update>;
+};
+
+export type StartupsFields_ContractDeployments_Create = {
+  __typename?: 'StartupsFields_contractDeployments_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Fields = {
+  __typename?: 'StartupsFields_contractDeployments_Fields';
+  chain?: Maybe<StartupsFields_ContractDeployments_Chain>;
+  chainId?: Maybe<StartupsFields_ContractDeployments_ChainId>;
+  daoAddress?: Maybe<StartupsFields_ContractDeployments_DaoAddress>;
+  daoImplementationAddress?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress>;
+  deployedAt?: Maybe<StartupsFields_ContractDeployments_DeployedAt>;
+  deployerWalletAddress?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress>;
+  exchangePoolAddress?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress>;
+  exchangePoolId?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId>;
+  forwarderAddress?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress>;
+  id?: Maybe<StartupsFields_ContractDeployments_Id>;
+  initialSupply?: Maybe<StartupsFields_ContractDeployments_InitialSupply>;
+  network?: Maybe<StartupsFields_ContractDeployments_Network>;
+  permit2Address?: Maybe<StartupsFields_ContractDeployments_Permit2Address>;
+  poolManagerAddress?: Maybe<StartupsFields_ContractDeployments_PoolManagerAddress>;
+  positionManagerAddress?: Maybe<StartupsFields_ContractDeployments_PositionManagerAddress>;
+  rewardTokenAddress?: Maybe<StartupsFields_ContractDeployments_RewardTokenAddress>;
+  rewardTokenImplementationAddress?: Maybe<StartupsFields_ContractDeployments_RewardTokenImplementationAddress>;
+  swapRouterAddress?: Maybe<StartupsFields_ContractDeployments_SwapRouterAddress>;
+  swapRouterImplementationAddress?: Maybe<StartupsFields_ContractDeployments_SwapRouterImplementationAddress>;
+  timelockAddress?: Maybe<StartupsFields_ContractDeployments_TimelockAddress>;
+  timelockImplementationAddress?: Maybe<StartupsFields_ContractDeployments_TimelockImplementationAddress>;
+  tokenAddress?: Maybe<StartupsFields_ContractDeployments_TokenAddress>;
+  tokenDecimals?: Maybe<StartupsFields_ContractDeployments_TokenDecimals>;
+  tokenImplementationAddress?: Maybe<StartupsFields_ContractDeployments_TokenImplementationAddress>;
+  tokenName?: Maybe<StartupsFields_ContractDeployments_TokenName>;
+  tokenSymbol?: Maybe<StartupsFields_ContractDeployments_TokenSymbol>;
+};
+
+export type StartupsFields_ContractDeployments_Read = {
+  __typename?: 'StartupsFields_contractDeployments_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Update = {
+  __typename?: 'StartupsFields_contractDeployments_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Chain = {
+  __typename?: 'StartupsFields_contractDeployments_chain';
+  create?: Maybe<StartupsFields_ContractDeployments_Chain_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_Chain_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_Chain_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_Chain_Update>;
+};
+
+export type StartupsFields_ContractDeployments_ChainId = {
+  __typename?: 'StartupsFields_contractDeployments_chainId';
+  create?: Maybe<StartupsFields_ContractDeployments_ChainId_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_ChainId_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_ChainId_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_ChainId_Update>;
+};
+
+export type StartupsFields_ContractDeployments_ChainId_Create = {
+  __typename?: 'StartupsFields_contractDeployments_chainId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ChainId_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_chainId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ChainId_Read = {
+  __typename?: 'StartupsFields_contractDeployments_chainId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ChainId_Update = {
+  __typename?: 'StartupsFields_contractDeployments_chainId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Chain_Create = {
+  __typename?: 'StartupsFields_contractDeployments_chain_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Chain_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_chain_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Chain_Read = {
+  __typename?: 'StartupsFields_contractDeployments_chain_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Chain_Update = {
+  __typename?: 'StartupsFields_contractDeployments_chain_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoAddress = {
+  __typename?: 'StartupsFields_contractDeployments_daoAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_DaoAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_DaoAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_DaoAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_DaoAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_DaoAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_daoAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_daoAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_daoAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_daoAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoImplementationAddress = {
+  __typename?: 'StartupsFields_contractDeployments_daoImplementationAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_DaoImplementationAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_daoImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoImplementationAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_daoImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoImplementationAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_daoImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DaoImplementationAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_daoImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployedAt = {
+  __typename?: 'StartupsFields_contractDeployments_deployedAt';
+  create?: Maybe<StartupsFields_ContractDeployments_DeployedAt_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_DeployedAt_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_DeployedAt_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_DeployedAt_Update>;
+};
+
+export type StartupsFields_ContractDeployments_DeployedAt_Create = {
+  __typename?: 'StartupsFields_contractDeployments_deployedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployedAt_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_deployedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployedAt_Read = {
+  __typename?: 'StartupsFields_contractDeployments_deployedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployedAt_Update = {
+  __typename?: 'StartupsFields_contractDeployments_deployedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployerWalletAddress = {
+  __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_DeployerWalletAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployerWalletAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployerWalletAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeployerWalletAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolAddress = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolId = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolId';
+  create?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId_Update>;
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolId_Create = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolId_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolId_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolId_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolId_Read = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolId_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ExchangePoolId_Update = {
+  __typename?: 'StartupsFields_contractDeployments_exchangePoolId_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ForwarderAddress = {
+  __typename?: 'StartupsFields_contractDeployments_forwarderAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_ForwarderAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_forwarderAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ForwarderAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_forwarderAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ForwarderAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_forwarderAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_ForwarderAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_forwarderAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Id = {
+  __typename?: 'StartupsFields_contractDeployments_id';
+  create?: Maybe<StartupsFields_ContractDeployments_Id_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_Id_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_Id_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_Id_Update>;
+};
+
+export type StartupsFields_ContractDeployments_Id_Create = {
+  __typename?: 'StartupsFields_contractDeployments_id_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Id_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_id_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Id_Read = {
+  __typename?: 'StartupsFields_contractDeployments_id_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Id_Update = {
+  __typename?: 'StartupsFields_contractDeployments_id_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_InitialSupply = {
+  __typename?: 'StartupsFields_contractDeployments_initialSupply';
+  create?: Maybe<StartupsFields_ContractDeployments_InitialSupply_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_InitialSupply_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_InitialSupply_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_InitialSupply_Update>;
+};
+
+export type StartupsFields_ContractDeployments_InitialSupply_Create = {
+  __typename?: 'StartupsFields_contractDeployments_initialSupply_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_InitialSupply_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_initialSupply_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_InitialSupply_Read = {
+  __typename?: 'StartupsFields_contractDeployments_initialSupply_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_InitialSupply_Update = {
+  __typename?: 'StartupsFields_contractDeployments_initialSupply_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Network = {
+  __typename?: 'StartupsFields_contractDeployments_network';
+  create?: Maybe<StartupsFields_ContractDeployments_Network_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_Network_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_Network_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_Network_Update>;
+};
+
+export type StartupsFields_ContractDeployments_Network_Create = {
+  __typename?: 'StartupsFields_contractDeployments_network_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Network_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_network_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Network_Read = {
+  __typename?: 'StartupsFields_contractDeployments_network_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Network_Update = {
+  __typename?: 'StartupsFields_contractDeployments_network_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Permit2Address = {
+  __typename?: 'StartupsFields_contractDeployments_permit2Address';
+  create?: Maybe<StartupsFields_ContractDeployments_Permit2Address_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_Permit2Address_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_Permit2Address_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_Permit2Address_Update>;
+};
+
+export type StartupsFields_ContractDeployments_Permit2Address_Create = {
+  __typename?: 'StartupsFields_contractDeployments_permit2Address_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Permit2Address_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_permit2Address_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Permit2Address_Read = {
+  __typename?: 'StartupsFields_contractDeployments_permit2Address_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_Permit2Address_Update = {
+  __typename?: 'StartupsFields_contractDeployments_permit2Address_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PoolManagerAddress = {
+  __typename?: 'StartupsFields_contractDeployments_poolManagerAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_PoolManagerAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_PoolManagerAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_PoolManagerAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_PoolManagerAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_PoolManagerAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_poolManagerAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PoolManagerAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_poolManagerAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PoolManagerAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_poolManagerAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PoolManagerAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_poolManagerAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PositionManagerAddress = {
+  __typename?: 'StartupsFields_contractDeployments_positionManagerAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_PositionManagerAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_PositionManagerAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_PositionManagerAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_PositionManagerAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_PositionManagerAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_positionManagerAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PositionManagerAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_positionManagerAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PositionManagerAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_positionManagerAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_PositionManagerAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_positionManagerAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenAddress = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_RewardTokenAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_RewardTokenAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_RewardTokenAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_RewardTokenAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenImplementationAddress = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenImplementationAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_RewardTokenImplementationAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_rewardTokenImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterAddress = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_SwapRouterAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_SwapRouterAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_SwapRouterAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_SwapRouterAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterImplementationAddress = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterImplementationAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_SwapRouterImplementationAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_swapRouterImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockAddress = {
+  __typename?: 'StartupsFields_contractDeployments_timelockAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_TimelockAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TimelockAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TimelockAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TimelockAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TimelockAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_timelockAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_timelockAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_timelockAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_timelockAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockImplementationAddress = {
+  __typename?: 'StartupsFields_contractDeployments_timelockImplementationAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_TimelockImplementationAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TimelockImplementationAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TimelockImplementationAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TimelockImplementationAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TimelockImplementationAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_timelockImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockImplementationAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_timelockImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockImplementationAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_timelockImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TimelockImplementationAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_timelockImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenAddress = {
+  __typename?: 'StartupsFields_contractDeployments_tokenAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_TokenAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TokenAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TokenAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TokenAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TokenAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_tokenAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_tokenAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_tokenAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_tokenAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenDecimals = {
+  __typename?: 'StartupsFields_contractDeployments_tokenDecimals';
+  create?: Maybe<StartupsFields_ContractDeployments_TokenDecimals_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TokenDecimals_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TokenDecimals_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TokenDecimals_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TokenDecimals_Create = {
+  __typename?: 'StartupsFields_contractDeployments_tokenDecimals_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenDecimals_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_tokenDecimals_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenDecimals_Read = {
+  __typename?: 'StartupsFields_contractDeployments_tokenDecimals_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenDecimals_Update = {
+  __typename?: 'StartupsFields_contractDeployments_tokenDecimals_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenImplementationAddress = {
+  __typename?: 'StartupsFields_contractDeployments_tokenImplementationAddress';
+  create?: Maybe<StartupsFields_ContractDeployments_TokenImplementationAddress_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TokenImplementationAddress_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TokenImplementationAddress_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TokenImplementationAddress_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TokenImplementationAddress_Create = {
+  __typename?: 'StartupsFields_contractDeployments_tokenImplementationAddress_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenImplementationAddress_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_tokenImplementationAddress_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenImplementationAddress_Read = {
+  __typename?: 'StartupsFields_contractDeployments_tokenImplementationAddress_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenImplementationAddress_Update = {
+  __typename?: 'StartupsFields_contractDeployments_tokenImplementationAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenName = {
+  __typename?: 'StartupsFields_contractDeployments_tokenName';
+  create?: Maybe<StartupsFields_ContractDeployments_TokenName_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TokenName_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TokenName_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TokenName_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TokenName_Create = {
+  __typename?: 'StartupsFields_contractDeployments_tokenName_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenName_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_tokenName_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenName_Read = {
+  __typename?: 'StartupsFields_contractDeployments_tokenName_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenName_Update = {
+  __typename?: 'StartupsFields_contractDeployments_tokenName_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenSymbol = {
+  __typename?: 'StartupsFields_contractDeployments_tokenSymbol';
+  create?: Maybe<StartupsFields_ContractDeployments_TokenSymbol_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_TokenSymbol_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_TokenSymbol_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_TokenSymbol_Update>;
+};
+
+export type StartupsFields_ContractDeployments_TokenSymbol_Create = {
+  __typename?: 'StartupsFields_contractDeployments_tokenSymbol_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenSymbol_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_tokenSymbol_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenSymbol_Read = {
+  __typename?: 'StartupsFields_contractDeployments_tokenSymbol_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_TokenSymbol_Update = {
+  __typename?: 'StartupsFields_contractDeployments_tokenSymbol_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -63710,6 +65733,7 @@ export type MutationStartupInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
   contentRankScore?: InputMaybe<Scalars['Float']['input']>;
+  contractDeployments?: InputMaybe<Array<InputMaybe<MutationStartup_ContractDeploymentsInput>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -63735,6 +65759,7 @@ export type MutationStartupUpdateInput = {
   company?: InputMaybe<Scalars['String']['input']>;
   completenessScore?: InputMaybe<Scalars['Float']['input']>;
   contentRankScore?: InputMaybe<Scalars['Float']['input']>;
+  contractDeployments?: InputMaybe<Array<InputMaybe<MutationStartupUpdate_ContractDeploymentsInput>>>;
   createdAt?: InputMaybe<Scalars['String']['input']>;
   createdBy?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -63754,9 +65779,67 @@ export type MutationStartupUpdateInput = {
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MutationStartupUpdate_ContractDeploymentsInput = {
+  chain: StartupUpdate_ContractDeployments_Chain_MutationInput;
+  chainId?: InputMaybe<Scalars['String']['input']>;
+  daoAddress?: InputMaybe<Scalars['String']['input']>;
+  daoImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  deployedAt?: InputMaybe<Scalars['String']['input']>;
+  deployerWalletAddress?: InputMaybe<Scalars['String']['input']>;
+  exchangePoolAddress?: InputMaybe<Scalars['String']['input']>;
+  exchangePoolId?: InputMaybe<Scalars['String']['input']>;
+  forwarderAddress?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  initialSupply?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  permit2Address?: InputMaybe<Scalars['String']['input']>;
+  poolManagerAddress?: InputMaybe<Scalars['String']['input']>;
+  positionManagerAddress?: InputMaybe<Scalars['String']['input']>;
+  rewardTokenAddress?: InputMaybe<Scalars['String']['input']>;
+  rewardTokenImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  swapRouterAddress?: InputMaybe<Scalars['String']['input']>;
+  swapRouterImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  timelockAddress?: InputMaybe<Scalars['String']['input']>;
+  timelockImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenDecimals?: InputMaybe<Scalars['Float']['input']>;
+  tokenImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenName?: InputMaybe<Scalars['String']['input']>;
+  tokenSymbol?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationStartupUpdate_FundsNeededInput = {
   amount?: InputMaybe<Scalars['Float']['input']>;
   currency?: InputMaybe<StartupUpdate_FundsNeeded_Currency_MutationInput>;
+};
+
+export type MutationStartup_ContractDeploymentsInput = {
+  chain: Startup_ContractDeployments_Chain_MutationInput;
+  chainId?: InputMaybe<Scalars['String']['input']>;
+  daoAddress?: InputMaybe<Scalars['String']['input']>;
+  daoImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  deployedAt?: InputMaybe<Scalars['String']['input']>;
+  deployerWalletAddress?: InputMaybe<Scalars['String']['input']>;
+  exchangePoolAddress?: InputMaybe<Scalars['String']['input']>;
+  exchangePoolId?: InputMaybe<Scalars['String']['input']>;
+  forwarderAddress?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  initialSupply?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  permit2Address?: InputMaybe<Scalars['String']['input']>;
+  poolManagerAddress?: InputMaybe<Scalars['String']['input']>;
+  positionManagerAddress?: InputMaybe<Scalars['String']['input']>;
+  rewardTokenAddress?: InputMaybe<Scalars['String']['input']>;
+  rewardTokenImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  swapRouterAddress?: InputMaybe<Scalars['String']['input']>;
+  swapRouterImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  timelockAddress?: InputMaybe<Scalars['String']['input']>;
+  timelockImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenDecimals?: InputMaybe<Scalars['Float']['input']>;
+  tokenImplementationAddress?: InputMaybe<Scalars['String']['input']>;
+  tokenName?: InputMaybe<Scalars['String']['input']>;
+  tokenSymbol?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationStartup_FundsNeededInput = {
@@ -67121,6 +69204,293 @@ export type VersionsStartup_Version__ContentRankScore_Operator = {
   not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type VersionsStartup_Version__ContractDeployments__ChainId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export enum VersionsStartup_Version__ContractDeployments__Chain_Input {
+  Ethereum = 'ethereum',
+  Tron = 'tron'
+}
+
+export type VersionsStartup_Version__ContractDeployments__Chain_Operator = {
+  all?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Input>>>;
+  equals?: InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Input>;
+  in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Input>>>;
+  not_equals?: InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Input>;
+  not_in?: InputMaybe<Array<InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Input>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__DaoAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__DeployedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__InitialSupply_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__Network_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__Permit2Address_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__PoolManagerAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__PositionManagerAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__RewardTokenAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__RewardTokenImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__SwapRouterAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__SwapRouterImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TimelockAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TimelockImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TokenAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TokenDecimals_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TokenImplementationAddress_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TokenName_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsStartup_Version__ContractDeployments__TokenSymbol_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type VersionsStartup_Version__CreatedAt_Operator = {
   equals?: InputMaybe<Scalars['DateTime']['input']>;
   exists?: InputMaybe<Scalars['Boolean']['input']>;
@@ -67332,6 +69702,32 @@ export type VersionsStartup_Where = {
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
+  version__contractDeployments__chain?: InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Operator>;
+  version__contractDeployments__chainId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ChainId_Operator>;
+  version__contractDeployments__daoAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoAddress_Operator>;
+  version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
+  version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
+  version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
+  version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
+  version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
+  version__contractDeployments__id?: InputMaybe<VersionsStartup_Version__ContractDeployments__Id_Operator>;
+  version__contractDeployments__initialSupply?: InputMaybe<VersionsStartup_Version__ContractDeployments__InitialSupply_Operator>;
+  version__contractDeployments__network?: InputMaybe<VersionsStartup_Version__ContractDeployments__Network_Operator>;
+  version__contractDeployments__permit2Address?: InputMaybe<VersionsStartup_Version__ContractDeployments__Permit2Address_Operator>;
+  version__contractDeployments__poolManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PoolManagerAddress_Operator>;
+  version__contractDeployments__positionManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PositionManagerAddress_Operator>;
+  version__contractDeployments__rewardTokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenAddress_Operator>;
+  version__contractDeployments__rewardTokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  version__contractDeployments__swapRouterAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterAddress_Operator>;
+  version__contractDeployments__swapRouterImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  version__contractDeployments__timelockAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockAddress_Operator>;
+  version__contractDeployments__timelockImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockImplementationAddress_Operator>;
+  version__contractDeployments__tokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenAddress_Operator>;
+  version__contractDeployments__tokenDecimals?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenDecimals_Operator>;
+  version__contractDeployments__tokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenImplementationAddress_Operator>;
+  version__contractDeployments__tokenName?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenName_Operator>;
+  version__contractDeployments__tokenSymbol?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenSymbol_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -67365,6 +69761,32 @@ export type VersionsStartup_Where_And = {
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
+  version__contractDeployments__chain?: InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Operator>;
+  version__contractDeployments__chainId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ChainId_Operator>;
+  version__contractDeployments__daoAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoAddress_Operator>;
+  version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
+  version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
+  version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
+  version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
+  version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
+  version__contractDeployments__id?: InputMaybe<VersionsStartup_Version__ContractDeployments__Id_Operator>;
+  version__contractDeployments__initialSupply?: InputMaybe<VersionsStartup_Version__ContractDeployments__InitialSupply_Operator>;
+  version__contractDeployments__network?: InputMaybe<VersionsStartup_Version__ContractDeployments__Network_Operator>;
+  version__contractDeployments__permit2Address?: InputMaybe<VersionsStartup_Version__ContractDeployments__Permit2Address_Operator>;
+  version__contractDeployments__poolManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PoolManagerAddress_Operator>;
+  version__contractDeployments__positionManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PositionManagerAddress_Operator>;
+  version__contractDeployments__rewardTokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenAddress_Operator>;
+  version__contractDeployments__rewardTokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  version__contractDeployments__swapRouterAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterAddress_Operator>;
+  version__contractDeployments__swapRouterImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  version__contractDeployments__timelockAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockAddress_Operator>;
+  version__contractDeployments__timelockImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockImplementationAddress_Operator>;
+  version__contractDeployments__tokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenAddress_Operator>;
+  version__contractDeployments__tokenDecimals?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenDecimals_Operator>;
+  version__contractDeployments__tokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenImplementationAddress_Operator>;
+  version__contractDeployments__tokenName?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenName_Operator>;
+  version__contractDeployments__tokenSymbol?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenSymbol_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -67398,6 +69820,32 @@ export type VersionsStartup_Where_Or = {
   version__company?: InputMaybe<VersionsStartup_Version__Company_Operator>;
   version__completenessScore?: InputMaybe<VersionsStartup_Version__CompletenessScore_Operator>;
   version__contentRankScore?: InputMaybe<VersionsStartup_Version__ContentRankScore_Operator>;
+  version__contractDeployments__chain?: InputMaybe<VersionsStartup_Version__ContractDeployments__Chain_Operator>;
+  version__contractDeployments__chainId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ChainId_Operator>;
+  version__contractDeployments__daoAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoAddress_Operator>;
+  version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
+  version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
+  version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
+  version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
+  version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
+  version__contractDeployments__id?: InputMaybe<VersionsStartup_Version__ContractDeployments__Id_Operator>;
+  version__contractDeployments__initialSupply?: InputMaybe<VersionsStartup_Version__ContractDeployments__InitialSupply_Operator>;
+  version__contractDeployments__network?: InputMaybe<VersionsStartup_Version__ContractDeployments__Network_Operator>;
+  version__contractDeployments__permit2Address?: InputMaybe<VersionsStartup_Version__ContractDeployments__Permit2Address_Operator>;
+  version__contractDeployments__poolManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PoolManagerAddress_Operator>;
+  version__contractDeployments__positionManagerAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__PositionManagerAddress_Operator>;
+  version__contractDeployments__rewardTokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenAddress_Operator>;
+  version__contractDeployments__rewardTokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__RewardTokenImplementationAddress_Operator>;
+  version__contractDeployments__swapRouterAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterAddress_Operator>;
+  version__contractDeployments__swapRouterImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__SwapRouterImplementationAddress_Operator>;
+  version__contractDeployments__timelockAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockAddress_Operator>;
+  version__contractDeployments__timelockImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TimelockImplementationAddress_Operator>;
+  version__contractDeployments__tokenAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenAddress_Operator>;
+  version__contractDeployments__tokenDecimals?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenDecimals_Operator>;
+  version__contractDeployments__tokenImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenImplementationAddress_Operator>;
+  version__contractDeployments__tokenName?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenName_Operator>;
+  version__contractDeployments__tokenSymbol?: InputMaybe<VersionsStartup_Version__ContractDeployments__TokenSymbol_Operator>;
   version__createdAt?: InputMaybe<VersionsStartup_Version__CreatedAt_Operator>;
   version__createdBy?: InputMaybe<VersionsStartup_Version__CreatedBy_Operator>;
   version__description?: InputMaybe<VersionsStartup_Version__Description_Operator>;
@@ -68720,7 +71168,7 @@ export type StartupByIdQueryVariables = Exact<{
 }>;
 
 
-export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, contractDeployments?: Array<{ __typename?: 'Startup_ContractDeployments', id?: string | null, chain?: Startup_ContractDeployments_Chain | null, network?: string | null, chainId?: string | null, deployedAt?: any | null, tokenName?: string | null, tokenSymbol?: string | null, tokenDecimals?: number | null, initialSupply?: string | null, deployerWalletAddress?: string | null, poolManagerAddress?: string | null, positionManagerAddress?: string | null, permit2Address?: string | null, forwarderAddress?: string | null, timelockAddress?: string | null, timelockImplementationAddress?: string | null, exchangePoolAddress?: string | null, exchangePoolId?: string | null, tokenAddress?: string | null, swapRouterAddress?: string | null, rewardTokenAddress?: string | null, daoAddress?: string | null, tokenImplementationAddress?: string | null, swapRouterImplementationAddress?: string | null, rewardTokenImplementationAddress?: string | null, daoImplementationAddress?: string | null }> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
 export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -68731,6 +71179,14 @@ export type ListStartupsByIdentityQueryVariables = Exact<{
 
 
 export type ListStartupsByIdentityQuery = { __typename?: 'Query', Startups?: { __typename?: 'Startups', totalDocs: number, hasNextPage: boolean, nextPage?: number | null, docs: Array<{ __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, description?: string | null, hasLiked?: boolean | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null } | null }> } | null };
+
+export type SaveVentureContractsMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: MutationStartupUpdateInput;
+}>;
+
+
+export type SaveVentureContractsMutation = { __typename?: 'Mutation', updateStartup?: { __typename?: 'Startup', id: string, contractDeployments?: Array<{ __typename?: 'Startup_ContractDeployments', id?: string | null, tokenAddress?: string | null, daoAddress?: string | null }> | null } | null };
 
 export type CreateStartupMutationVariables = Exact<{
   data: MutationStartupInput;
@@ -75345,6 +77801,34 @@ export const StartupByIdDocument = `
     isSubscribed
     serverURL
     title
+    contractDeployments {
+      id
+      chain
+      network
+      chainId
+      deployedAt
+      tokenName
+      tokenSymbol
+      tokenDecimals
+      initialSupply
+      deployerWalletAddress
+      poolManagerAddress
+      positionManagerAddress
+      permit2Address
+      forwarderAddress
+      timelockAddress
+      timelockImplementationAddress
+      exchangePoolAddress
+      exchangePoolId
+      tokenAddress
+      swapRouterAddress
+      rewardTokenAddress
+      daoAddress
+      tokenImplementationAddress
+      swapRouterImplementationAddress
+      rewardTokenImplementationAddress
+      daoImplementationAddress
+    }
     _status
     description
     likeCount
@@ -75497,6 +77981,35 @@ useListStartupsByIdentityQuery.getKey = (variables: ListStartupsByIdentityQueryV
 
 
 useListStartupsByIdentityQuery.fetcher = (variables: ListStartupsByIdentityQueryVariables, options?: RequestInit['headers']) => gqlFetcher<ListStartupsByIdentityQuery, ListStartupsByIdentityQueryVariables>(ListStartupsByIdentityDocument, variables, options);
+
+export const SaveVentureContractsDocument = `
+    mutation SaveVentureContracts($id: String!, $data: mutationStartupUpdateInput!) {
+  updateStartup(id: $id, data: $data) {
+    id
+    contractDeployments {
+      id
+      tokenAddress
+      daoAddress
+    }
+  }
+}
+    `;
+
+export const useSaveVentureContractsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SaveVentureContractsMutation, TError, SaveVentureContractsMutationVariables, TContext>) => {
+    
+    return useMutation<SaveVentureContractsMutation, TError, SaveVentureContractsMutationVariables, TContext>(
+      {
+    mutationKey: ['SaveVentureContracts'],
+    mutationFn: (variables?: SaveVentureContractsMutationVariables) => gqlFetcher<SaveVentureContractsMutation, SaveVentureContractsMutationVariables>(SaveVentureContractsDocument, variables)(),
+    ...options
+  }
+    )};
+
+
+useSaveVentureContractsMutation.fetcher = (variables: SaveVentureContractsMutationVariables, options?: RequestInit['headers']) => gqlFetcher<SaveVentureContractsMutation, SaveVentureContractsMutationVariables>(SaveVentureContractsDocument, variables, options);
 
 export const CreateStartupDocument = `
     mutation CreateStartup($data: mutationStartupInput!, $draft: Boolean!) {

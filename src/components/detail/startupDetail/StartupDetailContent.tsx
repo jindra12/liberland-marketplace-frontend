@@ -7,6 +7,7 @@ import { Comment_ReplyPostRelationshipInputRelationTo, Startup } from "../../../
 import { routes } from "../../../routes";
 import { EntityCommentsSection } from "../../comments/EntityCommentsSection";
 import { Markdown } from "../../Markdown";
+import { VentureContracts } from "../../VentureContracts/VentureContracts";
 import { CommonDetail } from "../CommonDetail";
 
 import { StartupDetailHeader } from "./StartupDetailHeader";
@@ -53,6 +54,11 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
                 </>
             }
             sections={[
+                {
+                    key: "contracts",
+                    label: "Token & governance",
+                    children: <VentureContracts venture={props.startup} serverURL={props.serverURL} />,
+                },
                 {
                     key: "team",
                     label: `Team (${props.startup.involvedUsers?.length || 0})`,
