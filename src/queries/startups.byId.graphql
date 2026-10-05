@@ -4,6 +4,34 @@ query StartupById($id: String!, $draft: Boolean = false) {
         isSubscribed
         serverURL
         title
+        contractDeployments {
+            id
+            chain
+            network
+            chainId
+            deployedAt
+            tokenName
+            tokenSymbol
+            tokenDecimals
+            initialSupply
+            deployerWalletAddress
+            poolManagerAddress
+            positionManagerAddress
+            permit2Address
+            forwarderAddress
+            timelockAddress
+            timelockImplementationAddress
+            exchangePoolAddress
+            exchangePoolId
+            tokenAddress
+            swapRouterAddress
+            rewardTokenAddress
+            daoAddress
+            tokenImplementationAddress
+            swapRouterImplementationAddress
+            rewardTokenImplementationAddress
+            daoImplementationAddress
+        }
         _status
         description
         likeCount
