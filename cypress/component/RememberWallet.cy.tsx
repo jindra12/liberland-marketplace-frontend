@@ -1,18 +1,19 @@
 import * as React from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Button } from "antd";
+import { Button, Card, Flex, Typography } from "antd";
 import type { FC } from "react";
 import { mount } from "cypress/react";
 
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { AntProvider } from "../../src/components/AntProvider";
 import type { SubmittedOrder } from "../../src/components/order/types";
 import { RememberWalletCheckbox } from "../../src/components/order/RememberWalletCheckbox";
 import { useOrderPaymentChainController } from "../../src/components/order/useOrderPaymentChainController";
 import type { ChainPaymentAmount } from "../../src/components/order/payment/utils";
 import type { PaymentProfileUser } from "../../src/components/order/types";
 import { Company_CryptoAddresses_Chain } from "../../src/generated/graphql";
-import { screenshotStep } from "../support/component-tests/utils";
+import { screenshotStep } from "../support/component-tests/directBasic";
 
 const chainPayment: ChainPaymentAmount = {
     amount: "1",
@@ -74,14 +75,25 @@ const RememberWalletHarness: FC<HarnessProps> = (props) => {
     });
 
     return (
-        <div>
-            <Button onClick={() => controller.handleWalletSelected({ address: "0xabc", chain: "ethereum", provider: "metamask" })}>
-                Select wallet
-            </Button>
-            <Button onClick={() => controller.handleTransactionId("0xtransaction")}>Commit payment</Button>
-            <div className="RememberWalletHarness__rememberedCount">{rememberedCount}</div>
+        <Flex vertical gap={16}>
+            <Flex gap={12} wrap>
+                <Button
+                    onClick={() =>
+                        controller.handleWalletSelected({ address: "0xabc", chain: "ethereum", provider: "metamask" })
+                    }
+                >
+                    Select wallet
+                </Button>
+                <Button type="primary" onClick={() => controller.handleTransactionId("0xtransaction")}>
+                    Commit payment
+                </Button>
+            </Flex>
+            <Typography.Text>
+                Saved wallets:{" "}
+                <Typography.Text className="RememberWalletHarness__rememberedCount">{rememberedCount}</Typography.Text>
+            </Typography.Text>
             {paymentComplete ? (
-                <div className="RememberWalletHarness__paymentComplete">Payment complete</div>
+                <Typography.Text className="RememberWalletHarness__paymentComplete">Payment complete</Typography.Text>
             ) : controller.showRememberWallet ? (
                 <RememberWalletCheckbox
                     checked={controller.rememberWallet}
@@ -89,16 +101,20 @@ const RememberWalletHarness: FC<HarnessProps> = (props) => {
                     onChange={controller.setRememberWallet}
                 />
             ) : null}
-        </div>
+        </Flex>
     );
 };
 
 const mountHarness = (props: HarnessProps) => {
     const queryClient = new QueryClient();
     mount(
-        <QueryClientProvider client={queryClient}>
-            <RememberWalletHarness profileUser={props.profileUser} />
-        </QueryClientProvider>,
+        <AntProvider>
+            <QueryClientProvider client={queryClient}>
+                <Card title="Payment wallet">
+                    <RememberWalletHarness profileUser={props.profileUser} />
+                </Card>
+            </QueryClientProvider>
+        </AntProvider>,
     );
 };
 

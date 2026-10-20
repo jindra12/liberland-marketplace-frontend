@@ -27,16 +27,14 @@ export const useVentureDeployment = (props: VentureContractsProps) => {
         const existing = (props.venture.contractDeployments || [])
             .filter(
                 (deployment) =>
-                    deployment.chainId !== manifest.chainId || deployment.tokenAddress !== manifest.token.address,
+                    deployment.chain === "ethereum" &&
+                    (deployment.chainId !== manifest.chainId || deployment.tokenAddress !== manifest.token.address),
             )
             .map((deployment) => {
                 const { __typename, ...fields } = deployment;
                 return {
                     ...fields,
-                    chain:
-                        deployment.chain === "tron"
-                            ? StartupUpdate_ContractDeployments_Chain_MutationInput.Tron
-                            : StartupUpdate_ContractDeployments_Chain_MutationInput.Ethereum,
+                    chain: StartupUpdate_ContractDeployments_Chain_MutationInput.Ethereum,
                 };
             });
         const response = await mutation.mutateAsync({

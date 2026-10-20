@@ -4,6 +4,7 @@ import { formatUnits } from "ethers";
 import { defineChain } from "thirdweb";
 
 import { StartupUpdate_ContractDeployments_Chain_MutationInput } from "../../generated/graphql";
+import { BACKEND_URL } from "../../gqlFetcher";
 import type { VentureDeployment } from "./types";
 
 export const getVentureChain = (chainId: number) => {
@@ -12,7 +13,7 @@ export const getVentureChain = (chainId: number) => {
         ? defineChain({
               id: chainId,
               name: configuration.label,
-              rpc: configuration.rpcUrl,
+              rpc: chainId === 31337 ? `${BACKEND_URL}/api/venture-test-rpc` : configuration.rpcUrl,
               nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
               testnet: true,
           })
@@ -20,13 +21,11 @@ export const getVentureChain = (chainId: number) => {
 };
 
 export const toSavedDeployment = (manifest: DeploymentManifest) => ({
-    chain:
-        manifest.chain === "ethereum"
-            ? StartupUpdate_ContractDeployments_Chain_MutationInput.Ethereum
-            : StartupUpdate_ContractDeployments_Chain_MutationInput.Tron,
+    chain: StartupUpdate_ContractDeployments_Chain_MutationInput.Ethereum,
     network: manifest.network,
     chainId: manifest.chainId,
     deployedAt: manifest.deployedAt,
+    deploymentBlock: manifest.deploymentBlock,
     tokenName: manifest.token.name,
     tokenSymbol: manifest.token.symbol,
     tokenDecimals: manifest.token.decimals,
@@ -38,6 +37,8 @@ export const toSavedDeployment = (manifest: DeploymentManifest) => ({
     timelockAddress: manifest.dao.timelock,
     forwarderAddress: manifest.implementations.forwarder,
     swapRouterAddress: manifest.swap.address,
+    exchangePoolAddress: manifest.swap.poolManager,
+    exchangePoolId: manifest.swap.poolId,
     poolManagerAddress: manifest.swap.poolManager,
     positionManagerAddress: manifest.swap.positionManager,
     permit2Address: manifest.swap.permit2,
@@ -49,9 +50,6 @@ export const toSavedDeployment = (manifest: DeploymentManifest) => ({
 });
 
 export const getAddressLink = (deployment: VentureDeployment, address: string): string | undefined => {
-    if (deployment.chain === "tron") {
-        return deployment.network === "mainnet" ? `https://tronscan.org/#/address/${address}` : undefined;
-    }
     switch (deployment.chainId) {
         case "1":
             return `https://etherscan.io/address/${address}`;

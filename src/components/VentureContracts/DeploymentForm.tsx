@@ -27,7 +27,7 @@ export const DeploymentForm: React.FunctionComponent<DeploymentFormProps> = (pro
                 type="info"
                 showIcon
                 message="Your wallet deploys. The DAO governs."
-                description="Deployments require several confirmed transactions and gas. Token supply goes to your wallet. Upgrades remain frozen until authorized by governance. Deploying does not initialize or fund a liquidity pool."
+                description="Your wallet receives the fixed token supply. Deployment initializes an ETH/token Uniswap V4 pool at your starting price. Add liquidity separately before trading. Upgrades remain frozen until authorized by the DAO."
             />
             <Row gutter={16}>
                 <Col xs={24} md={16}>
@@ -66,6 +66,23 @@ export const DeploymentForm: React.FunctionComponent<DeploymentFormProps> = (pro
                         label: configuration.label,
                     }))}
                 />
+            </Form.Item>
+            <Form.Item
+                name="tokensPerEth"
+                label="Starting price (tokens per ETH)"
+                extra="Sets the initial pool price, not a guaranteed exchange rate. The standard pool fee is 0.3%."
+                rules={[
+                    { required: true },
+                    {
+                        validator: async (_rule, value: string) => {
+                            if (!value || !/^\d+(\.\d{1,18})?$/.test(value) || parseUnits(value, 18) <= 0n) {
+                                throw new Error("Enter a positive starting price with at most 18 decimals.");
+                            }
+                        },
+                    },
+                ]}
+            >
+                <Input inputMode="decimal" placeholder="For example, 2000" />
             </Form.Item>
             <Form.Item
                 name="acknowledged"

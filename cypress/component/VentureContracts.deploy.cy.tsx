@@ -31,7 +31,10 @@ describe("Venture deployment form", () => {
         cy.contains("Enter a positive whole-token supply.").should("be.visible");
         cy.get("@deployContracts").should("not.have.been.called");
         fillFormField("Fixed supply", "21000000");
+        fillFormField("Starting price (tokens per ETH)", "2000");
         selectFormOption("Network", "Ethereum Sepolia (testnet)");
+        cy.get(".ant-select-dropdown").should("not.be.visible");
+        cy.contains("Starting price (tokens per ETH)").should("be.visible");
         screenshotStep("venture-deployment-settings");
         cy.contains("button", "Deploy token & governance").click();
         cy.get("@deployContracts")
@@ -41,6 +44,7 @@ describe("Venture deployment form", () => {
                     tokenName: "Harbor Venture",
                     tokenSymbol: "HBR",
                     initialSupply: "21000000",
+                    tokensPerEth: "2000",
                     deploymentNetwork: "sepolia",
                     acknowledged: true,
                 });

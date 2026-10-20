@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card, Form, Input, Select, Space, Typography } from "antd";
+import { Button, Card, Flex, Form, Input, Select, Space, Typography } from "antd";
 
 import { TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../../form/constants";
 
@@ -10,6 +10,7 @@ import { validateCryptoAddress } from "./utils";
 export interface CryptoAddressesFieldProps {
     description?: string;
     label?: string;
+    submitLabel?: string;
 }
 
 export const CryptoAddressesField: React.FunctionComponent<CryptoAddressesFieldProps> = (props) => {
@@ -54,6 +55,11 @@ export const CryptoAddressesField: React.FunctionComponent<CryptoAddressesFieldP
                     <Input placeholder="Enter wallet address" />
                 </Form.Item>
             </Space>
+            {props.submitLabel && (
+                <Flex justify="flex-end">
+                    <Button type="primary" htmlType="submit">{props.submitLabel}</Button>
+                </Flex>
+            )}
         </Card>
     );
 };

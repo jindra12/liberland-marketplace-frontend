@@ -9,7 +9,12 @@
     &__form { max-width: 760px; }
     &__form .ant-alert { margin-bottom: 22px; }
     &__form .ant-input-number { width: 100%; }
+    &__liquidity-notice { margin-bottom: 22px; }
+    &__quote { padding: 20px; margin-bottom: 20px; border: 1px solid rgba(74, 210, 173, .3); border-radius: 12px; }
+    &__proposal .ant-card-head { border-bottom-color: rgba(74, 210, 173, .22); }
     .ant-typography { margin-bottom: 0; }
+    .ant-typography.VentureContracts__confirmedTrade { margin-bottom: 22px; }
+    &__connect { flex: 0 0 auto; margin: 0; }
     .ant-statistic-content { font-size: 28px; }
     .ant-tabs-tab { white-space: normal; }
 

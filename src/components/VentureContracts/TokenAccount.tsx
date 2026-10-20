@@ -1,14 +1,16 @@
 import * as React from "react";
 
-import { Alert, Button, Flex, Skeleton, Statistic, Tabs, Typography } from "antd";
+import { Alert, Button, Flex, Select, Skeleton, Statistic, Typography } from "antd";
 import { formatUnits } from "ethers";
 
+import { ventureAccountActions } from "./constants";
 import { TokenActionForm } from "./TokenActionForm";
 import type { TokenAccountProps, VentureAccountAction } from "./types";
 import { useVentureAccount } from "./useVentureAccount";
 
 export const TokenAccount: React.FunctionComponent<TokenAccountProps> = (props) => {
     const model = useVentureAccount(props.deployment, props.account, props.wallet);
+    const [action, setAction] = React.useState<VentureAccountAction>("root");
     if (model.query.isPending) {
         return <Skeleton active />;
     }
@@ -56,26 +58,17 @@ export const TokenAccount: React.FunctionComponent<TokenAccountProps> = (props) 
             {model.mutation.data && (
                 <Typography.Text copyable>Confirmed transaction: {model.mutation.data}</Typography.Text>
             )}
-            <Tabs
-                items={(["root", "delegate", "transfer", "claim", "redeem"] as VentureAccountAction[]).map(
-                    (action) => ({
-                        key: action,
-                        label: {
-                            root: "Root",
-                            delegate: "Vote delegation",
-                            transfer: "Transfer",
-                            claim: "Claim rewards",
-                            redeem: "Redeem",
-                        }[action],
-                        children: (
-                            <TokenActionForm
-                                action={action}
-                                busy={model.mutation.isPending}
-                                onSubmit={(values) => model.mutation.mutateAsync({ action, values })}
-                            />
-                        ),
-                    }),
-                )}
+            <Select<VentureAccountAction>
+                aria-label="Token action"
+                value={action}
+                onChange={setAction}
+                options={ventureAccountActions}
+                className="VentureContracts__form"
+            />
+            <TokenActionForm
+                action={action}
+                busy={model.mutation.isPending}
+                onSubmit={(values) => model.mutation.mutateAsync({ action, values })}
             />
         </Flex>
     );

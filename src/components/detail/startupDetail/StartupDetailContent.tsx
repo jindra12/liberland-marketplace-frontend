@@ -7,6 +7,7 @@ import { Comment_ReplyPostRelationshipInputRelationTo, Startup } from "../../../
 import { routes } from "../../../routes";
 import { EntityCommentsSection } from "../../comments/EntityCommentsSection";
 import { Markdown } from "../../Markdown";
+import { ventureContractSections } from "../../VentureContracts/constants";
 import { VentureContracts } from "../../VentureContracts/VentureContracts";
 import { CommonDetail } from "../CommonDetail";
 
@@ -54,11 +55,13 @@ export const StartupDetailContent: React.FunctionComponent<StartupDetailContentP
                 </>
             }
             sections={[
-                {
-                    key: "contracts",
-                    label: "Token & governance",
-                    children: <VentureContracts venture={props.startup} serverURL={props.serverURL} />,
-                },
+                ...ventureContractSections.map((section) => ({
+                    key: section.key,
+                    label: section.label,
+                    children: (
+                        <VentureContracts venture={props.startup} serverURL={props.serverURL} section={section.key} />
+                    ),
+                })),
                 {
                     key: "team",
                     label: `Team (${props.startup.involvedUsers?.length || 0})`,
