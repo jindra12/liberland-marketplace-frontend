@@ -138,6 +138,14 @@
         "test:ct:venture-contracts-deploy:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.deploy.cy.tsx",
         "test:ct:venture-contracts-saved": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.saved.cy.tsx",
         "test:ct:venture-contracts-saved:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.saved.cy.tsx",
+        "test:ct:venture-detail-token": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureDetailToken.cy.tsx",
+        "test:ct:venture-detail-token:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureDetailToken.cy.tsx",
+        "test:ct:venture-exchange": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.exchange.cy.tsx",
+        "test:ct:venture-exchange:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.exchange.cy.tsx",
+        "test:ct:venture-governance": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.governance.cy.tsx",
+        "test:ct:venture-governance:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.governance.cy.tsx",
+        "test:ct:venture-recovery": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.recovery.cy.tsx",
+        "test:ct:venture-recovery:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.recovery.cy.tsx",
         "test:ct:startup": "yarn cypress:run --component --browser chrome --spec cypress/component/StartupMutation.cy.tsx",
         "test:ct:startup:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/StartupMutation.cy.tsx",
         "test:ct:non-preferred-wallet-payments": "yarn cypress:run --component --browser chrome --spec cypress/component/NonPreferredWalletPayments.cy.tsx",
@@ -188,6 +196,8 @@
         "deploy:test": "bash scripts/deploy-test.sh",
         "eject": "react-app-rewired eject",
         "postinstall": "patch-package",
+        "test:ct:venture-liquidity": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.liquidity.cy.tsx",
+        "test:ct:venture-liquidity:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.liquidity.cy.tsx",
         "cypress:run": "./scripts/run-cypress-single.sh"
     },
     "browserslist": {

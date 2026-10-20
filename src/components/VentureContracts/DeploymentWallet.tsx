@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { Flex, Typography } from "antd";
-import { ConnectButton, useActiveAccount, useActiveWallet } from "thirdweb/react";
+import { useActiveAccount, useActiveWallet } from "thirdweb/react";
 
-import { ventureWalletClient } from "./constants";
 import { DeploymentFlow } from "./DeploymentFlow";
 import type { DeploymentWalletProps } from "./types";
+import { VentureConnectButton } from "./VentureConnectButton";
 
 export const DeploymentWallet: React.FunctionComponent<DeploymentWalletProps> = (props) => {
     const account = useActiveAccount();
@@ -14,11 +14,14 @@ export const DeploymentWallet: React.FunctionComponent<DeploymentWalletProps> = 
         <Flex vertical gap={16}>
             <Flex align="center" justify="space-between" gap={12} wrap>
                 <Typography.Title level={4}>Deploy on Ethereum</Typography.Title>
-                <ConnectButton client={ventureWalletClient} />
+                <VentureConnectButton />
             </Flex>
             {account && wallet ? (
                 <DeploymentFlow
                     ventureName={props.ventureName}
+                    deploymentKey={props.deploymentKey}
+                    ventureId={props.ventureId}
+                    serverURL={props.serverURL}
                     account={account}
                     wallet={wallet}
                     onSave={props.onSave}

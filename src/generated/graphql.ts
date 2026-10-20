@@ -70,6 +70,7 @@ export type Access = {
   variantOptions?: Maybe<VariantOptionsAccess>;
   variantTypes?: Maybe<VariantTypesAccess>;
   variants?: Maybe<VariantsAccess>;
+  venture_chain_indexes?: Maybe<Venture_Chain_IndexesAccess>;
   venture_likes?: Maybe<Venture_LikesAccess>;
   verifications?: Maybe<VerificationsAccess>;
 };
@@ -23801,6 +23802,7 @@ export type Mutation = {
   createVariant?: Maybe<Variant>;
   createVariantOption?: Maybe<VariantOption>;
   createVariantType?: Maybe<VariantType>;
+  createVentureChainIndex?: Maybe<VentureChainIndex>;
   createVentureLike?: Maybe<VentureLike>;
   createVerification?: Maybe<Verification>;
   deleteAccount?: Maybe<Account>;
@@ -23847,6 +23849,7 @@ export type Mutation = {
   deleteVariant?: Maybe<Variant>;
   deleteVariantOption?: Maybe<VariantOption>;
   deleteVariantType?: Maybe<VariantType>;
+  deleteVentureChainIndex?: Maybe<VentureChainIndex>;
   deleteVentureLike?: Maybe<VentureLike>;
   deleteVerification?: Maybe<Verification>;
   duplicateAccount?: Maybe<Account>;
@@ -23892,6 +23895,7 @@ export type Mutation = {
   duplicateVariant?: Maybe<Variant>;
   duplicateVariantOption?: Maybe<VariantOption>;
   duplicateVariantType?: Maybe<VariantType>;
+  duplicateVentureChainIndex?: Maybe<VentureChainIndex>;
   duplicateVentureLike?: Maybe<VentureLike>;
   duplicateVerification?: Maybe<Verification>;
   joinStartup: StartupMembershipResult;
@@ -23958,6 +23962,7 @@ export type Mutation = {
   updateVariant?: Maybe<Variant>;
   updateVariantOption?: Maybe<VariantOption>;
   updateVariantType?: Maybe<VariantType>;
+  updateVentureChainIndex?: Maybe<VentureChainIndex>;
   updateVentureLike?: Maybe<VentureLike>;
   updateVerification?: Maybe<Verification>;
 };
@@ -24223,6 +24228,12 @@ export type MutationCreateVariantOptionArgs = {
 
 export type MutationCreateVariantTypeArgs = {
   data: MutationVariantTypeInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationCreateVentureChainIndexArgs = {
+  data: MutationVentureChainIndexInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -24503,6 +24514,12 @@ export type MutationDeleteVariantTypeArgs = {
 };
 
 
+export type MutationDeleteVentureChainIndexArgs = {
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationDeleteVentureLikeArgs = {
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -24769,6 +24786,12 @@ export type MutationDuplicateVariantOptionArgs = {
 
 export type MutationDuplicateVariantTypeArgs = {
   data: MutationVariantTypeInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationDuplicateVentureChainIndexArgs = {
+  data: MutationVentureChainIndexInput;
   id: Scalars['String']['input'];
 };
 
@@ -25287,6 +25310,15 @@ export type MutationUpdateVariantOptionArgs = {
 export type MutationUpdateVariantTypeArgs = {
   autosave?: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationVariantTypeUpdateInput;
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type MutationUpdateVentureChainIndexArgs = {
+  autosave?: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationVentureChainIndexUpdateInput;
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -37284,6 +37316,7 @@ export enum PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo {
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
   Variants = 'variants',
+  VentureChainIndexes = 'venture_chain_indexes',
   VentureLikes = 'venture_likes',
   Verifications = 'verifications'
 }
@@ -37297,7 +37330,7 @@ export enum PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo {
   Users = 'users'
 }
 
-export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | InformationRequest | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Report | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureLike | Verification;
+export type PayloadLockedDocument_Document = Account | Address | AdminInvitation | Cart | Category | Comment | CommentLike | Company | CompanyLike | Form | FormSubmission | Identity | IdentityLike | InformationRequest | Job | JobLike | Media | NotificationSubscription | OauthAccessToken | OauthApplication | OauthConsent | Order | Page | PayloadFolder | Post | PostLike | Product | ProductLike | Redirect | Report | Search | Session | Startup | Subscriber | Syndication | Transaction | User | Variant | VariantOption | VariantType | VentureChainIndex | VentureLike | Verification;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   relationTo?: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -37345,6 +37378,7 @@ export enum PayloadLockedDocument_DocumentRelationshipInputRelationTo {
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
   Variants = 'variants',
+  VentureChainIndexes = 'venture_chain_indexes',
   VentureLikes = 'venture_likes',
   Verifications = 'verifications'
 }
@@ -37390,6 +37424,7 @@ export enum PayloadLockedDocument_Document_RelationTo {
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
   Variants = 'variants',
+  VentureChainIndexes = 'venture_chain_indexes',
   VentureLikes = 'venture_likes',
   Verifications = 'verifications'
 }
@@ -37478,6 +37513,7 @@ export enum PayloadLockedDocument_Document_Relation_RelationTo {
   VariantOptions = 'variantOptions',
   VariantTypes = 'variantTypes',
   Variants = 'variants',
+  VentureChainIndexes = 'venture_chain_indexes',
   VentureLikes = 'venture_likes',
   Verifications = 'verifications'
 }
@@ -45332,6 +45368,8 @@ export type Query = {
   VariantType?: Maybe<VariantType>;
   VariantTypes?: Maybe<VariantTypes>;
   Variants?: Maybe<Variants>;
+  VentureChainIndex?: Maybe<VentureChainIndex>;
+  VentureChainIndexes?: Maybe<VentureChainIndexes>;
   VentureLike?: Maybe<VentureLike>;
   VentureLikes?: Maybe<VentureLikes>;
   Verification?: Maybe<Verification>;
@@ -45380,6 +45418,7 @@ export type Query = {
   countVariantOptions?: Maybe<CountVariantOptions>;
   countVariantTypes?: Maybe<CountVariantTypes>;
   countVariants?: Maybe<CountVariants>;
+  countVentureChainIndexes?: Maybe<CountVentureChainIndexes>;
   countVentureLikes?: Maybe<CountVentureLikes>;
   countVerifications?: Maybe<CountVerifications>;
   countallMedia?: Maybe<CountallMedia>;
@@ -45429,6 +45468,7 @@ export type Query = {
   docAccessVariant?: Maybe<VariantsDocAccess>;
   docAccessVariantOption?: Maybe<VariantOptionsDocAccess>;
   docAccessVariantType?: Maybe<VariantTypesDocAccess>;
+  docAccessVentureChainIndex?: Maybe<Venture_Chain_IndexesDocAccess>;
   docAccessVentureLike?: Maybe<Venture_LikesDocAccess>;
   docAccessVerification?: Maybe<VerificationsDocAccess>;
   initializedUser?: Maybe<Scalars['Boolean']['output']>;
@@ -46336,6 +46376,26 @@ export type QueryVariantsArgs = {
 };
 
 
+export type QueryVentureChainIndexArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['String']['input'];
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryVentureChainIndexesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pagination?: InputMaybe<Scalars['Boolean']['input']>;
+  select?: InputMaybe<Scalars['Boolean']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<VentureChainIndex_Where>;
+};
+
+
 export type QueryVentureLikeArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['String']['input'];
@@ -46689,6 +46749,13 @@ export type QueryCountVariantsArgs = {
 };
 
 
+export type QueryCountVentureChainIndexesArgs = {
+  draft?: InputMaybe<Scalars['Boolean']['input']>;
+  trash?: InputMaybe<Scalars['Boolean']['input']>;
+  where?: InputMaybe<VentureChainIndex_Where>;
+};
+
+
 export type QueryCountVentureLikesArgs = {
   draft?: InputMaybe<Scalars['Boolean']['input']>;
   trash?: InputMaybe<Scalars['Boolean']['input']>;
@@ -46926,6 +46993,11 @@ export type QueryDocAccessVariantOptionArgs = {
 
 
 export type QueryDocAccessVariantTypeArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryDocAccessVentureChainIndexArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -50516,6 +50588,7 @@ export type StartupVersion_Version_ContractDeployments = {
   daoImplementationAddress?: Maybe<Scalars['String']['output']>;
   deployedAt?: Maybe<Scalars['DateTime']['output']>;
   deployerWalletAddress?: Maybe<Scalars['String']['output']>;
+  deploymentBlock?: Maybe<Scalars['Float']['output']>;
   exchangePoolAddress?: Maybe<Scalars['String']['output']>;
   exchangePoolId?: Maybe<Scalars['String']['output']>;
   forwarderAddress?: Maybe<Scalars['String']['output']>;
@@ -50606,6 +50679,7 @@ export type Startup_ContractDeployments = {
   daoImplementationAddress?: Maybe<Scalars['String']['output']>;
   deployedAt?: Maybe<Scalars['DateTime']['output']>;
   deployerWalletAddress?: Maybe<Scalars['String']['output']>;
+  deploymentBlock?: Maybe<Scalars['Float']['output']>;
   exchangePoolAddress?: Maybe<Scalars['String']['output']>;
   exchangePoolId?: Maybe<Scalars['String']['output']>;
   forwarderAddress?: Maybe<Scalars['String']['output']>;
@@ -50832,6 +50906,16 @@ export type Startup_ContractDeployments__DeployerWalletAddress_Operator = {
   like?: InputMaybe<Scalars['String']['input']>;
   not_equals?: InputMaybe<Scalars['String']['input']>;
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Startup_ContractDeployments__DeploymentBlock_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type Startup_ContractDeployments__ExchangePoolAddress_Operator = {
@@ -51314,6 +51398,7 @@ export type Startup_Where = {
   contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
   contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
   contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__deploymentBlock?: InputMaybe<Startup_ContractDeployments__DeploymentBlock_Operator>;
   contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
   contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
   contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
@@ -51369,6 +51454,7 @@ export type Startup_Where_And = {
   contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
   contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
   contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__deploymentBlock?: InputMaybe<Startup_ContractDeployments__DeploymentBlock_Operator>;
   contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
   contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
   contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
@@ -51424,6 +51510,7 @@ export type Startup_Where_Or = {
   contractDeployments__daoImplementationAddress?: InputMaybe<Startup_ContractDeployments__DaoImplementationAddress_Operator>;
   contractDeployments__deployedAt?: InputMaybe<Startup_ContractDeployments__DeployedAt_Operator>;
   contractDeployments__deployerWalletAddress?: InputMaybe<Startup_ContractDeployments__DeployerWalletAddress_Operator>;
+  contractDeployments__deploymentBlock?: InputMaybe<Startup_ContractDeployments__DeploymentBlock_Operator>;
   contractDeployments__exchangePoolAddress?: InputMaybe<Startup_ContractDeployments__ExchangePoolAddress_Operator>;
   contractDeployments__exchangePoolId?: InputMaybe<Startup_ContractDeployments__ExchangePoolId_Operator>;
   contractDeployments__forwarderAddress?: InputMaybe<Startup_ContractDeployments__ForwarderAddress_Operator>;
@@ -51698,6 +51785,7 @@ export type StartupsDocAccessFields_ContractDeployments_Fields = {
   daoImplementationAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_DaoImplementationAddress>;
   deployedAt?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployedAt>;
   deployerWalletAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress>;
+  deploymentBlock?: Maybe<StartupsDocAccessFields_ContractDeployments_DeploymentBlock>;
   exchangePoolAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolAddress>;
   exchangePoolId?: Maybe<StartupsDocAccessFields_ContractDeployments_ExchangePoolId>;
   forwarderAddress?: Maybe<StartupsDocAccessFields_ContractDeployments_ForwarderAddress>;
@@ -51895,6 +51983,34 @@ export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Re
 
 export type StartupsDocAccessFields_ContractDeployments_DeployerWalletAddress_Update = {
   __typename?: 'StartupsDocAccessFields_contractDeployments_deployerWalletAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeploymentBlock = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deploymentBlock';
+  create?: Maybe<StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Create>;
+  delete?: Maybe<StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Delete>;
+  read?: Maybe<StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Read>;
+  update?: Maybe<StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Update>;
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Create = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deploymentBlock_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Delete = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deploymentBlock_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Read = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deploymentBlock_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsDocAccessFields_ContractDeployments_DeploymentBlock_Update = {
+  __typename?: 'StartupsDocAccessFields_contractDeployments_deploymentBlock_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -53191,6 +53307,7 @@ export type StartupsFields_ContractDeployments_Fields = {
   daoImplementationAddress?: Maybe<StartupsFields_ContractDeployments_DaoImplementationAddress>;
   deployedAt?: Maybe<StartupsFields_ContractDeployments_DeployedAt>;
   deployerWalletAddress?: Maybe<StartupsFields_ContractDeployments_DeployerWalletAddress>;
+  deploymentBlock?: Maybe<StartupsFields_ContractDeployments_DeploymentBlock>;
   exchangePoolAddress?: Maybe<StartupsFields_ContractDeployments_ExchangePoolAddress>;
   exchangePoolId?: Maybe<StartupsFields_ContractDeployments_ExchangePoolId>;
   forwarderAddress?: Maybe<StartupsFields_ContractDeployments_ForwarderAddress>;
@@ -53388,6 +53505,34 @@ export type StartupsFields_ContractDeployments_DeployerWalletAddress_Read = {
 
 export type StartupsFields_ContractDeployments_DeployerWalletAddress_Update = {
   __typename?: 'StartupsFields_contractDeployments_deployerWalletAddress_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeploymentBlock = {
+  __typename?: 'StartupsFields_contractDeployments_deploymentBlock';
+  create?: Maybe<StartupsFields_ContractDeployments_DeploymentBlock_Create>;
+  delete?: Maybe<StartupsFields_ContractDeployments_DeploymentBlock_Delete>;
+  read?: Maybe<StartupsFields_ContractDeployments_DeploymentBlock_Read>;
+  update?: Maybe<StartupsFields_ContractDeployments_DeploymentBlock_Update>;
+};
+
+export type StartupsFields_ContractDeployments_DeploymentBlock_Create = {
+  __typename?: 'StartupsFields_contractDeployments_deploymentBlock_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeploymentBlock_Delete = {
+  __typename?: 'StartupsFields_contractDeployments_deploymentBlock_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeploymentBlock_Read = {
+  __typename?: 'StartupsFields_contractDeployments_deploymentBlock_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type StartupsFields_ContractDeployments_DeploymentBlock_Update = {
+  __typename?: 'StartupsFields_contractDeployments_deploymentBlock_Update';
   permission: Scalars['Boolean']['output'];
 };
 
@@ -62635,6 +62780,685 @@ export type VariantsUpdateDocAccess = {
   where?: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type VentureChainIndex = {
+  __typename?: 'VentureChainIndex';
+  blockHash: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  createdBy?: Maybe<User>;
+  id: Scalars['String']['output'];
+  key: Scalars['String']['output'];
+  lastBlock: Scalars['Float']['output'];
+  pools: Scalars['JSON']['output'];
+  proposals: Scalars['JSON']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type VentureChainIndex_BlockHash_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VentureChainIndex_CreatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VentureChainIndex_CreatedBy_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type VentureChainIndex_Id_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VentureChainIndex_Key_Operator = {
+  all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  like?: InputMaybe<Scalars['String']['input']>;
+  not_equals?: InputMaybe<Scalars['String']['input']>;
+  not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VentureChainIndex_LastBlock_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type VentureChainIndex_Pools_Operator = {
+  contains?: InputMaybe<Scalars['JSON']['input']>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  intersects?: InputMaybe<Scalars['JSON']['input']>;
+  like?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  within?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type VentureChainIndex_Proposals_Operator = {
+  contains?: InputMaybe<Scalars['JSON']['input']>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  intersects?: InputMaybe<Scalars['JSON']['input']>;
+  like?: InputMaybe<Scalars['JSON']['input']>;
+  not_equals?: InputMaybe<Scalars['JSON']['input']>;
+  within?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type VentureChainIndex_UpdatedAt_Operator = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['DateTime']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than?: InputMaybe<Scalars['DateTime']['input']>;
+  less_than_equal?: InputMaybe<Scalars['DateTime']['input']>;
+  like?: InputMaybe<Scalars['DateTime']['input']>;
+  not_equals?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type VentureChainIndex_Where = {
+  AND?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_Or>>>;
+  blockHash?: InputMaybe<VentureChainIndex_BlockHash_Operator>;
+  createdAt?: InputMaybe<VentureChainIndex_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureChainIndex_CreatedBy_Operator>;
+  id?: InputMaybe<VentureChainIndex_Id_Operator>;
+  key?: InputMaybe<VentureChainIndex_Key_Operator>;
+  lastBlock?: InputMaybe<VentureChainIndex_LastBlock_Operator>;
+  pools?: InputMaybe<VentureChainIndex_Pools_Operator>;
+  proposals?: InputMaybe<VentureChainIndex_Proposals_Operator>;
+  updatedAt?: InputMaybe<VentureChainIndex_UpdatedAt_Operator>;
+};
+
+export type VentureChainIndex_Where_And = {
+  AND?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_Or>>>;
+  blockHash?: InputMaybe<VentureChainIndex_BlockHash_Operator>;
+  createdAt?: InputMaybe<VentureChainIndex_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureChainIndex_CreatedBy_Operator>;
+  id?: InputMaybe<VentureChainIndex_Id_Operator>;
+  key?: InputMaybe<VentureChainIndex_Key_Operator>;
+  lastBlock?: InputMaybe<VentureChainIndex_LastBlock_Operator>;
+  pools?: InputMaybe<VentureChainIndex_Pools_Operator>;
+  proposals?: InputMaybe<VentureChainIndex_Proposals_Operator>;
+  updatedAt?: InputMaybe<VentureChainIndex_UpdatedAt_Operator>;
+};
+
+export type VentureChainIndex_Where_Or = {
+  AND?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_And>>>;
+  OR?: InputMaybe<Array<InputMaybe<VentureChainIndex_Where_Or>>>;
+  blockHash?: InputMaybe<VentureChainIndex_BlockHash_Operator>;
+  createdAt?: InputMaybe<VentureChainIndex_CreatedAt_Operator>;
+  createdBy?: InputMaybe<VentureChainIndex_CreatedBy_Operator>;
+  id?: InputMaybe<VentureChainIndex_Id_Operator>;
+  key?: InputMaybe<VentureChainIndex_Key_Operator>;
+  lastBlock?: InputMaybe<VentureChainIndex_LastBlock_Operator>;
+  pools?: InputMaybe<VentureChainIndex_Pools_Operator>;
+  proposals?: InputMaybe<VentureChainIndex_Proposals_Operator>;
+  updatedAt?: InputMaybe<VentureChainIndex_UpdatedAt_Operator>;
+};
+
+export type VentureChainIndexes = {
+  __typename?: 'VentureChainIndexes';
+  docs: Array<VentureChainIndex>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPrevPage: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextPage?: Maybe<Scalars['Int']['output']>;
+  offset?: Maybe<Scalars['Int']['output']>;
+  page: Scalars['Int']['output'];
+  pagingCounter: Scalars['Int']['output'];
+  prevPage?: Maybe<Scalars['Int']['output']>;
+  totalDocs: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+};
+
+export type VentureChainIndexesCreateAccess = {
+  __typename?: 'VentureChainIndexesCreateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesCreateDocAccess = {
+  __typename?: 'VentureChainIndexesCreateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesDeleteAccess = {
+  __typename?: 'VentureChainIndexesDeleteAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesDeleteDocAccess = {
+  __typename?: 'VentureChainIndexesDeleteDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesDocAccessFields = {
+  __typename?: 'VentureChainIndexesDocAccessFields';
+  blockHash?: Maybe<VentureChainIndexesDocAccessFields_BlockHash>;
+  createdAt?: Maybe<VentureChainIndexesDocAccessFields_CreatedAt>;
+  createdBy?: Maybe<VentureChainIndexesDocAccessFields_CreatedBy>;
+  key?: Maybe<VentureChainIndexesDocAccessFields_Key>;
+  lastBlock?: Maybe<VentureChainIndexesDocAccessFields_LastBlock>;
+  pools?: Maybe<VentureChainIndexesDocAccessFields_Pools>;
+  proposals?: Maybe<VentureChainIndexesDocAccessFields_Proposals>;
+  updatedAt?: Maybe<VentureChainIndexesDocAccessFields_UpdatedAt>;
+};
+
+export type VentureChainIndexesDocAccessFields_BlockHash = {
+  __typename?: 'VentureChainIndexesDocAccessFields_blockHash';
+  create?: Maybe<VentureChainIndexesDocAccessFields_BlockHash_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_BlockHash_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_BlockHash_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_BlockHash_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_BlockHash_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_blockHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_BlockHash_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_blockHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_BlockHash_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_blockHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_BlockHash_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_blockHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedAt = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdAt';
+  create?: Maybe<VentureChainIndexesDocAccessFields_CreatedAt_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_CreatedAt_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_CreatedAt_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_CreatedAt_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedAt_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedAt_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedAt_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedAt_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedBy = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdBy';
+  create?: Maybe<VentureChainIndexesDocAccessFields_CreatedBy_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_CreatedBy_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_CreatedBy_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_CreatedBy_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedBy_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedBy_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedBy_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_CreatedBy_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Key = {
+  __typename?: 'VentureChainIndexesDocAccessFields_key';
+  create?: Maybe<VentureChainIndexesDocAccessFields_Key_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_Key_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_Key_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_Key_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_Key_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Key_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Key_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Key_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_LastBlock = {
+  __typename?: 'VentureChainIndexesDocAccessFields_lastBlock';
+  create?: Maybe<VentureChainIndexesDocAccessFields_LastBlock_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_LastBlock_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_LastBlock_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_LastBlock_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_LastBlock_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_lastBlock_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_LastBlock_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_lastBlock_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_LastBlock_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_lastBlock_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_LastBlock_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_lastBlock_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Pools = {
+  __typename?: 'VentureChainIndexesDocAccessFields_pools';
+  create?: Maybe<VentureChainIndexesDocAccessFields_Pools_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_Pools_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_Pools_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_Pools_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_Pools_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_pools_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Pools_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_pools_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Pools_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_pools_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Pools_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_pools_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Proposals = {
+  __typename?: 'VentureChainIndexesDocAccessFields_proposals';
+  create?: Maybe<VentureChainIndexesDocAccessFields_Proposals_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_Proposals_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_Proposals_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_Proposals_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_Proposals_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_proposals_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Proposals_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_proposals_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Proposals_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_proposals_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_Proposals_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_proposals_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_UpdatedAt = {
+  __typename?: 'VentureChainIndexesDocAccessFields_updatedAt';
+  create?: Maybe<VentureChainIndexesDocAccessFields_UpdatedAt_Create>;
+  delete?: Maybe<VentureChainIndexesDocAccessFields_UpdatedAt_Delete>;
+  read?: Maybe<VentureChainIndexesDocAccessFields_UpdatedAt_Read>;
+  update?: Maybe<VentureChainIndexesDocAccessFields_UpdatedAt_Update>;
+};
+
+export type VentureChainIndexesDocAccessFields_UpdatedAt_Create = {
+  __typename?: 'VentureChainIndexesDocAccessFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_UpdatedAt_Delete = {
+  __typename?: 'VentureChainIndexesDocAccessFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_UpdatedAt_Read = {
+  __typename?: 'VentureChainIndexesDocAccessFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesDocAccessFields_UpdatedAt_Update = {
+  __typename?: 'VentureChainIndexesDocAccessFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields = {
+  __typename?: 'VentureChainIndexesFields';
+  blockHash?: Maybe<VentureChainIndexesFields_BlockHash>;
+  createdAt?: Maybe<VentureChainIndexesFields_CreatedAt>;
+  createdBy?: Maybe<VentureChainIndexesFields_CreatedBy>;
+  key?: Maybe<VentureChainIndexesFields_Key>;
+  lastBlock?: Maybe<VentureChainIndexesFields_LastBlock>;
+  pools?: Maybe<VentureChainIndexesFields_Pools>;
+  proposals?: Maybe<VentureChainIndexesFields_Proposals>;
+  updatedAt?: Maybe<VentureChainIndexesFields_UpdatedAt>;
+};
+
+export type VentureChainIndexesFields_BlockHash = {
+  __typename?: 'VentureChainIndexesFields_blockHash';
+  create?: Maybe<VentureChainIndexesFields_BlockHash_Create>;
+  delete?: Maybe<VentureChainIndexesFields_BlockHash_Delete>;
+  read?: Maybe<VentureChainIndexesFields_BlockHash_Read>;
+  update?: Maybe<VentureChainIndexesFields_BlockHash_Update>;
+};
+
+export type VentureChainIndexesFields_BlockHash_Create = {
+  __typename?: 'VentureChainIndexesFields_blockHash_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_BlockHash_Delete = {
+  __typename?: 'VentureChainIndexesFields_blockHash_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_BlockHash_Read = {
+  __typename?: 'VentureChainIndexesFields_blockHash_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_BlockHash_Update = {
+  __typename?: 'VentureChainIndexesFields_blockHash_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedAt = {
+  __typename?: 'VentureChainIndexesFields_createdAt';
+  create?: Maybe<VentureChainIndexesFields_CreatedAt_Create>;
+  delete?: Maybe<VentureChainIndexesFields_CreatedAt_Delete>;
+  read?: Maybe<VentureChainIndexesFields_CreatedAt_Read>;
+  update?: Maybe<VentureChainIndexesFields_CreatedAt_Update>;
+};
+
+export type VentureChainIndexesFields_CreatedAt_Create = {
+  __typename?: 'VentureChainIndexesFields_createdAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedAt_Delete = {
+  __typename?: 'VentureChainIndexesFields_createdAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedAt_Read = {
+  __typename?: 'VentureChainIndexesFields_createdAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedAt_Update = {
+  __typename?: 'VentureChainIndexesFields_createdAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedBy = {
+  __typename?: 'VentureChainIndexesFields_createdBy';
+  create?: Maybe<VentureChainIndexesFields_CreatedBy_Create>;
+  delete?: Maybe<VentureChainIndexesFields_CreatedBy_Delete>;
+  read?: Maybe<VentureChainIndexesFields_CreatedBy_Read>;
+  update?: Maybe<VentureChainIndexesFields_CreatedBy_Update>;
+};
+
+export type VentureChainIndexesFields_CreatedBy_Create = {
+  __typename?: 'VentureChainIndexesFields_createdBy_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedBy_Delete = {
+  __typename?: 'VentureChainIndexesFields_createdBy_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedBy_Read = {
+  __typename?: 'VentureChainIndexesFields_createdBy_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_CreatedBy_Update = {
+  __typename?: 'VentureChainIndexesFields_createdBy_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Key = {
+  __typename?: 'VentureChainIndexesFields_key';
+  create?: Maybe<VentureChainIndexesFields_Key_Create>;
+  delete?: Maybe<VentureChainIndexesFields_Key_Delete>;
+  read?: Maybe<VentureChainIndexesFields_Key_Read>;
+  update?: Maybe<VentureChainIndexesFields_Key_Update>;
+};
+
+export type VentureChainIndexesFields_Key_Create = {
+  __typename?: 'VentureChainIndexesFields_key_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Key_Delete = {
+  __typename?: 'VentureChainIndexesFields_key_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Key_Read = {
+  __typename?: 'VentureChainIndexesFields_key_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Key_Update = {
+  __typename?: 'VentureChainIndexesFields_key_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_LastBlock = {
+  __typename?: 'VentureChainIndexesFields_lastBlock';
+  create?: Maybe<VentureChainIndexesFields_LastBlock_Create>;
+  delete?: Maybe<VentureChainIndexesFields_LastBlock_Delete>;
+  read?: Maybe<VentureChainIndexesFields_LastBlock_Read>;
+  update?: Maybe<VentureChainIndexesFields_LastBlock_Update>;
+};
+
+export type VentureChainIndexesFields_LastBlock_Create = {
+  __typename?: 'VentureChainIndexesFields_lastBlock_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_LastBlock_Delete = {
+  __typename?: 'VentureChainIndexesFields_lastBlock_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_LastBlock_Read = {
+  __typename?: 'VentureChainIndexesFields_lastBlock_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_LastBlock_Update = {
+  __typename?: 'VentureChainIndexesFields_lastBlock_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Pools = {
+  __typename?: 'VentureChainIndexesFields_pools';
+  create?: Maybe<VentureChainIndexesFields_Pools_Create>;
+  delete?: Maybe<VentureChainIndexesFields_Pools_Delete>;
+  read?: Maybe<VentureChainIndexesFields_Pools_Read>;
+  update?: Maybe<VentureChainIndexesFields_Pools_Update>;
+};
+
+export type VentureChainIndexesFields_Pools_Create = {
+  __typename?: 'VentureChainIndexesFields_pools_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Pools_Delete = {
+  __typename?: 'VentureChainIndexesFields_pools_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Pools_Read = {
+  __typename?: 'VentureChainIndexesFields_pools_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Pools_Update = {
+  __typename?: 'VentureChainIndexesFields_pools_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Proposals = {
+  __typename?: 'VentureChainIndexesFields_proposals';
+  create?: Maybe<VentureChainIndexesFields_Proposals_Create>;
+  delete?: Maybe<VentureChainIndexesFields_Proposals_Delete>;
+  read?: Maybe<VentureChainIndexesFields_Proposals_Read>;
+  update?: Maybe<VentureChainIndexesFields_Proposals_Update>;
+};
+
+export type VentureChainIndexesFields_Proposals_Create = {
+  __typename?: 'VentureChainIndexesFields_proposals_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Proposals_Delete = {
+  __typename?: 'VentureChainIndexesFields_proposals_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Proposals_Read = {
+  __typename?: 'VentureChainIndexesFields_proposals_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_Proposals_Update = {
+  __typename?: 'VentureChainIndexesFields_proposals_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_UpdatedAt = {
+  __typename?: 'VentureChainIndexesFields_updatedAt';
+  create?: Maybe<VentureChainIndexesFields_UpdatedAt_Create>;
+  delete?: Maybe<VentureChainIndexesFields_UpdatedAt_Delete>;
+  read?: Maybe<VentureChainIndexesFields_UpdatedAt_Read>;
+  update?: Maybe<VentureChainIndexesFields_UpdatedAt_Update>;
+};
+
+export type VentureChainIndexesFields_UpdatedAt_Create = {
+  __typename?: 'VentureChainIndexesFields_updatedAt_Create';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_UpdatedAt_Delete = {
+  __typename?: 'VentureChainIndexesFields_updatedAt_Delete';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_UpdatedAt_Read = {
+  __typename?: 'VentureChainIndexesFields_updatedAt_Read';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesFields_UpdatedAt_Update = {
+  __typename?: 'VentureChainIndexesFields_updatedAt_Update';
+  permission: Scalars['Boolean']['output'];
+};
+
+export type VentureChainIndexesReadAccess = {
+  __typename?: 'VentureChainIndexesReadAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesReadDocAccess = {
+  __typename?: 'VentureChainIndexesReadDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesUpdateAccess = {
+  __typename?: 'VentureChainIndexesUpdateAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type VentureChainIndexesUpdateDocAccess = {
+  __typename?: 'VentureChainIndexesUpdateDocAccess';
+  permission: Scalars['Boolean']['output'];
+  where?: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type VentureLike = {
   __typename?: 'VentureLike';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -63955,6 +64779,11 @@ export type CountVariantTypes = {
 
 export type CountVariants = {
   __typename?: 'countVariants';
+  totalDocs?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountVentureChainIndexes = {
+  __typename?: 'countVentureChainIndexes';
   totalDocs?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -65786,6 +66615,7 @@ export type MutationStartupUpdate_ContractDeploymentsInput = {
   daoImplementationAddress?: InputMaybe<Scalars['String']['input']>;
   deployedAt?: InputMaybe<Scalars['String']['input']>;
   deployerWalletAddress?: InputMaybe<Scalars['String']['input']>;
+  deploymentBlock?: InputMaybe<Scalars['Float']['input']>;
   exchangePoolAddress?: InputMaybe<Scalars['String']['input']>;
   exchangePoolId?: InputMaybe<Scalars['String']['input']>;
   forwarderAddress?: InputMaybe<Scalars['String']['input']>;
@@ -65820,6 +66650,7 @@ export type MutationStartup_ContractDeploymentsInput = {
   daoImplementationAddress?: InputMaybe<Scalars['String']['input']>;
   deployedAt?: InputMaybe<Scalars['String']['input']>;
   deployerWalletAddress?: InputMaybe<Scalars['String']['input']>;
+  deploymentBlock?: InputMaybe<Scalars['Float']['input']>;
   exchangePoolAddress?: InputMaybe<Scalars['String']['input']>;
   exchangePoolId?: InputMaybe<Scalars['String']['input']>;
   forwarderAddress?: InputMaybe<Scalars['String']['input']>;
@@ -66106,6 +66937,28 @@ export type MutationVariantUpdateInput = {
   priceInUSDEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   product?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationVentureChainIndexInput = {
+  blockHash: Scalars['String']['input'];
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  key: Scalars['String']['input'];
+  lastBlock: Scalars['Float']['input'];
+  pools: Scalars['JSON']['input'];
+  proposals: Scalars['JSON']['input'];
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationVentureChainIndexUpdateInput = {
+  blockHash?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  createdBy?: InputMaybe<Scalars['String']['input']>;
+  key?: InputMaybe<Scalars['String']['input']>;
+  lastBlock?: InputMaybe<Scalars['Float']['input']>;
+  pools?: InputMaybe<Scalars['JSON']['input']>;
+  proposals?: InputMaybe<Scalars['JSON']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -66669,6 +67522,24 @@ export type VariantsDocAccess = {
   read?: Maybe<VariantsReadDocAccess>;
   readVersions?: Maybe<VariantsReadVersionsDocAccess>;
   update?: Maybe<VariantsUpdateDocAccess>;
+};
+
+export type Venture_Chain_IndexesAccess = {
+  __typename?: 'venture_chain_indexesAccess';
+  create?: Maybe<VentureChainIndexesCreateAccess>;
+  delete?: Maybe<VentureChainIndexesDeleteAccess>;
+  fields?: Maybe<VentureChainIndexesFields>;
+  read?: Maybe<VentureChainIndexesReadAccess>;
+  update?: Maybe<VentureChainIndexesUpdateAccess>;
+};
+
+export type Venture_Chain_IndexesDocAccess = {
+  __typename?: 'venture_chain_indexesDocAccess';
+  create?: Maybe<VentureChainIndexesCreateDocAccess>;
+  delete?: Maybe<VentureChainIndexesDeleteDocAccess>;
+  fields?: Maybe<VentureChainIndexesDocAccessFields>;
+  read?: Maybe<VentureChainIndexesReadDocAccess>;
+  update?: Maybe<VentureChainIndexesUpdateDocAccess>;
 };
 
 export type Venture_LikesAccess = {
@@ -69272,6 +70143,16 @@ export type VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_
   not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type VersionsStartup_Version__ContractDeployments__DeploymentBlock_Operator = {
+  equals?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  greater_than?: InputMaybe<Scalars['Float']['input']>;
+  greater_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  less_than?: InputMaybe<Scalars['Float']['input']>;
+  less_than_equal?: InputMaybe<Scalars['Float']['input']>;
+  not_equals?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator = {
   all?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   contains?: InputMaybe<Scalars['String']['input']>;
@@ -69708,6 +70589,7 @@ export type VersionsStartup_Where = {
   version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
   version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
   version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__deploymentBlock?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeploymentBlock_Operator>;
   version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
   version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
   version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
@@ -69767,6 +70649,7 @@ export type VersionsStartup_Where_And = {
   version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
   version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
   version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__deploymentBlock?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeploymentBlock_Operator>;
   version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
   version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
   version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
@@ -69826,6 +70709,7 @@ export type VersionsStartup_Where_Or = {
   version__contractDeployments__daoImplementationAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DaoImplementationAddress_Operator>;
   version__contractDeployments__deployedAt?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployedAt_Operator>;
   version__contractDeployments__deployerWalletAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeployerWalletAddress_Operator>;
+  version__contractDeployments__deploymentBlock?: InputMaybe<VersionsStartup_Version__ContractDeployments__DeploymentBlock_Operator>;
   version__contractDeployments__exchangePoolAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolAddress_Operator>;
   version__contractDeployments__exchangePoolId?: InputMaybe<VersionsStartup_Version__ContractDeployments__ExchangePoolId_Operator>;
   version__contractDeployments__forwarderAddress?: InputMaybe<VersionsStartup_Version__ContractDeployments__ForwarderAddress_Operator>;
@@ -71168,7 +72052,7 @@ export type StartupByIdQueryVariables = Exact<{
 }>;
 
 
-export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, contractDeployments?: Array<{ __typename?: 'Startup_ContractDeployments', id?: string | null, chain?: Startup_ContractDeployments_Chain | null, network?: string | null, chainId?: string | null, deployedAt?: any | null, tokenName?: string | null, tokenSymbol?: string | null, tokenDecimals?: number | null, initialSupply?: string | null, deployerWalletAddress?: string | null, poolManagerAddress?: string | null, positionManagerAddress?: string | null, permit2Address?: string | null, forwarderAddress?: string | null, timelockAddress?: string | null, timelockImplementationAddress?: string | null, exchangePoolAddress?: string | null, exchangePoolId?: string | null, tokenAddress?: string | null, swapRouterAddress?: string | null, rewardTokenAddress?: string | null, daoAddress?: string | null, tokenImplementationAddress?: string | null, swapRouterImplementationAddress?: string | null, rewardTokenImplementationAddress?: string | null, daoImplementationAddress?: string | null }> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
+export type StartupByIdQuery = { __typename?: 'Query', Startup?: { __typename?: 'Startup', id: string, isSubscribed?: boolean | null, serverURL?: string | null, title?: string | null, _status?: Startup__Status | null, description?: string | null, likeCount?: number | null, stage?: Startup_Stage | null, lookingFor?: Array<Startup_LookingFor> | null, alreadyHave?: Array<Startup_AlreadyHave> | null, createdAt?: any | null, updatedAt?: any | null, contractDeployments?: Array<{ __typename?: 'Startup_ContractDeployments', id?: string | null, chain?: Startup_ContractDeployments_Chain | null, network?: string | null, chainId?: string | null, deployedAt?: any | null, deploymentBlock?: number | null, tokenName?: string | null, tokenSymbol?: string | null, tokenDecimals?: number | null, initialSupply?: string | null, deployerWalletAddress?: string | null, poolManagerAddress?: string | null, positionManagerAddress?: string | null, permit2Address?: string | null, forwarderAddress?: string | null, timelockAddress?: string | null, timelockImplementationAddress?: string | null, exchangePoolAddress?: string | null, exchangePoolId?: string | null, tokenAddress?: string | null, swapRouterAddress?: string | null, rewardTokenAddress?: string | null, daoAddress?: string | null, tokenImplementationAddress?: string | null, swapRouterImplementationAddress?: string | null, rewardTokenImplementationAddress?: string | null, daoImplementationAddress?: string | null }> | null, fundsNeeded?: { __typename?: 'Startup_FundsNeeded', amount?: number | null, currency?: Startup_FundsNeeded_Currency | null } | null, company?: { __typename?: 'Company', id: string, serverURL?: string | null, name?: string | null, email?: any | null, cryptoAddresses?: { __typename?: 'Company_CryptoAddresses', chain?: Company_CryptoAddresses_Chain | null, address?: string | null } | null } | null, createdBy?: { __typename?: 'User', id: string } | null, identity?: { __typename?: 'Identity', id: string, serverURL?: string | null, name: string, description?: string | null, website?: string | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null } | null, image?: { __typename?: 'Media', id: string, url?: string | null, alt?: string | null, filename?: string | null, width?: number | null, height?: number | null, mimeType?: string | null } | null, involvedUsers?: Array<{ __typename?: 'User', id: string, name: string, email: string }> | null } | null };
 
 export type ListStartupsByIdentityQueryVariables = Exact<{
   identityId: Scalars['JSON']['input'];
@@ -77807,6 +78691,7 @@ export const StartupByIdDocument = `
       network
       chainId
       deployedAt
+      deploymentBlock
       tokenName
       tokenSymbol
       tokenDecimals

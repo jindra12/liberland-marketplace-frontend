@@ -6,7 +6,7 @@ import { isAddress } from "ethers";
 import type { TokenActionFormProps } from "./types";
 
 export const TokenActionForm: React.FunctionComponent<TokenActionFormProps> = (props) => (
-    <Form layout="vertical" onFinish={props.onSubmit} disabled={props.busy}>
+    <Form layout="vertical" className="VentureContracts__form" onFinish={props.onSubmit} disabled={props.busy}>
         {(props.action === "transfer" || props.action === "delegate") && (
             <Form.Item
                 name="address"

@@ -4,7 +4,6 @@ import { BankOutlined, SafetyCertificateOutlined } from "@ant-design/icons";
 import { Alert, Collapse, Descriptions, Flex, Statistic, Tag, Typography } from "antd";
 
 import { deploymentAddressLabels } from "./constants";
-import { TokenWallet } from "./TokenWallet";
 import type { DeploymentSummaryProps } from "./types";
 import { formatTokenAmount, getAddressLink } from "./utils";
 
@@ -94,10 +93,5 @@ export const DeploymentSummary: React.FunctionComponent<DeploymentSummaryProps> 
                 },
             ]}
         />
-        {props.deployment.chain === "ethereum" &&
-            props.deployment.chainId &&
-            props.deployment.tokenAddress &&
-            props.deployment.daoAddress &&
-            props.deployment.rewardTokenAddress && <TokenWallet deployment={props.deployment} />}
     </Flex>
 );
