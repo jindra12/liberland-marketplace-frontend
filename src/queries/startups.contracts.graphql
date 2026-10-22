@@ -1,0 +1,10 @@
+mutation SaveVentureContracts($id: String!, $data: mutationStartupUpdateInput!) {
+    updateStartup(id: $id, data: $data) {
+        id
+        contractDeployments {
+            id
+            tokenAddress
+            daoAddress
+        }
+    }
+}

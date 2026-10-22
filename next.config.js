@@ -4,6 +4,7 @@ loadEnvConfig(process.cwd());
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    transpilePackages: ["@liberland/marketplace-contracts"],
     env: Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith("REACT_APP_"))),
     async rewrites() {
         return [{

@@ -2,8 +2,9 @@ import * as React from "react";
 
 import { mount } from "cypress/react";
 
-import { Button, Form } from "antd";
+import { Form } from "antd";
 
+import { AntProvider } from "../../src/components/AntProvider";
 import { CryptoAddressesField } from "../../src/components/publish/CryptoAddressesField/CryptoAddressesField";
 import type { CryptoAddressesFormValue } from "../../src/components/publish/CryptoAddressesField/types";
 import { buildCryptoAddressesInput, validateCryptoAddress } from "../../src/components/publish/CryptoAddressesField/utils";
@@ -21,12 +22,11 @@ const CryptoAddressesHarness: React.FunctionComponent<CryptoAddressesHarnessProp
     const [form] = Form.useForm<CryptoAddressesSubmitPayload>();
 
     return (
-        <Form form={form} layout="vertical" onFinish={props.onSubmit}>
-            <CryptoAddressesField description="Optional payout wallet for checkout." />
-            <Form.Item>
-                <Button htmlType="submit">Save wallet</Button>
-            </Form.Item>
-        </Form>
+        <AntProvider>
+            <Form form={form} layout="vertical" onFinish={props.onSubmit}>
+                <CryptoAddressesField description="Optional payout wallet for checkout." submitLabel="Save wallet" />
+            </Form>
+        </AntProvider>
     );
 };
 
@@ -59,7 +59,7 @@ describe("crypto addresses field", () => {
             "0x1234567890abcdef1234567890abcdef12345678",
             { force: true },
         );
-        cy.contains("button", "Save wallet").click();
+        cy.get(".Publish__cryptoCard").contains("button", "Save wallet").should("be.visible").click();
 
         cy.wrap(null).should(() => {
             expect(submittedPayload).to.deep.equal({
