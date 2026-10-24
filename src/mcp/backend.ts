@@ -1,32 +1,39 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+import { normalizePublicBackendUrl, publicBackendFetch } from "../server/security/utils";
+import { BACKEND_TIMEOUT_MS } from "../server/security/constants";
+import type { BackendAuthorization } from "./types";
 
 export const normalizeBackendUrl = (value: string): string => {
-    const parsed = new URL(value);
+    return normalizePublicBackendUrl(value);
+};
 
-    if (parsed.protocol !== "https:") {
-        throw new Error("Syndicated backends must use HTTPS.");
-    }
-
-    parsed.hash = "";
-    parsed.search = "";
-    return parsed.toString().replace(/\/+$/, "");
+export const authorizationForBackend = (authorization: BackendAuthorization | undefined, serverUrl: string): string | undefined => {
+    return authorization && normalizeBackendUrl(authorization.serverUrl) === normalizeBackendUrl(serverUrl)
+        ? authorization.value
+        : undefined;
 };
 
 export const callBackendTool = async (
     serverUrl: string,
-    authorization: string | undefined,
+    authorization: BackendAuthorization | undefined,
     toolName: string,
     argumentsValue: Record<string, unknown>,
+    signal?: AbortSignal,
 ): Promise<unknown> => {
+    const token = authorizationForBackend(authorization, serverUrl);
     const transport = new StreamableHTTPClientTransport(new URL(`${normalizeBackendUrl(serverUrl)}/api/mcp`), {
-        requestInit: authorization ? { headers: { Authorization: authorization } } : undefined,
+        requestInit: { headers: token ? { Authorization: token } : undefined, signal },
+        fetch: publicBackendFetch,
     });
     const client = new Client({ name: "nswap-mcp-gateway", version: "1.0.0" });
 
     try {
         await client.connect(transport);
-        const result = await client.callTool({ name: toolName, arguments: argumentsValue }) as {
+        const result = await client.callTool({ name: toolName, arguments: argumentsValue }, undefined, {
+            timeout: BACKEND_TIMEOUT_MS,
+            signal,
+        }) as {
             isError?: boolean;
             content: Array<{ type: string; text?: string }>;
             structuredContent?: unknown;
@@ -59,13 +66,23 @@ export const parseBackendToolResult = <T>(value: unknown): T => {
     return value as T;
 };
 
-export const searchBackendRag = async (serverUrl: string, authorization: string | undefined, query: string, limit?: number): Promise<unknown> => {
+export const searchBackendRag = async (
+    serverUrl: string,
+    authorization: BackendAuthorization | undefined,
+    query: string,
+    limit?: number,
+    signal?: AbortSignal,
+): Promise<unknown> => {
     const headers: Record<string, string> = { "Content-Type": "application/json" };
-    if (authorization) headers.Authorization = authorization;
-    const response = await fetch(`${normalizeBackendUrl(serverUrl)}/api/ai/search`, {
+    const token = authorizationForBackend(authorization, serverUrl);
+    if (token) {
+        headers.Authorization = token;
+    }
+    const response = await publicBackendFetch(`${normalizeBackendUrl(serverUrl)}/api/ai/search`, {
         method: "POST",
         headers,
         body: JSON.stringify({ query, limit }),
+        signal,
     });
     const body = await response.json() as RagResponse;
     if (!response.ok) {

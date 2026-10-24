@@ -9,7 +9,13 @@ export const getDefaultBackendUrl = (): string => {
 
 export const resolveBackendUrl = (serverUrl?: string | null): string => normalizeBackendUrl(serverUrl ?? getDefaultBackendUrl());
 
-export const resolveSessionServers = (authorization: string | undefined, serverUrl?: string | null): string[] => {
-    if (serverUrl) return [resolveBackendUrl(serverUrl)];
-    return Array.from(new Set([getDefaultBackendUrl(), ...listSyndicatedServers(authorization)]));
+export const resolveSessionServers = (
+    authorization: string | undefined,
+    serverUrl?: string | null,
+    authenticatedServerUrl?: string | null,
+): string[] => {
+    if (serverUrl) {
+        return [resolveBackendUrl(serverUrl)];
+    }
+    return Array.from(new Set([resolveBackendUrl(authenticatedServerUrl), ...listSyndicatedServers(authorization)]));
 };

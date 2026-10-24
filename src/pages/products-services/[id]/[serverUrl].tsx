@@ -1,8 +1,9 @@
-import { fetchProductById } from "../../../components/hooks";
+import { fetchProductById } from "../../../server/queries";
 import { buildProductPageMetadata, fetchProductRelatedMetadata } from "../../../detailMetadata/products";
-import { createDetailPage } from "../../../detailPage";
+import { DetailPage } from "../../../detailPage";
+import { createDetailPageProps } from "../../../server/detailPage";
 
-const { getServerSideProps, DetailPage } = createDetailPage({
+const getServerSideProps = createDetailPageProps({
     fetcher: fetchProductById,
     buildVariables: (params) => {
         if (!params.id) {

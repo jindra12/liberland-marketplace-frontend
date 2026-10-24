@@ -14,7 +14,7 @@ import type {
     ListProductsQuery,
     ListStartupsQuery,
 } from "./generated/graphql";
-import { BACKEND_URL } from "./gqlFetcher";
+import { fetchServerQuery } from "./server/utils";
 import { buildDetailUrl } from "./detailMetadata/related";
 import { SEO_BY_ROUTE, type SeoCollectionItem, type SeoCollectionPageData } from "./shellPage/seo";
 
@@ -26,11 +26,6 @@ type CollectionVariables = {
     sort: string;
 };
 
-type GraphQLResponse<TData> = {
-    data?: TData;
-    errors?: Array<{ message: string }>;
-};
-
 type CollectionQueryData =
     | ListCompaniesQuery
     | ListIdentitiesQuery
@@ -40,28 +35,7 @@ type CollectionQueryData =
     | ListStartupsQuery;
 
 const fetchCollection = async <TData>(query: string, variables: CollectionVariables): Promise<TData> => {
-    const response = await fetch(`${BACKEND_URL}/api/graphql`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query, variables }),
-    });
-
-    if (!response.ok) {
-        throw new Error(`Collection metadata request failed with status ${response.status}`);
-    }
-
-    const payload = (await response.json()) as GraphQLResponse<TData>;
-    if (payload.errors?.length) {
-        throw new Error(payload.errors[0].message);
-    }
-
-    if (!payload.data) {
-        throw new Error("Collection metadata response did not contain data");
-    }
-
-    return payload.data;
+    return fetchServerQuery<TData, CollectionVariables>(query, variables);
 };
 
 const toCollectionItem = (

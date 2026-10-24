@@ -1,8 +1,9 @@
 import { buildPostPageMetadata } from "../../../detailMetadata/posts";
-import { fetchPostById } from "../../../components/hooks";
-import { createDetailPage } from "../../../detailPage";
+import { fetchPostById } from "../../../server/queries";
+import { DetailPage } from "../../../detailPage";
+import { createDetailPageProps } from "../../../server/detailPage";
 
-const { getServerSideProps, DetailPage } = createDetailPage({
+const getServerSideProps = createDetailPageProps({
     fetcher: fetchPostById,
     buildVariables: (params) => {
         if (!params.id) {

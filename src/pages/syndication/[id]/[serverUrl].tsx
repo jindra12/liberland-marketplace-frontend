@@ -1,8 +1,9 @@
-import { fetchListPublishedSyndicationUrls } from "../../../components/hooks";
+import { fetchListPublishedSyndicationUrls } from "../../../server/queries";
 import { buildSyndicationPageMetadata } from "../../../detailMetadata/syndication";
-import { createDetailPage } from "../../../detailPage";
+import { DetailPage } from "../../../detailPage";
+import { createDetailPageProps } from "../../../server/detailPage";
 
-const { getServerSideProps, DetailPage } = createDetailPage({
+const getServerSideProps = createDetailPageProps({
     fetcher: fetchListPublishedSyndicationUrls,
     buildVariables: () => {
         return {};

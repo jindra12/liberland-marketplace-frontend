@@ -4,6 +4,7 @@ import path from "path";
 import { format } from "prettier";
 import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
+import { securityChecks } from "./cypress/support/securityChecks";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -89,6 +90,7 @@ export default defineConfig({
                 return launchOptions;
             });
             on("task", {
+                ...securityChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

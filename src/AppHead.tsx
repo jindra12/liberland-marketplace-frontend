@@ -2,6 +2,7 @@ import * as React from "react";
 import Head from "next/head";
 
 import { SITE_URL } from "./siteUrl";
+import { serializeJsonLd } from "./jsonLd/utils";
 type AppHeadProps = {
     title?: string;
     description?: string;
@@ -76,7 +77,7 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
                     key={`jsonld-${index}`}
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(entry),
+                        __html: serializeJsonLd(entry),
                     }}
                 />
             ))}

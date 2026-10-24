@@ -10,7 +10,7 @@ import {
     fetchListJobsByIdentity,
     fetchListProductsByIdentity,
     fetchListStartupsByIdentity,
-} from "../components/hooks";
+} from "../server/queries";
 
 import {
     buildAbsoluteImageUrl,

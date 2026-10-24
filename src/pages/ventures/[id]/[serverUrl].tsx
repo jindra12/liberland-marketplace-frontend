@@ -1,8 +1,9 @@
-import { fetchStartupById } from "../../../components/hooks";
+import { fetchStartupById } from "../../../server/queries";
 import { buildStartupPageMetadata } from "../../../detailMetadata/ventures";
-import { createDetailPage } from "../../../detailPage";
+import { DetailPage } from "../../../detailPage";
+import { createDetailPageProps } from "../../../server/detailPage";
 
-const { getServerSideProps, DetailPage } = createDetailPage({
+const getServerSideProps = createDetailPageProps({
     fetcher: fetchStartupById,
     buildVariables: (params) => {
         if (!params.id) {

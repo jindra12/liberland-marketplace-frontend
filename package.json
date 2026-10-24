@@ -29,7 +29,7 @@
         "@geoapify/geocoder-autocomplete": "^3.0.1",
         "@geoapify/react-geocoder-autocomplete": "^3.0.0",
         "@liberland/marketplace-contracts": "0.1.0",
-        "@modelcontextprotocol/sdk": "^1.30.0",
+        "@modelcontextprotocol/sdk": "1.32.2",
         "@polkadot/extension-dapp": "^0.59.1",
         "@polkadot/util-crypto": "^13.5.1",
         "@solana/pay": "^0.2.5",
@@ -48,8 +48,9 @@
         "@uiw/react-md-editor": "^4.0.11",
         "analytics": "^0.8.19",
         "antd": "^5.24.4",
+        "async-mutex": "^0.5.0",
         "autolinker": "^4.1.5",
-        "axios": "^1.13.4",
+        "axios": "1.20.0",
         "bignumber.js": "^9.3.0",
         "bs58check": "^4.0.0",
         "buffer": "^6.0.3",
@@ -57,9 +58,10 @@
         "crypto-browserify": "^3.12.1",
         "dayjs": "^1.11.20",
         "ethers": "^6.17.0",
+        "guarded-fetch": "^0.1.6",
         "lodash-es": "^4.17.23",
         "marked": "^18.0.0",
-        "next": "14.2.33",
+        "next": "16.4.3",
         "object-hash": "^3.0.0",
         "oidc-client-ts": "^3.4.1",
         "process": "^0.11.10",
@@ -71,7 +73,7 @@
         "react-infinite-scroll-component": "^6.1.1",
         "react-markdown": "^10.1.0",
         "react-oidc-context": "^3.3.0",
-        "react-router-dom": "^7.4.0",
+        "react-router-dom": "7.18.4",
         "react-scroll-into-view-if-needed": "^3.0.1",
         "react-share": "^5.3.0",
         "react-web-share": "^2.0.2",
@@ -88,15 +90,17 @@
         "usehooks-ts": "^3.1.1",
         "vm-browserify": "^1.1.2",
         "web-vitals": "^2.1.0",
-        "zod": "^4.4.3"
+        "zod": "4.6.7"
     },
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
+        "dev": "next dev --webpack",
+        "build": "next build --webpack",
         "start": "next start",
         "foxmcp:start": "bash scripts/start-foxmcp.sh",
         "test": "react-app-rewired test",
         "test:ct": "yarn cypress:run --component --browser chrome",
+        "test:ct:security": "yarn cypress:run --component --browser chrome --spec cypress/component/Security.cy.tsx",
+        "test:ct:security:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/Security.cy.tsx",
         "test:ct:headed": "yarn cypress:run --component --browser chrome --headed",
         "test:ct:report": "yarn cypress:run --component --browser chrome --spec cypress/component/Report.cy.tsx",
         "test:ct:report:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/Report.cy.tsx",
@@ -213,7 +217,8 @@
         ]
     },
     "resolutions": {
-        "@types/react": "19.1.4"
+        "@types/react": "19.1.4",
+        "**/@modelcontextprotocol/sdk/zod": "4.6.7"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^6.1.1",
@@ -237,7 +242,7 @@
         "@vitejs/plugin-react": "^6.0.1",
         "cors": "^2.8.6",
         "cross-env": "^7.0.3",
-        "cypress": "15.18.1",
+        "cypress": "16.2.0",
         "cypress-react-router": "2.0.1",
         "graphql": "^16.12.0",
         "graphql-mocks": "0.11.4",
@@ -248,7 +253,7 @@
         "stream-browserify": "^3.0.0",
         "tsx": "^4.21.0",
         "typescript": "^5.8.3",
-        "vercel": "^59.1.3",
+        "vercel": "65.2.0",
         "vite": "^8.0.3",
         "webpack-dev-server": "^5"
     }

@@ -1,6 +1,7 @@
-import { createCollectionPage } from "../../collectionPage";
+import { CollectionPage } from "../../collectionPage";
+import { createCollectionPageProps } from "../../server/collectionPage";
 
-const { getServerSideProps, CollectionPage } = createCollectionPage("/tribes");
+const getServerSideProps = createCollectionPageProps("/tribes");
 
 export { getServerSideProps };
 export default CollectionPage;

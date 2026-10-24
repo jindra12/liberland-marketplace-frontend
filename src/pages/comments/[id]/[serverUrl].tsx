@@ -1,8 +1,9 @@
-import { fetchCommentDetail } from "../../../components/hooks";
+import { fetchCommentDetail } from "../../../server/queries";
 import { buildCommentPageMetadata } from "../../../detailMetadata/comments";
-import { createDetailPage } from "../../../detailPage";
+import { DetailPage } from "../../../detailPage";
+import { createDetailPageProps } from "../../../server/detailPage";
 
-const { getServerSideProps, DetailPage } = createDetailPage({
+const getServerSideProps = createDetailPageProps({
     fetcher: fetchCommentDetail,
     buildVariables: (params) => {
         if (!params.id) {

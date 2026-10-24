@@ -1,5 +1,5 @@
 import type { ListProductsByCompanyQuery, ProductByIdQuery } from "../generated/graphql";
-import { fetchListProductsByCompany } from "../components/hooks";
+import { fetchListProductsByCompany } from "../server/queries";
 
 import {
     buildAbsoluteImageUrl,

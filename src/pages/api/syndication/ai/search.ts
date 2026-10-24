@@ -1,4 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
+import { normalizePublicBackendUrl, publicBackendFetch } from "../../../../server/security/utils";
+import { acquireRequestSlot } from "../../../../server/security/limits";
 
 type ProxyRequest = {
     query: string;
@@ -34,56 +37,16 @@ type ProxyResponse = {
 const MAX_SERVER_COUNT = 8;
 const MAX_QUERY_LENGTH = 600;
 
-const isPrivateHostname = (hostname: string): boolean => {
-    const normalizedHostname = hostname.toLowerCase();
+const proxyRequestSchema = z.object({
+    query: z.string().min(1).max(MAX_QUERY_LENGTH),
+    serverUrls: z.array(z.string().max(2048)).min(1).max(MAX_SERVER_COUNT),
+    limit: z.number().int().positive().max(20).optional(),
+});
 
-    return (
-        normalizedHostname === "localhost" ||
-        normalizedHostname === "::1" ||
-        normalizedHostname.endsWith(".local") ||
-        normalizedHostname.startsWith("127.") ||
-        normalizedHostname.startsWith("10.") ||
-        normalizedHostname.startsWith("192.168.") ||
-        /^172\.(1[6-9]|2\d|3[0-1])\./.test(normalizedHostname)
-    );
-};
-
-const normalizeServerUrl = (value: string): string => {
-    const parsed = new URL(value);
-
-    if (parsed.protocol !== "https:" || isPrivateHostname(parsed.hostname)) {
-        throw new Error("Syndicated backends must use a public HTTPS URL.");
-    }
-
-    parsed.hash = "";
-    parsed.search = "";
-    return parsed.toString().replace(/\/+$/, "");
-};
-
-const parseRequest = (body: ProxyRequest): ProxyRequest => {
-    if (!Array.isArray(body.serverUrls) || body.serverUrls.length === 0 || body.serverUrls.length > MAX_SERVER_COUNT) {
-        throw new Error(`Provide between 1 and ${MAX_SERVER_COUNT} syndicated backend URLs.`);
-    }
-
-    if (typeof body.query !== "string" || body.query.length === 0 || body.query.length > MAX_QUERY_LENGTH) {
-        throw new Error(`Query must contain between 1 and ${MAX_QUERY_LENGTH} characters.`);
-    }
-
-    return {
-        query: body.query,
-        serverUrls: Array.from(new Set(body.serverUrls.map(normalizeServerUrl))),
-        limit: body.limit,
-    };
-};
-
-const queryBackend = async (serverUrl: string, body: ProxyRequest, authorization?: string): Promise<ProxyResult> => {
+const queryBackend = async (serverUrl: string, body: ProxyRequest): Promise<ProxyResult> => {
     const headers: HeadersInit = { "Content-Type": "application/json" };
-
-    if (authorization) {
-        headers.Authorization = authorization;
-    }
-
-    const response = await fetch(`${serverUrl}/api/ai/search`, {
+    // Anonymous fan-out must never expose the caller's token to another backend.
+    const response = await publicBackendFetch(`${serverUrl}/api/ai/search`, {
         method: "POST",
         headers,
         body: JSON.stringify({ query: body.query, limit: body.limit }),
@@ -108,11 +71,17 @@ const handler = async (
         return;
     }
 
+    const release = await acquireRequestSlot();
+    if (!release) {
+        response.setHeader("Retry-After", "5");
+        response.status(429).json({ error: "Too many active search requests. Please retry shortly." });
+        return;
+    }
     try {
-        const body = parseRequest(request.body as ProxyRequest);
-        const authorization = typeof request.headers.authorization === "string" ? request.headers.authorization : undefined;
+        const input = proxyRequestSchema.parse(request.body);
+        const body = { ...input, serverUrls: Array.from(new Set(input.serverUrls.map(normalizePublicBackendUrl))) };
         const settledResults = await Promise.allSettled(
-            body.serverUrls.map(async (serverUrl) => queryBackend(serverUrl, body, authorization)),
+            body.serverUrls.map(async (serverUrl) => queryBackend(serverUrl, body)),
         );
         const results = settledResults.map((settledResult, index) => {
             const serverUrl = body.serverUrls[index];
@@ -138,8 +107,12 @@ const handler = async (
         response.status(200).json({ results, sources });
     } catch (error) {
         response.status(400).json({ error: error instanceof Error ? error.message : "Invalid AI search request." });
+    } finally {
+        release();
     }
 };
+
+export const config = { api: { bodyParser: { sizeLimit: "32kb" } } };
 
 // Next Pages API routes require a default handler export.
 // eslint-disable-next-line import/no-default-export

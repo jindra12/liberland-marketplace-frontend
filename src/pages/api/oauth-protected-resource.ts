@@ -2,14 +2,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { buildProtectedResourceMetadata, getMcpBackendUrl } from "../../mcp/auth";
 
 const handler = (request: NextApiRequest, response: NextApiResponse): void => {
-    const serverUrl = getMcpBackendUrl(request);
-
-    if (!serverUrl) {
-        response.status(400).json({ error: "serverUrl is required." });
-        return;
+    try {
+        const serverUrl = getMcpBackendUrl(request);
+        if (!serverUrl) {
+            response.status(400).json({ error: "serverUrl is required." });
+            return;
+        }
+        response.status(200).json(buildProtectedResourceMetadata(serverUrl));
+    } catch (error) {
+        response.status(400).json({ error: error instanceof Error ? error.message : "Invalid backend URL." });
     }
-
-    response.status(200).json(buildProtectedResourceMetadata(serverUrl));
 };
 
 // Next Pages API routes require a default handler export.

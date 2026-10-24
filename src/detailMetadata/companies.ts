@@ -10,7 +10,7 @@ import {
     fetchListPostsByCompany,
     fetchListProductsByCompany,
     fetchListStartupsByCompany,
-} from "../components/hooks";
+} from "../server/queries";
 
 import {
     buildAbsoluteImageUrl,
