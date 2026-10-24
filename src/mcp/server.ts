@@ -8,6 +8,7 @@ import { MCP_ENTITIES } from "./types";
 import type { BackendAuthorization } from "./types";
 import { discoverBackends } from "./discovery";
 import { MAX_TOOL_INPUT_ELEMENTS, REQUEST_TIMEOUT_MS } from "../server/security/constants";
+import { checkSearchQuota } from "../server/security/rateLimits";
 
 const entitySchema = z.enum(MCP_ENTITIES);
 const requiredBackendSchema = z.object({ serverUrl: z.url() });
@@ -62,8 +63,9 @@ const requireAuthorization = (authorization?: string): string => {
 };
 
 export const createNswapMcpServer = (
-    authorization?: string,
-    selectedServerUrl?: string | null,
+    authorization: string | undefined,
+    selectedServerUrl: string | null | undefined,
+    clientKey: string,
     signal = AbortSignal.timeout(REQUEST_TIMEOUT_MS),
 ): McpServer => {
     const scopedAuthorization = authorization ? { value: authorization, serverUrl: resolveBackendUrl(selectedServerUrl) } : undefined;
@@ -117,6 +119,10 @@ export const createNswapMcpServer = (
         inputSchema: { serverUrl: z.url().optional(), query: z.string().min(1).max(600), limit: z.number().int().positive().max(20).optional() },
     }, async (args) => {
         const servers = resolveSessionServers(authorization, args.serverUrl, selectedServerUrl);
+        const retryAfter = await checkSearchQuota(clientKey, servers.length);
+        if (retryAfter) {
+            throw new Error(`AI search quota reached. Retry in ${retryAfter} seconds.`);
+        }
         return textResult(await Promise.all(servers.map(async (serverUrl) => ({
             serverUrl,
             result: await searchBackendRag(serverUrl, scopedAuthorization, args.query, args.limit, signal),

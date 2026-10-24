@@ -1,27 +1,23 @@
 import { isIP } from "node:net";
 import { guardedFetch, isSafeIpAddress, readBodyAsText } from "guarded-fetch";
-import { BACKEND_TIMEOUT_MS, MAX_BACKEND_URL_LENGTH, MAX_RESPONSE_BYTES } from "./constants";
+import normalizeUrl from "normalize-url";
+import { z } from "zod";
+import { BACKEND_TIMEOUT_MS, BACKEND_URL_NORMALIZATION_OPTIONS, MAX_BACKEND_URL_LENGTH, MAX_RESPONSE_BYTES } from "./constants";
+
+const backendUrlSchema = z.url({ protocol: /^https$/ }).max(MAX_BACKEND_URL_LENGTH)
+    .transform((value) => new URL(value))
+    .refine((url) => !url.username && !url.password && !url.search && !url.hash, {
+        message: "Backends must use HTTPS URLs without credentials, queries, or fragments.",
+    })
+    .refine((url) => {
+        const hostname = url.hostname.startsWith("[") ? url.hostname.slice(1, -1) : url.hostname;
+        return hostname !== "localhost" && !hostname.endsWith(".localhost") && !hostname.endsWith(".local")
+            && (!isIP(hostname) || isSafeIpAddress(hostname));
+    }, { message: "Backends must use public network addresses." });
 
 export const normalizePublicBackendUrl = (value: string): string => {
-    if (value.length > MAX_BACKEND_URL_LENGTH) {
-        throw new Error("The backend URL is too long.");
-    }
-
-    const parsed = new URL(value);
-    const hostname = parsed.hostname.startsWith("[") ? parsed.hostname.slice(1, -1) : parsed.hostname;
-    if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.search || parsed.hash) {
-        throw new Error("Backends must use HTTPS URLs without credentials, queries, or fragments.");
-    }
-    if (hostname === "localhost" || hostname.endsWith(".localhost") || hostname.endsWith(".local")) {
-        throw new Error("Backends must use public network addresses.");
-    }
-    if (isIP(hostname) && !isSafeIpAddress(hostname)) {
-        throw new Error("Backends must use public network addresses.");
-    }
-
-    return parsed.toString().replace(/\/+$/, "");
+    return normalizeUrl(backendUrlSchema.parse(value).href, BACKEND_URL_NORMALIZATION_OPTIONS);
 };
-
 
 export const publicBackendFetch: typeof fetch = async (input, init) => {
     const request = new Request(input, init);

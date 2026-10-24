@@ -1,3 +1,5 @@
+import serialize from "serialize-javascript";
+
 export const serializeJsonLd = (entry: Record<string, unknown>): string => {
-    return JSON.stringify(entry).replace(/</g, "\\u003c");
+    return serialize(entry, { isJSON: true });
 };

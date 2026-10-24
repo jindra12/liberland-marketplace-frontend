@@ -37,6 +37,17 @@ It lets people browse, search, and open detail pages for jobs, companies, produc
 
 ## MCP Setup
 
+### Gateway Security Limits
+
+- MCP and public RAG requests are limited to 120 requests per client per minute and 1,200 requests per process per minute.
+- RAG is limited to 40 backend searches per client per hour and 400 per process per hour. A query sent to eight backends consumes eight searches, including failed attempts.
+- HTTP rate-limit responses use status `429` and a `Retry-After` header. MCP RAG tool errors include the retry delay.
+- Limits use `rate-limiter-flexible` in memory. They reset when a process restarts and are not shared across workers or serverless instances. Enforce deployment-wide limits through the hosting firewall or a shared rate-limit store before relying on these as a hard spending cap.
+- Client identifiers are hashed. Vercel-managed forwarding headers are trusted only on Vercel; other deployments use the socket address. A self-hosted reverse proxy therefore shares one limit unless its trusted client-address handling is configured separately.
+- Server-side marketplace requests use HTTPS and `guarded-fetch` for SSRF protection, with redirects disabled and bounded response sizes and deadlines.
+
+### Connecting
+
 Codex can connect to the Nswap syndicated MCP gateway over OAuth. The authenticated URL
 selects the backend whose account and permissions will be used for that MCP connection.
 Deploy both the frontend gateway and the backend OAuth metadata route before connecting.

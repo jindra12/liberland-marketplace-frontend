@@ -4,6 +4,7 @@ import { getMcpBackendUrl, isMcpAuthenticationRequired, sendMcpAuthorizationChal
 import { createNswapMcpServer } from "../../mcp/server";
 import { MAX_REQUEST_BYTES, REQUEST_TIMEOUT_MS } from "../../server/security/constants";
 import { acquireRequestSlot } from "../../server/security/limits";
+import { checkRequestLimit, getClientRateLimitKey } from "../../server/security/rateLimits";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
     if (request.method !== "POST" && request.method !== "GET" && request.method !== "DELETE") {
@@ -13,6 +14,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse): Prom
     }
 
     const authorization = typeof request.headers.authorization === "string" ? request.headers.authorization : undefined;
+    const clientKey = getClientRateLimitKey(request);
+    const retryAfter = await checkRequestLimit(clientKey);
+    if (retryAfter) {
+        response.setHeader("Retry-After", String(retryAfter));
+        response.status(429).json({ error: "MCP request limit reached. Please retry later." });
+        return;
+    }
 
     let backendUrl: string | null;
     try {
@@ -40,7 +48,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse): Prom
         enableJsonResponse: true,
         maxRequestBodySize: MAX_REQUEST_BYTES,
     });
-    const server = createNswapMcpServer(authorization, selectedServerUrl, signal);
+    const server = createNswapMcpServer(authorization, selectedServerUrl, clientKey, signal);
 
     const onTimeout = () => {
         if (!response.writableEnded) {

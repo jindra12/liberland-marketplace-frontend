@@ -1,6 +1,13 @@
 import { serializeJsonLd } from "../../src/jsonLd/utils";
 
 describe("security boundaries", () => {
+    it("enforces per-client request limits and charges RAG quota per backend", () => {
+        cy.task("securityRateLimits").should("equal", true);
+    });
+
+    it("ignores spoofed forwarding headers outside the trusted hosting platform", () => {
+        cy.task("securityClientAddress").should("equal", true);
+    });
     it("reuses generated detail queries and rejects private destinations before fetching", () => {
         cy.task("securityServerQueries").should("equal", true);
     });

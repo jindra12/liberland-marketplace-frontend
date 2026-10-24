@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import dns from "node:dns";
 import { mock } from "node:test";
+import { syncBuiltinESMExports } from "node:module";
 import { setImmediate } from "node:timers/promises";
 import { GuardedFetchErrorCode, isGuardedFetchError, isSafeIpAddress } from "guarded-fetch";
 import { authorizationForBackend } from "../../src/mcp/backend";
@@ -11,10 +12,13 @@ import { normalizePublicBackendUrl, publicBackendFetch } from "../../src/server/
 import { DISCOVERY_CONCURRENCY, MAX_ACTIVE_REQUESTS, MAX_DISCOVERY_DEPTH, MAX_DISCOVERY_SERVERS, MAX_RESPONSE_BYTES, MAX_SESSIONS, MAX_SERVERS_PER_SESSION, SESSION_TTL_MS } from "../../src/server/security/constants";
 import { fetchCompanyById } from "../../src/server/queries";
 import { CompanyByIdDocument } from "../../src/generated/graphql";
+import { securityRateChecks } from "./securityRateChecks";
 
 export const securityChecks = {
+    ...securityRateChecks,
     securityServerQueries: async () => {
         const lookup = mock.method(dns.promises, "lookup", async () => [{ address: "8.8.8.8", family: 4 }]);
+        syncBuiltinESMExports();
         const fetchMock = mock.method(globalThis, "fetch", async (input: string | URL | Request, init?: RequestInit) => {
             const request = new Request(input, init);
             assert.equal(request.url, "https://company.example/api/graphql");
@@ -32,6 +36,7 @@ export const securityChecks = {
         } finally {
             fetchMock.mock.restore();
             lookup.mock.restore();
+            syncBuiltinESMExports();
         }
         return true;
     },
@@ -50,6 +55,7 @@ export const securityChecks = {
         const lookup = mock.method(dns.promises, "lookup", async () => [
             { address: "8.8.8.8", family: 4 }, { address: "127.0.0.1", family: 4 },
         ]);
+        syncBuiltinESMExports();
         try {
             await assert.rejects(publicBackendFetch("https://private-dns.example/api/graphql"), (error: Error) => {
                 assert(isGuardedFetchError(error));
@@ -59,11 +65,13 @@ export const securityChecks = {
             assert.equal(lookup.mock.callCount(), 1);
         } finally {
             lookup.mock.restore();
+            syncBuiltinESMExports();
         }
         return true;
     },
     securityResponseLimits: async () => {
         const lookup = mock.method(dns.promises, "lookup", async () => [{ address: "8.8.8.8", family: 4 }]);
+        syncBuiltinESMExports();
         const fetchMock = mock.method(globalThis, "fetch", async (_input: string | URL | Request, init?: RequestInit) => {
             assert.equal(init?.redirect, "manual");
             assert(init?.signal);
@@ -83,6 +91,7 @@ export const securityChecks = {
         } finally {
             fetchMock.mock.restore();
             lookup.mock.restore();
+            syncBuiltinESMExports();
         }
         return true;
     },

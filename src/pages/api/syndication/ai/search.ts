@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import { normalizePublicBackendUrl, publicBackendFetch } from "../../../../server/security/utils";
 import { acquireRequestSlot } from "../../../../server/security/limits";
+import { checkRequestLimit, checkSearchQuota, getClientRateLimitKey } from "../../../../server/security/rateLimits";
 
 type ProxyRequest = {
     query: string;
@@ -71,6 +72,13 @@ const handler = async (
         return;
     }
 
+    const clientKey = getClientRateLimitKey(request);
+    const retryAfter = await checkRequestLimit(clientKey);
+    if (retryAfter) {
+        response.setHeader("Retry-After", String(retryAfter));
+        response.status(429).json({ error: "Search request limit reached. Please retry later." });
+        return;
+    }
     const release = await acquireRequestSlot();
     if (!release) {
         response.setHeader("Retry-After", "5");
@@ -80,6 +88,12 @@ const handler = async (
     try {
         const input = proxyRequestSchema.parse(request.body);
         const body = { ...input, serverUrls: Array.from(new Set(input.serverUrls.map(normalizePublicBackendUrl))) };
+        const quotaRetryAfter = await checkSearchQuota(clientKey, body.serverUrls.length);
+        if (quotaRetryAfter) {
+            response.setHeader("Retry-After", String(quotaRetryAfter));
+            response.status(429).json({ error: "AI search quota reached. Please retry later." });
+            return;
+        }
         const settledResults = await Promise.allSettled(
             body.serverUrls.map(async (serverUrl) => queryBackend(serverUrl, body)),
         );

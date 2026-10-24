@@ -1,15 +1,13 @@
-export {
-    CloverWalletAdapter,
-    Coin98WalletAdapter,
-    HyperPayWalletAdapter,
-    LedgerWalletAdapter,
-    MathWalletAdapter,
-    PhantomWalletAdapter,
-    SafePalWalletAdapter,
-    SkyWalletAdapter,
-    SolflareWalletAdapter,
-    TokenPocketWalletAdapter,
-    TorusWalletAdapter,
-    TrustWalletAdapter,
-    XDEFIWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
+export { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
+export { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+export { HyperPayWalletAdapter } from "@solana/wallet-adapter-hyperpay";
+export { LedgerWalletAdapter } from "@solana/wallet-adapter-ledger";
+export { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
+export { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+export { SafePalWalletAdapter } from "@solana/wallet-adapter-safepal";
+export { SkyWalletAdapter } from "@solana/wallet-adapter-sky";
+export { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
+export { TokenPocketWalletAdapter } from "@solana/wallet-adapter-tokenpocket";
+export { TorusWalletAdapter } from "@solana/wallet-adapter-torus";
+export { TrustWalletAdapter } from "@solana/wallet-adapter-trust";
+export { XDEFIWalletAdapter } from "@solana/wallet-adapter-xdefi";

@@ -5,6 +5,11 @@ export type GraphQLServerResponse<TData> = {
     errors?: Array<{ message: string }>;
 };
 
+export type ClientAddressRequest = {
+    headers: Record<string, string | string[] | undefined>;
+    socket: { remoteAddress?: string };
+};
+
 export type DetailRouteParams = {
     id?: string;
     serverUrl?: string;
