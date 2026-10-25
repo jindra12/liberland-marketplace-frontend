@@ -1,4 +1,5 @@
 import { SECTION_LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./constants";
+import { tribeSearchActions } from "../tribeSearch/utils";
 
 export type SeoConfig = {
     title: string;
@@ -42,11 +43,7 @@ const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] =>
             name: SITE_NAME,
             url: SITE_URL,
             description: SITE_DESCRIPTION,
-            potentialAction: {
-                "@type": "SearchAction",
-                target: `${SITE_URL}/jobs?search={search_term_string}`,
-                "query-input": "required name=search_term_string",
-            },
+            potentialAction: tribeSearchActions(),
         },
         {
             "@context": "https://schema.org",
@@ -177,11 +174,11 @@ export const buildCollectionJsonLd = (
                 "@type": "Audience",
                 audienceType: "People and AI agents looking for marketplace information",
             },
-            potentialAction: {
+            potentialAction: [...tribeSearchActions(), {
                 "@type": "SearchAction",
                 target: `${SITE_URL}${searchPath}?search={search_term_string}`,
                 "query-input": "required name=search_term_string",
-            },
+            }],
             additionalProperty: [
                 {
                     "@type": "PropertyValue",

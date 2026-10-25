@@ -9,6 +9,8 @@ import type { BackendAuthorization } from "./types";
 import { discoverBackends } from "./discovery";
 import { MAX_TOOL_INPUT_ELEMENTS, REQUEST_TIMEOUT_MS } from "../server/security/constants";
 import { checkSearchQuota } from "../server/security/rateLimits";
+import { tribeSearchSchema } from "../tribeSearch/utils";
+import { findBackendEntitiesByTribe } from "./tribeSearch/utils";
 
 const entitySchema = z.enum(MCP_ENTITIES);
 const requiredBackendSchema = z.object({ serverUrl: z.url() });
@@ -76,7 +78,7 @@ export const createNswapMcpServer = (
         return callAllBackends(scopedAuthorization, toolName, args, serverUrl, selectedServerUrl, signal);
     };
     const server = new McpServer({ name: "nswap-syndicated-marketplace", version: "1.0.0" }, {
-        instructions: `${DISCOVERY_INSTRUCTIONS} Credentials are backend-specific: log in separately for each backend. Discovery is bounded and reports truncated when its limits are reached.`,
+        instructions: `${DISCOVERY_INSTRUCTIONS} For companies, products/services, or jobs affiliated with a named tribe (for example Liberland), use find_by_tribe. It filters relationships, not textual mentions or legal location. Omit serverUrl to query all active/default backends; discover other servers and query them explicitly when needed. Public GET /api/search/tribe and tribe detail JSON-LD provide the same navigation without MCP. Credentials are backend-specific: log in separately for each backend. Discovery is bounded and reports truncated when its limits are reached.`,
         maxToolInputElements: MAX_TOOL_INPUT_ELEMENTS,
     });
 
@@ -112,6 +114,23 @@ export const createNswapMcpServer = (
     }, async (args) => {
         if (!authorization) throw new Error("Authentication is required.");
         return textResult({ servers: removeSyndicatedServer(authorization, args.serverUrl) });
+    });
+
+    server.registerTool("find_by_tribe", {
+        description: "Public relationship search for companies, products/services, or jobs by exact tribe name or tribeId. Products/jobs use their company's primary tribe. Not a text search or proof of geographic location. Omit serverUrl to query all active/default backends. Returns source-scoped records, JSON-LD detail links, and pagination. If a name is ambiguous, repeat with a returned tribeId and serverUrl. No login or AI credits required.",
+        inputSchema: tribeSearchSchema.shape,
+        annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
+    }, async (args) => {
+        const input = tribeSearchSchema.parse(args);
+        const servers = resolveSessionServers(authorization, input.serverUrl, selectedServerUrl);
+        return textResult(await Promise.all(servers.map(async (serverUrl) => {
+            try {
+                return { serverUrl, result: await findBackendEntitiesByTribe(input, serverUrl, signal) };
+            } catch (error) {
+                console.error("MCP tribe search failed", serverUrl, error);
+                return { serverUrl, error: error instanceof Error ? error.message : "Tribe search failed." };
+            }
+        })));
     });
 
     server.registerTool("search_rag", {

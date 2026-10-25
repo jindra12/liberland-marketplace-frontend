@@ -70,6 +70,48 @@ application. Pagination links use the page query parameter, for example:
 
 ## Search and discovery
 
+### Tribe-filtered discovery: companies, products/services, and jobs
+
+No login, MCP, JavaScript execution, or AI credits are required:
+
+- GET https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+- GET https://nswap.io/api/search/tribe?entity=products&tribe=Liberland
+- GET https://nswap.io/api/search/tribe?entity=jobs&tribe=Liberland
+
+The response is application/ld+json: CollectionPage.about identifies the resolved
+tribe, mainEntity contains the ItemList of real detail URLs and total count,
+relatedLink switches entity types, and hasPart links continue pagination.
+`tribe` matches an exact name case-insensitively; alternatively pass `tribeId`.
+Pass `serverUrl` for a particular backend (otherwise the configured default).
+`page` starts at 1, `limit` defaults to 20 and is at most 100. Pagination preserves
+the backend, tribe ID, and page size. Unknown or ambiguous names are errors;
+ambiguous names include candidate IDs. Never treat an error as zero results.
+
+For metadata traversal, fetch /companies?tribe=Liberland,
+/products-services?tribe=Liberland, or /jobs?tribe=Liberland and read the head's
+JSON-LD. Start at /tribes and follow a tribe detail Organization.subjectOf link
+to the full filtered collections, rather than relying on the five-item previews.
+Those links use tribeId and serverUrl for stable, backend-specific identity.
+Homepage and collection SearchActions expose the public lookup EntryPoints.
+These query parameters affect SSR metadata only; the interactive SPA is unchanged.
+
+Affiliation uses Company.identity; products/jobs inherit their company's primary
+tribe through companyIdentityId. allowedIdentities means eligibility, not
+affiliation. This is not proof of legal incorporation or physical location.
+For "a Liberland company", verify geographic/legal details separately if needed.
+
+MCP: after describe_backend, call the public tool
+`find_by_tribe({"entity":"companies","tribe":"Liberland"})`.
+Supported entity values: companies, products, jobs. Optional: tribeId, serverUrl,
+page, limit. With no serverUrl, it queries active/default backends and returns
+source-scoped results/errors. discover_syndicated_servers finds additional
+backends; query each explicitly or add them to the authenticated active cache.
+Generic list_entities supports `where: {"identity":{"equals":"TRIBE_ID"}}`
+for companies, or `where: {"companyIdentityId":{"equals":"TRIBE_ID"}}` for
+products/jobs; inspect describe_entity_schema first. Use RAG for semantic topic
+discovery, then verify affiliation with find_by_tribe or GET /api/search/tribe.
+See /llms.txt for the full walkthrough and copyable URLs.
+
 Exact and broad discovery can use the following concepts:
 
 - Search by words in names, titles, descriptions, job information, company

@@ -86,3 +86,38 @@ npx @openai/codex mcp get nswap-backend
 Codex stores the OAuth credentials locally after `mcp login`; no bearer-token environment
 variable is required. Each syndicated backend has its own login, so use one MCP entry per
 backend when authenticated operations need to span multiple servers.
+# AI Tribe Search
+
+Agents can find **companies, products/services, and jobs by tribe affiliation**
+without running the SPA or connecting MCP. For example:
+
+```bash
+curl 'https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland'
+curl 'https://nswap.io/api/search/tribe?entity=products&tribe=Liberland'
+curl 'https://nswap.io/api/search/tribe?entity=jobs&tribe=Liberland&page=2'
+```
+
+These public GET requests return JSON-LD. Use `tribe` (exact name,
+case-insensitive) or `tribeId`, optional `serverUrl`, `page` and `limit` (1–100,
+default 20). Backend-specific IDs prevent cross-server collisions; ambiguous
+names return candidate IDs instead of silently picking one. No RAG credits needed.
+
+The homepage/collection JSON-LD advertises SearchAction EntryPoints. Tribe detail
+`Organization.subjectOf` links expose full filtered collections; follow their
+ItemList detail URLs and `hasPart` pagination links. `/companies?tribe=Liberland`,
+`/products-services?tribe=Liberland`, and `/jobs?tribe=Liberland` expose the same
+results in SSR head metadata, with filter-preserving canonical/prev/next links.
+These filters do not modify the interactive SPA. No extra body UI is rendered.
+
+MCP clients can call public `find_by_tribe` after `describe_backend`, e.g.
+`{"entity":"companies","tribe":"Liberland","limit":5}`. Products/services use
+`entity: "products"`; jobs use `"jobs"`. With no serverUrl, the gateway queries
+active/default backends through their MCPs. Discover additional servers with
+`discover_syndicated_servers` and pass their serverUrl explicitly. Authenticated
+clients can also add servers to their active cache. Results/errors retain sources.
+
+Affiliation is Company.identity, or the employer/seller's companyIdentityId for
+jobs/products. It is not a keyword match, allowedIdentities eligibility, or proof
+of incorporation/location. See [`public/llms.txt`](public/llms.txt) and
+[`public/LLM.md`](public/LLM.md) for agent instructions and relationship filters.
+

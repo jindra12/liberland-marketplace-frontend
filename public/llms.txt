@@ -70,6 +70,57 @@ application. Pagination links use the page query parameter, for example:
 
 ## Search and discovery
 
+### Search companies, products/services, and jobs by tribe (no MCP or login needed)
+
+Use the public GET endpoint, which returns application/ld+json with real result
+detail URLs, the resolved tribe, total count, and links to subsequent pages:
+
+- https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+- https://nswap.io/api/search/tribe?entity=products&tribe=Liberland
+- https://nswap.io/api/search/tribe?entity=jobs&tribe=Liberland
+
+`tribe` is an exact tribe name (case-insensitive). You can instead use `tribeId`.
+The source defaults to the configured backend. Pass `serverUrl` for another
+syndicated backend; IDs are backend-specific. Ambiguous names are reported with
+candidate IDs; repeat with `tribeId` and `serverUrl`. Missing names are errors,
+not unfiltered search results. `page` starts at 1; `limit` defaults to 20 (max 100).
+Follow `hasPart` pagination links in the returned graph; they preserve the tribe,
+source, and page size. These links lead to server-generated listing metadata.
+This relationship lookup does not use RAG, embeddings, or OpenAI credits.
+
+Metadata-only navigation is also available directly:
+
+- https://nswap.io/companies?tribe=Liberland
+- https://nswap.io/products-services?tribe=Liberland
+- https://nswap.io/jobs?tribe=Liberland
+
+Fetch HTML and read the head's JSON-LD; no JavaScript execution is necessary.
+These query parameters filter server metadata; they do not change the SPA UI.
+Start at /tribes, follow a tribe detail URL, then its Organization.subjectOf
+links to all affiliated companies, products/services, or jobs. Unlike the small
+detail-page previews, these collections are fully paginated. Homepage and
+collection SearchActions advertise the public GET lookup using EntryPoint
+urlTemplate. Follow ItemList result URLs to individual detail metadata.
+
+Affiliation means Company.identity equals the tribe; products and jobs use
+companyIdentityId, the primary tribe of their seller/employer. Eligibility fields
+(allowedIdentities) or mere textual mentions are not affiliation. "Liberland
+company" here means tribe affiliation, NOT verified legal incorporation or
+physical location. Check detail fields separately for geographic claims.
+
+MCP equivalent (public): call describe_backend, then
+`find_by_tribe({"entity":"companies","tribe":"Liberland","page":1,"limit":20})`.
+Use `entity: "products"` or `"jobs"` for the other collections. Omit serverUrl to
+query active/default backends; errors are reported per backend. Use
+discover_syndicated_servers to find other reachable servers and call with their
+serverUrl explicitly (or add them to the authenticated active session cache).
+Retain each result's serverUrl and tribeId when following up. Generic MCP
+list_entities also supports relationship filters after describe_entity_schema:
+companies use `where: {"identity":{"equals":"TRIBE_ID"}}`; products/jobs use
+`where: {"companyIdentityId":{"equals":"TRIBE_ID"}}`.
+Use RAG separately for broad semantic concepts, and verify tribe affiliation with
+find_by_tribe or the public GET lookup before claiming membership.
+
 Exact and broad discovery can use the following concepts:
 
 - Search by words in names, titles, descriptions, job information, company
