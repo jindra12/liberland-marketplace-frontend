@@ -17,6 +17,7 @@ import type {
 import { fetchServerQuery } from "./server/utils";
 import { buildDetailUrl } from "./detailMetadata/related";
 import { SEO_BY_ROUTE, type SeoCollectionItem, type SeoCollectionPageData } from "./shellPage/seo";
+import { buildPaginationLinks } from "./shellPage/utils";
 
 type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
 
@@ -232,9 +233,6 @@ export const fetchCollectionPageMetadata = async (
         canonicalPath,
         jsonLd: seo.buildJsonLd?.(canonicalPath, page, pageData) ?? [],
         extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
-        extraLinks: [
-            ...(page > 1 ? [{ rel: "prev", href: `${canonicalPath.split("?")[0]}?page=${page - 1}` }] : []),
-            ...(pageData.hasNextPage ? [{ rel: "next", href: `${canonicalPath.split("?")[0]}?page=${page + 1}` }] : []),
-        ],
+        extraLinks: buildPaginationLinks(canonicalPath, page, pageData.hasNextPage),
     };
 };

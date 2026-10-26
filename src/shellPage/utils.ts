@@ -42,3 +42,16 @@ export const buildCanonicalPath = (asPath: string, pageNumber?: number): string 
 
     return path;
 };
+
+export const buildPaginationLinks = (canonicalPath: string, page: number, hasNextPage: boolean) => [
+    ...(page > 1 ? [{ rel: "prev", page: page - 1 }] : []),
+    ...(hasNextPage ? [{ rel: "next", page: page + 1 }] : []),
+].map((link) => {
+    const url = new URL(canonicalPath, SITE_URL);
+    if (link.page === 1) {
+        url.searchParams.delete("page");
+    } else {
+        url.searchParams.set("page", String(link.page));
+    }
+    return { rel: link.rel, href: `${url.pathname}${url.search}` };
+});

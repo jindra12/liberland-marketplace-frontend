@@ -1,5 +1,6 @@
 import { SECTION_LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./constants";
 import { tribeSearchActions } from "../tribeSearch/utils";
+import { buildPaginationLinks } from "./utils";
 
 export type SeoConfig = {
     title: string;
@@ -133,7 +134,7 @@ export const buildCollectionJsonLd = (
             mainEntity: {
                 "@type": "ItemList",
                 name,
-                url: `${SITE_URL}${path}`,
+                url: `${SITE_URL}${canonicalPath}`,
                 itemListOrder: "https://schema.org/ItemListOrderDescending",
                 numberOfItems: pageData?.totalItems,
                 itemListElement: pageData?.items.map((item, index) => ({
@@ -144,6 +145,7 @@ export const buildCollectionJsonLd = (
                     item: {
                         "@type": item.type ?? "Thing",
                         "@id": item.url,
+                        url: item.url,
                         name: item.name,
                         description: item.description || undefined,
                         additionalProperty: item.attributes?.map((attribute) => ({
@@ -154,6 +156,11 @@ export const buildCollectionJsonLd = (
                     },
                 })),
             },
+            hasPart: pageData ? buildPaginationLinks(canonicalPath, pageData.page, pageData.hasNextPage).map((link) => ({
+                "@type": "CollectionPage",
+                name: link.rel === "next" ? "Next page" : "Previous page",
+                url: `${SITE_URL}${link.href}`,
+            })) : [],
             keywords: keywords.join(", "),
             about: {
                 "@type": "DefinedTermSet",

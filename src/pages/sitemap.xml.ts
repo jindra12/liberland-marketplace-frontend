@@ -1,41 +1,7 @@
-import type { GetServerSideProps } from "next";
-
-import { SITE_URL } from "../siteUrl";
-
-const INDEXABLE_PATHS = ["/", "/jobs", "/companies", "/products-services", "/posts", "/tribes", "/ventures"];
-
-const buildSitemapXml = (generatedAtIso: string): string => {
-    const entries = INDEXABLE_PATHS.map((path) => {
-        const loc = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
-        const priority = path === "/" ? "1.0" : "0.8";
-
-        return `
-  <url>
-    <loc>${loc}</loc>
-    <lastmod>${generatedAtIso}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
-    }).join("");
-
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries}
-</urlset>`;
-};
+import { getRootSitemapProps } from "../server/sitemaps/utils";
 
 const SitemapXml = () => null;
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-    const xml = buildSitemapXml(new Date().toISOString());
-
-    res.setHeader("Content-Type", "application/xml");
-    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
-    res.write(xml);
-    res.end();
-
-    return {
-        props: {},
-    };
-};
+export const getServerSideProps = getRootSitemapProps;
 
 export default SitemapXml;

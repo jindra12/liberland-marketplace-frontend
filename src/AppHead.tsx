@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import { SITE_URL } from "./siteUrl";
 import { serializeJsonLd } from "./jsonLd/utils";
+import { AI_DISCOVERY_GUIDES, AI_DISCOVERY_HINT } from "./aiDiscovery/constants";
 type AppHeadProps = {
     title?: string;
     description?: string;
@@ -29,7 +30,7 @@ const DEFAULT_PREVIEW_IMAGE = "/preview-image.png";
 const DEFAULT_URL = SITE_URL;
 export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
     const titleValue = props.title || DEFAULT_TITLE;
-    const descriptionValue = props.description || DEFAULT_DESCRIPTION;
+    const descriptionValue = `${props.description || DEFAULT_DESCRIPTION} ${AI_DISCOVERY_HINT}`;
     const resolvedSiteUrl = props.siteUrl || DEFAULT_URL;
     const canonicalUrl = props.canonicalPath ? `${resolvedSiteUrl}${props.canonicalPath}` : undefined;
     const robotsValue = props.noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
@@ -45,6 +46,9 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             <meta name="application-name" content="NSwap" />
             <meta name="robots" content={robotsValue} />
             <meta name="description" content={descriptionValue} />
+            {AI_DISCOVERY_GUIDES.map((guide) => (
+                <link key={guide.path} rel="help" type={guide.type} title={guide.name} href={guide.path} />
+            ))}
             <meta property="og:site_name" content="NSwap" />
             <meta property="og:title" content={titleValue} />
             <meta property="og:description" content={descriptionValue} />

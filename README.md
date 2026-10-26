@@ -88,6 +88,39 @@ variable is required. Each syndicated backend has its own login, so use one MCP 
 backend when authenticated operations need to span multiple servers.
 # AI Tribe Search
 
+## Syndicated Sitemaps
+
+`/sitemap.xml` is an index of `/sitemaps/sections.xml` and cached detail shards from
+public syndicated backends. It points directly to URL sets, not nested indexes.
+The gateway uses each backend's `/api/sitemaps` manifest to discover published
+connections, with bounded, cycle-safe traversal. It does not scan entity databases.
+Shards are proxied under this domain and their canonical detail URLs retain the
+owning backend's encoded URL. Another frontend can reuse the same backend files.
+
+Backends persist snapshots outside their checkout, under
+`~/.cache/nswap/sitemaps/<configuration-hash>/` by default (optional
+`SITEMAP_CACHE_DIR` for a persistent volume). Snapshots stay fresh for **24 hours**.
+Requests serve stale files immediately and trigger a locked refresh after the
+response; there is **no cron job**. Failed refreshes retain the last good snapshot
+and back off for one hour. Unreferenced shards are retained for **14 days**.
+The very first request returns `503` plus `Retry-After: 60` while warming up.
+
+Coverage: tribes, companies, products/services, jobs, ventures, posts, comments,
+and published syndications. Only public records are included; private account,
+commerce and moderation data are excluded. Each shard has at most 500 URLs.
+Record timestamps supply `lastmod`; no fake request-time freshness is advertised.
+Only canonical detail/section URLs are listed, not every filter combination.
+
+The frontend needs no persistent filesystem and no Vercel-specific storage.
+Standard HTTP cache headers are an optimization, not the source of truth. Deploy
+the updated backends first, then the frontend; retry cold manifests to let them
+warm up. Unreachable secondary backends are logged and retried on later crawls;
+an unavailable primary returns a retryable error rather than an empty sitemap.
+Publication/deletion changes appear on the next successful refresh after the TTL.
+
+Verify the gateway with `yarn test:ct:sitemaps`. Backend cache implementation and
+operational details are documented in its `src/sitemaps/README.md`.
+
 Agents can find **companies, products/services, and jobs by tribe affiliation**
 without running the SPA or connecting MCP. For example:
 
@@ -107,7 +140,15 @@ The homepage/collection JSON-LD advertises SearchAction EntryPoints. Tribe detai
 ItemList detail URLs and `hasPart` pagination links. `/companies?tribe=Liberland`,
 `/products-services?tribe=Liberland`, and `/jobs?tribe=Liberland` expose the same
 results in SSR head metadata, with filter-preserving canonical/prev/next links.
-These filters do not modify the interactive SPA. No extra body UI is rendered.
+These filters do not modify the interactive SPA. A short visually clipped SSR
+body guide provides real links to `/llms.txt`, `/LLM.md`, `/tribes` and example
+GET searches, without adding visible UI. It is aria-hidden and its links are
+excluded from keyboard tab order. Readers that ignore aria-hidden content can
+use the head metadata and public GET search. Page descriptions include a no-JavaScript
+recovery hint; head `rel="help"` links and `robots.txt` comments advertise the
+guides. Robots comments are discovery hints, not standardized crawler directives.
+Regular and tribe-filtered collection JSON-LD includes real result links, counts,
+and `hasPart` pagination; HTTP/head pagination links use the same URL builder.
 
 MCP clients can call public `find_by_tribe` after `describe_backend`, e.g.
 `{"entity":"companies","tribe":"Liberland","limit":5}`. Products/services use

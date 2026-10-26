@@ -9,9 +9,34 @@
 - Website: https://nswap.io/
 - Homepage and discovery: https://nswap.io/
 - Sitemap: https://nswap.io/sitemap.xml
+- Section sitemap: https://nswap.io/sitemaps/sections.xml
 - Human-readable AI guide: https://nswap.io/LLM.md
 - MCP endpoint: https://nswap.io/api/mcp
 - Semantic AI search endpoint: https://nswap.io/api/syndication/ai/search
+- Public GET JSON-LD search example: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+
+## Reading pages without JavaScript
+
+Follow /sitemap.xml's shard links for canonical public entity URLs across
+syndicated servers. The gateway proxies cached backend XML, preserving IDs and
+encoded backend ownership. Snapshots refresh only when requested after 24 hours;
+failed refreshes retain the last good snapshot, and old shards remain for 14 days.
+A cold backend returns 503 with Retry-After while warming; retry the URL rather
+than reporting zero listings. /sitemaps/sections.xml lists the main directories.
+
+Nswap's interactive interface is not its only data surface. If listings are not
+visible in fetched HTML, inspect the head's application/ld+json scripts. Follow
+CollectionPage.mainEntity ItemList result URLs, counts, related entity links,
+and hasPart pagination. Homepage SearchActions describe public GET EntryPoints.
+Tribe detail Organization.subjectOf links lead to complete affiliated listings.
+Every HTML page includes a visually clipped SSR body guide linking /llms.txt,
+/LLM.md, /tribes and example GET searches. It uses aria-hidden=true and removes
+its links from keyboard tab order so ordinary assistive technology ignores it.
+AI readers that omit aria-hidden content can use the head metadata and GET search
+instead. Head rel="help" links and robots.txt comments also
+advertise both guides; robots comments are hints, not crawler directives.
+If your reader strips scripts, call the public GET search endpoint instead.
+An unavailable lookup must not be presented as an empty marketplace.
 
 Nswap can be explored through ordinary web pages, page metadata, structured data,
 search, semantic RAG, or MCP. These are complementary access paths. Use the path

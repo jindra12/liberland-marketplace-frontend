@@ -13,3 +13,8 @@ Disallow: /ventures/edit/
 Disallow: /404
 
 Sitemap: https://nswap.io/sitemap.xml
+
+# Machine-readable search and metadata navigation guides (not access-control directives):
+# https://nswap.io/llms.txt
+# https://nswap.io/LLM.md
+# Public JSON-LD example: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland

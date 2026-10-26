@@ -118,6 +118,45 @@ export const tribeSearchChecks = {
         });
         return true;
     },
+    aiDiscoverySsr: async () => {
+        const React = await import("react");
+        const { renderToStaticMarkup } = await import("react-dom/server");
+        const { DiscoveryGuide } = await import("../../src/aiDiscovery/DiscoveryGuide");
+        const html = renderToStaticMarkup(React.createElement(DiscoveryGuide));
+        assert.match(html, /class="[^"]*screen-reader-only/);
+        assert.match(html, /href="\/llms.txt"/);
+        assert.match(html, /href="\/LLM.md"/);
+        assert.match(html, /JSON-LD/);
+        assert.match(html, /href="\/tribes"/);
+        TRIBE_ENTITIES.forEach((entity) => assert(html.includes(`/api/search/tribe?entity=${entity}&amp;tribe=Liberland`)));
+        assert.match(html, /aria-hidden="true"/);
+        assert.equal((html.match(/tabindex="-1"/g) || []).length, 6);
+        assert(!html.includes("display:none"));
+        return true;
+    },
+    aiDiscoveryPagination: async () => {
+        const { SEO_BY_ROUTE } = await import("../../src/shellPage/seo");
+        const { buildPaginationLinks } = await import("../../src/shellPage/utils");
+        const data = {
+            items: [{ name: "Liberland", url: `${source}/tribes/tribe-id/server`, description: "A tribe" }],
+            page: 2, totalItems: 55, totalPages: 3, hasNextPage: true,
+        };
+        const graph = JSON.stringify(SEO_BY_ROUTE["/tribes"].buildJsonLd?.("/tribes?page=2", 2, data));
+        assert.match(graph, /"numberOfItems":55/);
+        assert.match(graph, /"name":"Next page"/);
+        assert.match(graph, /\/tribes\?page=3/);
+        assert.match(graph, /"name":"Previous page"/);
+        assert(graph.includes(data.items[0].url));
+        const last = JSON.stringify(SEO_BY_ROUTE["/tribes"].buildJsonLd?.("/tribes?page=3", 3, { ...data, page: 3, hasNextPage: false }));
+        assert(!last.includes('"name":"Next page"'));
+        buildPaginationLinks("/companies?tribeId=tribe-id&serverUrl=https%3A%2F%2Ftribe.example&limit=5&page=2", 2, true).forEach((link) => {
+            const url = new URL(link.href, source);
+            assert.equal(url.searchParams.get("tribeId"), "tribe-id");
+            assert.equal(url.searchParams.get("serverUrl"), source);
+            assert.equal(url.searchParams.get("limit"), "5");
+        });
+        return true;
+    },
     tribeSearchMcp: async () => withPublicDns(async () => {
         const { createNswapMcpServer } = await import("../../src/mcp/server");
         const calls: Array<{ name: string; arguments: { entity: string; where?: { AND: Array<Record<string, { equals: string | boolean }>> } } }> = [];

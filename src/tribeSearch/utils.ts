@@ -2,6 +2,7 @@ import { z } from "zod";
 import { SITE_URL } from "../siteUrl";
 import { buildDetailUrl } from "../detailMetadata/related";
 import { TRIBE_COLLECTIONS, TRIBE_ENTITIES } from "./constants";
+import { buildPaginationLinks } from "../shellPage/utils";
 import type { TribeEntity, TribeListing, TribeReference, TribeSearchInput } from "./types";
 
 export const tribeSearchSchema = z.object({
@@ -59,10 +60,7 @@ export const buildTribeListingMetadata = (
     const canonicalPath = tribeCollectionPath(input.entity, tribe.id, serverUrl, input.page, input.limit);
     const title = `${tribe.name}: ${collection.label} - Page ${input.page}`;
     const description = `${collection.label} affiliated with the ${tribe.name} tribe, via each company's primary tribe. Not a claim of legal incorporation or physical location. ${listing.totalDocs} published results on ${serverUrl}.`;
-    const extraLinks = [
-        ...(input.page > 1 ? [{ rel: "prev", href: tribeCollectionPath(input.entity, tribe.id, serverUrl, input.page - 1, input.limit) }] : []),
-        ...(listing.hasNextPage ? [{ rel: "next", href: tribeCollectionPath(input.entity, tribe.id, serverUrl, input.page + 1, input.limit) }] : []),
-    ];
+    const extraLinks = buildPaginationLinks(canonicalPath, input.page, listing.hasNextPage);
     const jsonLd = [{
         "@context": "https://schema.org",
         "@type": "CollectionPage",

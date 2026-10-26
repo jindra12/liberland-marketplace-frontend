@@ -10099,6 +10099,13 @@
   dependencies:
     undici-types "~6.21.0"
 
+"@types/node@^22.0.0 || ^24.0.0 || ^26.0.0":
+  version "26.6.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.6.5.tgz#cb35209e7767c503551b5fa42a48231c7441d979"
+  integrity sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==
+  dependencies:
+    undici-types "~8.9.0"
+
 "@types/node@^25.5.2":
   version "25.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-25.5.2.tgz#94861e32f9ffd8de10b52bbec403465c84fff762"
@@ -10184,6 +10191,13 @@
   version "0.12.2"
   resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.2.tgz#ed279a64fa438bb69f2480eda44937912bb7480a"
   integrity sha512-XISRgDJ2Tc5q4TRqvgJtzsRkFYNJzZrhTdtMoGVBttwzzQJkPnS3WWTFc7kuDRoPtPakl+T+OfdEUjYJj7Jbow==
+
+"@types/sax@^1.2.1":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@types/sax/-/sax-1.2.7.tgz#ba5fe7df9aa9c89b6dff7688a19023dd2963091d"
+  integrity sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==
+  dependencies:
+    "@types/node" "*"
 
 "@types/secp256k1@^4.0.1":
   version "4.0.7"
@@ -24396,6 +24410,11 @@ sass@^1.86.0:
   optionalDependencies:
     "@parcel/watcher" "^2.4.1"
 
+sax@^1.4.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-1.6.1.tgz#4c23cf608c0b693ab54b4b5888e92cfe977b9843"
+  integrity sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==
+
 sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz"
@@ -24886,6 +24905,15 @@ sisteransi@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
+
+sitemap@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-10.0.0.tgz#d6da651b6efafb841a44e77028391bdd6f6aeb6a"
+  integrity sha512-KSjl4H4KBEnGX5KXgzInPAycdOFhwLar0EmksDcYn6NqW2O+zLiMGeV2THE6tpuv3LCVdv+6xsSo2SWLGaBDKw==
+  dependencies:
+    "@types/node" "^22.0.0 || ^24.0.0 || ^26.0.0"
+    "@types/sax" "^1.2.1"
+    sax "^1.4.1"
 
 slash@^2.0.0:
   version "2.0.0"
@@ -26414,6 +26442,11 @@ undici-types@~7.18.0:
   version "7.18.2"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.18.2.tgz#29357a89e7b7ca4aef3bf0fd3fd0cd73884229e9"
   integrity sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==
+
+undici-types@~8.9.0:
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-8.9.0.tgz#e240d97c8b5d85e5347ce73d25865c7906c1ec9f"
+  integrity sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==
 
 undici@5.28.4:
   version "5.28.4"

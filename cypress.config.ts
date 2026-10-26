@@ -6,6 +6,7 @@ import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 import { securityChecks } from "./cypress/support/securityChecks";
 import { tribeSearchChecks } from "./cypress/support/tribeSearchChecks";
+import { sitemapChecks } from "./cypress/support/sitemapChecks";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -93,6 +94,7 @@ export default defineConfig({
             on("task", {
                 ...securityChecks,
                 ...tribeSearchChecks,
+                ...sitemapChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

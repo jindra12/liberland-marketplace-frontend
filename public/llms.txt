@@ -9,9 +9,37 @@
 - Website: https://nswap.io/
 - Homepage and discovery: https://nswap.io/
 - Sitemap: https://nswap.io/sitemap.xml
+- Section sitemap: https://nswap.io/sitemaps/sections.xml
 - Human-readable AI guide: https://nswap.io/LLM.md
 - MCP endpoint: https://nswap.io/api/mcp
 - Semantic AI search endpoint: https://nswap.io/api/syndication/ai/search
+- Public GET JSON-LD search example: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+
+## Reading pages without JavaScript
+
+The sitemap is an index linking to small cached detail URL sets across public
+syndicated servers. Follow its shard links to discover canonical detail pages;
+each URL preserves its backend ID and encoded source URL. Backends refresh
+snapshots on demand after 24 hours, retain the last successful snapshot if a
+refresh fails, and retain superseded shards for 14 days. A first request may
+return 503 with Retry-After while a backend warms its cache; retry, do not infer
+that the marketplace is empty. Fresh/stale file reads do not scan all entities.
+
+If a fetch does not show the interactive listings, the page is not necessarily
+empty: inspect its server-rendered `<script type="application/ld+json">` data.
+CollectionPage.mainEntity contains real ItemList result URLs and counts. Follow
+those URLs to detail metadata, related entity links, and hasPart pagination links.
+WebSite/SearchAction EntryPoints document usable GET search URL templates.
+Tribe detail Organization.subjectOf links lead to full affiliated collections.
+The HTML body also includes a visually clipped navigation guide with real links
+to these resources. It is available in raw HTML without JavaScript, but excluded
+from assistive technology with aria-hidden=true and from keyboard tab navigation.
+Some AI readers also omit aria-hidden content; the head metadata and public GET
+search do not depend on that body guide being included by a particular reader.
+The page head links this guide and /LLM.md using rel="help"; robots.txt mentions
+both guides in comments (these are discovery hints, not standardized directives).
+If your reader omits scripts, use the public GET JSON-LD endpoint linked above.
+Report lookup/network errors as failures, not as evidence that records are absent.
 
 Nswap can be explored through ordinary web pages, page metadata, structured data,
 search, semantic RAG, or MCP. These are complementary access paths. Use the path
