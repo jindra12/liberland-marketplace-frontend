@@ -7,6 +7,7 @@ export const CollectionPage: React.FunctionComponent<CollectionPageProps> = (pro
     return (
         <>
             <AppHead
+                jsonLdAlternateUrl={props.jsonLdAlternateUrl}
                 title={props.title}
                 description={props.description}
                 canonicalPath={props.canonicalPath}

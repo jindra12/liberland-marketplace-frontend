@@ -2,6 +2,8 @@ import type { GetServerSideProps } from "next";
 import { decodeServerUrlSegment, type DetailPageMetadata } from "../detailMetadata/shared";
 import { normalizePublicBackendUrl } from "./security/utils";
 import type { DetailPageConfig, DetailRouteParams } from "./types";
+import { encodeServerUrlSegment } from "../routes";
+import { jsonLdPageResponse } from "./jsonLd/utils";
 
 export const createDetailPageProps = <TData, TVariables extends object | undefined, TEntity, TExtra = undefined>(
     config: DetailPageConfig<TData, TVariables, TEntity, TExtra>,
@@ -35,9 +37,11 @@ export const createDetailPageProps = <TData, TVariables extends object | undefin
             const extraData = config.fetchAdditionalData
                 ? await config.fetchAdditionalData(entity, params, serverUrl)
                 : undefined;
-            return {
-                props: config.buildMetadata(entity, config.buildCanonicalPath(params, encodedServerUrl), extraData),
-            };
+            return jsonLdPageResponse(
+                config.buildMetadata(entity, config.buildCanonicalPath(params, encodeServerUrlSegment(serverUrl)), extraData),
+                context.query,
+                context.res,
+            );
         } catch (error) {
             console.error(error);
             return { notFound: true };

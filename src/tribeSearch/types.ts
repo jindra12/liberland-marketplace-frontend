@@ -1,4 +1,5 @@
 import type { TRIBE_ENTITIES } from "./constants";
+import type { MetadataCompany, MetadataProduct, MetadataTribe } from "../detailMetadata/types";
 
 export type TribeEntity = typeof TRIBE_ENTITIES[number];
 
@@ -13,12 +14,14 @@ export type TribeSearchInput = {
     limit: number;
 };
 
-export type TribeListingItem = {
+export type TribeListingItem = MetadataProduct & {
     id: string;
     name?: string | null;
     title?: string | null;
     description?: string | null;
     serverURL?: string | null;
+    company?: MetadataCompany | null;
+    identity?: MetadataTribe | null;
 };
 
 export type TribeListing = {

@@ -4,7 +4,10 @@ import Head from "next/head";
 import { SITE_URL } from "./siteUrl";
 import { serializeJsonLd } from "./jsonLd/utils";
 import { AI_DISCOVERY_GUIDES, AI_DISCOVERY_HINT } from "./aiDiscovery/constants";
+import { JSON_LD_MEDIA_TYPE } from "./jsonLd/constants";
+
 type AppHeadProps = {
+    jsonLdAlternateUrl?: string;
     title?: string;
     description?: string;
     canonicalPath?: string;
@@ -24,10 +27,12 @@ type AppHeadProps = {
         rel: string;
     }>;
 };
+
 const DEFAULT_TITLE = "NSwap";
 const DEFAULT_DESCRIPTION = "Network marketplace for all your needs";
 const DEFAULT_PREVIEW_IMAGE = "/preview-image.png";
 const DEFAULT_URL = SITE_URL;
+
 export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
     const titleValue = props.title || DEFAULT_TITLE;
     const descriptionValue = `${props.description || DEFAULT_DESCRIPTION} ${AI_DISCOVERY_HINT}`;
@@ -73,6 +78,9 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
                 <link key={`link-${index}`} rel={link.rel} href={link.href} />
             ))}
             {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+            {props.jsonLdAlternateUrl && (
+                <link rel="alternate" type={JSON_LD_MEDIA_TYPE} href={props.jsonLdAlternateUrl} />
+            )}
             <link rel="apple-touch-icon" href="/logo192.png" />
             <link rel="manifest" href="/manifest.json" />
             <title>{titleValue}</title>

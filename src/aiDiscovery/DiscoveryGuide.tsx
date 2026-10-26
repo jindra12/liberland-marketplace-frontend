@@ -8,7 +8,8 @@ export const DiscoveryGuide: React.FunctionComponent = () => (
             Nswap provides marketplace information without requiring JavaScript. If the interactive listings
             are not visible in this HTML, read the JSON-LD scripts in the page head for real records, detail
             URLs, related entities, SearchAction entry points, and pagination links. Missing interactive
-            content does not mean the marketplace has no results.
+            content does not mean the marketplace has no results. The head&apos;s alternate JSON-LD link
+            and HTTP Link header point to a standalone document if your reader omits scripts.
         </Typography.Paragraph>
         <Typography.Paragraph>
             {AI_DISCOVERY_GUIDES.map((guide) => (

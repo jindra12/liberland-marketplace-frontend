@@ -48,6 +48,7 @@ export const buildDetailJsonLd = (
         {
             "@context": "https://schema.org",
             "@type": "WebPage",
+            "@id": `${SITE_URL}${canonicalPath}#webpage`,
             name: ensureSiteSuffix(detailLabel),
             url: `${SITE_URL}${canonicalPath}`,
             description,
@@ -56,7 +57,7 @@ export const buildDetailJsonLd = (
                 name: SITE_NAME,
                 url: SITE_URL,
             },
-            mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+            mainEntity: extraJsonLd.length ? { "@id": `${SITE_URL}${canonicalPath}` } : undefined,
             potentialAction: {
                 "@type": "ReadAction",
                 target: `${SITE_URL}${canonicalPath}`,
@@ -86,7 +87,12 @@ export const buildDetailJsonLd = (
                 },
             ],
         },
-        ...extraJsonLd,
+        ...extraJsonLd.map((entity, index) => index === 0 ? {
+            ...entity,
+            "@id": `${SITE_URL}${canonicalPath}`,
+            url: `${SITE_URL}${canonicalPath}`,
+            mainEntityOfPage: { "@id": `${SITE_URL}${canonicalPath}#webpage` },
+        } : entity),
     ];
 };
 
@@ -104,6 +110,7 @@ const decodeHexSegment = (value: string): string => {
 };
 
 export type DetailPageMetadata = {
+    jsonLdAlternateUrl?: string;
     title: string;
     description: string;
     canonicalPath: string;

@@ -88,6 +88,31 @@ variable is required. Each syndicated backend has its own login, so use one MCP 
 backend when authenticated operations need to span multiple servers.
 # AI Tribe Search
 
+## Standalone JSON-LD
+
+The homepage, public collection pages and source-qualified detail pages expose
+`?format=jsonld`, advertised by both HTML `rel="alternate"` links with
+`type="application/ld+json"` and HTTP `Link` headers. These responses reuse the
+same generated-query metadata builders as HTML and contain only a JSON-LD
+`@context` / `@graph` envelope. Filters, pagination and backend ownership survive
+in the alternate URL. Canonical links and entity IDs remain HTML URLs.
+
+```bash
+curl 'https://nswap.io/?format=jsonld'
+curl 'https://nswap.io/companies?tribe=Liberland&format=jsonld'
+curl 'https://nswap.io/products-services?page=2&format=jsonld'
+# Append ?format=jsonld to a source-qualified detail URL for its complete graph.
+```
+
+Typed relationships connect company `memberOf` tribe, job `hiringOrganization`
+company, and product `offers` / `seller` / `itemOffered`. The same related record
+has the same backend-specific `@id` wherever it appears. Official company sites
+are not confused with tribe membership, sellers are not assumed to be brands,
+and prices preserve currency units (USD cents converted to dollars; crypto
+decimal strings retained). Schema.org objects use published `schema-dts` types.
+
+Run `yarn test:ct:jsonld` to verify alternate responses and linked metadata.
+
 ## Syndicated Sitemaps
 
 `/sitemap.xml` is an index of `/sitemaps/sections.xml` and cached detail shards from

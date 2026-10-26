@@ -22,6 +22,7 @@ import { buildDetailUrl, buildItemListJsonLd } from "./related";
 import { SITE_URL } from "../siteUrl";
 import { TRIBE_ENTITIES } from "../tribeSearch/constants";
 import { tribeCollectionPath, tribeSearchActions } from "../tribeSearch/utils";
+import { buildTribeReference, getMetadataServerUrl } from "./utils";
 
 type IdentityRelatedMetadata = {
     serverUrl: string;
@@ -72,7 +73,7 @@ export const buildIdentityPageMetadata = (
     related?: IdentityRelatedMetadata,
 ) => {
     const detailLabel = identity.name ?? "Tribe detail";
-    const sourceServerUrl = related?.serverUrl || identity.serverURL || process.env.REACT_APP_BACKEND_URL;
+    const sourceServerUrl = related?.serverUrl || identity.serverURL || getMetadataServerUrl(canonicalPath);
     const description = normalizeWhitespace(
         `${identity.description ?? `Detail page for ${identity.name ?? "a tribe"}.`} ${buildActionSentence([
             "view the tribe profile",
@@ -90,18 +91,17 @@ export const buildIdentityPageMetadata = (
         [
             {
                 "@context": "https://schema.org",
-                "@type": "Organization",
+                ...buildTribeReference(identity, getMetadataServerUrl(canonicalPath)),
                 "@id": `${SITE_URL}${canonicalPath}`,
                 name: detailLabel,
                 description,
-                url: identity.website ?? identity.serverURL,
                 image: buildAbsoluteImageUrl(identity.image?.url),
                 identifier: identity.id,
-                subjectOf: sourceServerUrl ? TRIBE_ENTITIES.map((entity) => ({
+                subjectOf: TRIBE_ENTITIES.map((entity) => ({
                     "@type": "CollectionPage",
                     url: `${SITE_URL}${tribeCollectionPath(entity, identity.id, sourceServerUrl)}`,
                     name: `${detailLabel}: ${entity}`,
-                })) : [],
+                })),
                 potentialAction: tribeSearchActions(),
             },
             ...buildIdentityRelatedItems(related),

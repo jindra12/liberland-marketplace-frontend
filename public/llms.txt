@@ -17,6 +17,33 @@
 
 ## Reading pages without JavaScript
 
+### Standalone JSON-LD documents
+
+On the homepage, public collection pages, and canonical source-qualified detail
+pages, follow `<link rel="alternate" type="application/ld+json">` in the head or
+the equivalent HTTP Link header. That URL serves the same page graph directly,
+without HTML or SPA code. Examples:
+
+- https://nswap.io/?format=jsonld
+- https://nswap.io/companies?tribe=Liberland&format=jsonld
+- https://nswap.io/products-services?page=2&format=jsonld
+
+To request a detail graph, append `?format=jsonld` to its full URL containing the
+record ID and encoded backend. Preserve other filters and pagination when adding
+format=jsonld. The response is application/ld+json with @context and @graph;
+inspect nodes inside @graph. Entity @id values and canonical links continue to
+identify the ordinary HTML detail URLs, not the alternate-format URLs.
+The existing /api/search/tribe endpoint instead returns a CollectionPage directly.
+
+Graphs express relationships explicitly: Company.memberOf identifies its tribe;
+JobPosting.hiringOrganization identifies the employer and its tribe; Product.offers
+contains Offer.seller, itemOffered and the applicable prices/currencies. Related
+entities retain their own backend-specific @id URLs. Company/tribe names and
+descriptions accompany those links. Official websites may appear as sameAs, but
+a company's tribe is not the same entity as the company. Affiliation is not proof
+of physical location or legal incorporation. Missing prices or inventory are not
+invented; USD cents are converted to dollars and crypto decimals retain precision.
+
 The sitemap is an index linking to small cached detail URL sets across public
 syndicated servers. Follow its shard links to discover canonical detail pages;
 each URL preserves its backend ID and encoded source URL. Backends refresh

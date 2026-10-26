@@ -1,6 +1,8 @@
 import { SECTION_LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./constants";
 import { tribeSearchActions } from "../tribeSearch/utils";
 import { buildPaginationLinks } from "./utils";
+import { buildListingRelationships } from "../detailMetadata/utils";
+import type { MetadataRelationships } from "../detailMetadata/types";
 
 export type SeoConfig = {
     title: string;
@@ -15,7 +17,7 @@ export type SeoConfig = {
     ) => Record<string, unknown>[];
 };
 
-export type SeoCollectionItem = {
+export type SeoCollectionItem = MetadataRelationships & {
     name: string;
     url: string;
     description?: string | null;
@@ -41,6 +43,7 @@ const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] =>
         {
             "@context": "https://schema.org",
             "@type": "WebSite",
+            "@id": `${SITE_URL}/#website`,
             name: SITE_NAME,
             url: SITE_URL,
             description: SITE_DESCRIPTION,
@@ -122,6 +125,7 @@ export const buildCollectionJsonLd = (
         {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
+            "@id": `${SITE_URL}${canonicalPath}`,
             name:
                 pageNumber && pageNumber > 1 ? `${name} | ${SITE_NAME} | Page ${pageNumber}` : `${name} | ${SITE_NAME}`,
             url: `${SITE_URL}${canonicalPath}`,
@@ -133,6 +137,7 @@ export const buildCollectionJsonLd = (
             },
             mainEntity: {
                 "@type": "ItemList",
+                "@id": `${SITE_URL}${canonicalPath}#items`,
                 name,
                 url: `${SITE_URL}${canonicalPath}`,
                 itemListOrder: "https://schema.org/ItemListOrderDescending",
@@ -148,6 +153,7 @@ export const buildCollectionJsonLd = (
                         url: item.url,
                         name: item.name,
                         description: item.description || undefined,
+                        ...buildListingRelationships(item),
                         additionalProperty: item.attributes?.map((attribute) => ({
                             "@type": "PropertyValue",
                             name: attribute.name,

@@ -27,6 +27,7 @@ export type DetailPageConfig<TData, TVariables extends object | undefined, TEnti
 export type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
 
 export type CollectionPageProps = {
+    jsonLdAlternateUrl?: string;
     title: string;
     description: string;
     canonicalPath: string;

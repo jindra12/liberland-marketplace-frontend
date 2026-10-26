@@ -7,6 +7,7 @@ export const DetailPage: React.FunctionComponent<DetailPageMetadata> = (props) =
     return (
         <>
             <AppHead
+                jsonLdAlternateUrl={props.jsonLdAlternateUrl}
                 title={props.title}
                 description={props.description}
                 canonicalPath={props.canonicalPath}

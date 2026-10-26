@@ -4,6 +4,7 @@ import { buildDetailUrl } from "../detailMetadata/related";
 import { TRIBE_COLLECTIONS, TRIBE_ENTITIES } from "./constants";
 import { buildPaginationLinks } from "../shellPage/utils";
 import type { TribeEntity, TribeListing, TribeReference, TribeSearchInput } from "./types";
+import { buildCompanyReference, buildProductOffers, buildTribeReference } from "../detailMetadata/utils";
 
 export const tribeSearchSchema = z.object({
     entity: z.enum(TRIBE_ENTITIES),
@@ -83,6 +84,9 @@ export const buildTribeListingMetadata = (
                     url: buildDetailUrl(collection.path, item.id, item.serverURL || serverUrl),
                     name: item.name || item.title || collection.label,
                     description: item.description || undefined,
+                    ...(input.entity === "companies" ? { memberOf: buildTribeReference({ ...tribe, serverURL: serverUrl }, serverUrl) } : {}),
+                    ...(input.entity === "jobs" && item.company ? { hiringOrganization: buildCompanyReference(item.company, serverUrl) } : {}),
+                    ...(input.entity === "products" ? { offers: buildProductOffers(item, buildDetailUrl(collection.path, item.id, item.serverURL || serverUrl), serverUrl) } : {}),
                 },
             })),
         },

@@ -6,6 +6,7 @@ import type { CollectionPageProps, CollectionRoute } from "./types";
 import { tribeSearchSchema } from "../tribeSearch/utils";
 import { TRIBE_ENTITIES, TRIBE_COLLECTIONS } from "../tribeSearch/constants";
 import { fetchTribeSearchMetadata } from "./tribeSearch/utils";
+import { jsonLdPageResponse } from "./jsonLd/utils";
 
 export const createCollectionPageProps = (route: CollectionRoute): GetServerSideProps<CollectionPageProps> => {
     return async (context) => {
@@ -18,7 +19,7 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                 return { notFound: true };
             }
             try {
-                return { props: await fetchTribeSearchMetadata(input.data) };
+                return jsonLdPageResponse(await fetchTribeSearchMetadata(input.data), context.query, context.res);
             } catch (error) {
                 console.error("Filtered tribe metadata failed", error);
                 // Never replace a failed filtered lookup with unrelated unfiltered listings.
@@ -26,20 +27,18 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
             }
         }
         try {
-            return { props: await fetchCollectionPageMetadata(route, canonicalPath, page) };
+            return jsonLdPageResponse(await fetchCollectionPageMetadata(route, canonicalPath, page), context.query, context.res);
         } catch (error) {
             console.error(error);
             const seo = SEO_BY_ROUTE[route];
-            return {
-                props: {
-                    title: page > 1 ? `${seo.title} - Page ${page}` : seo.title,
-                    description: page > 1 ? `${seo.description} This is page ${page} of the listing.` : seo.description,
-                    canonicalPath,
-                    jsonLd: seo.buildJsonLd?.(canonicalPath, page) ?? [],
-                    extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
-                    extraLinks: [],
-                },
-            };
+            return jsonLdPageResponse({
+                title: page > 1 ? `${seo.title} - Page ${page}` : seo.title,
+                description: page > 1 ? `${seo.description} This is page ${page} of the listing.` : seo.description,
+                canonicalPath,
+                jsonLd: seo.buildJsonLd?.(canonicalPath, page) ?? [],
+                extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
+                extraLinks: [],
+            }, context.query, context.res);
         }
     };
 };

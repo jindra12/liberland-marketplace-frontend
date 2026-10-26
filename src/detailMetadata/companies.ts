@@ -19,6 +19,7 @@ import {
     normalizeWhitespace,
 } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { buildCompanyReference, getMetadataServerUrl } from "./utils";
 
 type CompanyRelatedMetadata = {
     jobs: ListJobsByCompanyQuery["Jobs"];
@@ -27,14 +28,14 @@ type CompanyRelatedMetadata = {
     startups: ListStartupsByCompanyQuery["Startups"];
 };
 
-const buildCompanyRelatedItems = (company: NonNullable<CompanyByIdQuery["Company"]>, related?: CompanyRelatedMetadata) => {
-    const relatedServerUrl = company.serverURL || "";
+const buildCompanyRelatedItems = (company: NonNullable<CompanyByIdQuery["Company"]>, fallbackServerUrl: string, related?: CompanyRelatedMetadata) => {
+    const relatedServerUrl = company.serverURL || fallbackServerUrl;
     const identityItems =
         company.identity?.name && company.identity?.id
             ? buildItemListJsonLd("Identity", [
                   {
                       label: company.identity.name,
-                      url: buildDetailUrl("/tribes", company.identity.id, company.identity.serverURL),
+                      url: buildDetailUrl("/tribes", company.identity.id, company.identity.serverURL || relatedServerUrl),
                   },
               ])
             : [];
@@ -43,14 +44,14 @@ const buildCompanyRelatedItems = (company: NonNullable<CompanyByIdQuery["Company
         "Jobs",
         (related?.jobs?.docs || []).map((job) => ({
             label: job.title ?? "Job",
-            url: buildDetailUrl("/jobs", job.id, job.serverURL),
+            url: buildDetailUrl("/jobs", job.id, job.serverURL || relatedServerUrl),
         })),
     );
     const productItems = buildItemListJsonLd(
         "Products and services",
         (related?.products?.docs || []).map((product) => ({
             label: product.name ?? "Product",
-            url: buildDetailUrl("/products-services", product.id, product.serverURL),
+            url: buildDetailUrl("/products-services", product.id, product.serverURL || relatedServerUrl),
         })),
     );
     const startupItems = buildItemListJsonLd(
@@ -95,17 +96,15 @@ export const buildCompanyPageMetadata = (
         [
             {
                 "@context": "https://schema.org",
-                "@type": "Organization",
+                ...buildCompanyReference(company, getMetadataServerUrl(canonicalPath)),
                 name: detailLabel,
                 description,
-                url: company.website ?? company.serverURL,
                 image: buildAbsoluteImageUrl(company.image?.url),
                 telephone: company.phone,
                 email: company.email,
-                sameAs: company.identity?.website ? [company.identity.website] : undefined,
                 identifier: company.id,
             },
-            ...buildCompanyRelatedItems(company, related),
+            ...buildCompanyRelatedItems(company, getMetadataServerUrl(canonicalPath), related),
         ],
         {
             imageUrl: buildAbsoluteImageUrl(company.image?.url),

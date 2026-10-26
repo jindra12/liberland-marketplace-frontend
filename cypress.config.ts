@@ -7,6 +7,7 @@ import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/typ
 import { securityChecks } from "./cypress/support/securityChecks";
 import { tribeSearchChecks } from "./cypress/support/tribeSearchChecks";
 import { sitemapChecks } from "./cypress/support/sitemapChecks";
+import { jsonLdChecks } from "./cypress/support/jsonLdChecks";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -95,6 +96,7 @@ export default defineConfig({
                 ...securityChecks,
                 ...tribeSearchChecks,
                 ...sitemapChecks,
+                ...jsonLdChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

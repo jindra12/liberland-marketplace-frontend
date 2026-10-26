@@ -17,6 +17,31 @@
 
 ## Reading pages without JavaScript
 
+### Standalone page graphs and typed relationships
+
+The homepage, public collections and source-qualified detail pages advertise
+`<link rel="alternate" type="application/ld+json">` and an HTTP Link header.
+Follow that URL to retrieve the page's same JSON-LD as a standalone document,
+without parsing script elements or loading JavaScript. For example:
+
+- https://nswap.io/?format=jsonld
+- https://nswap.io/companies?tribe=Liberland&format=jsonld
+- https://nswap.io/jobs?page=2&format=jsonld
+
+Append format=jsonld to canonical detail URLs as well; retain their encoded
+backend and any existing query parameters. The result uses @context and @graph;
+read the nodes inside @graph. Stable entity @id values use HTML URLs so the same
+entity is recognized across detail, listing, and alternate-format documents.
+The separate /api/search/tribe API returns CollectionPage without this envelope.
+
+Company.memberOf points to its tribe. JobPosting.hiringOrganization points to its
+company, including that company's memberOf relationship. Product.offers exposes
+Offer.seller, itemOffered, and each available price/currency. Names, descriptions
+and source-specific detail URLs are included, not only generic directory links.
+Do not confuse a seller with a manufacturer/brand, or company/tribe affiliation
+with incorporation or geography. Missing prices/availability are not guessed;
+USD minor units become dollars and cryptocurrency decimal strings stay precise.
+
 Follow /sitemap.xml's shard links for canonical public entity URLs across
 syndicated servers. The gateway proxies cached backend XML, preserving IDs and
 encoded backend ownership. Snapshots refresh only when requested after 24 hours;

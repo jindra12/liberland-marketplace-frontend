@@ -9,6 +9,8 @@ import {
     SITE_URL,
 } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { buildProductOffers, getMetadataServerUrl } from "./utils";
+import { fromCents } from "../components/shared/product/utils";
 
 type ProductRelatedMetadata = {
     products: ListProductsByCompanyQuery["Products"];
@@ -16,14 +18,16 @@ type ProductRelatedMetadata = {
 
 const buildProductRelatedItems = (
     product: NonNullable<ProductByIdQuery["Product"]>,
+    fallbackServerUrl: string,
     related?: ProductRelatedMetadata,
 ) => {
+    const sourceServerUrl = product.serverURL || fallbackServerUrl;
     const companyItems =
         product.company?.name && product.company?.id
             ? buildItemListJsonLd("Company", [
                   {
                       label: product.company.name,
-                      url: buildDetailUrl("/companies", product.company.id, product.company.serverURL),
+                      url: buildDetailUrl("/companies", product.company.id, product.company.serverURL || sourceServerUrl),
                   },
               ])
             : [];
@@ -32,7 +36,7 @@ const buildProductRelatedItems = (
             ? buildItemListJsonLd("Identity", [
                   {
                       label: product.company.identity.name,
-                      url: buildDetailUrl("/tribes", product.company.identity.id, product.company.identity.serverURL),
+                      url: buildDetailUrl("/tribes", product.company.identity.id, product.company.identity.serverURL || product.company.serverURL || sourceServerUrl),
                   },
               ])
             : [];
@@ -40,14 +44,14 @@ const buildProductRelatedItems = (
         "Related products and services",
         (product.relatedProducts || []).map((relatedProduct) => ({
             label: relatedProduct.name ?? "Product",
-            url: buildDetailUrl("/products-services", relatedProduct.id, relatedProduct.serverURL),
+            url: buildDetailUrl("/products-services", relatedProduct.id, relatedProduct.serverURL || sourceServerUrl),
         })),
     );
     const companyProductItems = buildItemListJsonLd(
         "Company products and services",
         (related?.products?.docs || []).map((companyProduct) => ({
             label: companyProduct.name ?? "Product",
-            url: buildDetailUrl("/products-services", companyProduct.id, companyProduct.serverURL),
+            url: buildDetailUrl("/products-services", companyProduct.id, companyProduct.serverURL || product.company?.serverURL || sourceServerUrl),
         })),
     );
 
@@ -62,7 +66,7 @@ export const buildProductPageMetadata = (
     const detailLabel = product.name ?? "Product or service detail";
     const priceDetails = [
         product.priceInUSDEnabled && product.priceInUSD !== null && product.priceInUSD !== undefined
-            ? `USD ${product.priceInUSD}`
+            ? `USD ${fromCents(product.priceInUSD)}`
             : "",
         product.priceInETH !== null && product.priceInETH !== undefined ? `${product.priceInETH} ETH` : "",
         product.priceInSOL !== null && product.priceInSOL !== undefined ? `${product.priceInSOL} SOL` : "",
@@ -95,45 +99,21 @@ export const buildProductPageMetadata = (
                 description,
                 image: buildAbsoluteImageUrl(product.image?.url),
                 sku: product.id,
-                brand: product.company
-                    ? {
-                          "@type": "Organization",
-                          identifier: product.company.id,
-                          name: product.company.name,
-                          url: product.company.serverURL,
-                      }
-                    : undefined,
-                offers:
-                    product.orderable || product.priceInUSDEnabled
-                        ? {
-                              "@type": "Offer",
-                              availability:
-                                  product.inventory !== null && product.inventory !== undefined && product.inventory > 0
-                                      ? "https://schema.org/InStock"
-                                      : "https://schema.org/OutOfStock",
-                              price:
-                                  product.priceInUSD ??
-                                  product.priceInETH ??
-                                  product.priceInSOL ??
-                                  product.priceInTRX,
-                              priceCurrency: product.priceInUSDEnabled ? "USD" : undefined,
-                              url: product.url ?? `${SITE_URL}${canonicalPath}`,
-                          }
-                        : undefined,
+                offers: buildProductOffers(product, `${SITE_URL}${canonicalPath}`, getMetadataServerUrl(canonicalPath)),
                 identifier: product.id,
             },
-            ...buildProductRelatedItems(product, related),
+            ...buildProductRelatedItems(product, getMetadataServerUrl(canonicalPath), related),
         ],
         {
             imageUrl: buildAbsoluteImageUrl(product.image?.url ?? product.company?.image?.url),
             imageAlt: product.image?.filename ?? detailLabel,
             ogType: "product",
             extraMetaTags:
-                product.priceInUSD !== null && product.priceInUSD !== undefined
+                product.priceInUSDEnabled && typeof product.priceInUSD === "number"
                     ? [
                           {
                               property: "product:price:amount",
-                              content: String(product.priceInUSD),
+                              content: String(fromCents(product.priceInUSD)),
                           },
                           {
                               property: "product:price:currency",

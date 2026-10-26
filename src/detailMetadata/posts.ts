@@ -9,6 +9,7 @@ import {
     normalizeWhitespace,
 } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { buildCompanyReference, getMetadataServerUrl } from "./utils";
 
 export const buildPostPageMetadata = (
     post: NonNullable<PostByIdQuery["Post"]>,
@@ -54,18 +55,13 @@ export const buildPostPageMetadata = (
                     : undefined,
                 publisher: post.company
                     ? {
-                          "@type": "Organization",
-                          identifier: post.company.id,
-                          name: post.company.name,
-                          url: post.company.serverURL,
+                          ...buildCompanyReference(post.company, getMetadataServerUrl(canonicalPath)),
                           logo: buildAbsoluteImageUrl(post.company.image?.url),
                       }
                     : undefined,
                 about: post.company
                     ? {
-                          "@type": "Organization",
-                          identifier: post.company.id,
-                          name: post.company.name,
+                          ...buildCompanyReference(post.company, getMetadataServerUrl(canonicalPath)),
                       }
                     : undefined,
                 mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
