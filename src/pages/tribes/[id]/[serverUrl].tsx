@@ -1,10 +1,10 @@
-import { fetchIdentityById } from "../../../server/queries";
+import { fetchListedTribe } from "../../../server/tribeSearch/utils";
 import { buildIdentityPageMetadata, fetchIdentityRelatedMetadata } from "../../../detailMetadata/identity";
 import { DetailPage } from "../../../detailPage";
 import { createDetailPageProps } from "../../../server/detailPage";
 
 const getServerSideProps = createDetailPageProps({
-    fetcher: fetchIdentityById,
+    fetcher: fetchListedTribe,
     buildVariables: (params) => {
         if (!params.id) {
             return null;

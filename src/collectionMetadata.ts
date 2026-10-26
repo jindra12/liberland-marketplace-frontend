@@ -20,6 +20,7 @@ import { SEO_BY_ROUTE, type SeoCollectionItem, type SeoCollectionPageData } from
 import { buildPaginationLinks } from "./shellPage/utils";
 import { buildProductOffers, getMetadataServerUrl } from "./detailMetadata/utils";
 import type { MetadataRelationships } from "./detailMetadata/types";
+import type { PublicPageContent } from "./aiDiscovery/types";
 
 type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
 
@@ -58,7 +59,11 @@ const definedAttributes = (
             attribute.value !== null && attribute.value !== undefined && attribute.value !== "",
     );
 
-const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData, fallbackServerUrl?: string): SeoCollectionItem[] => {
+const buildCollectionItems = (
+    route: CollectionRoute,
+    data: CollectionQueryData,
+    fallbackServerUrl?: string,
+): SeoCollectionItem[] => {
     switch (route) {
         case "/companies":
             return (
@@ -109,7 +114,11 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData,
         case "/products-services":
             return (
                 (data as ListProductsQuery).Products?.docs.map((product) => {
-                    const url = buildDetailUrl("/products-services", product.id, product.serverURL || fallbackServerUrl);
+                    const url = buildDetailUrl(
+                        "/products-services",
+                        product.id,
+                        product.serverURL || fallbackServerUrl,
+                    );
                     return toCollectionItem(
                         product.name ?? "Product or service",
                         url,
@@ -204,6 +213,7 @@ export const fetchCollectionPageMetadata = async (
     jsonLd: Record<string, unknown>[];
     extraMetaTags: Array<{ name?: string; property?: string; content: string }>;
     extraLinks: Array<{ href: string; rel: string }>;
+    content: PublicPageContent;
 }> => {
     const variables = { page, limit: 20, sort: "-contentRankScore" };
     const data = await collectionData(route, variables);
@@ -241,5 +251,30 @@ export const fetchCollectionPageMetadata = async (
         jsonLd: seo.buildJsonLd?.(canonicalPath, page, pageData) ?? [],
         extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
         extraLinks: buildPaginationLinks(canonicalPath, page, pageData.hasNextPage),
+        content: {
+            title,
+            description,
+            items: pageData.items.map((item) => ({
+                name: item.name,
+                description: item.description || "",
+                url: item.url,
+                ...(item.identity
+                    ? {
+                          affiliation: {
+                              name: item.identity.name,
+                              url: buildDetailUrl(
+                                  "/tribes",
+                                  item.identity.id,
+                                  item.identity.serverURL || process.env.REACT_APP_BACKEND_URL,
+                              ),
+                          },
+                      }
+                    : {}),
+            })),
+            links: buildPaginationLinks(canonicalPath, page, pageData.hasNextPage).map((link) => ({
+                name: link.rel === "next" ? "Next page" : "Previous page",
+                url: link.href,
+            })),
+        },
     };
 };

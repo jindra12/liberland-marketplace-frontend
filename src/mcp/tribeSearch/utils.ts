@@ -1,5 +1,5 @@
 import { callBackendTool, parseBackendToolResult } from "../backend";
-import { buildTribeListingMetadata, selectTribe, tribeSearchSchema } from "../../tribeSearch/utils";
+import { buildTribeListingMetadata, selectTribe, tribeAffiliationSchema } from "../../tribeSearch/utils";
 import type { TribeListing, TribeReference, TribeSearchInput } from "../../tribeSearch/types";
 
 export const findBackendEntitiesByTribe = async (
@@ -7,7 +7,7 @@ export const findBackendEntitiesByTribe = async (
     serverUrl: string,
     signal: AbortSignal,
 ) => {
-    tribeSearchSchema.parse(input);
+    tribeAffiliationSchema.parse(input);
     const tribe = await resolveBackendTribe(input, serverUrl, signal);
     const affiliation = input.entity === "companies" ? "identity" : "companyIdentityId";
     // This discovery tool always reads anonymously, so backend access rules restrict it

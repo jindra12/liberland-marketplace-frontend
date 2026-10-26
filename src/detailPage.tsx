@@ -2,6 +2,7 @@ import React from "react";
 import { AppHead } from "./AppHead";
 import { Dynamic } from "./Dynamic";
 import type { DetailPageMetadata } from "./detailMetadata/shared";
+import { PublicContent } from "./aiDiscovery/PublicContent";
 
 export const DetailPage: React.FunctionComponent<DetailPageMetadata> = (props) => {
     return (
@@ -17,7 +18,8 @@ export const DetailPage: React.FunctionComponent<DetailPageMetadata> = (props) =
                 ogType={props.ogType}
                 extraMetaTags={props.extraMetaTags}
             />
-            <Dynamic />
+            {props.content && <PublicContent content={props.content} readableOnly={props.readableOnly} />}
+            {(!props.readableOnly || !props.content) && <Dynamic />}
         </>
     );
 };

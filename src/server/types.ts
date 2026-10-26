@@ -1,4 +1,5 @@
 import type { DetailPageMetadata } from "../detailMetadata/shared";
+import type { PublicPageContent } from "../aiDiscovery/types";
 
 export type GraphQLServerResponse<TData> = {
     data?: TData;
@@ -27,6 +28,8 @@ export type DetailPageConfig<TData, TVariables extends object | undefined, TEnti
 export type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
 
 export type CollectionPageProps = {
+    content?: PublicPageContent;
+    readableOnly?: boolean;
     jsonLdAlternateUrl?: string;
     title: string;
     description: string;

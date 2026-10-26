@@ -1,5 +1,6 @@
 import { stripMarkdownToText } from "../components/publish/postForm/utils";
 import { SITE_URL } from "../siteUrl";
+import type { PublicPageContent } from "../aiDiscovery/types";
 
 export const SITE_NAME = "NSwap";
 export { SITE_URL };
@@ -110,6 +111,8 @@ const decodeHexSegment = (value: string): string => {
 };
 
 export type DetailPageMetadata = {
+    content?: PublicPageContent;
+    readableOnly?: boolean;
     jsonLdAlternateUrl?: string;
     title: string;
     description: string;

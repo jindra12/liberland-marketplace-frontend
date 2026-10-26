@@ -9,7 +9,7 @@ import type { BackendAuthorization } from "./types";
 import { discoverBackends } from "./discovery";
 import { MAX_TOOL_INPUT_ELEMENTS, REQUEST_TIMEOUT_MS } from "../server/security/constants";
 import { checkSearchQuota } from "../server/security/rateLimits";
-import { tribeSearchSchema } from "../tribeSearch/utils";
+import { tribeAffiliationSchema } from "../tribeSearch/utils";
 import { findBackendEntitiesByTribe } from "./tribeSearch/utils";
 
 const entitySchema = z.enum(MCP_ENTITIES);
@@ -118,10 +118,10 @@ export const createNswapMcpServer = (
 
     server.registerTool("find_by_tribe", {
         description: "Public relationship search for companies, products/services, or jobs by exact tribe name or tribeId. Products/jobs use their company's primary tribe. Not a text search or proof of geographic location. Omit serverUrl to query all active/default backends. Returns source-scoped records, JSON-LD detail links, and pagination. If a name is ambiguous, repeat with a returned tribeId and serverUrl. No login or AI credits required.",
-        inputSchema: tribeSearchSchema.shape,
+        inputSchema: tribeAffiliationSchema.shape,
         annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: true },
     }, async (args) => {
-        const input = tribeSearchSchema.parse(args);
+        const input = tribeAffiliationSchema.parse(args);
         const servers = resolveSessionServers(authorization, input.serverUrl, selectedServerUrl);
         return textResult(await Promise.all(servers.map(async (serverUrl) => {
             try {

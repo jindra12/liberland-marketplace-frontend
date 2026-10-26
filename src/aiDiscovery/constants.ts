@@ -1,8 +1,8 @@
-export const AI_DISCOVERY_HINT = "Without JavaScript, read this page's JSON-LD or /llms.txt for search and navigation; the full guide is /LLM.md.";
+export const AI_DISCOVERY_HINT = "Without JavaScript, read the HTML listings, /llms.txt, or public search with format=json. The plain-text full guide is /LLM.txt; JSON-LD is also available.";
 
 export const AI_DISCOVERY_GUIDES = [
     { path: "/llms.txt", name: "Marketplace search and navigation guide", type: "text/plain" },
-    { path: "/LLM.md", name: "Detailed guide for AI readers", type: "text/markdown" },
+    { path: "/LLM.txt", name: "Detailed guide for AI readers", type: "text/plain" },
 ];
 
 export const AI_DISCOVERY_EXAMPLES = [

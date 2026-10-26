@@ -6,6 +6,38 @@
 
 ## Start here
 
+- Plain JSON company search: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&format=json
+- Web development lookup: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json
+- HTML-only directory: https://nswap.io/companies?tribe=Liberland&format=html
+- Plain-text extended guide: https://nswap.io/LLM.txt
+
+The JSON route returns actual docs with names, descriptions, canonical Nswap URLs,
+tribe IDs/names, source serverUrl, official website when recorded, and associated
+product/service evidence for q searches. q matches all query words against the
+company name/description and its tribe-filtered products/services; "web" also
+matches "website", "websites", and "frontend". It is lexical search, not RAG.
+Always verify service evidence in descriptions rather than assuming a category.
+Affiliation comes from the backend's relationship-filtered query, never a mention
+of Liberland in text. Legacy relationships may not populate on company details;
+affiliationEvidence identifies the authoritative filter and source used by search.
+This is tribe membership, not physical location or incorporation.
+
+Use entity=companies, products, or jobs. Pass serverUrl to select another public
+syndicated backend; IDs belong to that backend. Use tribeId when names are ambiguous.
+JSON includes totalDocs, page, limit, totalPages, hasNextPage and links.next/previous;
+follow the supplied URLs to preserve filters, source, and format. Empty matches
+return HTTP 200 with docs: [] and totalDocs: 0. Unknown tribes return 404, ambiguous
+names 409, invalid input 400, backend failures 502, overload 429/503. Errors are
+not evidence of absent companies. q scans at most 2,000 records per entity and
+returns an explicit error rather than silently truncating a larger service scan.
+
+Ordinary company HTML pages render real names, descriptions, and profile links
+before JavaScript takes over. format=html keeps the readable directory/profile
+view even in a browser. No MCP client, authentication, or JavaScript is needed.
+If application/ld+json or text/markdown is unsupported by your reader, use the
+application/json search and text/plain /LLM.txt instead. The original JSON-LD
+search endpoint and ?format=jsonld page graphs remain available unchanged.
+
 - Website: https://nswap.io/
 - Homepage and discovery: https://nswap.io/
 - Sitemap: https://nswap.io/sitemap.xml
@@ -65,7 +97,7 @@ Some AI readers also omit aria-hidden content; the head metadata and public GET
 search do not depend on that body guide being included by a particular reader.
 The page head links this guide and /LLM.md using rel="help"; robots.txt mentions
 both guides in comments (these are discovery hints, not standardized directives).
-If your reader omits scripts, use the public GET JSON-LD endpoint linked above.
+If your reader omits scripts, use the public GET format=json endpoint or format=html directory above.
 Report lookup/network errors as failures, not as evidence that records are absent.
 
 Nswap can be explored through ordinary web pages, page metadata, structured data,

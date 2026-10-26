@@ -187,3 +187,33 @@ jobs/products. It is not a keyword match, allowedIdentities eligibility, or proo
 of incorporation/location. See [`public/llms.txt`](public/llms.txt) and
 [`public/LLM.md`](public/LLM.md) for agent instructions and relationship filters.
 
+# Public HTTP Discovery
+
+Agents without MCP, authentication, or JavaScript can start at `/llms.txt`:
+
+- JSON: `/api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json`.
+- Ordinary HTML: `/companies?tribe=Liberland&q=web%20development`; `&format=html` retains the readable view in browsers.
+- Company profiles: follow each result's canonical `url`. Profiles include descriptions and related services in their SSR body.
+- Original JSON-LD: omit `format=json` on the search API, or append `format=jsonld` to a canonical collection/profile URL.
+- Extended instructions: `/LLM.txt` (text/plain), or `/LLM.md` (original Markdown).
+
+`entity` supports companies, products, and jobs. `serverUrl` selects the public source
+backend, `tribeId` disambiguates names, and `page`/`limit` paginate. Follow JSON
+`links.next`/`previous` or HTML pagination links to preserve the complete query.
+`q` is word matching over actual names/descriptions and affiliated company services,
+not RAG; web also matches website/websites/frontend. Tribe membership is established
+by backend relationship filters, never a word in a description. This is affiliation,
+not proof of geographic location/incorporation. Legacy tribe relationships may filter
+correctly while their populated detail field is null; JSON includes query provenance.
+Scans over 2,000 records per entity fail explicitly instead of returning partial matches.
+
+Search errors distinguish invalid input (400), unknown tribe (404), ambiguous tribe
+(409), throttling (429), backend failure (502), and capacity/scan limits (503).
+Empty matches are successful JSON with `docs: []` and `totalDocs: 0`.
+The normal browser SPA replaces the visible SSR fallback after hydration; it does
+not display a duplicate listing below the app. JSON-LD and MCP remain available.
+
+Run `yarn test:ct:public-discovery` for handler, HTML-only parsing, relationship,
+service matching, error, provenance, and pagination regressions. Its AlfaPi fixture
+is a real published record captured October 26, 2026; production data is not modified.
+

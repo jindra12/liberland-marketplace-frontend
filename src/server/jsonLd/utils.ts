@@ -25,7 +25,7 @@ export const jsonLdPageResponse = <T extends JsonLdPageMetadata>(
         response.end(serializeJsonLd({ "@context": "https://schema.org", "@graph": metadata.jsonLd }));
     }
     // Next requires JSON-safe props, including optional fields inside structured data.
-    const props: T & { jsonLdAlternateUrl: string } = JSON.parse(serializeJsonLd({ ...metadata, jsonLdAlternateUrl }));
+    const props: T & { jsonLdAlternateUrl: string; readableOnly: boolean } = JSON.parse(serializeJsonLd({ ...metadata, jsonLdAlternateUrl, readableOnly: query.format === "html" }));
     return { props };
 };
 

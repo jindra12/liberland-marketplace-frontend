@@ -6,7 +6,7 @@ export const DiscoveryGuide: React.FunctionComponent = () => (
     <Typography className="screen-reader-only" aria-hidden="true" aria-label="Marketplace data and navigation">
         <Typography.Paragraph>
             Nswap provides marketplace information without requiring JavaScript. If the interactive listings
-            are not visible in this HTML, read the JSON-LD scripts in the page head for real records, detail
+            are not visible in this HTML, use public search with format=json, or read the JSON-LD scripts in the page head for real records, detail
             URLs, related entities, SearchAction entry points, and pagination links. Missing interactive
             content does not mean the marketplace has no results. The head&apos;s alternate JSON-LD link
             and HTTP Link header point to a standalone document if your reader omits scripts.
@@ -24,9 +24,9 @@ export const DiscoveryGuide: React.FunctionComponent = () => (
             collections. Follow ItemList detail URLs and next-page links to continue browsing.
         </Typography.Paragraph>
         <Typography.Paragraph>
-            Public JSON-LD search examples (replace Liberland with the exact tribe name):
+            Public JSON search examples (replace Liberland with the exact tribe name; omit format=json for JSON-LD):
             {AI_DISCOVERY_EXAMPLES.map((example) => (
-                <Typography.Link key={example.entity} href={`/api/search/tribe?entity=${example.entity}&tribe=Liberland`} tabIndex={-1}>
+                <Typography.Link key={example.entity} href={`/api/search/tribe?entity=${example.entity}&tribe=Liberland&format=json`} tabIndex={-1}>
                     {example.name}.
                 </Typography.Link>
             ))}

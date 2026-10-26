@@ -7,7 +7,7 @@ const nextConfig = {
     transpilePackages: ["@liberland/marketplace-contracts"],
     env: Object.fromEntries(Object.entries(process.env).filter(([key]) => key.startsWith("REACT_APP_"))),
     async rewrites() {
-        return [{
+        return [{ source: "/LLM.txt", destination: "/api/guide" }, {
             source: "/.well-known/oauth-protected-resource",
             destination: "/api/oauth-protected-resource",
         }];

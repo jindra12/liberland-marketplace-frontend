@@ -125,10 +125,10 @@ export const tribeSearchChecks = {
         const html = renderToStaticMarkup(React.createElement(DiscoveryGuide));
         assert.match(html, /class="[^"]*screen-reader-only/);
         assert.match(html, /href="\/llms.txt"/);
-        assert.match(html, /href="\/LLM.md"/);
+        assert.match(html, /href="\/LLM.txt"/);
         assert.match(html, /JSON-LD/);
         assert.match(html, /href="\/tribes"/);
-        TRIBE_ENTITIES.forEach((entity) => assert(html.includes(`/api/search/tribe?entity=${entity}&amp;tribe=Liberland`)));
+        TRIBE_ENTITIES.forEach((entity) => assert(html.includes(`/api/search/tribe?entity=${entity}&amp;tribe=Liberland&amp;format=json`)));
         assert.match(html, /aria-hidden="true"/);
         assert.equal((html.match(/tabindex="-1"/g) || []).length, 6);
         assert(!html.includes("display:none"));
