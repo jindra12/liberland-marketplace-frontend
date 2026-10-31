@@ -5,6 +5,7 @@ import { SITE_URL } from "./siteUrl";
 import { serializeJsonLd } from "./jsonLd/utils";
 import { AI_DISCOVERY_GUIDES, AI_DISCOVERY_HINT } from "./aiDiscovery/constants";
 import { JSON_LD_MEDIA_TYPE } from "./jsonLd/constants";
+import { AGENT_DISCOVERY_LINKS } from "./agentDiscovery/constants";
 
 type AppHeadProps = {
     jsonLdAlternateUrl?: string;
@@ -51,6 +52,7 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             <meta name="application-name" content="NSwap" />
             <meta name="robots" content={robotsValue} />
             <meta name="description" content={descriptionValue} />
+            {AGENT_DISCOVERY_LINKS.map((link) => <link key={link.rel} rel={link.rel} href={link.href} type={link.type} />)}
             {AI_DISCOVERY_GUIDES.map((guide) => (
                 <link key={guide.path} rel="help" type={guide.type} title={guide.name} href={guide.path} />
             ))}

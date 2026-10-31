@@ -32,7 +32,7 @@ export const sendMcpAuthorizationChallenge = (
         return;
     }
 
-    const metadataUrl = new URL(buildSiteUrl("/.well-known/oauth-protected-resource"));
+    const metadataUrl = new URL(buildSiteUrl("/.well-known/oauth-protected-resource/api/mcp"));
     metadataUrl.searchParams.set("serverUrl", serverUrl);
     response.setHeader("WWW-Authenticate", `Bearer resource_metadata="${metadataUrl.toString()}"`);
     response.status(401).json({ error: "Authentication required.", resource_metadata: metadataUrl.toString() });
@@ -41,6 +41,7 @@ export const sendMcpAuthorizationChallenge = (
 export const buildProtectedResourceMetadata = (serverUrl: string) => ({
     resource: `${buildSiteUrl("/api/mcp")}?auth=required&serverUrl=${encodeURIComponent(serverUrl)}`,
     authorization_servers: [serverUrl],
-    scopes_supported: ["openid", "profile", "email"],
+    scopes_supported: ["openid", "profile", "email", "offline_access"],
     bearer_methods_supported: ["header"],
+    resource_documentation: buildSiteUrl("/auth.txt"),
 });

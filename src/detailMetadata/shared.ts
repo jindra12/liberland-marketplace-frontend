@@ -156,6 +156,11 @@ export const buildStandardDetailMetadata = (
         title: ensureSiteSuffix(detailLabel),
         description,
         canonicalPath,
+        content: {
+            title: detailLabel, description,
+            items: [{ name: detailLabel, description, url: `${SITE_URL}${canonicalPath}` }],
+            links: [{ name: sectionName, url: sectionPath }],
+        },
         jsonLd: buildDetailJsonLd(sectionName, sectionPath, detailLabel, description, canonicalPath, extraJsonLd),
         imageUrl: extras.imageUrl,
         imageAlt: extras.imageAlt,

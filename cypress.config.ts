@@ -9,6 +9,9 @@ import { tribeSearchChecks } from "./cypress/support/tribeSearchChecks";
 import { sitemapChecks } from "./cypress/support/sitemapChecks";
 import { jsonLdChecks } from "./cypress/support/jsonLdChecks";
 import { publicDiscoveryChecks } from "./cypress/support/publicDiscoveryChecks";
+import { agentReadinessChecks } from "./cypress/support/agentReadinessChecks";
+import { agentAuthChecks } from "./cypress/support/agentAuthChecks";
+import { poppyChecks } from "./cypress/support/poppyChecks";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -99,6 +102,9 @@ export default defineConfig({
                 ...sitemapChecks,
                 ...jsonLdChecks,
                 ...publicDiscoveryChecks,
+                ...agentReadinessChecks,
+                ...agentAuthChecks,
+                ...poppyChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

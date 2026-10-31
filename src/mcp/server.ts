@@ -10,6 +10,7 @@ import { discoverBackends } from "./discovery";
 import { MAX_TOOL_INPUT_ELEMENTS, REQUEST_TIMEOUT_MS } from "../server/security/constants";
 import { checkSearchQuota } from "../server/security/rateLimits";
 import { tribeAffiliationSchema } from "../tribeSearch/utils";
+import { MCP_IDENTITY } from "../agentDiscovery/constants";
 import { findBackendEntitiesByTribe } from "./tribeSearch/utils";
 
 const entitySchema = z.enum(MCP_ENTITIES);
@@ -77,12 +78,13 @@ export const createNswapMcpServer = (
     const callAll = (toolName: string, args: Record<string, unknown>, serverUrl?: string) => {
         return callAllBackends(scopedAuthorization, toolName, args, serverUrl, selectedServerUrl, signal);
     };
-    const server = new McpServer({ name: "nswap-syndicated-marketplace", version: "1.0.0" }, {
+    const server = new McpServer(MCP_IDENTITY, {
         instructions: `${DISCOVERY_INSTRUCTIONS} For companies, products/services, or jobs affiliated with a named tribe (for example Liberland), use find_by_tribe. It filters relationships, not textual mentions or legal location. Omit serverUrl to query all active/default backends; discover other servers and query them explicitly when needed. Public GET /api/search/tribe and tribe detail JSON-LD provide the same navigation without MCP. Credentials are backend-specific: log in separately for each backend. Discovery is bounded and reports truncated when its limits are reached.`,
         maxToolInputElements: MAX_TOOL_INPUT_ELEMENTS,
     });
 
     server.registerTool("add_syndicated_server", {
+        _meta: { "nswap/sessionOperation": true },
         description: "Add a syndicated backend to this authenticated MCP session. Its URL will be used by aggregate list/search/get operations.",
         inputSchema: { ...requiredBackendSchema.shape },
     }, async (args) => {
@@ -91,6 +93,8 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("list_syndicated_servers", {
+        _meta: { "nswap/sessionOperation": true },
+        annotations: { readOnlyHint: true },
         description: "List only the syndicated backends in this authenticated session's active cache. This does not query or modify any backend's public syndication directory.",
         inputSchema: {},
     }, async () => {
@@ -99,6 +103,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("discover_syndicated_servers", {
+        annotations: { readOnlyHint: true },
         description: "Recursively query every reachable backend's listed syndication directory and return one unique list. This is read-only and never changes the active session cache or any backend directory.",
         inputSchema: { serverUrl: z.url().optional() },
     }, async (args) => {
@@ -109,6 +114,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("remove_syndicated_server", {
+        _meta: { "nswap/sessionOperation": true },
         description: "Remove a syndicated backend from this authenticated MCP session.",
         inputSchema: { ...requiredBackendSchema.shape },
     }, async (args) => {
@@ -134,6 +140,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("search_rag", {
+        annotations: { readOnlyHint: true },
         description: "Run semantic search over descriptions, posts, jobs, companies, products, identities, and other indexed backend content.",
         inputSchema: { serverUrl: z.url().optional(), query: z.string().min(1).max(600), limit: z.number().int().positive().max(20).optional() },
     }, async (args) => {
@@ -149,6 +156,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("compare_products", {
+        annotations: { readOnlyHint: true },
         description: "Compare products across the selected backend or all registered syndicated backends.",
         inputSchema: { ...backendSchema.shape, query: z.string().min(1).max(200), limit: z.number().int().positive().max(100).default(20), where: z.record(z.string(), z.unknown()).optional() },
     }, async (args) => {
@@ -156,6 +164,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("list_user_orders", {
+        annotations: { readOnlyHint: true },
         description: "List the authenticated user's orders across all registered syndicated backends.",
         inputSchema: { page: z.number().int().positive().default(1), limit: z.number().int().positive().max(100).default(20) },
     }, async (args) => {
@@ -164,6 +173,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("payment_status", {
+        annotations: { readOnlyHint: true },
         description: "Report the payment status of the authenticated user's orders across syndicated backends.",
         inputSchema: { orderId: z.string().min(1).optional(), serverUrl: z.url().optional() },
     }, async (args) => {
@@ -172,6 +182,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("prepare_payment", {
+        annotations: { readOnlyHint: true },
         description: "Prepare payment information for an order without signing or sending a transaction. Returns normalized chains, recipients, amounts, and wallet requirements.",
         inputSchema: { ...backendSchema.shape, orderId: z.string().min(1) },
     }, async (args) => {
@@ -180,6 +191,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("create_checkout_link", {
+        annotations: { readOnlyHint: true },
         description: "Create a link to the existing order and payment flow for carts from one or more syndicated backends. The user must review and submit the order in the app.",
         inputSchema: { carts: z.array(z.object({ serverUrl: z.url(), secret: z.string().min(1) })).min(1).max(16) },
     }, async (args) => {
@@ -191,6 +203,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("wallet_capabilities", {
+        annotations: { readOnlyHint: true },
         description: "Return the authenticated user's available ETH, SOL, and TRX wallets for payment.",
         inputSchema: { ...backendSchema.shape },
     }, async (args) => {
@@ -198,6 +211,7 @@ export const createNswapMcpServer = (
         return textResult(await call("wallet_capabilities", args));
     });
     server.registerTool("list_seller_orders", {
+        annotations: { readOnlyHint: true },
         description: "List product/payment rows ordered by other users for the authenticated seller, matching the Orders tab. Use fulfilled or rejected filters to find pending work.",
         inputSchema: { ...backendSchema.shape, fulfilled: z.boolean().optional(), rejected: z.boolean().optional(), limit: z.number().int().positive().max(100).default(20), page: z.number().int().positive().default(1) },
     }, async (args) => {
@@ -219,6 +233,7 @@ export const createNswapMcpServer = (
         return textResult(await call("mark_seller_order_item_rejected", args));
     });
     server.registerTool("list_shipping_addresses", {
+        annotations: { readOnlyHint: true },
         description: "List saved shipping addresses. Save one before checkout if none exists.",
         inputSchema: { ...backendSchema.shape },
     }, async (args) => {
@@ -298,6 +313,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("list_entities", {
+        annotations: { readOnlyHint: true },
         description: "List companies, products/services, jobs, ventures, identities, posts, comments, orders, carts, users, media, syndications, reports, information requests, notification subscriptions, and subscribers from a selected syndicated backend.",
         inputSchema: {
             ...backendSchema.shape,
@@ -313,6 +329,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("search_entities", {
+        annotations: { readOnlyHint: true },
         description: "Search any supported entity on a selected syndicated backend, including relationship filters for company, identity, and related entities.",
         inputSchema: {
             ...backendSchema.shape,
@@ -328,6 +345,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("get_entity", {
+        annotations: { readOnlyHint: true },
         description: "Retrieve a complete entity from its owning syndicated backend.",
         inputSchema: { ...backendSchema.shape, entity: entitySchema, id: z.string().min(1) },
     }, async (args) => {
@@ -336,11 +354,13 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("describe_entity_schema", {
+        annotations: { readOnlyHint: true },
         description: "Return machine-readable searchable fields, filter operators, and field meanings before using list, search, or update tools.",
         inputSchema: { ...backendSchema.shape, entity: entitySchema },
     }, async (args) => textResult(await call("describe_entity_schema", args)));
 
     server.registerTool("find_related_entities", {
+        annotations: { readOnlyHint: true },
         description: "Find entities related to another entity across the selected backend or all active syndicated backends, such as jobs for a company or products for a company.",
         inputSchema: {
             ...backendSchema.shape,
@@ -358,6 +378,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("cart_get", {
+        annotations: { readOnlyHint: true },
         description: "Read a shopping cart from one syndicated backend. Keep its serverUrl and secret because checkout may contain carts from many backends.",
         inputSchema: { ...backendSchema.shape, secret: z.string().min(1) },
     }, async (args) => textResult(await call("cart_get", args)));
@@ -447,6 +468,7 @@ export const createNswapMcpServer = (
     });
 
     server.registerTool("describe_backend", {
+        annotations: { readOnlyHint: true },
         description: "FIRST STEP: discover the specified backend's MCP server identity, tools, entities, and supported operations before calling any other tool. Omit serverUrl to describe the configured default backend.",
         inputSchema: { serverUrl: z.url().optional() },
     }, async (args) => textResult(await call("describe_backend", { serverUrl: resolveBackendUrl(args.serverUrl) })));

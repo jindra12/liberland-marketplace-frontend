@@ -6,6 +6,28 @@
 
 ## Start here
 
+- API catalog (plain JSON): https://nswap.io/.well-known/api-catalog?format=json
+- OpenAPI: https://nswap.io/openapi.json
+- MCP server card: https://nswap.io/.well-known/mcp/server-card.json
+- AI capability catalog: https://nswap.io/.well-known/ard.json
+- Agent skills: https://nswap.io/.well-known/agent-skills/index.json
+- Authentication and per-backend OAuth: https://nswap.io/auth.txt
+- A2A search card: https://nswap.io/.well-known/agent-card.json
+
+Public pages also support Accept: text/markdown or ?format=markdown, alongside
+ordinary HTML, JSON-LD and the plain JSON search below. Markdown is negotiated
+only for page representations, never as a replacement for MCP or JSON APIs.
+The A2A endpoint uses protocol 1.0 JSON-RPC SendMessage with an application/json
+data part containing the same entity/tribe/tribeId/q/serverUrl/page/limit fields
+as public tribe search. It is public and read-only; it cannot mutate accounts,
+orders or payments. Supporting browsers expose the full MCP tool catalog through
+WebMCP, including account/cart tools using the user's backend-specific app login.
+Browser writes require user approval; payments still require wallet signing.
+Poppy draft 0.3 discovery: /.well-known/poppy.json, verified by the backend issuer.
+The backend supports browser consent and signed delegated sessions for scoped
+MCP access. Each backend retains its own accounts and permissions. Public HTTP
+search does not require authentication, MCP or Poppy.
+
 - Plain JSON company search: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&format=json
 - Web development lookup: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json
 - HTML-only directory: https://nswap.io/companies?tribe=Liberland&format=html

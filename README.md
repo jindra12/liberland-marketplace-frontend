@@ -37,6 +37,68 @@ It lets people browse, search, and open detail pages for jobs, companies, produc
 
 ## MCP Setup
 
+### Agent Discovery
+
+Public interfaces are advertised through `/.well-known/api-catalog` (or add
+`?format=json` for plain JSON), `/openapi.json`, `/.well-known/ard.json`,
+`/.well-known/mcp/server-card.json`, and `/.well-known/agent-skills/index.json`.
+`/auth.txt` explains per-backend OAuth. Existing authenticated MCP resource URLs
+are unchanged; challenges also expose path-specific resource metadata at
+`/.well-known/oauth-protected-resource/api/mcp?serverUrl=...`.
+Frontend OAuth/OpenID discovery redirects to the selected backend's canonical
+issuer rather than impersonating a frontend authorization server.
+
+Public Next pages accept `Accept: text/markdown` or `?format=markdown`, preserving
+HTML, JSON-LD and plain JSON alternatives. Markdown is generated from the same
+server-loaded records, with `Vary: Accept` and private/no-store caching.
+Robots policy is generated using `REACT_APP_BASE_URL`, keeps private-route
+exclusions, and declares search/AI input allowed and model training declined.
+
+The A2A 1.0 agent card is at `/.well-known/agent-card.json`. Send JSON-RPC
+`SendMessage` to `/api/a2a`, with `message.role: "ROLE_USER"`, a `messageId`, and a
+part such as `{ "data": { "entity": "companies", "tribe": "Liberland", "q": "web development" }, "mediaType": "application/json" }`.
+It performs only anonymous public search and returns source-qualified records;
+it has no persistent tasks, account writes or payment capability. The official
+A2A SDK handles protocol envelopes. Browser WebMCP mirrors the complete remote
+MCP tool catalog through the official MCP client; `src/mcp/server.ts` is the
+single source for schemas, descriptions, read/write annotations and handlers.
+Account tools use the existing app login for the requested backend only. Tokens
+are never tool arguments or results. Browser writes require an Ant Design
+approval dialog; tool-level confirmations and backend permissions still apply.
+Without a login, public reads and supported guest-cart tools remain available.
+Signing payments still requires the user's wallet, not an AI tool.
+WebMCP requires a browser implementing `document.modelContext`; remote MCP and
+ordinary public HTTP discovery do not. Run `yarn test:ct:webmcp` for parity,
+credential isolation, cancellation, approval and error-handling checks.
+
+Poppy draft 0.3 discovery is verified against the configured backend issuer,
+which must authorize this frontend domain through its existing `FRONTEND_URL`.
+The backend uses the published Personal Agent Protocol SDK for direct browser
+consent, signed delegated sessions and resource-specific MCP access. Grants and
+replay state are encrypted and persisted in MongoDB. Existing Payload account
+permissions still apply; writes require their granted scope and confirmation.
+Device/mediated sign-in, browser join, Operations and DPoP are not advertised.
+Existing backend-qualified OAuth MCP resource identities remain unchanged.
+Run `yarn test:ct:poppy` for discovery and issuer-isolation regressions.
+The informational payment-protocol checks are not implemented by adding fake
+manifests or by paywalling public search.
+
+Run `yarn test:ct:agent-readiness` for protocol/schema/content regressions.
+Run `yarn test:ct:agent-auth` for official SDK interoperability: PKCE, refresh
+token rotation with restored client credentials, issuer isolation, A2A card
+discovery/search, and browser preflight/challenge headers. The OAuth issuer in
+these tests is controlled test infrastructure, not a user's live login.
+MCP resource metadata advertises `offline_access`, matching the backend issuer,
+so clients can request refreshable access. MCP and A2A support anonymous CORS
+preflight; MCP accepts explicit bearer headers but never enables credentialed
+CORS/cross-origin cookies. Resource metadata is not publicly cached.
+
+TODO: After deployment, publish DNS-AID records for the configured site using
+the authoritative DNS provider, then verify propagation. The public catalog is
+`/.well-known/ai-catalog.json`. Follow the
+[DNS-AID publication guide](https://github.com/dns-aid/dns-aid-core/blob/main/docs/getting-started.md)
+without replacing existing DNS records.
+
 ### Gateway Security Limits
 
 - MCP and public RAG requests are limited to 120 requests per client per minute and 1,200 requests per process per minute.

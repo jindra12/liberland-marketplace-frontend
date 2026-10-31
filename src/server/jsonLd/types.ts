@@ -1,4 +1,9 @@
+import type { PublicPageContent } from "../../aiDiscovery/types";
+
 export type JsonLdPageMetadata = {
+    title?: string;
+    description?: string;
+    content?: PublicPageContent;
     canonicalPath: string;
     jsonLd: Record<string, unknown>[];
 };

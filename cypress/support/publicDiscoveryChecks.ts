@@ -16,48 +16,50 @@ import fixture from "../fixtures/publicDiscovery.json";
 const source = fixture.company.serverURL;
 type RequestBody = { query: string; variables: { identityId?: string; page: number; limit: number } };
 
-const withBackend = async (check: () => Promise<void>) => {
+const respondBackend: typeof fetch = async (input, init) => {
+    const request = new Request(input, init);
+    assert.equal(request.url, `${source}/api/graphql`);
+    assert.equal(request.headers.get("authorization"), null);
+    const body = (await request.json()) as RequestBody;
+    if (body.query === ListIdentitiesDocument) {
+        return Response.json({ data: { Identities: { docs: [fixture.tribe], hasNextPage: false } } });
+    }
+    assert.equal(body.variables.identityId, fixture.tribe.id);
+    switch (body.query) {
+        case ListCompaniesByIdentityDocument:
+            assert(stripIgnoredCharacters(body.query).includes("identity:{equals:$identityId}"));
+            return Response.json({
+                data: {
+                    Companies: {
+                        docs: [
+                            fixture.company,
+                            { id: "unrelated-service", name: "Coffee company", description: "Coffee and tea." },
+                        ],
+                        totalDocs: 2,
+                        hasNextPage: false,
+                    },
+                },
+            });
+        case ListProductsByIdentityDocument:
+            assert(stripIgnoredCharacters(body.query).includes("companyIdentityId:{equals:$identityId}"));
+            return Response.json({
+                data: {
+                    Products: {
+                        docs: [{ ...fixture.service, company: { id: fixture.company.id } }],
+                        totalDocs: 1,
+                        hasNextPage: false,
+                    },
+                },
+            });
+        default:
+            throw new Error("Unexpected query: discovery must reuse generated relationship filters.");
+    }
+};
+
+export const withBackend = async (check: () => Promise<void>, fetchResponse: typeof fetch = respondBackend) => {
     const dnsMock = mock.method(dns.promises, "lookup", async () => [{ address: "8.8.8.8", family: 4 }]);
     syncBuiltinESMExports();
-    const fetchMock = mock.method(globalThis, "fetch", async (input: string | URL | Request, init?: RequestInit) => {
-        const request = new Request(input, init);
-        assert.equal(request.url, `${source}/api/graphql`);
-        assert.equal(request.headers.get("authorization"), null);
-        const body = (await request.json()) as RequestBody;
-        if (body.query === ListIdentitiesDocument) {
-            return Response.json({ data: { Identities: { docs: [fixture.tribe], hasNextPage: false } } });
-        }
-        assert.equal(body.variables.identityId, fixture.tribe.id);
-        switch (body.query) {
-            case ListCompaniesByIdentityDocument:
-                assert(stripIgnoredCharacters(body.query).includes("identity:{equals:$identityId}"));
-                return Response.json({
-                    data: {
-                        Companies: {
-                            docs: [
-                                fixture.company,
-                                { id: "unrelated-service", name: "Coffee company", description: "Coffee and tea." },
-                            ],
-                            totalDocs: 2,
-                            hasNextPage: false,
-                        },
-                    },
-                });
-            case ListProductsByIdentityDocument:
-                assert(stripIgnoredCharacters(body.query).includes("companyIdentityId:{equals:$identityId}"));
-                return Response.json({
-                    data: {
-                        Products: {
-                            docs: [{ ...fixture.service, company: { id: fixture.company.id } }],
-                            totalDocs: 1,
-                            hasNextPage: false,
-                        },
-                    },
-                });
-            default:
-                throw new Error("Unexpected query: discovery must reuse generated relationship filters.");
-        }
-    });
+    const fetchMock = mock.method(globalThis, "fetch", fetchResponse);
     try {
         await check();
     } finally {
@@ -149,7 +151,11 @@ export const publicDiscoveryChecks = {
             assert(!html.includes("<script"));
             assert.match(JSON.stringify(metadata.jsonLd), /memberOf/);
             const listedTribe = await fetchListedTribe({ id: fixture.tribe.id }, source);
-            assert.equal(listedTribe.Identity?.id, fixture.tribe.id, "Canonical tribe metadata must not depend on the broken legacy by-ID resolver");
+            assert.equal(
+                listedTribe.Identity?.id,
+                fixture.tribe.id,
+                "Canonical tribe metadata must not depend on the broken legacy by-ID resolver",
+            );
         }),
     publicDiscoveryErrors: async () =>
         withBackend(async () => {

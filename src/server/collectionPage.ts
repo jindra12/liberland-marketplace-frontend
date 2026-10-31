@@ -20,7 +20,7 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                 return { notFound: true };
             }
             try {
-                return jsonLdPageResponse(await fetchTribeSearchMetadata(input.data), context.query, context.res);
+                return jsonLdPageResponse(await fetchTribeSearchMetadata(input.data), context.query, context.res, context.req.headers.accept);
             } catch (error) {
                 console.error("Filtered tribe metadata failed", error);
                 // Never replace a failed filtered lookup with unrelated unfiltered listings.
@@ -43,6 +43,7 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                     },
                     context.query,
                     context.res,
+                    context.req.headers.accept,
                 );
             }
         }
@@ -51,6 +52,7 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                 await fetchCollectionPageMetadata(route, canonicalPath, page),
                 context.query,
                 context.res,
+                context.req.headers.accept,
             );
         } catch (error) {
             console.error(error);
@@ -67,6 +69,7 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                 },
                 context.query,
                 context.res,
+                context.req.headers.accept,
             );
         }
     };

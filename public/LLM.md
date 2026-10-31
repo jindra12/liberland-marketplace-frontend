@@ -6,6 +6,26 @@
 
 ## Start here
 
+- [Public API catalog](https://nswap.io/.well-known/api-catalog?format=json), [OpenAPI](https://nswap.io/openapi.json), and [AI catalog](https://nswap.io/.well-known/ard.json).
+- [MCP connection card](https://nswap.io/.well-known/mcp/server-card.json), [skills](https://nswap.io/.well-known/agent-skills/index.json), and [plain-text authentication guide](https://nswap.io/auth.txt).
+- [Read-only A2A search](https://nswap.io/.well-known/agent-card.json): protocol 1.0 JSON-RPC SendMessage with a structured JSON data part using public tribe-search fields. No private account actions.
+
+Public collection and detail pages support `Accept: text/markdown` or
+`?format=markdown`. Explicit JSON-LD and HTML formats take precedence over the
+Accept header. Markdown responses retain canonical URLs, source-qualified detail
+links, affiliations and pagination. Header-negotiated responses are not publicly
+cached. Keep using plain JSON or HTML if Markdown is unsupported by your reader.
+Compatible browsers register the same tools as the remote MCP gateway, using
+its live catalog and schemas. Public reads work without login; account tools
+use the existing app login for the specified backend. Browser writes require
+visible user approval and wallet payments still require wallet signing.
+Poppy discovery at
+`/.well-known/poppy.json` is confirmed by the configured backend issuer. That
+backend supports direct browser consent and signed delegated sessions for its
+scoped MCP tools. Each syndicated backend owns its accounts and permissions;
+never ask users to disclose passwords or tokens in chat. Public HTTP search
+remains anonymous and does not require Poppy or MCP.
+
 - Plain JSON search: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&format=json
 - Web-development lookup: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json
 - Readable directory: https://nswap.io/companies?tribe=Liberland&format=html

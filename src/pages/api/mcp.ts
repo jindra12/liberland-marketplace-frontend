@@ -7,8 +7,23 @@ import { acquireRequestSlot } from "../../server/security/limits";
 import { checkRequestLimit, getClientRateLimitKey } from "../../server/security/rateLimits";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    response.setHeader(
+        "Access-Control-Allow-Headers",
+        "Authorization, Content-Type, Accept, MCP-Protocol-Version, MCP-Session-Id, Last-Event-ID",
+    );
+    response.setHeader(
+        "Access-Control-Expose-Headers",
+        "WWW-Authenticate, MCP-Session-Id, MCP-Protocol-Version, Retry-After",
+    );
+    response.setHeader("Cache-Control", "no-store");
+    if (request.method === "OPTIONS") {
+        response.status(204).end();
+        return;
+    }
     if (request.method !== "POST" && request.method !== "GET" && request.method !== "DELETE") {
-        response.setHeader("Allow", "GET, POST, DELETE");
+        response.setHeader("Allow", "GET, POST, DELETE, OPTIONS");
         response.status(405).json({ error: "Method not allowed." });
         return;
     }

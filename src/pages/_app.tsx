@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app";
 import { DiscoveryGuide } from "../aiDiscovery/DiscoveryGuide";
+import { WebMcpRegistration } from "../agentDiscovery/WebMcpRegistration";
+import { AntProvider } from "../components/AntProvider";
 import "../../node_modules/@uiw/react-markdown-preview/esm/styles/markdown.css";
 import "../../node_modules/@uiw/react-md-editor/esm/index.css";
 import "../../node_modules/@uiw/react-md-editor/esm/components/Toolbar/index.css";
@@ -11,6 +13,9 @@ const App = (props: AppProps) => {
     return (
         <>
             <DiscoveryGuide />
+            <AntProvider>
+                <WebMcpRegistration />
+            </AntProvider>
             <props.Component {...props.pageProps} />
         </>
     );

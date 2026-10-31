@@ -41,6 +41,7 @@ export const createDetailPageProps = <TData, TVariables extends object | undefin
                 config.buildMetadata(entity, config.buildCanonicalPath(params, encodeServerUrlSegment(serverUrl)), extraData),
                 context.query,
                 context.res,
+                context.req.headers.accept,
             );
         } catch (error) {
             console.error(error);
