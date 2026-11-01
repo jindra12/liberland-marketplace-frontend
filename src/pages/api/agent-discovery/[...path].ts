@@ -1,5 +1,6 @@
 /* eslint-disable import/no-default-export */
 import type { NextApiRequest, NextApiResponse } from "next";
+import Negotiator from "negotiator";
 import { findDiscoveryDocument } from "../../../server/agentDiscovery/utils";
 import { getIssuerDiscoveryUrl } from "../../../server/agentDiscovery/auth/utils";
 import { fetchPoppyDiscovery } from "../../../server/agentDiscovery/poppy/utils";
@@ -34,8 +35,12 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
             response.status(404).json({ error: "No such agent discovery document." });
             return;
         }
-        const type =
-            request.query.format === "json" && document.type.endsWith("+json") ? "application/json" : document.type;
+        const type = document.type.endsWith("+json")
+            ? request.query.format === "json"
+                ? "application/json"
+                : new Negotiator(request).mediaType([document.type, "application/json"]) || document.type
+            : document.type;
+        response.setHeader("Vary", "Accept");
         response.setHeader("Content-Type", `${type}; charset=utf-8`);
         response.setHeader("Cache-Control", "public, max-age=3600");
         response.setHeader("Content-Length", Buffer.byteLength(document.body));

@@ -7,6 +7,7 @@ import type { CollectionPageProps } from "../types";
 import type { JsonLdPageMetadata, JsonLdResponse } from "./types";
 import { buildPageMarkdown, wantsMarkdown } from "../markdown/utils";
 import { AGENT_DISCOVERY_LINKS } from "../../agentDiscovery/constants";
+import { fetchHomepageMetadata } from "../homepage/utils";
 
 export const jsonLdPageResponse = <T extends JsonLdPageMetadata>(
     metadata: T,
@@ -43,6 +44,9 @@ export const jsonLdPageResponse = <T extends JsonLdPageMetadata>(
 
 export const createPublicShellPageProps = (route: "/" | "/syndication"): GetServerSideProps<CollectionPageProps> => {
     return async (context) => {
+        if (route === "/") {
+            return jsonLdPageResponse(await fetchHomepageMetadata(), context.query, context.res, context.req.headers.accept);
+        }
         const seo = SEO_BY_ROUTE[route];
         return jsonLdPageResponse({
             title: seo.title,

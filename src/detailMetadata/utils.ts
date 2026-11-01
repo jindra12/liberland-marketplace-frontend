@@ -59,7 +59,7 @@ export const buildProductOffers = (product: MetadataProduct, productUrl: string,
     const offer: OfferLeaf = {
         "@type": "Offer",
         "@id": `${productUrl}#offer`,
-        url: product.url || productUrl,
+        url: product.orderable ? productUrl : product.url || productUrl,
         itemOffered: { "@id": productUrl },
         ...(product.company ? { seller: buildCompanyReference(product.company, fallbackServerUrl) } : {}),
         ...(product.orderable && typeof product.inventory === "number" ? {

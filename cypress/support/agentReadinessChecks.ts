@@ -58,6 +58,15 @@ export const agentReadinessChecks = {
                 JSON.stringify(validator.errors),
             );
             assert(validator.validate(catalogSchema, buildAiCatalog()), JSON.stringify(validator.errors));
+            const { SITE_URL } = await import("../../src/siteUrl");
+            buildAiCatalog().entries.forEach((entry) => {
+                assert(entry.identifier.startsWith(`urn:air:${new URL(SITE_URL).hostname}:`));
+                assert(entry.representativeQueries.length > 0);
+            });
+            assert.equal(findDiscoveryDocument("ai-catalog.json")?.type, "application/ai-catalog+json");
+            assert.equal(findDiscoveryDocument("ard.json")?.type, "application/json");
+            assert.match(findDiscoveryDocument("auth.md")!.body, /^# auth.md/);
+            assert.match(findDiscoveryDocument("auth.txt")!.body, /does not implement the separate Auth.md/);
             const { default: SwaggerParser } = await import("@apidevtools/swagger-parser");
             await SwaggerParser.validate(buildOpenApiDocument());
             [
@@ -122,6 +131,19 @@ export const agentReadinessChecks = {
             assert.match(String(get.res.getHeader("Content-Type")), /application\/linkset\+json/);
             const catalog = JSON.parse(get.res._getData()) as { linkset: Array<{ item: Array<{ href: string }> }> };
             assert(catalog.linkset[0].item.some((item) => item.href.endsWith("/api/mcp")));
+            const catalogRequests = [
+                { query: { path: ["ai-catalog.json"] }, headers: {}, type: "application/ai-catalog+json" },
+                { query: { path: ["ai-catalog.json"], format: "json" }, headers: {}, type: "application/json" },
+                { query: { path: ["ai-catalog.json"] }, headers: { accept: "application/json" }, type: "application/json" },
+            ];
+            await Promise.all(catalogRequests.map(async (request) => {
+                const result = createMocks<NextApiRequest, NextApiResponse>({ method: "GET", query: request.query, headers: request.headers });
+                await handler(result.req, result.res);
+                assert.equal(result.res.statusCode, 200);
+                assert.equal(result.res.getHeader("Content-Type"), `${request.type}; charset=utf-8`);
+                assert.equal(result.res.getHeader("Vary"), "Accept");
+                assert.equal(JSON.parse(result.res._getData()).entries.length, 5);
+            }));
             const head = createMocks<NextApiRequest, NextApiResponse>({
                 method: "HEAD",
                 query: { path: ["agent-skills", "index.json"] },

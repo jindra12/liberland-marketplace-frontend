@@ -202,6 +202,11 @@ const collectionData = async (route: CollectionRoute, variables: CollectionVaria
     }
 };
 
+export const fetchHomepageProducts = async (): Promise<SeoCollectionItem[]> => {
+    const data = await collectionData("/products-services", { page: 1, limit: 3, sort: "-contentRankScore" });
+    return buildCollectionItems("/products-services", data, process.env.REACT_APP_BACKEND_URL);
+};
+
 export const fetchCollectionPageMetadata = async (
     route: CollectionRoute,
     canonicalPath: string,

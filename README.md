@@ -72,7 +72,8 @@ ordinary public HTTP discovery do not. Run `yarn test:ct:webmcp` for parity,
 credential isolation, cancellation, approval and error-handling checks.
 
 Poppy draft 0.3 discovery is verified against the configured backend issuer,
-which must authorize this frontend domain through its existing `FRONTEND_URL`.
+which must authorize this frontend domain through its existing
+`NEXT_PUBLIC_FRONTEND_URL` setting.
 The backend uses the published Personal Agent Protocol SDK for direct browser
 consent, signed delegated sessions and resource-specific MCP access. Grants and
 replay state are encrypted and persisted in MongoDB. Existing Payload account
@@ -82,6 +83,20 @@ Existing backend-qualified OAuth MCP resource identities remain unchanged.
 Run `yarn test:ct:poppy` for discovery and issuer-isolation regressions.
 The informational payment-protocol checks are not implemented by adding fake
 manifests or by paywalling public search.
+
+The homepage's server-loaded metadata includes up to three actual products and
+their offers, using the same generated GraphQL document as the product directory.
+`/?format=html` and `/?format=markdown` expose those records without executing
+JavaScript. Orderable offers link to the Nswap product page; external-only
+listings retain their merchant destination. AI shopping ends with a
+`create_checkout_link` handoff: the user submits orders and approves payments.
+
+`/.well-known/ard.json` remains plain JSON. The equivalent
+`/.well-known/ai-catalog.json` uses `application/ai-catalog+json`; readers that
+need ordinary JSON can send `Accept: application/json` or use `?format=json`.
+Every catalog entry includes example tasks and an identifier scoped to the
+configured site's domain. `/auth.md` and its plain-text alternative `/auth.txt`
+describe existing OAuth/Poppy authorization, not Auth.md agent registration.
 
 Run `yarn test:ct:agent-readiness` for protocol/schema/content regressions.
 Run `yarn test:ct:agent-auth` for official SDK interoperability: PKCE, refresh

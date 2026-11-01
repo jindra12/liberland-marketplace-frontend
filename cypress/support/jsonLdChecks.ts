@@ -106,6 +106,8 @@ export const jsonLdChecks = {
         assert.equal(offers[0].priceCurrency, "USD");
         assert.equal(offers[1].price, "0.005");
         assert.equal(offers[1].priceCurrency, "ETH");
+        assert.equal(buildProductOffers({ ...product, url: "https://seller.example/shop" }, url, serverUrl)[0].url, url);
+        assert.equal(buildProductOffers({ ...product, orderable: false, url: "https://seller.example/shop" }, url, serverUrl)[0].url, "https://seller.example/shop");
         const cryptoOnly = buildProductOffers({ ...product, priceInUSDEnabled: false }, url, serverUrl);
         assert.equal(cryptoOnly.length, 1);
         assert.equal(cryptoOnly[0].priceCurrency, "ETH");
@@ -136,14 +138,20 @@ export const jsonLdChecks = {
     },
     jsonLdGeneratedQueryReuse: async () => {
         const { fetchCollectionPageMetadata } = await import("../../src/collectionMetadata");
-        const { ListCompaniesDocument } = await import("../../src/generated/graphql");
+        const { ListCompaniesDocument, ListProductsDocument } = await import("../../src/generated/graphql");
+        const { fetchHomepageMetadata } = await import("../../src/server/homepage/utils");
+        const { buildPageMarkdown } = await import("../../src/server/markdown/utils");
         const previous = process.env.REACT_APP_BACKEND_URL;
         process.env.REACT_APP_BACKEND_URL = serverUrl;
         const lookup = mock.method(dns.promises, "lookup", async () => [{ address: "8.8.8.8", family: 4 }]);
         syncBuiltinESMExports();
         const fetchMock = mock.method(globalThis, "fetch", async (input: string | URL | Request, init?: RequestInit) => {
             const request = new Request(input, init);
-            const body = await request.json() as { query: string };
+            const body = await request.json() as { query: string; variables: { limit: number } };
+            if (body.query === ListProductsDocument) {
+                assert.equal(body.variables.limit, 3);
+                return Response.json({ data: { Products: { docs: [product], totalDocs: 1, totalPages: 1, hasNextPage: false } } });
+            }
             assert.equal(body.query, ListCompaniesDocument);
             return Response.json({ data: { Companies: { docs: [company], totalDocs: 1, totalPages: 1, hasNextPage: false } } });
         });
@@ -152,6 +160,23 @@ export const jsonLdChecks = {
             assert.match(JSON.stringify(metadata.jsonLd), /memberOf/);
             assert.match(JSON.stringify(metadata.jsonLd), new RegExp(`/companies/${company.id}/${encoded}`));
             assert.equal(fetchMock.mock.callCount(), 1);
+            const homepage = await fetchHomepageMetadata();
+            const homepageProduct = homepage.jsonLd.find((node) => node["@type"] === "Product");
+            assert.equal(homepageProduct?.name, product.name);
+            assert.match(JSON.stringify(homepageProduct?.offers), /"priceCurrency":"USD"/);
+            assert.match(JSON.stringify(homepageProduct?.offers), /"price":12.99/);
+            assert.equal(homepage.content?.items[0].url, homepageProduct?.url);
+            assert.match(buildPageMarkdown(homepage), /Coffee/);
+            assert.match(buildPageMarkdown(homepage), /review and submit/);
+            const React = await import("react");
+            const { renderToStaticMarkup } = await import("react-dom/server");
+            const { PublicContent } = await import("../../src/aiDiscovery/PublicContent");
+            assert(homepage.content);
+            const html = renderToStaticMarkup(React.createElement(PublicContent, { content: homepage.content }));
+            assert(html.includes(`href="${homepage.content.items[0].url}"`));
+            assert(html.includes(product.name!));
+            assert(!html.includes("aria-hidden"));
+            assert.equal(fetchMock.mock.callCount(), 2);
         } finally {
             fetchMock.mock.restore();
             lookup.mock.restore();

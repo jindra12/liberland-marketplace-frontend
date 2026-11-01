@@ -4,6 +4,7 @@ import { MCP_IDENTITY, ROBOTS_DISALLOW_PATHS } from "../../../agentDiscovery/con
 import { buildProtectedResourceMetadata } from "../../../mcp/auth";
 import { getDiscoveryBackend } from "../auth/utils";
 import { buildSkillsIndex } from "../skills/utils";
+import { MARKETPLACE_SKILLS } from "../skills/constants";
 
 export const buildMcpServerCard = () => ({
     $schema: "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
@@ -64,14 +65,15 @@ export const buildAiCatalog = () => ({
     host: { displayName: "Nswap syndicated marketplaces", documentationUrl: buildSiteUrl("/LLM.txt") },
     entries: [
         {
-            identifier: "urn:air:nswap:http:search",
+            identifier: `urn:air:${new URL(SITE_URL).hostname}:http:search`,
             displayName: "Public HTTP and semantic search",
             type: "application/vnd.oai.openapi+json",
             url: buildSiteUrl("/openapi.json"),
             description: "Unauthenticated tribe/service lookup and semantic RAG with explicit backend provenance, pagination and error semantics.",
+            representativeQueries: ["Find a Liberland web development company", "Find jobs offered by companies affiliated with Liberland"],
         },
         {
-            identifier: "urn:air:nswap:mcp:marketplace",
+            identifier: `urn:air:${new URL(SITE_URL).hostname}:mcp:marketplace`,
             displayName: "Nswap marketplace MCP",
             type: "application/mcp-server-card+json",
             url: buildSiteUrl("/.well-known/mcp/server-card.json"),
@@ -80,21 +82,24 @@ export const buildAiCatalog = () => ({
             representativeQueries: [
                 "Find a Liberland web development company",
                 "Compare products across syndicated backends",
+                "Prepare a cart and return a checkout link for me to review and pay in the app",
             ],
         },
         {
-            identifier: "urn:air:nswap:a2a:search",
+            identifier: `urn:air:${new URL(SITE_URL).hostname}:a2a:search`,
             displayName: "Nswap read-only marketplace search",
             type: "application/a2a-agent-card+json",
             url: buildSiteUrl("/.well-known/agent-card.json"),
             description: "Structured, public tribe and service search without an account or AI credits.",
+            representativeQueries: ["Find Liberland-affiliated companies offering web development", "Find products from companies affiliated with Liberland"],
         },
         ...buildSkillsIndex().skills.map((skill) => ({
-            identifier: `urn:air:nswap:skill:${skill.name}`,
+            identifier: `urn:air:${new URL(SITE_URL).hostname}:skill:${skill.name}`,
             displayName: skill.name,
             type: "application/agent-skills+md",
             url: skill.url,
             description: skill.description,
+            representativeQueries: MARKETPLACE_SKILLS.find((definition) => definition.name === skill.name)!.representativeQueries,
         })),
     ],
 });

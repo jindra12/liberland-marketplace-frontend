@@ -24,8 +24,9 @@ export const findDiscoveryDocument = (path: string, serverUrl?: string) => {
         case "api-catalog":
             return { type: "application/linkset+json", body: JSON.stringify(buildApiCatalog()) };
         case "ard.json":
-        case "ai-catalog.json":
             return { type: "application/json", body: JSON.stringify(buildAiCatalog()) };
+        case "ai-catalog.json":
+            return { type: "application/ai-catalog+json", body: JSON.stringify(buildAiCatalog()) };
         case "mcp.json":
         case "mcp/server-card.json":
             return { type: "application/json", body: JSON.stringify(buildMcpServerCard()) };

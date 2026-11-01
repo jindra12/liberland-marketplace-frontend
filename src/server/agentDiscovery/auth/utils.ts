@@ -28,10 +28,11 @@ export const buildAuthGuide = (serverUrl?: string): string => {
     const backend = getDiscoveryBackend(serverUrl);
     const resource = buildProtectedResourceMetadata(backend);
     return [
-        "# Nswap authentication",
+        "# auth.md - Nswap authentication",
         "",
         "Nswap is a syndicated marketplace gateway, not a central account provider. Public browsing, affiliation search and read-only MCP tools do not require a login.",
         "Writes and private account data require authorization at the specific source backend. Each backend has independent users, permissions, carts and orders.",
+        "This guide documents user OAuth and Poppy authorization. It does not implement the separate Auth.md agent-registration protocol or advertise an agent_auth registration endpoint.",
         "",
         `Default backend: ${backend}`,
         `Public MCP: ${buildSiteUrl("/api/mcp")}`,

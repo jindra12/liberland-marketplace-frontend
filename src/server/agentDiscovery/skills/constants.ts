@@ -1,6 +1,7 @@
 export const MARKETPLACE_SKILLS = [
     {
         name: "marketplace-search",
+        representativeQueries: ["Find a Liberland web development company", "Find coffee products affiliated with Liberland"],
         description:
             "Find companies, products, services and jobs by verified tribe affiliation, service descriptions and source backend.",
         instructions: [
@@ -16,6 +17,7 @@ export const MARKETPLACE_SKILLS = [
     },
     {
         name: "syndicated-shopping",
+        representativeQueries: ["Compare coffee offers across tribes", "Prepare my cart and give me a checkout link to review and pay myself"],
         description:
             "Compare source-qualified products and prepare shopping across independent backends with explicit user authorization.",
         instructions: [
