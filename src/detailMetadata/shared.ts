@@ -1,5 +1,6 @@
 import { stripMarkdownToText } from "../components/publish/postForm/utils";
 import { SITE_URL } from "../siteUrl";
+import type { PublicPageContent } from "../aiDiscovery/types";
 
 export const SITE_NAME = "NSwap";
 export { SITE_URL };
@@ -48,6 +49,7 @@ export const buildDetailJsonLd = (
         {
             "@context": "https://schema.org",
             "@type": "WebPage",
+            "@id": `${SITE_URL}${canonicalPath}#webpage`,
             name: ensureSiteSuffix(detailLabel),
             url: `${SITE_URL}${canonicalPath}`,
             description,
@@ -56,7 +58,7 @@ export const buildDetailJsonLd = (
                 name: SITE_NAME,
                 url: SITE_URL,
             },
-            mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+            mainEntity: extraJsonLd.length ? { "@id": `${SITE_URL}${canonicalPath}` } : undefined,
             potentialAction: {
                 "@type": "ReadAction",
                 target: `${SITE_URL}${canonicalPath}`,
@@ -86,7 +88,12 @@ export const buildDetailJsonLd = (
                 },
             ],
         },
-        ...extraJsonLd,
+        ...extraJsonLd.map((entity, index) => index === 0 ? {
+            ...entity,
+            "@id": `${SITE_URL}${canonicalPath}`,
+            url: `${SITE_URL}${canonicalPath}`,
+            mainEntityOfPage: { "@id": `${SITE_URL}${canonicalPath}#webpage` },
+        } : entity),
     ];
 };
 
@@ -104,6 +111,9 @@ const decodeHexSegment = (value: string): string => {
 };
 
 export type DetailPageMetadata = {
+    content?: PublicPageContent;
+    readableOnly?: boolean;
+    jsonLdAlternateUrl?: string;
     title: string;
     description: string;
     canonicalPath: string;
@@ -146,6 +156,11 @@ export const buildStandardDetailMetadata = (
         title: ensureSiteSuffix(detailLabel),
         description,
         canonicalPath,
+        content: {
+            title: detailLabel, description,
+            items: [{ name: detailLabel, description, url: `${SITE_URL}${canonicalPath}` }],
+            links: [{ name: sectionName, url: sectionPath }],
+        },
         jsonLd: buildDetailJsonLd(sectionName, sectionPath, detailLabel, description, canonicalPath, extraJsonLd),
         imageUrl: extras.imageUrl,
         imageAlt: extras.imageAlt,

@@ -6,12 +6,121 @@
 
 ## Start here
 
+- API catalog (plain JSON): https://nswap.io/.well-known/api-catalog?format=json
+- OpenAPI: https://nswap.io/openapi.json
+- MCP server card: https://nswap.io/.well-known/mcp/server-card.json
+- AI capability catalog: https://nswap.io/.well-known/ard.json
+- Agent skills: https://nswap.io/.well-known/agent-skills/index.json
+- Authentication and per-backend OAuth: https://nswap.io/auth.txt
+- A2A search card: https://nswap.io/.well-known/agent-card.json
+
+Public pages also support Accept: text/markdown or ?format=markdown, alongside
+ordinary HTML, JSON-LD and the plain JSON search below. Markdown is negotiated
+only for page representations, never as a replacement for MCP or JSON APIs.
+The A2A endpoint uses protocol 1.0 JSON-RPC SendMessage with an application/json
+data part containing the same entity/tribe/tribeId/q/serverUrl/page/limit fields
+as public tribe search. It is public and read-only; it cannot mutate accounts,
+orders or payments. Supporting browsers expose the full MCP tool catalog through
+WebMCP, including account/cart tools using the user's backend-specific app login.
+Browser writes require user approval; payments still require wallet signing.
+Poppy draft 0.3 discovery: /.well-known/poppy.json, verified by the backend issuer.
+The backend supports browser consent and signed delegated sessions for scoped
+MCP access. Each backend retains its own accounts and permissions. Public HTTP
+search does not require authentication, MCP or Poppy.
+
+- Plain JSON company search: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&format=json
+- Web development lookup: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json
+- HTML-only directory: https://nswap.io/companies?tribe=Liberland&format=html
+- Plain-text extended guide: https://nswap.io/LLM.txt
+
+The JSON route returns actual docs with names, descriptions, canonical Nswap URLs,
+tribe IDs/names, source serverUrl, official website when recorded, and associated
+product/service evidence for q searches. q matches all query words against the
+company name/description and its tribe-filtered products/services; "web" also
+matches "website", "websites", and "frontend". It is lexical search, not RAG.
+Always verify service evidence in descriptions rather than assuming a category.
+Affiliation comes from the backend's relationship-filtered query, never a mention
+of Liberland in text. Legacy relationships may not populate on company details;
+affiliationEvidence identifies the authoritative filter and source used by search.
+This is tribe membership, not physical location or incorporation.
+
+Use entity=companies, products, or jobs. Pass serverUrl to select another public
+syndicated backend; IDs belong to that backend. Use tribeId when names are ambiguous.
+JSON includes totalDocs, page, limit, totalPages, hasNextPage and links.next/previous;
+follow the supplied URLs to preserve filters, source, and format. Empty matches
+return HTTP 200 with docs: [] and totalDocs: 0. Unknown tribes return 404, ambiguous
+names 409, invalid input 400, backend failures 502, overload 429/503. Errors are
+not evidence of absent companies. q scans at most 2,000 records per entity and
+returns an explicit error rather than silently truncating a larger service scan.
+
+Ordinary company HTML pages render real names, descriptions, and profile links
+before JavaScript takes over. format=html keeps the readable directory/profile
+view even in a browser. No MCP client, authentication, or JavaScript is needed.
+If application/ld+json or text/markdown is unsupported by your reader, use the
+application/json search and text/plain /LLM.txt instead. The original JSON-LD
+search endpoint and ?format=jsonld page graphs remain available unchanged.
+
 - Website: https://nswap.io/
 - Homepage and discovery: https://nswap.io/
 - Sitemap: https://nswap.io/sitemap.xml
+- Section sitemap: https://nswap.io/sitemaps/sections.xml
 - Human-readable AI guide: https://nswap.io/LLM.md
 - MCP endpoint: https://nswap.io/api/mcp
 - Semantic AI search endpoint: https://nswap.io/api/syndication/ai/search
+- Public GET JSON-LD search example: https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+
+## Reading pages without JavaScript
+
+### Standalone JSON-LD documents
+
+On the homepage, public collection pages, and canonical source-qualified detail
+pages, follow `<link rel="alternate" type="application/ld+json">` in the head or
+the equivalent HTTP Link header. That URL serves the same page graph directly,
+without HTML or SPA code. Examples:
+
+- https://nswap.io/?format=jsonld
+- https://nswap.io/companies?tribe=Liberland&format=jsonld
+- https://nswap.io/products-services?page=2&format=jsonld
+
+To request a detail graph, append `?format=jsonld` to its full URL containing the
+record ID and encoded backend. Preserve other filters and pagination when adding
+format=jsonld. The response is application/ld+json with @context and @graph;
+inspect nodes inside @graph. Entity @id values and canonical links continue to
+identify the ordinary HTML detail URLs, not the alternate-format URLs.
+The existing /api/search/tribe endpoint instead returns a CollectionPage directly.
+
+Graphs express relationships explicitly: Company.memberOf identifies its tribe;
+JobPosting.hiringOrganization identifies the employer and its tribe; Product.offers
+contains Offer.seller, itemOffered and the applicable prices/currencies. Related
+entities retain their own backend-specific @id URLs. Company/tribe names and
+descriptions accompany those links. Official websites may appear as sameAs, but
+a company's tribe is not the same entity as the company. Affiliation is not proof
+of physical location or legal incorporation. Missing prices or inventory are not
+invented; USD cents are converted to dollars and crypto decimals retain precision.
+
+The sitemap is an index linking to small cached detail URL sets across public
+syndicated servers. Follow its shard links to discover canonical detail pages;
+each URL preserves its backend ID and encoded source URL. Backends refresh
+snapshots on demand after 24 hours, retain the last successful snapshot if a
+refresh fails, and retain superseded shards for 14 days. A first request may
+return 503 with Retry-After while a backend warms its cache; retry, do not infer
+that the marketplace is empty. Fresh/stale file reads do not scan all entities.
+
+If a fetch does not show the interactive listings, the page is not necessarily
+empty: inspect its server-rendered `<script type="application/ld+json">` data.
+CollectionPage.mainEntity contains real ItemList result URLs and counts. Follow
+those URLs to detail metadata, related entity links, and hasPart pagination links.
+WebSite/SearchAction EntryPoints document usable GET search URL templates.
+Tribe detail Organization.subjectOf links lead to full affiliated collections.
+The HTML body also includes a visually clipped navigation guide with real links
+to these resources. It is available in raw HTML without JavaScript, but excluded
+from assistive technology with aria-hidden=true and from keyboard tab navigation.
+Some AI readers also omit aria-hidden content; the head metadata and public GET
+search do not depend on that body guide being included by a particular reader.
+The page head links this guide and /LLM.md using rel="help"; robots.txt mentions
+both guides in comments (these are discovery hints, not standardized directives).
+If your reader omits scripts, use the public GET format=json endpoint or format=html directory above.
+Report lookup/network errors as failures, not as evidence that records are absent.
 
 Nswap can be explored through ordinary web pages, page metadata, structured data,
 search, semantic RAG, or MCP. These are complementary access paths. Use the path
@@ -69,6 +178,57 @@ application. Pagination links use the page query parameter, for example:
 `https://nswap.io/products-services?page=2`.
 
 ## Search and discovery
+
+### Search companies, products/services, and jobs by tribe (no MCP or login needed)
+
+Use the public GET endpoint, which returns application/ld+json with real result
+detail URLs, the resolved tribe, total count, and links to subsequent pages:
+
+- https://nswap.io/api/search/tribe?entity=companies&tribe=Liberland
+- https://nswap.io/api/search/tribe?entity=products&tribe=Liberland
+- https://nswap.io/api/search/tribe?entity=jobs&tribe=Liberland
+
+`tribe` is an exact tribe name (case-insensitive). You can instead use `tribeId`.
+The source defaults to the configured backend. Pass `serverUrl` for another
+syndicated backend; IDs are backend-specific. Ambiguous names are reported with
+candidate IDs; repeat with `tribeId` and `serverUrl`. Missing names are errors,
+not unfiltered search results. `page` starts at 1; `limit` defaults to 20 (max 100).
+Follow `hasPart` pagination links in the returned graph; they preserve the tribe,
+source, and page size. These links lead to server-generated listing metadata.
+This relationship lookup does not use RAG, embeddings, or OpenAI credits.
+
+Metadata-only navigation is also available directly:
+
+- https://nswap.io/companies?tribe=Liberland
+- https://nswap.io/products-services?tribe=Liberland
+- https://nswap.io/jobs?tribe=Liberland
+
+Fetch HTML and read the head's JSON-LD; no JavaScript execution is necessary.
+These query parameters filter server metadata; they do not change the SPA UI.
+Start at /tribes, follow a tribe detail URL, then its Organization.subjectOf
+links to all affiliated companies, products/services, or jobs. Unlike the small
+detail-page previews, these collections are fully paginated. Homepage and
+collection SearchActions advertise the public GET lookup using EntryPoint
+urlTemplate. Follow ItemList result URLs to individual detail metadata.
+
+Affiliation means Company.identity equals the tribe; products and jobs use
+companyIdentityId, the primary tribe of their seller/employer. Eligibility fields
+(allowedIdentities) or mere textual mentions are not affiliation. "Liberland
+company" here means tribe affiliation, NOT verified legal incorporation or
+physical location. Check detail fields separately for geographic claims.
+
+MCP equivalent (public): call describe_backend, then
+`find_by_tribe({"entity":"companies","tribe":"Liberland","page":1,"limit":20})`.
+Use `entity: "products"` or `"jobs"` for the other collections. Omit serverUrl to
+query active/default backends; errors are reported per backend. Use
+discover_syndicated_servers to find other reachable servers and call with their
+serverUrl explicitly (or add them to the authenticated active session cache).
+Retain each result's serverUrl and tribeId when following up. Generic MCP
+list_entities also supports relationship filters after describe_entity_schema:
+companies use `where: {"identity":{"equals":"TRIBE_ID"}}`; products/jobs use
+`where: {"companyIdentityId":{"equals":"TRIBE_ID"}}`.
+Use RAG separately for broad semantic concepts, and verify tribe affiliation with
+find_by_tribe or the public GET lookup before claiming membership.
 
 Exact and broad discovery can use the following concepts:
 

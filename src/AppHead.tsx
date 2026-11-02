@@ -3,7 +3,12 @@ import Head from "next/head";
 
 import { SITE_URL } from "./siteUrl";
 import { serializeJsonLd } from "./jsonLd/utils";
+import { AI_DISCOVERY_GUIDES, AI_DISCOVERY_HINT } from "./aiDiscovery/constants";
+import { JSON_LD_MEDIA_TYPE } from "./jsonLd/constants";
+import { AGENT_DISCOVERY_LINKS } from "./agentDiscovery/constants";
+
 type AppHeadProps = {
+    jsonLdAlternateUrl?: string;
     title?: string;
     description?: string;
     canonicalPath?: string;
@@ -23,13 +28,15 @@ type AppHeadProps = {
         rel: string;
     }>;
 };
+
 const DEFAULT_TITLE = "NSwap";
 const DEFAULT_DESCRIPTION = "Network marketplace for all your needs";
 const DEFAULT_PREVIEW_IMAGE = "/preview-image.png";
 const DEFAULT_URL = SITE_URL;
+
 export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
     const titleValue = props.title || DEFAULT_TITLE;
-    const descriptionValue = props.description || DEFAULT_DESCRIPTION;
+    const descriptionValue = `${props.description || DEFAULT_DESCRIPTION} ${AI_DISCOVERY_HINT}`;
     const resolvedSiteUrl = props.siteUrl || DEFAULT_URL;
     const canonicalUrl = props.canonicalPath ? `${resolvedSiteUrl}${props.canonicalPath}` : undefined;
     const robotsValue = props.noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large";
@@ -45,6 +52,10 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
             <meta name="application-name" content="NSwap" />
             <meta name="robots" content={robotsValue} />
             <meta name="description" content={descriptionValue} />
+            {AGENT_DISCOVERY_LINKS.map((link) => <link key={link.rel} rel={link.rel} href={link.href} type={link.type} />)}
+            {AI_DISCOVERY_GUIDES.map((guide) => (
+                <link key={guide.path} rel="help" type={guide.type} title={guide.name} href={guide.path} />
+            ))}
             <meta property="og:site_name" content="NSwap" />
             <meta property="og:title" content={titleValue} />
             <meta property="og:description" content={descriptionValue} />
@@ -69,6 +80,9 @@ export const AppHead: React.FunctionComponent<AppHeadProps> = (props) => {
                 <link key={`link-${index}`} rel={link.rel} href={link.href} />
             ))}
             {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+            {props.jsonLdAlternateUrl && (
+                <link rel="alternate" type={JSON_LD_MEDIA_TYPE} href={props.jsonLdAlternateUrl} />
+            )}
             <link rel="apple-touch-icon" href="/logo192.png" />
             <link rel="manifest" href="/manifest.json" />
             <title>{titleValue}</title>

@@ -1,0 +1,16 @@
+{
+    "tribe": { "id": "699af07de3cc9546fc95dd12", "name": "Liberland" },
+    "service": {
+        "id": "6a7e6397bd7e4e4801010daa",
+        "name": "Website Development & Support",
+        "description": "Website design and build with ongoing maintenance, support and client training, from a Milan software house operating since 1995.\n\n*Catalogued by Claude*"
+    },
+    "company": {
+        "id": "6a7e6397bd7e4e4801010d85",
+        "name": "AlfaPi srl",
+        "description": "Milan web and software house founded in 1995 (VAT 11396690155), building customised web and software solutions to simplify business operations. The web practice covers website development, training, maintenance and support, and SEO and web marketing; the software practice covers custom web applications, systems integration and Smart IVR voice and telephone software. Lorenzo Imbasciati is founding partner and company administrator.\n\n*Catalogued by Claude*",
+        "website": "https://www.alfapi.com",
+        "serverURL": "https://backend.nswap.io",
+        "identity": null
+    }
+}

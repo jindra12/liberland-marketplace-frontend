@@ -17,6 +17,10 @@ import type {
 import { fetchServerQuery } from "./server/utils";
 import { buildDetailUrl } from "./detailMetadata/related";
 import { SEO_BY_ROUTE, type SeoCollectionItem, type SeoCollectionPageData } from "./shellPage/seo";
+import { buildPaginationLinks } from "./shellPage/utils";
+import { buildProductOffers, getMetadataServerUrl } from "./detailMetadata/utils";
+import type { MetadataRelationships } from "./detailMetadata/types";
+import type { PublicPageContent } from "./aiDiscovery/types";
 
 type CollectionRoute = "/companies" | "/tribes" | "/jobs" | "/products-services" | "/ventures" | "/posts";
 
@@ -44,7 +48,8 @@ const toCollectionItem = (
     description: string | null | undefined,
     type: string,
     attributes: SeoCollectionItem["attributes"] = [],
-): SeoCollectionItem => ({ name, url, description, type, attributes });
+    relationships: MetadataRelationships = {},
+): SeoCollectionItem => ({ name, url, description, type, attributes, ...relationships });
 
 const definedAttributes = (
     attributes: Array<{ name: string; value: string | number | boolean | null | undefined }>,
@@ -54,20 +59,25 @@ const definedAttributes = (
             attribute.value !== null && attribute.value !== undefined && attribute.value !== "",
     );
 
-const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData): SeoCollectionItem[] => {
+const buildCollectionItems = (
+    route: CollectionRoute,
+    data: CollectionQueryData,
+    fallbackServerUrl?: string,
+): SeoCollectionItem[] => {
     switch (route) {
         case "/companies":
             return (
                 (data as ListCompaniesQuery).Companies?.docs.map((company) =>
                     toCollectionItem(
                         company.name ?? "Company",
-                        buildDetailUrl("/companies", company.id, company.serverURL),
+                        buildDetailUrl("/companies", company.id, company.serverURL || fallbackServerUrl),
                         company.description,
                         "Organization",
                         definedAttributes([
                             { name: "identity", value: company.identity?.name },
                             { name: "verification", value: company.verification },
                         ]),
+                        { identity: company.identity },
                     ),
                 ) ?? []
             );
@@ -76,7 +86,7 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                 (data as ListIdentitiesQuery).Identities?.docs.map((identity) =>
                     toCollectionItem(
                         identity.name,
-                        buildDetailUrl("/tribes", identity.id, identity.serverURL),
+                        buildDetailUrl("/tribes", identity.id, identity.serverURL || fallbackServerUrl),
                         identity.description,
                         "Organization",
                         definedAttributes([{ name: "listedItems", value: identity.itemCount }]),
@@ -88,7 +98,7 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                 (data as ListJobsQuery).Jobs?.docs.map((job) =>
                     toCollectionItem(
                         job.title ?? "Job",
-                        buildDetailUrl("/jobs", job.id, job.serverURL),
+                        buildDetailUrl("/jobs", job.id, job.serverURL || fallbackServerUrl),
                         job.description,
                         "JobPosting",
                         definedAttributes([
@@ -97,15 +107,21 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                             { name: "company", value: job.company?.name },
                             { name: "identity", value: job.company?.identity?.name },
                         ]),
+                        { company: job.company },
                     ),
                 ) ?? []
             );
         case "/products-services":
             return (
-                (data as ListProductsQuery).Products?.docs.map((product) =>
-                    toCollectionItem(
+                (data as ListProductsQuery).Products?.docs.map((product) => {
+                    const url = buildDetailUrl(
+                        "/products-services",
+                        product.id,
+                        product.serverURL || fallbackServerUrl,
+                    );
+                    return toCollectionItem(
                         product.name ?? "Product or service",
-                        buildDetailUrl("/products-services", product.id, product.serverURL),
+                        url,
                         product.description,
                         "Product",
                         definedAttributes([
@@ -115,15 +131,16 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                             { name: "priceInETH", value: product.priceInETH },
                             { name: "priceInTRX", value: product.priceInTRX },
                         ]),
-                    ),
-                ) ?? []
+                        { offers: buildProductOffers(product, url, getMetadataServerUrl(url)) },
+                    );
+                }) ?? []
             );
         case "/ventures":
             return (
                 (data as ListStartupsQuery).Startups?.docs.map((venture) =>
                     toCollectionItem(
                         venture.title ?? "Venture",
-                        buildDetailUrl("/ventures", venture.id, venture.serverURL),
+                        buildDetailUrl("/ventures", venture.id, venture.serverURL || fallbackServerUrl),
                         venture.description,
                         "Organization",
                         definedAttributes([
@@ -141,7 +158,7 @@ const buildCollectionItems = (route: CollectionRoute, data: CollectionQueryData)
                 (data as ListPostsQuery).Posts?.docs.map((post) =>
                     toCollectionItem(
                         post.title ?? "Post",
-                        buildDetailUrl("/posts", post.id, post.company?.serverURL),
+                        buildDetailUrl("/posts", post.id, post.company?.serverURL || fallbackServerUrl),
                         post.meta?.description ?? post.content,
                         "Article",
                         definedAttributes([{ name: "company", value: post.company?.name }]),
@@ -185,6 +202,11 @@ const collectionData = async (route: CollectionRoute, variables: CollectionVaria
     }
 };
 
+export const fetchHomepageProducts = async (): Promise<SeoCollectionItem[]> => {
+    const data = await collectionData("/products-services", { page: 1, limit: 3, sort: "-contentRankScore" });
+    return buildCollectionItems("/products-services", data, process.env.REACT_APP_BACKEND_URL);
+};
+
 export const fetchCollectionPageMetadata = async (
     route: CollectionRoute,
     canonicalPath: string,
@@ -196,6 +218,7 @@ export const fetchCollectionPageMetadata = async (
     jsonLd: Record<string, unknown>[];
     extraMetaTags: Array<{ name?: string; property?: string; content: string }>;
     extraLinks: Array<{ href: string; rel: string }>;
+    content: PublicPageContent;
 }> => {
     const variables = { page, limit: 20, sort: "-contentRankScore" };
     const data = await collectionData(route, variables);
@@ -217,7 +240,7 @@ export const fetchCollectionPageMetadata = async (
     })();
     const seo = SEO_BY_ROUTE[route];
     const pageData: SeoCollectionPageData = {
-        items: buildCollectionItems(route, data),
+        items: buildCollectionItems(route, data, process.env.REACT_APP_BACKEND_URL),
         page,
         totalItems: result?.totalDocs ?? 0,
         totalPages: result?.totalPages ?? page,
@@ -232,9 +255,31 @@ export const fetchCollectionPageMetadata = async (
         canonicalPath,
         jsonLd: seo.buildJsonLd?.(canonicalPath, page, pageData) ?? [],
         extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
-        extraLinks: [
-            ...(page > 1 ? [{ rel: "prev", href: `${canonicalPath.split("?")[0]}?page=${page - 1}` }] : []),
-            ...(pageData.hasNextPage ? [{ rel: "next", href: `${canonicalPath.split("?")[0]}?page=${page + 1}` }] : []),
-        ],
+        extraLinks: buildPaginationLinks(canonicalPath, page, pageData.hasNextPage),
+        content: {
+            title,
+            description,
+            items: pageData.items.map((item) => ({
+                name: item.name,
+                description: item.description || "",
+                url: item.url,
+                ...(item.identity
+                    ? {
+                          affiliation: {
+                              name: item.identity.name,
+                              url: buildDetailUrl(
+                                  "/tribes",
+                                  item.identity.id,
+                                  item.identity.serverURL || process.env.REACT_APP_BACKEND_URL,
+                              ),
+                          },
+                      }
+                    : {}),
+            })),
+            links: buildPaginationLinks(canonicalPath, page, pageData.hasNextPage).map((link) => ({
+                name: link.rel === "next" ? "Next page" : "Previous page",
+                url: link.href,
+            })),
+        },
     };
 };

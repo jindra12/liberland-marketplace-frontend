@@ -156,3 +156,13 @@ manager is `yarn`.
 - Do not delete, remove, or alter `dev.env` or any of its records unless the user explicitly instructs you to add something there or otherwise change `dev.env` directly.
 - Do not override or "clean up" component changes that the user made unless the user explicitly asks you to change that component. If a component file has user-authored edits, stop and preserve them instead of rewriting the component for convenience.
 - If something consumes too much RAM memory, treat it first as a likely implementation bug or a bug in the tests, not as a signal to allocate more memory.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

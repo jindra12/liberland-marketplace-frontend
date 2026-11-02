@@ -12,13 +12,9 @@ import {
     fetchListStartupsByCompany,
 } from "../server/queries";
 
-import {
-    buildAbsoluteImageUrl,
-    buildActionSentence,
-    buildStandardDetailMetadata,
-    normalizeWhitespace,
-} from "./shared";
+import { buildAbsoluteImageUrl, buildActionSentence, buildStandardDetailMetadata, normalizeWhitespace } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { buildCompanyReference, getMetadataServerUrl } from "./utils";
 
 type CompanyRelatedMetadata = {
     jobs: ListJobsByCompanyQuery["Jobs"];
@@ -27,14 +23,22 @@ type CompanyRelatedMetadata = {
     startups: ListStartupsByCompanyQuery["Startups"];
 };
 
-const buildCompanyRelatedItems = (company: NonNullable<CompanyByIdQuery["Company"]>, related?: CompanyRelatedMetadata) => {
-    const relatedServerUrl = company.serverURL || "";
+const buildCompanyRelatedItems = (
+    company: NonNullable<CompanyByIdQuery["Company"]>,
+    fallbackServerUrl: string,
+    related?: CompanyRelatedMetadata,
+) => {
+    const relatedServerUrl = company.serverURL || fallbackServerUrl;
     const identityItems =
         company.identity?.name && company.identity?.id
             ? buildItemListJsonLd("Identity", [
                   {
                       label: company.identity.name,
-                      url: buildDetailUrl("/tribes", company.identity.id, company.identity.serverURL),
+                      url: buildDetailUrl(
+                          "/tribes",
+                          company.identity.id,
+                          company.identity.serverURL || relatedServerUrl,
+                      ),
                   },
               ])
             : [];
@@ -43,14 +47,14 @@ const buildCompanyRelatedItems = (company: NonNullable<CompanyByIdQuery["Company
         "Jobs",
         (related?.jobs?.docs || []).map((job) => ({
             label: job.title ?? "Job",
-            url: buildDetailUrl("/jobs", job.id, job.serverURL),
+            url: buildDetailUrl("/jobs", job.id, job.serverURL || relatedServerUrl),
         })),
     );
     const productItems = buildItemListJsonLd(
         "Products and services",
         (related?.products?.docs || []).map((product) => ({
             label: product.name ?? "Product",
-            url: buildDetailUrl("/products-services", product.id, product.serverURL),
+            url: buildDetailUrl("/products-services", product.id, product.serverURL || relatedServerUrl),
         })),
     );
     const startupItems = buildItemListJsonLd(
@@ -86,34 +90,68 @@ export const buildCompanyPageMetadata = (
         ])}`,
     );
 
-    return buildStandardDetailMetadata(
-        "Companies",
-        "/companies",
-        detailLabel,
-        description,
-        canonicalPath,
-        [
+    return {
+        ...buildStandardDetailMetadata(
+            "Companies",
+            "/companies",
+            detailLabel,
+            description,
+            canonicalPath,
+            [
+                {
+                    "@context": "https://schema.org",
+                    ...buildCompanyReference(company, getMetadataServerUrl(canonicalPath)),
+                    name: detailLabel,
+                    description,
+                    image: buildAbsoluteImageUrl(company.image?.url),
+                    telephone: company.phone,
+                    email: company.email,
+                    identifier: company.id,
+                },
+                ...buildCompanyRelatedItems(company, getMetadataServerUrl(canonicalPath), related),
+            ],
             {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                name: detailLabel,
-                description,
-                url: company.website ?? company.serverURL,
-                image: buildAbsoluteImageUrl(company.image?.url),
-                telephone: company.phone,
-                email: company.email,
-                sameAs: company.identity?.website ? [company.identity.website] : undefined,
-                identifier: company.id,
+                imageUrl: buildAbsoluteImageUrl(company.image?.url),
+                imageAlt: company.image?.alt ?? company.image?.filename ?? detailLabel,
+                ogType: "website",
+                extraMetaTags: company.website ? [{ property: "og:see_also", content: company.website }] : [],
             },
-            ...buildCompanyRelatedItems(company, related),
-        ],
-        {
-            imageUrl: buildAbsoluteImageUrl(company.image?.url),
-            imageAlt: company.image?.alt ?? company.image?.filename ?? detailLabel,
-            ogType: "website",
-            extraMetaTags: company.website ? [{ property: "og:see_also", content: company.website }] : [],
+        ),
+        content: {
+            title: detailLabel,
+            description,
+            items: [
+                {
+                    name: detailLabel,
+                    description: company.description || "",
+                    url: buildDetailUrl("/companies", company.id, getMetadataServerUrl(canonicalPath)),
+                    website: company.website || "",
+                    ...(company.identity
+                        ? {
+                              affiliation: {
+                                  name: company.identity.name,
+                                  url: buildDetailUrl(
+                                      "/tribes",
+                                      company.identity.id,
+                                      company.identity.serverURL || getMetadataServerUrl(canonicalPath),
+                                  ),
+                              },
+                          }
+                        : {}),
+                    services: (related?.products?.docs || []).map((product) => ({
+                        name: product.name || "Product or service",
+                        description: product.description || "",
+                        url: buildDetailUrl(
+                            "/products-services",
+                            product.id,
+                            product.serverURL || getMetadataServerUrl(canonicalPath),
+                        ),
+                    })),
+                },
+            ],
+            links: [],
         },
-    );
+    };
 };
 
 export const fetchCompanyRelatedMetadata = async (

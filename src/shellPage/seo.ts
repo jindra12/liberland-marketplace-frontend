@@ -1,4 +1,8 @@
 import { SECTION_LINKS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./constants";
+import { tribeSearchActions } from "../tribeSearch/utils";
+import { buildPaginationLinks } from "./utils";
+import { buildListingRelationships } from "../detailMetadata/utils";
+import type { MetadataRelationships } from "../detailMetadata/types";
 
 export type SeoConfig = {
     title: string;
@@ -13,7 +17,7 @@ export type SeoConfig = {
     ) => Record<string, unknown>[];
 };
 
-export type SeoCollectionItem = {
+export type SeoCollectionItem = MetadataRelationships & {
     name: string;
     url: string;
     description?: string | null;
@@ -39,14 +43,11 @@ const buildWebsiteJsonLd = (canonicalPath: string): Record<string, unknown>[] =>
         {
             "@context": "https://schema.org",
             "@type": "WebSite",
+            "@id": `${SITE_URL}/#website`,
             name: SITE_NAME,
             url: SITE_URL,
             description: SITE_DESCRIPTION,
-            potentialAction: {
-                "@type": "SearchAction",
-                target: `${SITE_URL}/jobs?search={search_term_string}`,
-                "query-input": "required name=search_term_string",
-            },
+            potentialAction: tribeSearchActions(),
         },
         {
             "@context": "https://schema.org",
@@ -124,6 +125,7 @@ export const buildCollectionJsonLd = (
         {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
+            "@id": `${SITE_URL}${canonicalPath}`,
             name:
                 pageNumber && pageNumber > 1 ? `${name} | ${SITE_NAME} | Page ${pageNumber}` : `${name} | ${SITE_NAME}`,
             url: `${SITE_URL}${canonicalPath}`,
@@ -135,8 +137,9 @@ export const buildCollectionJsonLd = (
             },
             mainEntity: {
                 "@type": "ItemList",
+                "@id": `${SITE_URL}${canonicalPath}#items`,
                 name,
-                url: `${SITE_URL}${path}`,
+                url: `${SITE_URL}${canonicalPath}`,
                 itemListOrder: "https://schema.org/ItemListOrderDescending",
                 numberOfItems: pageData?.totalItems,
                 itemListElement: pageData?.items.map((item, index) => ({
@@ -147,8 +150,10 @@ export const buildCollectionJsonLd = (
                     item: {
                         "@type": item.type ?? "Thing",
                         "@id": item.url,
+                        url: item.url,
                         name: item.name,
                         description: item.description || undefined,
+                        ...buildListingRelationships(item),
                         additionalProperty: item.attributes?.map((attribute) => ({
                             "@type": "PropertyValue",
                             name: attribute.name,
@@ -157,6 +162,11 @@ export const buildCollectionJsonLd = (
                     },
                 })),
             },
+            hasPart: pageData ? buildPaginationLinks(canonicalPath, pageData.page, pageData.hasNextPage).map((link) => ({
+                "@type": "CollectionPage",
+                name: link.rel === "next" ? "Next page" : "Previous page",
+                url: `${SITE_URL}${link.href}`,
+            })) : [],
             keywords: keywords.join(", "),
             about: {
                 "@type": "DefinedTermSet",
@@ -177,11 +187,11 @@ export const buildCollectionJsonLd = (
                 "@type": "Audience",
                 audienceType: "People and AI agents looking for marketplace information",
             },
-            potentialAction: {
+            potentialAction: [...tribeSearchActions(), {
                 "@type": "SearchAction",
                 target: `${SITE_URL}${searchPath}?search={search_term_string}`,
                 "query-input": "required name=search_term_string",
-            },
+            }],
             additionalProperty: [
                 {
                     "@type": "PropertyValue",

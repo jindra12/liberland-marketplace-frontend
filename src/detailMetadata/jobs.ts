@@ -7,8 +7,10 @@ import {
     normalizeWhitespace,
 } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { buildCompanyReference, getMetadataServerUrl } from "./utils";
 
 export const buildJobPageMetadata = (job: NonNullable<JobByIdQuery["Job"]>, canonicalPath: string) => {
+    const sourceServerUrl = job.serverURL || getMetadataServerUrl(canonicalPath);
     const detailLabel = job.title ?? "Job detail";
     const salaryRange =
         job.salaryRange?.min !== null &&
@@ -44,10 +46,7 @@ export const buildJobPageMetadata = (job: NonNullable<JobByIdQuery["Job"]>, cano
                 applyUrl: job.applyUrl,
                 hiringOrganization: job.company
                     ? {
-                          "@type": "Organization",
-                          identifier: job.company.id,
-                          name: job.company.name,
-                          url: job.company.serverURL,
+                          ...buildCompanyReference(job.company, sourceServerUrl),
                           logo: buildAbsoluteImageUrl(job.company.image?.url),
                       }
                     : undefined,
@@ -75,7 +74,7 @@ export const buildJobPageMetadata = (job: NonNullable<JobByIdQuery["Job"]>, cano
                     ? [
                           {
                               label: job.company.name,
-                              url: buildDetailUrl("/companies", job.company.id, job.company.serverURL),
+                              url: buildDetailUrl("/companies", job.company.id, job.company.serverURL || sourceServerUrl),
                           },
                       ]
                     : [],
@@ -86,7 +85,7 @@ export const buildJobPageMetadata = (job: NonNullable<JobByIdQuery["Job"]>, cano
                     ? [
                           {
                               label: job.company.identity.name,
-                              url: buildDetailUrl("/tribes", job.company.identity.id, job.company.identity.serverURL),
+                              url: buildDetailUrl("/tribes", job.company.identity.id, job.company.identity.serverURL || job.company.serverURL || sourceServerUrl),
                           },
                       ]
                     : [],

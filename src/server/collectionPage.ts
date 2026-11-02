@@ -3,18 +3,63 @@ import { fetchCollectionPageMetadata } from "../collectionMetadata";
 import { SEO_BY_ROUTE } from "../shellPage/seo";
 import { buildCanonicalPath, parsePageNumber } from "../shellPage/utils";
 import type { CollectionPageProps, CollectionRoute } from "./types";
+import { tribeSearchSchema } from "../tribeSearch/utils";
+import { TRIBE_ENTITIES, TRIBE_COLLECTIONS } from "../tribeSearch/constants";
+import { fetchTribeSearchMetadata } from "./tribeSearch/utils";
+import { jsonLdPageResponse } from "./jsonLd/utils";
+import { tribeSearchFailure } from "./tribeSearch/results/utils";
 
 export const createCollectionPageProps = (route: CollectionRoute): GetServerSideProps<CollectionPageProps> => {
     return async (context) => {
         const page = parsePageNumber(context.query.page) ?? 1;
         const canonicalPath = buildCanonicalPath(context.resolvedUrl || route, page);
+        if (context.query.tribe || context.query.tribeId) {
+            const entity = TRIBE_ENTITIES.find((candidate) => TRIBE_COLLECTIONS[candidate].path === route);
+            const input = tribeSearchSchema.safeParse({ ...context.query, format: undefined, entity });
+            if (!input.success) {
+                return { notFound: true };
+            }
+            try {
+                return jsonLdPageResponse(await fetchTribeSearchMetadata(input.data), context.query, context.res, context.req.headers.accept);
+            } catch (error) {
+                console.error("Filtered tribe metadata failed", error);
+                // Never replace a failed filtered lookup with unrelated unfiltered listings.
+                const failure = tribeSearchFailure(error);
+                context.res.statusCode = failure.status;
+                return jsonLdPageResponse(
+                    {
+                        title: "Marketplace lookup failed",
+                        description: failure.body.error,
+                        canonicalPath,
+                        jsonLd: [],
+                        extraLinks: [],
+                        extraMetaTags: [],
+                        content: {
+                            title: "Marketplace lookup failed",
+                            description: failure.body.error,
+                            items: [],
+                            links: [],
+                        },
+                    },
+                    context.query,
+                    context.res,
+                    context.req.headers.accept,
+                );
+            }
+        }
         try {
-            return { props: await fetchCollectionPageMetadata(route, canonicalPath, page) };
+            return jsonLdPageResponse(
+                await fetchCollectionPageMetadata(route, canonicalPath, page),
+                context.query,
+                context.res,
+                context.req.headers.accept,
+            );
         } catch (error) {
             console.error(error);
+            context.res.statusCode = 502;
             const seo = SEO_BY_ROUTE[route];
-            return {
-                props: {
+            return jsonLdPageResponse(
+                {
                     title: page > 1 ? `${seo.title} - Page ${page}` : seo.title,
                     description: page > 1 ? `${seo.description} This is page ${page} of the listing.` : seo.description,
                     canonicalPath,
@@ -22,7 +67,10 @@ export const createCollectionPageProps = (route: CollectionRoute): GetServerSide
                     extraMetaTags: seo.keywords?.length ? [{ name: "keywords", content: seo.keywords.join(", ") }] : [],
                     extraLinks: [],
                 },
-            };
+                context.query,
+                context.res,
+                context.req.headers.accept,
+            );
         }
     };
 };
