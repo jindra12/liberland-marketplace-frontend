@@ -3,12 +3,19 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 import { normalizePublicBackendUrl, publicBackendFetch } from "../server/security/utils";
 import { BACKEND_TIMEOUT_MS } from "../server/security/constants";
 import type { BackendAuthorization } from "./types";
+import { Semaphore } from "async-mutex";
+import { DISCOVERY_CONCURRENCY } from "../server/security/constants";
+
+const backendSlots = new Semaphore(DISCOVERY_CONCURRENCY);
 
 export const normalizeBackendUrl = (value: string): string => {
     return normalizePublicBackendUrl(value);
 };
 
-export const authorizationForBackend = (authorization: BackendAuthorization | undefined, serverUrl: string): string | undefined => {
+export const authorizationForBackend = (
+    authorization: BackendAuthorization | undefined,
+    serverUrl: string,
+): string | undefined => {
     return authorization && normalizeBackendUrl(authorization.serverUrl) === normalizeBackendUrl(serverUrl)
         ? authorization.value
         : undefined;
@@ -21,34 +28,41 @@ export const callBackendTool = async (
     argumentsValue: Record<string, unknown>,
     signal?: AbortSignal,
 ): Promise<unknown> => {
-    const token = authorizationForBackend(authorization, serverUrl);
-    const transport = new StreamableHTTPClientTransport(new URL(`${normalizeBackendUrl(serverUrl)}/api/mcp`), {
-        requestInit: { headers: token ? { Authorization: token } : undefined, signal },
-        fetch: publicBackendFetch,
-    });
-    const client = new Client({ name: "nswap-mcp-gateway", version: "1.0.0" });
+    return backendSlots.runExclusive(async () => {
+        signal?.throwIfAborted();
+        const token = authorizationForBackend(authorization, serverUrl);
+        const transport = new StreamableHTTPClientTransport(new URL(`${normalizeBackendUrl(serverUrl)}/api/mcp`), {
+            requestInit: { headers: token ? { Authorization: token } : undefined, signal },
+            fetch: publicBackendFetch,
+        });
+        const client = new Client({ name: "nswap-mcp-gateway", version: "1.0.0" });
 
-    try {
-        await client.connect(transport);
-        const result = await client.callTool({ name: toolName, arguments: argumentsValue }, undefined, {
-            timeout: BACKEND_TIMEOUT_MS,
-            signal,
-        }) as {
-            isError?: boolean;
-            content: Array<{ type: string; text?: string }>;
-            structuredContent?: unknown;
-        };
+        try {
+            await client.connect(transport);
+            const result = (await client.callTool({ name: toolName, arguments: argumentsValue }, undefined, {
+                timeout: BACKEND_TIMEOUT_MS,
+                signal,
+            })) as {
+                isError?: boolean;
+                content: Array<{ type: string; text?: string }>;
+                structuredContent?: unknown;
+            };
 
-        if (result.isError) {
-            throw new Error(result.content.map((item) => item.type === "text" ? item.text : "Backend MCP tool failed.").join("\n"));
+            if (result.isError) {
+                throw new Error(
+                    result.content
+                        .map((item) => (item.type === "text" ? item.text : "Backend MCP tool failed."))
+                        .join("\n"),
+                );
+            }
+
+            const hasTextContent = result.content.some((item) => item.type === "text" && item.text);
+
+            return hasTextContent ? result.content : (result.structuredContent ?? result.content);
+        } finally {
+            await client.close();
         }
-
-        const hasTextContent = result.content.some((item) => item.type === "text" && item.text);
-
-        return hasTextContent ? result.content : result.structuredContent ?? result.content;
-    } finally {
-        await client.close();
-    }
+    });
 };
 
 type McpTextContent = { type: "text"; text?: string };
@@ -84,7 +98,7 @@ export const searchBackendRag = async (
         body: JSON.stringify({ query, limit }),
         signal,
     });
-    const body = await response.json() as RagResponse;
+    const body = (await response.json()) as RagResponse;
     if (!response.ok) {
         const detail = typeof body.error === "string" ? `: ${body.error}` : ".";
         throw new Error(`RAG search failed on ${serverUrl}${detail}`);

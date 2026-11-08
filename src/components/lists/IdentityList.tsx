@@ -7,33 +7,29 @@ import { Avatar, Flex, Grid, Typography } from "antd";
 import { Identity } from "../../generated/graphql";
 import { routes } from "../../routes";
 import { AppList } from "../AppList";
-import { useDislikeIdentityMutation, useLikeIdentityMutation, useListIdentitiesQuery } from "../hooks";
 import { Markdown } from "../Markdown";
+import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { getImage } from "../shared/image/utils";
 
+import { useIdentityListModel } from "./useIdentityListModel";
+
 export const IdentityList: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
-    const likeMutation = useLikeIdentityMutation();
-    const dislikeMutation = useDislikeIdentityMutation();
-    const [page, setPage] = React.useState(1);
-    const query = useListIdentitiesQuery({
-        limit: 20,
-        page,
-    });
-    const allItems = query.data?.Identities?.docs || [];
+    const model = useIdentityListModel();
 
     return (
         <AppList
-            hasMore={false}
-            items={allItems}
-            next={() => setPage(page + 1)}
-            loading={query.isLoading}
-            refetch={query.refetch}
+            rowKey={getSourceQualifiedEntityKey}
+            hasMore={Boolean(model.query.data?.Identities?.hasNextPage)}
+            items={model.items}
+            next={model.loadMore}
+            loading={model.query.isLoading}
+            refetch={model.query.refetch}
             title="Tribes"
             likeActions={{
-                likeMutation,
-                dislikeMutation,
+                likeMutation: model.likeMutation,
+                dislikeMutation: model.dislikeMutation,
             }}
             renderItem={{
                 title: (identity) => (

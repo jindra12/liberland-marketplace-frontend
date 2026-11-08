@@ -4,12 +4,12 @@ import { useAnalytics } from "use-analytics";
 
 export const useTrackPageView = (serverUrl?: string | null) => {
     const analytics = useAnalytics();
-    const { hash, pathname, search } = useLocation();
+    const { pathname } = useLocation();
 
     React.useEffect(() => {
         analytics?.page?.(
-            { route: `${pathname}${search}${hash}` },
+            { route: pathname },
             serverUrl ? { targetUrl: serverUrl } : undefined,
         );
-    }, [analytics, hash, pathname, search, serverUrl]);
+    }, [analytics, pathname, serverUrl]);
 };

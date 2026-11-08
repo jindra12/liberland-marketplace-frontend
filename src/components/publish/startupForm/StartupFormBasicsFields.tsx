@@ -45,7 +45,7 @@ export const StartupFormBasicsFields: React.FunctionComponent<StartupFormBasicsF
                 ]}
                 className="Publish__startupCompanyField"
             >
-                <CompanyField serverURL={props.url} userId={props.userId} />
+                <CompanyField serverURL={props.url} />
             </Form.Item>
             <Form.Item
                 name="identity"
@@ -58,7 +58,11 @@ export const StartupFormBasicsFields: React.FunctionComponent<StartupFormBasicsF
                 ]}
                 className="Publish__startupIdentityField"
             >
-                <Select loading={props.isIdentitiesLoading} placeholder="Select a tribe" options={props.identityOptions} />
+                <Select
+                    loading={props.isIdentitiesLoading}
+                    placeholder="Select a tribe"
+                    options={props.identityOptions}
+                />
             </Form.Item>
         </>
     );

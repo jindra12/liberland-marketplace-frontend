@@ -1,5 +1,19 @@
 import { normalizePublicBackendUrl, publicBackendFetch } from "./security/utils";
-import type { GraphQLServerResponse } from "./types";
+import type { DetailRouteParams, FetchAdditionalDetailData, GraphQLServerResponse } from "./types";
+
+export const fetchOptionalDetailData = async <TEntity, TExtra>(
+    fetchAdditionalData: FetchAdditionalDetailData<TEntity, TExtra> | undefined,
+    entity: TEntity,
+    params: DetailRouteParams,
+    serverUrl: string,
+): Promise<TExtra | undefined> => {
+    try {
+        return await fetchAdditionalData?.(entity, params, serverUrl);
+    } catch (error) {
+        console.error("Optional detail metadata is unavailable", error);
+        return undefined;
+    }
+};
 
 export const fetchServerQuery = async <TData, TVariables extends object | undefined>(
     query: string,
@@ -22,7 +36,7 @@ export const fetchServerQuery = async <TData, TVariables extends object | undefi
         throw new Error(`GraphQL request failed with status ${response.status}`);
     }
 
-    const payload = await response.json() as GraphQLServerResponse<TData>;
+    const payload = (await response.json()) as GraphQLServerResponse<TData>;
     if (payload.errors?.length) {
         throw new Error(payload.errors[0].message);
     }

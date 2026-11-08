@@ -2,7 +2,6 @@ import { defineConfig } from "cypress";
 import fs from "fs";
 import path from "path";
 import { format } from "prettier";
-import webpack from "webpack";
 import type { GraphQLRequestLogPayload } from "./cypress/support/graphqlMock/types";
 import { securityChecks } from "./cypress/support/securityChecks";
 import { tribeSearchChecks } from "./cypress/support/tribeSearchChecks";
@@ -12,6 +11,10 @@ import { publicDiscoveryChecks } from "./cypress/support/publicDiscoveryChecks";
 import { agentReadinessChecks } from "./cypress/support/agentReadinessChecks";
 import { agentAuthChecks } from "./cypress/support/agentAuthChecks";
 import { poppyChecks } from "./cypress/support/poppyChecks";
+import { gatewayRegressionChecks } from "./cypress/support/security-regressions/gatewayChecks";
+import { protocolRegressionChecks } from "./cypress/support/security-regressions/protocolChecks";
+import { gatewayRoutingChecks } from "./cypress/support/security-regressions/gatewayRoutingChecks";
+import { gatewayTransportChecks } from "./cypress/support/security-regressions/http/utils";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -37,12 +40,6 @@ envFile.split(/\r?\n/).forEach((line) => {
 process.env.REACT_APP_BACKEND_URL = "http://127.0.0.1:3010";
 
 const walletStubWebpackConfig = {
-    plugins: [
-        new webpack.NormalModuleReplacementPlugin(
-            /SolanaPay$/,
-            path.resolve("cypress/support/walletStub/solana-pay-component.tsx"),
-        ),
-    ],
     resolve: {
         alias: {
             "thirdweb/react$": path.resolve("cypress/support/walletStub/thirdweb-react.tsx"),
@@ -105,6 +102,10 @@ export default defineConfig({
                 ...agentReadinessChecks,
                 ...agentAuthChecks,
                 ...poppyChecks,
+                ...gatewayRegressionChecks,
+                ...protocolRegressionChecks,
+                ...gatewayRoutingChecks,
+                ...gatewayTransportChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

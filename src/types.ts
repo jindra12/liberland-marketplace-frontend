@@ -159,6 +159,7 @@ export interface ConnectButtonProps {
 export type Chains = "Ethereum" | "Solana" | "Tron";
 
 export interface FormModel {
+    serverUrl?: string;
     amount: bigint;
     orderId: string;
     recipient: string;

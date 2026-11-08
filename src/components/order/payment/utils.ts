@@ -2,7 +2,9 @@ import {
     OrderUpdate_PaymentProofs_Chain_MutationInput,
     UserUpdate_Wallets_Chain_MutationInput,
 } from "../../../generated/graphql";
-import type { MeUserQuery, MutationUserUpdate_WalletsInput } from "../../../generated/graphql";
+import BigNumber from "bignumber.js";
+import type { MutationUserUpdate_WalletsInput } from "../../../generated/graphql";
+import type { BackendUserQuery } from "../../query/types";
 import type { CartForRequiredChains, CryptoChain, OrderForPayments } from "../../../types";
 import { getPrimaryCryptoAddress } from "../../shared/product/utils";
 import { CRYPTO_CHAIN_DECIMALS, CRYPTO_CHAIN_ORDER } from "../constants";
@@ -59,17 +61,6 @@ const resolveItemPaymentRecipient = (item: OrderItem, chain: CryptoChain): strin
     return undefined;
 };
 
-const resolveProductNativePrice = (item: OrderItem, chain: CryptoChain): string | null | undefined => {
-    switch (chain) {
-        case "ethereum":
-            return item.product?.priceInETH;
-        case "solana":
-            return item.product?.priceInSOL;
-        case "tron":
-            return item.product?.priceInTRX;
-    }
-};
-
 const toFixedNativeUnits = (value: string | null | undefined, decimals: number): bigint => {
     const [wholePart = "0", fractionPartRaw = ""] = String(value ?? "0").split(".");
     const fractionPart = fractionPartRaw.slice(0, decimals).padEnd(decimals, "0");
@@ -79,25 +70,6 @@ const toFixedNativeUnits = (value: string | null | undefined, decimals: number):
     const wholeUnits = BigInt(wholePart) * factor;
     const fractionUnits = fractionPart ? BigInt(fractionPart) : 0n;
     return wholeUnits + fractionUnits;
-};
-
-const formatFixedNativeUnits = (units: bigint, decimals: number): string => {
-    if (units === 0n) {
-        return "0";
-    }
-
-    const factor = Array.from({ length: decimals }).reduce<bigint>((accumulator) => {
-        return accumulator * 10n;
-    }, 1n);
-    const wholePart = units / factor;
-    const fractionPart = units % factor;
-
-    if (fractionPart === 0n) {
-        return wholePart.toString();
-    }
-
-    const fractionText = fractionPart.toString().padStart(decimals, "0").replace(/0+$/, "");
-    return `${wholePart.toString()}.${fractionText}`;
 };
 
 const toTransactionHashChainInput = (chain: CryptoChain): OrderUpdate_PaymentProofs_Chain_MutationInput => {
@@ -180,13 +152,13 @@ export const resolveOrderRecipientAddress = (
 };
 
 export const buildPaymentProfileUsersByUrl = (
-    meUsers: MeUserQuery | MeUserQuery[] | undefined,
+    meUsers: BackendUserQuery | BackendUserQuery[] | undefined,
     urls: string[],
 ): PaymentProfileUsersByUrl => {
     const entries = Array.isArray(meUsers) ? meUsers : meUsers ? [meUsers] : [];
 
-    return urls.reduce<PaymentProfileUsersByUrl>((result, url, index) => {
-        const user = entries[index]?.meUser?.user;
+    return urls.reduce<PaymentProfileUsersByUrl>((result, url) => {
+        const user = entries.find((entry) => entry.serverURL === url)?.meUser?.user;
 
         return {
             ...result,
@@ -254,63 +226,89 @@ export type ChainPaymentAmount = {
     amount: string;
 };
 
-export const collectOrderChainPaymentAmounts = (order: Pick<OrderForPayments, "items">): ChainPaymentAmount[] => {
-    const totals = (order.items ?? []).reduce<Record<string, ChainPaymentAmount>>((result, item) => {
-        const chain = resolveItemPaymentChain(item);
-        const productId = item.product?.id;
-
-        if (!chain || !productId) {
-            return result;
+export const collectOrderChainPaymentAmounts = (
+    order: Pick<OrderForPayments, "items" | "paymentTargets" | "cryptoPrices">,
+): ChainPaymentAmount[] => {
+    if (!order.paymentTargets?.length) {
+        // An old snapshot can only be allocated safely when it has exactly one payout destination.
+        const destinations = (order.items ?? []).flatMap((item) => {
+            const chain = resolveItemPaymentChain(item);
+            const recipient = chain && resolveItemPaymentRecipient(item, chain);
+            return chain && recipient && item.product?.id ? [{ chain, recipient, productId: item.product.id }] : [];
+        });
+        const first = destinations[0];
+        if (
+            !first ||
+            destinations.some((entry) => entry.chain !== first.chain || entry.recipient !== first.recipient)
+        ) {
+            return [];
         }
+        const amount = order.cryptoPrices?.find((price) => price.chain === first.chain)?.expectedNativeAmount;
+        return amount && new BigNumber(amount).isFinite() && new BigNumber(amount).gt(0)
+            ? [
+                  {
+                      chain: first.chain,
+                      recipient: first.recipient,
+                      productIds: [...new Set(destinations.map((entry) => entry.productId))],
+                      amount,
+                      amountInSmallestUnit: toFixedNativeUnits(amount, CRYPTO_CHAIN_DECIMALS[first.chain]),
+                  },
+              ]
+            : [];
+    }
 
-        const recipient = resolveItemPaymentRecipient(item, chain);
-
-        if (!recipient) {
-            return result;
-        }
-
-        const quantity = BigInt(item.quantity ?? 0);
-        const unitPrice = toFixedNativeUnits(resolveProductNativePrice(item, chain), CRYPTO_CHAIN_DECIMALS[chain]);
-        const lineTotal = unitPrice * quantity;
-        const key = `${chain}::${recipient}`;
-        const current = result[key];
-        const nextAmountInSmallestUnit = (current?.amountInSmallestUnit ?? 0n) + lineTotal;
-        const nextProductIds = current?.productIds.includes(productId)
-            ? current.productIds
-            : [...(current?.productIds ?? []), productId];
-
-        return {
-            ...result,
-            [key]: {
-                chain,
-                recipient,
-                productIds: nextProductIds,
-                amountInSmallestUnit: nextAmountInSmallestUnit,
-                amount: formatFixedNativeUnits(nextAmountInSmallestUnit, CRYPTO_CHAIN_DECIMALS[chain]),
-            },
-        };
-    }, {});
-
+    const groups = Object.groupBy(
+        order.paymentTargets,
+        (target) => `${target.chain}::${target.normalizedRecipientAddress || target.recipientAddress}`,
+    );
     return CRYPTO_CHAIN_ORDER.flatMap((chain) =>
-        Object.values(totals).filter((entry) => entry.chain === chain && entry.amountInSmallestUnit > 0n),
+        Object.values(groups).flatMap((targets) => {
+            const first = targets?.[0];
+            if (!first || first.chain !== chain || !first.recipientAddress) {
+                return [];
+            }
+            const rate = new BigNumber(
+                order.cryptoPrices?.find((price) => price.chain === chain)?.nativePerStable || "0",
+            );
+            if (
+                !rate.isFinite() ||
+                !rate.gt(0) ||
+                targets.some(
+                    (target) =>
+                        !target.productID ||
+                        target.stableAmount === null ||
+                        target.stableAmount === undefined ||
+                        !Number.isFinite(target.stableAmount) ||
+                        target.stableAmount < 0,
+                )
+            ) {
+                return [];
+            }
+            const stableAmount = targets.reduce((total, target) => total.plus(target.stableAmount!), new BigNumber(0));
+            const amount = stableAmount
+                .times(rate)
+                .decimalPlaces(CRYPTO_CHAIN_DECIMALS[chain], BigNumber.ROUND_DOWN)
+                .toFixed();
+            return new BigNumber(amount).gt(0)
+                ? [
+                      {
+                          chain,
+                          recipient: first.recipientAddress,
+                          productIds: [...new Set(targets.map((target) => target.productID!))],
+                          amount,
+                          amountInSmallestUnit: toFixedNativeUnits(amount, CRYPTO_CHAIN_DECIMALS[chain]),
+                      },
+                  ]
+                : [];
+        }),
     );
 };
 
 export const toExistingTransactionHashRows = (
-    order: {
-        items?: OrderItem[] | null;
-        transactionHashes?:
-            | {
-                  id?: string | null;
-                  product?: { id?: string | null } | string | null;
-                  chain?: CryptoChain | null;
-                  transactionHash?: string | null;
-              }[]
-            | null;
-    },
+    order: Pick<OrderForPayments, "paymentProofs">,
 ): TransactionHashUpdateRow[] => {
-    return (order.transactionHashes ?? []).reduce<TransactionHashUpdateRow[]>((rows, entry) => {
-        const productId = typeof entry?.product === "string" ? entry.product : entry?.product?.id;
+    return (order.paymentProofs ?? []).reduce<TransactionHashUpdateRow[]>((rows, entry) => {
+        const productId = entry.product?.id;
         const transactionHash = entry?.transactionHash;
         const chain = entry?.chain ? toCryptoChain(entry.chain) : undefined;
 
@@ -323,10 +321,15 @@ export const toExistingTransactionHashRows = (
             product: productId,
             chain: toTransactionHashChainInput(chain),
             transactionHash,
+            fulfilled: entry.fulfilled,
+            rejected: entry.rejected,
         });
         return rows;
     }, []);
 };
+
+const paymentProofKey = (product: TransactionHashUpdateRow["product"], chain: string, hash: string): string =>
+    `${product}::${chain}::${chain === "solana" ? hash : hash.toLowerCase()}`;
 
 export const appendTransactionHashRows = (props: {
     existingRows: TransactionHashUpdateRow[];
@@ -335,10 +338,10 @@ export const appendTransactionHashRows = (props: {
     txHash: string;
 }): { nextRows: TransactionHashUpdateRow[]; appendedCount: number } => {
     const existingKeys = new Set(
-        props.existingRows.map((row) => `${row.product}::${row.chain}::${row.transactionHash}`),
+        props.existingRows.map((row) => paymentProofKey(row.product, row.chain!, row.transactionHash!)),
     );
     const appendedRows = props.productIds.reduce<TransactionHashUpdateRow[]>((rows, productId) => {
-        const key = `${productId}::${props.chain}::${props.txHash}`;
+        const key = paymentProofKey(productId, props.chain, props.txHash);
 
         if (existingKeys.has(key)) {
             return rows;

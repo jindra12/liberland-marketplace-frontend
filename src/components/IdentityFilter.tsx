@@ -8,6 +8,7 @@ import type { LabeledValue } from "antd/es/select";
 import type { DocType, SearchOption } from "../types";
 
 import { useSearchIdentitiesQuery } from "./hooks";
+import { getSourceQualifiedEntityKey } from "./query/utils";
 
 export interface IdentityFilterProps {
     onChange: (ids: string[]) => void;
@@ -44,7 +45,7 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
                   .filter((searchDoc) => searchDoc.doc?.relationTo === "identities")
                   .map((searchDoc, index) => {
                       const doc = searchDoc.doc!.value as DocType;
-                      const value = `${doc.serverURL || ""}|${doc.id!}`;
+                      const value = getSourceQualifiedEntityKey({ id: doc.id!, serverURL: doc.serverURL });
 
                       return {
                           key: `${searchDoc.id}-${doc.serverURL || ""}-${value}-${index}`,
@@ -66,7 +67,7 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
             searchValue={searchTerm}
             filterOption={false}
             options={options.map((option) => ({
-                value: option.id,
+                value: option.value,
                 label: option.label || option.id,
             }))}
             notFoundContent={query.isLoading ? <Spin size="small" /> : undefined}

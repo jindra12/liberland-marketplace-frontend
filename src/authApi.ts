@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { getAccessToken } from "./gqlFetcher";
 
 const authClient = (url: string) => {
-    const token = getAccessToken(url);
     return axios.create({
         baseURL: `${url}/api/auth`,
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        withCredentials: true,
     });
 };
 

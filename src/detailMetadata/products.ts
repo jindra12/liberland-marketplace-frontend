@@ -130,7 +130,7 @@ export const fetchProductRelatedMetadata = async (
     _params: { id?: string; serverUrl?: string },
     serverUrl: string,
 ): Promise<ProductRelatedMetadata> => {
-    const url = product.serverURL || serverUrl;
+    const url = serverUrl;
 
     if (!url || !product.company?.id) {
         return {

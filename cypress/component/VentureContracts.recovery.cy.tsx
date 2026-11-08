@@ -8,6 +8,69 @@ import { screenshotStep } from "../support/component-tests/directBasic";
 import { writeDeploymentRecovery } from "../../src/components/VentureContracts/recoveryUtils";
 
 describe("Venture deployment recovery", () => {
+    it("requires explicit takeover and archival while retaining the remote transaction journal", () => {
+        const account = privateKeyToAccount({
+            client: ventureWalletClient,
+            privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+        });
+        let record: DeploymentRecovery | null = {
+            values: {
+                tokenName: "Harbor Venture",
+                tokenSymbol: "HBR",
+                initialSupply: "21000000",
+                tokensPerEth: "2000",
+                deploymentNetwork: "localhost",
+                acknowledged: true,
+            },
+            transactions: [{ label: "token implementation", hash: `0x${"a".repeat(64)}` }],
+            progress: [],
+            manifest: null,
+            runnerId: "c00beca2-d184-4afd-b465-72ee04d38a17",
+        };
+        cy.intercept("GET", "**/api/startups/leased/deployment-recovery*", (request) => request.reply({ record }));
+        cy.intercept<{ action: string; runnerId: string; record: DeploymentRecovery }>(
+            "POST",
+            "**/api/startups/leased/deployment-recovery*",
+            (request) => {
+                expect(request.body.record.transactions).to.deep.equal(record!.transactions);
+                if (request.body.action === "takeover") {
+                    record = { ...record!, runnerId: request.body.runnerId };
+                } else {
+                    expect(request.body.action).to.equal("abandon");
+                    record = null;
+                }
+                request.alias = request.body.action;
+                request.reply({ record });
+            },
+        );
+        mountVentureMarket(
+            <DeploymentFlow
+                ventureName="Harbor Venture"
+                ventureId="leased"
+                deploymentKey="leased"
+                account={account}
+                wallet={createWallet("io.metamask")}
+                onSave={cy.stub()}
+            />,
+        );
+        cy.contains("button", "Resume deployment").should("be.disabled");
+        cy.contains("button", "Take over recovery").click();
+        cy.contains("button", "Keep recovery unchanged").click();
+        cy.contains("button", "Resume deployment").should("be.disabled");
+        cy.contains("button", "Take over recovery").click();
+        cy.contains("I stopped every runner and reconciled all transactions.").click();
+        cy.contains("button", "Confirm takeover").click();
+        cy.wait("@takeover");
+        cy.contains("button", "Resume deployment").should("be.enabled");
+        cy.contains("button", "Archive abandoned deployment").click();
+        cy.contains("Reconcile every pending transaction").should("be.visible");
+        cy.contains("button", "Confirm archive").should("be.disabled");
+        cy.contains("I stopped every runner and reconciled all transactions.").click();
+        cy.contains("button", "Confirm archive").click();
+        cy.wait("@abandon");
+        cy.contains("button", "Deploy token & governance").should("exist");
+        cy.contains("button", "Resume deployment").should("not.exist");
+    });
     it("keeps an unsynced transaction hash and blocks deployment until the backend recovers", () => {
         const account = privateKeyToAccount({
             client: ventureWalletClient,

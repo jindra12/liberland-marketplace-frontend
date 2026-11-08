@@ -1,6 +1,7 @@
 mutation CreatePost($data: mutationPostInput!, $draft: Boolean) {
   createPost(data: $data, draft: $draft) {
     id
+    serverURL
     title
     slug
     repost

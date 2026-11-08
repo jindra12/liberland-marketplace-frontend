@@ -15,6 +15,7 @@ export const FormSubmitButtons: React.FunctionComponent<FormSubmitButtonsProps> 
                 type="primary"
                 htmlType="submit"
                 loading={props.loading}
+                disabled={props.loading}
                 onClick={() => {
                     props.draftRef.current = false;
                 }}
@@ -24,6 +25,7 @@ export const FormSubmitButtons: React.FunctionComponent<FormSubmitButtonsProps> 
             <Button
                 htmlType="submit"
                 loading={props.loading}
+                disabled={props.loading}
                 onClick={() => {
                     props.draftRef.current = true;
                 }}

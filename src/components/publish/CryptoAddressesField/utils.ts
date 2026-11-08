@@ -26,7 +26,7 @@ export const buildCryptoAddressesInput = (value?: CryptoAddressesFormValue | nul
     const address = typeof value?.address === "string" ? value.address.trim() : "";
 
     if (!chain && !address) {
-        return undefined;
+        return null;
     }
 
     return {

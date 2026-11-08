@@ -39,6 +39,7 @@ export const GovernancePanel: React.FunctionComponent<VentureMarketProps> = (pro
             )}
             {model.query.data?.items.map((proposal) => (
                 <DaoProposalCard
+                    deployment={props.deployment}
                     key={proposal.id}
                     proposal={proposal}
                     decimals={props.deployment.tokenDecimals ?? 18}

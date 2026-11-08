@@ -17,6 +17,7 @@ export const deployVentureContracts = async (
     report: (progress: DeploymentProgress) => void | Promise<void>,
     transactions: DeploymentTransaction[] = [],
     onSubmitted?: (transaction: DeploymentTransaction) => void | Promise<void>,
+    beforeTransaction?: () => Promise<void>,
 ) => {
     const configuration = deploymentNetworks[values.deploymentNetwork];
     const chain = getVentureChain(configuration.chainId);
@@ -40,6 +41,7 @@ export const deployVentureContracts = async (
         poolTokensPerEth: parseUnits(values.tokensPerEth, 18),
         transactions,
         onSubmitted,
+        beforeTransaction,
         onTransaction: async (label, receipt) => report({ label, hash: receipt.hash }),
     });
 };

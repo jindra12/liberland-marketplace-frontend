@@ -59,7 +59,7 @@ const queryBackend = async (serverUrl: string, body: ProxyRequest): Promise<Prox
         throw new Error("The syndicated backend rejected the AI search.");
     }
 
-    return { serverUrl, answer: result.answer, sources: result.sources };
+    return { serverUrl, answer: result.answer, sources: result.sources.map((source) => ({ ...source, serverUrl })) };
 };
 
 const handler = async (

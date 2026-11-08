@@ -1,5 +1,6 @@
 export type ProductParameterValueDraft = {
     id?: string | null;
+    key?: string | null;
     name?: string | null;
     default?: boolean | null;
 };

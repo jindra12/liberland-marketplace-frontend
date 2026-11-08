@@ -15,6 +15,7 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
             ... on Post {
               __typename
               id
+              serverURL
               title
               slug
               repost
@@ -74,6 +75,7 @@ query SearchPosts($searchTerm: String!, $page: Int = 1, $limit: Int = 20, $sort:
                 ... on Post {
                   __typename
                   id
+                  serverURL
                   title
                   slug
                   repost

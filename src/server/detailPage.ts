@@ -1,9 +1,11 @@
 import type { GetServerSideProps } from "next";
-import { decodeServerUrlSegment, type DetailPageMetadata } from "../detailMetadata/shared";
+import type { DetailPageMetadata } from "../detailMetadata/shared";
+import { decodeServerUrlSegment } from "../routes";
 import { normalizePublicBackendUrl } from "./security/utils";
 import type { DetailPageConfig, DetailRouteParams } from "./types";
 import { encodeServerUrlSegment } from "../routes";
 import { jsonLdPageResponse } from "./jsonLd/utils";
+import { fetchOptionalDetailData } from "./utils";
 
 export const createDetailPageProps = <TData, TVariables extends object | undefined, TEntity, TExtra = undefined>(
     config: DetailPageConfig<TData, TVariables, TEntity, TExtra>,
@@ -34,18 +36,33 @@ export const createDetailPageProps = <TData, TVariables extends object | undefin
                 return { notFound: true };
             }
 
-            const extraData = config.fetchAdditionalData
-                ? await config.fetchAdditionalData(entity, params, serverUrl)
-                : undefined;
+            const extraData = await fetchOptionalDetailData(config.fetchAdditionalData, entity, params, serverUrl);
             return jsonLdPageResponse(
-                config.buildMetadata(entity, config.buildCanonicalPath(params, encodeServerUrlSegment(serverUrl)), extraData),
+                config.buildMetadata(
+                    entity,
+                    config.buildCanonicalPath(params, encodeServerUrlSegment(serverUrl)),
+                    extraData,
+                ),
                 context.query,
                 context.res,
                 context.req.headers.accept,
             );
         } catch (error) {
             console.error(error);
-            return { notFound: true };
+            context.res.statusCode = 503;
+            context.res.setHeader("Cache-Control", "no-store");
+            context.res.setHeader("Retry-After", "60");
+            return jsonLdPageResponse(
+                {
+                    title: "Marketplace information temporarily unavailable",
+                    description: "The source backend is temporarily unavailable. Please retry shortly.",
+                    canonicalPath: config.buildCanonicalPath({ id, serverUrl: encodedServerUrl }, encodedServerUrl),
+                    jsonLd: [],
+                },
+                context.query,
+                context.res,
+                context.req.headers.accept,
+            );
         }
     };
 };

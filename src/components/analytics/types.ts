@@ -1,3 +1,5 @@
+import type { TrackAnalyticsEventMutation } from "../../generated/graphql";
+
 export type AnalyticsEventOptions = {
     targetUrl?: string;
 };
@@ -44,3 +46,7 @@ export type AnalyticsMutationEvent = {
     targetUrl?: string;
     type: string;
 };
+export type AnalyticsIdentitiesByBackend = Record<
+    string,
+    Pick<TrackAnalyticsEventMutation["trackAnalyticsEvent"]["analytics"], "distinctId" | "sessionId">
+>;

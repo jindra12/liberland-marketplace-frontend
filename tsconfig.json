@@ -38,6 +38,7 @@
     "node_modules",
     "src/submodules/liberland-marketplace-contracts/hardhat.config.ts",
     "src/submodules/liberland-marketplace-contracts/scripts/**/*.ts",
-    "src/submodules/liberland-marketplace-contracts/test/**/*.ts"
+    "src/submodules/liberland-marketplace-contracts/test/**/*.ts",
+    "src/submodules/liberland-marketplace-contracts/integration/**/*.ts"
   ]
 }

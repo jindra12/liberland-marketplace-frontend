@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
+import { User } from "oidc-client-ts";
 
-import { Job_EmploymentType_MutationInput } from "../../src/generated/graphql";
+import { Job_EmploymentType_MutationInput, useJobByIdQuery } from "../../src/generated/graphql";
 import { JobForm } from "../../src/components/publish/JobForm";
 import type { JobFormProps } from "../../src/components/publish/JobForm";
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
@@ -48,15 +49,23 @@ const assertJobTitle = (jobId: string, expectedTitle: string) => {
     });
 };
 
+const jobAuthor = new User({
+    access_token: "job-author-token",
+    token_type: "Bearer",
+    profile: {
+        sub: "user-nova",
+        iss: `${MAIN_SERVER_URL}/api/auth`,
+        aud: "frontend-app",
+        exp: 2000000000,
+        iat: 1900000000,
+    },
+});
+
 const mountJobForm = (initialValues?: JobFormProps["initialValues"]) => {
     mountWithProviders(<JobForm mode="create" url={MAIN_SERVER_URL} initialValues={initialValues} />, {
         auth: buildTestAuthContext({
             isAuthenticated: true,
-            user: {
-                profile: {
-                    sub: "user-nova",
-                },
-            } as never,
+            user: jobAuthor,
         }),
         route: "/publish",
     });
@@ -66,11 +75,7 @@ const mountEditJobForm = (initialValues?: JobFormProps["initialValues"]) => {
     mountWithProviders(<JobForm mode="edit" url={MAIN_SERVER_URL} initialValues={initialValues} />, {
         auth: buildTestAuthContext({
             isAuthenticated: true,
-            user: {
-                profile: {
-                    sub: "user-nova",
-                },
-            } as never,
+            user: jobAuthor,
         }),
         route: "/jobs/edit/job-editable-dock-crew",
     });
@@ -128,7 +133,9 @@ describe("job create/edit", () => {
             expect(interception.request.body.variables.data.title).to.equal(jobTitle);
             expect(interception.request.body.variables.data.positions).to.equal(2);
             expect(interception.request.body.variables.data.location).to.equal("Harbor City");
-            expect(interception.request.body.variables.data.applyUrl).to.equal("https://harbor.example/jobs/shift-coordinator");
+            expect(interception.request.body.variables.data.applyUrl).to.equal(
+                "https://harbor.example/jobs/shift-coordinator",
+            );
         });
         cy.location("pathname").should("match", /\/jobs\/job-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
@@ -142,7 +149,7 @@ describe("job create/edit", () => {
         const jobTitle = "Editable Dock Crew";
         const updatedJobTitle = "Editable Dock Crew Revised";
 
-        mountJobForm();
+        mountJobForm({ salaryMin: 1000, salaryMax: 2000, bountyAmount: 100 });
         cy.wait("@ownedCompanies");
 
         fillFormField("Title", jobTitle);
@@ -160,6 +167,11 @@ describe("job create/edit", () => {
 
         cy.location("pathname").then((pathname) => {
             const createdId = pathname.split("/")[2];
+            cy.then(() => useJobByIdQuery.fetcher({ id: createdId, draft: false })()).then((result) => {
+                expect(result.Job?.salaryRange?.min).to.equal(1000);
+                expect(result.Job?.salaryRange?.max).to.equal(2000);
+                expect(result.Job?.bounty?.amount).to.equal(100);
+            });
             mountEditJobForm({
                 id: createdId,
                 title: jobTitle,
@@ -168,6 +180,9 @@ describe("job create/edit", () => {
                 postedAt: dayjs("2026-01-01"),
                 location: "North Port",
                 company: "company-harbor-labs",
+                salaryMin: 1000,
+                salaryMax: 2000,
+                bountyAmount: 100,
             });
 
             assertFormFieldValue("Title", jobTitle);
@@ -179,6 +194,9 @@ describe("job create/edit", () => {
             fillFormField("Title", updatedJobTitle);
             fillFormField("Positions", "3");
             fillFormField("Location", "Harbor City");
+            cy.get("#salaryMin").clear();
+            cy.get("#salaryMax").clear();
+            cy.get("#bountyAmount").clear();
             uploadTestImage();
 
             cy.get(".Publish__form").contains("button", "Publish").click();
@@ -189,9 +207,15 @@ describe("job create/edit", () => {
                 expect(interception.request.body.variables.data.title).to.equal(updatedJobTitle);
                 expect(interception.request.body.variables.data.positions).to.equal(3);
                 expect(interception.request.body.variables.data.location).to.equal("Harbor City");
+                expect(interception.request.body.variables.data.salaryRange).to.equal(null);
+                expect(interception.request.body.variables.data.bounty).to.equal(null);
             });
             cy.location("pathname").should("match", new RegExp(`/jobs/${createdId}/[a-f0-9]+$`));
             assertJobTitle(createdId, updatedJobTitle);
+            cy.then(() => useJobByIdQuery.fetcher({ id: createdId, draft: false })()).then((result) => {
+                expect(result.Job?.salaryRange).to.equal(null);
+                expect(result.Job?.bounty).to.equal(null);
+            });
             screenshotStep("job-updated-form");
         });
     });

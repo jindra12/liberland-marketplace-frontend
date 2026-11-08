@@ -1,6 +1,8 @@
 import type { CryptoChain } from "../../types";
 
 export const SAVED_SHIPPING_ADDRESS_STORAGE_KEY = "buyNow.savedShippingAddresses";
+export const CHECKOUT_ORDERS_STORAGE_KEY = "checkout.pendingOrders";
+export const PAYMENT_ATTEMPT_STORAGE_KEY = "checkout.paymentAttempts";
 
 export const CRYPTO_CHAIN_LABELS: Record<CryptoChain, string> = {
     ethereum: "Ethereum",

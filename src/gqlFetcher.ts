@@ -1,5 +1,6 @@
 import axios, { AxiosHeaders } from "axios";
 import { appAnalytics } from "./components/analytics/analytics";
+import { readStoredAuthUser } from "./components/auth/utils";
 
 type GQLError = { message: string };
 
@@ -19,7 +20,7 @@ const normalizeAndReduce = (options?: RequestInit["headers"]) => {
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://backend.nswap.io";
 
-const getCurrentRoute = () => `${window.location.pathname}${window.location.search}${window.location.hash}`;
+const getCurrentRoute = () => window.location.pathname;
 
 const getGraphQLOperation = (query: string) => {
     const match = query.match(/\b(query|mutation|subscription)\s+([A-Za-z0-9_]+)/);
@@ -38,9 +39,8 @@ const getGraphQLOperation = (query: string) => {
 };
 
 export const getAccessToken = (url: string): string | undefined => {
-    const key = `oidc.user:${url}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
-    const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored).access_token : undefined;
+    const user = readStoredAuthUser(url);
+    return user && !user.expired ? user.access_token : undefined;
 };
 
 export const gqlFetcher =
@@ -82,7 +82,7 @@ export const gqlFetcher =
                         operationType,
                         route: getCurrentRoute(),
                         success: true,
-                        variables: anonymizer?.(variables!) || variables,
+                        variables: anonymizer?.(variables!),
                     },
                     {
                         targetUrl: defUrl,
@@ -102,7 +102,7 @@ export const gqlFetcher =
                         operationType,
                         route: getCurrentRoute(),
                         success: false,
-                        variables: anonymizer?.(variables!) || variables,
+                        variables: anonymizer?.(variables!),
                     },
                     {
                         targetUrl: defUrl,

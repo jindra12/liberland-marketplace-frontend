@@ -84,6 +84,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
             children: (
                 <ProfileListingList
                     deleteMutation={deleteJobMutation}
+                    serverURL={props.serverURL}
                     label="Job"
                     emptyText="No jobs created yet"
                     items={jobs as Job[]}
@@ -103,6 +104,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
             children: (
                 <ProfileListingList
                     deleteMutation={deleteCompanyMutation}
+                    serverURL={props.serverURL}
                     label="Company"
                     emptyText="No companies created yet"
                     items={companies as Company[]}
@@ -121,6 +123,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
             children: (
                 <ProfileListingList
                     deleteMutation={deleteStartupMutation}
+                    serverURL={props.serverURL}
                     label="Venture"
                     emptyText="No ventures created yet"
                     items={startups as Startup[]}
@@ -139,6 +142,7 @@ export const ProfileListingsSection: React.FunctionComponent<ProfileListingsSect
             children: (
                 <ProfileListingList
                     deleteMutation={deleteProductMutation}
+                    serverURL={props.serverURL}
                     label="Product / service"
                     emptyText="No products or services created yet"
                     items={products as Product[]}

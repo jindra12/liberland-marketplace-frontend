@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Alert, Button, Flex, List, Skeleton, Typography } from "antd";
+import { Alert, Button, Flex, List, Skeleton, Tag, Typography } from "antd";
 
 import { DeploymentForm } from "./DeploymentForm";
+import { RecoveryActions } from "./RecoveryActions";
 import type { DeploymentFlowProps } from "./types";
 import { useDeploymentFlow } from "./useDeploymentFlow";
 
@@ -36,15 +37,19 @@ export const DeploymentFlow: React.FunctionComponent<DeploymentFlowProps> = (pro
                 <Button
                     type="primary"
                     loading={flow.busy}
+                    disabled={!flow.owned || flow.busy}
                     onClick={() => flow.deploy(flow.recoveryValues!, props.account, props.wallet)}
                 >
                     Resume deployment
                 </Button>
             )}
+            {flow.recovery && !flow.saved && (
+                <RecoveryActions record={flow.recovery} owned={flow.owned} busy={flow.busy} onAction={flow.reconcile} />
+            )}
             {flow.manifest && (
                 <Flex gap={12} wrap>
                     {!flow.saved && (
-                        <Button type="primary" loading={flow.busy} disabled={!flow.ready} onClick={flow.retrySave}>
+                        <Button type="primary" loading={flow.busy} disabled={!flow.ready || !flow.owned} onClick={flow.retrySave}>
                             Retry saving addresses
                         </Button>
                     )}
@@ -57,15 +62,19 @@ export const DeploymentFlow: React.FunctionComponent<DeploymentFlowProps> = (pro
                     {flow.saved && <Button onClick={flow.startAnotherDeployment}>Start another deployment</Button>}
                 </Flex>
             )}
-            {flow.progress.length > 0 && (
+            {(flow.recovery?.transactions.length || flow.progress.length) > 0 && (
                 <List
                     size="small"
-                    header="Confirmed deployment transactions"
-                    dataSource={flow.progress}
+                    header="Deployment transaction journal"
+                    rowKey={(transaction) => `${transaction.label}:${transaction.hash}`}
+                    dataSource={flow.recovery?.transactions.length ? flow.recovery.transactions : flow.progress}
                     renderItem={(transaction) => (
                         <List.Item>
                             <Flex vertical>
                                 <Typography.Text>{transaction.label}</Typography.Text>
+                                <Tag color={flow.progress.some((entry) => entry.hash === transaction.hash) ? "green" : "orange"}>
+                                    {flow.progress.some((entry) => entry.hash === transaction.hash) ? "Confirmed" : "Submitted; verify receipt"}
+                                </Tag>
                                 <Typography.Text code copyable>
                                     {transaction.hash}
                                 </Typography.Text>

@@ -2,12 +2,12 @@ import * as React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Checkbox, Modal, Space, Typography } from "antd";
+import { Checkbox, message, Modal, Space, Typography } from "antd";
 
 import { routes } from "../routes";
 
 import type { EndpointContextType } from "./EndpointContext";
-import { enableOrInsertEndpoint } from "./endpoints/utils";
+import { enableOrInsertEndpoint, normalizeSyndicationUrl } from "./endpoints/utils";
 
 type ServerUrlGuardContentProps = React.PropsWithChildren<{
     isTrusted: boolean;
@@ -27,11 +27,16 @@ export const ServerUrlGuardContent: React.FunctionComponent<ServerUrlGuardConten
     }
 
     const handleTrust = () => {
-        if (shouldAddServer && props.decodedServerURL) {
-            props.setUrls((current) => enableOrInsertEndpoint(current, props.decodedServerURL));
+        try {
+            const url = normalizeSyndicationUrl(props.decodedServerURL);
+            if (shouldAddServer) {
+                props.setUrls((current) => enableOrInsertEndpoint(current, url));
+            }
+            setShouldEnableContent(true);
+        } catch (error) {
+            console.error(error);
+            message.error("Enter a valid HTTP or HTTPS server address.");
         }
-
-        setShouldEnableContent(true);
     };
 
     return (

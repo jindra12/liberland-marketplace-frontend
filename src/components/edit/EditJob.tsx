@@ -28,7 +28,7 @@ const EditJob: React.FunctionComponent = () => {
                         const createdById = job?.createdBy?.id;
 
                         return (
-                            <OwnerGuard createdById={createdById}>
+                            <OwnerGuard createdById={createdById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={job?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Job</Typography.Title>
                                 <JobForm
@@ -52,7 +52,7 @@ const EditJob: React.FunctionComponent = () => {
                                         existingImageUrl: job?.image?.url,
                                         existingImageId: job?.image?.id,
                                     }}
-                                    url={job?.serverURL ?? routeServerURL}
+                                    url={routeServerURL}
                                 />
                             </OwnerGuard>
                         );

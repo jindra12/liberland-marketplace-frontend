@@ -52,10 +52,11 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
     const loading =
         submittedSearchValue.length > 0 ? searchedJobs.isLoading && searchDocs.length === 0 : defaultJobs.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedJobs.data?.Searches?.hasNextPage) : false;
-    const handleSelect = (job: { id: string; title?: string | null }) => {
+    const handleSelect = (job: (typeof items)[number]) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Jobs,
             value: job.id,
+            serverURL: job.serverURL,
             label: job.title || "Job",
         });
         props.onClose();

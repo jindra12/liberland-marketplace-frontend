@@ -29,8 +29,24 @@ export const submitVentureLiquidity = async (
             Math.round(values.slippage * 100),
         );
         await client.approveCurrency(props.pool.key.currency1, quote.amount1Maximum, Number(deadline));
+        const refreshedQuote = await client.quoteFullRange(
+            props.pool,
+            network.stateViewAddress,
+            parseUnits(values.ethAmount, 18),
+            parseUnits(values.tokenAmount, decimals),
+            Math.round(values.slippage * 100),
+        );
+        if (deadline <= BigInt(Math.floor(Date.now() / 1000))) {
+            throw new Error("The liquidity approval window expired. Retry to refresh the approval and quote.");
+        }
+        if (
+            refreshedQuote.amount0Maximum > quote.amount0Maximum ||
+            refreshedQuote.amount1Maximum > quote.amount1Maximum
+        ) {
+            throw new Error("The pool price changed during approval. Review and approve a new liquidity quote.");
+        }
         const result = await client.mintPosition({
-            ...quote,
+            ...refreshedQuote,
             poolKey: props.pool.key,
             recipient: props.account!.address,
             deadline,
@@ -39,6 +55,9 @@ export const submitVentureLiquidity = async (
     }
     const tokenId = BigInt(values.tokenId);
     const available = await client.verifyPosition(tokenId, props.pool.key);
+    if (values.action !== "inspect" && deadline <= BigInt(Math.floor(Date.now() / 1000))) {
+        throw new Error("The position action window expired. Retry to review and submit with a fresh deadline.");
+    }
     switch (values.action) {
         case "inspect":
             return `Position receipt #${tokenId}: ${available} liquidity units. Owned by your connected wallet in this pool.`;
@@ -60,13 +79,18 @@ export const submitVentureLiquidity = async (
             if (liquidity <= 0n || liquidity > available) {
                 throw new Error(`Enter liquidity units between 1 and ${available}.`);
             }
+            const minimumEth = parseUnits(values.minimumEth, 18);
+            const minimumTokens = parseUnits(values.minimumTokens, decimals);
+            if (minimumEth < 0n || minimumTokens < 0n || (minimumEth === 0n && minimumTokens === 0n)) {
+                throw new Error("Withdrawal minimums must be non-negative, with at least one positive minimum.");
+            }
             return client.decreaseLiquidity({
                 tokenId,
                 liquidity,
                 poolKey: props.pool.key,
                 deadline,
-                amount0Limit: parseUnits(values.minimumEth, 18),
-                amount1Limit: parseUnits(values.minimumTokens, decimals),
+                amount0Limit: minimumEth,
+                amount1Limit: minimumTokens,
             });
         }
     }

@@ -2,7 +2,8 @@ import * as React from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Card, Divider, Flex, Grid, List, Spin, Typography } from "antd";
+import { Button, Card, Divider, Flex, Grid, List, Spin, Typography } from "antd";
+import type { ListProps } from "antd";
 
 import { CollectionListSkeleton } from "./LoadingSkeleton/CollectionListSkeleton";
 import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
@@ -17,7 +18,9 @@ interface AppListLikeItem {
 }
 
 export interface AppListProps<TItem> {
+    rowKey?: ListProps<TItem>["rowKey"];
     items: TItem[];
+    loadedCount?: number;
     renderItem: Partial<
         Record<"title" | "extra" | "avatar" | "cover" | "description" | "body" | "actions" | "like", (item: TItem) => React.ReactNode>
     >;
@@ -28,6 +31,7 @@ export interface AppListProps<TItem> {
     filters?: React.ReactNode;
     emptyText?: React.ReactNode;
     loading?: boolean;
+    fetching?: boolean;
     endMessage?: React.ReactNode;
     scrollableTarget?: string;
     titleHidden?: boolean;
@@ -46,7 +50,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
 
     return (
         <InfiniteScroll
-            dataLength={props.items.length}
+            dataLength={props.loadedCount ?? props.items.length}
             next={props.next}
             hasMore={props.hasMore}
             scrollableTarget={props.scrollableTarget}
@@ -70,6 +74,7 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
             <List
                 itemLayout="vertical"
                 dataSource={props.items}
+                rowKey={props.rowKey}
                 size="large"
                 loading={props.loading}
                 header={
@@ -162,6 +167,11 @@ export const AppList = <TItem,>(props: AppListProps<TItem>) => {
                     })()
                 }
             />
+            {props.hasMore && (
+                <Flex justify="center">
+                    <Button loading={props.fetching} disabled={props.fetching} onClick={props.next}>Load more</Button>
+                </Flex>
+            )}
         </InfiniteScroll>
     );
 };

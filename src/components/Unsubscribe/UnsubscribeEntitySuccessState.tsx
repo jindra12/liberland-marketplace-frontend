@@ -40,7 +40,7 @@ export const UnsubscribeEntitySuccessState: React.FunctionComponent<UnsubscribeR
                                 You&apos;re all set
                             </Typography.Title>
                             <Typography.Paragraph className="UnsubscribePage__description">
-                                We won&apos;t send any more emails to {props.params.email} about{" "}
+                                Your account will no longer receive updates about{" "}
                                 {props.entity.title}. Redirecting you to the homepage now.
                             </Typography.Paragraph>
                         </div>

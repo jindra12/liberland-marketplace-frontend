@@ -167,7 +167,7 @@ export const OrderCreateStep: React.FunctionComponent<OrderCreateStepProps> = (p
                     htmlType="submit"
                     form="order-form"
                     loading={props.isSubmitting}
-                    disabled={props.cartsWithItemsCount === 0}
+                    disabled={props.isSubmitting || props.cartsWithItemsCount === 0}
                 >
                     Create order
                 </Button>

@@ -21,7 +21,6 @@ export const ProfileContent: React.FunctionComponent = () => {
     const auth = useAuth();
     const { authUrl, urls } = useEndpointContext();
     const profile = auth.user?.profile;
-    const userId = profile?.sub;
     const emailVerified = profile?.email_verified;
 
     const profileServerOptions = React.useMemo(() => buildProfileServerOptions(urls, authUrl), [authUrl, urls]);
@@ -101,7 +100,7 @@ export const ProfileContent: React.FunctionComponent = () => {
 
             <Divider />
 
-            <ProfileListingsSection userId={userId} serverURL={selectedServerUrl} />
+            <ProfileListingsSection userId={selectedServerUser?.id} serverURL={selectedServerUrl} />
         </div>
     );
 };

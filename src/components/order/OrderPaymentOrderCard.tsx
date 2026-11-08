@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Alert, Card, List } from "antd";
+import { Alert, Card, List, Typography } from "antd";
 
 import { OrderPaymentChainRow } from "./OrderPaymentChainRow";
 import { buildOrderEntryKey, collectOrderChainPaymentAmounts } from "./payment/utils";
@@ -26,11 +26,12 @@ export const OrderPaymentOrderCard: React.FunctionComponent<OrderPaymentOrderCar
             title={`${props.orderIndex}${props.orderIndex === 1 ? "st" : props.orderIndex === 2 ? "nd" : props.orderIndex === 3 ? "rd" : "th"} payment`}
             key={buildOrderEntryKey(entryState.url, entryState.order.id)}
         >
+            <Typography.Paragraph>Order {entryState.order.id}</Typography.Paragraph>
             {chainPayments.length === 0 ? (
                 <Alert
                     showIcon
                     type="warning"
-                    message="No chain-native prices available for this order."
+                    message="Saved payment amounts or recipients are unavailable. Do not pay until the order can be verified."
                 />
             ) : (
                 <List

@@ -2,14 +2,18 @@ import * as React from "react";
 
 import { Form } from "antd";
 
+import { useServerUser } from "../auth/useServerUser";
 import { CompanyField } from "../CompanyField";
 
 type CommentCompanyFieldProps = {
     serverURL?: string | null;
-    userId: string;
 };
 
 export const CommentCompanyField: React.FunctionComponent<CommentCompanyFieldProps> = (props) => {
+    const serverUser = useServerUser(props.serverURL);
+    if (!serverUser.user) {
+        return null;
+    }
     return (
         <Form.Item
             name="company"
@@ -21,7 +25,7 @@ export const CommentCompanyField: React.FunctionComponent<CommentCompanyFieldPro
                 },
             ]}
         >
-            <CompanyField serverURL={props.serverURL} userId={props.userId} />
+            <CompanyField serverURL={props.serverURL} />
         </Form.Item>
     );
 };

@@ -1,23 +1,25 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { Form, Input } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
 import { CompanyField } from "../CompanyField";
 import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
-import {
-    useCreatePostMutation,
-    useUpdatePostMutation,
-} from "../hooks";
+import { useCreatePostMutation, useUpdatePostMutation } from "../hooks";
 import type { RelatedTargetSelection } from "../shared/post/types";
 
+import { FormNavigationGuard } from "./FormNavigationGuard";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { RelatedTargetField } from "./postForm/RelatedTargetField";
-import { buildRelatedTargetSelection, buildSeoDescription, resolvePostSeoDescription, slugifyPostTitle } from "./postForm/utils";
+import {
+    buildRelatedTargetSelection,
+    buildSeoDescription,
+    resolvePostSeoDescription,
+    slugifyPostTitle,
+    validateRelatedTargetSource,
+} from "./postForm/utils";
 import { useEntityForm } from "./useEntityForm";
 
 interface PostFormValues {
@@ -41,11 +43,10 @@ export interface PostFormProps {
 }
 
 export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
-    const auth = useAuth();
     const createMutation = useCreatePostMutation();
     const updateMutation = useUpdatePostMutation();
-    const userId = auth.user?.profile?.sub;
-    const initialSeoDescription = props.initialValues?.seoDescription ?? buildSeoDescription(props.initialValues?.content ?? "");
+    const initialSeoDescription =
+        props.initialValues?.seoDescription ?? buildSeoDescription(props.initialValues?.content ?? "");
     const defaults: Partial<PostFormValues> = {
         ...props.initialValues,
         seoDescription: initialSeoDescription,
@@ -80,9 +81,7 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                 ...(imageId !== undefined && {
                     heroImage: imageId,
                 }),
-                ...(relatedTarget && {
-                    relatedPosts: [relatedTarget],
-                }),
+                relatedPosts: relatedTarget ? [relatedTarget] : [],
             };
         },
         getCreateId: (r) => r.createPost?.id,
@@ -90,13 +89,8 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
     });
 
     return (
-        <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-            initialValues={defaults}
-            className="Publish__form"
-        >
+        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
+            <FormNavigationGuard />
             <Form.Item
                 name="title"
                 label="Title"
@@ -150,9 +144,19 @@ export const PostForm: React.FunctionComponent<PostFormProps> = (props) => {
                 ]}
                 className="Publish__postCompanyField"
             >
-                <CompanyField serverURL={props.url} userId={userId} allowPrivate />
+                <CompanyField serverURL={props.url} allowPrivate />
             </Form.Item>
-            <Form.Item name="relatedTarget" label="Related content" className="Publish__postRelatedField">
+            <Form.Item
+                name="relatedTarget"
+                label="Related content"
+                className="Publish__postRelatedField"
+                rules={[
+                    {
+                        validator: (_rule, value: RelatedTargetSelection | null | undefined) =>
+                            validateRelatedTargetSource(value, props.url),
+                    },
+                ]}
+            >
                 <RelatedTargetField />
             </Form.Item>
             <ImageUploadField existingImageUrl={props.initialValues?.existingImageUrl} serverUrl={props.url} />

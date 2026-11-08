@@ -41,7 +41,7 @@ export const fetchPoppyDiscovery = async () => {
     try {
         return await value;
     } catch (error) {
-        documents.delete(key);
+        documents.set(key, { expiresAt: Date.now() + 30000, value });
         throw error;
     }
 };

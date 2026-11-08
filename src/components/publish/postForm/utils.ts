@@ -1,4 +1,5 @@
-import { marked } from "marked";
+import removeMarkdown from "remove-markdown";
+import { normalizeSyndicationUrl } from "../../endpoints/utils";
 
 import {
     Post_RelatedPosts_RelationTo,
@@ -7,13 +8,18 @@ import {
 
 import type { RelatedTargetSelection } from "../../shared/post/types";
 
+export const validateRelatedTargetSource = async (selection: RelatedTargetSelection | null | undefined, serverURL: string) => {
+    if (selection?.serverURL && normalizeSyndicationUrl(selection.serverURL) !== normalizeSyndicationUrl(serverURL)) {
+        throw new Error("Related content must be on the same server as this post. Choose a result from that server.");
+    }
+};
+
 export const stripMarkdownToText = (markdown: string): string => {
-    const html = marked.parse(markdown, { async: false }) as string;
-    return html.replace(/&nbsp;/g, " ");
+    return removeMarkdown(markdown).replace(/&nbsp;/g, " ");
 };
 
 export const buildSeoDescription = (markdown: string): string => {
-    const plainText = stripMarkdownToText(markdown).replace(/\s+/g, " ");
+    const plainText = stripMarkdownToText(markdown).replace(/\s+/g, " ").trim();
     return plainText.slice(0, 100);
 };
 

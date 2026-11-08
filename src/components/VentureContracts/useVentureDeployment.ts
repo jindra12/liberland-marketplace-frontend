@@ -3,7 +3,6 @@ import type { DeploymentManifest } from "@liberland/marketplace-contracts";
 
 import {
     SaveVentureContractsDocument,
-    StartupUpdate_ContractDeployments_Chain_MutationInput,
     type SaveVentureContractsMutation,
     type SaveVentureContractsMutationVariables,
 } from "../../generated/graphql";
@@ -24,22 +23,9 @@ export const useVentureDeployment = (props: VentureContractsProps) => {
             )(),
     });
     return async (manifest: DeploymentManifest) => {
-        const existing = (props.venture.contractDeployments || [])
-            .filter(
-                (deployment) =>
-                    deployment.chain === "ethereum" &&
-                    (deployment.chainId !== manifest.chainId || deployment.tokenAddress !== manifest.token.address),
-            )
-            .map((deployment) => {
-                const { __typename, ...fields } = deployment;
-                return {
-                    ...fields,
-                    chain: StartupUpdate_ContractDeployments_Chain_MutationInput.Ethereum,
-                };
-            });
         const response = await mutation.mutateAsync({
             id: props.venture.id,
-            data: { contractDeployments: [...existing, toSavedDeployment(manifest)] },
+            data: { contractDeployments: [toSavedDeployment(manifest)] },
         });
         if (
             !response.updateStartup?.contractDeployments?.some(

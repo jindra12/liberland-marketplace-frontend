@@ -15,6 +15,12 @@ export class PublicKey {
 }
 
 export class Connection {
+    public async getSignatureStatuses() {
+        return {
+            context: { slot: 1 },
+            value: [{ slot: 1, confirmations: null, err: null, confirmationStatus: "finalized" }],
+        };
+    }
     public async getLatestBlockhash(): Promise<{
         blockhash: string;
         lastValidBlockHeight: number;

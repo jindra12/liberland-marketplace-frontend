@@ -9,6 +9,7 @@ import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikePostMutation, useLikePostMutation } from "../hooks";
 import { Markdown } from "../Markdown";
+import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { PostRepostLink } from "../shared/post/PostRepostLink";
 import { PostDoc } from "../shared/post/types";
@@ -33,6 +34,7 @@ export const PostListInternal: React.FunctionComponent<PostListInternalProps> = 
 
     return (
         <AppList
+            rowKey={getSourceQualifiedEntityKey}
             hasMore={props.hasMore}
             items={props.items}
             next={props.next}

@@ -52,10 +52,11 @@ export const StartupsSearch: React.FunctionComponent<StartupsSearchProps> = (pro
             ? searchedStartups.isLoading && searchDocs.length === 0
             : defaultStartups.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedStartups.data?.Searches?.hasNextPage) : false;
-    const handleSelect = (startup: { id: string; title?: string | null }) => {
+    const handleSelect = (startup: (typeof items)[number]) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Startups,
             value: startup.id,
+            serverURL: startup.serverURL,
             label: startup.title || "Venture",
         });
         props.onClose();

@@ -2,6 +2,8 @@ import * as React from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button, Divider, Typography } from "antd";
 import { IdentityFilter } from "../components/IdentityFilter";
+import { getSourceQualifiedEntityKey } from "../components/query/utils";
+import type { SourceQualifiedEntity } from "../components/query/types";
 
 interface UseTribeFilterOptions<TItem> {
     allItems: TItem[];
@@ -13,7 +15,7 @@ interface UseTribeFilterOptions<TItem> {
     setPage?: (page: number) => void;
 }
 
-export const useIdentityFilter = <TItem,>(options: UseTribeFilterOptions<TItem>) => {
+export const useIdentityFilter = <TItem extends SourceQualifiedEntity>(options: UseTribeFilterOptions<TItem>) => {
     const { allItems, hasNextPage, getIdentityIds, isLoading, isFetching, page, setPage } = options;
 
     const [searchParams] = useSearchParams();
@@ -25,7 +27,9 @@ export const useIdentityFilter = <TItem,>(options: UseTribeFilterOptions<TItem>)
     const items = isTribeFiltered
         ? allItems.filter((item) => {
               const ids = getIdentityIds(item);
-              return selectedIdentityIds.some((id) => ids.includes(id));
+              return selectedIdentityIds.some((selected) => ids.some((id) =>
+                  selected === id || selected === getSourceQualifiedEntityKey({ ...item, id }),
+              ));
           })
         : allItems;
 

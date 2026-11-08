@@ -7,11 +7,13 @@ import { RouteButton } from "./RouteButton";
 
 interface ProfileListingItem {
     id: string;
+    serverURL?: string | null;
     _status?: string | null;
 }
 
 interface ProfileListingListProps<TItem extends ProfileListingItem> {
-    deleteMutation: { mutateAsync: (vars: { id: string }) => Promise<unknown> };
+    deleteMutation: { mutateAsync: (vars: { id: string; url: string }) => Promise<unknown> };
+    serverURL?: string | null;
     label: string;
     emptyText: string;
     items: TItem[];
@@ -34,7 +36,11 @@ interface ProfileListingListProps<TItem extends ProfileListingItem> {
 export const ProfileListingList = <TItem extends ProfileListingItem>(props: ProfileListingListProps<TItem>) => {
     const handleDelete = async (item: TItem) => {
         try {
-            await props.deleteMutation.mutateAsync({ id: item.id });
+            const url = props.serverURL || item.serverURL;
+            if (!url) {
+                throw new Error("The listing's source server is missing. Reload the listing before deleting it.");
+            }
+            await props.deleteMutation.mutateAsync({ id: item.id, url });
             message.success(`${props.label} deleted`);
             await props.refetch();
         } catch (error) {

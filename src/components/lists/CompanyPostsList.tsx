@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
+import { useListPage } from "../../hooks/useListPage";
 import { useListPostsByCompanyQuery } from "../hooks";
 
 import { PostListInternal } from "./PostListInternal";
@@ -11,7 +12,7 @@ export interface CompanyPostsListProps {
 }
 
 export const CompanyPostsList: React.FunctionComponent<CompanyPostsListProps> = (props) => {
-    const [page, setPage] = React.useState(1);
+    const { page, setPage } = useListPage(props.companyId, props.serverUrl);
     const query = useListPostsByCompanyQuery({
         companyId: props.companyId,
         page,

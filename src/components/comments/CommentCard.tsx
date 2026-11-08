@@ -8,7 +8,7 @@ import {
     ShareAltOutlined,
     UpOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Flex, Typography } from "antd";
+import { Avatar, Button, Flex, message, Popconfirm, Typography } from "antd";
 
 import { Comment } from "../../generated/graphql";
 import { routes } from "../../routes";
@@ -142,16 +142,25 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
                     </Button>
                 )}
                 {canManageComment && (
-                    <Button
-                        type="text"
-                        danger
-                        onClick={() => props.onDeleteAction({ comIdToDelete: props.comment.id })}
-                        className="CommentCard__actionBtn"
-                        aria-label="Delete"
+                    <Popconfirm
+                        title="Delete this comment?"
+                        okText="Delete"
+                        cancelText="Cancel"
+                        okButtonProps={{ danger: true }}
+                        onConfirm={async () => {
+                            try {
+                                await props.onDeleteAction({ comIdToDelete: props.comment.id });
+                            } catch (error) {
+                                console.error(error);
+                                message.error("Could not delete the comment. Please try again.");
+                            }
+                        }}
                     >
-                        <DeleteOutlined className="CommentCard__actionIcon" />
-                        <span className="CommentCard__actionLabel">Delete</span>
-                    </Button>
+                        <Button type="text" danger className="CommentCard__actionBtn" aria-label="Delete">
+                            <DeleteOutlined className="CommentCard__actionIcon" />
+                            <span className="CommentCard__actionLabel">Delete</span>
+                        </Button>
+                    </Popconfirm>
                 )}
             </Flex>
             {formState === "reply" && (

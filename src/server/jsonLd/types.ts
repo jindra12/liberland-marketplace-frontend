@@ -9,6 +9,7 @@ export type JsonLdPageMetadata = {
 };
 
 export type JsonLdResponse = {
+    statusCode?: number;
     getHeader: (name: string) => string | number | string[] | undefined;
     setHeader: (name: string, value: string) => void;
     end: (body?: string) => void;

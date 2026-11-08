@@ -31,6 +31,7 @@ export type DeploymentRecovery = {
     manifest: DeploymentManifest | null;
     saved?: boolean;
     pendingSync?: boolean;
+    runnerId?: string;
 };
 export type VentureContractsProps = {
     venture: NonNullable<StartupByIdQuery["Startup"]>;
@@ -123,6 +124,7 @@ export type TradeFormProps = {
 export type ProposalAction = "vote" | "queue" | "execute" | "cancel";
 export type ProposalRequest = { proposal: DaoProposal; action: ProposalAction; support?: number; reason?: string };
 export type DaoProposalCardProps = {
+    deployment: VentureDeployment;
     proposal: DaoProposal;
     decimals: number;
     connected: boolean;
@@ -139,3 +141,12 @@ export type ProposalValues = {
     acknowledged?: boolean;
 };
 export type ProposalFormProps = { busy: boolean; onSubmit: (values: ProposalValues) => void };
+export type GovernanceCall = {
+    target: string;
+    value: string;
+    data: string;
+    signature: string;
+    arguments: string[];
+    risky: boolean;
+    nested: GovernanceCall[];
+};

@@ -14,6 +14,7 @@ import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
 import { Markdown } from "../Markdown";
+import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
@@ -45,6 +46,9 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
 
     return (
         <AppList
+            rowKey={getSourceQualifiedEntityKey}
+            loadedCount={allItems.length}
+            fetching={props.query.isFetching}
             hasMore={hasMore}
             items={items}
             next={() => props.setPage(props.page + 1)}

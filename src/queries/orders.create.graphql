@@ -9,6 +9,26 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
         transactions {
             id
         }
+        paymentTargets {
+            id
+            chain
+            productID
+            recipientAddress
+            normalizedRecipientAddress
+            quantity
+            unitAmount
+            stableAmount
+        }
+        paymentProofs {
+            id
+            chain
+            transactionHash
+            fulfilled
+            rejected
+            product {
+                id
+            }
+        }
         cryptoPrices {
             id
             chain

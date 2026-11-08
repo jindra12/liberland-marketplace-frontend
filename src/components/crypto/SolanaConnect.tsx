@@ -11,7 +11,7 @@ import type { PaymentWalletSelection } from "../order/types";
 import { SolanaButton } from "./SolanaButton";
 import { SolanaCallback } from "./SolanaCallback";
 
-export interface SolanaConnectProps extends ConnectButtonProps {
+export interface SolanaConnectProps extends Partial<ConnectButtonProps> {
     payment?: boolean;
     label?: React.ReactNode;
     disabled?: boolean;
@@ -32,7 +32,7 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
             return;
         }
 
-        props.selectWallet(publicKeyValue);
+        props.selectWallet?.(publicKeyValue);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         connected,
@@ -65,7 +65,7 @@ export const SolanaConnect: React.FunctionComponent<SolanaConnectProps> = (props
             {startedProcess && (
                 <SolanaCallback
                     selectWallet={(wallet) => {
-                        props.selectWallet(wallet);
+                        props.selectWallet?.(wallet);
                         setStartedProcess(false);
                     }}
                 />

@@ -6,7 +6,8 @@ import { Typography } from "antd";
 
 import { LONG_TEXT_INPUT_MAX_LENGTH } from "../form/constants";
 
-interface MarkdownEditorProps {
+interface MarkdownEditorProps extends Pick<React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    "id" | "name" | "disabled" | "required" | "onBlur" | "aria-label" | "aria-labelledby" | "aria-describedby" | "aria-invalid" | "aria-required"> {
     value?: string;
     onChange?: (value: string) => void;
     rows?: number;
@@ -24,6 +25,16 @@ export const MarkdownEditor: React.FunctionComponent<MarkdownEditorProps> = (pro
                 height={rows * 28}
                 preview="edit"
                 textareaProps={{
+                    id: props.id,
+                    name: props.name,
+                    disabled: props.disabled,
+                    required: props.required,
+                    onBlur: props.onBlur,
+                    "aria-label": props["aria-label"],
+                    "aria-labelledby": props["aria-labelledby"],
+                    "aria-describedby": props["aria-describedby"],
+                    "aria-invalid": props["aria-invalid"],
+                    "aria-required": props["aria-required"],
                     placeholder: props.placeholder,
                 }}
             />

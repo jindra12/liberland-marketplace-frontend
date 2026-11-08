@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { DollarOutlined } from "@ant-design/icons";
 import { Form, Input, InputNumber } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
@@ -17,6 +15,7 @@ import { toCents } from "../shared/product/utils";
 import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
 import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
 import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
+import { FormNavigationGuard } from "./FormNavigationGuard";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
@@ -43,10 +42,8 @@ export interface ProductFormProps {
     };
 }
 export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) => {
-    const auth = useAuth();
     const createMutation = useCreateProductMutation();
     const updateMutation = useUpdateProductMutation();
-    const userId = auth.user?.profile?.sub;
     const defaults: Partial<ProductFormValues> = {
         ...props.initialValues,
     };
@@ -60,7 +57,6 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
         updateMutation,
         url: props.url,
         buildData: (values: ProductFormValues, imageId) => {
-            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
             const parameters = buildProductParametersInput(values.parameters);
 
             return {
@@ -68,9 +64,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                 description: values.description,
                 url: values.url,
                 company: values.company,
-                ...(cryptoAddresses !== undefined && {
-                    cryptoAddresses,
-                }),
+                cryptoAddresses: buildCryptoAddressesInput(values.cryptoAddresses),
                 ...(parameters !== undefined && {
                     parameters,
                 }),
@@ -87,6 +81,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
     });
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
+            <FormNavigationGuard />
             <Form.Item
                 name="name"
                 label="Product Name"
@@ -127,7 +122,12 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                     className="Publish__fullWidth Publish__priceField"
                 />
             </Form.Item>
-            <Form.Item name="url" label="Product URL" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__productUrlField">
+            <Form.Item
+                name="url"
+                label="Product URL"
+                rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__productUrlField"
+            >
                 <Input />
             </Form.Item>
             <Form.Item name="inventory" label="Inventory" className="Publish__productInventoryField">
@@ -143,12 +143,10 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                 ]}
                 className="Publish__productCompanyField"
             >
-                <CompanyField serverURL={props.url} userId={userId} />
+                <CompanyField serverURL={props.url} />
             </Form.Item>
             <ProductParametersField />
-            <CryptoAddressesField
-                description="Optional single payout wallet. If no product wallet is set, the company wallet is used at checkout."
-            />
+            <CryptoAddressesField description="Optional single payout wallet. If no product wallet is set, the company wallet is used at checkout." />
             <Form.Item>
                 <FormSubmitButtons mode={props.mode} entityName="Product" loading={loading} draftRef={draftRef} />
             </Form.Item>

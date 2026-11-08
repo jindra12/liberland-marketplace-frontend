@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { normalizeBackendUrl } from "./backend";
 import { MAX_SESSIONS, MAX_SERVERS_PER_SESSION, SESSION_TTL_MS } from "../server/security/constants";
+import { verifyBackendAuthorization } from "./authorization";
 
 type Session = { servers: string[]; expiresAt: number };
 const sessions = new Map<string, Session>();
@@ -30,7 +31,14 @@ const getOrCreateSession = (authorization: string): Session => {
     return session;
 };
 
-export const addSyndicatedServer = (authorization: string, serverUrl: string): string[] => {
+export const addSyndicatedServer = async (
+    authorization: string,
+    serverUrl: string,
+    authServerUrl: string,
+): Promise<string[]> => {
+    if (!(await verifyBackendAuthorization(authorization, authServerUrl))) {
+        throw new Error("A valid authenticated session is required.");
+    }
     const normalized = normalizeBackendUrl(serverUrl);
     const session = getOrCreateSession(authorization);
     if (!session.servers.includes(normalized) && session.servers.length >= MAX_SERVERS_PER_SESSION) {
@@ -55,5 +63,5 @@ export const removeSyndicatedServer = (authorization: string, serverUrl: string)
 
 export const listSyndicatedServers = (authorization?: string): string[] => {
     pruneExpiredSessions();
-    return authorization ? sessions.get(getSessionKey(authorization))?.servers ?? [] : [];
+    return authorization ? (sessions.get(getSessionKey(authorization))?.servers ?? []) : [];
 };

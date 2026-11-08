@@ -18,6 +18,7 @@ export type ShareRepostFormValues = {
 };
 
 export type ShareRepostActionState = {
+    serverURL: string;
     disabled: boolean;
     isOpen: boolean;
     isSubmitting: boolean;
@@ -71,6 +72,7 @@ export const useShareRepostAction = (props: ShareRepostActionProps): ShareRepost
     };
 
     return {
+        serverURL: repostServerURL,
         disabled: !repostServerURL,
         isOpen,
         isSubmitting: shareRepostMutation.isPending,

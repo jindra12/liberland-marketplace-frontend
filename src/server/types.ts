@@ -16,11 +16,17 @@ export type DetailRouteParams = {
     serverUrl?: string;
 };
 
+export type FetchAdditionalDetailData<TEntity, TExtra> = (
+    entity: TEntity,
+    params: DetailRouteParams,
+    serverUrl: string,
+) => Promise<TExtra> | TExtra;
+
 export type DetailPageConfig<TData, TVariables extends object | undefined, TEntity, TExtra = undefined> = {
     fetcher: (variables: TVariables, url?: string, headers?: HeadersInit) => Promise<TData>;
     buildVariables: (params: DetailRouteParams) => TVariables | null | undefined;
     selectEntity: (data: TData, params: DetailRouteParams) => TEntity | null | undefined;
-    fetchAdditionalData?: (entity: TEntity, params: DetailRouteParams, serverUrl: string) => Promise<TExtra> | TExtra;
+    fetchAdditionalData?: FetchAdditionalDetailData<TEntity, TExtra>;
     buildMetadata: (entity: TEntity, canonicalPath: string, extraData?: TExtra) => DetailPageMetadata;
     buildCanonicalPath: (params: DetailRouteParams, encodedServerUrl: string) => string;
 };

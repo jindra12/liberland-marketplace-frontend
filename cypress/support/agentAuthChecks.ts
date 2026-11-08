@@ -63,6 +63,7 @@ const createOAuthHarness = async (backend: string) => {
         if (url.href === `${backend}/register`) {
             const registration: OAuthClientProvider["clientMetadata"] = await request.json();
             assert(registration.scope?.split(" ").includes("offline_access"));
+            assert(registration.scope?.split(" ").includes("marketplace:access"));
             return Response.json({ ...registration, client_id: "test-public-client" }, { status: 201 });
         }
         if (url.href === `${backend}/token`) {

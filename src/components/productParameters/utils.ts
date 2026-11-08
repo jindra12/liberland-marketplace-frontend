@@ -20,17 +20,7 @@ export type ProductParameterMutationInput = {
     values?: ProductParameterMutationValueInput[] | null;
 };
 
-const normalizeSpaces = (value: string) => value.replace(/\s+/g, "-");
-
-export const buildProductParameterKey = (value: string) =>
-    normalizeSpaces(
-        value
-            .normalize("NFD")
-            .toLowerCase()
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-z0-9\s-]/g, "")
-            .replace(/-+/g, "-"),
-    ).replace(/^-+|-+$/g, "");
+export const buildProductParameterKey = (value: string) => encodeURIComponent(value.normalize("NFC"));
 
 const resolveParameterValueKey = (value: { key?: string | null; name?: string | null }) =>
     value.key || buildProductParameterKey(value.name || "");
@@ -87,7 +77,7 @@ export const buildProductParametersInput = (
                 .filter((value) => Boolean(value?.name))
                 .map((value) => ({
                     id: value?.id,
-                    key: buildProductParameterKey(value?.name || ""),
+                    key: value?.key || buildProductParameterKey(value?.name || ""),
                     name: value?.name || "",
                     default: value?.default,
                 })),

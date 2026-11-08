@@ -9,6 +9,7 @@ import { AppProviders } from "./components/AppProviders";
 import { RouteErrorBoundary } from "./components/ErrorBoundary/RouteErrorBoundary";
 import { AppBootSkeleton } from "./components/LoadingSkeleton/AppBootSkeleton";
 import { RouteSurfaceSkeleton } from "./components/LoadingSkeleton/RouteSurfaceSkeleton";
+import { MARKETPLACE_QUERY_DEFAULTS } from "./components/query/constants";
 import { ServerUrlGuard } from "./components/ServerUrlGuard";
 import { TourService } from "./components/tour/TourService";
 import { routes } from "./routes";
@@ -76,13 +77,7 @@ const Main: React.FunctionComponent = () => {
     const config = React.useMemo(
         () =>
             new QueryClient({
-                defaultOptions: {
-                    queries: {
-                        refetchOnMount: false,
-                        refetchOnReconnect: false,
-                        refetchOnWindowFocus: false,
-                    },
-                },
+                defaultOptions: MARKETPLACE_QUERY_DEFAULTS,
             }),
         [],
     );

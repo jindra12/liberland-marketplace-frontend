@@ -3,6 +3,7 @@ import * as React from "react";
 import {
     connectSolanaWalletStub,
     disconnectSolanaWalletStub,
+    paymentBroadcastCounts,
     useWalletStubState,
 } from "./state";
 
@@ -25,9 +26,7 @@ const toPublicKeyStub = (value: string): PublicKeyStub => {
     };
 };
 
-export const ConnectionProvider: React.FunctionComponent<React.PropsWithChildren<{ endpoint: string }>> = (
-    props,
-) => {
+export const ConnectionProvider: React.FunctionComponent<React.PropsWithChildren<{ endpoint: string }>> = (props) => {
     return <>{props.children}</>;
 };
 
@@ -60,9 +59,15 @@ export const useWallet = () => {
         connecting: false,
         connect,
         disconnect,
-        publicKey: walletState.solana.connected && walletState.solana.publicKey ? toPublicKeyStub(walletState.solana.publicKey) : undefined,
+        publicKey:
+            walletState.solana.connected && walletState.solana.publicKey
+                ? toPublicKeyStub(walletState.solana.publicKey)
+                : undefined,
         select: (_wallet: null) => undefined,
-        sendTransaction: async () => "solana-tx-stub",
+        sendTransaction: async () => {
+            paymentBroadcastCounts.solana += 1;
+            return "solana-tx-stub";
+        },
         wallet,
     };
 };

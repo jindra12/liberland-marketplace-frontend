@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Form } from "antd";
 
+import { FormNavigationGuard } from "./FormNavigationGuard";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { StartupFormBasicsFields } from "./startupForm/StartupFormBasicsFields";
 import { StartupFormResourcesFields } from "./startupForm/StartupFormResourcesFields";
@@ -21,11 +22,11 @@ export const StartupForm: React.FunctionComponent<StartupFormProps> = (props) =>
             initialValues={startupFormModel.defaults}
             className="Publish__form"
         >
+            <FormNavigationGuard />
             <StartupFormBasicsFields
                 existingImageUrl={props.initialValues?.existingImageUrl}
                 identityOptions={startupFormModel.identityOptions}
                 isIdentitiesLoading={startupFormModel.isIdentitiesLoading}
-                userId={startupFormModel.userId}
                 url={props.url}
             />
             <StartupFormResourcesFields />

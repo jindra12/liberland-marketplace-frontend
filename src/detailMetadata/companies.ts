@@ -159,7 +159,7 @@ export const fetchCompanyRelatedMetadata = async (
     _params: { id?: string; serverUrl?: string },
     serverUrl: string,
 ): Promise<CompanyRelatedMetadata> => {
-    const url = company.serverURL || serverUrl;
+    const url = serverUrl;
 
     if (!url) {
         return {

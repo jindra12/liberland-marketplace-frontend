@@ -4,16 +4,14 @@ import type { NotificationTargetCollection } from "../share/SubscribeButton/type
 import type { UnsubscribeParseResult } from "./types";
 
 const SAFE_ENTITY_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/;
-const SAFE_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MISSING_SUBSCRIPTION_PATTERN = /not found|no document/i;
 
 export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): UnsubscribeParseResult => {
     const queryType = searchParams.get("type");
     const id = searchParams.get("id");
-    const email = searchParams.get("email");
     const serverUrl = searchParams.get("serverUrl");
 
-    if (!queryType || !id || !email || !serverUrl) {
+    if (!queryType || !id || !serverUrl) {
         return {
             isValid: false,
             reason: "This unsubscribe link is missing required details.",
@@ -43,20 +41,12 @@ export const parseUnsubscribeSearchParams = (searchParams: URLSearchParams): Uns
         };
     }
 
-    if (email.length > 254 || !SAFE_EMAIL_PATTERN.test(email)) {
-        return {
-            isValid: false,
-            reason: "This unsubscribe link contains an invalid email address.",
-        };
-    }
-
     return {
         isValid: true,
         params: {
             collection,
             queryType,
             id,
-            email,
             serverURL: decodedServerURL,
         },
     };

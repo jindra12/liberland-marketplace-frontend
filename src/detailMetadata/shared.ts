@@ -97,19 +97,6 @@ export const buildDetailJsonLd = (
     ];
 };
 
-const decodeHexSegment = (value: string): string => {
-    if (!value || value.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(value)) {
-        return "";
-    }
-
-    const bytes = value.match(/.{1,2}/g);
-    if (!bytes) {
-        return "";
-    }
-
-    return bytes.map((segment) => String.fromCharCode(Number.parseInt(segment, 16))).join("");
-};
-
 export type DetailPageMetadata = {
     content?: PublicPageContent;
     readableOnly?: boolean;
@@ -137,10 +124,6 @@ export type DetailPageMetadataExtras = {
         name?: string;
         property?: string;
     }>;
-};
-
-export const decodeServerUrlSegment = (value: string): string => {
-    return decodeHexSegment(value);
 };
 
 export const buildStandardDetailMetadata = (

@@ -7,22 +7,20 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { Alert, Flex, Result, Spin, Typography, message } from "antd";
 import useLocalStorage from "use-local-storage";
-import { useTimeout } from "usehooks-ts";
+import { useSessionStorage, useTimeout } from "usehooks-ts";
 
-import type { Order as OrderType } from "../generated/graphql";
 import { routes } from "../routes";
 
 import { CART_SECRETS_INDEX_KEY, CartSecretEntry } from "./cart/cartSecrets";
 import { CartSummary, useCartItems } from "./cart/useCartItems";
-import { notifyCartSecretsChanged } from "./cart/utils";
 import { useEndpointContext } from "./EndpointContext";
 import { useCreateOrderMutation, useDeleteCartMutation, useMeUserQuery, useUpdateOrderMutation } from "./hooks";
-import { SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
+import { CHECKOUT_ORDERS_STORAGE_KEY, SAVED_SHIPPING_ADDRESS_STORAGE_KEY } from "./order/constants";
 import { McpCheckoutHydrator } from "./order/McpCheckoutHydrator";
 import { OrderCreateStep } from "./order/OrderCreateStep";
 import { OrderPaymentStep } from "./order/OrderPaymentStep";
 import { collectRequiredChainsForCarts, buildPaymentProfileUsersByUrl } from "./order/payment/utils";
-import type { AddressWithEmail, OrderFormValues, SubmittedOrder } from "./order/types";
+import type { AddressWithEmail, CheckoutOrder, OrderFormValues, SubmittedOrder } from "./order/types";
 import { buildOrderPrefill, buildProfileShippingAddresses } from "./order/utils";
 import { buildProductParameterSelectionMap, buildSelectedProductParametersInput } from "./productParameters/utils";
 import { RouteButton } from "./RouteButton";
@@ -34,9 +32,12 @@ const OrderContent: React.FunctionComponent = () => {
     const { enabled } = useEndpointContext();
 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [submittedOrders, setSubmittedOrders] = React.useState<SubmittedOrder[]>([]);
+    const [submittedOrders, setSubmittedOrders] = useSessionStorage<CheckoutOrder[]>(
+        `${CHECKOUT_ORDERS_STORAGE_KEY}:${auth.user?.profile.iss || "guest"}:${auth.user?.profile.sub || "guest"}`,
+        [],
+    );
     const [showPaymentSuccess, setShowPaymentSuccess] = React.useState(false);
-    const [cartSecrets, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
+    const [, setCartSecrets] = useLocalStorage<CartSecretEntry[]>(CART_SECRETS_INDEX_KEY, []);
     const [savedShippingAddress, setSavedShippingAddress] = useLocalStorage<AddressWithEmail | undefined>(
         SAVED_SHIPPING_ADDRESS_STORAGE_KEY,
         undefined,
@@ -100,38 +101,46 @@ const OrderContent: React.FunctionComponent = () => {
         setIsSubmitting(true);
 
         try {
-            const ordered: { cart: CartSummary; order: OrderType }[] = [];
-            for (let i = 0; i < cartsWithItems.length; i++) {
-                const cart = cartsWithItems[i];
-                const items = cart.items
-                    .map((item) => ({
-                        product: item.product?.id,
-                        variant: item.variant?.id,
-                        quantity: item.quantity ?? 0,
-                        parameters: buildSelectedParametersForOrderItem(item),
-                    }))
-                    .filter((item) => Boolean(item.product) && item.quantity > 0);
+            await cartsWithItems.reduce(async (previous, cart) => {
+                await previous;
+                const recovered = submittedOrders.find(
+                    (entry) => entry.url === cart.url && entry.cartId === cart.cartId,
+                );
+                if (!recovered) {
+                    const items = cart.items
+                        .map((item) => ({
+                            product: item.product?.id,
+                            variant: item.variant?.id,
+                            quantity: item.quantity ?? 0,
+                            parameters: buildSelectedParametersForOrderItem(item),
+                        }))
+                        .filter((item) => Boolean(item.product) && item.quantity > 0);
 
-                if (items.length === 0) {
-                    message.error("Cart has no orderable items");
-                    return;
-                }
+                    if (items.length === 0) {
+                        throw new Error("Cart has no orderable items");
+                    }
 
-                const createOrderResult = await createOrderMutation.mutateAsync({
-                    url: cart.url,
-                    draft: false,
-                    data: {
-                        customerEmail: values.customerEmail,
-                        items,
-                        shippingAddress: values.shippingAddress,
-                    },
-                });
+                    const createOrderResult = await createOrderMutation.mutateAsync({
+                        url: cart.url,
+                        draft: false,
+                        data: {
+                            customerEmail: values.customerEmail,
+                            items,
+                            shippingAddress: values.shippingAddress,
+                        },
+                    });
 
-                const createdOrder = createOrderResult.createOrder;
+                    const createdOrder = createOrderResult.createOrder;
 
-                if (!createdOrder?.id) {
-                    message.error("Order creation did not return an order id");
-                    return;
+                    if (!createdOrder?.id) {
+                        throw new Error("Order creation did not return an order id");
+                    }
+
+                    // Persist before any cleanup or the next backend can fail.
+                    setSubmittedOrders((current) => [
+                        ...current,
+                        { url: cart.url, cartId: cart.cartId, order: createdOrder },
+                    ]);
                 }
 
                 await deleteCartMutation.mutateAsync({
@@ -140,54 +149,12 @@ const OrderContent: React.FunctionComponent = () => {
                     trash: false,
                 });
 
-                ordered.push({
-                    cart,
-                    order: createdOrder as OrderType,
-                });
-            }
-
-            const summary = ordered.reduce(
-                (acc, result) => {
-                    return {
-                        ...acc,
-                        submittedCarts: acc.submittedCarts + 1,
-                        submittedOrders: [
-                            ...acc.submittedOrders,
-                            {
-                                url: result.cart.url,
-                                order: result.order,
-                            },
-                        ],
-                    };
-                },
-                {
-                    submittedCarts: 0,
-                    submittedOrders: [] as SubmittedOrder[],
-                },
-            );
-
-            if (summary.submittedOrders.length > 0) {
-                const submittedCartKeys = new Set(ordered.map((entry) => `${entry.cart.url}::${entry.cart.secret}`));
-                const nextCartSecrets = (cartSecrets || []).filter(
-                    (entry) => !submittedCartKeys.has(`${entry.url}::${entry.secret}`),
+                setCartSecrets((current) =>
+                    (current || []).filter((entry) => entry.url !== cart.url || entry.secret !== cart.secret),
                 );
-                setCartSecrets(nextCartSecrets);
-                notifyCartSecretsChanged(nextCartSecrets);
-            }
-
-            setSubmittedOrders(summary.submittedOrders);
-
-            if (summary.submittedCarts > 0) {
-                await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
-                await refetch();
-            }
-
-            if (summary.submittedCarts === cartsWithItems.length) {
-                message.success("All products submitted");
-                return;
-            }
-
-            message.warning("Order was partially created");
+            }, Promise.resolve());
+            await queryClient.invalidateQueries({ queryKey: ["CartBySecret"] });
+            message.success("All products submitted");
         } catch (error) {
             console.error("Order creation failed", error);
             const errorMessage =
@@ -250,11 +217,13 @@ const OrderContent: React.FunctionComponent = () => {
                     submittedOrders={submittedOrders}
                     onPayerAddressSelected={updatePayerAddress}
                     onAllPaymentsComplete={() => {
+                        setSubmittedOrders([]);
                         setShowPaymentSuccess(true);
                     }}
                     profileUsersByUrl={profileUsersByUrl}
                 />
-            ) : (
+            ) : null}
+            {cartsWithItems.length > 0 && (
                 <OrderCreateStep
                     products={products}
                     isProductsLoading={isLoading}

@@ -38,6 +38,5 @@ export type StartupFormBasicsFieldsProps = {
     existingImageUrl?: string | null;
     identityOptions: StartupFormSelectOption[];
     isIdentitiesLoading: boolean;
-    userId?: string | null;
     url: string;
 };

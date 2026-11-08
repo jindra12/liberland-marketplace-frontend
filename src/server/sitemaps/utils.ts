@@ -63,11 +63,17 @@ export const buildSyndicatedSitemapIndex = async (): Promise<string> => {
         console.warn("Sitemap backend discovery incomplete", discovery);
     }
     // Index entries point straight to URL sets; nested sitemap indexes are not valid.
-    const entries = [...manifests.entries()].flatMap(([serverUrl, manifest]) => manifest.shards.map((shard) => ({
+    const orderedManifests = [...manifests.entries()].sort(([left], [right]) =>
+        left === root ? -1 : right === root ? 1 : left.localeCompare(right),
+    );
+    const entries = orderedManifests.flatMap(([serverUrl, manifest]) => manifest.shards.map((shard) => ({
         url: `${SITE_URL}/sitemaps/${encodeServerUrlSegment(serverUrl)}/${shard.file}`,
         lastmod: shard.lastmod,
     })));
-    return buildSitemapIndexXml([{ url: `${SITE_URL}/sitemaps/sections.xml` }, ...entries]);
+    if (entries.length >= MAX_SITEMAP_INDEX_ENTRIES) {
+        console.warn("Sitemap federation exceeds index capacity; primary shards are prioritized.");
+    }
+    return buildSitemapIndexXml([{ url: `${SITE_URL}/sitemaps/sections.xml` }, ...entries.slice(0, MAX_SITEMAP_INDEX_ENTRIES - 1)]);
 };
 
 export const fetchBackendSitemapShard = async (serverSegment: string, file: string): Promise<string> => {

@@ -50,10 +50,11 @@ export const IdentitiesSearch: React.FunctionComponent<IdentitiesSearchProps> = 
             ? searchedIdentities.isLoading && searchDocs.length === 0
             : defaultIdentities.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedIdentities.data?.Searches?.hasNextPage) : false;
-    const handleSelect = (identity: { id: string; name?: string | null }) => {
+    const handleSelect = (identity: (typeof items)[number]) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Identities,
             value: identity.id,
+            serverURL: identity.serverURL,
             label: identity.name || "Tribe",
         });
         props.onClose();

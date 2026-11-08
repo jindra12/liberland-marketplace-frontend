@@ -74,6 +74,7 @@ export const useAddToCartSharedState = (props: SharedAddToCartStateProps) => {
         candidateProfileAddressesForBuyNow: props.isAuthenticated ? candidateProfileAddresses : [],
         cartQuery,
         cartSecret,
+        isCartReady: !cartSecret || cartQuery.isSuccess || Boolean(existingCart),
         currentItem,
         currentItemQuantity,
         currentItemSelectedParameterKeys,
@@ -181,6 +182,10 @@ export const useAddToCartIncrementFormState = (props: AddToCartIncrementStatePro
     };
 
     const persistQuantity = async (nextQuantityValue: number | null | undefined) => {
+        if (!sharedState.isCartReady) {
+            return;
+        }
+
         const nextQuantity = clampCartQuantity(nextQuantityValue, sharedState.maxAvailable);
         const selectedParameterKeys = buildProductParameterSelectionMapFromFormValues(
             props.form.getFieldValue("parameters"),

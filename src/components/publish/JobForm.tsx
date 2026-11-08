@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { DatePicker, Form, Input, InputNumber, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import dayjs from "dayjs";
@@ -12,6 +10,7 @@ import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule }
 import { useCreateJobMutation, useUpdateJobMutation } from "../hooks";
 
 import { currencyOptions } from "./constants";
+import { FormNavigationGuard } from "./FormNavigationGuard";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
@@ -65,10 +64,8 @@ export interface JobFormProps {
     };
 }
 export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
-    const auth = useAuth();
     const createMutation = useCreateJobMutation();
     const updateMutation = useUpdateJobMutation();
-    const userId = auth.user?.profile?.sub;
     const defaults: Partial<JobFormValues> = {
         ...props.initialValues,
         positions: typeof props.initialValues?.positions === "number" ? props.initialValues.positions : 1,
@@ -97,29 +94,28 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
             ...(imageId !== undefined && {
                 image: imageId,
             }),
-            ...(typeof values.salaryMin === "number" || typeof values.salaryMax === "number"
-                ? {
-                      salaryRange: {
+            salaryRange:
+                typeof values.salaryMin === "number" || typeof values.salaryMax === "number"
+                    ? {
                           min: values.salaryMin,
                           max: values.salaryMax,
                           currency: values.salaryCurrency,
-                      },
-                  }
-                : {}),
-            ...(typeof values.bountyAmount === "number"
-                ? {
-                      bounty: {
+                      }
+                    : null,
+            bounty:
+                typeof values.bountyAmount === "number"
+                    ? {
                           amount: values.bountyAmount,
                           currency: values.bountyCurrency,
-                      },
-                  }
-                : {}),
+                      }
+                    : null,
         }),
         getCreateId: (r) => r.createJob?.id,
         getUpdateId: (r) => r.updateJob?.id,
     });
     return (
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={defaults} className="Publish__form">
+            <FormNavigationGuard />
             <Form.Item
                 name="title"
                 label="Title"
@@ -165,7 +161,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                 ]}
                 className="Publish__jobCompanyField"
             >
-                <CompanyField serverURL={props.url} userId={userId} />
+                <CompanyField serverURL={props.url} />
             </Form.Item>
             <Form.Item
                 name="positions"

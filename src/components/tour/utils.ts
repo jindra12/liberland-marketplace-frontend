@@ -1,6 +1,7 @@
 import { matchPath } from "react-router-dom";
 
 import type { TourProps } from "antd";
+import { TOUR_TYPES } from "./validation/constants";
 
 import type {
     Category,
@@ -21,9 +22,7 @@ export const parseTourHash = (hash: string): TourHashPayload | null => {
     }
 
     const rawType = hash.slice(TOUR_HASH_PREFIX.length);
-    const type = rawType as TourType;
-
-    return type ? { type } : null;
+    return isTourType(rawType) ? { type: rawType } : null;
 };
 
 export const buildTourHash = (type: TourType) => `${TOUR_HASH_PREFIX}${type}`;
@@ -83,7 +82,7 @@ export const isAnyRouteMatch = (pathname: string, patterns: string[]) =>
 export const getLocationPath = (pathname: string, search: string) => `${pathname}${search}`;
 
 export const isTourType = (value: string): value is TourType => {
-    return value.length > 0;
+    return TOUR_TYPES.some((type) => type === value);
 };
 
 export const isPublishTourType = (value: TourType) =>

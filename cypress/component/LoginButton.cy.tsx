@@ -3,6 +3,7 @@ import { EndpointPendingActionHost } from "../../src/components/EndpointPendingA
 import { AUTH_URL_STORAGE_KEY } from "../../src/components/endpoints/constants";
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { buildTestAuthContext, mountWithProviders, screenshotStep } from "../support/component-tests/utils";
+import { SourceAwareAuthFixture } from "../support/component-tests/SourceAwareAuthFixture";
 
 const buildAuthStorageKey = (serverUrl: string) => {
     return `oidc.user:${serverUrl}/api/auth:${process.env.REACT_APP_OIDC_CLIENT_ID || ""}`;
@@ -49,14 +50,15 @@ const mountLoginButton = (route: string, serverUrls: string[], loggedInServerUrl
     });
 
     mountWithProviders(
-        <>
+        <SourceAwareAuthFixture>
             <LoginButton />
             <EndpointPendingActionHost />
-        </>,
+        </SourceAwareAuthFixture>,
         {
         auth: buildTestAuthContext({
             signinRedirect,
             removeUser,
+            signoutRedirect: async () => removeUser(),
         }),
         route,
         setup: (win) => {

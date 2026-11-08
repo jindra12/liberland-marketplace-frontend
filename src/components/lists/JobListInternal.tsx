@@ -14,6 +14,7 @@ import { AppList } from "../AppList";
 import { ApplyButton } from "../ApplyButton";
 import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
 import { Markdown } from "../Markdown";
+import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
@@ -49,6 +50,9 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
 
     return (
         <AppList
+            rowKey={getSourceQualifiedEntityKey}
+            loadedCount={allItems.length}
+            fetching={props.query.isFetching}
             hasMore={hasMore}
             items={items}
             title="Jobs"

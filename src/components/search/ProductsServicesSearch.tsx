@@ -52,10 +52,11 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
             ? searchedProducts.isLoading && searchDocs.length === 0
             : defaultProducts.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedProducts.data?.Searches?.hasNextPage) : false;
-    const handleSelect = (product: { id: string; name?: string | null }) => {
+    const handleSelect = (product: (typeof items)[number]) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Products,
             value: product.id,
+            serverURL: product.serverURL,
             label: product.name || "Product",
         });
         props.onClose();

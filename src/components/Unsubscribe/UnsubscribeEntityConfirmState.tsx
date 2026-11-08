@@ -77,7 +77,7 @@ export const UnsubscribeEntityConfirmState: React.FunctionComponent<UnsubscribeR
                         <div className="UnsubscribePage__meta">
                             <span className="UnsubscribePage__metaChip">
                                 <MailOutlined />
-                                <span>{props.params.email}</span>
+                                <span>Your signed-in account</span>
                             </span>
                         </div>
                         <Space size={[12, 12]} wrap className="UnsubscribePage__actions">

@@ -26,7 +26,7 @@ const EditCompany: React.FunctionComponent = () => {
                         const createdById = company?.createdBy?.id;
 
                         return (
-                            <OwnerGuard createdById={createdById}>
+                            <OwnerGuard createdById={createdById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Company</Typography.Title>
                                 <CompanyForm
@@ -48,7 +48,7 @@ const EditCompany: React.FunctionComponent = () => {
                                         existingImageUrl: company?.image?.url,
                                         existingImageId: company?.image?.id,
                                     }}
-                                    url={company?.serverURL ?? routeServerURL}
+                                    url={routeServerURL}
                                 />
                             </OwnerGuard>
                         );

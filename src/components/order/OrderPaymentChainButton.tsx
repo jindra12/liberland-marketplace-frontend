@@ -23,6 +23,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
         return (
             <ThirdwebPayButton
                 formModel={{
+                    serverUrl: props.entry.url,
                     amount: props.chainPayment.amountInSmallestUnit,
                     orderId: props.entry.order.id,
                     recipient: props.recipient,
@@ -38,6 +39,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
         return (
             <SolanaPay
                 model={{
+                    serverUrl: props.entry.url,
                     amount: props.chainPayment.amountInSmallestUnit,
                     orderId: props.entry.order.id,
                     recipient: props.recipient,
@@ -52,6 +54,7 @@ export const OrderPaymentChainButton: React.FunctionComponent<OrderPaymentChainB
     return (
         <TronPaymentButton
             formModel={{
+                serverUrl: props.entry.url,
                 amount: props.chainPayment.amountInSmallestUnit,
                 orderId: props.entry.order.id,
                 recipient: props.recipient,

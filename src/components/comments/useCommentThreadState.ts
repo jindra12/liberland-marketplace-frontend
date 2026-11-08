@@ -2,7 +2,7 @@ import * as React from "react";
 
 import type { AuthProfile } from "../../types";
 import { useDislikeCommentMutation, useLikeCommentMutation } from "../hooks";
-import type { DislikeMutation, DislikeMutationVariables, LikeMutation, LikeMutationVariables } from "../shared/Like/types";
+import type { DislikeMutation, LikeMutation } from "../shared/Like/types";
 import type { CommentCurrentUser } from "./types";
 import { getCommentCurrentUser } from "./utils";
 
@@ -25,18 +25,9 @@ export const useCommentThreadState = (args: CommentThreadStateArgs): CommentThre
     const commentLikeMutation = useLikeCommentMutation();
     const commentDislikeMutation = useDislikeCommentMutation();
 
-    const likeMutation: LikeMutation = {
-        isPending: commentLikeMutation.isPending,
-        mutate: ({ id, liked }: LikeMutationVariables) => commentLikeMutation.mutate({ id, liked }),
-    };
-    const dislikeMutation: DislikeMutation = {
-        isPending: commentDislikeMutation.isPending,
-        mutate: ({ id }: DislikeMutationVariables) => commentDislikeMutation.mutate({ id }),
-    };
-
     return {
         currentUser,
-        likeMutation,
-        dislikeMutation,
+        likeMutation: commentLikeMutation,
+        dislikeMutation: commentDislikeMutation,
     };
 };

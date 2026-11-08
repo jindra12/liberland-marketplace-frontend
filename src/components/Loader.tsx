@@ -3,7 +3,7 @@ import * as React from "react";
 import { UseQueryResult } from "@tanstack/react-query";
 
 import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Result, Spin } from "antd";
+import { Alert, Button, Result, Spin } from "antd";
 import { AxiosError } from "axios";
 
 import { convertStatusCode, getErrorMessage } from "./loader/utils";
@@ -22,7 +22,7 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
         return props.isSmall ? <Spin size="small" /> : <DetailPageSkeleton />;
     }
 
-    if (error) {
+    if (error && !data) {
         const { status } = error as AxiosError;
         return (
             <Result
@@ -38,11 +38,16 @@ export const Loader = <TData,>(props: LoaderProps<TData>) => {
     }
 
     if (data) {
-        return props.children(
-            data,
-            <Button onClick={() => refetch()} icon={<ReloadOutlined />}>
-                Refresh
-            </Button>,
+        return (
+            <>
+                {props.children(
+                    data,
+                    <Button onClick={() => refetch()} icon={<ReloadOutlined />}>
+                        Refresh
+                    </Button>,
+                )}
+                {error && <Alert type="warning" showIcon message="Refresh failed. Your loaded data and edits have been kept. Retry using Refresh." />}
+            </>
         );
     }
 

@@ -1,11 +1,12 @@
 import * as React from "react";
 
+import { useListPage } from "../../hooks/useListPage";
 import { useListProductsQuery } from "../hooks";
 
 import { ProductServiceListInternal } from "./ProductServiceListInternal";
 
 export const ProductsServicesList: React.FunctionComponent = () => {
-    const [page, setPage] = React.useState(1);
+    const { page, setPage } = useListPage();
     const query = useListProductsQuery({
         limit: 20,
         page,

@@ -51,10 +51,11 @@ export const PostsSearch: React.FunctionComponent<PostsSearchProps> = (props) =>
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedPosts.data?.Searches?.hasNextPage) : false;
     const likeMutation = useLikePostMutation();
     const dislikeMutation = useDislikePostMutation();
-    const handleSelect = (post: { id: string; title?: string | null }) => {
+    const handleSelect = (post: (typeof items)[number]) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Posts,
             value: post.id,
+            serverURL: post.company?.serverURL,
             label: post.title || "Post",
         });
         props.onClose();

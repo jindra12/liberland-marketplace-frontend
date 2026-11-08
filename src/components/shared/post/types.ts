@@ -12,6 +12,7 @@ export type RelatedTargetSelection = {
     relationTo: Post_RelatedPosts_RelationTo;
     value: string;
     label: string;
+    serverURL?: string | null;
 };
 
 export type RelatedTargetInputSelection = {

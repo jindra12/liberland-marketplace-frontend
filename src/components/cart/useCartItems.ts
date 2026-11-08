@@ -38,7 +38,7 @@ export const useCartItems = () => {
         })),
     });
 
-    const isLoading = queries.some((query) => query.isLoading || query.isFetching);
+    const isLoading = queries.some((query) => query.isLoading);
 
     const carts = React.useMemo(() => {
         return entries

@@ -11,6 +11,12 @@ import {
 } from "@tanstack/react-query";
 import {
     CartBySecretDocument,
+    SellerOrderProductsDocument,
+    useSellerOrderProductsQuery as useSellerOrderProductsQuerySingle,
+    UpdateSellerOrderProductFulfilledDocument,
+    useUpdateSellerOrderProductFulfilledMutation as useUpdateSellerOrderProductFulfilledMutationSingle,
+    UpdateSellerOrderProductRejectedDocument,
+    useUpdateSellerOrderProductRejectedMutation as useUpdateSellerOrderProductRejectedMutationSingle,
     useCartBySecretQuery as useCartBySecretQuerySingle,
     CreateCartDocument,
     useCreateCartMutation as useCreateCartMutationSingle,
@@ -224,9 +230,8 @@ import {
     useDislikeVentureMutation as useDislikeVentureMutationSingle,
     LikeVentureDocument,
     useLikeVentureMutation as useLikeVentureMutationSingle,
-    MeUserQuery,
 } from "../generated/graphql";
-import { gqlFetcher } from "../gqlFetcher";
+import { BACKEND_URL, gqlFetcher } from "../gqlFetcher";
 import { useEndpointContext } from "./EndpointContext";
 import {
     anonymizeCartBySecretVariables,
@@ -257,8 +262,9 @@ import {
     anonymizeUpdateStartupVariables,
     anonymizeUpdateUserByIdVariables,
 } from "./analytics/anonymizers";
-import { combineResult, deepMergeConcatArrays } from "./query/utils";
+import { combineResult, deepMergeConcatArrays, mergeBackendUsers } from "./query/utils";
 import { useSortContent } from "./SortContentBySelect/useSortContent";
+import { withResponseSource } from "./query/provenanceUtils";
 
 export type GeneratedUseQueryHook<TQueryFnData, TVariables> = (<TData = TQueryFnData, TError = unknown>(
     variables: TVariables,
@@ -307,8 +313,7 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
     ) => {
         return useMutation<TData, TError, MutationVariablesWithUrl<TVariables>, TContext>({
             mutationFn: (variables) => {
-                const { url, ...rest } = variables;
-                return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, undefined, url, anonymizer)();
+                return useEnhancedMutation.fetcher(variables)();
             },
             ...options,
         });
@@ -319,7 +324,17 @@ export const enhancedMutationFactory = <TData, TVariables extends object | undef
         options?: RequestInit["headers"],
     ) => {
         const { url, ...rest } = variables;
-        return gqlFetcher<TData, TVariables>(mutation, rest as TVariables, options, url, anonymizer);
+        const serverUrl = url || BACKEND_URL;
+        return async () => {
+            const data = await gqlFetcher<TData, TVariables>(
+                mutation,
+                rest as TVariables,
+                options,
+                serverUrl,
+                anonymizer,
+            )();
+            return withResponseSource(data, serverUrl);
+        };
     };
 
     return useEnhancedMutation;
@@ -341,41 +356,67 @@ export const enhancedQueryFactory = <TQueryFnData, TVariables extends object | u
         const urls = variables?.url ? [variables.url] : enabled;
         const client = useQueryClient();
         const [value] = useSortContent();
+        const queryVariables = (hasSort ? { ...variables, sort: value } : variables) as TVariables;
+        const { enabled: callerEnabled, ...queryOptions } = params || {};
 
         return useQueries({
             queries: urls.map((url) => ({
-                queryKey: [...useHook.getKey(variables as TVariables), url],
-                queryFn: gqlFetcher<TQueryFnData, TVariables>(
-                    query,
-                    (hasSort ? {
-                        ...variables,
-                        sort: value,
-                    } : variables) as TVariables,
-                    options,
-                    url,
-                    anonymizer,
-                ),
-                enabled: (query: Query) => {
-                    const queryVariables = query.queryKey[1];
-                    if (queryVariables && typeof queryVariables === "object" && "page" in queryVariables) {
-                        const { page } = queryVariables as { page: number };
-                        const prevKey = useHook.getKey({
-                            ...queryVariables,
-                            page: page - 1,
-                        } as TVariables);
-                        const prevQuery = client.getQueryData(prevKey) as {
-                            hasNextPage?: boolean,
-                        };
-                        return prevQuery?.hasNextPage !== false;
+                queryKey: [...useHook.getKey(queryVariables), url],
+                queryFn: async () => {
+                    const data = await gqlFetcher<TQueryFnData, TVariables>(
+                        query,
+                        queryVariables,
+                        options,
+                        url,
+                        anonymizer,
+                    )();
+                    return withResponseSource(data, url);
+                },
+                ...queryOptions,
+                enabled: (currentQuery: Query) => {
+                    if (
+                        callerEnabled === false ||
+                        (typeof callerEnabled === "function" && !callerEnabled(currentQuery))
+                    ) {
+                        return false;
+                    }
+                    if (
+                        queryVariables &&
+                        "page" in queryVariables &&
+                        typeof queryVariables.page === "number" &&
+                        queryVariables.page > 1
+                    ) {
+                        const prevKey = [
+                            ...useHook.getKey({
+                                ...queryVariables,
+                                page: queryVariables.page - 1,
+                            }),
+                            url,
+                        ];
+                        const previous = client.getQueryData<Record<string, { hasNextPage?: boolean } | null>>(prevKey);
+                        return !Object.values(previous || {}).some((collection) => collection?.hasNextPage === false);
                     }
                     return true;
                 },
-                ...params,
             })),
             combine: (result) => combineResult(result, mergeAction as any) as UseQueryResult<TResult>,
         });
     };
 };
+
+export const useSellerOrderProductsQuery = enhancedQueryFactory(
+    useSellerOrderProductsQuerySingle,
+    SellerOrderProductsDocument,
+    false,
+);
+export const useUpdateSellerOrderProductFulfilledMutation = enhancedMutationFactory(
+    useUpdateSellerOrderProductFulfilledMutationSingle,
+    UpdateSellerOrderProductFulfilledDocument,
+);
+export const useUpdateSellerOrderProductRejectedMutation = enhancedMutationFactory(
+    useUpdateSellerOrderProductRejectedMutationSingle,
+    UpdateSellerOrderProductRejectedDocument,
+);
 
 export const useListCompaniesByCreatorQuery = enhancedQueryFactory(
     useListCompaniesByCreatorQuerySingle,
@@ -411,11 +452,23 @@ export const useSearchCompaniesBySecondaryIdentityQuery = enhancedQueryFactory(
     true,
 );
 export const useListCompaniesQuery = enhancedQueryFactory(useListCompaniesQuerySingle, ListCompaniesDocument, true);
-export const useSearchCompaniesQuery = enhancedQueryFactory(useSearchCompaniesQuerySingle, SearchCompaniesDocument, true);
+export const useSearchCompaniesQuery = enhancedQueryFactory(
+    useSearchCompaniesQuerySingle,
+    SearchCompaniesDocument,
+    true,
+);
 export const useIdentityByIdQuery = enhancedQueryFactory(useIdentityByIdQuerySingle, IdentityByIdDocument, false);
-export const useEntityImageUrlsQuery = enhancedQueryFactory(useEntityImageUrlsQuerySingle, EntityImageUrlsDocument, false);
+export const useEntityImageUrlsQuery = enhancedQueryFactory(
+    useEntityImageUrlsQuerySingle,
+    EntityImageUrlsDocument,
+    false,
+);
 export const useListIdentitiesQuery = enhancedQueryFactory(useListIdentitiesQuerySingle, ListIdentitiesDocument, true);
-export const useSearchIdentitiesQuery = enhancedQueryFactory(useSearchIdentitiesQuerySingle, SearchIdentitiesDocument, true);
+export const useSearchIdentitiesQuery = enhancedQueryFactory(
+    useSearchIdentitiesQuerySingle,
+    SearchIdentitiesDocument,
+    true,
+);
 export const useListJobsByCompanyQuery = enhancedQueryFactory(
     useListJobsByCompanyQuerySingle,
     ListJobsByCompanyDocument,
@@ -529,11 +582,7 @@ export const useListPostsByCompanyQuery = enhancedQueryFactory(
     true,
 );
 export const useSearchPostsQuery = enhancedQueryFactory(useSearchPostsQuerySingle, SearchPostsDocument, true);
-export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, false, (left: MeUserQuery | MeUserQuery[], right: MeUserQuery | MeUserQuery[]) => {
-    const leftEntries = Array.isArray(left) ? left : [left];
-    const rightEntries = Array.isArray(right) ? right : [right];
-    return [...leftEntries, ...rightEntries];
-});
+export const useMeUserQuery = enhancedQueryFactory(useMeUserQuerySingle, MeUserDocument, false, mergeBackendUsers);
 export const usePermissionsQuery = enhancedQueryFactory(usePermissionsQuerySingle, PermissionsDocument, false);
 export const useCreateCompanyMutation = enhancedMutationFactory(
     useCreateCompanyMutationSingle,
@@ -728,10 +777,7 @@ export const useCreateReportMutation = enhancedMutationFactory(
     CreateReportDocument,
     anonymizeReportVariables,
 );
-export const useShareRepostMutation = enhancedMutationFactory(
-    useShareRepostMutationSingle,
-    ShareRepostDocument,
-);
+export const useShareRepostMutation = enhancedMutationFactory(useShareRepostMutationSingle, ShareRepostDocument);
 export const useCreateInformationRequestMutation = enhancedMutationFactory(
     useCreateInformationRequestMutationSingle,
     CreateInformationRequestDocument,

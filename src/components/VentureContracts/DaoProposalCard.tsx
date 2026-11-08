@@ -4,6 +4,8 @@ import { Alert, Button, Card, Flex, Form, Input, Select, Statistic, Tag, Typogra
 import { formatUnits } from "ethers";
 
 import { proposalStateLabels } from "./constants";
+import { GovernanceCallDetails } from "./GovernanceCallDetails";
+import { describeGovernanceCall } from "./governanceUtils";
 import type { DaoProposalCardProps } from "./types";
 
 export const DaoProposalCard: React.FunctionComponent<DaoProposalCardProps> = (props) => (
@@ -15,6 +17,21 @@ export const DaoProposalCard: React.FunctionComponent<DaoProposalCardProps> = (p
     >
         <Flex vertical gap={16}>
             <Typography.Paragraph>{props.proposal.description}</Typography.Paragraph>
+            <Typography.Paragraph type="secondary">
+                Actions below use the recorded contract ABIs.
+                Decoding is not verification of deployed code or an upgrade's safety.
+            </Typography.Paragraph>
+            {props.proposal.targets.map((target, index) => (
+                <GovernanceCallDetails
+                    key={`${index}:${target}`}
+                    call={describeGovernanceCall(
+                        props.deployment,
+                        target,
+                        props.proposal.values[index],
+                        props.proposal.calldatas[index],
+                    )}
+                />
+            ))}
             <Typography.Text copyable className="VentureContracts__address">
                 Proposal: {props.proposal.id}
             </Typography.Text>
@@ -111,12 +128,6 @@ export const DaoProposalCard: React.FunctionComponent<DaoProposalCardProps> = (p
                     </Button>
                 </>
             )}
-            <Typography.Text type="secondary" className="VentureContracts__address">
-                Targets: {props.proposal.targets.join(", ")}
-            </Typography.Text>
-            <Typography.Paragraph code copyable className="VentureContracts__address">
-                Calldata: {props.proposal.calldatas.join(", ")}
-            </Typography.Paragraph>
             {!props.connected && (
                 <Typography.Text>Connect your wallet to vote or execute governance actions.</Typography.Text>
             )}

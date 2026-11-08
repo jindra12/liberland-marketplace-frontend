@@ -31,7 +31,7 @@ const EditStartup: React.FunctionComponent = () => {
                         const createdById = (startup?.createdBy as { id?: string } | null)?.id;
 
                         return (
-                            <OwnerGuard createdById={createdById}>
+                            <OwnerGuard createdById={createdById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={startup?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Venture</Typography.Title>
                                 <StartupForm
@@ -50,7 +50,7 @@ const EditStartup: React.FunctionComponent = () => {
                                         existingImageUrl: startup?.image?.url,
                                         existingImageId: startup?.image?.id,
                                     }}
-                                    url={startup?.serverURL ?? routeServerURL}
+                                    url={routeServerURL}
                                 />
                             </OwnerGuard>
                         );

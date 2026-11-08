@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { Alert, Button, Flex, Form, Input, InputNumber, Select, Typography } from "antd";
 
-import { validatePositiveAmount } from "./marketUtils";
+import { validatePositiveAmount, validateNonNegativeAmount } from "./marketUtils";
 import type { LiquidityValues, LiquidityFormProps } from "./types";
 
 export const LiquidityForm: React.FunctionComponent<LiquidityFormProps> = (props) => {
@@ -85,14 +85,14 @@ export const LiquidityForm: React.FunctionComponent<LiquidityFormProps> = (props
                                     <Form.Item
                                         name="minimumEth"
                                         label="Minimum ETH received"
-                                        rules={[{ validator: validatePositiveAmount }, { max: 100 }]}
+                                        rules={[{ validator: validateNonNegativeAmount }, { max: 100 }]}
                                     >
                                         <Input />
                                     </Form.Item>
                                     <Form.Item
                                         name="minimumTokens"
                                         label="Minimum tokens received"
-                                        rules={[{ validator: validatePositiveAmount }, { max: 100 }]}
+                                        rules={[{ validator: validateNonNegativeAmount }, { max: 100 }]}
                                     >
                                         <Input />
                                     </Form.Item>
@@ -100,6 +100,12 @@ export const LiquidityForm: React.FunctionComponent<LiquidityFormProps> = (props
                                         Withdrawal reverts if either minimum is not met. Liquidity units are not token
                                         amounts; inspect your position first to see its available liquidity units.
                                     </Typography.Paragraph>
+                                    <Alert
+                                        type="warning"
+                                        showIcon
+                                        message="You set the withdrawal protection"
+                                        description="These are your minimum acceptable payouts, not price estimates. Set at least one positive minimum. Zero leaves that currency unprotected and may be needed for a one-sided position. Transactions expire after 20 minutes; limits do not guarantee protection against every adverse price move."
+                                    />
                                 </>
                             )}
                         </>

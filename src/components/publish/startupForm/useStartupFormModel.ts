@@ -1,5 +1,3 @@
-import { useAuth } from "react-oidc-context";
-
 import { useCreateStartupMutation, useListIdentitiesQuery, useUpdateStartupMutation } from "../../hooks";
 import { useEntityForm } from "../useEntityForm";
 
@@ -7,7 +5,6 @@ import { buildStartupFormDefaults, buildStartupMutationData, toStartupSelectOpti
 import type { StartupFormProps, StartupFormValues } from "./types";
 
 export const useStartupFormModel = (props: StartupFormProps) => {
-    const auth = useAuth();
     const createMutation = useCreateStartupMutation();
     const updateMutation = useUpdateStartupMutation();
     const identitiesQuery = useListIdentitiesQuery({
@@ -39,6 +36,5 @@ export const useStartupFormModel = (props: StartupFormProps) => {
         isIdentitiesLoading: identitiesQuery.isLoading,
         loading: entityForm.loading,
         onFinish: entityForm.onFinish,
-        userId: auth.user?.profile?.sub,
     };
 };

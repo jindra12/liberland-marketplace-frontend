@@ -1,24 +1,26 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { message } from "antd";
-import { useAuth } from "react-oidc-context";
 
 import { invalidateStartupQueries } from "../../../startupUtils";
 import { useJoinStartupMutation, useLeaveStartupMutation } from "../../hooks";
 import { useIsOwnedByServerUser } from "../useIsOwnedByServerUser";
+import { useServerUser } from "../../auth/useServerUser";
 
 import type { StartupDetailEntity } from "./types";
 
 type UseStartupInvolvementProps = {
-    startup: StartupDetailEntity;
+    startup: Pick<StartupDetailEntity, "id" | "serverURL" | "involvedUsers"> & {
+        createdBy?: StartupDetailEntity["createdBy"];
+    };
 };
 
 export const useStartupInvolvement = (props: UseStartupInvolvementProps) => {
-    const auth = useAuth();
+    const serverUser = useServerUser(props.startup.serverURL);
     const queryClient = useQueryClient();
     const joinMutation = useJoinStartupMutation();
     const leaveMutation = useLeaveStartupMutation();
-    const userId = auth.user?.profile?.sub;
+    const userId = serverUser.user?.id;
     const involvedUsers = props.startup.involvedUsers || [];
     const isOwner = useIsOwnedByServerUser({
         ownerUserId: props.startup.createdBy?.id,
@@ -56,7 +58,7 @@ export const useStartupInvolvement = (props: UseStartupInvolvementProps) => {
     return {
         handleJoin,
         handleLeave,
-        isAuthenticated: Boolean(auth.isAuthenticated),
+        isAuthenticated: Boolean(serverUser.user),
         isInvolved: userId ? involvedUsers.some((user) => user.id === userId) : false,
         isJoinPending: joinMutation.isPending,
         isLeavePending: leaveMutation.isPending,

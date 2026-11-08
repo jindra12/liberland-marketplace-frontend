@@ -8,7 +8,7 @@ const getServerSideProps = createDetailPageProps({
     buildVariables: () => {
         return {};
     },
-    selectEntity: (data, params) => data.Syndications?.docs.find((entry) => entry.url === (params.id ?? "")),
+    selectEntity: (data, params) => data.Syndications?.docs.find((entry) => entry.id === params.id || entry.url === params.id),
     buildMetadata: buildSyndicationPageMetadata,
     buildCanonicalPath: (params, encodedServerUrl) =>
         `/syndication/${encodeURIComponent(params.id ?? "")}/${encodedServerUrl}`,

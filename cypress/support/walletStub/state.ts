@@ -57,6 +57,8 @@ const createDefaultState = (): WalletStubState => {
 
 const listeners = new Set<() => void>();
 
+export const paymentBroadcastCounts = { ethereum: 0, solana: 0 };
+
 let state = createDefaultState();
 
 const notify = () => {
@@ -113,6 +115,8 @@ const mergeState = (nextState: Partial<WalletStubState>): WalletStubState => {
 };
 
 export const resetWalletStubState = () => {
+    paymentBroadcastCounts.ethereum = 0;
+    paymentBroadcastCounts.solana = 0;
     state = createDefaultState();
     syncTronWeb();
     notify();

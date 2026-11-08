@@ -1,10 +1,6 @@
 import * as React from "react";
 
-import {
-    connectThirdwebWalletStub,
-    type WalletStubState,
-    useWalletStubState,
-} from "./state";
+import { connectThirdwebWalletStub, paymentBroadcastCounts, type WalletStubState, useWalletStubState } from "./state";
 
 type ConnectButtonProps = {
     connectButton?: {
@@ -42,8 +38,8 @@ export const ConnectButton: React.FunctionComponent<ConnectButtonProps> = (props
     };
 
     const label = isConnected
-        ? props.detailsButton?.label ?? props.connectButton?.label ?? "Connected"
-        : props.connectButton?.label ?? "Connect";
+        ? (props.detailsButton?.label ?? props.connectButton?.label ?? "Connected")
+        : (props.connectButton?.label ?? "Connect");
     const className = isConnected ? props.detailsButton?.className : props.connectButton?.className;
 
     return (
@@ -61,10 +57,11 @@ export const useActiveWallet = (): WalletStubState["thirdweb"]["wallet"] => {
     return useWalletStubState().thirdweb.wallet;
 };
 
-export const useSendAndConfirmTransaction = () => {
+export const useSendTransaction = () => {
     return {
         mutateAsync: async () => {
-            return { transactionHash: "0xwalletstub" };
+            paymentBroadcastCounts.ethereum += 1;
+            return { transactionHash: `0x${"ab".repeat(32)}` };
         },
         isPending: false,
         isError: false,

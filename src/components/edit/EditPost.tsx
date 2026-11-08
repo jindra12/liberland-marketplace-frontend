@@ -27,7 +27,7 @@ const EditPost: React.FunctionComponent = () => {
                         const createdById = post?.createdBy?.id;
 
                         return (
-                            <OwnerGuard createdById={createdById}>
+                            <OwnerGuard createdById={createdById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={post?.company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Post</Typography.Title>
                                 <PostForm
@@ -43,7 +43,7 @@ const EditPost: React.FunctionComponent = () => {
                                         existingImageUrl: post?.heroImage?.url,
                                         existingImageId: post?.heroImage?.id,
                                     }}
-                                    url={post?.company?.serverURL ?? routeServerURL}
+                                    url={routeServerURL}
                                 />
                             </OwnerGuard>
                         );

@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useListPage } from "../../hooks/useListPage";
 import { useListJobsByCompanyQuery } from "../hooks";
 
 import { JobListInternal } from "./JobListInternal";
@@ -10,7 +11,7 @@ export interface CompanyJobsListProps {
 }
 
 export const CompanyJobsList: React.FunctionComponent<CompanyJobsListProps> = (props) => {
-    const [page, setPage] = React.useState(1);
+    const { page, setPage } = useListPage(props.companyId, props.serverUrl);
     const query = useListJobsByCompanyQuery({
         companyId: props.companyId,
         page,

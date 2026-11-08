@@ -2,8 +2,97 @@ import { DaoProposalCard } from "../../src/components/VentureContracts/DaoPropos
 import { ProposalForm } from "../../src/components/VentureContracts/ProposalForm";
 import { fillFormField, selectFormOption, screenshotStep } from "../support/component-tests/directBasic";
 import { activeProposal, mountVentureMarket } from "../support/ventureMarket";
+import { Interface, parseEther } from "ethers";
+import { deploymentArtifacts } from "@liberland/marketplace-contracts/deployment/artifacts";
+import { savedDeployment } from "../support/ventureContracts";
 
 describe("Venture DAO governance", () => {
+    it("decodes a nested router fee change even when the description claims to change rewards", () => {
+        const dao = new Interface(deploymentArtifacts.daoArtifact.abi);
+        const router = new Interface(deploymentArtifacts.swapArtifact.abi);
+        mountVentureMarket(
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={{
+                    ...activeProposal,
+                    description: "Just update rewards",
+                    calldatas: [
+                        dao.encodeFunctionData("relay", [
+                            savedDeployment.swapRouterAddress!,
+                            0n,
+                            router.encodeFunctionData("setFee", [1000n, "0x1111111111111111111111111111111111111111"]),
+                        ]),
+                    ],
+                }}
+                decimals={18}
+                connected
+                busy={false}
+                onAction={cy.stub()}
+            />,
+        );
+        cy.contains("relay(address,uint256,bytes)").should("be.visible");
+        cy.contains("setFee(uint256,address)").should("be.visible");
+        cy.contains("feeBps_ (uint256): 1000").should("be.visible");
+        cy.contains("Upgrade or arbitrary execution").should("be.visible");
+    });
+
+    it("does not present a familiar selector on an unknown target as verified contract behavior", () => {
+        mountVentureMarket(
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={{ ...activeProposal, targets: ["0x1111111111111111111111111111111111111111"] }}
+                decimals={18}
+                connected
+                busy={false}
+                onAction={cy.stub()}
+            />,
+        );
+        cy.contains("Unknown target or nested call").should("be.visible");
+        cy.contains("setRewardPerPeriod(uint256)").should("not.exist");
+        cy.contains("Upgrade or arbitrary execution").should("be.visible");
+        mountVentureMarket(
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={{ ...activeProposal, calldatas: ["0x01"] }}
+                decimals={18}
+                connected
+                busy={false}
+                onAction={cy.stub()}
+            />,
+        );
+        cy.contains("Upgrade or arbitrary execution").should("be.visible");
+        cy.contains("0x01").should("be.visible");
+        cy.contains("setRewardPerPeriod(uint256)").should("not.exist");
+    });
+
+    it("warns about executable upgrade calldata hidden behind an innocent description", () => {
+        const dao = new Interface(deploymentArtifacts.daoArtifact.abi);
+        mountVentureMarket(
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={{
+                    ...activeProposal,
+                    description: "Just a harmless reward change",
+                    values: [parseEther("1")],
+                    calldatas: [
+                        dao.encodeFunctionData("upgradeToAndCall", [
+                            "0x1111111111111111111111111111111111111111",
+                            "0x12345678",
+                        ]),
+                    ],
+                }}
+                decimals={18}
+                connected
+                busy={false}
+                onAction={cy.stub()}
+            />,
+        );
+        cy.contains("upgradeToAndCall").should("be.visible");
+        cy.contains("Upgrade or arbitrary execution").should("be.visible");
+        cy.contains("1.0 ETH").should("be.visible");
+        cy.contains("0x12345678").should("be.visible");
+    });
+
     it("requires a governed target and explicit consent before proposing a permanent upgrade freeze", () => {
         const submit = cy.stub().resolves("0xfreeze-proposal");
         cy.wrap(submit).as("proposal");
@@ -33,9 +122,18 @@ describe("Venture DAO governance", () => {
         const act = cy.stub().resolves("0xvote");
         cy.wrap(act).as("vote");
         mountVentureMarket(
-            <DaoProposalCard proposal={activeProposal} decimals={18} connected busy={false} onAction={act} />,
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={activeProposal}
+                decimals={18}
+                connected
+                busy={false}
+                onAction={act}
+            />,
         );
         cy.contains("Snapshot quorum").should("be.visible");
+        cy.contains("setRewardPerPeriod(uint256)").should("be.visible");
+        cy.contains("5000000000000000000").should("be.visible");
         cy.contains("Your snapshot votes: 200.0").should("be.visible");
         cy.get(".VentureContracts__form").should(($form) => expect($form.width()).to.be.at.most(760));
         selectFormOption("Your vote", "Against");
@@ -56,6 +154,7 @@ describe("Venture DAO governance", () => {
         const act = cy.stub().resolves("0xgovernance");
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, hasVoted: true }}
                 decimals={18}
                 connected
@@ -67,6 +166,7 @@ describe("Venture DAO governance", () => {
         cy.contains("button", "Cast vote").should("not.exist");
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, state: 5, eta: activeProposal.timestamp + 100n }}
                 decimals={18}
                 connected
@@ -77,6 +177,7 @@ describe("Venture DAO governance", () => {
         cy.contains("button", "Execute proposal").should("be.disabled");
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, state: 5, eta: activeProposal.timestamp - 1n }}
                 decimals={18}
                 connected
@@ -92,6 +193,7 @@ describe("Venture DAO governance", () => {
         const act = cy.stub().resolves("0xvote");
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, votingPower: 0n }}
                 decimals={18}
                 connected
@@ -101,7 +203,14 @@ describe("Venture DAO governance", () => {
         );
         cy.contains("button", "Cast vote").should("be.disabled");
         mountVentureMarket(
-            <DaoProposalCard proposal={activeProposal} decimals={18} connected={false} busy={false} onAction={act} />,
+            <DaoProposalCard
+                deployment={savedDeployment}
+                proposal={activeProposal}
+                decimals={18}
+                connected={false}
+                busy={false}
+                onAction={act}
+            />,
         );
         cy.contains("button", "Cast vote").should("be.disabled");
         cy.viewport(390, 844);
@@ -128,6 +237,7 @@ describe("Venture DAO governance", () => {
         const act = cy.stub();
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, state: 0, canCancel: true }}
                 decimals={18}
                 connected
@@ -139,6 +249,7 @@ describe("Venture DAO governance", () => {
         cy.then(() => expect(act.firstCall.args[0].action).to.equal("cancel"));
         mountVentureMarket(
             <DaoProposalCard
+                deployment={savedDeployment}
                 proposal={{ ...activeProposal, state: 0, canCancel: false }}
                 decimals={18}
                 connected

@@ -1,4 +1,5 @@
-import { useSellerOrderProductsQuery } from "../../generated/graphql";
+import { useSellerOrderProductsQuery } from "../hooks";
+import { useEndpointContext } from "../EndpointContext";
 
 type UseOrderSummaryResult = {
     hasOrders: boolean;
@@ -6,10 +7,12 @@ type UseOrderSummaryResult = {
 };
 
 export const useOrderSummary = (enabled: boolean): UseOrderSummaryResult => {
+    const { authUrl } = useEndpointContext();
     const allOrdersQuery = useSellerOrderProductsQuery(
         {
             limit: 1,
             page: 1,
+            url: authUrl,
         },
         {
             enabled,
@@ -21,6 +24,7 @@ export const useOrderSummary = (enabled: boolean): UseOrderSummaryResult => {
             limit: 1,
             page: 1,
             rejected: false,
+            url: authUrl,
         },
         {
             enabled,

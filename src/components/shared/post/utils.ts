@@ -64,7 +64,7 @@ export const getPostHeroImageUrl = (post?: PostDoc | null): string => {
         return "";
     }
 
-    const directImage = toAbsoluteImageUrl(post.heroImage?.url, post.company?.serverURL);
+    const directImage = toAbsoluteImageUrl(post.heroImage?.url, post.serverURL || post.company?.serverURL);
     if (directImage) {
         return directImage;
     }
@@ -110,6 +110,7 @@ export const getRelatedTargetSelection = (related?: PostRelatedTarget | null): R
     return {
         relationTo: related.relationTo,
         value: relatedValue.id,
+        serverURL: relatedValue.serverURL || relatedValue.company?.serverURL,
         label: getRelatedSelectionLabel(relatedValue, related.relationTo),
     };
 };

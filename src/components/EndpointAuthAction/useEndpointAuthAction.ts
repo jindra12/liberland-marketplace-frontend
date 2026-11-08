@@ -1,7 +1,10 @@
 import { useAuth } from "react-oidc-context";
+import { notification } from "antd";
 
 import { useEndpointContext } from "../EndpointContext";
 import type { EndpointAction, EndpointAuthActionController } from "./types";
+import { buildAuthAuthority } from "../auth/utils";
+import { tryNormalizeEndpointUrl } from "../endpoints/utils";
 
 export const useEndpointAuthAction = (): EndpointAuthActionController => {
     const auth = useAuth();
@@ -9,12 +12,18 @@ export const useEndpointAuthAction = (): EndpointAuthActionController => {
     const { authUrl, setAuthUrl, pendingAction, setPendingAction } = endpointContext;
 
     const runWithTargetAuthUrl = async (targetAuthUrl: string, action: EndpointAction) => {
-        if (targetAuthUrl !== authUrl) {
+        const target = tryNormalizeEndpointUrl(targetAuthUrl);
+        if (!target || !endpointContext.urls.some((entry) => entry.value === target)) {
+            setPendingAction(undefined);
+            notification.warning({ message: "Enable this server in Syndication before signing in to it." });
+            return;
+        }
+        if (target !== authUrl || auth.settings.authority !== buildAuthAuthority(target) || auth.isLoading) {
             setPendingAction({
                 action,
-                targetAuthUrl,
+                targetAuthUrl: target,
             });
-            setAuthUrl(targetAuthUrl);
+            setAuthUrl(target);
             return;
         }
 

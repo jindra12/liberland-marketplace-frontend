@@ -73,7 +73,9 @@ describe("crypto addresses field", () => {
     });
 
     it("builds normalized crypto address payloads", () => {
-        expect(buildCryptoAddressesInput()).to.equal(undefined);
+        [undefined, null, {}, { chain: null, address: "" }].forEach((value) => {
+            expect(buildCryptoAddressesInput(value)).to.equal(null);
+        });
         expect(buildCryptoAddressesInput({ chain: "solana", address: " 11111111111111111111111111111111 " })).to.deep.equal(
             {
                 chain: "solana",

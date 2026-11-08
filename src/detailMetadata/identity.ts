@@ -119,7 +119,7 @@ export const fetchIdentityRelatedMetadata = async (
     _params: { id?: string; serverUrl?: string },
     serverUrl: string,
 ): Promise<IdentityRelatedMetadata> => {
-    const url = identity.serverURL || serverUrl;
+    const url = serverUrl;
 
     if (!url) {
         return {

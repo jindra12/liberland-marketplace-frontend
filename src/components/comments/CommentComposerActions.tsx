@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
+import { useMutation } from "@tanstack/react-query";
 
-import { Button, Flex, Form, Input } from "antd";
+import { Alert, Button, Flex, Form, Input } from "antd";
 
 import { EndpointAuthAction } from "../EndpointAuthAction/EndpointAuthAction";
 import { LONG_TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
@@ -24,24 +24,12 @@ type CommentComposerActionsProps = {
 };
 
 export const CommentComposerActions: React.FunctionComponent<CommentComposerActionsProps> = (props) => {
-    const auth = useAuth();
-    const userId = auth.user?.profile?.sub;
     const [form] = Form.useForm<CommentComposerValues>();
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-    const handleFinish = async (values: CommentComposerValues) => {
-        if (props.showCompanyField && !values.company) {
-            return;
-        }
-
-        setIsSubmitting(true);
-        try {
-            await props.onSubmit(values);
-            form.resetFields();
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+    const submission = useMutation({
+        mutationFn: props.onSubmit,
+        onSuccess: () => form.resetFields(),
+        onError: (error) => console.error(error),
+    });
 
     return (
         <Form
@@ -52,11 +40,14 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
                 text: props.initialValue ?? "",
                 company: props.initialCompany,
             }}
-            onFinish={handleFinish}
+            onFinish={(values) => {
+                if (props.showCompanyField && !values.company) {
+                    return;
+                }
+                submission.mutate(values);
+            }}
         >
-            {props.showCompanyField && userId && (
-                <CommentCompanyField serverURL={props.serverURL} userId={userId} />
-            )}
+            {props.showCompanyField && <CommentCompanyField serverURL={props.serverURL} />}
             <Form.Item
                 name="text"
                 className="CommentComposer__field"
@@ -71,6 +62,13 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
                     }}
                 />
             </Form.Item>
+            {submission.error && (
+                <Alert
+                    type="error"
+                    showIcon
+                    message="Could not save the comment. Your text has been kept; please try again."
+                />
+            )}
             <Flex gap={8} justify="flex-end" wrap className="CommentComposer__actions">
                 {props.allowCancel && props.onCancel && (
                     <Button onClick={props.onCancel} className="CommentComposer__cancelBtn">
@@ -82,7 +80,7 @@ export const CommentComposerActions: React.FunctionComponent<CommentComposerActi
                         <Button
                             type="primary"
                             htmlType="button"
-                            loading={isSubmitting}
+                            loading={submission.isPending}
                             className="CommentComposer__submitBtn"
                             onClick={(event) => {
                                 event.preventDefault();

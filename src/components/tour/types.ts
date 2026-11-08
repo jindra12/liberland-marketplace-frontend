@@ -1,33 +1,7 @@
 import type { TourStepProps } from "antd";
+import type { TOUR_TYPES } from "./validation/constants";
 
-export type TourType =
-    | "home"
-    | "jobs"
-    | "job-detail"
-    | "companies"
-    | "company-detail"
-    | "tribes"
-    | "tribe-detail"
-    | "products"
-    | "product-detail"
-    | "posts"
-    | "post-detail"
-    | "ventures"
-    | "venture-detail"
-    | "profile"
-    | "profile-wallets"
-    | "profile-address"
-    | "publish"
-    | "publish-job"
-    | "publish-company"
-    | "publish-product"
-    | "publish-post"
-    | "publish-startup"
-    | "cart"
-    | "order"
-    | "syndication"
-    | "syndication-detail"
-    | "syndicate";
+export type TourType = typeof TOUR_TYPES[number];
 
 export type Category = "publish-job" | "publish-company" | "publish-product" | "publish-post" | "publish-startup";
 

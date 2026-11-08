@@ -21,7 +21,7 @@ export type CheckoutCartSnapshot = CheckoutCartReference & {
 
 export const createCheckoutLink = (carts: CheckoutCartReference[]): string => {
     const payload = Buffer.from(JSON.stringify({ carts }), "utf8").toString("base64url");
-    return `${getSiteUrl()}/order?mcpCheckout=${encodeURIComponent(payload)}`;
+    return `${getSiteUrl()}/order#mcpCheckout=${encodeURIComponent(payload)}`;
 };
 
 export const buildCheckoutPaymentSummary = (carts: CheckoutCartSnapshot[]) => {

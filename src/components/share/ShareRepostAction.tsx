@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { useAuth } from "react-oidc-context";
-
 import { RetweetOutlined } from "@ant-design/icons";
 import { Button, Form, Modal, Typography } from "antd";
 
@@ -13,13 +11,11 @@ import type { ShareRepostActionProps } from "./useShareRepostAction";
 import { useShareRepostAction } from "./useShareRepostAction";
 
 export const ShareRepostAction: React.FunctionComponent<ShareRepostActionProps> = (props) => {
-    const auth = useAuth();
     const state = useShareRepostAction(props);
-    const userId = auth.user?.profile?.sub;
 
     return (
         <>
-            <EndpointAuthAction defaultAuthUrl={props.serverURL}>
+            <EndpointAuthAction defaultAuthUrl={state.serverURL}>
                 {({ runWithAuthOrLogin }) => (
                     <Button
                         type="primary"
@@ -30,11 +26,6 @@ export const ShareRepostAction: React.FunctionComponent<ShareRepostActionProps> 
                         disabled={state.disabled}
                         onClick={async (event) => {
                             event.preventDefault();
-                            if (auth.isAuthenticated) {
-                                await state.openRepost();
-                                return;
-                            }
-
                             await runWithAuthOrLogin(async () => {
                                 await state.openRepost();
                             });
@@ -54,9 +45,7 @@ export const ShareRepostAction: React.FunctionComponent<ShareRepostActionProps> 
                 onCancel={state.closeRepost}
                 destroyOnHidden
             >
-                <Typography.Paragraph>
-                    Share a short note with this repost. Markdown is supported.
-                </Typography.Paragraph>
+                <Typography.Paragraph>Share a short note with this repost. Markdown is supported.</Typography.Paragraph>
                 <Form form={state.form} layout="vertical" onFinish={state.submitRepost}>
                     <Form.Item
                         name="companyId"
@@ -68,7 +57,7 @@ export const ShareRepostAction: React.FunctionComponent<ShareRepostActionProps> 
                             },
                         ]}
                     >
-                        <CompanyField serverURL={props.serverURL} userId={userId} allowPrivate />
+                        <CompanyField serverURL={state.serverURL} allowPrivate />
                     </Form.Item>
                     <Form.Item name="description" label="Your take">
                         <MarkdownEditor

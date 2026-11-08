@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { Avatar, Space, Tag } from "antd";
 
 import { ListStartupsQuery, Startup } from "../../generated/graphql";
-import { BACKEND_URL } from "../../gqlFetcher";
 import { routes } from "../../routes";
 import { useDislikeVentureMutation, useLikeVentureMutation } from "../hooks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { getImage } from "../shared/image/utils";
 
 import { SplashCard } from "./SplashCard";
 import { SplashCardItem } from "./SplashCardItem";
@@ -44,7 +44,7 @@ export const StartupCard: React.FunctionComponent<StartupCardProps> = (props) =>
                                     <Avatar
                                         shape="square"
                                         size={80}
-                                        src={`${BACKEND_URL}${imageUrl}`}
+                                        src={getImage(startup)}
                                         className="SplashEntityCard__avatar"
                                     />
                                 </Link>

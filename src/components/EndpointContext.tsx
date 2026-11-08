@@ -14,7 +14,7 @@ import { gqlFetcher } from "../gqlFetcher";
 import { URL } from "../types";
 
 import type { EndpointPendingAction } from "./EndpointAuthAction/types";
-import { AUTH_URL_STORAGE_KEY } from "./endpoints/constants";
+import { useAuthServerStorage } from "./endpoints/useAuthServerStorage";
 import { getDefaultEndpointUrls, mergeSyndicationUrls } from "./endpoints/utils";
 import { combineResult, deepMergeConcatArrays } from "./query/utils";
 
@@ -34,7 +34,7 @@ const defaultUrls: URL[] = getDefaultEndpointUrls();
 
 export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[]) => URL[]) | URL[]) => void) => {
     const queries = useQueries({
-        queries: urls.map((url) => ({
+        queries: urls.filter((url) => url.enabled).map((url) => ({
             queryKey: [...useListPublishedSyndicationUrlsQuery.getKey({}), url.value],
             queryFn: gqlFetcher<ListPublishedSyndicationUrlsQuery, ListPublishedSyndicationUrlsQueryVariables>(
                 ListPublishedSyndicationUrlsDocument,
@@ -54,7 +54,7 @@ export const useSyndicationQuery = (urls: URL[], setUrls: (urls: ((prev?: URL[])
 
 export const EndpointContextProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     const [storedUrls, setUrls] = useLocalStorage<URL[]>("endpoints.urls", defaultUrls);
-    const [storedAuthUrl, setAuthUrl] = useLocalStorage<string>(AUTH_URL_STORAGE_KEY, defaultUrls[0].value);
+    const [storedAuthUrl, setAuthUrl] = useAuthServerStorage(defaultUrls[0].value);
     const [pendingAction, setPendingAction] = React.useState<EndpointPendingAction>();
     const urls = React.useMemo(() => {
         if (!Array.isArray(storedUrls) || storedUrls.length === 0) {

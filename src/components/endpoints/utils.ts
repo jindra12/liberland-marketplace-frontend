@@ -13,7 +13,7 @@ export const normalizeSyndicationUrl = (value: string): string => {
     return parsed.toString().replace(/\/+$/, "");
 };
 
-const tryNormalizeEndpointUrl = (value?: string | null): string | undefined => {
+export const tryNormalizeEndpointUrl = (value?: string | null): string | undefined => {
     if (!value) {
         return undefined;
     }
@@ -117,7 +117,7 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
 
         return [
             createEndpointEntry(normalizedValue, {
-                enabled: doc.autoEnable ?? false,
+                enabled: false,
                 name: doc.name,
                 description: doc.description,
                 nsfw: doc.nsfw,
@@ -131,18 +131,6 @@ export const mergeSyndicationUrls = (current: EndpointUrl[] | undefined, docs: S
             return [...mergedEntries, discoveredEntry];
         }
 
-        return mergedEntries.map((entry) => {
-            if (entry.value !== discoveredEntry.value) {
-                return entry;
-            }
-
-            return {
-                ...entry,
-                name: discoveredEntry.name || entry.name,
-                description: discoveredEntry.description ?? entry.description,
-                nsfw: discoveredEntry.nsfw ?? entry.nsfw,
-                autoEnable: discoveredEntry.autoEnable ?? entry.autoEnable,
-            };
-        });
+        return mergedEntries;
     }, entries);
 };

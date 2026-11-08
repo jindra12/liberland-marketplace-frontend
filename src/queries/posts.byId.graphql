@@ -1,6 +1,7 @@
 query PostById($id: String!, $draft: Boolean = false) {
   Post(id: $id, draft: $draft) {
     id
+    serverURL
     title
     slug
     repost
@@ -62,6 +63,7 @@ query PostById($id: String!, $draft: Boolean = false) {
         ... on Post {
           __typename
           id
+          serverURL
           title
           slug
           repost

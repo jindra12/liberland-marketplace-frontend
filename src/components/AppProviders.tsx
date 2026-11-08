@@ -1,13 +1,14 @@
 import * as React from "react";
 
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
+
 
 import { CypressHistorySupport } from "cypress-react-router";
 import { ThirdwebProvider } from "thirdweb/react";
 
 import { AppAnalyticsProvider } from "./analytics/AppAnalyticsProvider";
 import { AntProvider } from "./AntProvider";
+import { AppRouter } from "./AppRouter";
 import { AppRouteTitle } from "./AppRouteTitle";
 import { LoginSuccessMessageService } from "./auth/LoginSuccessMessageService";
 import { AuthContextProvider } from "./AuthContext";
@@ -32,7 +33,7 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
                 <TronContext>
                     <SolanaContext>
                         <ThirdwebProvider>
-                            <BrowserRouter>
+                            <AppRouter>
                                 <AuthContextProvider>
                                     <EndpointPendingActionHost />
                                     <CypressHistorySupport />
@@ -52,7 +53,7 @@ export const AppProviders: React.FunctionComponent<AppProvidersProps> = (props) 
                                         </AntProvider>
                                     </AppAnalyticsProvider>
                                 </AuthContextProvider>
-                            </BrowserRouter>
+                            </AppRouter>
                         </ThirdwebProvider>
                     </SolanaContext>
                 </TronContext>

@@ -27,7 +27,7 @@ const EditProduct: React.FunctionComponent = () => {
                         const companyCreatedById = product?.company?.createdBy?.id;
 
                         return (
-                            <OwnerGuard createdById={companyCreatedById}>
+                            <OwnerGuard createdById={companyCreatedById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={product?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Product</Typography.Title>
                                 <ProductForm
@@ -50,7 +50,7 @@ const EditProduct: React.FunctionComponent = () => {
                                         existingImageUrl: product?.image?.url,
                                         existingImageId: product?.image?.id,
                                     }}
-                                    url={product?.serverURL ?? routeServerURL}
+                                    url={routeServerURL}
                                 />
                             </OwnerGuard>
                         );

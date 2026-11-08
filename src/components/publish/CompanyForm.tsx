@@ -9,6 +9,7 @@ import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutat
 import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
 import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
 import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
+import { FormNavigationGuard } from "./FormNavigationGuard";
 import { FormSubmitButtons } from "./FormSubmitButtons";
 import { ImageUploadField } from "./ImageUploadField";
 import { MarkdownEditor } from "./MarkdownEditor";
@@ -51,8 +52,6 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
         updateMutation,
         url: props.url,
         buildData: (values: CompanyFormValues, imageId) => {
-            const cryptoAddresses = buildCryptoAddressesInput(values.cryptoAddresses);
-
             return {
                 name: values.name,
                 description: values.description,
@@ -60,9 +59,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                 phone: values.phone,
                 website: values.website,
                 identity: values.identity,
-                ...(cryptoAddresses !== undefined && {
-                    cryptoAddresses,
-                }),
+                cryptoAddresses: buildCryptoAddressesInput(values.cryptoAddresses),
                 ...(imageId !== undefined && {
                     image: imageId,
                 }),
@@ -79,6 +76,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
             initialValues={props.initialValues}
             className="Publish__form"
         >
+            <FormNavigationGuard />
             <Form.Item
                 name="name"
                 label="Company Name"

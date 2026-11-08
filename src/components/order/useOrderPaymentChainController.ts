@@ -190,7 +190,7 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
         const isSaved = await saveTransactionHash(txHash);
 
         if (!isSaved) {
-            return;
+            throw new Error("The payment was sent, but its proof could not be saved. Retry saving the same transaction.");
         }
 
         await rememberSelectedWallet();

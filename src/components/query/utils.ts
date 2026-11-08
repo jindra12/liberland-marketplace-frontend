@@ -6,7 +6,20 @@ import type {
     UseQueryResult,
 } from "@tanstack/react-query";
 import mergeWith from "lodash-es/mergeWith";
+import cloneDeep from "lodash-es/cloneDeep";
 import uniqBy from "lodash-es/uniqBy";
+import type { BackendUserQuery, SourceQualifiedEntity } from "./types";
+
+export const getSourceQualifiedEntityKey = (entity: SourceQualifiedEntity): string =>
+    JSON.stringify([entity.serverURL || entity.company?.serverURL, entity.id]);
+
+export const mergeBackendUsers = (
+    left: BackendUserQuery | BackendUserQuery[],
+    right?: BackendUserQuery | BackendUserQuery[],
+): BackendUserQuery[] => [
+    ...(Array.isArray(left) ? left : [left]),
+    ...(Array.isArray(right) ? right : right ? [right] : []),
+];
 
 type QueryResult<TData> = UseQueryResult<TData, Error>;
 
@@ -53,11 +66,13 @@ export const deepMergeConcatArrays = <T, E = T>(left: T, right?: T): E => {
         }
 
         if (leftValue === null || leftValue === undefined) {
-            return rightValue;
+            return cloneDeep(rightValue);
         }
 
         if (Array.isArray(leftValue) && Array.isArray(rightValue)) {
-            return uniqBy([...leftValue, ...rightValue], (value: any) => value?.id || Math.random());
+            return uniqBy(cloneDeep([...leftValue, ...rightValue]), (value) =>
+                value?.id ? getSourceQualifiedEntityKey(value) : value,
+            );
         }
 
         const strategy = (specialMergeStrategies as any)[key as any];
@@ -76,7 +91,7 @@ export const combineResult = <TQuery, TResult = TQuery>(
     const isError = results.length > 0 && results.every((query) => query.isError);
     const isPending = results.length > 0 && results.every((query) => query.isPending);
     const isLoading = results.length > 0 && results.every((query) => query.isLoading);
-    const isFetching = results.length > 0 && results.every((query) => query.isFetching);
+    const isFetching = results.some((query) => query.isFetching);
     const isFetched = results.some((query) => query.isFetched);
     const isFetchedAfterMount = results.some((query) => query.isFetchedAfterMount);
     const isPaused = results.some((query) => query.isPaused);

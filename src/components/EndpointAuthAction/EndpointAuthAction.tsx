@@ -63,55 +63,34 @@ export const EndpointAuthAction: React.FunctionComponent<EndpointAuthActionProps
             signinState?: string;
         },
     ) => {
-        if (auth.isAuthenticated) {
-            if (props.requireVerifiedEmail && auth.user?.profile?.email_verified !== true) {
-                const runUnverifiedAction = async () => {
+        const runWithAccount = async (currentAuth: EndpointAuthClient) => {
+            if (currentAuth.isAuthenticated) {
+                if (props.requireVerifiedEmail && currentAuth.user?.profile?.email_verified !== true) {
                     setPendingAction(undefined);
                     showUnverifiedEmailNotification(props.defaultAuthUrl ?? authUrl);
-                };
-
-                if (props.defaultAuthUrl) {
-                    if (authUrl === props.defaultAuthUrl) {
-                        await runUnverifiedAction();
-                        return;
-                    }
-
-                    await runWithTargetAuthUrl(props.defaultAuthUrl, runUnverifiedAction);
                     return;
                 }
 
-                await runUnverifiedAction();
+                setPendingAction(undefined);
+                await authorizedAction(currentAuth);
                 return;
             }
 
-            setPendingAction(undefined);
-            await authorizedAction(auth);
-            return;
-        }
+            await options?.onUnauthorizedBeforeLogin?.();
+            await currentAuth.signinRedirect({ state: options?.signinState });
+        };
 
         if (props.defaultAuthUrl) {
-            const runLogin = async (currentAuth: EndpointAuthClient) => {
-                await options?.onUnauthorizedBeforeLogin?.();
-                await currentAuth.signinRedirect({
-                    state: options?.signinState,
-                });
-            };
-
-            if (authUrl === props.defaultAuthUrl) {
-                await runLogin(auth);
-                return;
-            }
-
-            await runWithTargetAuthUrl(props.defaultAuthUrl, runLogin);
+            await runWithTargetAuthUrl(props.defaultAuthUrl, runWithAccount);
             return;
         }
 
-        runWithEndpointSelection(async (currentAuth) => {
-            await options?.onUnauthorizedBeforeLogin?.();
-            await currentAuth.signinRedirect({
-                state: options?.signinState,
-            });
-        });
+        if (auth.isAuthenticated) {
+            await runWithAccount(auth);
+            return;
+        }
+
+        runWithEndpointSelection(runWithAccount);
     };
 
     const items: MenuProps["items"] = buildEndpointAuthMenuItems(urls);

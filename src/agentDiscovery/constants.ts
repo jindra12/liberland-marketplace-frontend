@@ -1,6 +1,7 @@
 export const MCP_IDENTITY = { name: "io.nswap/marketplace", version: "1.0.0" };
 
 export const AGENT_DISCOVERY_LINKS = [
+    { href: "/llms.txt", rel: "help", type: "text/plain" },
     { href: "/.well-known/api-catalog", rel: "api-catalog", type: "application/linkset+json" },
     { href: "/.well-known/ard.json", rel: "ard", type: "application/json" },
     { href: "/.well-known/ai-catalog.json", rel: "ai-catalog", type: "application/json" },

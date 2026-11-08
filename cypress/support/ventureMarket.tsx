@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Flex } from "antd";
 import { mount } from "cypress/react";
-import { ZeroAddress, parseEther } from "ethers";
+import { Interface, ZeroAddress, parseEther } from "ethers";
+import { deploymentArtifacts } from "@liberland/marketplace-contracts/deployment/artifacts";
 import type { ReactNode } from "react";
 import type { DaoProposal } from "@liberland/marketplace-contracts/client/governance";
 import type { TradeQuote, VenturePool } from "@liberland/marketplace-contracts/client/trading";
@@ -55,7 +56,7 @@ export const activeProposal: DaoProposal = {
     description: "Set the monthly rooted-holder reward to 5 HBR reward tokens.",
     targets: [savedDeployment.daoAddress!],
     values: [0n],
-    calldatas: ["0x12345678"],
+    calldatas: [new Interface(deploymentArtifacts.daoArtifact.abi).encodeFunctionData("setRewardPerPeriod", [parseEther("5")])],
     snapshot: 1791196800n,
     deadline: 1791801600n,
     eta: 0n,

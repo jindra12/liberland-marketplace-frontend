@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { buildSiteUrl } from "../siteUrl";
 import { normalizeBackendUrl } from "./backend";
+import { OAUTH_SCOPES } from "../components/auth/constants";
 
 export const getMcpBackendUrl = (request: NextApiRequest): string | null => {
     const value = request.query.serverUrl;
@@ -23,10 +24,7 @@ export const isMcpAuthenticationRequired = (request: NextApiRequest): boolean =>
     return authMode === "required";
 };
 
-export const sendMcpAuthorizationChallenge = (
-    response: NextApiResponse,
-    serverUrl: string | null,
-): void => {
+export const sendMcpAuthorizationChallenge = (response: NextApiResponse, serverUrl: string | null): void => {
     if (!serverUrl) {
         response.status(500).json({ error: "MCP authentication is not configured with a backend URL." });
         return;
@@ -41,7 +39,7 @@ export const sendMcpAuthorizationChallenge = (
 export const buildProtectedResourceMetadata = (serverUrl: string) => ({
     resource: `${buildSiteUrl("/api/mcp")}?auth=required&serverUrl=${encodeURIComponent(serverUrl)}`,
     authorization_servers: [serverUrl],
-    scopes_supported: ["openid", "profile", "email", "offline_access"],
+    scopes_supported: OAUTH_SCOPES,
     bearer_methods_supported: ["header"],
     resource_documentation: buildSiteUrl("/auth.txt"),
 });

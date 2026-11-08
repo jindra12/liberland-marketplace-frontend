@@ -1,9 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { getMcpBackendUrl, isMcpAuthenticationRequired, sendMcpAuthorizationChallenge } from "../../mcp/auth";
+import {
+    getMcpBackendUrl,
+    isMcpAuthenticationRequired,
+    sendMcpAuthorizationChallenge,
+} from "../../mcp/auth";
+import { verifyBackendAuthorization } from "../../mcp/authorization";
 import { createNswapMcpServer } from "../../mcp/server";
 import { MAX_REQUEST_BYTES, REQUEST_TIMEOUT_MS } from "../../server/security/constants";
-import { acquireRequestSlot } from "../../server/security/limits";
+import { acquireNotificationSlot, acquireRequestSlot } from "../../server/security/limits";
 import { checkRequestLimit, getClientRateLimitKey } from "../../server/security/rateLimits";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
@@ -49,15 +54,29 @@ const handler = async (request: NextApiRequest, response: NextApiResponse): Prom
         return;
     }
 
-    const release = await acquireRequestSlot();
+    const release = await (request.method === "GET" ? acquireNotificationSlot() : acquireRequestSlot());
     if (!release) {
         response.setHeader("Retry-After", "5");
         response.status(429).json({ error: "Too many active MCP requests. Please retry shortly." });
         return;
     }
+    if (authorization) {
+        try {
+            if (!backendUrl || !(await verifyBackendAuthorization(authorization, backendUrl))) {
+                release();
+                sendMcpAuthorizationChallenge(response, backendUrl);
+                return;
+            }
+        } catch (error) {
+            release();
+            console.error("MCP authentication verification failed", error);
+            response.status(502).json({ error: "The authentication backend is temporarily unavailable." });
+            return;
+        }
+    }
     const controller = new AbortController();
     const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(REQUEST_TIMEOUT_MS)]);
-    const selectedServerUrl = isMcpAuthenticationRequired(request) ? backendUrl : undefined;
+    const selectedServerUrl = backendUrl;
     const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined,
         enableJsonResponse: true,

@@ -2,6 +2,9 @@ import * as React from "react";
 
 import OrderList from "../../src/components/OrderList";
 import { buildTestAuthContext, mountWithProviders, screenshotStep } from "../support/component-tests/directBasic";
+import { MAIN_SERVER_URL } from "../support/component-tests/constants";
+import { getGraphQLFixturesForHost } from "../support/graphqlMock/runtimeState";
+import { Order_Status } from "../../src/generated/graphql";
 
 const mountOrderList = (route: string = "/orders") => {
     mountWithProviders(<OrderList />, {
@@ -13,19 +16,21 @@ const mountOrderList = (route: string = "/orders") => {
 };
 
 describe("orders", () => {
+    beforeEach(() => {
+        // Fulfillment starts after backend settlement, not with the unpaid checkout fixture.
+        cy.then(() => {
+            getGraphQLFixturesForHost(new URL(MAIN_SERVER_URL).host).orders[0].status = Order_Status.Completed;
+        });
+    });
     it("renders seller orders and lets the user switch their status on desktop", () => {
         cy.viewport(1440, 900);
         mountOrderList();
 
         cy.contains("h2", "Orders").should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget")
-            .closest(".ant-list-item")
-            .as("solarOrder");
+        cy.contains(".OrderList__productName", "Solar Widget").closest(".ant-list-item").as("solarOrder");
 
         cy.get("@solarOrder").contains(".OrderList__statusTag", "Pending").should("be.visible");
-        cy.get("@solarOrder")
-            .contains(".OrderList__wallet", "SoOrderAlpha1515")
-            .should("be.visible");
+        cy.get("@solarOrder").contains(".OrderList__wallet", "SoOrderAlpha1515").should("be.visible");
         cy.get("@solarOrder")
             .contains(".OrderList__shippingAddressLine", "1 Harbor Way · Suite 42 · Port Sol, Coast, 11000 · Liberland")
             .should("be.visible");
@@ -72,9 +77,7 @@ describe("orders", () => {
         mountOrderList();
 
         cy.contains("h2", "Orders").should("be.visible");
-        cy.contains(".OrderList__productName", "Solar Widget")
-            .closest(".ant-list-item")
-            .as("solarOrderMobile");
+        cy.contains(".OrderList__productName", "Solar Widget").closest(".ant-list-item").as("solarOrderMobile");
 
         cy.get("@solarOrderMobile")
             .contains(".OrderList__shippingAddressLine", "1 Harbor Way · Suite 42 · Port Sol, Coast, 11000 · Liberland")

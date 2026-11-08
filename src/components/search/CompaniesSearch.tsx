@@ -56,6 +56,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Companies,
             value: company.id,
+            serverURL: company.serverURL,
             label: company.name || "Company",
         });
         props.onClose();

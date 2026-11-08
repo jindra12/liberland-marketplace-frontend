@@ -8,6 +8,7 @@ query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $s
     ) {
         docs {
             id
+            serverURL
             title
             slug
             repost
@@ -67,6 +68,7 @@ query ListPostsByCompany($companyId: JSON!, $page: Int = 1, $limit: Int = 20, $s
                     ... on Post {
                         __typename
                         id
+                        serverURL
                         title
                         slug
                         repost

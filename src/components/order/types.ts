@@ -17,6 +17,8 @@ export type SubmittedOrder = {
     order: CreatedOrder;
 };
 
+export type CheckoutOrder = SubmittedOrder & { cartId: string };
+
 export type OrderFormValues = {
     customerEmail: string;
     shippingAddress: MutationOrder_ShippingAddressInput;

@@ -15,7 +15,8 @@ export const TradingPanel: React.FunctionComponent<TradingPanelProps> = (props) 
         return <Skeleton active />;
     }
     const pools = query.data?.pools || [];
-    const pool = pools.find((item) => item.id === poolId) || pools[0];
+    const pool = pools.find((item) => item.id === (poolId || props.deployment.exchangePoolId))
+        || (!props.deployment.exchangePoolId ? pools[0] : undefined);
     return (
         <Flex vertical gap={16}>
             <Typography.Title level={4}>

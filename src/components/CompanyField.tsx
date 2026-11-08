@@ -2,23 +2,27 @@ import * as React from "react";
 
 import { Select } from "antd";
 
+import { useServerUser } from "./auth/useServerUser";
 import { useListCompaniesByCreatorQuery } from "./hooks";
 
 type CompanyFieldProps = {
     value?: string | null;
     onChange?: (value: string | null) => void;
     serverURL?: string | null;
-    userId?: string | null;
     placeholder?: string;
     allowPrivate?: boolean;
 };
 
 export const CompanyField: React.FunctionComponent<CompanyFieldProps> = (props) => {
-    const companiesQuery = useListCompaniesByCreatorQuery({
-        userId: props.userId,
-        draft: true,
-        url: props.serverURL,
-    });
+    const serverUser = useServerUser(props.serverURL);
+    const companiesQuery = useListCompaniesByCreatorQuery(
+        {
+            userId: serverUser.user?.id,
+            draft: true,
+            url: props.serverURL,
+        },
+        { enabled: Boolean(serverUser.user?.id) },
+    );
     const companies = companiesQuery.data?.Companies?.docs ?? [];
 
     return (
@@ -34,8 +38,8 @@ export const CompanyField: React.FunctionComponent<CompanyFieldProps> = (props) 
                     value: company.id,
                     label: company.name,
                 }))}
-            loading={companiesQuery.isLoading}
-            disabled={companiesQuery.isLoading}
+            loading={serverUser.isLoading || companiesQuery.isLoading}
+            disabled={!serverUser.user || companiesQuery.isLoading}
             allowClear
         />
     );

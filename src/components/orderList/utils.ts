@@ -38,6 +38,12 @@ export const formatShippingContactLine = (order: SellerOrderProduct): string => 
 };
 
 export const getOrderStatusLabel = (order: SellerOrderProduct): string => {
+    switch (order.orderStatus) {
+        case "cancelled":
+            return "Cancelled";
+        case "refunded":
+            return "Refunded";
+    }
     if (order.fulfilled) {
         return "Fulfilled";
     }
@@ -50,6 +56,9 @@ export const getOrderStatusLabel = (order: SellerOrderProduct): string => {
 };
 
 export const getOrderStatusColor = (order: SellerOrderProduct): string => {
+    if (order.orderStatus === "cancelled" || order.orderStatus === "refunded") {
+        return "default";
+    }
     if (order.fulfilled) {
         return "success";
     }

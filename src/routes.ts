@@ -75,11 +75,13 @@ const posts = {
     getLink: () => "/posts",
     detail: {
         route: "/posts/:id/:serverUrl",
-        getLink: (post: Post) => `/posts/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
+        getLink: (post: Post) =>
+            `/posts/${post.id}/${encodeServerUrlSegment(post.serverURL || post.company?.serverURL || "")}`,
     },
     edit: {
         route: "/posts/edit/:id/:serverUrl",
-        getLink: (post: Post) => `/posts/edit/${post.id}/${encodeServerUrlSegment(post.company?.serverURL ?? "")}`,
+        getLink: (post: Post) =>
+            `/posts/edit/${post.id}/${encodeServerUrlSegment(post.serverURL || post.company?.serverURL || "")}`,
     },
     relatedTarget: {
         getLink: (related: PostRelatedTarget) => {

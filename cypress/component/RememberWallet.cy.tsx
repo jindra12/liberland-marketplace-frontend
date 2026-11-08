@@ -106,6 +106,17 @@ const RememberWalletHarness: FC<HarnessProps> = (props) => {
 };
 
 const mountHarness = (props: HarnessProps) => {
+    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (request) => {
+        const body = request.body as { query: string };
+        if (body.query.includes("mutation UpdateOrder(")) {
+            request.alias = "savePaymentProof";
+            request.reply({ data: { updateOrder: order } });
+        }
+        if (body.query.includes("mutation UpdateUserById(")) {
+            request.alias = "savePaymentWallet";
+            request.reply({ data: { updateUser: profileUser } });
+        }
+    });
     const queryClient = new QueryClient();
     mount(
         <AntProvider>
@@ -142,6 +153,7 @@ describe("remember wallet", () => {
         cy.contains("Remember this wallet for future payments").should("be.visible");
         screenshotStep("remember-wallet-checked-state");
         cy.contains("Commit payment").click();
+        cy.wait("@savePaymentProof");
         cy.get(".RememberWalletHarness__rememberedCount").should("have.text", "0");
     });
 
@@ -151,6 +163,8 @@ describe("remember wallet", () => {
         cy.contains("Select wallet").click();
         cy.contains("Remember this wallet for future payments").click();
         cy.contains("Commit payment").click();
+        cy.wait("@savePaymentProof");
+        cy.wait("@savePaymentWallet");
         cy.get(".RememberWalletHarness__rememberedCount").should("have.text", "1");
         cy.contains(".RememberWalletHarness__paymentComplete", "Payment complete").should("be.visible");
         screenshotStep("remember-wallet-remembered");

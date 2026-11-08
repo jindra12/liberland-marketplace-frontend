@@ -1,14 +1,36 @@
-import { UserManager, WebStorageStateStore } from "oidc-client-ts";
+import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
+import type { SignoutRedirectArgs } from "oidc-client-ts";
+import { OAUTH_SCOPES } from "./constants";
+
+export const buildAuthStorageKey = (authority: string, clientId: string) => `oidc.user:${authority}:${clientId}`;
+
+export const isAuthStorageEvent = (event: StorageEvent, authority: string, clientId: string) =>
+    event.storageArea === window.localStorage &&
+    (event.key === null || event.key === buildAuthStorageKey(authority, clientId));
+
+export const readStoredOidcUser = (authority: string, clientId: string): User | undefined => {
+    const stored = window.localStorage.getItem(buildAuthStorageKey(authority, clientId));
+    if (!stored) {
+        return undefined;
+    }
+    try {
+        return User.fromStorageString(stored);
+    } catch (error) {
+        console.error(error);
+        return undefined;
+    }
+};
+
+export const readStoredAuthUser = (url: string): User | undefined =>
+    readStoredOidcUser(buildAuthAuthority(url), process.env.REACT_APP_OIDC_CLIENT_ID || "");
 
 export const buildAuthAuthority = (authUrl: string) => {
     return `${authUrl}/api/auth`;
 };
 
-export const buildSignOutUrl = (authUrl: string, returnTo: string) => {
-    const signOutUrl = new URL("/api/auth/sign-out", `${authUrl}/`);
-    signOutUrl.searchParams.set("callbackURL", new URL(returnTo, window.location.origin).toString());
-    return signOutUrl.toString();
-};
+export const buildSignOutParameters = (returnTo: string): SignoutRedirectArgs => ({
+    extraQueryParams: { callbackURL: new URL(returnTo, window.location.origin).toString() },
+});
 
 export const buildAuthSettings = (authUrl: string) => {
     const authority = buildAuthAuthority(authUrl);
@@ -16,15 +38,15 @@ export const buildAuthSettings = (authUrl: string) => {
     return {
         authority,
         client_id: process.env.REACT_APP_OIDC_CLIENT_ID || "",
-        client_secret: process.env.REACT_APP_OIDC_CLIENT_SECRET || "",
         redirect_uri: process.env.REACT_APP_OIDC_REDIRECT_URI || `${window.location.origin}/auth/callback`,
-        scope: "openid profile email",
+        scope: OAUTH_SCOPES.join(" "),
         userStore: new WebStorageStateStore({ store: window.localStorage }),
         metadata: {
             issuer: authority,
             authorization_endpoint: `${authority}/oauth2/authorize`,
             token_endpoint: `${authority}/oauth2/token`,
             userinfo_endpoint: `${authority}/oauth2/userinfo`,
+            end_session_endpoint: `${authority}/sign-out`,
         },
     };
 };

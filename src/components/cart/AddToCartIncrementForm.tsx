@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { InputNumber } from "antd";
+import { Button, InputNumber } from "antd";
 import type { ButtonProps } from "antd";
 
 import { AddToCartSubmitButton } from "./AddToCartSubmitButton";
@@ -14,6 +14,11 @@ type AddToCartIncrementFormProps = {
 export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementFormProps> = (props) => {
     return (
         <>
+            {props.state.cartQuery.isError && (
+                <Button onClick={() => props.state.cartQuery.refetch()} size={props.size || "large"}>
+                    Retry cart
+                </Button>
+            )}
             {props.state.hasItemInCart ? (
                 <InputNumber
                     min="0"
@@ -23,7 +28,7 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
                     stringMode
                     size={props.size || "large"}
                     className={props.state.quantityInputClassName}
-                    disabled={props.state.isMutating}
+                    disabled={props.state.isMutating || !props.state.isCartReady}
                     value={props.state.quantityText}
                     onChange={(value) => {
                         props.state.setQuantityText(value === null || value === undefined ? "" : String(value));
@@ -46,8 +51,9 @@ export const AddToCartIncrementForm: React.FunctionComponent<AddToCartIncrementF
                 />
             ) : (
                 <AddToCartSubmitButton
-                    disabled={props.state.isMutating}
-                    loading={props.state.isMutating}
+                    disabled={props.state.isMutating || !props.state.isCartReady}
+                    loading={props.state.isMutating
+                        || Boolean(props.state.cartSecret && props.state.cartQuery.isPending)}
                     onClick={() => {
                         props.state.persistQuantity(1);
                     }}

@@ -21,6 +21,7 @@ import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
 import { Markdown } from "../Markdown";
+import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
@@ -89,6 +90,9 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
 
     return (
         <AppList
+            rowKey={getSourceQualifiedEntityKey}
+            loadedCount={allItems.length}
+            fetching={props.source === "query" ? props.query.isFetching : props.isLoading}
             hasMore={hasMore}
             items={items}
             next={() => props.setPage?.((props.page ?? 1) + 1)}

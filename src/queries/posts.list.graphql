@@ -2,6 +2,7 @@ query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankS
     Posts(draft: false, page: $page, limit: $limit, sort: $sort) {
     docs {
       id
+      serverURL
       title
       slug
       content
@@ -62,6 +63,7 @@ query ListPosts($page: Int = 1, $limit: Int = 20, $sort: String = "-contentRankS
           ... on Post {
             __typename
             id
+            serverURL
             title
             slug
             repost

@@ -3,7 +3,10 @@ import type { AuthContextProps } from "react-oidc-context";
 
 import type { URL as EndpointURL } from "../../types";
 
-export type EndpointAuthClient = Pick<AuthContextProps, "signinRedirect" | "removeUser">;
+export type EndpointAuthClient = Pick<
+    AuthContextProps,
+    "signinRedirect" | "signoutRedirect" | "removeUser" | "isAuthenticated" | "user"
+>;
 
 export type EndpointAction = (auth: EndpointAuthClient) => void | Promise<void>;
 

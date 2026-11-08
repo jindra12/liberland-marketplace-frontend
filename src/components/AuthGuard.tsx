@@ -7,6 +7,7 @@ import { Spin } from "antd";
 
 import { routes } from "../routes";
 
+import { SignInRedirect } from "./auth/SignInRedirect";
 import { buildLoginReturnTo } from "./auth/utils";
 
 interface AuthGuardProps {
@@ -18,13 +19,12 @@ export const AuthGuard: React.FunctionComponent<AuthGuardProps> = (props) => {
     const auth = useAuth();
     const location = useLocation();
     const returnTo = buildLoginReturnTo(location.pathname, location.search, location.hash);
-    if (auth.isLoading) return <Spin />;
+    if (auth.isLoading) {
+        return <Spin />;
+    }
     if (!auth.isAuthenticated) {
         if (props.redirect) {
-            auth.signinRedirect({
-                state: returnTo,
-            });
-            return <Spin />;
+            return <SignInRedirect returnTo={returnTo} signinRedirect={auth.signinRedirect} />;
         }
         return props.fallback || <Navigate to={routes.home.route} replace />;
     }

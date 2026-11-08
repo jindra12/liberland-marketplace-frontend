@@ -7,7 +7,6 @@ export type ParsedUnsubscribeParams = {
     collection: NotificationTargetCollection;
     queryType: string;
     id: string;
-    email: string;
     serverURL: string;
 };
 

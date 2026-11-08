@@ -136,3 +136,9 @@ export const validatePositiveAmount = async (_rule: object, value: string) => {
         throw new Error("Enter a positive token amount.");
     }
 };
+
+export const validateNonNegativeAmount = async (_rule: object, value: string) => {
+    if (!value || !/^\d+(\.\d+)?$/.test(value)) {
+        throw new Error("Enter a non-negative token amount.");
+    }
+};

@@ -33,7 +33,8 @@ describe("Venture liquidity", () => {
         cy.contains(".ant-form-item", "Minimum ETH received").find(".ant-form-item-explain-error").should("be.visible");
         cy.then(() => expect(submit).not.to.have.been.called);
         fillFormField("Minimum ETH received", "0.09");
-        fillFormField("Minimum tokens received", "190");
+        fillFormField("Minimum tokens received", "0");
+        cy.contains("You set the withdrawal protection").should("be.visible");
         cy.viewport(390, 844);
         screenshotStep("venture-test-liquidity-withdraw");
         cy.contains("button", "Submit liquidity transaction").click();
@@ -42,7 +43,7 @@ describe("Venture liquidity", () => {
                 action: "withdraw",
                 tokenId: "42",
                 minimumEth: "0.09",
-                minimumTokens: "190",
+                minimumTokens: "0",
             }),
         );
         mountVentureMarket(<LiquidityForm connected={false} decimals={18} onSubmit={submit} />);

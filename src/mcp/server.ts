@@ -89,7 +89,7 @@ export const createNswapMcpServer = (
         inputSchema: { ...requiredBackendSchema.shape },
     }, async (args) => {
         if (!authorization) throw new Error("Authentication is required.");
-        return textResult({ servers: addSyndicatedServer(authorization, args.serverUrl) });
+        return textResult({ servers: await addSyndicatedServer(authorization, args.serverUrl, resolveBackendUrl(selectedServerUrl)) });
     });
 
     server.registerTool("list_syndicated_servers", {
@@ -149,10 +149,14 @@ export const createNswapMcpServer = (
         if (retryAfter) {
             throw new Error(`AI search quota reached. Retry in ${retryAfter} seconds.`);
         }
-        return textResult(await Promise.all(servers.map(async (serverUrl) => ({
-            serverUrl,
-            result: await searchBackendRag(serverUrl, scopedAuthorization, args.query, args.limit, signal),
-        }))));
+        return textResult(await Promise.all(servers.map(async (serverUrl) => {
+            try {
+                return { serverUrl, result: await searchBackendRag(serverUrl, scopedAuthorization, args.query, args.limit, signal) };
+            } catch (error) {
+                console.error("MCP semantic search failed", serverUrl, error);
+                return { serverUrl, error: error instanceof Error ? error.message : "Semantic search failed." };
+            }
+        })));
     });
 
     server.registerTool("compare_products", {
@@ -471,7 +475,7 @@ export const createNswapMcpServer = (
         annotations: { readOnlyHint: true },
         description: "FIRST STEP: discover the specified backend's MCP server identity, tools, entities, and supported operations before calling any other tool. Omit serverUrl to describe the configured default backend.",
         inputSchema: { serverUrl: z.url().optional() },
-    }, async (args) => textResult(await call("describe_backend", { serverUrl: resolveBackendUrl(args.serverUrl) })));
+    }, async (args) => textResult(await call("describe_backend", args)));
 
     return server;
 };
