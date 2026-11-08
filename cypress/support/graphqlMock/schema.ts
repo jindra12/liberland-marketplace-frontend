@@ -298,6 +298,7 @@ export const graphqlSchema = buildSchema(`
 
     type Post {
         id: String
+        serverURL: String
         title: String
         slug: String
         repost: String
