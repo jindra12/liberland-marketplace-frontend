@@ -17,6 +17,72 @@ import { withBackend } from "../publicDiscoveryChecks";
 import { withDiscoveryConfig } from "../agentReadinessChecks";
 
 export const gatewayRegressionChecks = {
+    gatewayRagSupportsGet: async () => {
+        const { default: handler } = await import("../../../src/pages/api/syndication/ai/search");
+        const backends = ["https://get-first.example", "https://get-second.example"];
+        const calls: string[] = [];
+        await withBackend(
+            async () => {
+                const { req, res } = createMocks<NextApiRequest, NextApiResponse>({
+                    method: "GET",
+                    headers: { authorization: "Bearer must-not-be-forwarded" },
+                    query: { query: "web development", serverUrls: backends, limit: "5" },
+                });
+                await handler(req, res);
+                assert.equal(res.statusCode, 200);
+                assert.equal(res.getHeader("Cache-Control"), "no-store");
+                const result: { sources: Array<{ serverUrl: string }> } = res._getJSONData();
+                assert.deepEqual(result.sources.map((source) => source.serverUrl).sort(), [...backends].sort());
+                assert.equal(calls.length, 2);
+                const single = createMocks<NextApiRequest, NextApiResponse>({
+                    method: "GET",
+                    query: { query: "web development", serverUrls: backends[0] },
+                });
+                await handler(single.req, single.res);
+                assert.equal(single.res.statusCode, 200);
+                const invalid = createMocks<NextApiRequest, NextApiResponse>({
+                    method: "GET",
+                    query: { query: "web development", serverUrls: backends[0], limit: "invalid" },
+                });
+                await handler(invalid.req, invalid.res);
+                assert.equal(invalid.res.statusCode, 400);
+                assert.equal(calls.length, 3, "Invalid input must not reach a backend.");
+                const unsupported = createMocks<NextApiRequest, NextApiResponse>({ method: "DELETE" });
+                await handler(unsupported.req, unsupported.res);
+                assert.equal(unsupported.res.statusCode, 405);
+                assert.equal(unsupported.res.getHeader("Allow"), "GET, POST");
+            },
+            async (input, init) => {
+                const request = new Request(input, init);
+                assert.equal(new URL(request.url).pathname, "/api/graphql");
+                assert.equal(request.headers.get("authorization"), null);
+                const body: { query: string; variables: { query: string; limit?: number } } = await request.json();
+                assert.match(body.query, /query SemanticSearch/);
+                assert.equal(body.variables.query, "web development");
+                if (calls.length < 2) {
+                    assert.equal(body.variables.limit, 5);
+                }
+                calls.push(request.url);
+                return Response.json({
+                    data: {
+                        semanticSearch: {
+                            answer: "Fixture company",
+                            sources: [
+                                {
+                                    collection: "companies",
+                                    id: "fixture",
+                                    title: "Fixture company",
+                                    slug: null,
+                                    serverUrl: "https://forged.example",
+                                },
+                            ],
+                        },
+                    },
+                });
+            },
+        );
+        return true;
+    },
     gatewaySearchRejectionPreservesBudgets: async () => {
         // Capture actual library buckets to release this fixture's global allocation afterward.
         const buckets = new Set<RateLimiterMemory>();
@@ -77,16 +143,20 @@ export const gatewayRegressionChecks = {
             },
             async () =>
                 Response.json({
-                    answer: "Fixture answer",
-                    sources: [
-                        {
-                            collection: "companies",
-                            id: "company",
-                            title: "Fixture company",
-                            slug: null,
-                            serverUrl: "https://impersonated-market.example",
+                    data: {
+                        semanticSearch: {
+                            answer: "Fixture answer",
+                            sources: [
+                                {
+                                    collection: "companies",
+                                    id: "company",
+                                    title: "Fixture company",
+                                    slug: null,
+                                    serverUrl: "https://impersonated-market.example",
+                                },
+                            ],
                         },
-                    ],
+                    },
                 }),
         );
         return true;

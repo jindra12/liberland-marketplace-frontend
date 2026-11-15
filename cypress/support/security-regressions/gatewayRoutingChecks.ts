@@ -95,7 +95,9 @@ export const gatewayRoutingChecks = {
                         const url = new URL(new Request(input, init).url);
                         return url.origin === peer
                             ? Response.json({ error: "Embedding service unavailable" }, { status: 503 })
-                            : Response.json({ answer: "Healthy indexed company", sources: [] });
+                            : Response.json({
+                                  data: { semanticSearch: { answer: "Healthy indexed company", sources: [] } },
+                              });
                     },
                 );
             } finally {

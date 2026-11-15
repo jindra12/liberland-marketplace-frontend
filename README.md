@@ -118,7 +118,21 @@ without replacing existing DNS records.
 
 - MCP and public RAG requests are limited to 120 requests per client per minute and 1,200 requests per process per minute.
 - RAG is limited to 40 backend searches per client per hour and 400 per process per hour. A query sent to eight backends consumes eight searches, including failed attempts.
+- Public RAG supports `GET /api/syndication/ai/search?query=coffee&serverUrls=https%3A%2F%2Fbackend.nswap.io&limit=5` and POST JSON (`query`, `serverUrls`, optional `limit`). Repeat the GET `serverUrls` parameter for multiple backends. Both use backend GraphQL internally, preserve public HTTP compatibility, and share quotas. Results are not cached; inspect each backend's `error` even on HTTP 200.
 - HTTP rate-limit responses use status `429` and a `Retry-After` header. MCP RAG tool errors include the retry delay.
+
+### Public GET Reads
+
+`/api/marketplace/{operation}` exposes the existing anonymous read-only tools without
+an MCP client. Operations: `backend`, `schema`, `list`, `search`, `get`, `related`,
+`compare`, `servers`. Full parameters and examples are in `/openapi.json` and
+`/llms.txt`. For example: `/api/marketplace/search?entity=companies&query=coffee`.
+
+The default source is `REACT_APP_BACKEND_URL`. Repeat `serverUrl` for up to eight
+explicit backends; recursive `servers` discovery instead takes one optional root.
+Responses contain decoded source-qualified results/errors and pagination links.
+Caller credentials are never forwarded. Private records and writes are excluded.
+MCP and A2A protocols are unchanged.
 - Limits use `rate-limiter-flexible` in memory. They reset when a process restarts and are not shared across workers or serverless instances. Enforce deployment-wide limits through the hosting firewall or a shared rate-limit store before relying on these as a hard spending cap.
 - Client identifiers are hashed. Vercel-managed forwarding headers are trusted only on Vercel; other deployments use the socket address. A self-hosted reverse proxy therefore shares one limit unless its trusted client-address handling is configured separately.
 - Server-side marketplace requests use HTTPS and `guarded-fetch` for SSRF protection, with redirects disabled and bounded response sizes and deadlines.

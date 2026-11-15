@@ -1,23 +1,30 @@
 export const MARKETPLACE_SKILLS = [
     {
         name: "marketplace-search",
-        representativeQueries: ["Find a Liberland web development company", "Find coffee products affiliated with Liberland"],
+        representativeQueries: [
+            "Find a Liberland web development company",
+            "Find coffee products affiliated with Liberland",
+        ],
         description:
             "Find companies, products, services and jobs by verified tribe affiliation, service descriptions and source backend.",
         instructions: [
             "Start with /llms.txt or /.well-known/api-catalog. Public reads require neither login nor an MCP client.",
+            "For general GET reads use /api/marketplace/backend, /schema?entity=companies, /list?entity=posts&limit=5, /search?entity=companies&query=coffee, /get?entity=companies&id=ID, /related?entity=companies&relatedEntity=jobs&relatedField=company&relatedId=ID, /compare?query=coffee, and /servers. All paths share the /api/marketplace prefix. Supply serverUrl for source-specific IDs; repeat it for multi-backend reads. Follow response links.next and preserve each outer serverUrl.",
             "GET /api/search/tribe?entity=companies&tribe=Liberland&q=web%20development&format=json. Replace the exact tribe name and service query as needed. entity also accepts products or jobs.",
             "Use tribeId to disambiguate names. serverUrl selects a public syndicated backend; identifiers are scoped to that backend.",
             "Verify affiliationEvidence against the returned tribe, and inspect descriptions and services for the requested offering. Tribe membership does not prove location or incorporation. q is lexical matching, not semantic RAG.",
             "Follow links.next until enough verified matches are found. Preserve source, filters and representation. Return each real name, relevant evidence, canonical url and serverUrl.",
             "Empty docs with totalDocs=0 means no matches. HTTP errors mean a failed lookup, not absent companies. Do not invent a result or substitute an unverified external company.",
-            "For broader semantic queries use the documented POST /api/syndication/ai/search; verify RAG sources with authoritative entity records. AI search can fail independently of ordinary search.",
+            "For broader semantic queries use GET /api/syndication/ai/search?query=web%20development&serverUrls=https%3A%2F%2Fbackend.nswap.io&limit=5 (or POST JSON); verify RAG sources with authoritative entity records. AI search can fail independently of ordinary search.",
             "If scripts or JSON-LD are stripped, use format=json on search or format=html on collection/company pages. Accept: text/markdown provides a page representation; /LLM.txt is the plain-text guide.",
         ],
     },
     {
         name: "syndicated-shopping",
-        representativeQueries: ["Compare coffee offers across tribes", "Prepare my cart and give me a checkout link to review and pay myself"],
+        representativeQueries: [
+            "Compare coffee offers across tribes",
+            "Prepare my cart and give me a checkout link to review and pay myself",
+        ],
         description:
             "Compare source-qualified products and prepare shopping across independent backends with explicit user authorization.",
         instructions: [

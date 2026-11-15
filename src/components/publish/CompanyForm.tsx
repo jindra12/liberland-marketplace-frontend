@@ -6,6 +6,7 @@ import type { UploadFile } from "antd/es/upload/interface";
 import { LONG_TEXT_INPUT_MAX_LENGTH, TEXT_INPUT_MAX_LENGTH, buildMaxLengthRule } from "../form/constants";
 import { useCreateCompanyMutation, useListIdentitiesQuery, useUpdateCompanyMutation } from "../hooks";
 
+import { CompanyPaymentFields } from "./CompanyPayments/CompanyPaymentFields";
 import { CryptoAddressesField } from "./CryptoAddressesField/CryptoAddressesField";
 import type { CryptoAddressesFormValue } from "./CryptoAddressesField/types";
 import { buildCryptoAddressesInput } from "./CryptoAddressesField/utils";
@@ -23,6 +24,8 @@ interface CompanyFormValues {
     website?: string | null;
     identity?: string | null;
     cryptoAddresses?: CryptoAddressesFormValue | null;
+    paymentWebhookUrl?: string | null;
+    acceptThirdwebDonations?: boolean | null;
     imageFile?: UploadFile[];
 }
 export interface CompanyFormProps {
@@ -32,6 +35,7 @@ export interface CompanyFormProps {
         id?: string | null;
         existingImageUrl?: string | null;
         existingImageId?: string | null;
+        hasPaymentWebhookSecret?: boolean;
     };
 }
 export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) => {
@@ -60,6 +64,8 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                 website: values.website,
                 identity: values.identity,
                 cryptoAddresses: buildCryptoAddressesInput(values.cryptoAddresses),
+                paymentWebhookUrl: values.paymentWebhookUrl,
+                acceptThirdwebDonations: values.acceptThirdwebDonations,
                 ...(imageId !== undefined && {
                     image: imageId,
                 }),
@@ -119,7 +125,12 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                     }))}
                 />
             </Form.Item>
-            <Form.Item name="email" label="Email" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyEmailField">
+            <Form.Item
+                name="email"
+                label="Email"
+                rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]}
+                className="Publish__companyEmailField"
+            >
                 <Input type="email" />
             </Form.Item>
             <Form.Item name="phone" label="Phone" rules={[buildMaxLengthRule(TEXT_INPUT_MAX_LENGTH)]} className="Publish__companyPhoneField">
@@ -130,6 +141,11 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
             </Form.Item>
             <CryptoAddressesField
                 description="Optional single payout wallet. If no product wallet is set, this wallet will be used at checkout."
+            />
+            <CompanyPaymentFields
+                serverUrl={props.url}
+                companyId={props.initialValues?.id}
+                hasSecret={props.initialValues?.hasPaymentWebhookSecret || false}
             />
             <Form.Item>
                 <FormSubmitButtons mode={props.mode} entityName="Company" loading={loading} draftRef={draftRef} />

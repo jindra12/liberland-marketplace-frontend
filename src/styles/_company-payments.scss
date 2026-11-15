@@ -1,0 +1,15 @@
+.PaymentIntegrationGuide__code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: monospace;
+    font-size: 0.85rem;
+}
+
+.PaymentIntegrationGuide .ant-modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.PaymentWebhookSecret__value {
+    overflow-wrap: anywhere;
+}

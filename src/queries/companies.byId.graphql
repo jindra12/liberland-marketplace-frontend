@@ -4,6 +4,8 @@ query CompanyById($id: String!, $draft: Boolean = false) {
         isSubscribed
         serverURL
         name
+        acceptThirdwebDonations
+        canAcceptThirdwebDonations
         verification
         isPrivate
         _status

@@ -20,6 +20,7 @@ export const fetchServerQuery = async <TData, TVariables extends object | undefi
     variables: TVariables,
     serverUrl = process.env.REACT_APP_BACKEND_URL,
     requestHeaders?: HeadersInit,
+    signal?: AbortSignal,
 ): Promise<TData> => {
     if (!serverUrl) {
         throw new Error("REACT_APP_BACKEND_URL is required for server-side GraphQL requests.");
@@ -31,6 +32,7 @@ export const fetchServerQuery = async <TData, TVariables extends object | undefi
         method: "POST",
         headers,
         body: JSON.stringify({ query, variables }),
+        signal,
     });
     if (!response.ok) {
         throw new Error(`GraphQL request failed with status ${response.status}`);

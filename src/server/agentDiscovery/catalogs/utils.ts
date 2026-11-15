@@ -39,6 +39,12 @@ export const buildApiCatalog = () => ({
                 { href: buildSiteUrl("/auth.txt"), type: "text/plain" },
             ],
             item: [
+                { href: buildSiteUrl("/api/marketplace/backend"), title: "Public GET backend capabilities" },
+                {
+                    href: buildSiteUrl("/api/marketplace/list?entity=posts&limit=5"),
+                    title: "Public GET marketplace records",
+                },
+                { href: buildSiteUrl("/api/marketplace/servers"), title: "Public GET syndicated-server discovery" },
                 { href: buildSiteUrl("/api/search/tribe"), title: "Public affiliation and service search" },
                 {
                     href: buildSiteUrl("/api/syndication/ai/search"),
@@ -69,8 +75,12 @@ export const buildAiCatalog = () => ({
             displayName: "Public HTTP and semantic search",
             type: "application/vnd.oai.openapi+json",
             url: buildSiteUrl("/openapi.json"),
-            description: "Unauthenticated tribe/service lookup and semantic RAG with explicit backend provenance, pagination and error semantics.",
-            representativeQueries: ["Find a Liberland web development company", "Find jobs offered by companies affiliated with Liberland"],
+            description:
+                "Unauthenticated tribe/service lookup and semantic RAG with explicit backend provenance, pagination and error semantics.",
+            representativeQueries: [
+                "Find a Liberland web development company",
+                "Find jobs offered by companies affiliated with Liberland",
+            ],
         },
         {
             identifier: `urn:air:${new URL(SITE_URL).hostname}:mcp:marketplace`,
@@ -91,7 +101,10 @@ export const buildAiCatalog = () => ({
             type: "application/a2a-agent-card+json",
             url: buildSiteUrl("/.well-known/agent-card.json"),
             description: "Structured, public tribe and service search without an account or AI credits.",
-            representativeQueries: ["Find Liberland-affiliated companies offering web development", "Find products from companies affiliated with Liberland"],
+            representativeQueries: [
+                "Find Liberland-affiliated companies offering web development",
+                "Find products from companies affiliated with Liberland",
+            ],
         },
         ...buildSkillsIndex().skills.map((skill) => ({
             identifier: `urn:air:${new URL(SITE_URL).hostname}:skill:${skill.name}`,
@@ -99,7 +112,8 @@ export const buildAiCatalog = () => ({
             type: "application/agent-skills+md",
             url: skill.url,
             description: skill.description,
-            representativeQueries: MARKETPLACE_SKILLS.find((definition) => definition.name === skill.name)!.representativeQueries,
+            representativeQueries: MARKETPLACE_SKILLS.find((definition) => definition.name === skill.name)!
+                .representativeQueries,
         })),
     ],
 });

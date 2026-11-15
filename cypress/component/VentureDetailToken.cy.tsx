@@ -1,3 +1,4 @@
+import { interceptGraphQLOperation } from "../support/graphqlMock/intercept";
 import { StartupDetailContent } from "../../src/components/detail/startupDetail/StartupDetailContent";
 import type { StartupDetailEntity } from "../../src/components/detail/startupDetail/types";
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
@@ -38,15 +39,21 @@ describe("Venture detail token integration", () => {
     });
 
     it("opens the in-app exchange and liquidity form from the Venture detail page", () => {
-        cy.intercept("GET", "**/api/startups/venture-harbor/contract-index*", {
-            pools: [venturePool],
-            proposals: [],
-            hasMore: false,
-        }).as("contractIndex");
+        interceptGraphQLOperation("VentureContractIndex", (request) =>
+            request.reply({
+                data: {
+                    ventureContractIndex: {
+                        pools: [venturePool],
+                        proposals: [],
+                        hasMore: false,
+                    },
+                },
+            }),
+        ).as("contractIndex");
         mountWithProviders(
             <StartupDetailContent startup={venture} startupId={venture.id} serverURL={MAIN_SERVER_URL} />,
         );
-        cy.get(".EntityDetail__tabs").contains('[role="tab"]', "Exchange / buy / sell").click();
+        cy.get(".EntityDetail__tabs").contains('[role="tab"]', "Exchange").click();
         cy.wait("@contractIndex");
         cy.contains("Exchange rates & trading").should("be.visible");
         cy.contains("Maximum ETH deposit").should("not.exist");
@@ -73,11 +80,17 @@ describe("Venture detail token integration", () => {
             quorumNumerator: 4n,
             quorumDenominator: 100n,
         });
-        cy.intercept("GET", "**/api/startups/venture-harbor/contract-index*", {
-            pools: [],
-            proposals: [],
-            hasMore: false,
-        }).as("contractIndex");
+        interceptGraphQLOperation("VentureContractIndex", (request) =>
+            request.reply({
+                data: {
+                    ventureContractIndex: {
+                        pools: [],
+                        proposals: [],
+                        hasMore: false,
+                    },
+                },
+            }),
+        ).as("contractIndex");
         mountWithProviders(
             <StartupDetailContent startup={venture} startupId={venture.id} serverURL={MAIN_SERVER_URL} />,
         );
@@ -85,7 +98,7 @@ describe("Venture detail token integration", () => {
         cy.contains("Connect your wallet to see balances and rewards.").should("be.visible");
         cy.get(".VentureContracts").find('[role="tablist"]').should("not.exist");
         screenshotStep("venture-detail-balances");
-        cy.get(".EntityDetail__tabs").contains('[role="tab"]', "DAO proposals & voting").click();
+        cy.get(".EntityDetail__tabs").contains('[role="tab"]', "Voting").click();
         cy.wait("@contractIndex");
         cy.contains("No DAO proposals have been indexed yet.").should("be.visible");
         cy.get(".VentureContracts").find('[role="tablist"]').should("not.exist");

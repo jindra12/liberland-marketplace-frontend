@@ -1,6 +1,7 @@
 import { SITE_URL } from "../../../siteUrl";
 import { TRIBE_ENTITIES } from "../../../tribeSearch/constants";
 import type { OpenAPIV3_1 } from "openapi-types";
+import { buildPublicMarketplacePaths } from "../../publicMarketplace/openapi";
 
 const queryParameter = (
     name: string,
@@ -27,6 +28,7 @@ export const buildOpenApiDocument = (): OpenAPIV3_1.Document => ({
     security: [],
     externalDocs: { url: `${SITE_URL}/LLM.txt` },
     paths: {
+        ...buildPublicMarketplacePaths(),
         "/api/search/tribe": {
             get: {
                 operationId: "searchByTribe",
@@ -97,6 +99,41 @@ export const buildOpenApiDocument = (): OpenAPIV3_1.Document => ({
             },
         },
         "/api/syndication/ai/search": {
+            get: {
+                operationId: "searchSyndicatedContentGet",
+                summary: "Public semantic RAG search for GET-only readers",
+                description:
+                    "Same anonymous search, per-backend provenance, quotas and results as POST. Results are not cached. Inspect result.error even on HTTP 200.",
+                parameters: [
+                    queryParameter(
+                        "query",
+                        "Natural-language search",
+                        { type: "string", minLength: 1, maxLength: 600 },
+                        true,
+                    ),
+                    {
+                        ...queryParameter(
+                            "serverUrls",
+                            "Repeat this parameter for each public backend",
+                            {
+                                type: "array",
+                                minItems: 1,
+                                maxItems: 8,
+                                items: { type: "string", format: "uri" },
+                            },
+                            true,
+                        ),
+                        style: "form",
+                        explode: true,
+                    },
+                    queryParameter("limit", "Results per backend", { type: "integer", minimum: 1, maximum: 20 }),
+                ],
+                responses: {
+                    "200": { $ref: "#/paths/~1api~1syndication~1ai~1search/post/responses/200" },
+                    "400": { description: "Invalid input" },
+                    "429": { description: "Request or RAG quota exceeded; inspect Retry-After" },
+                },
+            },
             post: {
                 operationId: "searchSyndicatedContent",
                 summary: "Semantic RAG search across explicitly supplied backends",

@@ -4,6 +4,7 @@ import { Form } from "antd";
 import { useSessionStorage } from "usehooks-ts";
 
 import { BuyNowButton } from "../../src/components/cart/BuyNowButton/BuyNowButton";
+import { buildAuthAuthority } from "../../src/components/auth/utils";
 import { BUY_NOW_RETURN_TO_STORAGE_KEY } from "../../src/components/cart/BuyNowButton/constants";
 import type { AddressWithEmail } from "../../src/components/order/types";
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
@@ -56,7 +57,7 @@ const mountBuyNowHarness = (
     auth = buildTestAuthContext(),
 ) => {
     mountWithProviders(<BuyNowHarness candidateProfileAddresses={candidateProfileAddresses} />, {
-        auth,
+        auth: { ...auth, settings: { ...auth.settings, authority: buildAuthAuthority(MAIN_SERVER_URL) } },
         route,
     });
 };

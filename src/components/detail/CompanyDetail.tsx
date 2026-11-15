@@ -21,6 +21,7 @@ import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 import { CommonDetail } from "./CommonDetail";
+import { CompanyDonateButton } from "./companyDetail/CompanyDonateButton";
 import { CompanyVerificationTag } from "./companyDetail/CompanyVerificationTag";
 import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
@@ -78,7 +79,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                         header={
                             <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
                                 {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
-                                <Flex vertical gap={md ? 18 : 14} className="EntityDetail__headerBody">
+                                <Flex vertical align="start" gap={md ? 18 : 14} className="EntityDetail__headerBody">
                                     <div className="EntityDetail__titleBlock">
                                         <Typography.Text className="EntityDetail__eyebrow">Company</Typography.Text>
                                         <div className="EntityDetail__titleRow">
@@ -104,6 +105,13 @@ const CompanyDetail: React.FunctionComponent = () => {
                                             </Flex>
                                         )}
                                     </div>
+                                    {companyData && (
+                                        <CompanyDonateButton
+                                            companyId={companyData.id!}
+                                            serverUrl={routeServerURL}
+                                            canAcceptThirdwebDonations={companyData.canAcceptThirdwebDonations}
+                                        />
+                                    )}
                                 </Flex>
                             </Space>
                         }

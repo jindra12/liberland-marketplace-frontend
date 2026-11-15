@@ -1,0 +1,30 @@
+mutation SaveVentureDeploymentRecovery(
+    $ventureId: String!
+    $walletAddress: String!
+    $record: VentureDeploymentRecoveryInput!
+) {
+    saveVentureDeploymentRecovery(ventureId: $ventureId, walletAddress: $walletAddress, record: $record) {
+        values {
+            tokenName
+            tokenSymbol
+            initialSupply
+            tokensPerEth
+            deploymentNetwork
+            acknowledged
+        }
+        transactions {
+            label
+            hash
+            nonce
+            chainId
+            submittedAtBlock
+        }
+        progress {
+            label
+            hash
+        }
+        manifest
+        saved
+        runnerId
+    }
+}

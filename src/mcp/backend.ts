@@ -5,6 +5,7 @@ import { BACKEND_TIMEOUT_MS } from "../server/security/constants";
 import type { BackendAuthorization } from "./types";
 import { Semaphore } from "async-mutex";
 import { DISCOVERY_CONCURRENCY } from "../server/security/constants";
+import { queryBackendRag } from "../server/ragUtils";
 
 const backendSlots = new Semaphore(DISCOVERY_CONCURRENCY);
 
@@ -67,11 +68,6 @@ export const callBackendTool = async (
 
 type McpTextContent = { type: "text"; text?: string };
 
-type RagResponse = {
-    error?: string;
-    [key: string]: unknown;
-};
-
 export const parseBackendToolResult = <T>(value: unknown): T => {
     if (Array.isArray(value)) {
         const textContent = value.find((item: McpTextContent) => item.type === "text" && item.text);
@@ -92,17 +88,5 @@ export const searchBackendRag = async (
     if (token) {
         headers.Authorization = token;
     }
-    const response = await publicBackendFetch(`${normalizeBackendUrl(serverUrl)}/api/ai/search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ query, limit }),
-        signal,
-    });
-    const body = (await response.json()) as RagResponse;
-    if (!response.ok) {
-        const detail = typeof body.error === "string" ? `: ${body.error}` : ".";
-        throw new Error(`RAG search failed on ${serverUrl}${detail}`);
-    }
-
-    return body;
+    return queryBackendRag(normalizeBackendUrl(serverUrl), query, limit, headers, signal);
 };
